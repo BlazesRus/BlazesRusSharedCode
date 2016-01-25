@@ -1,0 +1,135 @@
+﻿Build started 1/11/2016 11:07:48 PM.
+     1>Project "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\niflib\MiscFiles\SourceMergeMover\SourceMergeMover.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         F:\UserFiles\ProgrammingTools\Compilers\VisualStudio2013\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\niflib\MiscFiles\SourceMergeMover\include" /I"C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\\" /Zi /nologo /W3 /WX- /sdl /O2 /Ob2 /Oi /Oy /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /GF /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverIntermediate\\" /Fd"C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverIntermediate\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\MiscFunctions.cpp" "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\QuadVector.cpp" "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\QuadVectorFunctions.cpp" "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp" "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringVectorList.cpp" "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\TagPosition.cpp" "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\VariableData.cpp" "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\VariableTypeLists.cpp" "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\VariableVectorFunctions.cpp" IniData.cpp SourceMergeMover.cpp
+         MiscFunctions.cpp
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\MiscFunctions.cpp(25): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\MiscFunctions.cpp(398): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\MiscFunctions.cpp(401): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\MiscFunctions.cpp(441): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\MiscFunctions.cpp(444): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\MiscFunctions.cpp(562): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\MiscFunctions.cpp(745): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\MiscFunctions.cpp(810): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\MiscFunctions.cpp(874): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(99): warning C4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(98) : while compiling class template member function 'int VariableList<std::string>::Size(void)'
+                 C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\MiscFunctions.cpp(151) : see reference to function template instantiation 'int VariableList<std::string>::Size(void)' being compiled
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\StringVectorList.h(10) : see reference to class template instantiation 'VariableList<std::string>' being compiled
+         QuadVector.cpp
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\QuadVector.cpp(54): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(99): warning C4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(98) : while compiling class template member function 'int VariableList<int>::Size(void)'
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableTypeLists.h(59) : see reference to function template instantiation 'int VariableList<int>::Size(void)' being compiled
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableTypeLists.h(11) : see reference to class template instantiation 'VariableList<int>' being compiled
+         QuadVectorFunctions.cpp
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\QuadVectorFunctions.cpp(24): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(99): warning C4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(98) : while compiling class template member function 'int VariableList<int>::Size(void)'
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableTypeLists.h(59) : see reference to function template instantiation 'int VariableList<int>::Size(void)' being compiled
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableTypeLists.h(11) : see reference to class template instantiation 'VariableList<int>' being compiled
+         StringFunctions.cpp
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(29): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(43): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(57): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(73): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(174): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(208): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(212): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(221): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(258): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(278): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(282): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(293): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(347): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(439): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(463): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(491): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(522): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(550): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(603): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(651): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(683): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(747): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(817): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(876): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(977): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(990): warning C4244: '=' : conversion from 'double' to 'unsigned short', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(991): warning C4244: '-=' : conversion from 'double' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(1002): warning C4244: '=' : conversion from 'double' to 'unsigned short', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(1038): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(1039): warning C4244: '-=' : conversion from 'double' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(1187): warning C4056: overflow in floating-point constant arithmetic
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(1228): warning C4244: 'argument' : conversion from 'double' to 'uint64_t', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringFunctions.cpp(1233): warning C4244: 'return' : conversion from 'uint64_t' to 'double', possible loss of data
+         StringVectorList.cpp
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringVectorList.cpp(48): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringVectorList.cpp(666): warning C4018: '<' : signed/unsigned mismatch
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringVectorList.cpp(701): warning C4101: 'TempChar' : unreferenced local variable
+     1>c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(99): warning C4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(98) : while compiling class template member function 'int VariableList<std::string>::Size(void)'
+                 C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringVectorList.cpp(15) : see reference to function template instantiation 'int VariableList<std::string>::Size(void)' being compiled
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\StringVectorList.h(10) : see reference to class template instantiation 'VariableList<std::string>' being compiled
+         TagPosition.cpp
+     1>c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(99): warning C4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(98) : while compiling class template member function 'int VariableList<int>::Size(void)'
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableTypeLists.h(59) : see reference to function template instantiation 'int VariableList<int>::Size(void)' being compiled
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableTypeLists.h(11) : see reference to class template instantiation 'VariableList<int>' being compiled
+         VariableData.cpp
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\VariableData.cpp(5): warning C4267: 'initializing' : conversion from 'size_t' to 'unsigned int', possible loss of data
+         VariableTypeLists.cpp
+     1>c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(99): warning C4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(98) : while compiling class template member function 'int VariableList<int>::Size(void)'
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableTypeLists.h(59) : see reference to function template instantiation 'int VariableList<int>::Size(void)' being compiled
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableTypeLists.h(11) : see reference to class template instantiation 'VariableList<int>' being compiled
+         VariableVectorFunctions.cpp
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\VariableVectorFunctions.cpp(21): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\VariableVectorFunctions.cpp(53): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\VariableVectorFunctions.cpp(85): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\VariableVectorFunctions.cpp(116): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\VariableVectorFunctions.cpp(189): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\VariableVectorFunctions.cpp(227): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(87): warning C4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(86) : while compiling class template member function 'int VariableList<std::string>::length(void)'
+                 C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\VariableVectorFunctions.cpp(161) : see reference to function template instantiation 'int VariableList<std::string>::length(void)' being compiled
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\StringVectorList.h(10) : see reference to class template instantiation 'VariableList<std::string>' being compiled
+     1>c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(99): warning C4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(98) : while compiling class template member function 'int VariableList<int>::Size(void)'
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableTypeLists.h(59) : see reference to function template instantiation 'int VariableList<int>::Size(void)' being compiled
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableTypeLists.h(11) : see reference to class template instantiation 'VariableList<int>' being compiled
+         IniData.cpp
+     1>IniData.cpp(21): warning C4267: '=' : conversion from 'size_t' to 'unsigned int', possible loss of data
+     1>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\VariableList.h(99): warning C4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+                 C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\VariableList.h(98) : while compiling class template member function 'int VariableList<IniDataElement>::Size(void)'
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\niflib\miscfiles\sourcemergemover\IniData.h(30) : see reference to function template instantiation 'int VariableList<IniDataElement>::Size(void)' being compiled
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\niflib\miscfiles\sourcemergemover\IniData.h(16) : see reference to class template instantiation 'VariableList<IniDataElement>' being compiled
+         SourceMergeMover.cpp
+     1>SourceMergeMover.cpp(17): warning C4018: '<' : signed/unsigned mismatch
+     1>SourceMergeMover.cpp(66): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(99): warning C4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+                 c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\VariableList.h(98) : while compiling class template member function 'int VariableList<std::string>::Size(void)'
+                 SourceMergeMover.cpp(17) : see reference to function template instantiation 'int VariableList<std::string>::Size(void)' being compiled
+                 C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\StringVectorList.h(10) : see reference to class template instantiation 'VariableList<std::string>' being compiled
+         Generating Code...
+     1>c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\stringfunctions.cpp(1187): warning C4756: overflow in constant arithmetic
+     1>c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\stringfunctions.cpp(1189): warning C4756: overflow in constant arithmetic
+     1>c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\stringfunctions.cpp(1187): warning C4756: overflow in constant arithmetic
+     1>c:\users\blazesrus\documents\visual studio 2013\projects\niflibtestenvironment\globalcode\stringfunctions.cpp(1189): warning C4756: overflow in constant arithmetic
+       Link:
+         F:\UserFiles\ProgrammingTools\Compilers\VisualStudio2013\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverProgram\SourceMergeMover.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverProgram\SourceMergeMover.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverProgram\SourceMergeMover.lib" /MACHINE:X64 "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverIntermediate\MiscFunctions.obj"
+         "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverIntermediate\QuadVector.obj"
+         "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverIntermediate\QuadVectorFunctions.obj"
+         "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverIntermediate\StringFunctions.obj"
+         "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverIntermediate\StringVectorList.obj"
+         "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverIntermediate\TagPosition.obj"
+         "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverIntermediate\VariableData.obj"
+         "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverIntermediate\VariableTypeLists.obj"
+         "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverIntermediate\VariableVectorFunctions.obj"
+         "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverIntermediate\IniData.obj"
+         "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverIntermediate\SourceMergeMover.obj"
+         SourceMergeMover.vcxproj -> C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\\niflib\MiscFiles\SourceMergeMoverProgram\SourceMergeMover.exe
+     1>Done Building Project "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\niflib\MiscFiles\SourceMergeMover\SourceMergeMover.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:08.55
