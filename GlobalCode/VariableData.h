@@ -1,4 +1,10 @@
+/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
+	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+*/
 #pragma once
+#ifndef VariableData_IncludeGuard
+#define VariableData_IncludeGuard
+
 #include <string>
 class VariableData
 {
@@ -19,3 +25,4 @@ public:
 	VariableData() {};
 	~VariableData() {};
 };
+#endif

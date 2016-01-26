@@ -1,6 +1,6 @@
 /*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
-	Latest Code release available at http://www.nexusmods.com/skyrim/mods/44884/?
-	*/
+	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+*/
 #include "QuadVector.h"
 #include "StringFunctions.h"
 #include "MiscFunctions.h"
@@ -23,9 +23,9 @@ double QuadVector::GetVectorValue(int index)
 }
 
 //converts variables back into string format that havok uses in files(0.000000 0.000000 0.000000 0.000000)
-string QuadVector::ConvertToString()
+std::string QuadVector::ConvertToString()
 {
-	string TempString = "(";
+	std::string TempString = "(";
 	TempString += std::to_string(PositionX);
 	TempString += " ";
 	TempString += std::to_string(PositionY);
@@ -53,7 +53,7 @@ void QuadVector::ReadQuadVectorFromString(std::string LineString)
 	//Current character loaded in steam
 	char StringChar;
 	//Current Characters worth of string found of Double Value
-	string PartialSearchBuffer = "";
+	std::string PartialSearchBuffer = "";
 	//Temporary Storage of converted double value
 	double DoubleStorageTemp;
 	//Vector index of value to store
@@ -83,18 +83,18 @@ void QuadVector::ReadQuadVectorFromString(std::string LineString)
 	}
 }
 
-QuadVector::QuadVector(string TempString)
+QuadVector::QuadVector(std::string TempString)
 {
 	int StringLength;
 	StringLength = TempString.length();
-	string ValueExtractionBuffer = "";
+	std::string ValueExtractionBuffer = "";
 	//Temporary Storage of converted double value
 	double DoubleStorageTemp;
 	//Current character loaded in steam
-	string StringChar;
+	std::string StringChar;
 	//Vector index of value to store
-	int VectorIndex = 0;
-	for(int i = 0; i < StringLength&&VectorIndex < 4; i++)
+	unsigned __int8 VectorIndex = 0;
+	for(unsigned __int8 i = 0; i < StringLength&&VectorIndex < 4; i++)
 	{
 		StringChar = TempString.at(i);
 		if(StringChar == " " || StringChar == "\t" || StringChar == ")")
@@ -138,7 +138,7 @@ void QuadVectorList::ConvertStringToVectorList(std::string Content)
 	const size_t StringSize = Content.length();
 	size_t ElementIndex;
 	char CurrentChar;
-	string CurrentElement = "";
+	std::string CurrentElement = "";
 	QuadVector CurrentElementVector;
 	for(size_t Index=0; Index < StringSize; ++Index)
 	{

@@ -1,3 +1,6 @@
+/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
+	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+*/
 #pragma once
 #ifndef TagTreeData_IncludeGuard
 #define TagTreeData_IncludeGuard
@@ -476,7 +479,7 @@ namespace TagTreeData
 		//template <typename ConstructionDataType>
 		//void HkConstructFileFromData(ConstructionDataType& SharedData)
 		{
-			string TempTag = StringFunctions::CreateTabSpace(SharedData.TabLevel);
+			std::string TempTag = StringFunctions::CreateTabSpace(SharedData.TabLevel);
 			TempTag += "<";
 			size_t ListSize;
 			if(ClosingStatus)

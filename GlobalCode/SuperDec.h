@@ -1,9 +1,15 @@
+/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
+	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+*/
 #pragma once
+#ifndef SuperDec_IncludeGuard
+#define SuperDec_IncludeGuard
+
 #include <io.h>
 #include <math.h>
 #include <iostream>
 
-//Class holding higher possible precision Decimal Values (64Bit only version)
+//Class holding higher possible precision Decimal Values (64Bit only version)(Not Finished)
 class SuperDec
 {
 public:
@@ -86,4 +92,4 @@ public:
 	SuperDec();
 	~SuperDec();
 };
-
+#endif

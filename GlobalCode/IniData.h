@@ -1,4 +1,7 @@
+//Code Created by James Michael Armstrong(Skyrim nexus name:BlazesRus)
 #pragma once
+#ifndef IniData_IncludeGuard
+#define IniData_IncludeGuard
 #include "VariableList.h"
 #include "StringVectorList.h"
 
@@ -15,7 +18,7 @@ public:
 class IniData : public VariableList <IniDataElement>
 {
 public:
-	unsigned short IniType = 0;
+	unsigned __int8 IniType = 0;
 	//************************************
 	// Method:    LoadIniData
 	// FullName:  IniData::LoadIniData
@@ -30,7 +33,7 @@ public:
 		const unsigned int ListSize = Size();
 		IniDataElement ElementData;
 		bool ElementExists = false;
-		for(unsigned int Index=0;Index<ListSize&&ElementExists==false;++Index)
+		for(size_t Index=0;Index<ListSize&&ElementExists==false;++Index)
 		{
 			ElementData = ElementAt(Index);
 			if(ElementData.ScriptArg01==Value)
@@ -42,11 +45,11 @@ public:
 	}
 	std::string GetElementData(std::string Value)
 	{
-		const unsigned int ListSize = Size();
+		const size_t ListSize = Size();
 		std::string ElementValue="";
 		IniDataElement ElementData;
 		bool ElementExists = false;
-		for(unsigned int Index=0; Index < ListSize && ElementExists == false; ++Index)
+		for(size_t Index=0; Index < ListSize && ElementExists == false; ++Index)
 		{
 			ElementData = ElementAt(Index);
 			if(ElementData.ScriptArg01 == Value)
@@ -64,4 +67,4 @@ public:
 	IniData();
 	~IniData();
 };
-
+#endif

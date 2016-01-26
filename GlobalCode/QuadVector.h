@@ -1,3 +1,6 @@
+/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
+	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+*/
 #pragma once
 #ifndef QuadVector_IncludeGuard
 #define QuadVector_IncludeGuard
@@ -5,8 +8,6 @@
 #include <string>
 #include "VariableTypeLists.h"
 #include "VariableList.h"
-
-using std::string;
 
 class QuadVector
 {
@@ -20,12 +21,12 @@ public:
 	//Get value based on index value
 	double GetVectorValue(int index);
 	//Reconstruct as string
-	string ConvertToString();
+	std::string ConvertToString();
 	//Reconstruct as DoubleList vector
 	DoubleList ConvertToDoubleList();
 	//Construct QuadVector from String
 	void ReadQuadVectorFromString(std::string LineString);
-	QuadVector(string TempString);
+	QuadVector(std::string TempString);
 	QuadVector();
 	~QuadVector();
 };

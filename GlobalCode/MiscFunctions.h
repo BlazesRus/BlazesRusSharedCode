@@ -1,9 +1,11 @@
 /*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
-	Latest Code release available at http://www.nexusmods.com/skyrim/mods/44884/?
-	*/
+	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+*/
 #pragma once
+#ifndef MiscFunctions_IncludeGuard
+#define MiscFunctions_IncludeGuard
 
-#include "..\GlobalCode\VariableTypeLists.h"
+#include "VariableTypeLists.h"
 #include <string>
 
 class MiscFunctions
@@ -15,28 +17,28 @@ public:
 		bool VariableTypeScanned = false;
 		bool VariableNameScanned = false;
 		std::string VariableTypeName = "";
-		string VariableName = "";
+		std::string VariableName = "";
 		// true = LineComments; false = Multi-line comments
 		bool LineCommentType = false;
 		bool ScanningComments = false;
-		string CommentStringBuffer;
+		std::string CommentStringBuffer;
 		int TabLevel = 0;
 		int StringLength;
 		int TempInt;
 		char StringChar;
 		bool DisplayCommentsToConsole = true;
 		bool SaveCommentData = true;
-		string CommentDataString = "";
+		std::string CommentDataString = "";
 		StringVectorList CommentDataBuffer;
 		//CommentData is sent here when sending variable data
 		StringVectorList LinkedCommentData;
 		bool CreateGetFunctions = false;
 		StringVectorList VariableNameList;
 		StringVectorList VariableTypeList;
-		string ReconstructVariableAssignment(string Name, string Type);
-		void CreateFileWithVariableData(string FileName);
+		std::string ReconstructVariableAssignment(std::string Name, std::string Type);
+		void CreateFileWithVariableData(std::string FileName);
 		void SendVariableAssignmentInfo();
-		void ScanData(string LineString);
+		void ScanData(std::string LineString);
 	};
 	static bool FindWrappedText(std::string LineString, std::string SearchedString);
 	static bool TextNotFound(std::string LineString, std::string SearchedString);
@@ -53,3 +55,4 @@ public:
 	MiscFunctions();
 	~MiscFunctions();
 };
+#endif

@@ -1,4 +1,8 @@
+/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
+	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+*/
 #include "IniData.h"
+#include <string>
 
 
 void IniData::LoadIniData(std::string FileName)
@@ -6,12 +10,12 @@ void IniData::LoadIniData(std::string FileName)
 	StringVectorList TargetSettings;
 	TargetSettings.LoadFileDataV2(FileName);
 	//First part of command;Syntax:[ScriptArg01=ScriptArg02]
-	string ScriptArg01;
+	std::string ScriptArg01;
 	//Command Value;Syntax:[ScriptArg01=ScriptArg02]
-	string ScriptArg02;
+	std::string ScriptArg02;
 	//CommandScan Stage (limited to value of 255 to save little ram)
 	unsigned short CommandStage = 0;
-	string LineString = "";
+	std::string LineString = "";
 	unsigned int LineSize;
 	char LineChar;
 	bool InsideParenthesis = false;

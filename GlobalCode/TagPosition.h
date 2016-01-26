@@ -1,3 +1,6 @@
+/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
+	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+*/
 #pragma once
 #ifndef TagPosition_IncludeGuard
 #define TagPosition_IncludeGuard

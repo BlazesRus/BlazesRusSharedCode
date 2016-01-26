@@ -1,6 +1,12 @@
+/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
+	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+*/
 #pragma once
+#ifndef XMLOption_IncludeGuard
+#define XMLOption_IncludeGuard
+
 #include <string>
-#include "..\GlobalCode\VariableList.h"
+#include "VariableList.h"
 class XMLOption
 {
 public:
@@ -61,3 +67,4 @@ public:
 		Add(OptionToAdd);
 	}
 };
+#endif

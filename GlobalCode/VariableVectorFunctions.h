@@ -1,6 +1,6 @@
 /*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
-	Latest Code release available at http://www.nexusmods.com/skyrim/mods/44884/?
-	*/
+	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+*/
 #pragma once
 #ifndef VariableVectorFunctions_IncludeGuard
 #define VariableVectorFunctions_IncludeGuard

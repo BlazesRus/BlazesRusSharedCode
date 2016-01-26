@@ -1,4 +1,8 @@
+/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
+	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+*/
 #include "TagNodeTreeTemplate.h"
+using std::string;
 
 size_t TagNodeTreeTemplateData::TagNodeFunctions::FindContentType(std::string Content)
 {
@@ -256,7 +260,7 @@ StringVectorList TagNodeTreeTemplateData::TagNodeFunctions::ConvertStringToStrin
 	const size_t StringSize = Content.length();
 	size_t ElementIndex;
 	char CurrentChar;
-	string CurrentElement="";
+	std::string CurrentElement="";
 	for(size_t Index=0; Index < StringSize;++Index)
 	{
 		CurrentChar = Content.at(Index);
