@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <CodeSharingProject>248F659F-DAC5-46E8-AC09-60EC9FC95053</CodeSharingProject>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>5639f4e6-e651-4d76-ac02-7706bf619d7d</SharedGUID>
+    <ItemsProjectGuid>{fdf6c044-319f-445f-9224-a09728178ee8}</ItemsProjectGuid>
+    <ItemsRootNamespace>GlobalCode</ItemsRootNamespace>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)IniData.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MiscFunctions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QuadVector.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QuadVectorFunctions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)StringFunctions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)StringVectorList.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SuperDec.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TagNodeTreeTemplate.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TagPosition.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)VariableData.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)VariableTypeLists.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)VariableVectorFunctions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XMLOption.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IniData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)LooseNodeTreeTemplate.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MiscFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QuadVector.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QuadVectorFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StringFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StringVectorList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SuperDec.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TagNodeTreeTemplate.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TagPosition.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)VariableData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)VariableList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)VariableTypeLists.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)VariableVectorFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XMLOption.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XMLTagTree.h" />
+  </ItemGroup>
+</Project>
