@@ -13,7 +13,7 @@ void DoubleList::SaveDataToFile(std::string Path)
 {
 	std::string LineString;
 	std::fstream CraftedIniFile;
-	CraftedIniFile.open(Path, std::ios::out || std::ios::trunc);
+	CraftedIniFile.open(Path, std::ios::out | std::ios::trunc);
 	size_t DataSize = Size();
 	if(CraftedIniFile.is_open())
 	{
@@ -62,7 +62,7 @@ void IntegerList::SaveDataToFile(std::string Path)
 {
 	std::string LineString;
 	std::fstream CraftedIniFile;
-	CraftedIniFile.open(Path, std::ios::out || std::ios::trunc);
+	CraftedIniFile.open(Path, std::ios::out | std::ios::trunc);
 	size_t DataSize = Size();
 	if(CraftedIniFile.is_open())
 	{
@@ -87,7 +87,7 @@ void XIntegerList::SaveDataToFile(std::string Path)
 {
 	std::string LineString;
 	std::fstream CraftedIniFile;
-	CraftedIniFile.open(Path, std::ios::out || std::ios::trunc);
+	CraftedIniFile.open(Path, std::ios::out | std::ios::trunc);
 	size_t DataSize = Size();
 	if(CraftedIniFile.is_open())
 	{

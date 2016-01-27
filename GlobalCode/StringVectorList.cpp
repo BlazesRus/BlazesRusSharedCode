@@ -58,7 +58,7 @@ void StringVectorList::SaveDataToFileV2(std::string FileName)
 {
 	std::string LineString;
 	std::fstream CraftedIniFile;
-	CraftedIniFile.open(FileName.c_str(), std::ios::out || std::ios::trunc);
+	CraftedIniFile.open(FileName.c_str(), std::ios::out | std::ios::trunc);
 	size_t DataSize = Size();
 	if(CraftedIniFile.is_open())
 	{
@@ -313,7 +313,7 @@ void StringVectorList::LoadXMLFileWithoutComments(std::string InputFile)
 {
 	Reset();
 	bool FileStreamOpen = false;
-	int FileStreamState = 0;
+	unsigned _int8 FileStreamState = 0;
 	string LineString = "";
 	string LineChar;
 	char NextChar = ' ';
@@ -321,7 +321,7 @@ void StringVectorList::LoadXMLFileWithoutComments(std::string InputFile)
 	const string XMLCommentHeader = "<!--";
 	const string XMLCommentFooter = "-->";
 	bool ScanningXMLComments = false;
-	int CommentIndex = 0;
+	size_t CommentIndex = 0;
 	std::fstream LoadedFileStream;
 	while(FileStreamState >= 0)
 	{
@@ -714,11 +714,13 @@ void StringVectorList::CreateFileIfDoesntExist(std::string FileName)
 
 void StringVectorList::SaveDataToFileV3(std::string FileName, bool Verbose/*=false*/)
 {
+	size_t StringLength;
+	char StringChar;
 	std::string LineString;
 	std::fstream LoadedFileStream;
 	//Fix for non-existing file
 	CreateFileIfDoesntExist(FileName);
-	LoadedFileStream.open(FileName, std::fstream::out || std::fstream::trunc);
+	LoadedFileStream.open(FileName.c_str(), std::fstream::out | std::fstream::trunc);
 	size_t DataSize = Size();
 	if(LoadedFileStream.is_open())
 	{
@@ -732,7 +734,13 @@ void StringVectorList::SaveDataToFileV3(std::string FileName, bool Verbose/*=fal
 				}
 				LineString = ElementAt(i);
 				if(Verbose) { std::cout << LineString << "\n"; }
-				LoadedFileStream << LineString;
+				//LoadedFileStream << LineString;
+				StringLength = LineString.length();
+				for(size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
+				{
+					StringChar = LineString.at(StringIndex);
+					LoadedFileStream << StringChar;
+				}
 			}
 		}
 		else
