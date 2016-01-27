@@ -178,7 +178,7 @@ double StringFunctions::ReadDoubleFromString(string TempString)
 	double CalculatedValue;
 	bool IsNegative = false;
 	string StringChar;
-	int StringLength;
+	size_t StringLength;
 	StringLength = TempString.length();
 	string WholeNumberBuffer = "";
 	string DecimalBuffer = "";
@@ -187,7 +187,7 @@ double StringFunctions::ReadDoubleFromString(string TempString)
 	int TempInt02;
 	double TempDouble;
 	//cout << "WholeNumber Part:";
-	for(int i = 0; i < StringLength; i++)
+	for(size_t i = 0; i < StringLength; ++i)
 	{
 		StringChar = TempString.at(i);
 		if(IsDigit(StringChar))
@@ -213,7 +213,7 @@ double StringFunctions::ReadDoubleFromString(string TempString)
 		}
 	}
 	//cout << "\nWhole Number Calculations:\n";
-	for(int i = WholeNumberBuffer.length() - 1; i >= 0; i--)
+	for(size_t i = WholeNumberBuffer.length() - 1; i >= 0; --i)
 	{
 		StringChar = WholeNumberBuffer.at(i);
 		TempInt = CharAsInt(StringChar.at(0));
@@ -228,7 +228,7 @@ double StringFunctions::ReadDoubleFromString(string TempString)
 	//cout << "\nEnd of WholeNumber Calculations\n";
 	StringLength = DecimalBuffer.length();
 	PlaceNumber = -1;
-	for(int i = 0; i < StringLength; i++)
+	for(size_t i = 0; i < StringLength; i++)
 	{
 		StringChar = DecimalBuffer.at(i);
 		TempInt = CharAsInt(StringChar.at(0));
@@ -283,7 +283,7 @@ int StringFunctions::ReadIntFromString(string TempString)
 		}
 	}
 	//cout << "\nWhole Number Calculations:\n";
-	for(size_t i = WholeNumberBuffer.length() - 1; i >= 0; i--)
+	for(size_t i = WholeNumberBuffer.length() - 1; i >= 0; --i)
 	{
 		StringChar = WholeNumberBuffer.at(i);
 		TempInt = CharAsInt(StringChar.at(0));
@@ -330,7 +330,7 @@ long long int StringFunctions::ReadXIntFromString(std::string TempString)
 		}
 	}
 	//cout << "\nWhole Number Calculations:\n";
-	for(size_t i = WholeNumberBuffer.length() - 1; i >= 0; i--)
+	for(size_t i = WholeNumberBuffer.length() - 1; i >= 0; --i)
 	{
 		StringChar = WholeNumberBuffer.at(i);
 		TempInt = CharAsInt(StringChar.at(0));
@@ -397,13 +397,13 @@ bool StringFunctions::ReadBoolFromString(string LineString)
 	//Current Characters worth of string found that match SearchString
 	string PartialSearchBuffer = "";
 	//Current Index of Loaded PartialSearch
-	int PartialBufferIndex = 0;
+	size_t PartialBufferIndex = 0;
 	//Total size of LineString to load
-	int StringSize = LineString.size();
+	size_t StringSize = LineString.size();
 	//Boolean check to determine if have found first string match
 	bool SearchSuccess = false;
 	std::locale loc;
-	for(int i = 0; i < StringSize&&SearchSuccess == false; i++)
+	for(size_t i = 0; i < StringSize&&SearchSuccess == false; i++)
 	{
 		StringChar = std::tolower(LineString.at(i), loc);
 		if(StringChar == '1')
@@ -475,7 +475,7 @@ bool StringFunctions::LineStringContains(string LineString, string SearchedStrin
 // Qualifier:
 // Parameter: int temp
 //************************************
-string StringFunctions::CreateTabSpace(int temp)
+string StringFunctions::CreateTabSpace(size_t temp)
 {
 	string TempString = "";
 	while(temp > 0)
@@ -491,10 +491,10 @@ string StringFunctions::CreateTabSpace(int temp)
 string StringFunctions::OutputLineStringTabs(string LineString)
 {
 	string TempString = "";
-	int StringLength = LineString.length();
+	size_t StringLength = LineString.length();
 	bool Finished = false;
 	string StringChar;
-	for(int i = 0; (i < StringLength) || Finished; i++)
+	for(size_t i = 0; (i < StringLength) || Finished; i++)
 	{
 		StringChar = "" + LineString.at(i);
 		if(StringChar == "[^\\\\d]")//Only Records Whitespace/tabs
@@ -515,10 +515,10 @@ string StringFunctions::OutputLineStringTabs(string LineString)
 string StringFunctions::OutputQuadVariableLines(string LineString)
 {
 	string TempString = "";
-	int StringLength = LineString.length();
+	size_t StringLength = LineString.length();
 	bool RecordString = false;
 	string StringChar;
-	for(int i = 0; (i < StringLength); i++)
+	for(size_t i = 0; (i < StringLength); i++)
 	{
 		StringChar = "" + LineString.at(i);
 		if(RecordString)
@@ -543,9 +543,9 @@ string StringFunctions::OutputQuadVariableLines(string LineString)
 string StringFunctions::SeparateFilePathIntoFileName(string TempString)
 {
 	string FileName = "";
-	int StringLength = TempString.length();
+	size_t StringLength = TempString.length();
 	char StringChar;
-	for(int i = 0; i < StringLength; i++)
+	for(size_t i = 0; i < StringLength; i++)
 	{
 		StringChar = TempString.at(i);
 		if(StringChar == '/' || StringChar == '\\')//Separate filename with path slashs(and reset filename buffer)
@@ -574,10 +574,10 @@ string StringFunctions::CreateLinkedHTMLString(string LineString, string TargetO
 string StringFunctions::RemoveStringTabs(string LineString)
 {
 	string TempString = "";
-	int StringLength = LineString.length();
+	size_t StringLength = LineString.length();
 	bool Finished = false;
 	string StringChar;
-	for(int i = 0; i < StringLength; i++)
+	for(size_t i = 0; i < StringLength; ++i)
 	{
 		StringChar = "" + LineString.at(i);
 		if(StringChar != "[^\\\\d]")//Only Records Whitespace/tabs
@@ -598,14 +598,14 @@ string StringFunctions::RemoveStringTabs(string LineString)
  * @param TabEquivalent:Amount of spaces is equal to tab
  * @return
  */
-int StringFunctions::ExamineTabSpace(string LineString, int TabEquivalent)
+size_t StringFunctions::ExamineTabSpace(string LineString, int TabEquivalent)
 {
-	int AmountOfTabs = 0;
-	int TotalSpaces = 0;
-	int StringLength = LineString.length();
+	size_t AmountOfTabs = 0;
+	size_t TotalSpaces = 0;
+	size_t StringLength = LineString.length();
 	bool Finished = false;
 	string StringChar;
-	for(int i = 0; (i < StringLength && Finished == false); i++)
+	for(size_t i = 0; (i < StringLength && Finished == false); ++i)
 	{
 		StringChar = LineString.at(i);
 		if(StringChar == "\t" || StringChar == "	")
@@ -639,7 +639,7 @@ int StringFunctions::ExamineTabSpace(string LineString, int TabEquivalent)
  * @param LineString
  * @return
  */
-int StringFunctions::ExamineTabSpace(string LineString)
+size_t StringFunctions::ExamineTabSpace(string LineString)
 {
 	return ExamineTabSpace(LineString, 4);
 }
@@ -653,12 +653,12 @@ int StringFunctions::ExamineTabSpace(string LineString)
 string StringFunctions::RemoveAmountOfTabSpace(string LineString, int TabEquivalent, int AmountOfWhitespaceRemoval)
 {
 	string TempString = "";
-	int AmountOfTabs = 0;
-	int TotalSpaces = 0;
-	int StringLength = LineString.length();
+	size_t AmountOfTabs = 0;
+	size_t TotalSpaces = 0;
+	size_t StringLength = LineString.length();
 	bool Finished = false;
 	string StringChar;
-	for(int i = 0; i < StringLength; i++)
+	for(size_t i = 0; i < StringLength; ++i)
 	{
 		StringChar = "" + LineString.at(i);
 		if(Finished == false)
@@ -667,11 +667,11 @@ string StringFunctions::RemoveAmountOfTabSpace(string LineString, int TabEquival
 			{
 				if(StringChar == "\t")
 				{
-					AmountOfTabs++;
+					++AmountOfTabs;
 				}
 				else if(StringChar == " ")
 				{
-					TotalSpaces++;
+					++TotalSpaces;
 				}
 			}
 			else
@@ -682,7 +682,7 @@ string StringFunctions::RemoveAmountOfTabSpace(string LineString, int TabEquival
 			if(TotalSpaces == TabEquivalent)
 			{
 				TotalSpaces = 0;
-				AmountOfTabs++;
+				++AmountOfTabs;
 			}
 			if(AmountOfTabs >= AmountOfWhitespaceRemoval)
 			{
@@ -703,11 +703,11 @@ string StringFunctions::RemoveAmountOfTabSpace(string LineString, int TabEquival
  */
 string StringFunctions::RemoveXMLTags(string LineString)
 {
-	int StringLength = LineString.length();
+	size_t StringLength = LineString.length();
 	string TempString = "";
 	bool InsideTag = false;
 	char StringChar;
-	for(int i = 0; i < StringLength; i++)
+	for(size_t i = 0; i < StringLength; ++i)
 	{
 		StringChar = LineString.at(i);
 		if(InsideTag)
@@ -735,12 +735,12 @@ string StringFunctions::RemoveXMLTags(string LineString)
  */
 string StringFunctions::ReturnXMLTagContent(string LineString)
 {
-	int StringLength = LineString.length();
+	size_t StringLength = LineString.length();
 	string TempString = "";
 	bool InsideTag = false;
-	int TagDataStage = 0;
+	unsigned __int8 TagDataStage = 0;
 	char StringChar;
-	for(int i = 0; i < StringLength; i++)
+	for(size_t i = 0; i < StringLength; i++)
 	{
 		StringChar = LineString.at(i);
 		if(InsideTag)
@@ -797,12 +797,12 @@ string StringFunctions::ReplaceFirst(string LineString, string SearchString, str
 		//Current Characters worth of string found that match SearchString
 		string PartialSearchBuffer = "";
 		//Current Index of Loaded PartialSearch
-		int PartialBufferIndex = 0;
+		size_t PartialBufferIndex = 0;
 		//Total size of LineString to load
-		int StringSize = LineString.size();
+		size_t StringSize = LineString.size();
 		//Boolean check to determine if have found first string match
 		bool SearchSuccess = false;
-		for(int i = 0; i < StringSize; i++)
+		for(size_t i = 0; i < StringSize; ++i)
 		{
 			StringChar = LineString.at(i);
 			if(SearchSuccess)
@@ -867,10 +867,10 @@ string StringFunctions::ReplaceAll(string LineString, string SearchString, strin
 		//Current Characters worth of string found that match SearchString
 		string PartialSearchBuffer = "";
 		//Current Index of Loaded PartialSearch
-		int PartialBufferIndex = 0;
+		size_t PartialBufferIndex = 0;
 		//Total size of LineString to load
-		int StringSize = LineString.size();
-		for(int i = 0; i < StringSize; i++)
+		size_t StringSize = LineString.size();
+		for(size_t i = 0; i < StringSize; ++i)
 		{
 			StringChar = LineString.at(i);
 			//Matching Partial String Search
@@ -885,7 +885,7 @@ string StringFunctions::ReplaceAll(string LineString, string SearchString, strin
 				}
 				else
 				{
-					PartialBufferIndex++;
+					++PartialBufferIndex;
 				}
 			}
 			//Failed Partial String Search
@@ -926,14 +926,14 @@ string StringFunctions::ReturnParamName(string LineString)
 	//Current Characters worth of string found that match SearchString
 	string PartialSearchBuffer = "";
 	//Current Index of Loaded PartialSearch
-	int PartialBufferIndex = 0;
+	size_t PartialBufferIndex = 0;
 	//Total size of LineString to load
-	int StringSize = LineString.size();
+	size_t StringSize = LineString.size();
 	//Boolean check to determine if have found first string match of SearchString
 	bool SearchSuccess = false;
 	//Boolean check to determine if done scanning ParamName
 	bool ParamNameScanInProgress = true;
-	for(int i = 0; i < StringSize&&ParamNameScanInProgress; i++)
+	for(size_t i = 0; i < StringSize&&ParamNameScanInProgress; ++i)
 	{
 		StringChar = LineString.at(i);
 		if(SearchSuccess)
@@ -1115,7 +1115,7 @@ std::string StringFunctions::XIntToStringConversion(long long int TempValue)
 	}
 	else
 	{
-		for(int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
+		for(long long int i = NumberOfPlaces(IntegerHalf); i >= 0; --i)
 		{
 			CurrentDigit = floor(IntegerHalf / pow(10, i));
 			IntegerHalf -= (long long int) floor(CurrentDigit*pow(10, i));

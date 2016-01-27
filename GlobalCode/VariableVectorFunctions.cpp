@@ -113,7 +113,7 @@ StringVectorList VariableVectorFunctions::ParamInfoFromString(string LineString)
 {
 	string TempString = "";
 	StringVectorList ParamList;
-	int StringLength = LineString.length();
+	size_t StringLength = LineString.length();
 	char StringChar;
 	for(int i = 0; i < StringLength; i++)
 	{
@@ -141,7 +141,7 @@ StringVectorList VariableVectorFunctions::ParamInfoFromString(string LineString)
 * @param NewVarList
 * @return integer of new VariableIndex
 */
-int VariableVectorFunctions::ConvertVariableIndex(int Index, StringVectorList CurrentVarList, StringVectorList NewVarList)
+size_t VariableVectorFunctions::ConvertVariableIndex(size_t Index, StringVectorList CurrentVarList, StringVectorList NewVarList)
 {
 	string TempString = CurrentVarList.elementAt(Index);
 	return NewVarList.GetElementIndex(TempString);
@@ -186,10 +186,10 @@ StringVectorList VariableVectorFunctions::IniInfoFromString(string LineString)
 {
 	string TempString = "";
 	StringVectorList ParamList;
-	int StringLength = LineString.length();
+	size_t StringLength = LineString.length();
 	string StringChar;
 	bool IgnoreWhitespace = true;
-	for(int i = 0; i < StringLength; i++)
+	for(size_t i = 0; i < StringLength; ++i)
 	{
 		StringChar = "" + LineString.at(i);
 		if(StringChar == "=")
@@ -218,14 +218,14 @@ StringVectorList VariableVectorFunctions::ParamInfoFromStringList(StringVectorLi
 {
 	string TempString = "";
 	StringVectorList ParamList;
-	int StringLength;
+	size_t StringLength;
 	char StringChar;
 	string LineString;
-	for(int ListLine = 0; TempStringList.StreamLineData(); ListLine++)
+	for(size_t ListLine = 0; TempStringList.StreamLineData(); ++ListLine)
 	{
 		LineString = TempStringList.CurrentStreamedLineString();
 		StringLength = LineString.length();
-		for(int i = 0; i < StringLength; i++)
+		for(size_t i = 0; i < StringLength; i++)
 		{
 			StringChar = LineString.at(i);
 			if(StringChar == ',')
@@ -250,7 +250,7 @@ StringVectorList VariableVectorFunctions::ParamInfoFromStringList(StringVectorLi
 * @param LineString
 * @return
 */
-int VariableVectorFunctions::GetNumberOfParamsFromString(string LineString)
+size_t VariableVectorFunctions::GetNumberOfParamsFromString(string LineString)
 {
 	StringVectorList ParamList = ParamInfoFromString(LineString);
 	return ParamList.length();

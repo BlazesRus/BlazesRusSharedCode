@@ -33,7 +33,7 @@ public:
 	* @param NewVarList
 	* @return integer of new VariableIndex
 	*/
-	static int ConvertVariableIndex(int Index, StringVectorList CurrentVarList, StringVectorList NewVarList);
+	static size_t ConvertVariableIndex(size_t Index, StringVectorList CurrentVarList, StringVectorList NewVarList);
 
 	/** Converts Entries in StringList to Rows of 16-entry Strings
 	* (Use to convert StringList for BoneEntries back to Lines of Strings)
@@ -49,7 +49,7 @@ public:
 	* @param LineString
 	* @return
 	*/
-	static int GetNumberOfParamsFromString(std::string LineString);
+	static size_t GetNumberOfParamsFromString(std::string LineString);
 	VariableVectorFunctions();
 	~VariableVectorFunctions();
 };

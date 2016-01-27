@@ -58,10 +58,10 @@ public:
 	void EditLastEntry(int TempValue);
 	void IncreaseLastEntry()
 	{
-		int LastIndex = this->Size() - 1;
-		int TempValue = this->ElementAt(LastIndex);
+		size_t LastIndex = Size() - 1;
+		int TempValue = ElementAt(LastIndex);
 		TempValue++;
-		this->SetElementAt(LastIndex, TempValue);
+		SetElementAt(LastIndex, TempValue);
 	}
 	//************************************
 	// Generates String with format Index:0_Index:1...Index:5

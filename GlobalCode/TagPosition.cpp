@@ -8,6 +8,6 @@ std::string TagPosition::PositionString()
 {
 	std::string PositionString = ParentIndexPosition.GenerateAsString();
 	PositionString += "-";
-	PositionString += StringFunctions::IntToStringConversion(ListPosition);
+	PositionString += StringFunctions::XIntToStringConversion(ListPosition);
 	return PositionString;
 }

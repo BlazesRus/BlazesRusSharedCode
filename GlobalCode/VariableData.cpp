@@ -5,10 +5,10 @@
 
 VariableData::VariableData(std::string StringData)
 {
-	unsigned int LineSize = StringData.length();
+	size_t LineSize = StringData.length();
 	char LineChar;
-	unsigned int DataStage = 0;
-	for(unsigned int i = 0; i < LineSize; i++)
+	unsigned __int8 DataStage = 0;
+	for(size_t i = 0; i < LineSize; i++)
 	{
 		LineChar = StringData.at(i);
 		if(LineChar == ',')

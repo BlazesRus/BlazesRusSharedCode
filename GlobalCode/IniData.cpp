@@ -14,17 +14,17 @@ void IniData::LoadIniData(std::string FileName)
 	//Command Value;Syntax:[ScriptArg01=ScriptArg02]
 	std::string ScriptArg02;
 	//CommandScan Stage (limited to value of 255 to save little ram)
-	unsigned short CommandStage = 0;
+	unsigned __int8 CommandStage = 0;
 	std::string LineString = "";
-	unsigned int LineSize;
+	size_t LineSize;
 	char LineChar;
 	bool InsideParenthesis = false;
 	IniDataElement ElementData;
-	for(unsigned int LineNumber = 0; TargetSettings.StreamLineData(); ++LineNumber)
+	for(size_t LineNumber = 0; TargetSettings.StreamLineData(); ++LineNumber)
 	{
 		LineString = TargetSettings.CurrentStreamedLineString();
 		LineSize = LineString.length();
-		for(unsigned int i = 0; i < LineSize; ++i)
+		for(size_t i = 0; i < LineSize; ++i)
 		{
 			LineChar = LineString.at(i);
 			if(LineChar == '"') { InsideParenthesis = !InsideParenthesis; }

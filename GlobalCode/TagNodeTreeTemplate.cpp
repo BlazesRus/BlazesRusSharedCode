@@ -4,34 +4,12 @@
 #include "TagNodeTreeTemplate.h"
 using std::string;
 
-size_t TagNodeTreeTemplateData::TagNodeFunctions::FindContentType(std::string Content)
+unsigned __int8 TagNodeTreeTemplateData::TagNodeFunctions::FindContentType(std::string Content)
 {
-	size_t DetectedContentType = 0;
-	//Need to code later detection of int/string/bool/whitespace
-	//std::string BoolBuffer = "";
-	////Either value of true or false
-	////0:Not detected yet
-	////1:Contains true/false traits so far
-	////2:Fails to match pattern
-	////3:Using BoolList detected
-	//unsigned __int8 BoolDetectionState = 0;
-	////Has characters other than spaces/tab in string
-	////0:Not detected yet
-	////3:Using StringList detected
-	//unsigned __int8 StringDetectionState = 0;
-	////Detect havok class names as #???? (any strings starting with #)
-	//unsigned __int8 HavokClassStringDetectionState = 0;
-	////Any numberic only string without decimal
-	//unsigned __int8 IntDetectionState = 0;
-	////Any numberic only string with decimal
-	//unsigned __int8 DoubleDetectionState = 0;
-	////Only contains spaces/tabs/new-lines
-	//unsigned __int8 IsBlankSpace = 0;
-	//bool IsList = false;
-
+	unsigned __int8 DetectedContentType = 0;
 	//0 = No List Detected
 	//1 = List Detected
-	//2 = Possible List Detected (on next detected element is converted to List Detected)
+	//2 = Possible List Detected
 	unsigned __int8 ListDetectionState = 0;
 	//false = testing for false value;true = testing for true value
 	bool BoolValueDetecting;
@@ -191,7 +169,6 @@ size_t TagNodeTreeTemplateData::TagNodeFunctions::FindContentType(std::string Co
 		//5:Event Index(Int)
 		//6:Variable Index(Int)
 		//7:Havok Class index(Int)
-		//8:Short
 		//9:QuadVector
 		//10:Event String
 		//11:Variable String
@@ -258,7 +235,6 @@ StringVectorList TagNodeTreeTemplateData::TagNodeFunctions::ConvertStringToStrin
 {
 	StringVectorList ConvertedValue;
 	const size_t StringSize = Content.length();
-	size_t ElementIndex;
 	char CurrentChar;
 	std::string CurrentElement="";
 	for(size_t Index=0; Index < StringSize;++Index)

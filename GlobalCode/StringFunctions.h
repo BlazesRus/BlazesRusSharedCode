@@ -56,7 +56,7 @@ public:
 	static std::string OutputLineStringTabs(std::string LineString);
 
 	//Create TabSpace string based on TabSpace amount
-	static std::string CreateTabSpace(int temp);
+	static std::string CreateTabSpace(size_t temp);
 
 	/** Use to keep tabs aligned on parameters
 	 * @param LineString
@@ -86,7 +86,7 @@ public:
 	 * @param TabEquivalent:Amount of spaces is equal to tab
 	 * @return
 	 */
-	static int ExamineTabSpace(std::string LineString, int TabEquivalent);
+	static size_t ExamineTabSpace(std::string LineString, int TabEquivalent);
 
 	/** Examines the number of tabs/(equivalent of tabs in spaces) of whitespace before text<br>
 	 * Rounds up partial amount of spaces leftover as being equivalent as another tab<br>
@@ -94,7 +94,7 @@ public:
 	 * @param LineString
 	 * @return
 	 */
-	static int ExamineTabSpace(std::string LineString);
+	static size_t ExamineTabSpace(std::string LineString);
 
 	/** Removes Specific amount of whitespace from front of LineString
 	 * @param LineString

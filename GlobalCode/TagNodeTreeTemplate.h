@@ -27,7 +27,7 @@ namespace TagNodeTreeTemplateData
 		// Qualifier:
 		// Parameter: std::string Content
 		//************************************
-		static size_t FindContentType(std::string Content);
+		static unsigned __int8 FindContentType(std::string Content);
 		//************************************
 		// Method:    ConvertStringToStringVectorList
 		// FullName:  TagNodeTreeTemplateData::TagNodeFunctions::ConvertStringToStringVectorList

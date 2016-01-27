@@ -24,7 +24,7 @@ void MiscFunctions::VariableScanning::ScanData(string LineString)
 	}
 	StringLength = LineString.length();
 	TempInt = StringLength - 1;
-	for(int i = 0; i < StringLength; i++)
+	for(size_t i = 0; i < StringLength; ++i)
 	{
 		StringChar = LineString.at(i);
 		if(ScanningComments)
@@ -138,7 +138,7 @@ void MiscFunctions::VariableScanning::ScanData(string LineString)
 
 void MiscFunctions::VariableScanning::SendVariableAssignmentInfo()
 {
-	int CommentSize;
+	size_t CommentSize;
 	string TempComment = "";
 	//Create Lines of code for variable set function
 	if(VariableName != ""&&VariableTypeName != "")
@@ -149,7 +149,7 @@ void MiscFunctions::VariableScanning::SendVariableAssignmentInfo()
 			VariableNameList.Add(VariableName);
 			VariableTypeList.Add(VariableTypeName);
 			CommentSize = CommentDataBuffer.Size();
-			for(int i = 0; i < CommentSize; i++)
+			for(size_t i = 0; i < CommentSize; i++)
 			{
 				if(i != 0)
 				{
@@ -181,11 +181,11 @@ void MiscFunctions::VariableScanning::CreateFileWithVariableData(string FileName
 		//exit(1);
 	}
 	//Double check to ensure both same size and not empty
-	int ListSize = VariableNameList.Size();
+	size_t ListSize = VariableNameList.Size();
 	bool TempBool;
 	if(ListSize > 0 && ListSize == VariableTypeList.Size())
 	{
-		for(int LineNumber = 0; VariableNameList.StreamLineData(); LineNumber++)
+		for(size_t LineNumber = 0; VariableNameList.StreamLineData(); ++LineNumber)
 		{
 			CommentDataString = LinkedCommentData.ElementAt(LineNumber);
 			if(CommentDataString != "")
@@ -393,13 +393,13 @@ bool MiscFunctions::TextNotFound(std::string LineString, std::string SearchedStr
 	bool Success = false;
 	string StringBuffer = "";
 	char LineChar;
-	int StringLength;
-	int TempInt = 0;
+	size_t StringLength;
+	size_t TempInt = 0;
 	StringLength = LineString.length();
 	//Double-checks to ensure Search does not exceed SearchedString.Size()---Although impossible to fail unless major glitch occurs
-	int SearchLength;
+	size_t SearchLength;
 	SearchLength = SearchedString.size();
-	for(int i = 0; i < StringLength&&Success == false && i < SearchLength; i++)
+	for(size_t i = 0; i < StringLength&&Success == false && i < SearchLength; ++i)
 	{
 		LineChar = LineString.at(i);
 		if(StringBuffer == "")
@@ -436,13 +436,13 @@ bool MiscFunctions::FindWrappedText(std::string LineString, std::string Searched
 	bool Success = false;
 	string StringBuffer = "";
 	char LineChar;
-	int StringLength;
-	int TempInt = 0;
+	size_t StringLength;
+	size_t TempInt = 0;
 	StringLength = LineString.length();
 	//Double-checks to ensure Search does not exceed SearchedString.Size()---Although impossible to fail unless major glitch occurs
-	int SearchLength;
+	size_t SearchLength;
 	SearchLength = SearchedString.size();
-	for(int i = 0; i < StringLength&&Success == false && i < SearchLength; i++)
+	for(size_t i = 0; i < StringLength&&Success == false && i < SearchLength; ++i)
 	{
 		LineChar = LineString.at(i);
 		if(StringBuffer == "")
@@ -477,7 +477,7 @@ std::string MiscFunctions::ConvertFileToString(std::string FileName)
 {
 	string ConvertedString = "";
 	bool FileStreamOpen = false;
-	int FileStreamState = 0;
+	unsigned __int8 FileStreamState = 0;
 	string LineString = "";
 	string LineChar;
 	char NextChar = ' ';
@@ -558,7 +558,7 @@ std::string MiscFunctions::ConvertFileToString(std::string FileName)
 
 void MiscFunctions::ConvertStringToFile(std::string FileName, std::string TargetString)
 {
-	int StringSize;
+	size_t StringSize;
 	StringSize = TargetString.size();
 	std::fstream OutputStream;
 	OutputStream.open(FileName, std::ios::out | std::ios::trunc);
@@ -741,10 +741,10 @@ string MiscFunctions::ExtractFirstTagContents(std::string LineString)
 	string TagContents = "";
 	bool TagHeaderFound = false, TagFooterFound = false, ExtractingContents = false, InsideParenthesis = false, IsFooterTag = false;
 	string StringChar, StringBuffer = "";
-	int StringLength, TempInt;
+	size_t StringLength, TempInt;
 	StringLength = LineString.length();
 	TempInt = StringLength - 1;
-	for(int i = 0; i < StringLength&&TagFooterFound == false; i++)
+	for(size_t i = 0; i < StringLength&&TagFooterFound == false; ++i)
 	{
 		StringChar = LineString.at(i);
 		if(StringChar == "\"")
@@ -806,9 +806,9 @@ std::string MiscFunctions::RemoveExcessSpacing(std::string LineString)
 	string TempString = "";
 	bool SpacingUsed = false;
 	string StringChar, StringBuffer = "";
-	int StringLength;
+	size_t StringLength;
 	StringLength = LineString.length();
-	for(int i = 0; i < StringLength; i++)
+	for(size_t i = 0; i < StringLength; i++)
 	{
 		StringChar = LineString.at(i);
 		if(SpacingUsed)
@@ -867,7 +867,7 @@ std::string MiscFunctions::RetrieveTopLevelObjectFromString(std::string LineStri
 {
 	string TopLevelObject = "toplevelobject=";
 	string TopLevelObjectClassName = "";
-	int TempInt, TempInt02;
+	size_t TempInt, TempInt02;
 	bool TempBool, TempBool02, TempBool03;
 	TempBool = false; TempBool02 = false; TempBool03 = false;
 	string StringChar;
@@ -876,7 +876,7 @@ std::string MiscFunctions::RetrieveTopLevelObjectFromString(std::string LineStri
 	TempBool = false;
 	string TempString = "";
 	string TempString03 = "";
-	for(int i = 0; i < TempInt&&TempBool == false; i++)
+	for(size_t i = 0; i < TempInt&&TempBool == false; i++)
 	{
 		StringChar = LineString.at(i);
 		if(TempBool03)

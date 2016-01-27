@@ -14,11 +14,11 @@
 #include <io.h>
 
 template <typename VariableType>
-class VariableList : public vector < VariableType >
+class VariableList : public std::vector < VariableType >
 {
 private:
 	VariableType LineData;
-	int StreamLine = -1;
+	size_t StreamLine = -1;
 public:
 	//Returns the value at the specified index.
 	//************************************
@@ -29,7 +29,7 @@ public:
 	// Qualifier:
 	// Parameter: int index
 	//************************************
-	VariableType elementAt(int index)
+	VariableType elementAt(size_t index)
 	{
 		return at(index);
 	}
@@ -42,7 +42,7 @@ public:
 	// Qualifier:
 	// Parameter: int index
 	//************************************
-	VariableType ElementAt(int index)
+	VariableType ElementAt(size_t index)
 	{
 		return at(index);
 	}
@@ -218,10 +218,10 @@ public:
 	*/
 	bool ElementExists(VariableType ElementValue)
 	{
-		int ArraySize = Size();
+		size_t ArraySize = Size();
 		bool ElementFound = false;
 		VariableType ElementTemp;
-		for(int i = 0; i < ArraySize&&ElementFound == false; i++)
+		for(size_t i = 0; i < ArraySize&&ElementFound == false; ++i)
 		{
 			ElementTemp = ElementAt(i);
 			if(ElementTemp == ElementValue)
@@ -236,13 +236,13 @@ public:
 	* @param ElementValue
 	* @return
 	*/
-	int GetElementIndex(VariableType ElementValue)
+	size_t GetElementIndex(VariableType ElementValue)
 	{
-		int ElementIndex = -1;
-		int ArraySize = Size();
+		size_t ElementIndex = -1;
+		size_t ArraySize = Size();
 		bool ElementFound = false;
 		VariableType ElementTemp;
-		for(int i = 0; (i < ArraySize) || ElementFound; i++)
+		for(size_t i = 0; (i < ArraySize)&&!ElementFound; ++i)
 		{
 			ElementTemp = at(i);
 			if(ElementTemp == ElementValue)

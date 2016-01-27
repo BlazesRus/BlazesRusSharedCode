@@ -30,7 +30,7 @@ public:
 	void LoadIniData(std::string FileName);
 	bool CheckIfElementExists(std::string Value)
 	{
-		const unsigned int ListSize = Size();
+		const size_t ListSize = Size();
 		IniDataElement ElementData;
 		bool ElementExists = false;
 		for(size_t Index=0;Index<ListSize&&ElementExists==false;++Index)

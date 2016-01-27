@@ -22,9 +22,9 @@ public:
 		bool LineCommentType = false;
 		bool ScanningComments = false;
 		std::string CommentStringBuffer;
-		int TabLevel = 0;
-		int StringLength;
-		int TempInt;
+		size_t TabLevel = 0;
+		size_t StringLength;
+		size_t TempInt;
 		char StringChar;
 		bool DisplayCommentsToConsole = true;
 		bool SaveCommentData = true;

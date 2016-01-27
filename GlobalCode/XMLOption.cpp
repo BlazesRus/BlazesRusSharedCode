@@ -12,7 +12,7 @@ XMLOption::~XMLOption()
 bool XMLOptionList::HasOption(std::string OptionNameTemp)
 {
 	bool OptionFound = false;
-	int ListSize = Size();
+	size_t ListSize = Size();
 	XMLOption* OptionPointer;
 	for(size_t i = 0; i < ListSize&&OptionFound == false; ++i)
 	{

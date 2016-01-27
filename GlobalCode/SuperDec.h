@@ -41,7 +41,7 @@ public:
 			std::cout << "Only partial of value could convert to int(Int value stored exceeds 2,147,483,647).";
 			ValueAsInt = 2147483647;
 		}
-		if(IsNegative) { ValueAsInt*-1; }
+		if(IsNegative) { ValueAsInt*=-1; }
 		return ValueAsInt;
 	}
 	unsigned int AsUnsignedInt()

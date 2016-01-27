@@ -14,6 +14,15 @@ private:
 	//	bool FileStreamOpen = false;
 public:
 	//************************************
+	// Method:    CreateFileIfDoesntExist
+	// FullName:  StringVectorList::CreateFileIfDoesntExist
+	// Access:    public 
+	// Returns:   void
+	// Qualifier:
+	// Parameter: std::string FileName
+	//************************************
+	void CreateFileIfDoesntExist(std::string FileName);
+	//************************************
 	// Alternate Version of SaveDataToFileV2 that creates file if doesn't exist
 	// Method:    SaveDataToFileV3
 	// FullName:  StringVectorList::SaveDataToFileV3
@@ -22,7 +31,7 @@ public:
 	// Qualifier:
 	// Parameter: std::string FileName
 	//************************************
-	void SaveDataToFileV3(std::string FileName);
+	void SaveDataToFileV3(std::string FileName, bool Verbose=false);
 	//************************************
 	// Attempt to workaround the rare case of the Link2001 Error (essentially the same as SaveDataToFile but more directly coded)
 	// Method:    SaveDataToFileV2
@@ -58,7 +67,7 @@ public:
 	//************************************
 	void LoadFileDataV2(std::string FileName, unsigned short ConfigSetting=0, bool Verbose=false);
 	std::string ConvertToString();
-	int AddData();
+	size_t AddData();
 	//************************************
 	// Method:    ConvertStringToStringVectorList
 	// FullName:  StringVectorList::ConvertStringToStringVectorList

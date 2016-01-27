@@ -85,7 +85,7 @@ void QuadVector::ReadQuadVectorFromString(std::string LineString)
 
 QuadVector::QuadVector(std::string TempString)
 {
-	int StringLength;
+	size_t StringLength;
 	StringLength = TempString.length();
 	std::string ValueExtractionBuffer = "";
 	//Temporary Storage of converted double value
@@ -136,7 +136,6 @@ void QuadVectorList::ConvertStringToVectorList(std::string Content)
 		Reset();
 	}
 	const size_t StringSize = Content.length();
-	size_t ElementIndex;
 	char CurrentChar;
 	std::string CurrentElement = "";
 	QuadVector CurrentElementVector;

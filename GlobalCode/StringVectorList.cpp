@@ -6,13 +6,15 @@
 #include <iostream>
 #include <fstream>
 #include "StringFunctions.h"
+#include <iosfwd>
+#include <sys/stat.h>
 
 using std::cout;
 using std::string;
 
-int StringVectorList::AddData()
+size_t StringVectorList::AddData()
 {
-	int Index = Size();
+	size_t Index = Size();
 	string TempValue = "";
 	Add(TempValue);
 	return Index;
@@ -25,7 +27,6 @@ void StringVectorList::ConvertStringToStringVectorList(std::string Content)
 		Reset();
 	}
 	const size_t StringSize = Content.length();
-	size_t ElementIndex;
 	char CurrentChar;
 	string CurrentElement = "";
 	for(size_t Index=0; Index < StringSize; ++Index)
@@ -58,10 +59,10 @@ void StringVectorList::SaveDataToFileV2(std::string FileName)
 	std::string LineString;
 	std::fstream CraftedIniFile;
 	CraftedIniFile.open(FileName.c_str(), std::ios::out || std::ios::trunc);
-	int DataSize = Size();
+	size_t DataSize = Size();
 	if(CraftedIniFile.is_open())
 	{
-		for(size_t i = 0; i < DataSize; i++)
+		for(size_t i = 0; i < DataSize; ++i)
 		{
 			if(i != 0)
 			{//Carriage Return to next line
@@ -80,7 +81,7 @@ void StringVectorList::SaveDataToFileV2(std::string FileName)
 
 bool StringVectorList::ScanData(std::string LineString)
 {
-	int StringLength = LineString.length();
+	size_t StringLength = LineString.length();
 	char StringChar;
 	for(size_t i = 0; i < StringLength; ++i)
 	{
@@ -688,11 +689,37 @@ std::string StringVectorList::ConvertToString()
 	return ConvertedString;
 }
 
-void StringVectorList::SaveDataToFileV3(std::string FileName)
+void StringVectorList::CreateFileIfDoesntExist(std::string FileName)
+{
+	bool FileExists = false;
+	//Based on https://www.quora.com/What-is-the-best-way-to-check-whether-a-particular-file-exists-or-not-in-C++
+	struct stat buffer;
+	FileExists = (stat(FileName.c_str(), &buffer) == 0);
+	return;
+	//Based on http://stackoverflow.com/questions/17818099/how-to-check-if-a-file-exists-before-creating-a-new-file
+	//if(std::ifstream(FileName))
+	//{
+	//	std::cout << "File already exists" << std::endl;
+	//	return;
+	//}
+	if(!FileExists)
+	{
+		std::ofstream file(FileName);
+		if(!file)
+		{
+			std::cout << "File could not be created" << std::endl;
+			return;
+		}
+	}
+}
+
+void StringVectorList::SaveDataToFileV3(std::string FileName, bool Verbose/*=false*/)
 {
 	std::string LineString;
-	std::ofstream LoadedFileStream;
-	LoadedFileStream.open(FileName, std::ios::out || std::ios::trunc);
+	std::fstream LoadedFileStream;
+	//Fix for non-existing file
+	CreateFileIfDoesntExist(FileName);
+	LoadedFileStream.open(FileName, std::fstream::out || std::fstream::trunc);
 	size_t DataSize = Size();
 	if(LoadedFileStream.is_open())
 	{
@@ -705,7 +732,7 @@ void StringVectorList::SaveDataToFileV3(std::string FileName)
 					LoadedFileStream << "\n";
 				}
 				LineString = ElementAt(i);
-				//std::cout << LineString<<"\n";
+				if(Verbose) { std::cout << LineString << "\n"; }
 				LoadedFileStream << LineString;
 			}
 		}
@@ -720,7 +747,7 @@ void StringVectorList::SaveDataToFileV3(std::string FileName)
 	}
 	else
 	{
-		cout << "Failed to open" << FileName << "\n";
+		cout << "Failed to open " << FileName << ".\n";
 	}
 }
 
@@ -730,7 +757,7 @@ void StringVectorList::LoadFileDataV2(std::string FileName, unsigned short Confi
 	std::string LineString;
 	std::ofstream LoadedFileStream;
 	LoadedFileStream.open(FileName, std::ios::in);
-	unsigned int DataSize = Size();
+	size_t DataSize = Size();
 	//char NextChar;
 	char LineChar;
 	string CommentBuffer = "";
@@ -743,7 +770,7 @@ void StringVectorList::LoadFileDataV2(std::string FileName, unsigned short Confi
 	// true = LineComments; false = Multi-line comments
 	bool LineCommentType = false;
 	//-------------------------
-	int CommentIndex = 0;
+	size_t CommentIndex = 0;
 	if(LoadedFileStream.is_open())
 	{
 		if(LoadedFileStream.good())

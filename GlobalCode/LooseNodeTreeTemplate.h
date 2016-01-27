@@ -319,7 +319,7 @@ namespace LooseNodeTreeTemplate
 		// Qualifier:
 		// Parameter: string Name
 		//************************************
-		void SetCurrentNodeByName(string Name)
+		void SetCurrentNodeByName(std::string Name)
 		{
 			CurrentNode = GetNodePointerFromInternalName(Name);
 			if(CurrentNode == nullptr)
@@ -816,7 +816,7 @@ namespace LooseNodeTreeTemplate
 		// Qualifier:
 		// Parameter: string Filename
 		//************************************
-		void OutputInternalNamesTreeToFile(string Filename)
+		void OutputInternalNamesTreeToFile(std::string Filename)
 		{
 			StringVectorList OutputBuffer;
 			size_t OutputLvl=0;
