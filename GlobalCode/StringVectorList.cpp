@@ -695,7 +695,6 @@ void StringVectorList::CreateFileIfDoesntExist(std::string FileName)
 	//Based on https://www.quora.com/What-is-the-best-way-to-check-whether-a-particular-file-exists-or-not-in-C++
 	struct stat buffer;
 	FileExists = (stat(FileName.c_str(), &buffer) == 0);
-	return;
 	//Based on http://stackoverflow.com/questions/17818099/how-to-check-if-a-file-exists-before-creating-a-new-file
 	//if(std::ifstream(FileName))
 	//{
