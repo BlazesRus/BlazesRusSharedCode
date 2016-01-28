@@ -354,7 +354,7 @@ namespace LooseNodeTreeTemplate
 				for(size_t Index=0; Index < SizeTemp&&TargetNodePointer==nullptr; ++Index)
 				{
 					NodePointer = GetElementPointerV2(Index);
-					if(NodePointer->InternalName == InternalName)
+					if(NodePointer->InternalName == CurrentTagInternalName)
 					{
 						TargetNodePointer = NodePointer;
 						CurrentNodeIndex = Index;
@@ -399,11 +399,11 @@ namespace LooseNodeTreeTemplate
 		}
 		NodeType* FindFirstNodeWithMatchingNodeName(std::string TargetName)
 		{
-			const unsigned int SizeTemp = Size();
+			const size_t SizeTemp = Size();
 			NodeType* NodePointer = nullptr;
 			NodeType* TargetNodePointer = nullptr;
 			std::string CurrentInternalName;
-			for(unsigned int Index; Index < SizeTemp&&TargetNodePointer==nullptr; ++Index)
+			for(size_t Index=0; Index < SizeTemp&&TargetNodePointer==nullptr; ++Index)
 			{
 				NodePointer = this->GetElementPointerV2(Index);
 				if(NodePointer->NodeName==TargetName)
@@ -420,13 +420,13 @@ namespace LooseNodeTreeTemplate
 			CurrentNodeIndex = Size();
 			AddData();
 			FixCurrentNodeData();
-			NodeType* NextNode = this->GetElementPointerV2(Index);
+			NodeType* NextNode = GetElementPointerV2(CurrentNodeIndex);
 			TagPosition PositionTemp = CurrentNode->PositionInTree;
 			PositionTemp.IncreaseListPos();
 			NextNode->PositionInTree = PositionTemp;
 			if(ItemName != "")
 			{
-				NextNode->NodeName = NodeName;
+				NextNode->NodeName = ItemName;
 			}
 			if(InternalName != "")
 			{
@@ -442,7 +442,7 @@ namespace LooseNodeTreeTemplate
 			}
 			else
 			{
-				string NameTemp;
+				std::string NameTemp;
 				NameTemp = PositionTemp.PositionString();
 				//Check if InternalName used
 				if(CheckIfInternalNameUsed(NameTemp) == false)
@@ -454,7 +454,7 @@ namespace LooseNodeTreeTemplate
 					NextNode->InternalName = GenerateUnusedInternalName(NameTemp);
 				}
 			}
-			NextNode->ParentInternalName = NodeTargetString;
+			NextNode->ParentInternalName = TargetNode->InternalName;
 			TargetNode->ChildInternalNames.Add(NextNode->InternalName);
 		}
 		void AddLastItem(std::string SpecialModifier = "", std::string ItemName = "", std::string InternalName = "")
@@ -552,7 +552,7 @@ namespace LooseNodeTreeTemplate
 		//************************************
 		void AddMenuItemData(std::string TargetMenuMaster, std::string SpecialModifier = "", std::string ItemName = "", std::string InternalName = "")
 		{
-			unsigned int SizeTemp = Size();
+			size_t SizeTemp = Size();
 			FixCurrentNodeData();
 			CurrentNodeIndexUsed = false;
 			//For this version directly fix pointers as needed
