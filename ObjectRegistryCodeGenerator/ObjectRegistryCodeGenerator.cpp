@@ -21,6 +21,10 @@ int main(int ConsoleParamNumber, char *CommandArgs [])
 	StringVectorList CraftedFile01;
 	//File Created for ObjectRegistry
 	StringVectorList CraftedFile02;
+	//File Created for Create Node lines data
+	StringVectorList CraftedFile03;
+	//File Created for Destroying Actual NodeData
+	StringVectorList CraftedFile04;
 	std::string LineString;
 	std::string TempString;
 	const size_t FileSize = LoadedFile.Size();
@@ -31,7 +35,7 @@ int main(int ConsoleParamNumber, char *CommandArgs [])
 		TempString = "class ";
 		TempString += LineString;
 		TempString += " : public ";
-		TempString += "NifNode,Niflib::";
+		TempString += "NifNode, public Niflib::";
 		TempString += LineString;
 		TempString += "{};";
 		CraftedFile01.Add(TempString);
@@ -47,8 +51,35 @@ int main(int ConsoleParamNumber, char *CommandArgs [])
 		TempString += LineString;
 		TempString += "_Registry;";
 		CraftedFile02.Add(TempString);
+		TempString = "if(TargetNodeType == ";
+		TempString += "\"";
+		TempString += LineString;
+		TempString += "\")";
+		CraftedFile03.Add(TempString);
+		CraftedFile03.Add("{");
+		TempString = "\tIndex = TargetObjectRegistry.";
+		TempString += LineString;
+		TempString += "_Registry.AddData();";
+		CraftedFile03.Add(TempString);
+		TempString = "TargetObjectRegistry.";
+		TempString += LineString;
+		TempString += "_Registry.GetElementPointerV2(Index)->InternalName = InternalName;";
+		CraftedFile03.Add("}");
+		TempString = "if(NodeType == ";
+		TempString += "\"";
+		TempString += LineString;
+		TempString += "\")";
+		CraftedFile04.Add(TempString);
+		CraftedFile04.Add("{");
+		TempString = "\tTargetObjectRegistry->";
+		TempString += LineString;
+		TempString += "_Registry.Remove(IndexInRegistry);";
+		CraftedFile04.Add(TempString);
+		CraftedFile04.Add("}");
 	}
 	CraftedFile01.SaveDataToFileV3("ObjectRegistryClasses.txt");
 	CraftedFile02.SaveDataToFileV3("ObjectRegistry.txt");
+	CraftedFile03.SaveDataToFileV3("GenerateNodeLines.txt");
+	CraftedFile04.SaveDataToFileV3("DestroyActualNodeLines.txt");
 	system("pause");
 }

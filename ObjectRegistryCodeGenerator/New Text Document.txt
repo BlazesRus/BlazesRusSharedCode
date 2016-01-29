@@ -1,3 +1,4 @@
+NiObject
 Ni3dsAlphaAnimator
 Ni3dsAnimationNode
 Ni3dsColorAnimator

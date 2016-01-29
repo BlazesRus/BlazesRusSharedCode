@@ -47,7 +47,7 @@ namespace LooseNodeTreeTemplate
 		// Parameter: StringVectorList & ListOfNodes
 		//************************************
 		template <typename NodeTreeType>
-		void ObtainAllChildNodeNames(NodeTreeType& NodeTreeTarget, StringVectorList& ListOfNodes)
+		void ObtainAllChildNodeNames(NodeTreeType* NodeTreeTarget, StringVectorList& ListOfNodes)
 		{
 			const size_t ChildListSize = ChildInternalNames.Size();
 			Node* TargetNode;
@@ -671,6 +671,7 @@ namespace LooseNodeTreeTemplate
 		//************************************
 		void DestroyTargetNodeAndAllItsChildren(NodeType* TargetNode)
 		{
+			std::string const TargetNodeInternalName = TargetNode->InternalName;
 			StringVectorList InternalNamesOfNodesToDestroy;
 			InternalNamesOfNodesToDestroy.Add(TargetNodeInternalName);
 			//Remove node from child list of parent
@@ -688,7 +689,7 @@ namespace LooseNodeTreeTemplate
 				NodeType* ParentNode = GetNodePointerFromInternalName(ParentNodeName);
 				if(ParentNode != nullptr)
 				{
-					ParentNode->ChildInternalNames.RemoveElementWithMatchingValue(TargetNodeInternalName)
+					ParentNode->ChildInternalNames.RemoveElementWithMatchingValue(TargetNodeInternalName);
 				}
 			}
 			size_t SizeTemp;
@@ -705,7 +706,7 @@ namespace LooseNodeTreeTemplate
 				//Now search childrens...children etc
 				TargetNode = GetNodePointerFromInternalName(TargetNameTemp);
 				//Need to auto-update reference of NodeTree class type in just to ensure it updates the NodeTree reference when derived (I'll try to see if auto-updates derived class type first)
-				TargetNode.ObtainAllChildNodeNames(&this, &InternalNamesOfNodesToDestroy) < NodeTree > ;//<std::typeid(NodeTree)>
+				TargetNode.ObtainAllChildNodeNames(this, &InternalNamesOfNodesToDestroy);//<std::typeid(NodeTree)>
 			}
 			//Now destroy all nodes in list set to destroy
 			SizeTemp = InternalNamesOfNodesToDestroy.Size();
