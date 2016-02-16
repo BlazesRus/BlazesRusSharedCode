@@ -1,0 +1,1820 @@
+if(TargetNodeType == "NiObject")
+{
+	Index = TargetObjectRegistry.NiObject_Registry.AddData();
+}
+if(TargetNodeType == "Ni3dsAlphaAnimator")
+{
+	Index = TargetObjectRegistry.Ni3dsAlphaAnimator_Registry.AddData();
+}
+if(TargetNodeType == "Ni3dsAnimationNode")
+{
+	Index = TargetObjectRegistry.Ni3dsAnimationNode_Registry.AddData();
+}
+if(TargetNodeType == "Ni3dsColorAnimator")
+{
+	Index = TargetObjectRegistry.Ni3dsColorAnimator_Registry.AddData();
+}
+if(TargetNodeType == "Ni3dsMorphShape")
+{
+	Index = TargetObjectRegistry.Ni3dsMorphShape_Registry.AddData();
+}
+if(TargetNodeType == "Ni3dsParticleSystem")
+{
+	Index = TargetObjectRegistry.Ni3dsParticleSystem_Registry.AddData();
+}
+if(TargetNodeType == "Ni3dsPathController")
+{
+	Index = TargetObjectRegistry.Ni3dsPathController_Registry.AddData();
+}
+if(TargetNodeType == "NiParticleModifier")
+{
+	Index = TargetObjectRegistry.NiParticleModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysCollider")
+{
+	Index = TargetObjectRegistry.NiPSysCollider_Registry.AddData();
+}
+if(TargetNodeType == "bhkRefObject")
+{
+	Index = TargetObjectRegistry.bhkRefObject_Registry.AddData();
+}
+if(TargetNodeType == "bhkSerializable")
+{
+	Index = TargetObjectRegistry.bhkSerializable_Registry.AddData();
+}
+if(TargetNodeType == "bhkWorldObject")
+{
+	Index = TargetObjectRegistry.bhkWorldObject_Registry.AddData();
+}
+if(TargetNodeType == "bhkPhantom")
+{
+	Index = TargetObjectRegistry.bhkPhantom_Registry.AddData();
+}
+if(TargetNodeType == "bhkShapePhantom")
+{
+	Index = TargetObjectRegistry.bhkShapePhantom_Registry.AddData();
+}
+if(TargetNodeType == "bhkSimpleShapePhantom")
+{
+	Index = TargetObjectRegistry.bhkSimpleShapePhantom_Registry.AddData();
+}
+if(TargetNodeType == "bhkEntity")
+{
+	Index = TargetObjectRegistry.bhkEntity_Registry.AddData();
+}
+if(TargetNodeType == "bhkRigidBody")
+{
+	Index = TargetObjectRegistry.bhkRigidBody_Registry.AddData();
+}
+if(TargetNodeType == "bhkRigidBodyT")
+{
+	Index = TargetObjectRegistry.bhkRigidBodyT_Registry.AddData();
+}
+if(TargetNodeType == "bhkConstraint")
+{
+	Index = TargetObjectRegistry.bhkConstraint_Registry.AddData();
+}
+if(TargetNodeType == "bhkLimitedHingeConstraint")
+{
+	Index = TargetObjectRegistry.bhkLimitedHingeConstraint_Registry.AddData();
+}
+if(TargetNodeType == "bhkMalleableConstraint")
+{
+	Index = TargetObjectRegistry.bhkMalleableConstraint_Registry.AddData();
+}
+if(TargetNodeType == "bhkStiffSpringConstraint")
+{
+	Index = TargetObjectRegistry.bhkStiffSpringConstraint_Registry.AddData();
+}
+if(TargetNodeType == "bhkRagdollConstraint")
+{
+	Index = TargetObjectRegistry.bhkRagdollConstraint_Registry.AddData();
+}
+if(TargetNodeType == "bhkPrismaticConstraint")
+{
+	Index = TargetObjectRegistry.bhkPrismaticConstraint_Registry.AddData();
+}
+if(TargetNodeType == "bhkHingeConstraint")
+{
+	Index = TargetObjectRegistry.bhkHingeConstraint_Registry.AddData();
+}
+if(TargetNodeType == "bhkBallAndSocketConstraint")
+{
+	Index = TargetObjectRegistry.bhkBallAndSocketConstraint_Registry.AddData();
+}
+if(TargetNodeType == "bhkBallSocketConstraintChain")
+{
+	Index = TargetObjectRegistry.bhkBallSocketConstraintChain_Registry.AddData();
+}
+if(TargetNodeType == "bhkShape")
+{
+	Index = TargetObjectRegistry.bhkShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkTransformShape")
+{
+	Index = TargetObjectRegistry.bhkTransformShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkSphereRepShape")
+{
+	Index = TargetObjectRegistry.bhkSphereRepShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkConvexShape")
+{
+	Index = TargetObjectRegistry.bhkConvexShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkSphereShape")
+{
+	Index = TargetObjectRegistry.bhkSphereShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkCapsuleShape")
+{
+	Index = TargetObjectRegistry.bhkCapsuleShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkBoxShape")
+{
+	Index = TargetObjectRegistry.bhkBoxShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkConvexVerticesShape")
+{
+	Index = TargetObjectRegistry.bhkConvexVerticesShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkConvexTransformShape")
+{
+	Index = TargetObjectRegistry.bhkConvexTransformShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkMultiSphereShape")
+{
+	Index = TargetObjectRegistry.bhkMultiSphereShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkBvTreeShape")
+{
+	Index = TargetObjectRegistry.bhkBvTreeShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkMoppBvTreeShape")
+{
+	Index = TargetObjectRegistry.bhkMoppBvTreeShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkShapeCollection")
+{
+	Index = TargetObjectRegistry.bhkShapeCollection_Registry.AddData();
+}
+if(TargetNodeType == "bhkListShape")
+{
+	Index = TargetObjectRegistry.bhkListShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkMeshShape")
+{
+	Index = TargetObjectRegistry.bhkMeshShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkPackedNiTriStripsShape")
+{
+	Index = TargetObjectRegistry.bhkPackedNiTriStripsShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkNiTriStripsShape")
+{
+	Index = TargetObjectRegistry.bhkNiTriStripsShape_Registry.AddData();
+}
+if(TargetNodeType == "NiExtraData")
+{
+	Index = TargetObjectRegistry.NiExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiInterpolator")
+{
+	Index = TargetObjectRegistry.NiInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiKeyBasedInterpolator")
+{
+	Index = TargetObjectRegistry.NiKeyBasedInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiFloatInterpolator")
+{
+	Index = TargetObjectRegistry.NiFloatInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiTransformInterpolator")
+{
+	Index = TargetObjectRegistry.NiTransformInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiPoint3Interpolator")
+{
+	Index = TargetObjectRegistry.NiPoint3Interpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiPathInterpolator")
+{
+	Index = TargetObjectRegistry.NiPathInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiBoolInterpolator")
+{
+	Index = TargetObjectRegistry.NiBoolInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiBoolTimelineInterpolator")
+{
+	Index = TargetObjectRegistry.NiBoolTimelineInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiBlendInterpolator")
+{
+	Index = TargetObjectRegistry.NiBlendInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiBSplineInterpolator")
+{
+	Index = TargetObjectRegistry.NiBSplineInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiObjectNET")
+{
+	Index = TargetObjectRegistry.NiObjectNET_Registry.AddData();
+}
+if(TargetNodeType == "NiCollisionObject")
+{
+	Index = TargetObjectRegistry.NiCollisionObject_Registry.AddData();
+}
+if(TargetNodeType == "NiCollisionData")
+{
+	Index = TargetObjectRegistry.NiCollisionData_Registry.AddData();
+}
+if(TargetNodeType == "bhkNiCollisionObject")
+{
+	Index = TargetObjectRegistry.bhkNiCollisionObject_Registry.AddData();
+}
+if(TargetNodeType == "bhkCollisionObject")
+{
+	Index = TargetObjectRegistry.bhkCollisionObject_Registry.AddData();
+}
+if(TargetNodeType == "bhkBlendCollisionObject")
+{
+	Index = TargetObjectRegistry.bhkBlendCollisionObject_Registry.AddData();
+}
+if(TargetNodeType == "bhkPCollisionObject")
+{
+	Index = TargetObjectRegistry.bhkPCollisionObject_Registry.AddData();
+}
+if(TargetNodeType == "bhkSPCollisionObject")
+{
+	Index = TargetObjectRegistry.bhkSPCollisionObject_Registry.AddData();
+}
+if(TargetNodeType == "NiAVObject")
+{
+	Index = TargetObjectRegistry.NiAVObject_Registry.AddData();
+}
+if(TargetNodeType == "NiDynamicEffect")
+{
+	Index = TargetObjectRegistry.NiDynamicEffect_Registry.AddData();
+}
+if(TargetNodeType == "NiLight")
+{
+	Index = TargetObjectRegistry.NiLight_Registry.AddData();
+}
+if(TargetNodeType == "NiProperty")
+{
+	Index = TargetObjectRegistry.NiProperty_Registry.AddData();
+}
+if(TargetNodeType == "NiTransparentProperty")
+{
+	Index = TargetObjectRegistry.NiTransparentProperty_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysModifier")
+{
+	Index = TargetObjectRegistry.NiPSysModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysEmitter")
+{
+	Index = TargetObjectRegistry.NiPSysEmitter_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysVolumeEmitter")
+{
+	Index = TargetObjectRegistry.NiPSysVolumeEmitter_Registry.AddData();
+}
+if(TargetNodeType == "NiTimeController")
+{
+	Index = TargetObjectRegistry.NiTimeController_Registry.AddData();
+}
+if(TargetNodeType == "NiInterpController")
+{
+	Index = TargetObjectRegistry.NiInterpController_Registry.AddData();
+}
+if(TargetNodeType == "NiMultiTargetTransformController")
+{
+	Index = TargetObjectRegistry.NiMultiTargetTransformController_Registry.AddData();
+}
+if(TargetNodeType == "NiGeomMorpherController")
+{
+	Index = TargetObjectRegistry.NiGeomMorpherController_Registry.AddData();
+}
+if(TargetNodeType == "NiMorphController")
+{
+	Index = TargetObjectRegistry.NiMorphController_Registry.AddData();
+}
+if(TargetNodeType == "NiMorpherController")
+{
+	Index = TargetObjectRegistry.NiMorpherController_Registry.AddData();
+}
+if(TargetNodeType == "NiSingleInterpController")
+{
+	Index = TargetObjectRegistry.NiSingleInterpController_Registry.AddData();
+}
+if(TargetNodeType == "NiKeyframeController")
+{
+	Index = TargetObjectRegistry.NiKeyframeController_Registry.AddData();
+}
+if(TargetNodeType == "NiTransformController")
+{
+	Index = TargetObjectRegistry.NiTransformController_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysModifierCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysModifierCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysEmitterCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysEmitterCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysModifierBoolCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysModifierBoolCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysModifierActiveCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysModifierActiveCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysModifierFloatCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysModifierFloatCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysEmitterDeclinationCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysEmitterDeclinationCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysEmitterDeclinationVarCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysEmitterDeclinationVarCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysEmitterInitialRadiusCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysEmitterInitialRadiusCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysEmitterLifeSpanCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysEmitterLifeSpanCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysEmitterSpeedCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysEmitterSpeedCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysGravityStrengthCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysGravityStrengthCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiFloatInterpController")
+{
+	Index = TargetObjectRegistry.NiFloatInterpController_Registry.AddData();
+}
+if(TargetNodeType == "NiFlipController")
+{
+	Index = TargetObjectRegistry.NiFlipController_Registry.AddData();
+}
+if(TargetNodeType == "NiAlphaController")
+{
+	Index = TargetObjectRegistry.NiAlphaController_Registry.AddData();
+}
+if(TargetNodeType == "NiTextureTransformController")
+{
+	Index = TargetObjectRegistry.NiTextureTransformController_Registry.AddData();
+}
+if(TargetNodeType == "NiLightDimmerController")
+{
+	Index = TargetObjectRegistry.NiLightDimmerController_Registry.AddData();
+}
+if(TargetNodeType == "NiBoolInterpController")
+{
+	Index = TargetObjectRegistry.NiBoolInterpController_Registry.AddData();
+}
+if(TargetNodeType == "NiVisController")
+{
+	Index = TargetObjectRegistry.NiVisController_Registry.AddData();
+}
+if(TargetNodeType == "NiPoint3InterpController")
+{
+	Index = TargetObjectRegistry.NiPoint3InterpController_Registry.AddData();
+}
+if(TargetNodeType == "NiMaterialColorController")
+{
+	Index = TargetObjectRegistry.NiMaterialColorController_Registry.AddData();
+}
+if(TargetNodeType == "NiLightColorController")
+{
+	Index = TargetObjectRegistry.NiLightColorController_Registry.AddData();
+}
+if(TargetNodeType == "NiExtraDataController")
+{
+	Index = TargetObjectRegistry.NiExtraDataController_Registry.AddData();
+}
+if(TargetNodeType == "NiFloatExtraDataController")
+{
+	Index = TargetObjectRegistry.NiFloatExtraDataController_Registry.AddData();
+}
+if(TargetNodeType == "NiBoneLODController")
+{
+	Index = TargetObjectRegistry.NiBoneLODController_Registry.AddData();
+}
+if(TargetNodeType == "NiBSBoneLODController")
+{
+	Index = TargetObjectRegistry.NiBSBoneLODController_Registry.AddData();
+}
+if(TargetNodeType == "NiGeometry")
+{
+	Index = TargetObjectRegistry.NiGeometry_Registry.AddData();
+}
+if(TargetNodeType == "NiTriBasedGeom")
+{
+	Index = TargetObjectRegistry.NiTriBasedGeom_Registry.AddData();
+}
+if(TargetNodeType == "NiGeometryData")
+{
+	Index = TargetObjectRegistry.NiGeometryData_Registry.AddData();
+}
+if(TargetNodeType == "AbstractAdditionalGeometryData")
+{
+	Index = TargetObjectRegistry.AbstractAdditionalGeometryData_Registry.AddData();
+}
+if(TargetNodeType == "NiTriBasedGeomData")
+{
+	Index = TargetObjectRegistry.NiTriBasedGeomData_Registry.AddData();
+}
+if(TargetNodeType == "bhkBlendController")
+{
+	Index = TargetObjectRegistry.bhkBlendController_Registry.AddData();
+}
+if(TargetNodeType == "BSBound")
+{
+	Index = TargetObjectRegistry.BSBound_Registry.AddData();
+}
+if(TargetNodeType == "BSFurnitureMarker")
+{
+	Index = TargetObjectRegistry.BSFurnitureMarker_Registry.AddData();
+}
+if(TargetNodeType == "BSParentVelocityModifier")
+{
+	Index = TargetObjectRegistry.BSParentVelocityModifier_Registry.AddData();
+}
+if(TargetNodeType == "BSPSysArrayEmitter")
+{
+	Index = TargetObjectRegistry.BSPSysArrayEmitter_Registry.AddData();
+}
+if(TargetNodeType == "BSWindModifier")
+{
+	Index = TargetObjectRegistry.BSWindModifier_Registry.AddData();
+}
+if(TargetNodeType == "hkPackedNiTriStripsData")
+{
+	Index = TargetObjectRegistry.hkPackedNiTriStripsData_Registry.AddData();
+}
+if(TargetNodeType == "NiAlphaProperty")
+{
+	Index = TargetObjectRegistry.NiAlphaProperty_Registry.AddData();
+}
+if(TargetNodeType == "NiAmbientLight")
+{
+	Index = TargetObjectRegistry.NiAmbientLight_Registry.AddData();
+}
+if(TargetNodeType == "NiParticlesData")
+{
+	Index = TargetObjectRegistry.NiParticlesData_Registry.AddData();
+}
+if(TargetNodeType == "NiRotatingParticlesData")
+{
+	Index = TargetObjectRegistry.NiRotatingParticlesData_Registry.AddData();
+}
+if(TargetNodeType == "NiAutoNormalParticlesData")
+{
+	Index = TargetObjectRegistry.NiAutoNormalParticlesData_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysData")
+{
+	Index = TargetObjectRegistry.NiPSysData_Registry.AddData();
+}
+if(TargetNodeType == "NiMeshPSysData")
+{
+	Index = TargetObjectRegistry.NiMeshPSysData_Registry.AddData();
+}
+if(TargetNodeType == "NiBinaryExtraData")
+{
+	Index = TargetObjectRegistry.NiBinaryExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiBinaryVoxelExtraData")
+{
+	Index = TargetObjectRegistry.NiBinaryVoxelExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiBinaryVoxelData")
+{
+	Index = TargetObjectRegistry.NiBinaryVoxelData_Registry.AddData();
+}
+if(TargetNodeType == "NiBlendBoolInterpolator")
+{
+	Index = TargetObjectRegistry.NiBlendBoolInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiBlendFloatInterpolator")
+{
+	Index = TargetObjectRegistry.NiBlendFloatInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiBlendPoint3Interpolator")
+{
+	Index = TargetObjectRegistry.NiBlendPoint3Interpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiBlendTransformInterpolator")
+{
+	Index = TargetObjectRegistry.NiBlendTransformInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiBoolData")
+{
+	Index = TargetObjectRegistry.NiBoolData_Registry.AddData();
+}
+if(TargetNodeType == "NiBooleanExtraData")
+{
+	Index = TargetObjectRegistry.NiBooleanExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiBSplineBasisData")
+{
+	Index = TargetObjectRegistry.NiBSplineBasisData_Registry.AddData();
+}
+if(TargetNodeType == "NiBSplineFloatInterpolator")
+{
+	Index = TargetObjectRegistry.NiBSplineFloatInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiBSplineCompFloatInterpolator")
+{
+	Index = TargetObjectRegistry.NiBSplineCompFloatInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiBSplinePoint3Interpolator")
+{
+	Index = TargetObjectRegistry.NiBSplinePoint3Interpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiBSplineCompPoint3Interpolator")
+{
+	Index = TargetObjectRegistry.NiBSplineCompPoint3Interpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiBSplineTransformInterpolator")
+{
+	Index = TargetObjectRegistry.NiBSplineTransformInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiBSplineCompTransformInterpolator")
+{
+	Index = TargetObjectRegistry.NiBSplineCompTransformInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "BSRotAccumTransfInterpolator")
+{
+	Index = TargetObjectRegistry.BSRotAccumTransfInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiBSplineData")
+{
+	Index = TargetObjectRegistry.NiBSplineData_Registry.AddData();
+}
+if(TargetNodeType == "NiCamera")
+{
+	Index = TargetObjectRegistry.NiCamera_Registry.AddData();
+}
+if(TargetNodeType == "NiColorData")
+{
+	Index = TargetObjectRegistry.NiColorData_Registry.AddData();
+}
+if(TargetNodeType == "NiColorExtraData")
+{
+	Index = TargetObjectRegistry.NiColorExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiControllerManager")
+{
+	Index = TargetObjectRegistry.NiControllerManager_Registry.AddData();
+}
+if(TargetNodeType == "NiSequence")
+{
+	Index = TargetObjectRegistry.NiSequence_Registry.AddData();
+}
+if(TargetNodeType == "NiControllerSequence")
+{
+	Index = TargetObjectRegistry.NiControllerSequence_Registry.AddData();
+}
+if(TargetNodeType == "NiAVObjectPalette")
+{
+	Index = TargetObjectRegistry.NiAVObjectPalette_Registry.AddData();
+}
+if(TargetNodeType == "NiDefaultAVObjectPalette")
+{
+	Index = TargetObjectRegistry.NiDefaultAVObjectPalette_Registry.AddData();
+}
+if(TargetNodeType == "NiDirectionalLight")
+{
+	Index = TargetObjectRegistry.NiDirectionalLight_Registry.AddData();
+}
+if(TargetNodeType == "NiDitherProperty")
+{
+	Index = TargetObjectRegistry.NiDitherProperty_Registry.AddData();
+}
+if(TargetNodeType == "NiRollController")
+{
+	Index = TargetObjectRegistry.NiRollController_Registry.AddData();
+}
+if(TargetNodeType == "NiFloatData")
+{
+	Index = TargetObjectRegistry.NiFloatData_Registry.AddData();
+}
+if(TargetNodeType == "NiFloatExtraData")
+{
+	Index = TargetObjectRegistry.NiFloatExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiFloatsExtraData")
+{
+	Index = TargetObjectRegistry.NiFloatsExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiFogProperty")
+{
+	Index = TargetObjectRegistry.NiFogProperty_Registry.AddData();
+}
+if(TargetNodeType == "NiGravity")
+{
+	Index = TargetObjectRegistry.NiGravity_Registry.AddData();
+}
+if(TargetNodeType == "NiIntegerExtraData")
+{
+	Index = TargetObjectRegistry.NiIntegerExtraData_Registry.AddData();
+}
+if(TargetNodeType == "BSXFlags")
+{
+	Index = TargetObjectRegistry.BSXFlags_Registry.AddData();
+}
+if(TargetNodeType == "NiIntegersExtraData")
+{
+	Index = TargetObjectRegistry.NiIntegersExtraData_Registry.AddData();
+}
+if(TargetNodeType == "BSKeyframeController")
+{
+	Index = TargetObjectRegistry.BSKeyframeController_Registry.AddData();
+}
+if(TargetNodeType == "NiKeyframeData")
+{
+	Index = TargetObjectRegistry.NiKeyframeData_Registry.AddData();
+}
+if(TargetNodeType == "NiLookAtController")
+{
+	Index = TargetObjectRegistry.NiLookAtController_Registry.AddData();
+}
+if(TargetNodeType == "NiLookAtInterpolator")
+{
+	Index = TargetObjectRegistry.NiLookAtInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "NiMaterialProperty")
+{
+	Index = TargetObjectRegistry.NiMaterialProperty_Registry.AddData();
+}
+if(TargetNodeType == "NiMorphData")
+{
+	Index = TargetObjectRegistry.NiMorphData_Registry.AddData();
+}
+if(TargetNodeType == "NiNode")
+{
+	Index = TargetObjectRegistry.NiNode_Registry.AddData();
+}
+if(TargetNodeType == "NiBone")
+{
+	Index = TargetObjectRegistry.NiBone_Registry.AddData();
+}
+if(TargetNodeType == "AvoidNode")
+{
+	Index = TargetObjectRegistry.AvoidNode_Registry.AddData();
+}
+if(TargetNodeType == "FxWidget")
+{
+	Index = TargetObjectRegistry.FxWidget_Registry.AddData();
+}
+if(TargetNodeType == "FxButton")
+{
+	Index = TargetObjectRegistry.FxButton_Registry.AddData();
+}
+if(TargetNodeType == "FxRadioButton")
+{
+	Index = TargetObjectRegistry.FxRadioButton_Registry.AddData();
+}
+if(TargetNodeType == "NiBillboardNode")
+{
+	Index = TargetObjectRegistry.NiBillboardNode_Registry.AddData();
+}
+if(TargetNodeType == "NiBSAnimationNode")
+{
+	Index = TargetObjectRegistry.NiBSAnimationNode_Registry.AddData();
+}
+if(TargetNodeType == "NiBSParticleNode")
+{
+	Index = TargetObjectRegistry.NiBSParticleNode_Registry.AddData();
+}
+if(TargetNodeType == "NiSwitchNode")
+{
+	Index = TargetObjectRegistry.NiSwitchNode_Registry.AddData();
+}
+if(TargetNodeType == "NiLODNode")
+{
+	Index = TargetObjectRegistry.NiLODNode_Registry.AddData();
+}
+if(TargetNodeType == "NiPalette")
+{
+	Index = TargetObjectRegistry.NiPalette_Registry.AddData();
+}
+if(TargetNodeType == "NiParticleBomb")
+{
+	Index = TargetObjectRegistry.NiParticleBomb_Registry.AddData();
+}
+if(TargetNodeType == "NiParticleColorModifier")
+{
+	Index = TargetObjectRegistry.NiParticleColorModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiParticleGrowFade")
+{
+	Index = TargetObjectRegistry.NiParticleGrowFade_Registry.AddData();
+}
+if(TargetNodeType == "NiParticleMeshModifier")
+{
+	Index = TargetObjectRegistry.NiParticleMeshModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiParticleRotation")
+{
+	Index = TargetObjectRegistry.NiParticleRotation_Registry.AddData();
+}
+if(TargetNodeType == "NiParticles")
+{
+	Index = TargetObjectRegistry.NiParticles_Registry.AddData();
+}
+if(TargetNodeType == "NiAutoNormalParticles")
+{
+	Index = TargetObjectRegistry.NiAutoNormalParticles_Registry.AddData();
+}
+if(TargetNodeType == "NiParticleMeshes")
+{
+	Index = TargetObjectRegistry.NiParticleMeshes_Registry.AddData();
+}
+if(TargetNodeType == "NiParticleMeshesData")
+{
+	Index = TargetObjectRegistry.NiParticleMeshesData_Registry.AddData();
+}
+if(TargetNodeType == "NiParticleSystem")
+{
+	Index = TargetObjectRegistry.NiParticleSystem_Registry.AddData();
+}
+if(TargetNodeType == "NiMeshParticleSystem")
+{
+	Index = TargetObjectRegistry.NiMeshParticleSystem_Registry.AddData();
+}
+if(TargetNodeType == "NiParticleSystemController")
+{
+	Index = TargetObjectRegistry.NiParticleSystemController_Registry.AddData();
+}
+if(TargetNodeType == "NiBSPArrayController")
+{
+	Index = TargetObjectRegistry.NiBSPArrayController_Registry.AddData();
+}
+if(TargetNodeType == "NiPathController")
+{
+	Index = TargetObjectRegistry.NiPathController_Registry.AddData();
+}
+if(TargetNodeType == "ATextureRenderData")
+{
+	Index = TargetObjectRegistry.ATextureRenderData_Registry.AddData();
+}
+if(TargetNodeType == "NiPersistentSrcTextureRendererData")
+{
+	Index = TargetObjectRegistry.NiPersistentSrcTextureRendererData_Registry.AddData();
+}
+if(TargetNodeType == "NiPixelData")
+{
+	Index = TargetObjectRegistry.NiPixelData_Registry.AddData();
+}
+if(TargetNodeType == "NiPlanarCollider")
+{
+	Index = TargetObjectRegistry.NiPlanarCollider_Registry.AddData();
+}
+if(TargetNodeType == "NiPointLight")
+{
+	Index = TargetObjectRegistry.NiPointLight_Registry.AddData();
+}
+if(TargetNodeType == "NiPosData")
+{
+	Index = TargetObjectRegistry.NiPosData_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysAgeDeathModifier")
+{
+	Index = TargetObjectRegistry.NiPSysAgeDeathModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysBombModifier")
+{
+	Index = TargetObjectRegistry.NiPSysBombModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysBoundUpdateModifier")
+{
+	Index = TargetObjectRegistry.NiPSysBoundUpdateModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysBoxEmitter")
+{
+	Index = TargetObjectRegistry.NiPSysBoxEmitter_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysColliderManager")
+{
+	Index = TargetObjectRegistry.NiPSysColliderManager_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysColorModifier")
+{
+	Index = TargetObjectRegistry.NiPSysColorModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysCylinderEmitter")
+{
+	Index = TargetObjectRegistry.NiPSysCylinderEmitter_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysDragModifier")
+{
+	Index = TargetObjectRegistry.NiPSysDragModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysEmitterCtlrData")
+{
+	Index = TargetObjectRegistry.NiPSysEmitterCtlrData_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysGravityModifier")
+{
+	Index = TargetObjectRegistry.NiPSysGravityModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysGrowFadeModifier")
+{
+	Index = TargetObjectRegistry.NiPSysGrowFadeModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysMeshEmitter")
+{
+	Index = TargetObjectRegistry.NiPSysMeshEmitter_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysMeshUpdateModifier")
+{
+	Index = TargetObjectRegistry.NiPSysMeshUpdateModifier_Registry.AddData();
+}
+if(TargetNodeType == "BSPSysInheritVelocityModifier")
+{
+	Index = TargetObjectRegistry.BSPSysInheritVelocityModifier_Registry.AddData();
+}
+if(TargetNodeType == "BSPSysHavokUpdateModifier")
+{
+	Index = TargetObjectRegistry.BSPSysHavokUpdateModifier_Registry.AddData();
+}
+if(TargetNodeType == "BSPSysRecycleBoundModifier")
+{
+	Index = TargetObjectRegistry.BSPSysRecycleBoundModifier_Registry.AddData();
+}
+if(TargetNodeType == "BSPSysSubTexModifier")
+{
+	Index = TargetObjectRegistry.BSPSysSubTexModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysPlanarCollider")
+{
+	Index = TargetObjectRegistry.NiPSysPlanarCollider_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysSphericalCollider")
+{
+	Index = TargetObjectRegistry.NiPSysSphericalCollider_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysPositionModifier")
+{
+	Index = TargetObjectRegistry.NiPSysPositionModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysResetOnLoopCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysResetOnLoopCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysRotationModifier")
+{
+	Index = TargetObjectRegistry.NiPSysRotationModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysSpawnModifier")
+{
+	Index = TargetObjectRegistry.NiPSysSpawnModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysSphereEmitter")
+{
+	Index = TargetObjectRegistry.NiPSysSphereEmitter_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysUpdateCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysUpdateCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysFieldModifier")
+{
+	Index = TargetObjectRegistry.NiPSysFieldModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysVortexFieldModifier")
+{
+	Index = TargetObjectRegistry.NiPSysVortexFieldModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysGravityFieldModifier")
+{
+	Index = TargetObjectRegistry.NiPSysGravityFieldModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysDragFieldModifier")
+{
+	Index = TargetObjectRegistry.NiPSysDragFieldModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysTurbulenceFieldModifier")
+{
+	Index = TargetObjectRegistry.NiPSysTurbulenceFieldModifier_Registry.AddData();
+}
+if(TargetNodeType == "BSPSysLODModifier")
+{
+	Index = TargetObjectRegistry.BSPSysLODModifier_Registry.AddData();
+}
+if(TargetNodeType == "BSPSysScaleModifier")
+{
+	Index = TargetObjectRegistry.BSPSysScaleModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysFieldMagnitudeCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysFieldMagnitudeCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysFieldAttenuationCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysFieldAttenuationCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysFieldMaxDistanceCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysFieldMaxDistanceCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysAirFieldAirFrictionCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysAirFieldAirFrictionCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysAirFieldInheritVelocityCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysAirFieldInheritVelocityCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysAirFieldSpreadCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysAirFieldSpreadCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysInitialRotSpeedCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysInitialRotSpeedCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysInitialRotSpeedVarCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysInitialRotSpeedVarCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysInitialRotAngleCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysInitialRotAngleCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysInitialRotAngleVarCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysInitialRotAngleVarCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysEmitterPlanarAngleCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysEmitterPlanarAngleCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysEmitterPlanarAngleVarCtlr")
+{
+	Index = TargetObjectRegistry.NiPSysEmitterPlanarAngleVarCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysAirFieldModifier")
+{
+	Index = TargetObjectRegistry.NiPSysAirFieldModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysTrailEmitter")
+{
+	Index = TargetObjectRegistry.NiPSysTrailEmitter_Registry.AddData();
+}
+if(TargetNodeType == "NiLightIntensityController")
+{
+	Index = TargetObjectRegistry.NiLightIntensityController_Registry.AddData();
+}
+if(TargetNodeType == "NiPSysRadialFieldModifier")
+{
+	Index = TargetObjectRegistry.NiPSysRadialFieldModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiLODData")
+{
+	Index = TargetObjectRegistry.NiLODData_Registry.AddData();
+}
+if(TargetNodeType == "NiRangeLODData")
+{
+	Index = TargetObjectRegistry.NiRangeLODData_Registry.AddData();
+}
+if(TargetNodeType == "NiScreenLODData")
+{
+	Index = TargetObjectRegistry.NiScreenLODData_Registry.AddData();
+}
+if(TargetNodeType == "NiRotatingParticles")
+{
+	Index = TargetObjectRegistry.NiRotatingParticles_Registry.AddData();
+}
+if(TargetNodeType == "NiSequenceStreamHelper")
+{
+	Index = TargetObjectRegistry.NiSequenceStreamHelper_Registry.AddData();
+}
+if(TargetNodeType == "NiShadeProperty")
+{
+	Index = TargetObjectRegistry.NiShadeProperty_Registry.AddData();
+}
+if(TargetNodeType == "NiSkinData")
+{
+	Index = TargetObjectRegistry.NiSkinData_Registry.AddData();
+}
+if(TargetNodeType == "NiSkinInstance")
+{
+	Index = TargetObjectRegistry.NiSkinInstance_Registry.AddData();
+}
+if(TargetNodeType == "NiTriShapeSkinController")
+{
+	Index = TargetObjectRegistry.NiTriShapeSkinController_Registry.AddData();
+}
+if(TargetNodeType == "NiClodSkinInstance")
+{
+	Index = TargetObjectRegistry.NiClodSkinInstance_Registry.AddData();
+}
+if(TargetNodeType == "NiSkinPartition")
+{
+	Index = TargetObjectRegistry.NiSkinPartition_Registry.AddData();
+}
+if(TargetNodeType == "NiTexture")
+{
+	Index = TargetObjectRegistry.NiTexture_Registry.AddData();
+}
+if(TargetNodeType == "NiSourceTexture")
+{
+	Index = TargetObjectRegistry.NiSourceTexture_Registry.AddData();
+}
+if(TargetNodeType == "NiSpecularProperty")
+{
+	Index = TargetObjectRegistry.NiSpecularProperty_Registry.AddData();
+}
+if(TargetNodeType == "NiSphericalCollider")
+{
+	Index = TargetObjectRegistry.NiSphericalCollider_Registry.AddData();
+}
+if(TargetNodeType == "NiSpotLight")
+{
+	Index = TargetObjectRegistry.NiSpotLight_Registry.AddData();
+}
+if(TargetNodeType == "NiStencilProperty")
+{
+	Index = TargetObjectRegistry.NiStencilProperty_Registry.AddData();
+}
+if(TargetNodeType == "NiStringExtraData")
+{
+	Index = TargetObjectRegistry.NiStringExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiStringPalette")
+{
+	Index = TargetObjectRegistry.NiStringPalette_Registry.AddData();
+}
+if(TargetNodeType == "NiStringsExtraData")
+{
+	Index = TargetObjectRegistry.NiStringsExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiTextKeyExtraData")
+{
+	Index = TargetObjectRegistry.NiTextKeyExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiTextureEffect")
+{
+	Index = TargetObjectRegistry.NiTextureEffect_Registry.AddData();
+}
+if(TargetNodeType == "NiTextureModeProperty")
+{
+	Index = TargetObjectRegistry.NiTextureModeProperty_Registry.AddData();
+}
+if(TargetNodeType == "NiImage")
+{
+	Index = TargetObjectRegistry.NiImage_Registry.AddData();
+}
+if(TargetNodeType == "NiTextureProperty")
+{
+	Index = TargetObjectRegistry.NiTextureProperty_Registry.AddData();
+}
+if(TargetNodeType == "NiMultiTextureProperty")
+{
+	Index = TargetObjectRegistry.NiMultiTextureProperty_Registry.AddData();
+}
+if(TargetNodeType == "NiTexturingProperty")
+{
+	Index = TargetObjectRegistry.NiTexturingProperty_Registry.AddData();
+}
+if(TargetNodeType == "NiTransformData")
+{
+	Index = TargetObjectRegistry.NiTransformData_Registry.AddData();
+}
+if(TargetNodeType == "NiTriShape")
+{
+	Index = TargetObjectRegistry.NiTriShape_Registry.AddData();
+}
+if(TargetNodeType == "NiTriShapeData")
+{
+	Index = TargetObjectRegistry.NiTriShapeData_Registry.AddData();
+}
+if(TargetNodeType == "NiTriStrips")
+{
+	Index = TargetObjectRegistry.NiTriStrips_Registry.AddData();
+}
+if(TargetNodeType == "NiTriStripsData")
+{
+	Index = TargetObjectRegistry.NiTriStripsData_Registry.AddData();
+}
+if(TargetNodeType == "NiEnvMappedTriShape")
+{
+	Index = TargetObjectRegistry.NiEnvMappedTriShape_Registry.AddData();
+}
+if(TargetNodeType == "NiEnvMappedTriShapeData")
+{
+	Index = TargetObjectRegistry.NiEnvMappedTriShapeData_Registry.AddData();
+}
+if(TargetNodeType == "NiBezierTriangle4")
+{
+	Index = TargetObjectRegistry.NiBezierTriangle4_Registry.AddData();
+}
+if(TargetNodeType == "NiBezierMesh")
+{
+	Index = TargetObjectRegistry.NiBezierMesh_Registry.AddData();
+}
+if(TargetNodeType == "NiClod")
+{
+	Index = TargetObjectRegistry.NiClod_Registry.AddData();
+}
+if(TargetNodeType == "NiClodData")
+{
+	Index = TargetObjectRegistry.NiClodData_Registry.AddData();
+}
+if(TargetNodeType == "NiUVController")
+{
+	Index = TargetObjectRegistry.NiUVController_Registry.AddData();
+}
+if(TargetNodeType == "NiUVData")
+{
+	Index = TargetObjectRegistry.NiUVData_Registry.AddData();
+}
+if(TargetNodeType == "NiVectorExtraData")
+{
+	Index = TargetObjectRegistry.NiVectorExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiVertexColorProperty")
+{
+	Index = TargetObjectRegistry.NiVertexColorProperty_Registry.AddData();
+}
+if(TargetNodeType == "NiVertWeightsExtraData")
+{
+	Index = TargetObjectRegistry.NiVertWeightsExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiVisData")
+{
+	Index = TargetObjectRegistry.NiVisData_Registry.AddData();
+}
+if(TargetNodeType == "NiWireframeProperty")
+{
+	Index = TargetObjectRegistry.NiWireframeProperty_Registry.AddData();
+}
+if(TargetNodeType == "NiZBufferProperty")
+{
+	Index = TargetObjectRegistry.NiZBufferProperty_Registry.AddData();
+}
+if(TargetNodeType == "RootCollisionNode")
+{
+	Index = TargetObjectRegistry.RootCollisionNode_Registry.AddData();
+}
+if(TargetNodeType == "NiRawImageData")
+{
+	Index = TargetObjectRegistry.NiRawImageData_Registry.AddData();
+}
+if(TargetNodeType == "NiSortAdjustNode")
+{
+	Index = TargetObjectRegistry.NiSortAdjustNode_Registry.AddData();
+}
+if(TargetNodeType == "NiSourceCubeMap")
+{
+	Index = TargetObjectRegistry.NiSourceCubeMap_Registry.AddData();
+}
+if(TargetNodeType == "NiPhysXProp")
+{
+	Index = TargetObjectRegistry.NiPhysXProp_Registry.AddData();
+}
+if(TargetNodeType == "NiPhysXPropDesc")
+{
+	Index = TargetObjectRegistry.NiPhysXPropDesc_Registry.AddData();
+}
+if(TargetNodeType == "NiPhysXActorDesc")
+{
+	Index = TargetObjectRegistry.NiPhysXActorDesc_Registry.AddData();
+}
+if(TargetNodeType == "NiPhysXBodyDesc")
+{
+	Index = TargetObjectRegistry.NiPhysXBodyDesc_Registry.AddData();
+}
+if(TargetNodeType == "NiPhysXD6JointDesc")
+{
+	Index = TargetObjectRegistry.NiPhysXD6JointDesc_Registry.AddData();
+}
+if(TargetNodeType == "NiPhysXShapeDesc")
+{
+	Index = TargetObjectRegistry.NiPhysXShapeDesc_Registry.AddData();
+}
+if(TargetNodeType == "NiPhysXMeshDesc")
+{
+	Index = TargetObjectRegistry.NiPhysXMeshDesc_Registry.AddData();
+}
+if(TargetNodeType == "NiPhysXMaterialDesc")
+{
+	Index = TargetObjectRegistry.NiPhysXMaterialDesc_Registry.AddData();
+}
+if(TargetNodeType == "NiPhysXKinematicSrc")
+{
+	Index = TargetObjectRegistry.NiPhysXKinematicSrc_Registry.AddData();
+}
+if(TargetNodeType == "NiPhysXTransformDest")
+{
+	Index = TargetObjectRegistry.NiPhysXTransformDest_Registry.AddData();
+}
+if(TargetNodeType == "NiArkAnimationExtraData")
+{
+	Index = TargetObjectRegistry.NiArkAnimationExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiArkImporterExtraData")
+{
+	Index = TargetObjectRegistry.NiArkImporterExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiArkTextureExtraData")
+{
+	Index = TargetObjectRegistry.NiArkTextureExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiArkViewportInfoExtraData")
+{
+	Index = TargetObjectRegistry.NiArkViewportInfoExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiArkShaderExtraData")
+{
+	Index = TargetObjectRegistry.NiArkShaderExtraData_Registry.AddData();
+}
+if(TargetNodeType == "NiLines")
+{
+	Index = TargetObjectRegistry.NiLines_Registry.AddData();
+}
+if(TargetNodeType == "NiLinesData")
+{
+	Index = TargetObjectRegistry.NiLinesData_Registry.AddData();
+}
+if(TargetNodeType == "NiScreenElementsData")
+{
+	Index = TargetObjectRegistry.NiScreenElementsData_Registry.AddData();
+}
+if(TargetNodeType == "NiScreenElements")
+{
+	Index = TargetObjectRegistry.NiScreenElements_Registry.AddData();
+}
+if(TargetNodeType == "NiRoomGroup")
+{
+	Index = TargetObjectRegistry.NiRoomGroup_Registry.AddData();
+}
+if(TargetNodeType == "NiRoom")
+{
+	Index = TargetObjectRegistry.NiRoom_Registry.AddData();
+}
+if(TargetNodeType == "NiPortal")
+{
+	Index = TargetObjectRegistry.NiPortal_Registry.AddData();
+}
+if(TargetNodeType == "BSFadeNode")
+{
+	Index = TargetObjectRegistry.BSFadeNode_Registry.AddData();
+}
+if(TargetNodeType == "BSShaderProperty")
+{
+	Index = TargetObjectRegistry.BSShaderProperty_Registry.AddData();
+}
+if(TargetNodeType == "BSShaderLightingProperty")
+{
+	Index = TargetObjectRegistry.BSShaderLightingProperty_Registry.AddData();
+}
+if(TargetNodeType == "BSShaderNoLightingProperty")
+{
+	Index = TargetObjectRegistry.BSShaderNoLightingProperty_Registry.AddData();
+}
+if(TargetNodeType == "BSShaderPPLightingProperty")
+{
+	Index = TargetObjectRegistry.BSShaderPPLightingProperty_Registry.AddData();
+}
+if(TargetNodeType == "BSEffectShaderPropertyFloatController")
+{
+	Index = TargetObjectRegistry.BSEffectShaderPropertyFloatController_Registry.AddData();
+}
+if(TargetNodeType == "BSEffectShaderPropertyColorController")
+{
+	Index = TargetObjectRegistry.BSEffectShaderPropertyColorController_Registry.AddData();
+}
+if(TargetNodeType == "BSLightingShaderPropertyFloatController")
+{
+	Index = TargetObjectRegistry.BSLightingShaderPropertyFloatController_Registry.AddData();
+}
+if(TargetNodeType == "BSLightingShaderPropertyColorController")
+{
+	Index = TargetObjectRegistry.BSLightingShaderPropertyColorController_Registry.AddData();
+}
+if(TargetNodeType == "BSNiAlphaPropertyTestRefController")
+{
+	Index = TargetObjectRegistry.BSNiAlphaPropertyTestRefController_Registry.AddData();
+}
+if(TargetNodeType == "BSProceduralLightningController")
+{
+	Index = TargetObjectRegistry.BSProceduralLightningController_Registry.AddData();
+}
+if(TargetNodeType == "BSShaderTextureSet")
+{
+	Index = TargetObjectRegistry.BSShaderTextureSet_Registry.AddData();
+}
+if(TargetNodeType == "WaterShaderProperty")
+{
+	Index = TargetObjectRegistry.WaterShaderProperty_Registry.AddData();
+}
+if(TargetNodeType == "SkyShaderProperty")
+{
+	Index = TargetObjectRegistry.SkyShaderProperty_Registry.AddData();
+}
+if(TargetNodeType == "TileShaderProperty")
+{
+	Index = TargetObjectRegistry.TileShaderProperty_Registry.AddData();
+}
+if(TargetNodeType == "DistantLODShaderProperty")
+{
+	Index = TargetObjectRegistry.DistantLODShaderProperty_Registry.AddData();
+}
+if(TargetNodeType == "BSDistantTreeShaderProperty")
+{
+	Index = TargetObjectRegistry.BSDistantTreeShaderProperty_Registry.AddData();
+}
+if(TargetNodeType == "TallGrassShaderProperty")
+{
+	Index = TargetObjectRegistry.TallGrassShaderProperty_Registry.AddData();
+}
+if(TargetNodeType == "VolumetricFogShaderProperty")
+{
+	Index = TargetObjectRegistry.VolumetricFogShaderProperty_Registry.AddData();
+}
+if(TargetNodeType == "HairShaderProperty")
+{
+	Index = TargetObjectRegistry.HairShaderProperty_Registry.AddData();
+}
+if(TargetNodeType == "Lighting30ShaderProperty")
+{
+	Index = TargetObjectRegistry.Lighting30ShaderProperty_Registry.AddData();
+}
+if(TargetNodeType == "BSLightingShaderProperty")
+{
+	Index = TargetObjectRegistry.BSLightingShaderProperty_Registry.AddData();
+}
+if(TargetNodeType == "BSEffectShaderProperty")
+{
+	Index = TargetObjectRegistry.BSEffectShaderProperty_Registry.AddData();
+}
+if(TargetNodeType == "BSWaterShaderProperty")
+{
+	Index = TargetObjectRegistry.BSWaterShaderProperty_Registry.AddData();
+}
+if(TargetNodeType == "BSSkyShaderProperty")
+{
+	Index = TargetObjectRegistry.BSSkyShaderProperty_Registry.AddData();
+}
+if(TargetNodeType == "BSDismemberSkinInstance")
+{
+	Index = TargetObjectRegistry.BSDismemberSkinInstance_Registry.AddData();
+}
+if(TargetNodeType == "BSDecalPlacementVectorExtraData")
+{
+	Index = TargetObjectRegistry.BSDecalPlacementVectorExtraData_Registry.AddData();
+}
+if(TargetNodeType == "BSPSysSimpleColorModifier")
+{
+	Index = TargetObjectRegistry.BSPSysSimpleColorModifier_Registry.AddData();
+}
+if(TargetNodeType == "BSValueNode")
+{
+	Index = TargetObjectRegistry.BSValueNode_Registry.AddData();
+}
+if(TargetNodeType == "BSStripParticleSystem")
+{
+	Index = TargetObjectRegistry.BSStripParticleSystem_Registry.AddData();
+}
+if(TargetNodeType == "BSStripPSysData")
+{
+	Index = TargetObjectRegistry.BSStripPSysData_Registry.AddData();
+}
+if(TargetNodeType == "BSPSysStripUpdateModifier")
+{
+	Index = TargetObjectRegistry.BSPSysStripUpdateModifier_Registry.AddData();
+}
+if(TargetNodeType == "BSMaterialEmittanceMultController")
+{
+	Index = TargetObjectRegistry.BSMaterialEmittanceMultController_Registry.AddData();
+}
+if(TargetNodeType == "BSMasterParticleSystem")
+{
+	Index = TargetObjectRegistry.BSMasterParticleSystem_Registry.AddData();
+}
+if(TargetNodeType == "BSPSysMultiTargetEmitterCtlr")
+{
+	Index = TargetObjectRegistry.BSPSysMultiTargetEmitterCtlr_Registry.AddData();
+}
+if(TargetNodeType == "BSRefractionStrengthController")
+{
+	Index = TargetObjectRegistry.BSRefractionStrengthController_Registry.AddData();
+}
+if(TargetNodeType == "BSOrderedNode")
+{
+	Index = TargetObjectRegistry.BSOrderedNode_Registry.AddData();
+}
+if(TargetNodeType == "BSBlastNode")
+{
+	Index = TargetObjectRegistry.BSBlastNode_Registry.AddData();
+}
+if(TargetNodeType == "BSDamageStage")
+{
+	Index = TargetObjectRegistry.BSDamageStage_Registry.AddData();
+}
+if(TargetNodeType == "BSRefractionFirePeriodController")
+{
+	Index = TargetObjectRegistry.BSRefractionFirePeriodController_Registry.AddData();
+}
+if(TargetNodeType == "bhkConvexListShape")
+{
+	Index = TargetObjectRegistry.bhkConvexListShape_Registry.AddData();
+}
+if(TargetNodeType == "BSTreadTransfInterpolator")
+{
+	Index = TargetObjectRegistry.BSTreadTransfInterpolator_Registry.AddData();
+}
+if(TargetNodeType == "BSAnimNotes")
+{
+	Index = TargetObjectRegistry.BSAnimNotes_Registry.AddData();
+}
+if(TargetNodeType == "bhkLiquidAction")
+{
+	Index = TargetObjectRegistry.bhkLiquidAction_Registry.AddData();
+}
+if(TargetNodeType == "BSMultiBoundNode")
+{
+	Index = TargetObjectRegistry.BSMultiBoundNode_Registry.AddData();
+}
+if(TargetNodeType == "BSMultiBound")
+{
+	Index = TargetObjectRegistry.BSMultiBound_Registry.AddData();
+}
+if(TargetNodeType == "BSMultiBoundData")
+{
+	Index = TargetObjectRegistry.BSMultiBoundData_Registry.AddData();
+}
+if(TargetNodeType == "BSMultiBoundOBB")
+{
+	Index = TargetObjectRegistry.BSMultiBoundOBB_Registry.AddData();
+}
+if(TargetNodeType == "BSMultiBoundSphere")
+{
+	Index = TargetObjectRegistry.BSMultiBoundSphere_Registry.AddData();
+}
+if(TargetNodeType == "BSSegmentedTriShape")
+{
+	Index = TargetObjectRegistry.BSSegmentedTriShape_Registry.AddData();
+}
+if(TargetNodeType == "BSMultiBoundAABB")
+{
+	Index = TargetObjectRegistry.BSMultiBoundAABB_Registry.AddData();
+}
+if(TargetNodeType == "NiAdditionalGeometryData")
+{
+	Index = TargetObjectRegistry.NiAdditionalGeometryData_Registry.AddData();
+}
+if(TargetNodeType == "BSPackedAdditionalGeometryData")
+{
+	Index = TargetObjectRegistry.BSPackedAdditionalGeometryData_Registry.AddData();
+}
+if(TargetNodeType == "BSWArray")
+{
+	Index = TargetObjectRegistry.BSWArray_Registry.AddData();
+}
+if(TargetNodeType == "bhkAabbPhantom")
+{
+	Index = TargetObjectRegistry.bhkAabbPhantom_Registry.AddData();
+}
+if(TargetNodeType == "BSFrustumFOVController")
+{
+	Index = TargetObjectRegistry.BSFrustumFOVController_Registry.AddData();
+}
+if(TargetNodeType == "BSDebrisNode")
+{
+	Index = TargetObjectRegistry.BSDebrisNode_Registry.AddData();
+}
+if(TargetNodeType == "bhkBreakableConstraint")
+{
+	Index = TargetObjectRegistry.bhkBreakableConstraint_Registry.AddData();
+}
+if(TargetNodeType == "bhkOrientHingedBodyAction")
+{
+	Index = TargetObjectRegistry.bhkOrientHingedBodyAction_Registry.AddData();
+}
+if(TargetNodeType == "NiDataStream")
+{
+	Index = TargetObjectRegistry.NiDataStream_Registry.AddData();
+}
+if(TargetNodeType == "NiRenderObject")
+{
+	Index = TargetObjectRegistry.NiRenderObject_Registry.AddData();
+}
+if(TargetNodeType == "NiMeshModifier")
+{
+	Index = TargetObjectRegistry.NiMeshModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiMesh")
+{
+	Index = TargetObjectRegistry.NiMesh_Registry.AddData();
+}
+if(TargetNodeType == "NiMorphWeightsController")
+{
+	Index = TargetObjectRegistry.NiMorphWeightsController_Registry.AddData();
+}
+if(TargetNodeType == "NiMorphMeshModifier")
+{
+	Index = TargetObjectRegistry.NiMorphMeshModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiSkinningMeshModifier")
+{
+	Index = TargetObjectRegistry.NiSkinningMeshModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiInstancingMeshModifier")
+{
+	Index = TargetObjectRegistry.NiInstancingMeshModifier_Registry.AddData();
+}
+if(TargetNodeType == "NiSkinningLODController")
+{
+	Index = TargetObjectRegistry.NiSkinningLODController_Registry.AddData();
+}
+if(TargetNodeType == "NiPSParticleSystem")
+{
+	Index = TargetObjectRegistry.NiPSParticleSystem_Registry.AddData();
+}
+if(TargetNodeType == "NiPSMeshParticleSystem")
+{
+	Index = TargetObjectRegistry.NiPSMeshParticleSystem_Registry.AddData();
+}
+if(TargetNodeType == "NiPSEmitParticlesCtlr")
+{
+	Index = TargetObjectRegistry.NiPSEmitParticlesCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSForceActiveCtlr")
+{
+	Index = TargetObjectRegistry.NiPSForceActiveCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSSimulator")
+{
+	Index = TargetObjectRegistry.NiPSSimulator_Registry.AddData();
+}
+if(TargetNodeType == "NiPSSimulatorStep")
+{
+	Index = TargetObjectRegistry.NiPSSimulatorStep_Registry.AddData();
+}
+if(TargetNodeType == "NiPSSimulatorGeneralStep")
+{
+	Index = TargetObjectRegistry.NiPSSimulatorGeneralStep_Registry.AddData();
+}
+if(TargetNodeType == "NiPSSimulatorForcesStep")
+{
+	Index = TargetObjectRegistry.NiPSSimulatorForcesStep_Registry.AddData();
+}
+if(TargetNodeType == "NiPSSimulatorCollidersStep")
+{
+	Index = TargetObjectRegistry.NiPSSimulatorCollidersStep_Registry.AddData();
+}
+if(TargetNodeType == "NiPSSimulatorMeshAlignStep")
+{
+	Index = TargetObjectRegistry.NiPSSimulatorMeshAlignStep_Registry.AddData();
+}
+if(TargetNodeType == "NiPSSimulatorFinalStep")
+{
+	Index = TargetObjectRegistry.NiPSSimulatorFinalStep_Registry.AddData();
+}
+if(TargetNodeType == "NiPSFacingQuadGenerator")
+{
+	Index = TargetObjectRegistry.NiPSFacingQuadGenerator_Registry.AddData();
+}
+if(TargetNodeType == "NiShadowGenerator")
+{
+	Index = TargetObjectRegistry.NiShadowGenerator_Registry.AddData();
+}
+if(TargetNodeType == "NiPSBoundUpdater")
+{
+	Index = TargetObjectRegistry.NiPSBoundUpdater_Registry.AddData();
+}
+if(TargetNodeType == "NiPSDragForce")
+{
+	Index = TargetObjectRegistry.NiPSDragForce_Registry.AddData();
+}
+if(TargetNodeType == "NiPSGravityForce")
+{
+	Index = TargetObjectRegistry.NiPSGravityForce_Registry.AddData();
+}
+if(TargetNodeType == "NiPSBoxEmitter")
+{
+	Index = TargetObjectRegistry.NiPSBoxEmitter_Registry.AddData();
+}
+if(TargetNodeType == "NiPSMeshEmitter")
+{
+	Index = TargetObjectRegistry.NiPSMeshEmitter_Registry.AddData();
+}
+if(TargetNodeType == "NiPSGravityStrengthCtlr")
+{
+	Index = TargetObjectRegistry.NiPSGravityStrengthCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSPlanarCollider")
+{
+	Index = TargetObjectRegistry.NiPSPlanarCollider_Registry.AddData();
+}
+if(TargetNodeType == "NiPSEmitterSpeedCtlr")
+{
+	Index = TargetObjectRegistry.NiPSEmitterSpeedCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSEmitterRadiusCtlr")
+{
+	Index = TargetObjectRegistry.NiPSEmitterRadiusCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSResetOnLoopCtlr")
+{
+	Index = TargetObjectRegistry.NiPSResetOnLoopCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSSphereEmitter")
+{
+	Index = TargetObjectRegistry.NiPSSphereEmitter_Registry.AddData();
+}
+if(TargetNodeType == "NiPSCylinderEmitter")
+{
+	Index = TargetObjectRegistry.NiPSCylinderEmitter_Registry.AddData();
+}
+if(TargetNodeType == "NiPSEmitterDeclinationCtlr")
+{
+	Index = TargetObjectRegistry.NiPSEmitterDeclinationCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSEmitterDeclinationVarCtlr")
+{
+	Index = TargetObjectRegistry.NiPSEmitterDeclinationVarCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSEmitterPlanarAngleCtlr")
+{
+	Index = TargetObjectRegistry.NiPSEmitterPlanarAngleCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSEmitterPlanarAngleVarCtlr")
+{
+	Index = TargetObjectRegistry.NiPSEmitterPlanarAngleVarCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSEmitterRotAngleCtlr")
+{
+	Index = TargetObjectRegistry.NiPSEmitterRotAngleCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSEmitterRotAngleVarCtlr")
+{
+	Index = TargetObjectRegistry.NiPSEmitterRotAngleVarCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSEmitterRotSpeedCtlr")
+{
+	Index = TargetObjectRegistry.NiPSEmitterRotSpeedCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSEmitterRotSpeedVarCtlr")
+{
+	Index = TargetObjectRegistry.NiPSEmitterRotSpeedVarCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSEmitterLifeSpanCtlr")
+{
+	Index = TargetObjectRegistry.NiPSEmitterLifeSpanCtlr_Registry.AddData();
+}
+if(TargetNodeType == "NiPSBombForce")
+{
+	Index = TargetObjectRegistry.NiPSBombForce_Registry.AddData();
+}
+if(TargetNodeType == "NiPSSphericalCollider")
+{
+	Index = TargetObjectRegistry.NiPSSphericalCollider_Registry.AddData();
+}
+if(TargetNodeType == "NiPSSpawner")
+{
+	Index = TargetObjectRegistry.NiPSSpawner_Registry.AddData();
+}
+if(TargetNodeType == "NiSequenceData")
+{
+	Index = TargetObjectRegistry.NiSequenceData_Registry.AddData();
+}
+if(TargetNodeType == "NiTransformEvaluator")
+{
+	Index = TargetObjectRegistry.NiTransformEvaluator_Registry.AddData();
+}
+if(TargetNodeType == "NiBSplineCompTransformEvaluator")
+{
+	Index = TargetObjectRegistry.NiBSplineCompTransformEvaluator_Registry.AddData();
+}
+if(TargetNodeType == "NiMeshHWInstance")
+{
+	Index = TargetObjectRegistry.NiMeshHWInstance_Registry.AddData();
+}
+if(TargetNodeType == "NiFurSpringController")
+{
+	Index = TargetObjectRegistry.NiFurSpringController_Registry.AddData();
+}
+if(TargetNodeType == "CStreamableAssetData")
+{
+	Index = TargetObjectRegistry.CStreamableAssetData_Registry.AddData();
+}
+if(TargetNodeType == "bhkCompressedMeshShape")
+{
+	Index = TargetObjectRegistry.bhkCompressedMeshShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkCompressedMeshShapeData")
+{
+	Index = TargetObjectRegistry.bhkCompressedMeshShapeData_Registry.AddData();
+}
+if(TargetNodeType == "BSInvMarker")
+{
+	Index = TargetObjectRegistry.BSInvMarker_Registry.AddData();
+}
+if(TargetNodeType == "BSBoneLODExtraData")
+{
+	Index = TargetObjectRegistry.BSBoneLODExtraData_Registry.AddData();
+}
+if(TargetNodeType == "BSBehaviorGraphExtraData")
+{
+	Index = TargetObjectRegistry.BSBehaviorGraphExtraData_Registry.AddData();
+}
+if(TargetNodeType == "BSLagBoneController")
+{
+	Index = TargetObjectRegistry.BSLagBoneController_Registry.AddData();
+}
+if(TargetNodeType == "BSLODTriShape")
+{
+	Index = TargetObjectRegistry.BSLODTriShape_Registry.AddData();
+}
+if(TargetNodeType == "BSFurnitureMarkerNode")
+{
+	Index = TargetObjectRegistry.BSFurnitureMarkerNode_Registry.AddData();
+}
+if(TargetNodeType == "BSLeafAnimNode")
+{
+	Index = TargetObjectRegistry.BSLeafAnimNode_Registry.AddData();
+}
+if(TargetNodeType == "BSTreeNode")
+{
+	Index = TargetObjectRegistry.BSTreeNode_Registry.AddData();
+}
+if(TargetNodeType == "NiLightRadiusController")
+{
+	Index = TargetObjectRegistry.NiLightRadiusController_Registry.AddData();
+}
+if(TargetNodeType == "BSShape")
+{
+	Index = TargetObjectRegistry.BSShape_Registry.AddData();
+}
+if(TargetNodeType == "BSTriShape")
+{
+	Index = TargetObjectRegistry.BSTriShape_Registry.AddData();
+}
+if(TargetNodeType == "BSSubIndexTriShape")
+{
+	Index = TargetObjectRegistry.BSSubIndexTriShape_Registry.AddData();
+}
+if(TargetNodeType == "BSMeshLODTriShape")
+{
+	Index = TargetObjectRegistry.BSMeshLODTriShape_Registry.AddData();
+}
+if(TargetNodeType == "bhkNPCollisionObject")
+{
+	Index = TargetObjectRegistry.bhkNPCollisionObject_Registry.AddData();
+}
+if(TargetNodeType == "BSExtraData")
+{
+	Index = TargetObjectRegistry.BSExtraData_Registry.AddData();
+}
+if(TargetNodeType == "bhkPhysicsSystem")
+{
+	Index = TargetObjectRegistry.bhkPhysicsSystem_Registry.AddData();
+}
+if(TargetNodeType == "bhkRagdollSystem")
+{
+	Index = TargetObjectRegistry.bhkRagdollSystem_Registry.AddData();
+}
+if(TargetNodeType == "BSClothExtraData")
+{
+	Index = TargetObjectRegistry.BSClothExtraData_Registry.AddData();
+}
+if(TargetNodeType == "BSSkin__Instance")
+{
+	Index = TargetObjectRegistry.BSSkin__Instance_Registry.AddData();
+}
+if(TargetNodeType == "BSSkin__BoneData")
+{
+	Index = TargetObjectRegistry.BSSkin__BoneData_Registry.AddData();
+}
+if(TargetNodeType == "BSPositionData")
+{
+	Index = TargetObjectRegistry.BSPositionData_Registry.AddData();
+}
+if(TargetNodeType == "BSConnectPoint__Parents")
+{
+	Index = TargetObjectRegistry.BSConnectPoint__Parents_Registry.AddData();
+}
+if(TargetNodeType == "BSConnectPoint__Children")
+{
+	Index = TargetObjectRegistry.BSConnectPoint__Children_Registry.AddData();
+}

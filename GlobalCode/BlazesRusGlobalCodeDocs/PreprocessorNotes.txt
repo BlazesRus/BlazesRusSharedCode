@@ -1,0 +1,4 @@
+Win32BitBuild = Defines build as 32Bit Build
+GlobalCodeAsDLL = Defines compile as a DLL build
+NifLibUseGlobalCode = Definition for Niflib for determining whether to use GlobalCode library functions
+UseLocalStringFunctionCode = Definition for Niflib that sets it to use local version of conversion functions

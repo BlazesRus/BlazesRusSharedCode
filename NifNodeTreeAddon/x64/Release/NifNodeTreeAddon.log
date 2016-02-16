@@ -1,0 +1,920 @@
+﻿Build started 2/16/2016 2:39:45 AM.
+     1>Project "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\NifNodeTreeAddon\NifNodeTreeAddon.vcxproj" on node 2 (Build target(s)).
+     1>Lib:
+         F:\UserFiles\ProgrammingTools\Compilers\VisualStudio2013\VC\bin\x86_amd64\Lib.exe /OUT:"C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\x64\Release\NifNodeTreeAddon_x64.lib" "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\StaticLibraries\niflib_x64.lib" "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode/GlobalCodeLibraries/GlobalCode_StringFunctions_x64.lib" "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode/GlobalCodeLibraries/GlobalCode_VariableConversionFunctions_x64.lib" "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode/GlobalCodeLibraries/GlobalCode_VariableLists_x64.lib" "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode/GlobalCodeLibraries/GlobalCode_NodeTrees_x64.lib" /NOLOGO /MACHINE:X64 /LTCG x64\Release\NifNodeTree.obj
+     1>niflib_x64.lib(userprintf_rbox.obj) : warning LNK4006: qh_fprintf_rbox already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: rbox_inuse already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: rbox already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: qh_rboxpoints already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: qh_errexit_rbox already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: qh_roundi already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: qh_out1 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: qh_out2n already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: qh_out3n already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_errexit already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_errprint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_new_qhull already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_printfacetlist already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_printhelp_degenerate already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_printhelp_narrowhull already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_printhelp_singular already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_user_memsizes already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_dfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_dvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printneighborhood already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_produce_output already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_readpoints already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_facetvertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_compare_facetarea already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_compare_facetmerge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_compare_facetvisit already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_compare_vertexpoint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_copyfilename already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_countfacets already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_detvnorm already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_detvridge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_detvridge3 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_eachvoronoi already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_eachvoronoi_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_facet2point already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_geomplanes already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_markkeep already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_markvoronoi already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_order_vertexneighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_prepare_output already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printafacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printbegin already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printcenter already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printcentrum already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printend already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printend4geom already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printextremes already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printextremes_2d already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printextremes_d already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet2math already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet2geom already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet2geom_points already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet3math already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet3geom_nonsimplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet3geom_points already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet3geom_simplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet3vertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet4geom_nonsimplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet4geom_simplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacetNvertex_nonsimplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacetNvertex_simplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacetheader already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacetridges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacets already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printhyperplaneintersection already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printline3geom already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printpoint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printpointid already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printpoint3 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printpoints_out already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printpointvect already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printpointvect2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printridge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printspheres already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvdiagram already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvdiagram2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvertexlist already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvneighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvoronoi already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvnorm already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvridge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_produce_output2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_projectdim3 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_readfeasible already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_setfeasible already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_skipfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_skipfilename already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(userprintf.obj) : warning LNK4006: qh_fprintf already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(usermem.obj) : warning LNK4006: qh_exit already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(usermem.obj) : warning LNK4006: qh_fprintf_stderr already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(usermem.obj) : warning LNK4006: qh_free already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(usermem.obj) : warning LNK4006: qh_malloc already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_last_random already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_randommatrix already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_argv_to_command already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_argv_to_command_size already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_rand already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_srand already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_randomfactor already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_strtol already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_strtod already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qhmem already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memalloc already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memfree already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memfreeshort already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_meminit already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_meminitbuffers already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memsetup already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memsize already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memstatistics already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memtotal already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memcheck already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setaddsorted already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setaddnth already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setappend already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setappend_set already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setappend2ndlast already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setcheck already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setcompact already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setcopy already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setdel already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setdellast already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setdelnth already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setdelnthsorted already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setdelsorted already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setduplicate already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setendpointer already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setequal already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setequal_except already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setequal_skip already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setfree already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setfree2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setfreelong already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setin already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setindex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setlarger already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setlast already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setnew already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setnew_delnthsorted already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setprint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setreplace already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setsize already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_settemp already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_settempfree already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_settempfree_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_settemppop already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_settemppush already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_settruncate already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setunique already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setzero already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_pointid already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_appendfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_appendvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_attachnewfacets already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_checkflipped already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_delfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_deletevisible already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_facetintersect already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_gethash already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_makenewfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_makenewplanes already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_makenew_nonsimplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_makenew_simplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_matchneighbor already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_matchnewfacets already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_matchvertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_newfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_newridge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_removefacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_removevertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_updatevertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_findbest already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_findbestnew already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_backnormal already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_distplane already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_findbesthorizon already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_gausselim already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_getangle already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_getcenter already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_getcentrum already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_getdistance already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_normalize already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_normalize2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_projectpoint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_setfacetplane already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_sethyperplane_det already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_sethyperplane_gauss already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_qhull already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_addpoint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_printsummary already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_buildhull already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_buildtracing already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_build_withrestart already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_errexit2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_findhorizon already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_nextfurthest already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_partitionall already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_partitioncoplanar already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_partitionpoint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_partitionvisible already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_precision already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_premerge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_postmerge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_all_merges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_appendmergeset already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_basevertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_checkconnect already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_checkzero already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_compareangle already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_comparemerge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_comparevisit already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_copynonconvex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_degen_redundant_facet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_degen_redundant_neighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_find_newvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_findbest_test already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_findbestneighbor already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_flippedmerges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_forcedmerges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_getmergeset already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_getmergeset_initial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_hashridge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_hashridge_find already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_makeridges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mark_dupridges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_maydropneighbor already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_merge_degenredundant already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_merge_nonconvex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergecycle already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergecycle_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergecycle_facets already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergecycle_neighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergecycle_ridges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergecycle_vneighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergefacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergefacet2d already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergeneighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergeridges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergesimplex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergevertex_del already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergevertex_neighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergevertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_neighbor_intersections already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_newvertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_reducevertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_redundant_vertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_remove_extravertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_rename_sharedvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_renameridgevertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_renamevertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_test_appendmerge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_test_vneighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_tracemerge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_tracemerging already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_updatetested already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_vertexridges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_vertexridges_facet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_willdelete already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_check_output already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_check_points already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_findbestfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_nearvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_point already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_pointfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_pointvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_setvoronoi_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_triangulate already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_addhash already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_check_bestdist already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_check_maxout already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_check_point already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_checkconvex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_checkfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_checkflipped_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_checkpolygon already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_checkvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_clearcenters already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_createsimplex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_delridge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_delvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_facet3vertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_findbestlower already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_findfacet_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_findgood already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_findgood_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_furthestnext already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_furthestout already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_infiniteloop already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_initbuild already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_initialhull already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_initialvertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_isvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_makenewfacets already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_matchduplicates already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_nearcoplanar already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_newhashtable already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_newvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_nextridge3d already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_outcoplanar already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_point_add already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_prependfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_printhashtable already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_printlists already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_resetlists already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_triangulate_facet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_triangulate_link already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_triangulate_mirror already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_triangulate_null already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_vertexintersect already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_vertexintersect_new already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_vertexneighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_vertexsubset already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_gram_schmidt already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_outerinner already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_projectinput already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_rotateinput already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_scaleinput already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_setdelaunay already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_sethalfspace_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_sharpnewfacets already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_copypoints already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_crossproduct already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_determinant already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_detjoggle already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_detroundoff already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_detsimplex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_distnorm already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_distround already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_divzero already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_facetarea already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_facetarea_simplex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_facetcenter already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_findgooddist already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_getarea already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_inthresholds already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_joggleinput already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_maxabsval already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_maxmin already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_maxouter already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_maxsimplex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_minabsval already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_mindiff already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_orientoutside already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_pointdist already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_printmatrix already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_printpoints already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_projectpoints already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_rotatepoints already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_scalelast already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_scalepoints already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_sethalfspace already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_voronoi_center already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_collectstatistics already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_printallstatistics already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatA already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatB already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatC already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatD already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatE already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatE2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatF already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatG already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatH already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatI already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatistics already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_freestatistics already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_initstatistics already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_newstats already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_nostatistic already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_printstatistics already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_printstatlevel already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_printstats already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_stddev already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_version already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_version2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_qh already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_clock already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_checkflags already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_clear_outputflags already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_freebuffers already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_freeqhull already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_freeqhull2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_init_A already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_init_B already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_init_qhull_command already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initflags already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initqhull_buffers already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initqhull_globals already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initqhull_mem already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initqhull_outputflags already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initqhull_start already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initqhull_start2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initthresholds already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_lib_check already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_option already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_appendprint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_freebuild already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(userprintf_rbox.obj) : warning LNK4006: qh_fprintf_rbox already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: rbox_inuse already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: rbox already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: qh_rboxpoints already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: qh_errexit_rbox already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: qh_roundi already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: qh_out1 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: qh_out2n already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(rboxlib.obj) : warning LNK4006: qh_out3n already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_errexit already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_errprint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_new_qhull already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_printfacetlist already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_printhelp_degenerate already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_printhelp_narrowhull already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_printhelp_singular already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(user.obj) : warning LNK4006: qh_user_memsizes already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_dfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_dvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printneighborhood already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_produce_output already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_readpoints already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_facetvertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_compare_facetarea already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_compare_facetmerge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_compare_facetvisit already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_compare_vertexpoint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_copyfilename already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_countfacets already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_detvnorm already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_detvridge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_detvridge3 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_eachvoronoi already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_eachvoronoi_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_facet2point already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_geomplanes already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_markkeep already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_markvoronoi already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_order_vertexneighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_prepare_output already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printafacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printbegin already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printcenter already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printcentrum already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printend already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printend4geom already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printextremes already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printextremes_2d already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printextremes_d already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet2math already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet2geom already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet2geom_points already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet3math already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet3geom_nonsimplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet3geom_points already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet3geom_simplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet3vertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet4geom_nonsimplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacet4geom_simplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacetNvertex_nonsimplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacetNvertex_simplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacetheader already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacetridges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printfacets already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printhyperplaneintersection already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printline3geom already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printpoint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printpointid already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printpoint3 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printpoints_out already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printpointvect already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printpointvect2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printridge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printspheres already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvdiagram already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvdiagram2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvertexlist already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvneighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvoronoi already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvnorm already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_printvridge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_produce_output2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_projectdim3 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_readfeasible already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_setfeasible already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_skipfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(io.obj) : warning LNK4006: qh_skipfilename already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(userprintf.obj) : warning LNK4006: qh_fprintf already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(usermem.obj) : warning LNK4006: qh_exit already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(usermem.obj) : warning LNK4006: qh_fprintf_stderr already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(usermem.obj) : warning LNK4006: qh_free already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(usermem.obj) : warning LNK4006: qh_malloc already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_last_random already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_randommatrix already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_argv_to_command already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_argv_to_command_size already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_rand already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_srand already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_randomfactor already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_strtol already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(random.obj) : warning LNK4006: qh_strtod already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qhmem already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memalloc already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memfree already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memfreeshort already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_meminit already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_meminitbuffers already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memsetup already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memsize already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memstatistics already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memtotal already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(mem.obj) : warning LNK4006: qh_memcheck already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setaddsorted already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setaddnth already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setappend already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setappend_set already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setappend2ndlast already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setcheck already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setcompact already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setcopy already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setdel already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setdellast already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setdelnth already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setdelnthsorted already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setdelsorted already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setduplicate already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setendpointer already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setequal already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setequal_except already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setequal_skip already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setfree already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setfree2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setfreelong already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setin already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setindex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setlarger already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setlast already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setnew already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setnew_delnthsorted already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setprint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setreplace already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setsize already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_settemp already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_settempfree already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_settempfree_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_settemppop already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_settemppush already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_settruncate already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setunique already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(qset.obj) : warning LNK4006: qh_setzero already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_pointid already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_appendfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_appendvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_attachnewfacets already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_checkflipped already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_delfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_deletevisible already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_facetintersect already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_gethash already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_makenewfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_makenewplanes already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_makenew_nonsimplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_makenew_simplicial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_matchneighbor already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_matchnewfacets already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_matchvertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_newfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_newridge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_removefacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_removevertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly.obj) : warning LNK4006: qh_updatevertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_findbest already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_findbestnew already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_backnormal already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_distplane already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_findbesthorizon already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_gausselim already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_getangle already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_getcenter already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_getcentrum already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_getdistance already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_normalize already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_normalize2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_projectpoint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_setfacetplane already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_sethyperplane_det already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom.obj) : warning LNK4006: qh_sethyperplane_gauss already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_qhull already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_addpoint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_printsummary already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_buildhull already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_buildtracing already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_build_withrestart already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_errexit2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_findhorizon already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_nextfurthest already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_partitionall already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_partitioncoplanar already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_partitionpoint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_partitionvisible already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(libqhull.obj) : warning LNK4006: qh_precision already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_premerge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_postmerge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_all_merges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_appendmergeset already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_basevertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_checkconnect already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_checkzero already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_compareangle already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_comparemerge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_comparevisit already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_copynonconvex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_degen_redundant_facet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_degen_redundant_neighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_find_newvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_findbest_test already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_findbestneighbor already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_flippedmerges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_forcedmerges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_getmergeset already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_getmergeset_initial already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_hashridge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_hashridge_find already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_makeridges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mark_dupridges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_maydropneighbor already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_merge_degenredundant already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_merge_nonconvex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergecycle already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergecycle_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergecycle_facets already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergecycle_neighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergecycle_ridges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergecycle_vneighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergefacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergefacet2d already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergeneighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergeridges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergesimplex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergevertex_del already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergevertex_neighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_mergevertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_neighbor_intersections already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_newvertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_reducevertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_redundant_vertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_remove_extravertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_rename_sharedvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_renameridgevertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_renamevertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_test_appendmerge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_test_vneighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_tracemerge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_tracemerging already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_updatetested already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_vertexridges already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_vertexridges_facet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(merge.obj) : warning LNK4006: qh_willdelete already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_check_output already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_check_points already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_findbestfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_nearvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_point already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_pointfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_pointvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_setvoronoi_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_triangulate already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_addhash already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_check_bestdist already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_check_maxout already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_check_point already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_checkconvex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_checkfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_checkflipped_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_checkpolygon already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_checkvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_clearcenters already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_createsimplex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_delridge already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_delvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_facet3vertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_findbestlower already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_findfacet_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_findgood already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_findgood_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_furthestnext already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_furthestout already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_infiniteloop already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_initbuild already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_initialhull already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_initialvertices already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_isvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_makenewfacets already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_matchduplicates already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_nearcoplanar already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_newhashtable already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_newvertex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_nextridge3d already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_outcoplanar already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_point_add already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_prependfacet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_printhashtable already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_printlists already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_resetlists already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_triangulate_facet already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_triangulate_link already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_triangulate_mirror already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_triangulate_null already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_vertexintersect already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_vertexintersect_new already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_vertexneighbors already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(poly2.obj) : warning LNK4006: qh_vertexsubset already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_gram_schmidt already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_outerinner already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_projectinput already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_rotateinput already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_scaleinput already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_setdelaunay already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_sethalfspace_all already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_sharpnewfacets already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_copypoints already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_crossproduct already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_determinant already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_detjoggle already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_detroundoff already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_detsimplex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_distnorm already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_distround already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_divzero already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_facetarea already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_facetarea_simplex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_facetcenter already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_findgooddist already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_getarea already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_inthresholds already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_joggleinput already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_maxabsval already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_maxmin already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_maxouter already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_maxsimplex already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_minabsval already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_mindiff already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_orientoutside already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_pointdist already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_printmatrix already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_printpoints already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_projectpoints already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_rotatepoints already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_scalelast already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_scalepoints already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_sethalfspace already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(geom2.obj) : warning LNK4006: qh_voronoi_center already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_collectstatistics already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_printallstatistics already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatA already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatB already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatC already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatD already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatE already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatE2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatF already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatG already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatH already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatI already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_allstatistics already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_freestatistics already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_initstatistics already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_newstats already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_nostatistic already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_printstatistics already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_printstatlevel already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_printstats already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(stat.obj) : warning LNK4006: qh_stddev already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_version already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_version2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_qh already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_clock already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_checkflags already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_clear_outputflags already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_freebuffers already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_freeqhull already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_freeqhull2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_init_A already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_init_B already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_init_qhull_command already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initflags already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initqhull_buffers already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initqhull_globals already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initqhull_mem already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initqhull_outputflags already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initqhull_start already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initqhull_start2 already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_initthresholds already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_lib_check already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_option already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_appendprint already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>niflib_x64.lib(global.obj) : warning LNK4006: qh_freebuild already defined in niflib_x64.lib(nifqhull.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DisplayFullValues(float,float)" (?DisplayFullValues@VariableConversionFunctions@@QEAA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DisplayFullValues_Vector(float,float)" (?DisplayFullValues_Vector@VariableConversionFunctions@@QEAA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DisplayFullValues(float,float,float)" (?DisplayFullValues@VariableConversionFunctions@@QEAA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MMM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DisplayFullValues_Vector(float,float,float)" (?DisplayFullValues_Vector@VariableConversionFunctions@@QEAA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MMM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DisplayFullValues(float,float,float,float)" (?DisplayFullValues@VariableConversionFunctions@@QEAA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MMMM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DisplayFullValues_Vector(float,float,float,float)" (?DisplayFullValues_Vector@VariableConversionFunctions@@QEAA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MMMM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: float __cdecl VariableConversionFunctions::Int32ToFloat(int)" (?Int32ToFloat@VariableConversionFunctions@@QEAAMH@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::FloatToStringConversion(float)" (?FloatToStringConversion@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@M@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static double __cdecl VariableConversionFunctions::FloatToDouble(float)" (?FloatToDouble@VariableConversionFunctions@@SANM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static float __cdecl VariableConversionFunctions::DoubleToFloat(double)" (?DoubleToFloat@VariableConversionFunctions@@SAMN@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static float __cdecl VariableConversionFunctions::double_to_float(unsigned __int64)" (?double_to_float@VariableConversionFunctions@@SAM_K@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static unsigned __int64 __cdecl VariableConversionFunctions::float_to_double(float)" (?float_to_double@VariableConversionFunctions@@SA_KM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::BoolAsString(bool)" (?BoolAsString@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::XIntToStringConversion(unsigned __int64)" (?XIntToStringConversion@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_K@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::XIntToStringConversion(__int64)" (?XIntToStringConversion@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_J@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::IntToStringConversion(unsigned int)" (?IntToStringConversion@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::IntToStringConversion(int)" (?IntToStringConversion@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DoubleToStringConversion(double)" (?DoubleToStringConversion@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@N@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static bool __cdecl VariableConversionFunctions::ReadBoolFromString(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReadBoolFromString@VariableConversionFunctions@@SA_NV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DoubleAsString(double)" (?DoubleAsString@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@N@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static bool __cdecl VariableConversionFunctions::ReadBoolFromInt(int)" (?ReadBoolFromInt@VariableConversionFunctions@@SA_NH@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static __int64 __cdecl VariableConversionFunctions::ReadXIntFromString(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReadXIntFromString@VariableConversionFunctions@@SA_JV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static int __cdecl VariableConversionFunctions::ReadIntFromString(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReadIntFromString@VariableConversionFunctions@@SAHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static double __cdecl VariableConversionFunctions::ReadDoubleFromString(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReadDoubleFromString@VariableConversionFunctions@@SANV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static bool __cdecl VariableConversionFunctions::IsDigit(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?IsDigit@VariableConversionFunctions@@SA_NV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static bool __cdecl VariableConversionFunctions::IsDigit(char)" (?IsDigit@VariableConversionFunctions@@SA_ND@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static char __cdecl VariableConversionFunctions::DigitAsChar(int)" (?DigitAsChar@VariableConversionFunctions@@SADH@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static int __cdecl VariableConversionFunctions::CharAsInt(char)" (?CharAsInt@VariableConversionFunctions@@SAHD@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static int __cdecl VariableConversionFunctions::NumberOfDecimalPlaces(double)" (?NumberOfDecimalPlaces@VariableConversionFunctions@@SAHN@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static int __cdecl VariableConversionFunctions::NumberOfDecimalPlaces(int)" (?NumberOfDecimalPlaces@VariableConversionFunctions@@SAHH@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static int __cdecl VariableConversionFunctions::NumberOfPlaces(double)" (?NumberOfPlaces@VariableConversionFunctions@@SAHN@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static __int64 __cdecl VariableConversionFunctions::NumberOfPlacesX(unsigned __int64)" (?NumberOfPlacesX@VariableConversionFunctions@@SA_J_K@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static __int64 __cdecl VariableConversionFunctions::NumberOfPlaces(__int64)" (?NumberOfPlaces@VariableConversionFunctions@@SA_J_J@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static int __cdecl VariableConversionFunctions::NumberOfPlaces(unsigned int)" (?NumberOfPlaces@VariableConversionFunctions@@SAHI@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static int __cdecl VariableConversionFunctions::NumberOfPlaces(int)" (?NumberOfPlaces@VariableConversionFunctions@@SAHH@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static unsigned char __cdecl StringFunctions::FindContentType(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?FindContentType@StringFunctions@@SAEV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::CheckAndCorrectFilepath(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?CheckAndCorrectFilepath@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@_N@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::CheckAndCorrectDirectoryLocation(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?CheckAndCorrectDirectoryLocation@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@_N@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::AddStringInFront(char,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?AddStringInFront@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@DV23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::AddStringInFront(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?AddStringInFront@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@0@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::ReturnParamName(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReturnParamName@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::ReplaceAll(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReplaceAll@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@00@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::ReplaceFirst(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReplaceFirst@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@00@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::ReturnXMLTagContent(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReturnXMLTagContent@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::RemoveXMLTags(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?RemoveXMLTags@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::RemoveAmountOfTabSpace(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,int,int)" (?RemoveAmountOfTabSpace@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@HH@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static unsigned __int64 __cdecl StringFunctions::ExamineTabSpace(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ExamineTabSpace@StringFunctions@@SA_KV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static unsigned __int64 __cdecl StringFunctions::ExamineTabSpace(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,int)" (?ExamineTabSpace@StringFunctions@@SA_KV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::RemoveStringTabs(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?RemoveStringTabs@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::CreateLinkedHTMLString(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?CreateLinkedHTMLString@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@0@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::SeparateFilePathIntoFileName(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?SeparateFilePathIntoFileName@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::OutputQuadVariableLines(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?OutputQuadVariableLines@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::OutputLineStringTabs(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?OutputLineStringTabs@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::CreateTabSpace(unsigned __int64)" (?CreateTabSpace@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_K@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_VariableLists_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static bool __cdecl StringFunctions::LineStringContains(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?LineStringContains@StringFunctions@@SA_NV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DisplayFullValues(float,float)" (?DisplayFullValues@VariableConversionFunctions@@QEAA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DisplayFullValues_Vector(float,float)" (?DisplayFullValues_Vector@VariableConversionFunctions@@QEAA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DisplayFullValues(float,float,float)" (?DisplayFullValues@VariableConversionFunctions@@QEAA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MMM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DisplayFullValues_Vector(float,float,float)" (?DisplayFullValues_Vector@VariableConversionFunctions@@QEAA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MMM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DisplayFullValues(float,float,float,float)" (?DisplayFullValues@VariableConversionFunctions@@QEAA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MMMM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DisplayFullValues_Vector(float,float,float,float)" (?DisplayFullValues_Vector@VariableConversionFunctions@@QEAA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MMMM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: float __cdecl VariableConversionFunctions::Int32ToFloat(int)" (?Int32ToFloat@VariableConversionFunctions@@QEAAMH@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::FloatToStringConversion(float)" (?FloatToStringConversion@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@M@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static double __cdecl VariableConversionFunctions::FloatToDouble(float)" (?FloatToDouble@VariableConversionFunctions@@SANM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static float __cdecl VariableConversionFunctions::DoubleToFloat(double)" (?DoubleToFloat@VariableConversionFunctions@@SAMN@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static float __cdecl VariableConversionFunctions::double_to_float(unsigned __int64)" (?double_to_float@VariableConversionFunctions@@SAM_K@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static unsigned __int64 __cdecl VariableConversionFunctions::float_to_double(float)" (?float_to_double@VariableConversionFunctions@@SA_KM@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::BoolAsString(bool)" (?BoolAsString@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::XIntToStringConversion(unsigned __int64)" (?XIntToStringConversion@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_K@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::XIntToStringConversion(__int64)" (?XIntToStringConversion@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_J@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::IntToStringConversion(unsigned int)" (?IntToStringConversion@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::IntToStringConversion(int)" (?IntToStringConversion@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DoubleToStringConversion(double)" (?DoubleToStringConversion@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@N@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static bool __cdecl VariableConversionFunctions::ReadBoolFromString(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReadBoolFromString@VariableConversionFunctions@@SA_NV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl VariableConversionFunctions::DoubleAsString(double)" (?DoubleAsString@VariableConversionFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@N@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static bool __cdecl VariableConversionFunctions::ReadBoolFromInt(int)" (?ReadBoolFromInt@VariableConversionFunctions@@SA_NH@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static __int64 __cdecl VariableConversionFunctions::ReadXIntFromString(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReadXIntFromString@VariableConversionFunctions@@SA_JV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static int __cdecl VariableConversionFunctions::ReadIntFromString(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReadIntFromString@VariableConversionFunctions@@SAHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static double __cdecl VariableConversionFunctions::ReadDoubleFromString(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReadDoubleFromString@VariableConversionFunctions@@SANV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static bool __cdecl VariableConversionFunctions::IsDigit(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?IsDigit@VariableConversionFunctions@@SA_NV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static bool __cdecl VariableConversionFunctions::IsDigit(char)" (?IsDigit@VariableConversionFunctions@@SA_ND@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static char __cdecl VariableConversionFunctions::DigitAsChar(int)" (?DigitAsChar@VariableConversionFunctions@@SADH@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static int __cdecl VariableConversionFunctions::CharAsInt(char)" (?CharAsInt@VariableConversionFunctions@@SAHD@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static int __cdecl VariableConversionFunctions::NumberOfDecimalPlaces(double)" (?NumberOfDecimalPlaces@VariableConversionFunctions@@SAHN@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static int __cdecl VariableConversionFunctions::NumberOfDecimalPlaces(int)" (?NumberOfDecimalPlaces@VariableConversionFunctions@@SAHH@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static int __cdecl VariableConversionFunctions::NumberOfPlaces(double)" (?NumberOfPlaces@VariableConversionFunctions@@SAHN@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static __int64 __cdecl VariableConversionFunctions::NumberOfPlacesX(unsigned __int64)" (?NumberOfPlacesX@VariableConversionFunctions@@SA_J_K@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static __int64 __cdecl VariableConversionFunctions::NumberOfPlaces(__int64)" (?NumberOfPlaces@VariableConversionFunctions@@SA_J_J@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static int __cdecl VariableConversionFunctions::NumberOfPlaces(unsigned int)" (?NumberOfPlaces@VariableConversionFunctions@@SAHI@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(VariableConversionFunctions.obj) : warning LNK4006: "public: static int __cdecl VariableConversionFunctions::NumberOfPlaces(int)" (?NumberOfPlaces@VariableConversionFunctions@@SAHH@Z) already defined in GlobalCode_VariableConversionFunctions_x64.lib(VariableConversionFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static unsigned char __cdecl StringFunctions::FindContentType(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?FindContentType@StringFunctions@@SAEV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::CheckAndCorrectFilepath(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?CheckAndCorrectFilepath@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@_N@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::CheckAndCorrectDirectoryLocation(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?CheckAndCorrectDirectoryLocation@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@_N@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::AddStringInFront(char,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?AddStringInFront@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@DV23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::AddStringInFront(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?AddStringInFront@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@0@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::ReturnParamName(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReturnParamName@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::ReplaceAll(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReplaceAll@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@00@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::ReplaceFirst(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReplaceFirst@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@00@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::ReturnXMLTagContent(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ReturnXMLTagContent@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::RemoveXMLTags(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?RemoveXMLTags@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::RemoveAmountOfTabSpace(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,int,int)" (?RemoveAmountOfTabSpace@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@HH@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static unsigned __int64 __cdecl StringFunctions::ExamineTabSpace(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ExamineTabSpace@StringFunctions@@SA_KV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static unsigned __int64 __cdecl StringFunctions::ExamineTabSpace(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,int)" (?ExamineTabSpace@StringFunctions@@SA_KV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::RemoveStringTabs(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?RemoveStringTabs@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::CreateLinkedHTMLString(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?CreateLinkedHTMLString@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@0@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::SeparateFilePathIntoFileName(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?SeparateFilePathIntoFileName@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::OutputQuadVariableLines(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?OutputQuadVariableLines@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::OutputLineStringTabs(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?OutputLineStringTabs@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl StringFunctions::CreateTabSpace(unsigned __int64)" (?CreateTabSpace@StringFunctions@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_K@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+     1>GlobalCode_NodeTrees_x64.lib(StringFunctions.obj) : warning LNK4006: "public: static bool __cdecl StringFunctions::LineStringContains(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?LineStringContains@StringFunctions@@SA_NV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0@Z) already defined in GlobalCode_StringFunctions_x64.lib(StringFunctions.obj); second definition ignored
+         NifNodeTreeAddon.vcxproj -> C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\x64\Release\NifNodeTreeAddon_x64.lib
+     1>Done Building Project "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\NifNodeTreeAddon\NifNodeTreeAddon.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:03:11.49
