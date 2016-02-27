@@ -67,7 +67,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SourceMergeMover", "Utility
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		GlobalCode\LocalLibraryVersions\GlobalCode.vcxitems*{7aa04c9e-d924-4fed-b9bf-2fc73e0e526f}*SharedItemsImports = 4
+		GlobalCode\LocalLibraryVersions\GlobalCode.vcxitems*{0fe283fb-a9f1-423c-b9e2-1ea6f1e8fcb2}*SharedItemsImports = 4
 		GlobalCode\LocalLibraryVersions\GlobalCode.vcxitems*{d9a61189-2607-4118-8437-d444a076190a}*SharedItemsImports = 4
+		GlobalCode\LocalLibraryVersions\GlobalCode.vcxitems*{77cbec2b-6aa6-493e-83e8-78a10b8735fc}*SharedItemsImports = 4
 		GlobalCode\LocalLibraryVersions\GlobalCode.vcxitems*{fdf6c044-319f-445f-9224-a09728178ee8}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

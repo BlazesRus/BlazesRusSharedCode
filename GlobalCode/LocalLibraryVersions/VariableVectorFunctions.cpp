@@ -4,7 +4,7 @@
 
 #include "VariableVectorFunctions.h"
 #include <string>
-#include "StringFunctions.h"
+#include "VariableConversionFunctions.h"
 
 using std::string;
 
@@ -56,7 +56,7 @@ IntegerList VariableVectorFunctions::ReadIntParamFromStringList(StringVectorList
 			StringChar = LineString.at(i);
 			if(StringChar == ' ' || StringChar == '	'&&TempString != "")
 			{
-				ParamList.Add(StringFunctions::ReadIntFromString(TempString));
+				ParamList.Add(VariableConversionFunctions::ReadIntFromString(TempString));
 				TempString = "";
 			}
 			else
@@ -67,7 +67,7 @@ IntegerList VariableVectorFunctions::ReadIntParamFromStringList(StringVectorList
 	}
 	if(TempString != "")
 	{
-		ParamList.Add(StringFunctions::ReadIntFromString(TempString));
+		ParamList.Add(VariableConversionFunctions::ReadIntFromString(TempString));
 	}
 	return ParamList;
 }
@@ -88,7 +88,7 @@ DoubleList VariableVectorFunctions::ReadDoubleParamFromStringList(StringVectorLi
 			StringChar = LineString.at(i);
 			if(StringChar == ' ' || StringChar == '	')
 			{
-				ParamList.Add(StringFunctions::ReadDoubleFromString(TempString));
+				ParamList.Add(VariableConversionFunctions::ReadDoubleFromString(TempString));
 				TempString = "";
 			}
 			else
@@ -99,7 +99,7 @@ DoubleList VariableVectorFunctions::ReadDoubleParamFromStringList(StringVectorLi
 	}
 	if(TempString != "")
 	{
-		ParamList.Add(StringFunctions::ReadDoubleFromString(TempString));
+		ParamList.Add(VariableConversionFunctions::ReadDoubleFromString(TempString));
 	}
 	return ParamList;
 }

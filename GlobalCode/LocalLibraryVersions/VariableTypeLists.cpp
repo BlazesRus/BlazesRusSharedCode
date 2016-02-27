@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include "StringFunctions.h"
+#include "..\GlobalCode_VariableLists\VariableVectorFunctions.h"
 
 using std::cout;
 using std::string;
@@ -23,7 +24,7 @@ void DoubleList::SaveDataToFile(std::string Path)
 			{//Carriage Return to next line
 				CraftedIniFile << "\r\n";
 			}
-			LineString = StringFunctions::DoubleToStringConversion(ElementAt(i));
+			LineString = VariableConversionFunctions::DoubleToStringConversion(ElementAt(i));
 			CraftedIniFile << LineString;
 		}
 		CraftedIniFile.close();
@@ -72,7 +73,7 @@ void IntegerList::SaveDataToFile(std::string Path)
 			{//Carriage Return to next line
 				CraftedIniFile << "\r\n";
 			}
-			LineString = StringFunctions::IntToStringConversion(ElementAt(i));
+			LineString = VariableConversionFunctions::IntToStringConversion(ElementAt(i));
 			CraftedIniFile << LineString;
 		}
 		CraftedIniFile.close();
@@ -97,7 +98,7 @@ void XIntegerList::SaveDataToFile(std::string Path)
 			{//Carriage Return to next line
 				CraftedIniFile << "\r\n";
 			}
-			LineString = StringFunctions::XIntToStringConversion(ElementAt(i));
+			LineString = VariableConversionFunctions::XIntToStringConversion(ElementAt(i));
 			CraftedIniFile << LineString;
 		}
 		CraftedIniFile.close();
@@ -115,7 +116,7 @@ StringVectorList DoubleList::AsStringList()
 	size_t TempInt = Size();
 	for(size_t i = 0; i < TempInt; ++i)
 	{
-		TempString = StringFunctions::DoubleAsString(ElementAt(i));
+		TempString = VariableConversionFunctions::DoubleAsString(ElementAt(i));
 		TempStringList.Add(TempString);
 	}
 	return TempStringList;
@@ -148,7 +149,7 @@ void DoubleList::ConvertStringToVectorList(std::string Content)
 			}
 			else
 			{
-				Add(StringFunctions::ReadDoubleFromString(CurrentElement));
+				Add(VariableConversionFunctions::ReadDoubleFromString(CurrentElement));
 				CurrentElement = "";
 			}
 		}
@@ -162,7 +163,7 @@ StringVectorList IntegerList::AsStringList()
 	size_t TempInt = Size();
 	for(size_t i = 0; i < TempInt; ++i)
 	{
-		TempString = StringFunctions::IntToStringConversion(ElementAt(i));
+		TempString = VariableConversionFunctions::IntToStringConversion(ElementAt(i));
 		TempStringList.Add(TempString);
 	}
 	return TempStringList;
@@ -200,12 +201,12 @@ std::string IntegerList::GenerateAsString()
 		TempValue = this->ElementAt(i);
 		if(i == 0)
 		{
-			ListString = StringFunctions::IntToStringConversion(TempValue);
+			ListString = VariableConversionFunctions::IntToStringConversion(TempValue);
 		}
 		else
 		{
 			ListString += "_";
-			ListString += StringFunctions::IntToStringConversion(TempValue);
+			ListString += VariableConversionFunctions::IntToStringConversion(TempValue);
 		}
 	}
 	return ListString;
@@ -238,7 +239,7 @@ void IntegerList::ConvertStringToVectorList(std::string Content)
 			}
 			else
 			{
-				Add(StringFunctions::ReadIntFromString(CurrentElement));
+				Add(VariableConversionFunctions::ReadIntFromString(CurrentElement));
 				CurrentElement = "";
 			}
 		}
@@ -255,12 +256,12 @@ std::string XIntegerList::GenerateAsString()
 		TempValue = this->ElementAt(i);
 		if(i == 0)
 		{
-			ListString = StringFunctions::XIntToStringConversion(TempValue);
+			ListString = VariableConversionFunctions::XIntToStringConversion(TempValue);
 		}
 		else
 		{
 			ListString += "_";
-			ListString += StringFunctions::XIntToStringConversion(TempValue);
+			ListString += VariableConversionFunctions::XIntToStringConversion(TempValue);
 		}
 	}
 	return ListString;
@@ -293,7 +294,7 @@ void XIntegerList::ConvertStringToVectorList(std::string Content)
 			}
 			else
 			{
-				Add(StringFunctions::ReadXIntFromString(CurrentElement));
+				Add(VariableConversionFunctions::ReadXIntFromString(CurrentElement));
 				CurrentElement = "";
 			}
 		}
@@ -322,7 +323,7 @@ void BoolList::SaveDataToFile(std::string Path)
 			{//Carriage Return to next line
 				CraftedIniFile << "\r\n";
 			}
-			LineString = StringFunctions::BoolAsString(ElementAt(i));
+			LineString = VariableConversionFunctions::BoolAsString(ElementAt(i));
 			CraftedIniFile << LineString;
 		}
 		CraftedIniFile.close();
@@ -340,7 +341,7 @@ StringVectorList BoolList::AsStringList()
 	size_t TempInt = Size();
 	for(size_t i = 0; i < TempInt; i++)
 	{
-		TempString = StringFunctions::BoolAsString(ElementAt(i));
+		TempString = VariableConversionFunctions::BoolAsString(ElementAt(i));
 		TempStringList.Add(TempString);
 	}
 	return TempStringList;
@@ -373,7 +374,7 @@ void BoolList::ConvertStringToVectorList(std::string Content)
 			}
 			else
 			{
-				Add(StringFunctions::ReadBoolFromString(CurrentElement));
+				Add(VariableConversionFunctions::ReadBoolFromString(CurrentElement));
 				CurrentElement = "";
 			}
 		}

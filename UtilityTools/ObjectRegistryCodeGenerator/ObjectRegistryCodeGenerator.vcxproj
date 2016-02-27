@@ -53,6 +53,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
     <Import Project="..\GlobalCode\GlobalCode.vcxitems" Label="Shared" Condition="Exists('..\GlobalCode\GlobalCode.vcxitems')" />
+    <Import Project="..\..\GlobalCode\LocalLibraryVersions\GlobalCode.vcxitems" Label="Shared" Condition="Exists('..\..\GlobalCode\LocalLibraryVersions\GlobalCode.vcxitems')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -75,15 +76,15 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>ObjectRegistryCodeGenerator</TargetName>
+    <TargetName>ObjectRegistryCodeGenerator_$(Platform)</TargetName>
     <IntDir>$(SolutionDir)ObjectRegistryCodeGenerator/$(Platform)/</IntDir>
-    <OutDir>$(SolutionDir)ObjectRegistryCodeGenerator/</OutDir>
+    <OutDir>$(SolutionDir)UtilityTools/ObjectRegistryCodeGenerator/</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)ObjectRegistryCodeGenerator/</OutDir>
+    <OutDir>$(SolutionDir)UtilityTools/ObjectRegistryCodeGenerator/</OutDir>
     <IntDir>$(SolutionDir)ObjectRegistryCodeGenerator/$(Platform)/</IntDir>
-    <TargetName>ObjectRegistryCodeGenerator</TargetName>
+    <TargetName>ObjectRegistryCodeGenerator_$(Platform)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

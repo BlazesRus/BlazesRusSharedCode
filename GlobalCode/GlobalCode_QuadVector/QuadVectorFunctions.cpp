@@ -3,7 +3,7 @@
 */
 #include "QuadVectorFunctions.h"
 #include <string>
-#include "StringFunctions.h"
+#include "..\LocalLibraryVersions\VariableConversionFunctions.h"
 
 using std::string;
 
@@ -29,7 +29,7 @@ QuadVector QuadVectorFunctions::ReadQuadVectorFromString(string LineString)
 		{
 			if(ScanningDouble)
 			{
-				DoubleStorageTemp = StringFunctions::ReadDoubleFromString(PartialSearchBuffer);
+				DoubleStorageTemp = VariableConversionFunctions::ReadDoubleFromString(PartialSearchBuffer);
 				StorageValue.StoreInVectorIndex(VectorIndex, DoubleStorageTemp);
 				PartialSearchBuffer = "";
 				VectorIndex++;

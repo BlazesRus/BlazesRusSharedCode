@@ -21,10 +21,12 @@ int main(int ConsoleParamNumber, char *CommandArgs [])
 	StringVectorList CraftedFile01;
 	//File Created for ObjectRegistry
 	StringVectorList CraftedFile02;
-	//File Created for Create Node lines data
+	//File Created for Create Node lines data (lines of code for NifNodeTree::AddNodeToTree)
 	StringVectorList CraftedFile03;
 	//File Created for Destroying Actual NodeData
 	StringVectorList CraftedFile04;
+	//File Created for NifNodeTree::CopyNodeToTree
+	StringVectorList CraftedFile05;
 	std::string LineString;
 	std::string TempString;
 	const size_t FileSize = LoadedFile.Size();
@@ -61,9 +63,10 @@ int main(int ConsoleParamNumber, char *CommandArgs [])
 		TempString += LineString;
 		TempString += "_Registry.AddData();";
 		CraftedFile03.Add(TempString);
-		TempString = "TargetObjectRegistry.";
+		TempString = "\tTargetObjectRegistry.";
 		TempString += LineString;
-		TempString += "_Registry.GetElementPointerV2(Index)->InternalName = InternalName;";
+		TempString += "_Registry.GetElementPointerV2(Index)->InternalName = CurrentNode->InternalName;";
+		CraftedFile03.Add(TempString);
 		CraftedFile03.Add("}");
 		TempString = "if(NodeType == ";
 		TempString += "\"";
@@ -76,10 +79,26 @@ int main(int ConsoleParamNumber, char *CommandArgs [])
 		TempString += "_Registry.Remove(IndexInRegistry);";
 		CraftedFile04.Add(TempString);
 		CraftedFile04.Add("}");
+		TempString = "if(TargetNodeType == ";
+		TempString += "\"";
+		TempString += LineString;
+		TempString += "\")";
+		CraftedFile05.Add(TempString);
+		CraftedFile05.Add("{");
+		TempString = "\tIndex = TargetObjectRegistry.";
+		TempString += LineString;
+		TempString += "_Registry.AddDataCopy(TargetNode);";
+		CraftedFile05.Add(TempString);
+		TempString = "\tTargetObjectRegistry.";
+		TempString += LineString;
+		TempString += "_Registry.GetElementPointerV2(Index)->InternalName = CurrentNode->InternalName;";
+		CraftedFile05.Add(TempString);
+		CraftedFile05.Add("}");
 	}
 	CraftedFile01.SaveDataToFileV3("ObjectRegistryClasses.txt");
 	CraftedFile02.SaveDataToFileV3("ObjectRegistry.txt");
 	CraftedFile03.SaveDataToFileV3("GenerateNodeLines.txt");
 	CraftedFile04.SaveDataToFileV3("DestroyActualNodeLines.txt");
+	CraftedFile05.SaveDataToFileV3("CopyNodeToTree.txt");
 	system("pause");
 }

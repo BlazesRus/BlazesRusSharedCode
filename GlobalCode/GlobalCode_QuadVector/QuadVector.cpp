@@ -2,8 +2,8 @@
 	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
 */
 #include "QuadVector.h"
-#include "StringFunctions.h"
-#include "MiscFunctions.h"
+#include "..\LocalLibraryVersions\VariableConversionFunctions.h"
+#include "..\GlobalCode_VariableLists\VariableTypeLists.h"
 
 void QuadVector::StoreInVectorIndex(int index, double TempValue)
 {
@@ -34,7 +34,7 @@ std::string QuadVector::ConvertToString()
 	TempString += " ";
 	TempString += std::to_string(PositionW);
 	TempString += ")";
-	TempString += StringFunctions::DoubleToStringConversion(1.1);
+	TempString += VariableConversionFunctions::DoubleToStringConversion(1.1);
 	return TempString;
 }
 
@@ -69,7 +69,7 @@ void QuadVector::ReadQuadVectorFromString(std::string LineString)
 		{
 			if(ScanningDouble)
 			{
-				DoubleStorageTemp = StringFunctions::ReadDoubleFromString(PartialSearchBuffer);
+				DoubleStorageTemp = VariableConversionFunctions::ReadDoubleFromString(PartialSearchBuffer);
 				StoreInVectorIndex(VectorIndex, DoubleStorageTemp);
 				PartialSearchBuffer = "";
 				VectorIndex++;
@@ -102,13 +102,13 @@ QuadVector::QuadVector(std::string TempString)
 			if(ValueExtractionBuffer != "")
 			{
 				//std::cout << "ValueStored:" << ValueExtractionBuffer << " VectorIndex:" << VectorIndex << "\n";
-				DoubleStorageTemp = StringFunctions::ReadDoubleFromString(ValueExtractionBuffer);
+				DoubleStorageTemp = VariableConversionFunctions::ReadDoubleFromString(ValueExtractionBuffer);
 				StoreInVectorIndex(VectorIndex, DoubleStorageTemp);
 				ValueExtractionBuffer = "";
 				VectorIndex++;
 			}
 		}
-		else if(StringChar == "." || StringFunctions::IsDigit(StringChar) || StringChar == "-")
+		else if(StringChar == "." || VariableConversionFunctions::IsDigit(StringChar) || StringChar == "-")
 		{
 			ValueExtractionBuffer += StringChar;
 		}

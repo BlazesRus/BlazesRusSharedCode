@@ -15,13 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DLLAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="NifNodeTree.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ObjectRegistryClasses.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DLLAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

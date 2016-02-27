@@ -7,46 +7,17 @@
 #include "..\..\GlobalCode\GlobalCode_VariableLists\VariableList.h"
 #include "..\..\GlobalCode\GlobalCode_VariableLists\StringVectorList.h"
 #include "..\..\GlobalCode\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h"
+#include "..\niflib\include\niflib.h"
+#include "..\..\GlobalCode\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
+#include "..\niflib\include\obj\NiAVObject.h"
+#include "..\niflib\include\obj\NiObject.h"
 //#include "gen\Header.h"
 
 class DLL_API NifNodeTreeData
 {
 private:
+	class NifNode;
 	class NifNodeTree;
-	struct NodeTypeDestructionData;
-	struct NodeTypeDestructionDataList;
-public:
-	//Basic NifNode Variables/Functions (Use as part of base of ObjectRegistryNodes combined with Node classes in Niflib)
-	//Actual full Node Data is Stored in Object Registry VariableLists
-	class NifNode : public LooseNodeTreeTemplate::Node
-	{
-	public:
-		/*std::string asString(bool verbose=false) const
-		{
-		}*/
-		//NodeType of Actual Node stored inside Object Registry
-		std::string NodeType = "";
-		//Index of actual node inside VariableList with name NodeType
-		size_t IndexInRegistry;
-		void ObtainAllChildNodeNamesForDestructionV2(NodeTypeDestructionDataList& DestructionData, NifNodeTree* NodeTreeTarget, StringVectorList& ListOfNodes)
-		{
-			const size_t ChildListSize = ChildInternalNames.Size();
-			NifNode* TargetNode;
-			std::string NodeName;
-			DestructionData.UpdateDestructionData(this);
-			for(size_t Index = 0; Index < ChildListSize; ++Index)
-			{
-				NodeName = ChildInternalNames.ElementAt(Index);
-				TargetNode = NodeTreeTarget->GetNodePointerFromInternalName(NodeName);
-				if(TargetNode != nullptr)
-				{
-					ListOfNodes.Add(NodeName);
-					TargetNode->ObtainAllChildNodeNamesForDestructionV2(DestructionData,NodeTreeTarget, ListOfNodes);
-				}
-			}
-		}
-		void DestroyNodeData(ObjectRegistry* TargetObjectRegistry);
-	};
 	struct NodeTypeDestructionData
 	{
 		size_t NodeTypeIndex;// = TargetNode->IndexInRegistry;
@@ -93,6 +64,55 @@ public:
 			}
 		}
 	};
+	static Niflib::NiObjectRef FindRoot(vector<Niflib::NiObjectRef> const & objects);
+	static inline std::string ConvertPointerToStringAddress(Niflib::NiObjectRef obj)
+	{//Based on combination of http://www.cplusplus.com/forum/beginner/114557/ and http://www.cplusplus.com/forum/general/8597/
+		std::stringstream ss;
+		ss << static_cast<const void*>(obj);
+		return ss.str();
+	}
+	static inline std::string ConvertPointerToStringAddress_NiObjectRef(Niflib::Ref<Niflib::NiObject> obj)
+	{//Based on combination of http://www.cplusplus.com/forum/beginner/114557/ and http://www.cplusplus.com/forum/general/8597/
+		std::stringstream ss;
+		ss << static_cast<const void*>(obj);
+		return ss.str();
+	}
+public:
+	//Basic NifNode Variables/Functions (Use as part of base of ObjectRegistryNodes combined with Node classes in Niflib)
+	//Actual full Node Data is Stored in Object Registry VariableLists
+	class NifNode : public LooseNodeTreeTemplate::Node
+	{
+	/** Notes of Altered usage of derived member variables
+	When importing NifFile: InternalName => StringAddress (string version of address of node), in order to help organize the NifNodeTree during import
+
+	*/
+	public:
+		/*std::string asString(bool verbose=false) const
+		{
+		}*/
+		//NodeType of Actual Node stored inside Object Registry
+		std::string NodeType = "";
+		//Index of actual node inside VariableList with name NodeType
+		size_t IndexInRegistry;
+		void ObtainAllChildNodeNamesForDestructionV2(NodeTypeDestructionDataList& DestructionData, NifNodeTree* NodeTreeTarget, StringVectorList& ListOfNodes)
+		{
+			const size_t ChildListSize = ChildInternalNames.Size();
+			NifNode* TargetNode;
+			std::string NodeName;
+			DestructionData.UpdateDestructionData(this);
+			for(size_t Index = 0; Index < ChildListSize; ++Index)
+			{
+				NodeName = ChildInternalNames.ElementAt(Index);
+				TargetNode = NodeTreeTarget->GetNodePointerFromInternalName(NodeName);
+				if(TargetNode != nullptr)
+				{
+					ListOfNodes.Add(NodeName);
+					TargetNode->ObtainAllChildNodeNamesForDestructionV2(DestructionData,NodeTreeTarget, ListOfNodes);
+				}
+			}
+		}
+		void DestroyNodeData(ObjectRegistry* TargetObjectRegistry);
+	};
 	class NifNodeTree : public LooseNodeTreeTemplate::NodeTree<NifNode>
 	{
 	public:
@@ -100,8 +120,8 @@ public:
 		ObjectRegistry TargetObjectRegistry;
 		Niflib::NifInfo NifHeaderInfo;
 		//************************************
-		// Method:    FixCurrentNodeData
-		// FullName:  LooseNodeTreeTemplate::NodeTree<NifNodeTreeData::NifNode>::FixCurrentNodeData
+		// Method:    AddNodeToTree
+		// FullName:  LooseNodeTreeTemplate::NodeTree<NifNodeTreeData::NifNode>::AddNodeToTree
 		// Access:    public 
 		// Returns:   void
 		// Qualifier:
@@ -112,13 +132,42 @@ public:
 		// Parameter: std::string InternalName
 		//************************************
 		void AddNodeToTree(std::string TargetNodeType, std::string TargetMenuMaster, std::string SpecialModifier = "", std::string ItemName = "", std::string InternalName = "");
+		//************************************
+		// Method:    CopyNodeToTree
+		// FullName:  NifNodeTreeData::NifNodeTree::CopyNodeToTree
+		// Access:    public 
+		// Returns:   void
+		// Qualifier:
+		// Parameter: Niflib::NiObjectRef TargetNode
+		// Parameter: std::string TargetMenuMaster
+		// Parameter: std::string SpecialModifier
+		// Parameter: std::string ItemName
+		// Parameter: std::string InternalName
+		//************************************
+		void CopyNodeToTree(Niflib::NiObjectRef TargetNode, std::string TargetMenuMaster, std::string SpecialModifier = "", std::string ItemName = "", std::string InternalName = "");
+		//************************************
+		// (Unfinished Placeholder method)
+		// Method:    CloneNodeByInternalNameAsOtherType
+		// FullName:  NifNodeTreeData::NifNodeTree::CloneNodeByInternalNameAsOtherType
+		// Access:    public 
+		// Returns:   void
+		// Qualifier:
+		// Parameter: std::string TargetNodeType
+		// Parameter: std::string TargetNodeName
+		//************************************
 		void CloneNodeByInternalNameAsOtherType(std::string TargetNodeType, std::string TargetNodeName)
 		{
 		}
+		//************************************
+		// Method:    DestroyTargetNodeAndAllItsChildrenV2
+		// FullName:  NifNodeTreeData::NifNodeTree::DestroyTargetNodeAndAllItsChildrenV2
+		// Access:    public 
+		// Returns:   void
+		// Qualifier:
+		// Parameter: NifNode * TargetNode
+		//************************************
 		void DestroyTargetNodeAndAllItsChildrenV2(NifNode* TargetNode)
 		{
-			//size_t const NodeTypeIndex = TargetNode->IndexInRegistry;
-			//std::string const NodeType = TargetNode->NodeType;
 			//Need to refactor IndexInRegistry for all with index for all destroyed
 			NodeTypeDestructionDataList DestructionData;
 			DestructionData.UpdateDestructionData(TargetNode);
@@ -189,6 +238,14 @@ public:
 				}
 			}
 		}
+		//************************************
+		// Method:    DestroyNodeAndAllItsChildrenV2
+		// FullName:  NifNodeTreeData::NifNodeTree::DestroyNodeAndAllItsChildrenV2
+		// Access:    public 
+		// Returns:   void
+		// Qualifier:
+		// Parameter: std::string TargetNodeInternalName
+		//************************************
 		void DestroyNodeAndAllItsChildrenV2(std::string TargetNodeInternalName)
 		{
 			CurrentNodeIndexUsed = false;
@@ -202,12 +259,39 @@ public:
 				DestroyTargetNodeAndAllItsChildrenV2(TargetNode);
 			}
 		}
-		/* List of Functions that don't need New Versions(Don't need to edit any ObjectRegistry Indexes,Although might need to code check later):
-		MoveNode(std::string TargetNodeInternalName, std::string TargetNodeMoveLocationInternalName)//Actual NodeData doesn't move when node Moves in NodeTree
-		*/
-		void ReadNifNodeTree(string const & FileName)
-		{//Need to create non-address based version of 
+		//Temporary Method for Importing NifFile(Called from ReadNifNodeTree)
+		void ImportNifFileV1_UsingNiflibFunctions(string const & FileName)
+		{
+			using namespace Niflib;
+			using NifListElement = Ref<NiObject>;
+			NifInfo Info;
+			vector< Ref<NiObject> > TargetNiObjectList = ReadNifList("skeleton.nif", &Info);
+			//size_t NifListSize = TargetNiObjectList.size();
+			NifHeaderInfo = Info;
+			//NifListElement TargetElement;
+			//for(size_t Index = 0; Index < NifListSize; ++Index)
+			//{
+			//	TargetElement = TargetNiObjectList.at(Index);
+			//}
+			NiObjectRef CurrentObjectNode = FindRoot(TargetNiObjectList);
 
+		}
+		//Temporary Method for Importing NifFile(Called from ReadNifNodeTree)
+		void ImportNifFileV1(string const & FileName)
+		{
+
+		}
+		//************************************
+		// Method:    ReadNifNodeTree
+		// FullName:  NifNodeTreeData::NifNodeTree::ReadNifNodeTree
+		// Access:    public 
+		// Returns:   void
+		// Qualifier:
+		// Parameter: string const & FileName
+		//************************************
+		void ReadNifNodeTree(string const & FileName)
+		{//Need to create non-address based version of Niflib::ReadNifTree
+			ImportNifFileV1(FileName);
 		}
 		NifNodeTree(string const & FileName)
 		{
@@ -215,6 +299,12 @@ public:
 		}
 		NifNodeTree(){}
 		~NifNodeTree() {}
+		/* List of Functions that don't need New Versions(Don't need to edit any ObjectRegistry Indexes,Although might need to code check later):
+		MoveNode(std::string TargetNodeInternalName, std::string TargetNodeMoveLocationInternalName)//Actual NodeData doesn't move when node Moves in NodeTree
+		*/
 	};
 };
+
+
+
 #endif

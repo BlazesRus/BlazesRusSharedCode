@@ -474,10 +474,152 @@ namespace ObjectRegistryClasses
 	template <typename NodeType>
 	class ObjectStorage : public VariableList<NodeType>
 	{
-		//Place Object Storage specialized functions here
+	public:
+		//************************************
+		// Attempt to ObjectNode data into storage(need to fix data copying from TargetNode later)
+		// Method:    AddDataCopy
+		// FullName:  ObjectRegistryClasses::ObjectStorage<NodeType>::AddDataCopy
+		// Access:    private 
+		// Returns:   size_t
+		// Qualifier:
+		// Parameter: Niflib::NiObjectRef TargetNode
+		//************************************
+		size_t AddDataCopy(Niflib::NiObjectRef TargetNode)
+		{
+			//Need to fix the conversion from Niflib::NiObjectRef to NodeType
+			//Add(DynamicCast<NodeType>(TargetNode));
+			//For now just adding blank data and manually copying some data from the inherited classes
+			AddData();
+			size_t Index = Size()-1;
+			NodeType* TargetIndex = GetElementPointerV2(Index);
+			//if(NodeType.typename() == "bhkRigidBody")
+			//{
+		///*! Unknown. Could be 2 shorts corresponding to Unknown 7 Shorts[1] and [2]. */
+		//int unknownInt1;
+				//TargetIndex->unknownInt1 = TargetNode->unknownInt1;
+		///*! Unknown. */
+		//int unknownInt2;
+		///*! Unknown. Could be 3 floats. */
+		//array<3, int > unknown3Ints;
+		///*! The collision response. See hkResponseType for hkpWorld default implementations. */
+		//hkResponseType collisionResponse_;
+		///*! Unknown */
+		//byte unknownByte;
+		///*!
+		// * Lowers the frequency for processContactCallbacks. A value of 5 means that a
+		// * callback is raised every 5th frame.
+		// */
+		//unsigned short processContactCallbackDelay_;
+		///*! Unknown. */
+		//array<2, unsigned short > unknown2Shorts;
+		///*! Copy of Layer value? */
+		//OblivionLayer layerCopy;
+		///*! Copy of Col Filter value? */
+		//byte colFilterCopy;
+		///*! Copy of Skyrim Layer value? */
+		//SkyrimLayer skyrimLayerCopy;
+		///*! Copy of Flags & Part number? */
+		//byte flagsAndPartNumberCopy;
+		///*!
+		// * Unknown.
+		// *             Oblivion defaults: 0 21280 2481 62977 65535 44 0
+		// *             Skyrim defaults: 0 56896 1343 0 0 1 65535 (fourth and fifth element
+		// * *must* be zero)
+		// */
+		//array<7, unsigned short > unknown7Shorts;
+		///*!
+		// * A vector that moves the body by the specified amount. Only enabled in
+		// * bhkRigidBodyT objects.
+		// */
+		//Vector4 translation;
+		///*!
+		// * The rotation Yaw/Pitch/Roll to apply to the body. Only enabled in bhkRigidBodyT
+		// * objects.
+		// */
+		//QuaternionXYZW rotation;
+		///*! Linear velocity. */
+		//Vector4 linearVelocity;
+		///*! Angular velocity. */
+		//Vector4 angularVelocity;
+		///*! Defines how the mass is distributed among the body. */
+		//InertiaMatrix inertia;
+		///*!
+		// * This seems to be used to relocate the object's center of mass. Useful for
+		// * balancing objects in contraints.
+		// */
+		//Vector4 center;
+		///*! The body's mass in kg. A mass of zero represents an immovable object. */
+		//float mass;
+		///*!
+		// * Damping value for linear movement. A value that is too small fixes the object in
+		// * place.
+		// */
+		//float linearDamping;
+		///*! Damping value for angular movement. */
+		//float angularDamping;
+		///*! Unknown. */
+		//float unknownTimefactorOrGravityfactor1;
+		///*! Unknown. */
+		//float unknownTimefactorOrGravityfactor2;
+		///*! The body's friction. */
+		//float friction;
+		///*! Unknown. */
+		//float rollingfrictionmultiplier_;
+		///*!
+		// * The body's restitution (elasticity).
+		// *             If the restitution is not 0.0 the object will need extra CPU for all
+		// * new collisions.
+		// *             Try to set restitution to 0 for maximum performance (e.g. collapsing
+		// * buildings)
+		// */
+		//float restitution;
+		///*! Maximal linear velocity. */
+		//float maxLinearVelocity;
+		///*! Maximal angular velocity. Pi x 10? */
+		//float maxAngularVelocity;
+		///*!
+		// * The maximum allowed penetration for this object.
+		// *             This is a hint to the engine to see how much CPU the engine should
+		// * invest to keep this object from penetrating.
+		// *             A good choice is 5% - 20% of the smallest diameter of the object.
+		// */
+		//float penetrationDepth;
+		///*! Motion system? Overrides Quality when on Keyframed? */
+		//MotionSystem motionSystem;
+		///*! The initial deactivator type of the body. */
+		//DeactivatorType deactivatorType;
+		///*!
+		// * Usually set to 1 for fixed objects, or set to 2 for moving ones.  Seems to
+		// * always be same as Unknown Byte 1.
+		// */
+		//SolverDeactivation solverDeactivation;
+		///*! The motion type. Determines quality of motion? */
+		//MotionQuality qualityType;
+		///*! Unknown. */
+		//unsigned int unknownInt6;
+		///*! Unknown. */
+		//unsigned int unknownInt7;
+		///*! Unknown. */
+		//unsigned int unknownInt8;
+		///*! Unknown. Skyrim only. */
+		//unsigned int unknownInt81;
+		///*! The number of constraints this object is bound to. */
+		//mutable unsigned int numConstraints;
+		///*! Unknown. */
+		//vector<Ref<bhkSerializable > > constraints;
+		///*! 0 = do not respond to wind, 1 = respond to wind (?) */
+		//unsigned int unknownInt9;
+		///*! Unknown. */
+		//unsigned short unknownInt91;
+			//}
+
+			return Size();
+		}
 	};
 	class NiObject : public BasicNode, public Niflib::NiObject {};
-	class NiObject_Storage : public ObjectStorage <NiObject> {};
+	class NiObject_Storage : public ObjectStorage <NiObject> 
+	{
+	};
 	class Ni3dsAlphaAnimator : public BasicNode, public Niflib::Ni3dsAlphaAnimator {};
 	class Ni3dsAlphaAnimator_Storage : public ObjectStorage <Ni3dsAlphaAnimator> {};
 	class Ni3dsAnimationNode : public BasicNode, public Niflib::Ni3dsAnimationNode {};

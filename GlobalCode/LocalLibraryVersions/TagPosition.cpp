@@ -2,12 +2,12 @@
 	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
 */
 #include "TagPosition.h"
-#include "StringFunctions.h"
+#include "VariableConversionFunctions.h"
 
 std::string TagPosition::PositionString()
 {
 	std::string PositionString = ParentIndexPosition.GenerateAsString();
 	PositionString += "-";
-	PositionString += StringFunctions::XIntToStringConversion(ListPosition);
+	PositionString += VariableConversionFunctions::XIntToStringConversion(ListPosition);
 	return PositionString;
 }

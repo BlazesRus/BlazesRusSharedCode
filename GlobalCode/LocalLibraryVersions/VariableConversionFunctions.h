@@ -304,72 +304,12 @@ public:
 	// Qualifier:
 	// Parameter: int32_t Value
 	//************************************
-	static float Int32ToFloat(int32_t Value);
-	//************************************
-	// Method:    DisplayFullValues_Vector
-	// FullName:  VariableConversionFunctions::DisplayFullValues_Vector
-	// Access:    public static 
-	// Returns:   std::string
-	// Qualifier:
-	// Parameter: float x
-	// Parameter: float y
-	// Parameter: float z
-	// Parameter: float w
-	//************************************
-	static std::string DisplayFullValues_Vector(float x, float y, float z, float w);
-	//************************************
-	// Method:    DisplayFullValues_Vector
-	// FullName:  VariableConversionFunctions::DisplayFullValues_Vector
-	// Access:    public static 
-	// Returns:   std::string
-	// Qualifier:
-	// Parameter: float x
-	// Parameter: float y
-	// Parameter: float z
-	//************************************
-	static std::string DisplayFullValues_Vector(float x, float y, float z);
-	//************************************
-	// Method:    DisplayFullValues_Vector
-	// FullName:  VariableConversionFunctions::DisplayFullValues_Vector
-	// Access:    public static 
-	// Returns:   std::string
-	// Qualifier:
-	// Parameter: float x
-	// Parameter: float y
-	//************************************
-	static std::string DisplayFullValues_Vector(float x, float y);
-	//************************************
-	// Method:    DisplayFullValues
-	// FullName:  VariableConversionFunctions::DisplayFullValues
-	// Access:    public static 
-	// Returns:   std::string
-	// Qualifier:
-	// Parameter: float x
-	// Parameter: float y
-	// Parameter: float z
-	// Parameter: float w
-	//************************************
-	static std::string DisplayFullValues(float x, float y, float z, float w);
-	//************************************
-	// Method:    DisplayFullValues
-	// FullName:  VariableConversionFunctions::DisplayFullValues
-	// Access:    public static 
-	// Returns:   std::string
-	// Qualifier:
-	// Parameter: float x
-	// Parameter: float y
-	// Parameter: float z
-	//************************************
-	static std::string DisplayFullValues(float x, float y, float z);
-	//************************************
-	// Method:    DisplayFullValues
-	// FullName:  VariableConversionFunctions::DisplayFullValues
-	// Access:    public static 
-	// Returns:   std::string
-	// Qualifier:
-	// Parameter: float x
-	// Parameter: float y
-	//************************************
-	static std::string DisplayFullValues(float x, float y);
+	float Int32ToFloat(int32_t Value);
+	std::string DisplayFullValues_Vector(float x, float y, float z, float w);
+	std::string DisplayFullValues_Vector(float x, float y, float z);
+	std::string DisplayFullValues_Vector(float x, float y);
+	std::string DisplayFullValues(float x, float y, float z, float w);
+	std::string DisplayFullValues(float x, float y, float z);
+	std::string DisplayFullValues(float x, float y);
 };
 #endif
