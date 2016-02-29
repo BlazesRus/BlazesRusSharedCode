@@ -29,10 +29,12 @@
   <ItemGroup>
     <ClInclude Include="DLLAPI.h" />
     <ClInclude Include="NifNodeTree.h" />
-    <ClInclude Include="ObjectRegistryClasses.h" />
+    <ClInclude Include="NifTreeObjectRegistry.h" />
+    <ClInclude Include="NifTreeObjectRegistryClasses.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NifNodeTree.cpp" />
+    <ClCompile Include="NifTreeObjectRegistry.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4CD5EB9D-0471-4D67-835A-72626C284E6A}</ProjectGuid>
@@ -183,7 +185,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NifNodeTreeAddon_DLL;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -225,7 +227,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NifNodeTreeAddon_DLL;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>

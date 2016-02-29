@@ -21,12 +21,18 @@
     <ClInclude Include="NifNodeTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectRegistryClasses.h">
+    <ClInclude Include="NifTreeObjectRegistry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NifTreeObjectRegistryClasses.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NifNodeTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NifTreeObjectRegistry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
