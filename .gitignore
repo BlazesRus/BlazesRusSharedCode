@@ -1,2 +1,8 @@
 /*.sdf
 /*.opensdf
+/*.obj
+/*.log
+/*.pdb
+/*.tlog
+/*.lastbuildstate
+/*.dll

@@ -2,9 +2,11 @@
 #ifndef NifTreeObjectRegistry_IncludeGuard
 #define NifTreeObjectRegistry_IncludeGuard
 
+#include "DLLAPI.h"
 #include "NifTreeObjectRegistryClasses.h"
 
-struct NifTreeObjectRegistry
+//NifNodeTree Version of ObjectRegistry
+struct DLL_API NifTreeObjectRegistry
 {
 	ObjectRegistryClasses::NiObject_Storage NiObject_Registry;
 	ObjectRegistryClasses::Ni3dsAlphaAnimator_Storage Ni3dsAlphaAnimator_Registry;
@@ -462,6 +464,21 @@ struct NifTreeObjectRegistry
 	ObjectRegistryClasses::BSConnectPoint__Parents_Storage BSConnectPoint__Parents_Registry;
 	ObjectRegistryClasses::BSConnectPoint__Children_Storage BSConnectPoint__Children_Registry;
 	void Reset();
+	struct ParentInfo
+	{
+		//Returns NodeType of parent Node
+		std::string ParentNodeType = "";
+		//Returns "" if no parent found. Otherwise, returns InternalName of parent node.
+		std::string ParentInternalName = "";
+	};
+	//************************************
+	// Method:    ReturnParentInfo
+	// FullName:  NifTreeObjectRegistry::ReturnParentInfo
+	// Access:    public 
+	// Returns:   NifTreeObjectRegistry::ParentInfo
+	// Qualifier:
+	//************************************
+	ParentInfo ReturnParentInfo();
 };
 
 #endif

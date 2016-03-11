@@ -14,7 +14,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)BinaryVectorList.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)IniData.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MiscFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QuadVector.cpp" />
@@ -34,7 +33,6 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)BinaryVectorList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IniData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)LooseNodeTreeTemplate.h">
       <ExcludedFromBuild>false</ExcludedFromBuild>

@@ -6,6 +6,8 @@
 #define VariableData_IncludeGuard
 
 #include <string>
+
+//Used for arg parameters of xml tags
 class VariableData
 {
 public:

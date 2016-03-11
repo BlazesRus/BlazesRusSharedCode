@@ -20,10 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MiscFunctions.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\DLLAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MiscFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,8 +2,21 @@
 	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
 */
 #include "QuadVector.h"
-#include "..\LocalLibraryVersions\VariableConversionFunctions.h"
+
+
+//Inside this ifdef block holds GlobalCode Environment library version of header structure (preprocessor defined inside all GlobalCode library configs)
+#ifdef BLAZESGLOBALCODE_LIBRARY
+#include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
 #include "..\GlobalCode_VariableLists\VariableTypeLists.h"
+//Local Version of headers here(within else block)
+#else
+#include "VariableConversionFunctions.h"
+#include "VariableTypeLists.h"
+//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
+#ifndef DLL_API
+#define DLL_API
+#endif
+#endif
 
 void QuadVector::StoreInVectorIndex(int index, double TempValue)
 {

@@ -8,7 +8,21 @@
 #include "VariableTypeLists.h"
 #include <string>
 
-class VariableVectorFunctions
+
+//Inside this ifdef block holds GlobalCode Environment library version of header structure (preprocessor defined inside all GlobalCode library configs)
+#ifdef BLAZESGLOBALCODE_LIBRARY
+#include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
+#include "..\DLLAPI.h"
+//Local Version of headers here(within else block)
+#else
+#include "VariableConversionFunctions.h"
+//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
+#ifndef DLL_API
+#define DLL_API
+#endif
+#endif
+
+class DLL_API VariableVectorFunctions
 {
 public:
 	//Return param of strings from things like havok lists
@@ -50,6 +64,161 @@ public:
 	* @return
 	*/
 	static size_t GetNumberOfParamsFromString(std::string LineString);
+	static DoubleList ConvertStringToDoubleList(std::string Content)
+	{
+		DoubleList ConvertedValue;
+		const size_t StringSize = Content.length();
+		char CurrentChar;
+		std::string CurrentElement = "";
+		for(size_t Index = 0; Index < StringSize; ++Index)
+		{
+			CurrentChar = Content.at(Index);
+			if(CurrentElement == "")
+			{
+				if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+				{
+					CurrentElement = CurrentChar;
+				}
+			}
+			else
+			{
+				if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+				{
+					CurrentElement += CurrentChar;
+				}
+				else
+				{
+					ConvertedValue.Add(VariableConversionFunctions::ReadDoubleFromString(CurrentElement));
+					CurrentElement = "";
+				}
+			}
+		}
+		return ConvertedValue;
+	}
+	static IntegerList ConvertStringToIntegerList(std::string Content)
+	{
+		IntegerList ConvertedValue;
+		const size_t StringSize = Content.length();
+		char CurrentChar;
+		std::string CurrentElement = "";
+		for(size_t Index = 0; Index < StringSize; ++Index)
+		{
+			CurrentChar = Content.at(Index);
+			if(CurrentElement == "")
+			{
+				if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+				{
+					CurrentElement = CurrentChar;
+				}
+			}
+			else
+			{
+				if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+				{
+					CurrentElement += CurrentChar;
+				}
+				else
+				{
+					ConvertedValue.Add(VariableConversionFunctions::ReadIntFromString(CurrentElement));
+					CurrentElement = "";
+				}
+			}
+		}
+		return ConvertedValue;
+	}
+	static XIntegerList ConvertStringToXIntegerList(std::string Content)
+	{
+		XIntegerList ConvertedValue;
+		const size_t StringSize = Content.length();
+		char CurrentChar;
+		std::string CurrentElement = "";
+		for(size_t Index = 0; Index < StringSize; ++Index)
+		{
+			CurrentChar = Content.at(Index);
+			if(CurrentElement == "")
+			{
+				if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+				{
+					CurrentElement = CurrentChar;
+				}
+			}
+			else
+			{
+				if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+				{
+					CurrentElement += CurrentChar;
+				}
+				else
+				{
+					ConvertedValue.Add(VariableConversionFunctions::ReadXIntFromString(CurrentElement));
+					CurrentElement = "";
+				}
+			}
+		}
+		return ConvertedValue;
+	}
+	static BoolList ConvertStringToBoolList(std::string Content)
+	{
+		BoolList ConvertedValue;
+		const size_t StringSize = Content.length();
+		char CurrentChar;
+		std::string CurrentElement = "";
+		for(size_t Index = 0; Index < StringSize; ++Index)
+		{
+			CurrentChar = Content.at(Index);
+			if(CurrentElement == "")
+			{
+				if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+				{
+					CurrentElement = CurrentChar;
+				}
+			}
+			else
+			{
+				if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+				{
+					CurrentElement += CurrentChar;
+				}
+				else
+				{
+					ConvertedValue.Add(VariableConversionFunctions::ReadBoolFromString(CurrentElement));
+					CurrentElement = "";
+				}
+			}
+		}
+		return ConvertedValue;
+	}
+	static StringVectorList ConvertStringToStringVectorList(std::string Content)
+	{
+		StringVectorList ConvertedValue;
+		const size_t StringSize = Content.length();
+		char CurrentChar;
+		std::string CurrentElement = "";
+		for(size_t Index = 0; Index < StringSize; ++Index)
+		{
+			CurrentChar = Content.at(Index);
+			if(CurrentElement == "")
+			{
+				if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+				{
+					CurrentElement = CurrentChar;
+				}
+			}
+			else
+			{
+				if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+				{
+					CurrentElement += CurrentChar;
+				}
+				else
+				{
+					ConvertedValue.Add(CurrentElement);
+					CurrentElement = "";
+				}
+			}
+		}
+		return ConvertedValue;
+	}
 	VariableVectorFunctions();
 	~VariableVectorFunctions();
 };

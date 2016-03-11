@@ -27,13 +27,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BinaryVectorList.cpp" />
     <ClCompile Include="SuperDec.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\DLLAPI.h" />
-    <ClInclude Include="BinaryVectorList.h" />
+    <ClInclude Include="DocGenerator.h" />
     <ClInclude Include="SuperDec.h" />
+    <ClInclude Include="VariableListV2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DB3355AC-AC98-4359-A22C-914956D9A058}</ProjectGuid>
@@ -118,6 +118,7 @@
     <OutDir>$(SolutionDir)GlobalCode\GlobalCodeLibraries\</OutDir>
     <IntDir>$(ProjectDir)GlobalCode/Intermediate/$(ProjectName)/$(Platform)</IntDir>
     <TargetName>$(ProjectName)_$(Platform)</TargetName>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(SolutionDir)GlobalCode\GlobalCodeLibraries\;</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)GlobalCode\GlobalCodeLibraries\</OutDir>
@@ -134,6 +135,7 @@
     <OutDir>$(SolutionDir)GlobalCode\GlobalCodeLibraries\</OutDir>
     <IntDir>$(ProjectDir)GlobalCode/Intermediate/$(ProjectName)/$(Platform)</IntDir>
     <TargetName>$(ProjectName)_$(Platform)</TargetName>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)GlobalCode\GlobalCodeLibraries\;</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -141,7 +143,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;DLLAPI_EXPORTS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BLAZESGLOBALCODE_LIBRARY;BLAZESGLOBALCODE_LIBRARY;WIN32;DLLAPI_EXPORTS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
@@ -154,6 +156,9 @@
     <Xdcmake>
       <OutputFile>$(SolutionDir)GlobalCode/BlazesRusGlobalCodeDocs/$(TargetName).xml</OutputFile>
     </Xdcmake>
+    <Lib>
+      <AdditionalDependencies>$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_VariableLists_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_StringFunctions_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_VariableConversionFunctions_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_NodeTrees_$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -161,7 +166,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;DLLAPI_EXPORTS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BLAZESGLOBALCODE_LIBRARY;BLAZESGLOBALCODE_LIBRARY;WIN32;DLLAPI_EXPORTS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
@@ -174,6 +179,9 @@
     <Xdcmake>
       <OutputFile>$(SolutionDir)GlobalCode/BlazesRusGlobalCodeDocs/$(TargetName).xml</OutputFile>
     </Xdcmake>
+    <Lib>
+      <AdditionalDependencies>$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_VariableLists_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_StringFunctions_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_VariableConversionFunctions_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_NodeTrees_$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -183,7 +191,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;DLLAPI_EXPORTS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BLAZESGLOBALCODE_LIBRARY;BLAZESGLOBALCODE_LIBRARY;WIN32;DLLAPI_EXPORTS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
@@ -199,7 +207,7 @@
       <OutputFile>$(SolutionDir)GlobalCode/BlazesRusGlobalCodeDocs/$(TargetName).xml</OutputFile>
     </Xdcmake>
     <Lib>
-      <AdditionalDependencies>$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_VariableLists_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_StringFunctions_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_VariableConversionFunctions_$(Platform).lib;</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_VariableLists_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_StringFunctions_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_VariableConversionFunctions_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_NodeTrees_$(Platform).lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_DLL|Win32'">
@@ -210,7 +218,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;DLLAPI_EXPORTS;GlobalCodeAsDLL;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BLAZESGLOBALCODE_LIBRARY;BLAZESGLOBALCODE_LIBRARY;WIN32;DLLAPI_EXPORTS;GlobalCodeAsDLL;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
@@ -234,7 +242,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;DLLAPI_EXPORTS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BLAZESGLOBALCODE_LIBRARY;WIN32;DLLAPI_EXPORTS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
@@ -250,7 +258,7 @@
       <OutputFile>$(SolutionDir)GlobalCode/BlazesRusGlobalCodeDocs/$(TargetName).xml</OutputFile>
     </Xdcmake>
     <Lib>
-      <AdditionalDependencies>$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_VariableLists_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_StringFunctions_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_VariableConversionFunctions_$(Platform).lib;</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_VariableLists_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_StringFunctions_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_VariableConversionFunctions_$(Platform).lib;$(SolutionDir)GlobalCode\GlobalCodeLibraries\GlobalCode_NodeTrees_$(Platform).lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_DLL|x64'">
@@ -261,7 +269,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;DLLAPI_EXPORTS;GlobalCodeAsDLL;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BLAZESGLOBALCODE_LIBRARY;BLAZESGLOBALCODE_LIBRARY;WIN32;DLLAPI_EXPORTS;GlobalCodeAsDLL;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>

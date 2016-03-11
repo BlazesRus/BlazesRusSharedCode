@@ -14,7 +14,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XMLOption.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SuperDec.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TagNodeTreeTemplate.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)BinaryVectorList.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)VariableConversionFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -34,7 +33,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)XMLOption.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SuperDec.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TagNodeTreeTemplate.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)BinaryVectorList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)VariableConversionFunctions.h" />
   </ItemGroup>
 </Project>

@@ -491,11 +491,9 @@ std::string VariableConversionFunctions::DoubleToStringConversion(double TempVal
 	{
 		DigitString += ".";
 		int DecimalPlaces = NumberOfDecimalPlaces(DecimalHalf);
-		for(int Index = 0; Index < DecimalPlaces; ++Index)
+		for(unsigned int Index = 0; Index < DecimalPlaces; ++Index)
 		{
-			DecimalHalf *= 10;
-			CurrentDigit = floor(DecimalHalf);
-			DecimalHalf -= CurrentDigit;
+			CurrentDigit = floor(DecimalHalf*(10*pow(10,Index)));
 			DigitString += DigitAsChar(CurrentDigit);
 		}
 	}

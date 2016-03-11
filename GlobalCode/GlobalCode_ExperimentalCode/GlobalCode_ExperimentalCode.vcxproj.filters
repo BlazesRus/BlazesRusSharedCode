@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BinaryVectorList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SuperDec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -29,7 +26,10 @@
     <ClInclude Include="SuperDec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BinaryVectorList.h">
+    <ClInclude Include="DocGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableListV2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

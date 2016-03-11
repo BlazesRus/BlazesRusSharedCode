@@ -24,8 +24,8 @@ struct DLL_API LooseNodeTreeTemplate
 	class DLL_API Node
 	{
 	public:
-		//Node connected in 3d way to NodeTree(things like ExtraData);(Alters auto-naming sense used)
-		bool IsLooseNode = false;
+#ifndef NodeTree_AlternativeInternalName
+		//InternalName of child elements to this node
 		StringVectorList ChildInternalNames;
 		//AutoGenerate InternalName based on XMLPosition unless specified(InternalName must be unique;Required for pointer fixes)
 		//Example: ParentIndexPositionString-ListPosition ("-0" for first Tag in menu)
@@ -34,6 +34,54 @@ struct DLL_API LooseNodeTreeTemplate
 		//InternalName of parent(fix for pointer invalidation);"(Core)"=Connected at base of NodeTree;"(LooseNodes)"=Connected to LooseNodes (not part of main 3d NodeTree)
 		//Reserve "(InvalidPointer)" for non-existing Internal names of Pointers
 		std::string ParentInternalName = "";
+		bool IsLooseNode()
+		{
+			if(ParentInternalName == "LooseNodes" || ParentInternalName == "")
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		void SearchAndBuildOutputNodeInternalName(StringVectorList& OutputBuffer, int& OutputLvl)
+		{
+			std::cout << StringFunctions::CreateTabSpace(OutputLvl) << "[" << InternalName << "]\n";
+		}
+		template <typename NodeTreeType>
+		void SearchAndBuildOutputNodeInternalNameWithin(NodeTreeType* NodeTreeTarget, StringVectorList& OutputBuffer, int& OutputLvl)
+		{
+			std::string TargetNameTemp;
+			NodeTreeType* TargetNode;
+			SearchAndBuildOutputNodeInternalName(OutputBuffer, OutputLvl);
+			const size_t ChildListSize = ChildInternalNames.Size();
+			for(size_t Index = 0; Index < ChildListSize; ++Index)
+			{
+				TargetNameTemp = ChildInternalNames.ElementAt(Index);
+				TargetNode = NodeTreeTarget->GetNodePointerFromInternalName(NodeName);
+				if(TargetNode != nullptr)
+				{
+					TargetNode->SearchAndBuildOutputNodeInternalNameWithin(NodeTreeTarget, OutputBuffer, OutputLvl);
+				}
+			}
+		}
+//Finish Alternative InternalID code later
+#elif NodeTree_AlternativeInternalName == 1
+		//InternalID of child elements to this node
+		VariableList <unsigned __int32> ChildInternalNames;
+		//InternalID of Node(Must be unique inside NodeTree)
+		unsigned __int32 InternalID = 4294967294;
+		//InternalID of ParentNode
+		unsigned __int32 ParentInternalID = 4294967294;
+#elif NodeTree_AlternativeInternalName == 2
+		//InternalID of child elements to this node
+		VariableList <unsigned __int64> ChildInternalNames;
+		//InternalID of Node(Must be unique inside NodeTree)
+		unsigned __int64 InternalID = 18446744073709551615;
+		//InternalID of ParentNode
+		unsigned __int64 ParentInternalID = 18446744073709551615;
+#endif
 		//Note:Position data will be messed up if some nodes are destroyed in some situations(would need to recalculate position in such cases) 
 		TagPosition PositionInTree;
 		//Name of Node
@@ -66,26 +114,11 @@ struct DLL_API LooseNodeTreeTemplate
 				}
 			}
 		}
-		void SearchAndBuildOutputNodeInternalName(StringVectorList& OutputBuffer, int& OutputLvl)
+		void Reset()
 		{
-			std::cout << StringFunctions::CreateTabSpace(OutputLvl) << "[" << InternalName << "]\n";
-		}
-		template <typename NodeTreeType>
-		void SearchAndBuildOutputNodeInternalNameWithin(NodeTreeType* NodeTreeTarget, StringVectorList& OutputBuffer, int& OutputLvl)
-		{
-			std::string TargetNameTemp;
-			NodeTreeType* TargetNode;
-			SearchAndBuildOutputNodeInternalName(OutputBuffer, OutputLvl);
-			const size_t ChildListSize = ChildInternalNames.Size();
-			for(size_t Index = 0; Index < ChildListSize; ++Index)
-			{
-				TargetNameTemp = ChildInternalNames.ElementAt(Index);
-				TargetNode = NodeTreeTarget->GetNodePointerFromInternalName(NodeName);
-				if(TargetNode != nullptr)
-				{
-					TargetNode->SearchAndBuildOutputNodeInternalNameWithin(NodeTreeTarget, OutputBuffer, OutputLvl);
-				}
-			}
+			ChildInternalNames.Reset();
+			PositionInTree.ListPosition = -1;
+			PositionInTree.ParentIndexPosition.Reset();
 		}
 		Node() {}
 		~Node() {}
@@ -105,8 +138,17 @@ struct DLL_API LooseNodeTreeTemplate
 		size_t CurrentNodeIndex=0;
 		//Current Saved XML Tag Edited/Added
 		NodeType* CurrentNode = nullptr;
+//use NodeTree_AlternativeInternalName if need to save extra memory by storing InternalName as integer values instead of names
+#ifndef NodeTree_AlternativeInternalName
 		//InternalName of CurrentNode(for fixing Pointer)
-		std::string CurrentTagInternalName = "";
+		std::string CurrentNodeInternalName = "";
+#elif NodeTree_AlternativeInternalName == 1
+		//InternalID of CurrentNode(32 Bit Int) max value=ValueNotSet (limits Number of usable nodes to between 0 - 4,294,967,293
+		unsigned __int32 CurrentNodeInternalID = 4294967294;//(unsigned __int32) std::numeric_limits<unsigned __int32>::max();
+#elif NodeTree_AlternativeInternalName == 2
+		//InternalID of CurrentNode(64 Bit Int) max value=ValueNotSet (limits Number of usable nodes to between 0 - 18,446,744,073,709,551,614
+		unsigned __int64 CurrentNodeInternalID = 18446744073709551615;//(unsigned __int64) std::numeric_limits<unsigned __int64>::max();
+#endif
 		//Used for Nodes not part of 3d Node Tree (for things such as extra data nodes in Niflib)
 		StringVectorList BaseLooseNode;
 		//Root internal Nodes
@@ -259,7 +301,7 @@ struct DLL_API LooseNodeTreeTemplate
 			}
 			ElementPointer->ParentInternalName = "(Core)";
 			RootInternalNodes.Add(ElementPointer->InternalName);
-			CurrentTagInternalName = ElementPointer->InternalName;
+			CurrentNodeInternalName = ElementPointer->InternalName;
 		}
 		void AddLooseNode(std::string NodeName = "", std::string InternalName = "")
 		{
@@ -288,7 +330,7 @@ struct DLL_API LooseNodeTreeTemplate
 		void SetCurrentNode(NodeType* PointerTemp)
 		{
 			CurrentNode = PointerTemp;
-			CurrentTagInternalName = CurrentNode->InternalName;
+			CurrentNodeInternalName = CurrentNode->InternalName;
 		}
 		//************************************
 		// Finds Node with Associated InternalName(Fix for Pointer invalidation);Returns nullptr if not found
@@ -327,11 +369,11 @@ struct DLL_API LooseNodeTreeTemplate
 			CurrentNode = GetNodePointerFromInternalName(Name);
 			if(CurrentNode == nullptr)
 			{
-				CurrentTagInternalName = "";
+				CurrentNodeInternalName = "";
 			}
 			else
 			{
-				CurrentTagInternalName = Name;
+				CurrentNodeInternalName = Name;
 			}
 		}
 		//************************************
@@ -344,12 +386,12 @@ struct DLL_API LooseNodeTreeTemplate
 		//************************************
 		void FixCurrentNodeData()
 		{
-			if(CurrentNodeIndexUsed&&(CurrentNode == nullptr||CurrentNode->InternalName != CurrentTagInternalName))
+			if(CurrentNodeIndexUsed&&(CurrentNode == nullptr||CurrentNode->InternalName != CurrentNodeInternalName))
 			{
 				CurrentNode = GetElementPointerV2(CurrentNodeIndex);
-				CurrentTagInternalName = CurrentNode->InternalName;
+				CurrentNodeInternalName = CurrentNode->InternalName;
 			}
-			else if((CurrentNode == nullptr&&CurrentTagInternalName != "")||CurrentNode->InternalName != CurrentTagInternalName)
+			else if((CurrentNode == nullptr&&CurrentNodeInternalName != "")||CurrentNode->InternalName != CurrentNodeInternalName)
 			{
 				const size_t SizeTemp = Size();
 				NodeType* NodePointer = nullptr;
@@ -357,7 +399,7 @@ struct DLL_API LooseNodeTreeTemplate
 				for(size_t Index=0; Index < SizeTemp&&TargetNodePointer==nullptr; ++Index)
 				{
 					NodePointer = GetElementPointerV2(Index);
-					if(NodePointer->InternalName == CurrentTagInternalName)
+					if(NodePointer->InternalName == CurrentNodeInternalName)
 					{
 						TargetNodePointer = NodePointer;
 						CurrentNodeIndex = Index;
@@ -365,7 +407,7 @@ struct DLL_API LooseNodeTreeTemplate
 				}
 				if(TargetNodePointer==nullptr)
 				{
-					CurrentTagInternalName = "";
+					CurrentNodeInternalName = "";
 				}
 				else
 				{
@@ -462,7 +504,7 @@ struct DLL_API LooseNodeTreeTemplate
 		}
 		void AddLastItem(std::string SpecialModifier = "", std::string ItemName = "", std::string InternalName = "")
 		{
-			if(CurrentTagInternalName == "")
+			if(CurrentNodeInternalName == "")
 			{
 				std::cout << "No current node selected. Adding item data to root instead.\n";
 				AddNodeToRoot(ItemName, InternalName);
@@ -576,7 +618,7 @@ struct DLL_API LooseNodeTreeTemplate
 				CurrentNode = FindFirstNodeWithMatchingNodeName(TargetMenuMaster);
 				SpecialModifier = "AddSubItem";
 				SetCurrentNodeByName(TargetMenuMaster);
-				if(CurrentTagInternalName == "")
+				if(CurrentNodeInternalName == "")
 				{
 					std::cout << "Error:Node with NodeName of " << TargetMenuMaster << " not found.\nNo Node added.\n";
 				}
@@ -590,7 +632,7 @@ struct DLL_API LooseNodeTreeTemplate
 				CurrentNode = FindFirstNodeWithMatchingNodeName(TargetMenuMaster);
 				SpecialModifier = "";
 				SetCurrentNodeByName(TargetMenuMaster);
-				if(CurrentTagInternalName == "")
+				if(CurrentNodeInternalName == "")
 				{
 					std::cout << "Error:Node with NodeName of " << TargetMenuMaster << " not found.\nNo Node added.\n";
 				}
@@ -618,7 +660,7 @@ struct DLL_API LooseNodeTreeTemplate
 				{
 					SetCurrentNodeByName(TargetMenuMaster);
 				}
-				if(CurrentTagInternalName == "")
+				if(CurrentNodeInternalName == "")
 				{
 					if(TargetModifier==2||TargetModifier==1)
 					{

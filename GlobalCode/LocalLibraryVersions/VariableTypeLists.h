@@ -9,7 +9,22 @@
 #include "StringVectorList.h"
 #include <string>
 
-class IntegerList : public VariableList < int >
+//Inside this ifdef block holds GlobalCode Environment library version of header structure (preprocessor defined inside all GlobalCode library configs)
+#ifdef BLAZESGLOBALCODE_LIBRARY
+#include "..\DLLAPI.h"
+//Local Version of headers here(within else block)
+#else
+//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
+#ifndef DLL_API
+#define DLL_API
+#endif
+#endif
+
+#ifdef AddBinaryFunctions
+#include <bitset>
+#endif
+
+class DLL_API IntegerList : public VariableList < int >
 {
 public:
 	//************************************
@@ -73,9 +88,16 @@ public:
 	//************************************
 	std::string GenerateAsString();
 	void ConvertStringToVectorList(std::string Content);
+#ifdef AddBinaryFunctions
+	std::bitset<32> RetrieveElementAsBitSet(size_t Index)
+	{
+		uint8_t Element = ElementAt(Index);
+		std::bitset<32> bitten(Element);
+	}
+#endif
 };
 
-class XIntegerList : public VariableList < long long int >
+class DLL_API XIntegerList : public VariableList < long long int >
 {
 public:
 	//************************************
@@ -139,9 +161,16 @@ public:
 	//************************************
 	std::string GenerateAsString();
 	void ConvertStringToVectorList(std::string Content);
+#ifdef AddBinaryFunctions
+	std::bitset<64> RetrieveElementAsBitSet(size_t Index)
+	{
+		uint8_t Element = ElementAt(Index);
+		std::bitset<64> bitten(Element);
+	}
+#endif
 };
 
-class DoubleList : public VariableList < double >
+class DLL_API DoubleList : public VariableList < double >
 {
 public:
 	size_t AddData();
@@ -150,12 +179,19 @@ public:
 	void ConvertStringToVectorList(std::string Content);
 };
 
-class BoolList : public VariableList < bool >
+class DLL_API BoolList : public VariableList < bool >
 {
 public:
 	size_t AddData();
 	void SaveDataToFile(std::string Path);
 	StringVectorList AsStringList();
 	void ConvertStringToVectorList(std::string Content);
+#ifdef AddBinaryFunctions
+	std::bitset<8> RetrieveElementAsBitSet(size_t Index)
+	{
+		bool Element = ElementAt(Index);
+		std::bitset<8> bitten(Element);
+	}
+#endif
 };
 #endif

@@ -6,10 +6,11 @@
 #define TagNodeTreeTemplate_IncludeGuard
 
 #include "LooseNodeTreeTemplate.h"
-#include "XMLOption.h"
+#include "..\DLLAPI.h"
 
 //Derivative of LooseNodeTree for XML style data (with TagContent etc)
-namespace TagNodeTreeTemplateData
+//Main additions from derived code -> to TagContent related code/variables
+struct DLL_API TagNodeTreeTemplateData
 {
 	//Send and share Data through Node optimization (less complicated detection of TagContent variable types)
 	struct OptimizationData
@@ -17,35 +18,15 @@ namespace TagNodeTreeTemplateData
 		std::string CurrentHavokClass = "";
 		std::string CurrentActionDataSection_01 = "";
 	};
-	struct TagNodeFunctions
-	{
-		//************************************
-		// Method:    FindContentType
-		// FullName:  TagNodeTreeTemplateData::TagNodeFunctions::FindContentType
-		// Access:    public static 
-		// Returns:   size_t
-		// Qualifier:
-		// Parameter: std::string Content
-		//************************************
-		static unsigned __int8 FindContentType(std::string Content);
-		//************************************
-		// Method:    ConvertStringToStringVectorList
-		// FullName:  TagNodeTreeTemplateData::TagNodeFunctions::ConvertStringToStringVectorList
-		// Access:    public static 
-		// Returns:   StringVectorList
-		// Qualifier:
-		// Parameter: std::string Content
-		//************************************
-		static StringVectorList ConvertStringToStringVectorList(std::string Content);
-	};
 	struct TagNodeTreeSharedData
 	{
 		size_t TabLevel = 0;
 	};
+	//Node Template for TagNodeTreeTemplateData
 	class Node : public LooseNodeTreeTemplate::Node
 	{
 	public:
-		//Internal Name of Tag Closing Tag Connected To
+		//Internal Name of Tag Closing Tag Connected To(Used for Destroying Closing Tag when destroying NodesWithin) 
 		std::string InternalNameOfTagClosed = "";
 		//Detects if either Closing Tag, Closed Tag, or Neither
 		//0 = Tag is not a Closing Tag
@@ -84,6 +65,7 @@ namespace TagNodeTreeTemplateData
 		//251:Unknown(String) with only whitespace and
 		//252:Node Link(Internal Name of Node Linking to);For use with HTML/XML generation of Tree
 		unsigned __int8 TagContentType = 0;
+		//Additional Tag Args
 		XMLOptionList AdditionTagOptions;
 		bool SelfContainedTag = false;
 		bool XMLVersionTag = false;
@@ -114,7 +96,7 @@ namespace TagNodeTreeTemplateData
 		{
 			if(TagContentType == 0 && TagContent != "")
 			{
-				TagContentType = TagNodeFunctions::FindContentType(TagContent);
+				TagContentType = StringFunctions::FindContentType(TagContent);
 			}
 		}
 		//************************************
@@ -218,7 +200,7 @@ namespace TagNodeTreeTemplateData
 			}
 		}
 	};
-	//NodeType = Node (Templated Node here)
+	//Node Template for TagNodeTreeTemplateData(NodeType = (Templated Node here))
 	template <typename NodeType>
 	class NodeTree : public LooseNodeTreeTemplate::NodeTree <NodeType>
 	{
@@ -497,9 +479,30 @@ namespace TagNodeTreeTemplateData
 			}
 		}
 		//************************************
+		// Method:    GenerateHTMLDoc
+		// FullName:  TagNodeTreeTemplateData::NodeTree<NodeType>::GenerateHTMLDoc
+		// Access:    public 
+		// Returns:   void
+		// Qualifier:
+		// Parameter: StringVectorList & FileStreamString
+		// Parameter: size_t & TabLevel
+		// Parameter: const unsigned __int8 GenerationOptions
+		//************************************
+		void GenerateHTMLDoc(StringVectorList& FileStreamString, size_t& TabLevel, const unsigned __int8 GenerationOptions=0)
+		{
+			std::string TempString;
+			NodeType* NodePointer;
+			const size_t SizeTemp = RootInternalNodes.Size();
+			for(size_t Index = 0; Index < SizeTemp; ++Index)
+			{
+				TempString = RootInternalNodes.ElementAt(Index);
+				NodePointer = GetNodePointerFromInternalName(TempString);
+				NodePointer->GenerateHTMLDocWithin(this, FileStreamString, TabLevel, GenerationOptions);
+			}
+		}
+		//************************************
 		// GenerationOptions:
 		// 0 = Default
-		// 1 = Auto-Align Nodes
 		// Method:    GenerateHTMLDoc
 		// FullName:  TagNodeTreeTemplateData::NodeTree<NodeType>::GenerateHTMLDoc
 		// Access:    public 

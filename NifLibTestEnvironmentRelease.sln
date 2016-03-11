@@ -65,12 +65,23 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUICodeGenerator", "Utility
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SourceMergeMover", "UtilityTools\SourceMergeMover\SourceMergeMover.vcxproj", "{7AA04C9E-D924-4FED-B9BF-2FC73E0E526F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GeneratedCodeLines", "GeneratedCodeLines", "{AC7EFCB4-D7F8-40D4-83C2-E229126ECEFD}"
+	ProjectSection(SolutionItems) = preProject
+		UtilityTools\ObjectRegistryCodeGenerator\CopyNodeToTree.txt = UtilityTools\ObjectRegistryCodeGenerator\CopyNodeToTree.txt
+		UtilityTools\ObjectRegistryCodeGenerator\DestroyActualNodeLines.txt = UtilityTools\ObjectRegistryCodeGenerator\DestroyActualNodeLines.txt
+		UtilityTools\ObjectRegistryCodeGenerator\GenerateNodeLines.txt = UtilityTools\ObjectRegistryCodeGenerator\GenerateNodeLines.txt
+		UtilityTools\ObjectRegistryCodeGenerator\Object Registry Aliases.txt = UtilityTools\ObjectRegistryCodeGenerator\Object Registry Aliases.txt
+		UtilityTools\ObjectRegistryCodeGenerator\ObjectRegistry.txt = UtilityTools\ObjectRegistryCodeGenerator\ObjectRegistry.txt
+		UtilityTools\ObjectRegistryCodeGenerator\ObjectRegistryClasses.txt = UtilityTools\ObjectRegistryCodeGenerator\ObjectRegistryClasses.txt
+		UtilityTools\ObjectRegistryCodeGenerator\ResetObjectRegistry.txt = UtilityTools\ObjectRegistryCodeGenerator\ResetObjectRegistry.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BoostLibraries", "BoostLibraries", "{AEEF616A-002A-405B-919D-ACFC2C26711B}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		GlobalCode\LocalLibraryVersions\GlobalCode.vcxitems*{7aa04c9e-d924-4fed-b9bf-2fc73e0e526f}*SharedItemsImports = 4
 		GlobalCode\LocalLibraryVersions\GlobalCode.vcxitems*{0fe283fb-a9f1-423c-b9e2-1ea6f1e8fcb2}*SharedItemsImports = 4
 		GlobalCode\LocalLibraryVersions\GlobalCode.vcxitems*{d9a61189-2607-4118-8437-d444a076190a}*SharedItemsImports = 4
-		GlobalCode\LocalLibraryVersions\GlobalCode.vcxitems*{77cbec2b-6aa6-493e-83e8-78a10b8735fc}*SharedItemsImports = 4
 		GlobalCode\LocalLibraryVersions\GlobalCode.vcxitems*{fdf6c044-319f-445f-9224-a09728178ee8}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1525,5 +1536,7 @@ Global
 		{0FE283FB-A9F1-423C-B9E2-1EA6F1E8FCB2} = {04141C0A-DEC1-4088-99C8-BC83C9F83FED}
 		{77CBEC2B-6AA6-493E-83E8-78A10B8735FC} = {04141C0A-DEC1-4088-99C8-BC83C9F83FED}
 		{7AA04C9E-D924-4FED-B9BF-2FC73E0E526F} = {04141C0A-DEC1-4088-99C8-BC83C9F83FED}
+		{AC7EFCB4-D7F8-40D4-83C2-E229126ECEFD} = {04141C0A-DEC1-4088-99C8-BC83C9F83FED}
+		{AEEF616A-002A-405B-919D-ACFC2C26711B} = {1DB2281D-B784-4898-83B3-DA55354686CB}
 	EndGlobalSection
 EndGlobal

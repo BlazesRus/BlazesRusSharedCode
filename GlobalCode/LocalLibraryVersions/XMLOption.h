@@ -7,7 +7,19 @@
 
 #include <string>
 #include "VariableList.h"
-class XMLOption
+
+//Inside this ifdef block holds GlobalCode Environment library version of header structure (preprocessor defined inside all GlobalCode library configs)
+#ifdef BLAZESGLOBALCODE_LIBRARY
+#include "..\DLLAPI.h"
+//Local Version of headers here(within else block)
+#else
+//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
+#ifndef DLL_API
+#define DLL_API
+#endif
+#endif
+
+class DLL_API XMLOption
 {
 public:
 	std::string OptionName = "";
@@ -36,7 +48,7 @@ public:
 	~XMLOption();
 };
 
-class XMLOptionList : public VariableList < XMLOption >
+class DLL_API XMLOptionList : public VariableList < XMLOption >
 {
 public:
 	//************************************

@@ -2,266 +2,8 @@
 	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
 */
 #include "TagNodeTreeTemplate.h"
+#include "VariableVectorFunctions.h"
 using std::string;
-
-unsigned __int8 TagNodeTreeTemplateData::TagNodeFunctions::FindContentType(std::string Content)
-{
-	unsigned __int8 DetectedContentType = 0;
-	//0 = No List Detected
-	//1 = List Detected
-	//2 = Possible List Detected
-	unsigned __int8 ListDetectionState = 0;
-	//false = testing for false value;true = testing for true value
-	bool BoolValueDetecting;
-	const string TrueString = "true";
-	const string FalseString = "false";
-	string CurrentElement = "";
-	char CurrentChar;
-	bool ContentTypeConfirmed=false;
-	//0 = Whitespace only/Nothing so far
-	//1 = Possible Bool/String Detected
-	//2 = Possible Havok Class Target Detected
-	//3 = Possible Int/Double Detected
-	//4 = Possible Double Detected
-	//5 = Likely String Detected
-	//6 = Possible BoolList Detected
-	//7 = Possible Havok Class Target List Detected
-	//8 = Possible IntegerList Detected
-	//9 = Possible DoubleList Detected
-	//10 = Likely StringList Detected
-	//11 = Possible QuadVector Detected
-	//12 = Possible QuadVectorList Detected
-	unsigned __int8 CurrentDetectionStatus = 0;
-	//---------------------------------------------------------
-	const size_t StringSize = Content.length();
-	size_t ElementIndex;
-	for(size_t Index=0; Index < StringSize&&!ContentTypeConfirmed;++Index)
-	{
-		CurrentChar = Content.at(Index);
-		if(CurrentElement=="")
-		{
-			if(ListDetectionState==2)
-			{
-				if(CurrentChar!='\n'&&CurrentChar!=' '&&CurrentChar!='\t'&&CurrentChar!='	')
-				{
-					ListDetectionState = 1;
-					//Convert detected type to List
-					CurrentElement = CurrentChar;
-					if(CurrentDetectionStatus<11)
-					{
-						CurrentDetectionStatus += 5;
-					}
-					else if(CurrentDetectionStatus==11)
-					{
-						CurrentDetectionStatus = 12;
-					}
-					ContentTypeConfirmed = true;
-				}
-			}
-			else if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
-			{
-				if(CurrentChar=='t')
-				{
-					//Possible Bool/String Detected
-					BoolValueDetecting = true;
-					CurrentDetectionStatus = 1;
-				}
-				else if(CurrentChar=='f')
-				{
-					//Possible Bool/String Detected
-					BoolValueDetecting = false;
-					CurrentDetectionStatus = 1;
-				}
-				else if(CurrentChar=='-')//Only the first character of digit can be negative to count
-				{
-					//Possible Int/Double detected
-					CurrentDetectionStatus = 3;
-				}
-				else if(CurrentChar=='#')
-				{
-					//Possible Havok Class Target Detected
-					CurrentDetectionStatus = 2;
-				}
-				else if(CurrentChar=='1'||CurrentChar=='2'||CurrentChar=='3'||CurrentChar=='4'||CurrentChar=='5'
-				||CurrentChar=='6'||CurrentChar=='7'||CurrentChar=='8'||CurrentChar=='9'||CurrentChar=='0')
-				{
-					//Possible Int/Double detected
-					CurrentDetectionStatus = 3;
-				}
-				else if(CurrentChar=='(')
-				{
-					CurrentDetectionStatus = 11;
-				}
-				else
-				{
-					//Likely either String Value or value type not listed for detection
-					CurrentDetectionStatus = 5;
-				}
-				CurrentElement = CurrentChar;
-			}
-		}
-		else
-		{
-			if(CurrentDetectionStatus==11)
-			{
-				if(CurrentChar==')')
-				{
-					CurrentElement = "";
-					ListDetectionState = 2;
-				}
-			}
-			else if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
-			{
-				ElementIndex = CurrentElement.length();
-				CurrentElement += CurrentChar;
-				//check to see if matches pattern
-				switch(CurrentDetectionStatus)
-				{
-					case 1:
-						if(BoolValueDetecting)
-						{
-							if(CurrentElement.at(ElementIndex)!=TrueString.at(ElementIndex)){CurrentDetectionStatus = 5;}
-						}
-						else
-						{
-							if(CurrentElement.at(ElementIndex)!=FalseString.at(ElementIndex)){CurrentDetectionStatus = 5;}
-						}
-						break;
-					case 2:
-						//Allow all but whitespace to be counted as havok class character
-						break;
-					case 3:
-						if(CurrentChar=='.')
-						{
-							CurrentDetectionStatus = 4;
-						}
-						else if(CurrentChar!='1'&&CurrentChar!='2'&&CurrentChar!='3'&&CurrentChar!='4'&&CurrentChar!='5'&&CurrentChar!='6'&&CurrentChar!='7'&&CurrentChar!='8'&&CurrentChar!='9'&&CurrentChar!='0')//Non-Digit Char detected
-						{
-							CurrentDetectionStatus = 5;
-						}
-						break;
-					case 4:
-						if(CurrentChar!='1'&&CurrentChar!='2'&&CurrentChar!='3'&&CurrentChar!='4'&&CurrentChar!='5'&&CurrentChar!='6'&&CurrentChar!='7'&&CurrentChar!='8'&&CurrentChar!='9'&&CurrentChar!='0')//Non-Digit Char detected
-						{
-							CurrentDetectionStatus = 5;
-						}
-						break;
-					//default:
-					//	break;
-				}
-			}
-			else
-			{
-				//End of Current Element
-				CurrentElement = "";
-				ListDetectionState = 2;
-			}
-		}
-	}
-	switch(CurrentDetectionStatus)
-	{
-		//Type of data stores inside Tag (Strings stored in TagContent)
-		//0:Default Extracted content
-		//1:Int
-		//2:Bool
-		//3:Double
-		//4:String
-		//5:Event Index(Int)
-		//6:Variable Index(Int)
-		//7:Havok Class index(Int)
-		//9:QuadVector
-		//10:Event String
-		//11:Variable String
-		//12:Animation Path String
-		//13:Condition (String)
-		//14:Havok Class Target Name (String)
-		//15:Havok Class Target List (StringVectorList)
-		//20:IntegerList
-		//21:DoubleList
-		//22:StringVectorList
-		//23:BooleanList
-		//24:QuadVectorList
-		//50:flags (String)
-		//51:Clip Mode (String)
-		//240:Holds Havok Class info
-		//241:hkobject Container
-		//242:Closing Tag of Havok Class
-		//250:Unknown (String)
-		//251:Unknown(String) with only whitespace and
-		case 1:
-			DetectedContentType = 2;
-			break;
-		case 2:
-			DetectedContentType = 14;
-			break;
-		case 3:
-			DetectedContentType = 1;
-			break;
-		case 4:
-			DetectedContentType = 3;
-			break;
-		case 5:
-			DetectedContentType = 4;
-			break;
-		case 6:
-			DetectedContentType = 23;
-			break;
-		case 7:
-			DetectedContentType = 15;
-			break;
-		case 8:
-			DetectedContentType = 20;
-			break;
-		case 9:
-			DetectedContentType = 21;
-			break;
-		case 10:
-			DetectedContentType = 22;
-			break;
-		case 11:
-			DetectedContentType = 9;
-			break;
-		case 12:
-			DetectedContentType = 24;
-			break;
-		default:
-			DetectedContentType = 251;
-			break;
-	}
-	return DetectedContentType;
-}
-
-StringVectorList TagNodeTreeTemplateData::TagNodeFunctions::ConvertStringToStringVectorList(std::string Content)
-{
-	StringVectorList ConvertedValue;
-	const size_t StringSize = Content.length();
-	char CurrentChar;
-	std::string CurrentElement="";
-	for(size_t Index=0; Index < StringSize;++Index)
-	{
-		CurrentChar = Content.at(Index);
-		if(CurrentElement=="")
-		{
-			if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
-			{
-				CurrentElement = CurrentChar;
-			}
-		}
-		else
-		{
-			if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
-			{
-				CurrentElement += CurrentChar;
-			}
-			else
-			{
-				ConvertedValue.Add(CurrentElement);
-				CurrentElement = "";
-			}
-		}
-	}
-	return ConvertedValue;
-}
 
 void TagNodeTreeTemplateData::Node::DetectTagContentTypeV2(OptimizationData& SharedData)
 {
@@ -311,7 +53,7 @@ void TagNodeTreeTemplateData::Node::DetectTagContentTypeV2(OptimizationData& Sha
 		}
 		else
 		{
-			TagContentType = TagNodeFunctions::FindContentType(TagContent);
+			TagContentType = StringFunctions::FindContentType(TagContent);
 		}
 	}
 	else if(NodeName == "hkobject"&&AdditionTagOptions.HasOption("signature"))//Detect if Current Node Is Havok Class
@@ -325,11 +67,178 @@ void TagNodeTreeTemplateData::Node::DetectTagContentTypeV2(OptimizationData& Sha
 	}
 	else if(TagContentType == 0 && TagContent != "")
 	{
-		TagContentType = TagNodeFunctions::FindContentType(TagContent);
+		TagContentType = StringFunctions::FindContentType(TagContent);
 	}
 }
 
 void TagNodeTreeTemplateData::Node::GenerateHTMLDoc(StringVectorList& OutputBuffer, size_t& OutputLvl, const unsigned __int8& GenerationOptions/*=0*/)
 {
-
+	std::string TempTag;
+	size_t SizeTemp;
+	if(TagContentType == 240)//Havok Class Block Tag
+	{
+		TempTag = "<a name=\"";
+		TempTag += AdditionTagOptions.GetOptionValue("name");
+		TempTag += "\">";
+		TempTag += "<code>";
+		TempTag += StringFunctions::CreateTabSpace(OutputLvl);
+		TempTag += "<hkobject name=\"";
+		TempTag += AdditionTagOptions.GetOptionValue("name");
+		TempTag += "\" class=\"";
+		TempTag += AdditionTagOptions.GetOptionValue("class");
+		TempTag += "\" signature=\"";
+		TempTag += AdditionTagOptions.GetOptionValue("signature");
+		TempTag += "\"></code>";
+	}
+	else
+	{
+		TempTag = "<code>";
+		TempTag += StringFunctions::CreateTabSpace(OutputLvl);
+		TempTag += "<";
+		if(ClosingStatus == 1)
+		{
+			TempTag += "/";
+		}
+		TempTag += NodeName;
+		//Tag Option output
+		SizeTemp = AdditionTagOptions.Size();
+		XMLOption OptionTemp;
+		for(size_t Index = 0; Index < SizeTemp; ++Index)
+		{
+			TempTag += " ";
+			OptionTemp = AdditionTagOptions.ElementAt(Index);
+			if(OptionTemp.ValueType == "None")
+			{
+				TempTag += OptionTemp.OptionName;
+			}
+			else if(OptionTemp.ValueNotInParenthesis)
+			{
+				TempTag += "=";
+				TempTag += OptionTemp.ValueString;
+			}
+			else
+			{
+				TempTag += "=\"";
+				TempTag += OptionTemp.ValueString;
+				TempTag += "\"";
+			}
+		}
+		if(SelfContainedTag)
+		{
+			TempTag += "/>";
+			TempTag += "<br>"; OutputBuffer.Add(TempTag);
+		}
+		else if(ClosingStatus != 1)
+		{
+			TempTag += ">";
+			TempTag += "</code>";
+			if(!((TagContentType >= 1 && TagContentType <= 14) || TagContentType == 252))
+			{//Don't Separate line for known single-line Tags
+				TempTag += "<br>"; OutputBuffer.Add(TempTag);
+				TempTag = "<code>";
+				TempTag += StringFunctions::CreateTabSpace(OutputLvl + 1);
+				TempTag += "</code>";
+			}
+			//Output TagContent
+			//StringVectorList TempList;
+			switch(TagContentType)
+			{
+				case 14://Generate link to havok class
+				{
+					TempTag += "<a href=\"#\"";
+					TempTag += TagContent;
+					TempTag += "\">";
+					TempTag += TagContent;
+					TempTag += "</a>";
+					break;
+				}
+				case 15://Generate linked havok classes
+				{
+					StringVectorList TempList = VariableVectorFunctions::ConvertStringToStringVectorList(TagContent);
+					SizeTemp = TempList.Size();
+					//Limit 16 entries a line
+					unsigned __int8 LineIndex = 0;
+					for(size_t Index = 0; Index < SizeTemp; ++Index&&++LineIndex)
+					{
+						if(LineIndex == 16)
+						{
+							TempTag += "<br>"; OutputBuffer.Add(TempTag);
+							TempTag = "<code>";
+							TempTag += StringFunctions::CreateTabSpace(OutputLvl + 1);
+							TempTag += "</code>";
+							LineIndex = 0;
+						}
+						if(LineIndex != 0)
+						{
+							TempTag += "<code> </code>";
+						}
+						TempTag += "<a href=\"#\"";
+						TempTag += TagContent;
+						TempTag += "\">";
+						TempTag += TagContent;
+						TempTag += "</a>";
+					}
+					TempTag += "<br>"; OutputBuffer.Add(TempTag);
+					TempTag = "<code>";
+					TempTag += StringFunctions::CreateTabSpace(OutputLvl + 1);
+					TempTag += "</code>";
+					break;
+				}
+				//case 5://Display index to Event with alt text of EventName (link to EventName)
+				//{
+				//	const size_t Index = StringFunctions::ReadXIntFromString(TempTag);
+				//	const std::string NameTemp = SharedData.TargetBHVTreePointer->VariableData.eventNames.ElementAt(Index);
+				//	TempTag += "<a href=\"#\"";
+				//	//Link to EventName here
+				//	TempTag += "eventNames_";
+				//	TempTag += StringFunctions::DoubleToStringConversion(Index);
+				//	TempTag += "\" title=\"";
+				//	//Mouse-Over Text of EventName
+				//	TempTag += NameTemp;
+				//	TempTag += "\">";
+				//	TempTag += TagContent;
+				//	TempTag += "</a>";
+				//	break;
+				//}
+				//case 6://Display index to variable with alt text
+				//{
+				//	const size_t Index = StringFunctions::ReadXIntFromString(TempTag);
+				//	const std::string NameTemp = SharedData.TargetBHVTreePointer->VariableData.variableNames.ElementAt(Index);
+				//	TempTag += "<a href=\"#\"";
+				//	//;//Link to EventName here
+				//	TempTag += "variableNames_";
+				//	TempTag += StringFunctions::DoubleToStringConversion(Index);
+				//	TempTag += "\" title=\"";
+				//	//Mouse-Over Text of EventName
+				//	TempTag += NameTemp;
+				//	TempTag += "\">";
+				//	TempTag += TagContent;
+				//	TempTag += "</a>";
+				//	break;
+				//}
+				case 252:
+				{
+					TempTag += "<a href=\"#\"";
+					TempTag += TagContent;
+					TempTag += "\">";
+					TempTag += TagContent;
+					TempTag += "</a>";
+					break;
+				}
+				default:
+				{
+					TempTag += TagContent;
+					TempTag += "<br>"; OutputBuffer.Add(TempTag);
+				}
+			}
+		}
+		else
+		{
+			if(!((TagContentType >= 1 && TagContentType <= 14) || TagContentType == 252))
+			{//Don't Separate line for known single-line Tags
+				TempTag += TagContent;
+				TempTag += "<br>"; OutputBuffer.Add(TempTag);
+			}
+		}
+	}
 }
