@@ -329,6 +329,19 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return NewSelf;
 		}
 
+		public static SmallDec operator -(SmallDec Value)
+		{//Place DecBoolStatus>1 checks above in V2 of type
+			if (Value.DecBoolStatus == 1)
+			{
+				Value.DecBoolStatus = 0;
+			}//No negative zero
+			else if ((Value.DecimalStatus == 0 && Value.IntValue == 0) == false)
+			{
+				Value.DecBoolStatus = 1;
+			}
+			return Value;
+		}
+
 		//Limit CSharpGlobalCode.GlobalCode_ExperimentalCode explicit Conversions from other type to self (no OtherType(SelfType) explicit conversions)
 		public static SmallDec operator +(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
 		{
@@ -1522,19 +1535,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		public static bool operator !=(dynamic Value, SmallDec self)
 		{
 			return self != Value;
-		}
-
-		public static SmallDec operator -(SmallDec Value)
-		{//Place DecBoolStatus>1 checks above in V2 of type
-			if(Value.DecBoolStatus==1)
-			{
-				Value.DecBoolStatus = 0;
-			}//No negative zero
-			else if((Value.DecimalStatus==0&&Value.IntValue==0)==false)
-			{
-				Value.DecBoolStatus = 1;
-			}
-			return Value;
 		}
 
 		public override bool Equals(object obj)
