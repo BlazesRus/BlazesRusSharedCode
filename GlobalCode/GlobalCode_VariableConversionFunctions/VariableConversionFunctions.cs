@@ -58,7 +58,7 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
 		// Qualifier:
 		// Parameter: char Temp
 		//************************************
-		static dynamic CharAsInt(char Temp)
+		public static dynamic CharAsInt(char Temp)
 		{
 			int Value = 0;
 			if(Temp == '0') { Value = 0; }

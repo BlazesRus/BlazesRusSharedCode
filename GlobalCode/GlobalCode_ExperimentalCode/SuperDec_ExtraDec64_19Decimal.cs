@@ -291,11 +291,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			y -= WholeHalfOfY;
 			if (WholeHalfOfY == 0) { }
 			//ex. -9 - 9
-			else if (self.GetDecBoolStatus() == 1 && IsYNegative == false)
+			else if (self.GetBoolStatus() == 1 && IsYNegative == false)
 			{// -X - Y
 				self.IntValue = self.GetIntValue() + WholeHalfOfY;
 			}//ex. 9 - (-1)
-			else if (self.GetDecBoolStatus() == 0 && IsYNegative)
+			else if (self.GetBoolStatus() == 0 && IsYNegative)
 			{
 				//X - (-Y)
 				self.IntValue = self.GetIntValue() + WholeHalfOfY;
@@ -303,7 +303,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			else
 			{
 				// X - (Y)
-				if (self.GetDecBoolStatus() == 0)
+				if (self.GetBoolStatus() == 0)
 				{
 					// ex. 8 - 9
 					if (WholeHalfOfY > self.GetIntValue())
@@ -335,7 +335,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			if (self.GetDecimalStatus() != 0 || SecondDec != 0)
 			{
 				// ex. -0.5 - 0.6
-				if (self.GetDecBoolStatus() == 1 && IsYNegative == false)
+				if (self.GetBoolStatus() == 1 && IsYNegative == false)
 				{
 					//Potential Overflow check
 					BigMath.Int128 DecimalStatusTemp = self.GetDecimalStatus() + SecondDec;
@@ -347,7 +347,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 					}
 					self.DecimalStatus = (ulong)DecimalStatusTemp;
 				}// ex. 0.5 - (-0.6)
-				else if (self.GetDecBoolStatus() == 0 && IsYNegative)
+				else if (self.GetBoolStatus() == 0 && IsYNegative)
 				{
 					//Potential Overflow check
 					BigMath.Int128 DecimalStatusTemp = self.GetDecimalStatus() + SecondDec;
@@ -407,13 +407,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static SuperDec_ExtraDec64_19Decimal operator -(SuperDec_ExtraDec64_19Decimal self, SuperDec_ExtraDec64_19Decimal y)
 		{
-			bool IsYNegative = (y.GetDecBoolStatus() == 1) ? true : false;
+			bool IsYNegative = (y.GetBoolStatus() == 1) ? true : false;
 			//ex. -9 - 9
-			if (self.GetDecBoolStatus() == 1 && IsYNegative == false)
+			if (self.GetBoolStatus() == 1 && IsYNegative == false)
 			{// -X - Y
 				self.IntValue = self.GetIntValue() + y.GetIntValue();
 			}//ex. 9 - (-1)
-			else if (self.GetDecBoolStatus() == 0 && IsYNegative == true)
+			else if (self.GetBoolStatus() == 0 && IsYNegative == true)
 			{
 				//X - (-Y)
 				self.IntValue = self.GetIntValue() + y.GetIntValue();
@@ -421,7 +421,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			else
 			{
 				// X - (Y)
-				if (self.GetDecBoolStatus() == 0)
+				if (self.GetBoolStatus() == 0)
 				{
 					// ex. 8 - 9
 					if (y.GetIntValue() > self.GetIntValue())
@@ -453,7 +453,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			{
 				//ulong SecondDec = (ulong)(System.Math.Abs(y) - System.Math.Abs(WholeHalfOfY)) * 10000000000000000000;
 				// ex. -0.5 - 0.6
-				if (self.GetDecBoolStatus() == 1 && IsYNegative == false)
+				if (self.GetBoolStatus() == 1 && IsYNegative == false)
 				{
 					//Potential Overflow check
 					BigMath.Int128 DecimalStatusTemp = self.GetDecimalStatus() + y.GetDecimalStatus();
@@ -464,7 +464,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 					}
 					self.DecimalStatus = (ulong)DecimalStatusTemp;
 				}// ex. 0.5 - (-0.6)
-				else if (self.GetDecBoolStatus() == 0 && IsYNegative)
+				else if (self.GetBoolStatus() == 0 && IsYNegative)
 				{
 					//Potential Overflow check
 					BigMath.Int128 DecimalStatusTemp = self.GetDecimalStatus() + y.GetDecimalStatus();
@@ -525,11 +525,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		public static SuperDec_ExtraDec64_19Decimal operator -(SuperDec_ExtraDec64_19Decimal self, dynamic y)
 		{
 			//ex. -9 - 9
-			if (self.GetDecBoolStatus() == 1 && y >= 0)
+			if (self.GetBoolStatus() == 1 && y >= 0)
 			{// -X - Y
 				self.IntValue = self.GetIntValue() + (uint)y;
 			}//ex. 9 - (-1)
-			else if (self.GetDecBoolStatus() == 0 && y < 0)
+			else if (self.GetBoolStatus() == 0 && y < 0)
 			{
 				//X - (-Y)
 				self.IntValue = self.GetIntValue() + (uint)Math.Abs(y);
@@ -537,7 +537,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			else
 			{
 				// X - (Y)
-				if (self.GetDecBoolStatus() == 0)
+				if (self.GetBoolStatus() == 0)
 				{
 					// ex. 8 - 9
 					if (y > self.GetIntValue())
@@ -684,7 +684,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 			else
 			{
-				if (y.GetDecBoolStatus() == 1) { self.SwapNegativeStatus(); }
+				if (y.GetBoolStatus() == 1) { self.SwapNegativeStatus(); }
 				if (self.DecimalStatus == 0 && y.GetDecimalStatus() == 0)
 				{//Use normal simple (int value) * (int value) if not dealing with any decimals
 					self.IntValue %= y.IntValue;
@@ -731,7 +731,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 			else
 			{
-				if (y.GetDecBoolStatus() == 1) { self.SwapNegativeStatus(); }
+				if (y.GetBoolStatus() == 1) { self.SwapNegativeStatus(); }
 				if (self.DecimalStatus == 0 && y.GetDecimalStatus() == 0)
 				{//Use normal simple (int value) * (int value) if not dealing with any decimals
 					self.IntValue *= y.IntValue;
@@ -879,7 +879,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 			else
 			{
-				if (y.GetDecBoolStatus() == 1) { self.SwapNegativeStatus(); }
+				if (y.GetBoolStatus() == 1) { self.SwapNegativeStatus(); }
 				if (self.DecimalStatus == 0 && y.GetDecimalStatus() == 0)
 				{//Use normal simple (int value) * (int value) if not dealing with any decimals
 					self.IntValue /= y.IntValue;
@@ -1020,11 +1020,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			uint WholeHalfOfY = (uint)Math.Floor(y);
 			y -= WholeHalfOfY;
 			if (WholeHalfOfY == 0) { }
-			else if (self.GetDecBoolStatus() == 1 && IsYNegative)
+			else if (self.GetBoolStatus() == 1 && IsYNegative)
 			{// -X - Y (ex. -8 + -6)
 				self.IntValue = self.GetIntValue() + WholeHalfOfY;
 			}
-			else if (self.GetDecBoolStatus() == 0 && IsYNegative == false)
+			else if (self.GetBoolStatus() == 0 && IsYNegative == false)
 			{
 				//X + Y (ex. 8 + 6)
 				self.IntValue = self.GetIntValue() + WholeHalfOfY;
@@ -1032,7 +1032,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			else
 			{
 				// -X + Y
-				if (self.GetDecBoolStatus() == 1)
+				if (self.GetBoolStatus() == 1)
 				{   //ex. -8 + 9
 					if (y > self.GetIntValue())
 					{
@@ -1058,11 +1058,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				}
 			}
 			//Decimal Calculation Section
-			if (self.GetDecBoolStatus() != 0 || y != 0)
+			if (self.GetBoolStatus() != 0 || y != 0)
 			{
 				ulong SecondDec = (ulong)(System.Math.Abs(y) - System.Math.Abs(WholeHalfOfY)) * 10000000000000000000;
 				// ?.XXXXXX + ?.YYYYYY
-				if (self.GetDecBoolStatus() == 0 && IsYNegative == false)
+				if (self.GetBoolStatus() == 0 && IsYNegative == false)
 				{
 					//Potential Overflow check
 					BigMath.Int128 DecimalStatusTemp = self.GetDecimalStatus() + SecondDec;
@@ -1074,7 +1074,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 					self.DecimalStatus = (ulong)DecimalStatusTemp;
 				}
 				// -?.XXXXXX - ?.YYYYYY
-				else if (self.GetDecBoolStatus() == 1 && IsYNegative == true)
+				else if (self.GetBoolStatus() == 1 && IsYNegative == true)
 				{
 					//Potential Overflow check
 					BigMath.Int128 DecimalStatusTemp = self.GetDecimalStatus() + SecondDec;
@@ -1135,12 +1135,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static SuperDec_ExtraDec64_19Decimal operator +(SuperDec_ExtraDec64_19Decimal self, SuperDec_ExtraDec64_19Decimal y)
 		{
-			bool IsYNegative = (y.GetDecBoolStatus() == 1) ? true : false;
-			if (self.GetDecBoolStatus() == 1 && IsYNegative)
+			bool IsYNegative = (y.GetBoolStatus() == 1) ? true : false;
+			if (self.GetBoolStatus() == 1 && IsYNegative)
 			{// -X - Y (ex. -8 + -6)
 				self.IntValue = self.GetIntValue() + y.GetIntValue();
 			}
-			else if (self.GetDecBoolStatus() == 0 && IsYNegative == false)
+			else if (self.GetBoolStatus() == 0 && IsYNegative == false)
 			{
 				//X + Y (ex. 8 + 6)
 				self.IntValue = self.GetIntValue() + y.GetIntValue();
@@ -1148,7 +1148,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			else
 			{
 				// -X + Y
-				if (self.GetDecBoolStatus() == 1)
+				if (self.GetBoolStatus() == 1)
 				{   //ex. -8 + 9
 					if (y.GetIntValue() > self.GetIntValue())
 					{
@@ -1177,7 +1177,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			if (self.GetDecimalStatus() != 0 || y.GetDecimalStatus() != 0)
 			{
 				// ?.XXXXXX + ?.YYYYYY (ex. 0.9 + 0.2)
-				if (self.GetDecBoolStatus() == 0 && IsYNegative == false)
+				if (self.GetBoolStatus() == 0 && IsYNegative == false)
 				{
 					//Potential Overflow check
 					BigMath.Int128 DecimalStatusTemp = self.GetDecimalStatus() + y.GetDecimalStatus();
@@ -1189,7 +1189,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 					self.DecimalStatus = (ulong)DecimalStatusTemp;
 				}
 				// -?.XXXXXX - ?.YYYYYY (ex. -0.9 + -0.2)
-				else if (self.GetDecBoolStatus() == 1 && IsYNegative)
+				else if (self.GetBoolStatus() == 1 && IsYNegative)
 				{
 					//Potential Overflow check
 					BigMath.Int128 DecimalStatusTemp = self.GetDecimalStatus() + y.GetDecimalStatus();
@@ -1250,11 +1250,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static SuperDec_ExtraDec64_19Decimal operator +(SuperDec_ExtraDec64_19Decimal self, dynamic y)
 		{
-			if (self.GetDecBoolStatus() == 1 && y < 0)
+			if (self.GetBoolStatus() == 1 && y < 0)
 			{// -X - Y (ex. -8 + -6)
 				self.IntValue = self.GetIntValue() + (uint)Math.Abs(y);
 			}
-			else if (self.GetDecBoolStatus() == 0 && y >= 0)
+			else if (self.GetBoolStatus() == 0 && y >= 0)
 			{
 				//X + Y (ex. 8 + 6)
 				self.IntValue = self.GetIntValue() + (uint)y;
@@ -1262,7 +1262,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			else
 			{
 				// -X + Y
-				if (self.GetDecBoolStatus() == 1)
+				if (self.GetBoolStatus() == 1)
 				{   //ex. -8 + 9
 					if (y > self.GetIntValue())
 					{
@@ -1910,7 +1910,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 		}
 
-		public byte GetDecBoolStatus()
+		public byte GetBoolStatus()
 		{
 			return DecBoolStatus;
 		}
