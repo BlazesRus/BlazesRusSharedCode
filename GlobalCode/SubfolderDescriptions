@@ -25,4 +25,6 @@ GlobalCode_VariableLists:
 Contains VariableList class etc.
 
 ThirdPartyCode:
-Contains 3rd party c++ header(s)
+Contains 3rd party c++ header(s):
+https://sourceforge.net/projects/cpp-bigint/files/C%2B%2B%20BigInt%20Class/
+https://github.com/calccrypto/uint128_t

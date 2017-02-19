@@ -6,7 +6,6 @@ BoolDecStatusRelatedValues
 For most values greator than 1
 (BoolDecStatus-1)%2==0 ? IsNegativeNumber: IsPositiveNumber
 
-
 {From 2-200} = IntValue (*-1 if IsNegativeNumber) + Fractional{generally DecimalStatus/BoolDecStatus but varies based on BoolDecStatus} 
 {Between 2-200}
 BoolDecStatus /= 2;
@@ -14,7 +13,6 @@ BoolDecStatus /= 2;
 BoolDecStatus -= 1;
 BoolDecStatus /= 2;
 ushort Denominator;
-///-----------------------------------------------------SmallDec BoolDecStatus Values 2-200------------------------------------------------------------------------------------------
 if(DecimalStatus<10000)
 {
 	If(DecimalStatus<1000){ Represents +- IntValue + DecimalStatus/BoolDecStatus}
@@ -239,11 +237,10 @@ Else If(DecimalStatus>=50000)
  201 = Unused/Uninitialyzed Status
  202 = NaN
  
- 
- 240 = IntValue  + DecimalStatus i 
- 241 = -IntValue + DecimalStatus i
- 242 = IntValue  - DecimalStatus i 
- 243 = -IntValue - DecimalStatus i 
+240 = IntValue  + DecimalStatus i 
+241 = -IntValue + DecimalStatus i
+242 = IntValue  - DecimalStatus i 
+243 = -IntValue - DecimalStatus i 
 
 246 = PI ^ IntValue.DecimalStatus
 247 = -PI ^ IntValue.DecimalStatus

@@ -120,6 +120,10 @@ BlazesGlobalCode_DebugConsole:
 Display additional console messages
 (Not Impliemented yet)
 
+BlazesGlobalCode_Int128Version:
+0/(NonDefined : BigInt
+1 : 
+2:
 
 --------Decimal Storage notes------
 (signed/unsigned) int 8 = can store 2 places (signed stores -128 to 127;unsigned stores 0 to 255)
