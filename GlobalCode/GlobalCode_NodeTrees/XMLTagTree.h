@@ -5,11 +5,30 @@
 #ifndef TagTreeData_IncludeGuard
 #define TagTreeData_IncludeGuard
 
+#ifndef BlazesGlobalCode_FileStructureVersion
+	#define BlazesGlobalCode_FileStructureVersion 0
+	//FileStructureVersion 0 = Refers to required files set up similar/same as Library Versions of files
+	//FileStructureVersion 1 = All required files from GlobalCode within same folder locally
+#endif
+
+#ifdef BLAZESGLOBALCODE_LIBRARY
+	#include "..\DLLAPI.h"
+#else
+//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
+	#ifndef DLL_API
+		#define DLL_API
+	#endif
+#endif
+
 #include "TagNodeTreeTemplate.h"
 #include "XMLOption.h"
-//#include "..\..\BlazesBehaviorFileMerger\HkBhvNodeTree.h"
-#include "QuadVectorFunctions.h"
-#include "..\DLLAPI.h"
+
+//Non-Alternating headers above (Structure based headers in this section)
+#ifndef BlazesGlobalCode_FileStructureVersion || BlazesGlobalCode_FileStructureVersion == 0//(library style  layout)
+	#include "..\GlobalCode_QuadVector\QuadVectorFunctions.h"
+#elif BlazesGlobalCode_FileStructureVersion == 1//(Local version style layout)
+	#include "QuadVectorFunctions.h"
+#endif
 
 struct DLL_API TagTreeData
 {

@@ -5,22 +5,23 @@
 #ifndef VariableVectorFunctions_IncludeGuard
 #define VariableVectorFunctions_IncludeGuard
 
+#ifndef BlazesGlobalCode_FileStructureVersion
+	#define BlazesGlobalCode_FileStructureVersion 0
+	//FileStructureVersion 0 = Refers to required files set up similar/same as Library Versions of files
+	//FileStructureVersion 1 = All required files from GlobalCode within same folder locally
+#endif
+
+#ifdef BLAZESGLOBALCODE_LIBRARY
+	#include "..\DLLAPI.h"
+#else
+//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
+	#ifndef DLL_API
+		#define DLL_API
+	#endif
+#endif
+
 #include "VariableTypeLists.h"
 #include <string>
-
-
-//Inside this ifdef block holds GlobalCode Environment library version of header structure (preprocessor defined inside all GlobalCode library configs)
-#ifdef BLAZESGLOBALCODE_LIBRARY
-#include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
-#include "..\DLLAPI.h"
-//Local Version of headers here(within else block)
-#else
-#include "VariableConversionFunctions.h"
-//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
-#ifndef DLL_API
-#define DLL_API
-#endif
-#endif
 
 class DLL_API VariableVectorFunctions
 {

@@ -28,11 +28,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SuperDec.cpp" />
+    <ClCompile Include="SuperDecHex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\DLLAPI.h" />
     <ClInclude Include="DocGenerator.h" />
     <ClInclude Include="SuperDec.h" />
+    <ClInclude Include="SuperDecHex.h" />
     <ClInclude Include="VariableListV2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

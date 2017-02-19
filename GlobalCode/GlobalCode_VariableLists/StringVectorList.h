@@ -5,20 +5,23 @@
 #ifndef StringVectorList_IncludeGuard
 #define StringVectorList_IncludeGuard
 
-#include "VariableList.h"
-#include <string>
+#ifndef BlazesGlobalCode_FileStructureVersion
+	#define BlazesGlobalCode_FileStructureVersion 0
+	//FileStructureVersion 0 = Refers to required files set up similar/same as Library Versions of files
+	//FileStructureVersion 1 = All required files from GlobalCode within same folder locally
+#endif
 
-
-//Inside this ifdef block holds GlobalCode Environment library version of header structure (preprocessor defined inside all GlobalCode library configs)
 #ifdef BLAZESGLOBALCODE_LIBRARY
-#include "..\DLLAPI.h"
-//Local Version of headers here(within else block)
+	#include "..\DLLAPI.h"
 #else
 //Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
-#ifndef DLL_API
-#define DLL_API
+	#ifndef DLL_API
+		#define DLL_API
+	#endif
 #endif
-#endif
+
+#include "VariableList.h"
+#include <string>
 
 class DLL_API StringVectorList : public VariableList < std::string >
 {

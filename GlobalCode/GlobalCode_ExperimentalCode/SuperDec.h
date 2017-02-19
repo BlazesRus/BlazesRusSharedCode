@@ -1,462 +1,37 @@
 /*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
 	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
-	*/
-#pragma once
+	(Consider this old version of CustomDec; Using as reference for new version of code)
+*/
 #ifndef SuperDec_IncludeGuard
 #define SuperDec_IncludeGuard
+
+//#ifndef BlazesGlobalCode_FileStructureVersion
+//	#define BlazesGlobalCode_FileStructureVersion 0
+//	//FileStructureVersion 0 = Refers to required files set up similar/same as Library Versions of files
+//	//FileStructureVersion 1 = All required files from GlobalCode within same folder locally
+//#endif
+
+#ifdef BLAZESGLOBALCODE_LIBRARY
+	#include "..\DLLAPI.h"
+#else
+//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
+	#ifndef DLL_API
+		#define DLL_API
+	#endif
+#endif
 
 #include <io.h>
 #include <math.h>
 #include <iostream>
-#include "..\DLLAPI.h"
 #include <string>
+#include "SuperDecHex.h"
 
-//Preprocessor for enabling Fractional Storage & such with left over unused bits (once I create the code for it);Use SuperDecHex to help find left over bits
-////#define SuperDec_EnableFractionalStorage
-
-namespace SuperDecHex
-{
-	//************************************
-	// Method:    IntToHexChar
-	// FullName:  SuperDecHex::IntToHexChar
-	// Access:    public static 
-	// Returns:   char DLL_API
-	// Qualifier:
-	// Parameter: ValueType num
-	//************************************
-	template <typename ValueType>
-	static char DLL_API IntToHexChar(ValueType num)
-	{
-		switch(num)
-		{
-			case 1:
-				return '1';
-			case 2:
-				return '2';
-			case 3:
-				return '3';
-			case 4:
-				return '4';
-			case 5:
-				return '5';
-			case 6:
-				return '6';
-			case 7:
-				return '7';
-			case 8:
-				return '8';
-			case 9:
-				return '9';
-			case 10:
-				return 'A';
-			case 11:
-				return 'B';
-			case 12:
-				return 'C';
-			case 13:
-				return 'D';
-			case 14:
-				return 'E';
-			case 15:
-				return 'F';
-			default:
-				return '0';
-		}
-	}
-	//************************************
-	// Method:    HexCharToInt
-	// FullName:  SuperDecHex::HexCharToInt
-	// Access:    public static 
-	// Returns:   unsigned __int8
-	// Qualifier:
-	// Parameter: int num
-	//************************************
-	static unsigned __int8 HexCharToInt(int num);
-	//Takes any type of unsigned Int value and converts to hex Equavalent
-	//Based on http://www.geeksforgeeks.org/implement-itoa/
-	//************************************
-	// Method:    IntToHexString
-	// FullName:  SuperDecHex::IntToHexString
-	// Access:    public static 
-	// Returns:   std::string DLL_API
-	// Qualifier:
-	// Parameter: ValueType num
-	// Parameter: bool ReversedHex
-	//************************************
-	template <typename ValueType>
-	static std::string DLL_API IntToHexString(ValueType num, bool ReversedHex=false)
-	{
-		if(num==0)
-		{
-			return "";
-		}
-		if(num<0)
-		{
-			std::cout<<"Negative values not supported by this version of the method.\n";
-			return "";
-		}
-		ValueType rem;
-		std::string str="";
-		//Process individual digits
-		while(num!=0)
-		{
-			rem =num%16;
-			str += IntToChar(rem);
-			num = num/16;
-		}
-		if(ReversedHex)
-		{
-			std::string TempString="";
-			for(unsigned __int8 Index=str.length();Index>=0;++Index)
-			{
-				TempString += str.at(Index);
-			}
-			return TempString;
-		}
-		else
-		{
-			return str;
-		}
-	}
-	//Holds 16 HalfByte int values of between 0-15 (0-F as char) (Represents 8 Byte as Hex)
-	//HalfByte refers to 0-15 value (Half of Hex chars of a byte);Example Hex String "FFFFFFFFFFFFFFFF"
-	//Main use here is for splitting remaining digits of value for using for other purposes
-	struct DLL_API Hex_8Byte
-	{
-		unsigned __int8 Byte1_a = 0;
-		unsigned __int8 Byte1_b = 0;
-		unsigned __int8 Byte2_a = 0;
-		unsigned __int8 Byte2_b = 0;
-		unsigned __int8 Byte3_a = 0;
-		unsigned __int8 Byte3_b = 0;
-		unsigned __int8 Byte4_a = 0;
-		unsigned __int8 Byte4_b = 0;
-		unsigned __int8 Byte5_a = 0;
-		unsigned __int8 Byte5_b = 0;
-		unsigned __int8 Byte6_a = 0;
-		unsigned __int8 Byte6_b = 0;
-		unsigned __int8 Byte7_a = 0;
-		unsigned __int8 Byte7_b = 0;
-		unsigned __int8 Byte8_a = 0;
-		unsigned __int8 Byte8_b = 0;
-		//************************************
-		// Assign values based 8 Byte Hex String (16 HalfBytes)
-		// Method:    operator=
-		// FullName:  SuperDecHex::Hex_8Byte::operator=
-		// Access:    public
-		// Returns:   SuperDecHex::Hex_8Byte
-		// Qualifier:
-		// Parameter: std::string HexValue
-		//************************************
-		Hex_8Byte operator=(std::string HexValue);
-		template <typename ValueType>
-		void IntTo8ByteHex(ValueType Value)
-		{
-			std::string HexValue = IntToHexString(Value,true);
-			unsigned int HexSize = HexValue.length();
-			unsigned __int8 Index;
-			for(Index=0;Index<HexSize;++Index)
-			{
-				switch(Index)
-				{
-					case 0:
-						Byte1_a = IntToHexChar(HexValue.at(Index));break;
-					case 1:
-						Byte1_b = IntToHexChar(HexValue.at(Index));break;
-					case 2:
-						Byte2_a = IntToHexChar(HexValue.at(Index));break;
-					case 3:
-						Byte2_b = IntToHexChar(HexValue.at(Index));break;
-					case 4:
-						Byte3_a = IntToHexChar(HexValue.at(Index));break;
-					case 5:
-						Byte3_b = IntToHexChar(HexValue.at(Index));break;
-					case 6:
-						Byte4_a = IntToHexChar(HexValue.at(Index));break;
-					case 7:
-						Byte4_b = IntToHexChar(HexValue.at(Index));break;
-					case 8:
-						Byte5_a = IntToHexChar(HexValue.at(Index));break;
-					case 9:
-						Byte5_b = IntToHexChar(HexValue.at(Index));break;
-					case 10:
-						Byte6_a = IntToHexChar(HexValue.at(Index));break;
-					case 11:
-						Byte6_b = IntToHexChar(HexValue.at(Index));break;
-					case 12:
-						Byte7_a = IntToHexChar(HexValue.at(Index));break;
-					case 13:
-						Byte7_b = IntToHexChar(HexValue.at(Index));break;
-					case 14:
-						Byte8_a = IntToHexChar(HexValue.at(Index));break;
-					case 15:
-						Byte8_b = IntToHexChar(HexValue.at(Index));break;
-				}
-			}
-			//Set rest of HalfBytes to value of zero
-			for(++Index;Index<16;++Index)
-			{
-				switch(Index)
-				{
-					case 0:
-						Byte1_a = 0;break;
-					case 1:
-						Byte1_b = 0;break;
-					case 2:
-						Byte2_a = 0;break;
-					case 3:
-						Byte2_b = 0;break;
-					case 4:
-						Byte3_a = 0;break;
-					case 5:
-						Byte3_b =0;break;
-					case 6:
-						Byte4_a = 0;break;
-					case 7:
-						Byte4_b = 0;break;
-					case 8:
-						Byte5_a = 0;break;
-					case 9:
-						Byte5_b = 0;break;
-					case 10:
-						Byte6_a = 0;break;
-					case 11:
-						Byte6_b = 0;break;
-					case 12:
-						Byte7_a = 0;break;
-					case 13:
-						Byte7_b = 0;break;
-					case 14:
-						Byte8_a = 0;break;
-					case 15:
-						Byte8_b = 0;break;
-				}
-			}
-		}
-		Hex_8Byte operator=(signed __int8 Value){IntTo8ByteHex(Value);}
-		Hex_8Byte operator=(signed __int16 Value){IntTo8ByteHex(Value);}
-		Hex_8Byte operator=(signed __int32 Value){IntTo8ByteHex(Value);}
-		Hex_8Byte operator=(signed __int64 Value){IntTo8ByteHex(Value);}
-		Hex_8Byte operator=(unsigned __int8 Value){IntTo8ByteHex(Value);}
-		Hex_8Byte operator=(unsigned __int16 Value){IntTo8ByteHex(Value);}
-		Hex_8Byte operator=(unsigned __int32 Value){IntTo8ByteHex(Value);}
-		Hex_8Byte operator=(unsigned __int64 Value){IntTo8ByteHex(Value);}
-		//************************************
-		// Method:    GetAsInt64
-		// FullName:  SuperDecHex::Hex_8Byte::GetAsInt64
-		// Access:    public 
-		// Returns:   unsigned __int64
-		// Qualifier:
-		//************************************
-		unsigned __int64 GetAsInt64();
-	};
-	struct DLL_API Hex_4Byte
-	{
-		unsigned __int8 Byte1_a = 0;
-		unsigned __int8 Byte1_b = 0;
-		unsigned __int8 Byte2_a = 0;
-		unsigned __int8 Byte2_b = 0;
-		unsigned __int8 Byte3_a = 0;
-		unsigned __int8 Byte3_b = 0;
-		unsigned __int8 Byte4_a = 0;
-		unsigned __int8 Byte4_b = 0;
-		//************************************
-		// Assign values based 4 Byte Hex String (8 HalfBytes)
-		// Method:    operator=
-		// FullName:  SuperDecHex::Hex_8Byte::operator=
-		// Access:    public
-		// Returns:   SuperDecHex::Hex_8Byte
-		// Qualifier:
-		// Parameter: std::string HexValue
-		//************************************
-		Hex_4Byte operator=(std::string HexValue);
-		template <typename ValueType>
-		void IntTo4ByteHex(ValueType Value)
-		{
-			std::string HexValue = IntToHexString(Value,true);
-			unsigned int HexSize = HexValue.length();
-			//Store at function scope to use for setting rest of half-bytes to zero
-			unsigned __int8 Index;
-			for(Index=0;Index<HexSize;++Index)
-			{
-				switch(Index)
-				{
-					case 0:
-						Byte1_a = IntToHexChar(HexValue.at(Index));break;
-					case 1:
-						Byte1_b = IntToHexChar(HexValue.at(Index));break;
-					case 2:
-						Byte2_a = IntToHexChar(HexValue.at(Index));break;
-					case 3:
-						Byte2_b = IntToHexChar(HexValue.at(Index));break;
-					case 4:
-						Byte3_a = IntToHexChar(HexValue.at(Index));break;
-					case 5:
-						Byte3_b = IntToHexChar(HexValue.at(Index));break;
-					case 6:
-						Byte4_a = IntToHexChar(HexValue.at(Index));break;
-					case 7:
-						Byte4_b = IntToHexChar(HexValue.at(Index));break;
-				}
-			}
-			//Set rest of HalfBytes to value of zero
-			for(++Index;Index<16;++Index)
-			{
-				switch(Index)
-				{
-					case 0:
-						Byte1_a = 0;break;
-					case 1:
-						Byte1_b = 0;break;
-					case 2:
-						Byte2_a = 0;break;
-					case 3:
-						Byte2_b = 0;break;
-					case 4:
-						Byte3_a = 0;break;
-					case 5:
-						Byte3_b =0;break;
-					case 6:
-						Byte4_a = 0;break;
-					case 7:
-						Byte4_b = 0;break;
-				}
-			}
-		}
-		Hex_4Byte operator=(signed __int8 Value){IntTo4ByteHex(Value);}
-		Hex_4Byte operator=(signed __int16 Value){IntTo4ByteHex(Value);}
-		Hex_4Byte operator=(signed __int32 Value){IntTo4ByteHex(Value);}
-		Hex_4Byte operator=(unsigned __int8 Value){IntTo4ByteHex(Value);}
-		Hex_4Byte operator=(unsigned __int16 Value){IntTo4ByteHex(Value);}
-		Hex_4Byte operator=(unsigned __int32 Value){IntTo4ByteHex(Value);}
-		//************************************
-		// Method:    GetAsInt32
-		// FullName:  SuperDecHex::Hex_4Byte::GetAsInt32
-		// Access:    public 
-		// Returns:   unsigned __int64
-		// Qualifier:
-		//************************************
-		unsigned __int32 GetAsInt32();
-	};
-	struct DLL_API Hex_2Byte
-	{
-		unsigned __int8 Byte1_a = 0;
-		unsigned __int8 Byte1_b = 0;
-		unsigned __int8 Byte2_a = 0;
-		unsigned __int8 Byte2_b = 0;
-		//************************************
-		// Assign values based 2 Byte Hex String (4 HalfBytes)
-		// Method:    operator=
-		// FullName:  SuperDecHex::Hex_8Byte::operator=
-		// Access:    public
-		// Returns:   SuperDecHex::Hex_8Byte
-		// Qualifier:
-		// Parameter: std::string HexValue
-		//************************************
-		Hex_2Byte operator=(std::string HexValue);
-		template <typename ValueType>
-		void IntTo2ByteHex(ValueType Value)
-		{
-			std::string HexValue = IntToHexString(Value,true);
-			unsigned int HexSize = HexValue.length();
-			unsigned __int8 Index;
-			for(Index=0;Index<HexSize;++Index)
-			{
-				switch(Index)
-				{
-					case 0:
-						Byte1_a = IntToHexChar(HexValue.at(Index));break;
-					case 1:
-						Byte1_b = IntToHexChar(HexValue.at(Index));break;
-					case 2:
-						Byte2_a = IntToHexChar(HexValue.at(Index));break;
-					case 3:
-						Byte2_b = IntToHexChar(HexValue.at(Index));break;
-				}
-			}
-			//Set rest of HalfBytes to value of zero
-			for(++Index;Index<4;++Index)
-			{
-				switch(Index)
-				{
-					case 0:
-						Byte1_a = 0;break;
-					case 1:
-						Byte1_b = 0;break;
-					case 2:
-						Byte2_a = 0;break;
-					case 3:
-						Byte2_b = 0;break;
-				}
-			}
-		}
-		Hex_2Byte operator=(signed __int8 Value){IntTo2ByteHex(Value);}
-		Hex_2Byte operator=(signed __int16 Value){IntTo2ByteHex(Value);}
-		Hex_2Byte operator=(signed __int32 Value){IntTo2ByteHex(Value);}
-		Hex_2Byte operator=(unsigned __int8 Value){IntTo2ByteHex(Value);}
-		Hex_2Byte operator=(unsigned __int16 Value){IntTo2ByteHex(Value);}
-		Hex_2Byte operator=(unsigned __int32 Value){IntTo2ByteHex(Value);}
-		unsigned __int16 GetAsInt16();
-	};
-	struct DLL_API Hex_1Byte
-	{
-		unsigned __int8 Byte1_a = 0;
-		unsigned __int8 Byte1_b = 0;
-		//************************************
-		// Assign values based 1 Byte Hex String (2 HalfBytes)
-		// Method:    operator=
-		// FullName:  SuperDecHex::Hex_8Byte::operator=
-		// Access:    public
-		// Returns:   SuperDecHex::Hex_8Byte
-		// Qualifier:
-		// Parameter: std::string HexValue
-		//************************************
-		Hex_1Byte operator=(std::string HexValue);
-		template <typename ValueType>
-		void IntTo1ByteHex(ValueType Value)
-		{
-			std::string HexValue = IntToHexString(Value,true);
-			unsigned int HexSize = HexValue.length();
-			//Store at function scope to use for setting rest of half-bytes to zero
-			unsigned __int8 Index;
-			for(Index=0;Index<HexSize;++Index)
-			{
-				switch(Index)
-				{
-					case 0:
-						Byte1_a = IntToHexChar(HexValue.at(Index));break;
-					case 1:
-						Byte1_b = IntToHexChar(HexValue.at(Index));break;
-				}
-			}
-			//Set rest of HalfBytes to value of zero
-			for(++Index;Index<2;++Index)
-			{
-				switch(Index)
-				{
-					case 0:
-						Byte1_a = 0;break;
-					case 1:
-						Byte1_b = 0;break;
-				}
-			}
-		}
-		Hex_1Byte operator=(signed __int8 Value){IntTo1ByteHex(Value);}
-		Hex_1Byte operator=(signed __int16 Value){IntTo1ByteHex(Value);}
-		Hex_1Byte operator=(signed __int32 Value){IntTo1ByteHex(Value);}
-		Hex_1Byte operator=(unsigned __int8 Value){IntTo1ByteHex(Value);}
-		Hex_1Byte operator=(unsigned __int16 Value){IntTo1ByteHex(Value);}
-		Hex_1Byte operator=(unsigned __int32 Value){IntTo1ByteHex(Value);}
-		//************************************
-		// Method:    GetAsInt8
-		// FullName:  SuperDecHex::Hex_1Byte::GetAsInt8
-		// Access:    public 
-		// Returns:   unsigned __int8
-		// Qualifier:
-		//************************************
-		unsigned __int8 GetAsInt8();
-	};
-};
+//Non-Alternating headers above (Structure based headers in this section)
+//#ifndef BlazesGlobalCode_FileStructureVersion || BlazesGlobalCode_FileStructureVersion == 0
+	//Place  library Style  layout here
+//#elif BlazesGlobalCode_FileStructureVersion == 1
+	//Place Local version layout here
+//#endif
 
 //High Precision Decimal Class (BaseClass defaults to up to 32 Bit unsigned int of whole numbers, plus negative modifier and 2 decimal places of stored digits;5 Bytes Total Stored for Base class if using Unsigned __int32 for wholenumber half(default))
 template <typename IntType = unsigned __int32>
@@ -502,10 +77,25 @@ public:
 	//226 = IntValue/11
 	//227 = IntValue/13
 	//250 = Undefined Value Flag (Usable without SuperDec_EnableFractionalStorage but only for status of not setting actual value)
-	//251 = N/A
+	//251 = N/A (value sent if divide by zero and such for now)
 	//Holds first 2 places in Decimal as perfect Accuracy (plus some other specific values if optional preprocessor switch SuperDec_EnableFractionalStorage is on)
 	//All statuses here above 199(except value 250) require SuperDec_EnableFractionalStorage on to be used right now
 	unsigned __int8 DecimalStatus;
+	//************************************
+	// Method:    GetAsDouble
+	// FullName:  SuperDec_BaseClass<IntType>::GetAsDouble
+	// Access:    public
+	// Returns:   double
+	// Qualifier:
+	//************************************
+	double GetAsDouble()
+	{
+#ifdef SuperDec_EnableFractionalStorage
+#endif
+		bool IsPositive = DecimalStatus < 100;
+		if(IsPositive == false) { DecimalStatus -= 100; }
+		return IsPositive ? (IntValue + (DecimalStatus*.01)) : (IntValue + (DecimalStatus*.01))*-1;
+	}
 	template <typename ValueType>
 	void ApplyUnsignedAddition(ValueType Value)
 	{
@@ -758,6 +348,59 @@ public:
 		}
 	}
 	SuperDec_BaseClass operator+(std::string Value);
+	template <typename ValueType>
+	void ApplyEqualFloatValueOperation(ValueType Value)
+	{
+		signed __int64 WholeHalf = floor(Value);
+		SuperDec_BaseClass::operator=(WholeHalf);
+		std::string DecimalPart = VariableConversionFunctions::DoubleToStringConversion(Value);
+		bool IsNegative;
+		if(DecimalPart.at(0) == '-')
+		{
+			IsNegative = true;
+		}
+		else
+		{
+			IsNegative = false;
+		}
+		unsigned int SizeTemp = DecimalPart.length();
+		bool InsideDecimal = false;
+		unsigned __int16 DecimalBuffer = 0;
+		unsigned __int8 DecimalIndex = 0;
+		for(unsigned __int8 Index = 0; Index < SizeTemp; ++Index)
+		{
+			if(InsideDecimal)
+			{
+				++DecimalIndex;
+				if(DecimalIndex == 1)
+				{
+					DecimalBuffer += VariableConversionFunctions::CharAsInt(DecimalPart.at(Index));
+				}
+				else if(DecimalIndex == 2)
+				{
+					DecimalBuffer += VariableConversionFunctions::CharAsInt(DecimalPart.at(Index)) * 10;
+					if(IsNegative)
+					{
+						DecimalStatus = DecimalBuffer + 100;
+					}
+					else
+					{
+						DecimalStatus = DecimalBuffer;
+					}
+					DecimalBuffer = 0;
+				}
+				else//For Decimal Places higher than 2
+				{/*--Placeholder for other derived classes extra decimal place storage*/
+				}
+			}
+		}
+		//Calculate Buffer difference if haven't yet
+		if(DecimalIndex < 2)
+		{
+			if(IsNegative) { DecimalStatus = DecimalBuffer + 100; }
+			else { DecimalStatus = DecimalBuffer; }
+		}
+	}
 	SuperDec_BaseClass operator=(double Value)
 	{
 		SuperDec_BaseClass::operator=((signed __int64) floor(Value));
@@ -798,7 +441,7 @@ public:
 					DecimalBuffer = 0;
 				}
 				else//For Decimal Places higher than 2
-				{
+				{/*--Placeholder for other derived classes extra decimal place storage*/
 				}
 			}
 		}
@@ -809,6 +452,7 @@ public:
 			else { DecimalStatus = DecimalBuffer; }
 		}
 	}
+	SuperDec_BaseClass operator=(float Value) { ApplyEqualFloatValueOperation(&Value); }
 	SuperDec_BaseClass operator=(std::string Value);
 	SuperDec_BaseClass operator=(unsigned int Value);
 	SuperDec_BaseClass operator=(int Value);
@@ -863,75 +507,163 @@ public:
 			}
 			DecimalStatus = DecimalBuffer;
 		}
-		//IntValue *= Value;
 	}
-	template <typename ValueType>
-	void ApplyFloatValueMultOperation(ValueType Value)
-	{
-		if(Value == 0 || (DecimalStatus == 0 && IntValue == 0))
-		{
-			IntValue = 0;
-			DecimalStatus = 0;
-		}
-		else
-		{
-			//bool ValueIsNegative = Value < 0;
-			if(Value < 0)
-			{
-				Value *= -1;
-				if(DecimalStatus < 100)//Flip positive to negative
-				{
-					DecimalStatus += 100;
-				}
-#ifdef SuperDec_EnableFractionalStorage
-#endif
-				else
-				{
-					DecimalStatus -= 100;
-				}
-			}
-			//ValueType WholeHalfOfValue = floor(Value);
-			//double DecimalHalfTemp = 0.0;
-			//DecimalHalfTemp = Value - WholeHalfOfValue;
-			////DecimalHalfOfValue = Value - 
-			//unsigned __int64 DecimalBuffer = DecimalStatus;
-		}
-		//IntValue *= Value;
-	}
-	template <typename ValueType>
-	void ApplySuperDecValueMultOperation(ValueType Value)
-	{
-		if(Value == 0 || (DecimalStatus == 0 && IntValue == 0))
-		{
-			IntValue = 0;
-			DecimalStatus = 0;
-		}
-		else
-		{
-			//bool ValueIsNegative = Value < 0;
-			if(Value < 0)
-			{
-				Value *= -1;
-				if(DecimalStatus < 100)//Flip positive to negative
-				{
-					DecimalStatus += 100;
-				}
-#ifdef SuperDec_EnableFractionalStorage
-#endif
-				else
-				{
-					DecimalStatus -= 100;
-				}
-			}
-			//ValueType WholeHalfOfValue = floor(Value);
-			//double DecimalHalfTemp = 0.0;
-			//DecimalHalfTemp = Value - WholeHalfOfValue;
-			////DecimalHalfOfValue = Value - 
-			//unsigned __int64 DecimalBuffer = DecimalStatus;
-			
-		}
-		//IntValue *= Value;
-	}
+//	template <typename ValueType>
+//	void ApplyFloatValueMultOperation(ValueType Value, unsigned __int8 MethodType = 0, bool DivideInstead = false)
+//	{
+//		if(DivideInstead&&Value==0)
+//		{//Return similar to N/A result
+//			DecimalStatus = 251;
+//		}
+//		else if(Value == 0 || (DecimalStatus == 0 && IntValue == 0))
+//		{
+//			IntValue = 0;
+//			DecimalStatus = 0;
+//		}
+//		else if(DecimalStatus>199)
+//		{//Fractional And other such more "abstract" value operations here(Not implimented yet)
+//		}
+//		else
+//		{
+//			bool StatusIsNegative = DecimalStatus>100;
+//			if(StatusIsNegative)
+//			{
+//				DecimalStatus -= 100;
+//			}
+//			//(IntValue+Decimal)*X = (IntValue*X) + (Decimal*X)
+//			//X = (XIntPart+XDecimalPart)
+//			//(IntValue*XIntPart)+(IntValue*XDecimalPart)+(Decimal*XIntPart)+(Decimal*XDecimalPart)
+//			bool ValueIsNegative;
+//			if(Value < 0)
+//			{
+//				Value *= -1;
+//				ValueIsNegative = true;
+//			}
+//			else { ValueIsNegative = false; }
+//			unsigned __int64 ValueIntPart = floor(Value);
+//			//Store Decimal Half as 
+//			switch(MethodType)
+//			{
+//				case 2://DecimalHalf of Value x 1000000 (Keep only 6 Digits of decimal half of value)
+//				{
+//					//(IntValue*XIntPart)+(IntValue*XDecimalPart)+(Decimal*XIntPart)+(Decimal*XDecimalPart)
+//					unsigned __int64 ValueDecimalPart_X1000000 = (Value - ValueIntPart) * 1000000;
+//				}break;
+//				case 1://just apply operations using double to multiple
+//				{
+//				
+//				}break;
+//				default://Store Decimal Half as double
+//				{
+//				
+//				}
+//			}
+//			if(MethodType==2)
+//			{
+//			
+//			}
+//			else
+//			{
+//				
+//				
+//			}
+//
+//			if(MethodType == 2)
+//			{
+//
+//				//Split value into decimal and whole half
+//				unsigned __int64 WholeHalfOfValue = floor(Value);
+//				//
+//				//ApplyIntValueMultOperation(ValueType Value)
+//			}
+//			else
+//			{
+//				//bool ValueIsNegative = Value < 0;
+//				if(Value < 0)
+//				{
+//					Value *= -1;
+//					if(DecimalStatus < 100)//Flip positive to negative
+//					{
+//						DecimalStatus += 100;
+//					}
+//#ifdef SuperDec_EnableFractionalStorage
+//#endif
+//					else
+//					{
+//						DecimalStatus -= 100;
+//					}
+//				}
+//				bool StatusIsNegative = DecimalStatus>100;
+//				unsigned __int64 DecimalBuffer = DecimalStatus;
+//				if(StatusIsNegative)
+//				{
+//					DecimalBuffer -= 100;
+//				}
+//				switch(MethodType)
+//				{
+//					case 0:
+//					{
+//						unsigned __int64 IntBuffer = IntValue;
+//					}break;
+//					//Convert Values to double then multiple method here
+//					case 1:
+//					{
+//						double TempValue GetAsDouble()*Value;
+//					}break;
+//				}
+//				//ValueType WholeHalfOfValue = floor(Value);
+//				//double DecimalHalfTemp = 0.0;
+//				//DecimalHalfTemp = Value - WholeHalfOfValue;
+//				////DecimalHalfOfValue = Value -
+//				//unsigned __int64 DecimalBuffer = DecimalStatus;
+//				}
+//			}
+//			//IntValue *= Value;
+//		}
+	//void ApplySuperDecValueMultOperation(SuperDec_BaseClass Value, bool DivideInstead = false)
+	//{
+	//	if(Value.DecimalStatus==0)//Positive Whole Number Value
+	//	{
+	//		if(DecimalStatus==0)//WholeNumber x (Whole Number Value)
+	//		{
+	//		
+	//		}
+	//		else if(DecimalStatus==100)//WholeNumber x (Negative Whole Number Value)
+	//		{
+	//		
+	//		}
+	//		else
+	//		{
+	//		
+	//		}
+	//	}
+	//	else if(Value.DecimalStatus==100)//Negative Whole Number Value
+	//	{
+	//		if(DecimalStatus==0)//WholeNumber x (Whole Number Value)
+	//		{
+	//		
+	//		}
+	//		else if(DecimalStatus==100)//WholeNumber x (Negative Whole Number Value)
+	//		{
+	//			DecimalStatus = 0;//Flip Negative Number to positive
+	//			
+	//		}
+	//		else
+	//		{
+	//		
+	//		}
+	//	}
+	//	else if(Value.DecimalStatus>199)//Operation using non-standard Value Status(Work on code for this last)
+	//	{}
+	//	else if(Value.DecimalStatus<100)//Positive Decimal Number Value
+	//	{
+	//	
+	//	}
+	//	else//Negative Decimal Value
+	//	{
+	//	
+	//	}
+	//}
 	template <typename ValueType>
 	void ApplyIntValueDivideOperation(ValueType Value)
 	{
@@ -962,69 +694,18 @@ public:
 			}
 			//Create rest of the code here later
 		}
-	}
-	template <typename ValueType>
-	void ApplyFloatValueDivideOperation(ValueType Value)
-	{
-		if(Value == 0)
-		{//Return similar to N/A result
-			DecimalStatus = 251;
 		}
-		else if(DecimalStatus == 0 && IntValue == 0)
-		{
-			IntValue = 0;
-			DecimalStatus = 0;
-		}
-		else
-		{
-			if(Value < 0)
-			{
-				if(DecimalStatus < 100)//Flip positive to negative
-				{
-					DecimalStatus += 100;
-				}
-#ifdef SuperDec_EnableFractionalStorage
-#endif
-				else
-				{
-					DecimalStatus -= 100;
-				}
-				Value *= -1;
-			}
-			//Create rest of the code here later
-		}
-	}
-	template <typename ValueType>
-	void ApplySuperDecValueDivideOperation(ValueType Value)
-	{
-		if(Value == 0)
-		{//Return similar to N/A result
-			DecimalStatus = 251;
-		}
-		else if(DecimalStatus == 0 && IntValue == 0)
-		{
-			IntValue = 0;
-			DecimalStatus = 0;
-		}
-		else
-		{
-			if(Value < 0)
-			{
-				if(DecimalStatus < 100)//Flip positive to negative
-				{
-					DecimalStatus += 100;
-				}
-#ifdef SuperDec_EnableFractionalStorage
-#endif
-				else
-				{
-					DecimalStatus -= 100;
-				}
-				Value *= -1;
-			}
-			//Create rest of the code here later
-		}
-	}
+	//template <typename ValueType>
+	//void ApplyFloatValueDivideOperation(ValueType Value, unsigned __int8 MethodType = 0)
+	//{
+	//	//Placing Divide Operation code inside one actual function to make easier to work on code and "maintain"
+	//	ApplyFloatValueMultOperation(ValueType Value, MethodType, true);
+	//}
+	//void ApplySuperDecValueDivideOperation(SuperDec_BaseClass Value)
+	//{
+	//	//Actual Code inside Multi Version to make easier to update
+	//	ApplySuperDecValueMultOperation(Value, true);
+	//}
 	SuperDec_BaseClass operator*(signed int Value) { ApplyIntValueMultOperation(&Value); }
 	SuperDec_BaseClass operator*(unsigned int Value) { ApplyIntValueMultOperation(&Value); }
 	SuperDec_BaseClass operator*(signed __int8 Value) { ApplyIntValueMultOperation(&Value); }
@@ -1043,19 +724,79 @@ public:
 	SuperDec_BaseClass& operator=(SuperDec_BaseClass const& copy) = default;
 	SuperDec_BaseClass() {}
 	~SuperDec_BaseClass() {}
-};
+	};
 
-class SuperDec_Basic : public SuperDec_BaseClass <unsigned __int64>
+class SuperDec_64BitBasic : public SuperDec_BaseClass <unsigned __int64>
 {};
 
-class SuperDec : public SuperDec_BaseClass <unsigned __int32>
+/* Notes on digit storable space possible for different Interger values (such as XXXXXX.XXXXX digits):
+signed __int64 holds XX digits
+
+unsigned __int8 (aka unsigned char) holds 2 digits (plus +- status) 
+unsigned __int16 (aka unsigned short) holds XX digits (plus +- status)
+unsigned __int32 holds XX digits (plus +- status)
+unsigned __int64 holds XX digits (plus +- status)
+
+Required amount of storage for whole number half of representation:
+signed __int16 needs
+signed __int32 needs 
+signed __int64 needs 
+
+*/
+
+//Stores 5 Bytes worth of data to store with 100% accuracy +- Int32 with 2 Decimal places stored
+//(4 Bytes for Int32;1 Byte for 2 Decimal places plus decimal status of +- and other statuses as optional later)
+class SuperDec_Basic : public SuperDec_BaseClass <unsigned __int32>
 {
 	//Base::operator=(d);
-	SuperDec operator=(double Value);
+	SuperDec_Basic operator=(double Value);
+	SuperDec_Basic operator*(double Value);
+	SuperDec_Basic operator*(float Value);
 };
 
+//Design to hold at least 7 decimal digits of storage plus Full signed Int32 range of whole values plus negative/positive status 
+//Might need to override DecimalStatus into larger storage type to optimize decimal representation calculations
+//Limit storage variables to less than 8 Bytes 
+class HalfDec : public SuperDec_Basic
+{
+
+};
+
+//Design to hopefully replace usage of double
+//Limit storage variables to 8 Bytes (whole value representation costs 4 bytes of 8)
+//Needs to hold at least 14 digits of decimal representation
+class SuperDec_8Byte : public SuperDec_Basic
+{
+
+};
+
+class SuperDec_21Dec : public SuperDec_Basic 
+{
+	//Holds data for Digits(3-21)
+	//Value 1 = Digit # 3 has value of 1 and Digits #4-21 have values of zero
+	unsigned __int64 ExtraDecimal00;
+};
+
+//Stores 9 Bytes worth of data to store with 100% accuracy +- Int32 with 11 Decimal places stored
+//For reference TI-83 Plus Calculators values inside 9 Byte Variables with some inaccuracies) (Reference:http://merthsoft.com/linkguide/ti83+/vars.html)
+//Traditionally Manually calculate to 14 significant digits?
+class SuperDec_11Dec : public SuperDec_Basic
+{
+	//Holds data for Digits(3-21)
+	//Value 1 = Digit # 3 has value of 1 and Digits #4-11 have values of zero
+	unsigned __int32 ExtraDecimal00;
+};
+
+class SuperDec_15Dec : public SuperDec_Basic
+{
+	//Holds data for Digits(3-21)
+	//Value 1 = Digit # 3 has value of 1 and Digits #4-11 have values of zero
+	unsigned __int32 ExtraDecimal00;
+};
+
+
 //78 Perfect Digits Decimal,Holds 64Bt unsigned int worth of whole numbers, holds Negative/Positive Status, Holds optional Fractionals/things like pi, Total Storage space used = 42 Bytes Used
-class SuperDec_64Bit78Dec : public  SuperDec_Basic
+class SuperDec_64Bit78Dec : public  SuperDec_64BitBasic
 {
 	//Holds data for Digits(3-21)
 	//Value 1 = Digit # 3 has value of 1 and Digits #4-21 have values of zero

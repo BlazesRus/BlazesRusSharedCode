@@ -2,11 +2,22 @@
 	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
 	*/
 #include "SuperDec.h"
-#ifdef BLAZESGLOBALCODE_LIBRARY
-#include "..\..\niflib\GlobalCode\VariableConversionFunctions.h"
-#else
-#include "VariableConversionFunctions.h"
+
+//Non-Alternating headers above (Structure based headers in this section)
+#if BlazesGlobalCode_FileStructureVersion == 0 || #ifndef (BlazesGlobalCode_FileStructureVersion)//(library style  layout)
+	#include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
+#elif BlazesGlobalCode_FileStructureVersion == 1//(Local version style layout)
+	#include "VariableConversionFunctions.h"
 #endif
+
+
+//#ifndef BLAZESGLOBALCODE_EnableFloatingPointMultiplication
+//	#define BLAZESGLOBALCODE_EnableFloatingPointMultiplication 1
+//#endif
+
+//#ifndef BLAZESGLOBALCODE_SpecialDecStatus
+//	#define BLAZESGLOBALCODE_SpecialDecStatus 0
+//#endif
 
 template <typename IntType>
 SuperDec_BaseClass SuperDec_BaseClass<IntType>::operator=(std::string Value)
@@ -90,9 +101,10 @@ SuperDec_BaseClass SuperDec_BaseClass::operator=(unsigned __int64 Value)
 	}
 }
 
-SuperDec SuperDec::operator=(double Value)
+SuperDec_Basic SuperDec_Basic::operator=(double Value)
 {
-	SuperDec_BaseClass::operator=((signed __int64) floor(Value));
+	signed __int64 WholeHalf = floor(Value);
+	SuperDec_BaseClass::operator=(WholeHalf);
 	std::string DecimalPart = VariableConversionFunctions::DoubleToStringConversion(Value);
 	bool IsNegative;
 	if(DecimalPart.at(0) == '-')
@@ -143,346 +155,62 @@ SuperDec SuperDec::operator=(double Value)
 	}
 }
 
-SuperDecHex::Hex_8Byte SuperDecHex::Hex_8Byte::operator=(std::string HexValue)
+SuperDec_Basic SuperDec_Basic::operator*(float Value)
 {
-	unsigned int HexSize = HexValue.length();
-	//Store at function scope to use for setting rest of half-bytes to zero
-	unsigned __int8 Index;
-	for(Index = 0; Index < HexSize; ++Index)
+	if(floor(Value) == Value)//Whole Number Detected
 	{
-		switch(Index)
-		{
-			case 0:
-				Byte1_a = IntToHexChar(HexValue.at(Index)); break;
-			case 1:
-				Byte1_b = IntToHexChar(HexValue.at(Index)); break;
-			case 2:
-				Byte2_a = IntToHexChar(HexValue.at(Index)); break;
-			case 3:
-				Byte2_b = IntToHexChar(HexValue.at(Index)); break;
-			case 4:
-				Byte3_a = IntToHexChar(HexValue.at(Index)); break;
-			case 5:
-				Byte3_b = IntToHexChar(HexValue.at(Index)); break;
-			case 6:
-				Byte4_a = IntToHexChar(HexValue.at(Index)); break;
-			case 7:
-				Byte4_b = IntToHexChar(HexValue.at(Index)); break;
-			case 8:
-				Byte5_a = IntToHexChar(HexValue.at(Index)); break;
-			case 9:
-				Byte5_b = IntToHexChar(HexValue.at(Index)); break;
-			case 10:
-				Byte6_a = IntToHexChar(HexValue.at(Index)); break;
-			case 11:
-				Byte6_b = IntToHexChar(HexValue.at(Index)); break;
-			case 12:
-				Byte7_a = IntToHexChar(HexValue.at(Index)); break;
-			case 13:
-				Byte7_b = IntToHexChar(HexValue.at(Index)); break;
-			case 14:
-				Byte8_a = IntToHexChar(HexValue.at(Index)); break;
-			case 15:
-				Byte8_b = IntToHexChar(HexValue.at(Index)); break;
-		}
+		ApplyIntValueMultOperation((int) Value);
 	}
-	//Set rest of HalfBytes to value of zero
-	for(++Index; Index < 16; ++Index)
+	else
 	{
-		switch(Index)
-		{
-			case 0:
-				Byte1_a = 0; break;
-			case 1:
-				Byte1_b = 0; break;
-			case 2:
-				Byte2_a = 0; break;
-			case 3:
-				Byte2_b = 0; break;
-			case 4:
-				Byte3_a = 0; break;
-			case 5:
-				Byte3_b = 0; break;
-			case 6:
-				Byte4_a = 0; break;
-			case 7:
-				Byte4_b = 0; break;
-			case 8:
-				Byte5_a = 0; break;
-			case 9:
-				Byte5_b = 0; break;
-			case 10:
-				Byte6_a = 0; break;
-			case 11:
-				Byte6_b = 0; break;
-			case 12:
-				Byte7_a = 0; break;
-			case 13:
-				Byte7_b = 0; break;
-			case 14:
-				Byte8_a = 0; break;
-			case 15:
-				Byte8_b = 0; break;
-		}
+
 	}
 }
 
-unsigned __int64 SuperDecHex::Hex_8Byte::GetAsInt64()
+SuperDec_Basic SuperDec_Basic::operator*(double Value)
 {
-	unsigned __int64 CalcValue = 0;
-	for(unsigned __int8 Index = 0; Index < 16; ++Index)
+	int WholeHalfValue = floor(Value);
+	if(WholeHalfValue==Value)//Whole Number Detected
 	{
-		switch(Index)
-		{
-			case 0:
-				CalcValue += pow(16, Index) * Byte1_a; break;
-			case 1:
-				CalcValue += pow(16, Index) * Byte1_b; break;
-			case 2:
-				CalcValue += pow(16, Index) * Byte2_a; break;
-			case 3:
-				CalcValue += pow(16, Index) * Byte2_b; break;
-			case 4:
-				CalcValue += pow(16, Index) * Byte3_a; break;
-			case 5:
-				CalcValue += pow(16, Index) * Byte3_b; break;
-			case 6:
-				CalcValue += pow(16, Index) * Byte4_a; break;
-			case 7:
-				CalcValue += pow(16, Index) * Byte4_b; break;
-			case 8:
-				CalcValue += pow(16, Index) * Byte5_a; break;
-			case 9:
-				CalcValue += pow(16, Index) * Byte5_b; break;
-			case 10:
-				CalcValue += pow(16, Index) * Byte6_a; break;
-			case 11:
-				CalcValue += pow(16, Index) * Byte6_b; break;
-			case 12:
-				CalcValue += pow(16, Index) * Byte7_a; break;
-			case 13:
-				CalcValue += pow(16, Index) * Byte7_b; break;
-			case 14:
-				CalcValue += pow(16, Index) * Byte8_a; break;
-			case 15:
-				CalcValue += pow(16, Index) * Byte8_b; break;
-		}
+		ApplyIntValueMultOperation((int)Value);
 	}
-	return CalcValue;
-}
-
-SuperDecHex::Hex_4Byte SuperDecHex::Hex_4Byte::operator=(std::string HexValue)
-{
-	unsigned int HexSize = HexValue.length();
-	unsigned __int8 Index;
-	for(Index = 0; Index < HexSize; ++Index)
+	else
 	{
-		switch(Index)
+		bool IsNegative=false;
+		if(WholeHalfValue<0)
 		{
-			case 0:
-				Byte1_a = IntToHexChar(HexValue.at(Index)); break;
-			case 1:
-				Byte1_b = IntToHexChar(HexValue.at(Index)); break;
-			case 2:
-				Byte2_a = IntToHexChar(HexValue.at(Index)); break;
-			case 3:
-				Byte2_b = IntToHexChar(HexValue.at(Index)); break;
-			case 4:
-				Byte3_a = IntToHexChar(HexValue.at(Index)); break;
-			case 5:
-				Byte3_b = IntToHexChar(HexValue.at(Index)); break;
-			case 6:
-				Byte4_a = IntToHexChar(HexValue.at(Index)); break;
-			case 7:
-				Byte4_b = IntToHexChar(HexValue.at(Index)); break;
+			IsNegative = true;
+			Value*=-1;
+			WholeHalfValue*=-1;
 		}
-	}
-	//Set rest of HalfBytes to value of zero
-	for(++Index; Index < 16; ++Index)
-	{
-		switch(Index)
+		double DecimalHalfValue = Value - WholeHalfValue;
+		#ifdef BLAZESGLOBALCODE_SpecialDecStatus
+		if(DecimalStatus>200)//Only Makes this check if BLAZESGLOBALCODE_SpecialDecStatus usage is enabled
 		{
-			case 0:
-				Byte1_a = 0; break;
-			case 1:
-				Byte1_b = 0; break;
-			case 2:
-				Byte2_a = 0; break;
-			case 3:
-				Byte2_b = 0; break;
-			case 4:
-				Byte3_a = 0; break;
-			case 5:
-				Byte3_b = 0; break;
-			case 6:
-				Byte4_a = 0; break;
-			case 7:
-				Byte4_b = 0; break;
+		
 		}
+		else
+		{
+		#endif
+			//Represents stored value as IntValue then (Decimal Value) for rest of degits (need to reserve more of Decimal Places for if larger max stored decimal value or use alternative represention (should work with most decimal storage as long as IntValue is int32 instead of int64 otherwise need to check size before deciding representation
+			__int64 StoredValue = IntValue*100+(DecimalStatus>100?DecimalStatus-100:DecimalStatus);
+			//if(WholeHalfValue==0)//Decimal Only Multiplication
+			//{
+			//	#if BLAZESGLOBALCODE_EnableFloatingPointMultiplication == 1
+			//	
+			//	#else
+			//	
+			//	#endif
+			//}
+			//else
+			//{
+			//	//(IntValue+Decimal)*X = (IntValue*X) + (Decimal*X)
+			//	//X = (XIntPart+XDecimalPart)
+			//	//(IntValue*XIntPart)+(IntValue*XDecimalPart)+(Decimal*XIntPart)+(Decimal*XDecimalPart)
+			//}
+		#ifdef BLAZESGLOBALCODE_SpecialDecStatus
+		}
+		#endif
 	}
 }
 
-unsigned __int32 SuperDecHex::Hex_4Byte::GetAsInt32()
-{
-	unsigned __int32 CalcValue = 0;
-	for(unsigned __int8 Index = 0; Index < 16; ++Index)
-	{
-		switch(Index)
-		{
-			case 0:
-				CalcValue += pow(16, Index) * Byte1_a; break;
-			case 1:
-				CalcValue += pow(16, Index) * Byte1_b; break;
-			case 2:
-				CalcValue += pow(16, Index) * Byte2_a; break;
-			case 3:
-				CalcValue += pow(16, Index) * Byte2_b; break;
-			case 4:
-				CalcValue += pow(16, Index) * Byte3_a; break;
-			case 5:
-				CalcValue += pow(16, Index) * Byte3_b; break;
-			case 6:
-				CalcValue += pow(16, Index) * Byte4_a; break;
-			case 7:
-				CalcValue += pow(16, Index) * Byte4_b; break;
-		}
-	}
-	return CalcValue;
-}
-
-SuperDecHex::Hex_2Byte SuperDecHex::Hex_2Byte::operator=(std::string HexValue)
-{
-	unsigned int HexSize = HexValue.length();
-	unsigned __int8 Index;
-	for(Index = 0; Index < HexSize; ++Index)
-	{
-		switch(Index)
-		{
-			case 0:
-				Byte1_a = IntToHexChar(HexValue.at(Index)); break;
-			case 1:
-				Byte1_b = IntToHexChar(HexValue.at(Index)); break;
-			case 2:
-				Byte2_a = IntToHexChar(HexValue.at(Index)); break;
-			case 3:
-				Byte2_b = IntToHexChar(HexValue.at(Index)); break;
-		}
-	}
-	//Set rest of HalfBytes to value of zero
-	for(++Index; Index < 4; ++Index)
-	{
-		switch(Index)
-		{
-			case 0:
-				Byte1_a = 0; break;
-			case 1:
-				Byte1_b = 0; break;
-			case 2:
-				Byte2_a = 0; break;
-			case 3:
-				Byte2_b = 0; break;
-		}
-	}
-}
-
-unsigned __int16 SuperDecHex::Hex_2Byte::GetAsInt16()
-{
-	unsigned __int16 CalcValue = 0;
-	for(unsigned __int8 Index = 0; Index < 4; ++Index)
-	{
-		switch(Index)
-		{
-			case 0:
-				CalcValue += pow(16, Index) * Byte1_a; break;
-			case 1:
-				CalcValue += pow(16, Index) * Byte1_b; break;
-			case 2:
-				CalcValue += pow(16, Index) * Byte2_a; break;
-			case 3:
-				CalcValue += pow(16, Index) * Byte2_b; break;
-		}
-	}
-	return CalcValue;
-}
-
-SuperDecHex::Hex_1Byte SuperDecHex::Hex_1Byte::operator=(std::string HexValue)
-{
-	unsigned int HexSize = HexValue.length();
-	unsigned __int8 Index;
-	for(Index = 0; Index < HexSize; ++Index)
-	{
-		switch(Index)
-		{
-			case 0:
-				Byte1_a = IntToHexChar(HexValue.at(Index)); break;
-			case 1:
-				Byte1_b = IntToHexChar(HexValue.at(Index)); break;
-		}
-	}
-	//Set rest of HalfBytes to value of zero
-	for(++Index; Index < 2; ++Index)
-	{
-		switch(Index)
-		{
-			case 0:
-				Byte1_a = 0; break;
-			case 1:
-				Byte1_b = 0; break;
-		}
-	}
-}
-
-unsigned __int8 SuperDecHex::Hex_1Byte::GetAsInt8()
-{
-	unsigned __int8 CalcValue = 0;
-	for(unsigned __int8 Index = 0; Index < 2; ++Index)
-	{
-		switch(Index)
-		{
-			case 0:
-				CalcValue += pow(16, Index) * Byte1_a; break;
-			case 1:
-				CalcValue += pow(16, Index) * Byte1_b; break;
-		}
-	}
-	return CalcValue;
-}
-
-unsigned __int8 SuperDecHex::HexCharToInt(int num)
-{
-	switch(num)
-	{
-		case '1':
-			return 1;
-		case '2':
-			return 2;
-		case '3':
-			return 3;
-		case '4':
-			return 4;
-		case '5':
-			return 5;
-		case '6':
-			return 6;
-		case '7':
-			return 7;
-		case '8':
-			return 8;
-		case '9':
-			return 9;
-		case 'A':
-			return 10;
-		case 'B':
-			return 11;
-		case 'C':
-			return 12;
-		case 'D':
-			return 13;
-		case 'E':
-			return 14;
-		case 'F':
-			return 15;
-		default:
-			return 0;
-	}
-}
