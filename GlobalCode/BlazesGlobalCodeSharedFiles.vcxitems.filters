@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="GlobalCode_ExperimentalCode">
+      <UniqueIdentifier>{ddba552d-b465-4878-9a47-3150ef968ba7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GlobalCode_IniData">
+      <UniqueIdentifier>{ec82998e-8701-44cd-aaf5-c87116fb2b1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GlobalCode_MiscFunctions">
+      <UniqueIdentifier>{9395b110-4839-49e5-9f7e-e48ca7e67294}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GlobalCode_VariableLists">
+      <UniqueIdentifier>{fcb60964-20c5-418e-a204-a18fb5d33e16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GlobalCode_VariableConversionFunctions">
+      <UniqueIdentifier>{a3c4ef35-0fc3-463d-815d-3353c3ad8c5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GlobalCode_StringFunctions">
+      <UniqueIdentifier>{f6451db0-8f1f-41c7-bfd9-61101b8a9af5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GlobalCode_QuadVector">
+      <UniqueIdentifier>{0174033f-2ed5-4c7c-8721-4ded65217218}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GlobalCode_NodeTrees">
+      <UniqueIdentifier>{879acdb9-f5ee-4cb7-98a8-12ccb147ee4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation">
+      <UniqueIdentifier>{4d2d888d-67fc-4cff-96bc-251bd10f1726}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\CustomDec.h">
+      <Filter>GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec.h">
+      <Filter>GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDecHex.h">
+      <Filter>GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\CustomDec_UnsignedTemplates.h">
+      <Filter>GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_IniData\IniData.h">
+      <Filter>GlobalCode_IniData</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_MiscFunctions\MiscFunctions.h">
+      <Filter>GlobalCode_MiscFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_VariableLists\StringVectorList.h">
+      <Filter>GlobalCode_VariableLists</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_VariableLists\VariableList.h">
+      <Filter>GlobalCode_VariableLists</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_VariableLists\VariableTypeLists.h">
+      <Filter>GlobalCode_VariableLists</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_VariableLists\VariableVectorFunctions.h">
+      <Filter>GlobalCode_VariableLists</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h">
+      <Filter>GlobalCode_VariableConversionFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_StringFunctions\StringFunctions.h">
+      <Filter>GlobalCode_StringFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_QuadVector\QuadVector.h">
+      <Filter>GlobalCode_QuadVector</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_QuadVector\QuadVectorFunctions.h">
+      <Filter>GlobalCode_QuadVector</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\LooseNodeTreeTemplate.h">
+      <Filter>GlobalCode_NodeTrees</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\TagNodeTreeTemplate.h">
+      <Filter>GlobalCode_NodeTrees</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\TagPosition.h">
+      <Filter>GlobalCode_NodeTrees</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\VariableData.h">
+      <Filter>GlobalCode_NodeTrees</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\XMLOption.h">
+      <Filter>GlobalCode_NodeTrees</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\XMLTagTree.h">
+      <Filter>GlobalCode_NodeTrees</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\CustomDec_Templates.h">
+      <Filter>GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.h">
+      <Filter>GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec.cpp">
+      <Filter>GlobalCode_ExperimentalCode</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDecHex.cpp">
+      <Filter>GlobalCode_ExperimentalCode</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_IniData\IniData.cpp">
+      <Filter>GlobalCode_IniData</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_MiscFunctions\MiscFunctions.cpp">
+      <Filter>GlobalCode_MiscFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_VariableLists\StringVectorList.cpp">
+      <Filter>GlobalCode_VariableLists</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_VariableLists\VariableTypeLists.cpp">
+      <Filter>GlobalCode_VariableLists</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_VariableLists\VariableVectorFunctions.cpp">
+      <Filter>GlobalCode_VariableLists</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cpp">
+      <Filter>GlobalCode_VariableConversionFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_StringFunctions\StringFunctions.cpp">
+      <Filter>GlobalCode_StringFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_QuadVector\QuadVector.cpp">
+      <Filter>GlobalCode_QuadVector</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_QuadVector\QuadVectorFunctions.cpp">
+      <Filter>GlobalCode_QuadVector</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp">
+      <Filter>GlobalCode_NodeTrees</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\TagPosition.cpp">
+      <Filter>GlobalCode_NodeTrees</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\VariableData.cpp">
+      <Filter>GlobalCode_NodeTrees</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\XMLOption.cpp">
+      <Filter>GlobalCode_NodeTrees</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cpp">
+      <Filter>GlobalCode_ExperimentalCode</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="$(MSBuildThisFileDirectory)PreprocessorVariables.txt">
+      <Filter>Documentation</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)SubfolderDescriptions">
+      <Filter>Documentation</Filter>
+    </None>
+  </ItemGroup>
+</Project>

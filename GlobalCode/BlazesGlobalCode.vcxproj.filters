@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\GlobalCode_ExperimentalCode">
+      <UniqueIdentifier>{696927c5-183b-4c31-bcba-139ef3be35bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GlobalCode_ExperimentalCode">
+      <UniqueIdentifier>{a46acfbf-0ade-45dc-b32e-70c3ff864c00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GlobalCode_IniData">
+      <UniqueIdentifier>{04fb6e3a-1f1a-4e55-9f02-3c1a8303b0f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GlobalCode_IniData">
+      <UniqueIdentifier>{a20a8876-58df-4a22-b812-fa5f1ec8c785}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GlobalCode_MiscFunctions">
+      <UniqueIdentifier>{bba9cfa7-c7c1-408f-a374-da169d1a2ae5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GlobalCode_MiscFunctions">
+      <UniqueIdentifier>{52994d8f-4f18-4a52-a9c0-226a423424c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GlobalCode_VariableLists">
+      <UniqueIdentifier>{49f08e36-8caf-4dfb-89a5-e8a53231c814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GlobalCode_VariableLists">
+      <UniqueIdentifier>{f7cb8e8b-49a6-49ab-894d-6d5b0363cda9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GlobalCode_VariableConversionFunctions">
+      <UniqueIdentifier>{68bf72d5-0ec0-4f91-888c-40b2b6b4d6c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GlobalCode_VariableConversionFunctions">
+      <UniqueIdentifier>{89a092f9-c8c9-4c61-9219-9d02170cf176}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GlobalCode_StringFunctions">
+      <UniqueIdentifier>{23c32711-5495-4cc4-a890-188bf31009e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GlobalCode_StringFunctions">
+      <UniqueIdentifier>{e5b4044c-a53c-4d13-be14-39747b869563}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GlobalCode_QuadVector">
+      <UniqueIdentifier>{973546b3-6995-4100-9477-bd4990216a1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GlobalCode_QuadVector">
+      <UniqueIdentifier>{c7cef4b4-ef52-485f-b4a0-01770e5a7aea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GlobalCode_NodeTrees">
+      <UniqueIdentifier>{bfbb14b6-43b9-4d78-8df6-cfa8a4b02d35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GlobalCode_NodeTrees">
+      <UniqueIdentifier>{cd8e9aa7-29c4-4e21-9b22-777277ecef7c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GlobalCode_ExperimentalCode\CustomDec.h">
+      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_ExperimentalCode\SuperDec.h">
+      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_ExperimentalCode\SuperDecHex.h">
+      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_ExperimentalCode\CustomDec_Templates.h">
+      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_ExperimentalCode\QuadFloatingInt.h">
+      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GlobalCode_ExperimentalCode\SuperDec.cpp">
+      <Filter>Source Files\GlobalCode_ExperimentalCode</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalCode_ExperimentalCode\SuperDecHex.cpp">
+      <Filter>Source Files\GlobalCode_ExperimentalCode</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalCode_ExperimentalCode\CustomDec.cpp">
+      <Filter>Source Files\GlobalCode_ExperimentalCode</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

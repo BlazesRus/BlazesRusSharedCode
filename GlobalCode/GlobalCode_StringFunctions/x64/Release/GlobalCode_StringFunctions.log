@@ -1,0 +1,13 @@
+﻿Build started 2/13/2016 6:35:45 PM.
+     1>Project "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\GlobalCode_StringFunctions\GlobalCode_StringFunctions.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         F:\UserFiles\ProgrammingTools\Compilers\VisualStudio2013\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /GL /D WIN32 /D DLLAPI_EXPORTS /D DLLAPI_EXPORTS /D NDEBUG /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc120.pdb" /Gd /TP /errorReport:prompt StringFunctions.cpp
+         StringFunctions.cpp
+       Lib:
+         F:\UserFiles\ProgrammingTools\Compilers\VisualStudio2013\VC\bin\x86_amd64\Lib.exe /OUT:"C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\x64\Release\GlobalCode_StringFunctions.lib" /NOLOGO /MACHINE:X64 /LTCG x64\Release\StringFunctions.obj
+         GlobalCode_StringFunctions.vcxproj -> C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\x64\Release\GlobalCode_StringFunctions.lib
+     1>Done Building Project "C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibTestEnvironment\GlobalCode\GlobalCode_StringFunctions\GlobalCode_StringFunctions.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.71
