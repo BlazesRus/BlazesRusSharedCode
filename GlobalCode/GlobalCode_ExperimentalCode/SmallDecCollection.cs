@@ -5,26 +5,27 @@ using System.Windows.Media;
 
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
-	//CollectionBase, IFormattable, IList, ICollection, IList<SmallDec>, ICollection<SmallDec>, IEnumerable<SmallDec>, IEnumerable
-	//Freezable, IFormattable, IList, ICollection, IList<SmallDec>, ICollection<SmallDec>, IEnumerable<SmallDec>, IEnumerable
 	//[Serializable]
 	public class SmallDecCollection : CollectionBase, IFormattable, IList, ICollection, IList<SmallDec>, ICollection<SmallDec>, IEnumerable<SmallDec>, IEnumerable
 	{
-		//private IEnumerable<SmallDec> tics;
 
 		public SmallDecCollection(IEnumerable<SmallDec> tics)
 		{
-			//this.tics = tics;
+			this.InnerList.Clear();
+			this.InnerList.Add(tics);
 		}
 
-		//public SmallDecCollection(IEnumerable<int> tics)
-		//{
-		//	this.GetEnumerator
-		//}
+		public SmallDecCollection(IEnumerable<int> tics)
+		{
+			this.InnerList.Clear();
+			this.InnerList.Add(tics);
+		}
 
-		//public SmallDecCollection(IEnumerable<SmallDec> collection)
-		//{
-		//}
+		public SmallDecCollection()
+		{
+			this.InnerList.Clear();
+		}
+
 		public SmallDec this[int index]
 		{
 			get
@@ -45,7 +46,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			{
 				NewCollection.Add((double)Element);
 			}
-			throw new NotImplementedException();
+			return NewCollection;
+		}
+
+		public static explicit operator SmallDecCollection(DoubleCollection self)
+		{
+			SmallDecCollection NewCollection = new SmallDecCollection();
+			foreach (var Element in self)
+			{
+				NewCollection.Add((SmallDec)Element);
+			}
+			return NewCollection;
 		}
 
 		object IList.this[int index]
@@ -68,12 +79,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public int Add(object value)
 		{
-			throw new NotImplementedException();
+			return this.InnerList.Add((SmallDec)value);
 		}
 
 		public void Add(SmallDec value)
 		{
-			throw new NotImplementedException();
+			this.InnerList.Add(value);
 		}
 
 		public void AddRange(SmallDecCollection collection)
@@ -98,7 +109,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public void CopyTo(Array array, int index)
 		{
-			throw new NotImplementedException();
+			this.List.CopyTo(array, index);
 		}
 
 		public void CopyTo(SmallDec[] array, int arrayIndex)

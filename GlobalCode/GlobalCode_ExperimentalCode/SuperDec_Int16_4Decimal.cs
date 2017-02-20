@@ -11,6 +11,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
 	using System.Collections.Generic;
 	using System.Globalization;
+	using System.Windows;
 	using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
 	//Aka SuperDec_Int16_4Decimal
@@ -98,6 +99,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 			return NewSelf;
 		}
+
+		public static explicit operator SmallDec(DependencyProperty v)
+		{
+			throw new NotImplementedException();
+		}
+
 		internal static SmallDec Pow(double self, double Value) { return SmallDec.Pow((SmallDec)self, (SmallDec)Value); }
 		internal static SmallDec Pow(SmallDec self, double Value) { return SmallDec.Pow(self, (SmallDec)Value); }
 		internal static SmallDec Pow(SmallDec self, float Value) { return SmallDec.Pow(self, (SmallDec)Value); }

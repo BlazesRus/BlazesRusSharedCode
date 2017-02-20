@@ -61,6 +61,9 @@
     <Filter Include="Source Files\GlobalCode_NodeTrees">
       <UniqueIdentifier>{cd8e9aa7-29c4-4e21-9b22-777277ecef7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Documentation">
+      <UniqueIdentifier>{b2bc07f8-d60d-490b-9a93-9f72307593b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GlobalCode_ExperimentalCode\CustomDec.h">
@@ -78,6 +81,57 @@
     <ClInclude Include="GlobalCode_ExperimentalCode\QuadFloatingInt.h">
       <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalCode_IniData\IniData.h">
+      <Filter>Header Files\GlobalCode_IniData</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_MiscFunctions\MiscFunctions.h">
+      <Filter>Header Files\GlobalCode_MiscFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_NodeTrees\LooseNodeTreeTemplate.h">
+      <Filter>Header Files\GlobalCode_NodeTrees</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_NodeTrees\TagNodeTreeTemplate.h">
+      <Filter>Header Files\GlobalCode_NodeTrees</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_NodeTrees\TagPosition.h">
+      <Filter>Header Files\GlobalCode_NodeTrees</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_NodeTrees\VariableData.h">
+      <Filter>Header Files\GlobalCode_NodeTrees</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_NodeTrees\XMLOption.h">
+      <Filter>Header Files\GlobalCode_NodeTrees</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_NodeTrees\XMLTagTree.h">
+      <Filter>Header Files\GlobalCode_NodeTrees</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_QuadVector\QuadVector.h">
+      <Filter>Header Files\GlobalCode_QuadVector</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_QuadVector\QuadVectorFunctions.h">
+      <Filter>Header Files\GlobalCode_QuadVector</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_StringFunctions\StringFunctions.h">
+      <Filter>Header Files\GlobalCode_StringFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h">
+      <Filter>Header Files\GlobalCode_VariableConversionFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_VariableLists\StringVectorList.h">
+      <Filter>Header Files\GlobalCode_VariableLists</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_VariableLists\VariableList.h">
+      <Filter>Header Files\GlobalCode_VariableLists</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_VariableLists\VariableTypeLists.h">
+      <Filter>Header Files\GlobalCode_VariableLists</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_VariableLists\VariableVectorFunctions.h">
+      <Filter>Header Files\GlobalCode_VariableLists</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.h">
+      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GlobalCode_ExperimentalCode\SuperDec.cpp">
@@ -89,5 +143,57 @@
     <ClCompile Include="GlobalCode_ExperimentalCode\CustomDec.cpp">
       <Filter>Source Files\GlobalCode_ExperimentalCode</Filter>
     </ClCompile>
+    <ClCompile Include="GlobalCode_IniData\IniData.cpp">
+      <Filter>Source Files\GlobalCode_IniData</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalCode_MiscFunctions\MiscFunctions.cpp">
+      <Filter>Source Files\GlobalCode_MiscFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp">
+      <Filter>Source Files\GlobalCode_NodeTrees</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalCode_NodeTrees\TagPosition.cpp">
+      <Filter>Source Files\GlobalCode_NodeTrees</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalCode_NodeTrees\VariableData.cpp">
+      <Filter>Source Files\GlobalCode_NodeTrees</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalCode_NodeTrees\XMLOption.cpp">
+      <Filter>Source Files\GlobalCode_NodeTrees</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalCode_QuadVector\QuadVector.cpp">
+      <Filter>Source Files\GlobalCode_QuadVector</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalCode_QuadVector\QuadVectorFunctions.cpp">
+      <Filter>Source Files\GlobalCode_QuadVector</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalCode_StringFunctions\StringFunctions.cpp">
+      <Filter>Source Files\GlobalCode_StringFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cpp">
+      <Filter>Source Files\GlobalCode_VariableConversionFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalCode_VariableLists\StringVectorList.cpp">
+      <Filter>Source Files\GlobalCode_VariableLists</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalCode_VariableLists\VariableTypeLists.cpp">
+      <Filter>Source Files\GlobalCode_VariableLists</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalCode_VariableLists\VariableVectorFunctions.cpp">
+      <Filter>Source Files\GlobalCode_VariableLists</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cpp">
+      <Filter>Source Files\GlobalCode_ExperimentalCode</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="PreprocessorVariables.txt">
+      <Filter>Documentation</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SubfolderDescriptions">
+      <Filter>Documentation</Filter>
+    </None>
   </ItemGroup>
 </Project>
