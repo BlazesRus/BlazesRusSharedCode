@@ -10,10 +10,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
 	using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
-	public struct SuperDec_ExtraDec64_19Decimal : SuperDecBase
+	public struct SuperDec_ExtraDec64_19Decimal
 	{
 		//0 = Positive;1=Negative;Other states at higher then 1
-		//public byte DecBoolStatus;
+		public byte DecBoolStatus;
 
 		//Stores decimal section info
 		public ulong DecimalStatus;
@@ -1971,5 +1971,34 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		public double AsDouble() { return (double)this; }
 		public int AsInt() { return (int)this; }
 		public string AsString() { return (string)this; }
+
+		public bool IsInfinity()
+		{
+			//Negative Infinity
+			if (DecBoolStatus == 255)
+			{ return true; }
+			//Positive Infinity
+			else if (DecBoolStatus == 254)
+			{ return true; }
+			else { return false; }
+		}
+
+		public bool IsNull()
+		{
+			if (DecBoolStatus == 202) { return true; }
+			else { return false; }
+		}
+
+
+		public byte GetBoolStatus()
+		{
+			return DecBoolStatus;
+		}
+
+		public void SwapNegativeStatus()
+		{
+			if (DecBoolStatus == 1) { DecBoolStatus = 0; }
+			else { DecBoolStatus = 1; }
+		}
 	}
 }

@@ -15,7 +15,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 	using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
 	//Aka SuperDec_Int16_4Decimal
-	public struct SmallDec : IComparable<SmallDec>, SuperDecBase
+	public struct SmallDec : IComparable<SmallDec>
 	{
 		//0 = Positive;1=Negative;Other states at higher then 1;254 = Positive Infinity;255 = Negative Infinity
 		public byte DecBoolStatus;
@@ -100,10 +100,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return NewSelf;
 		}
 
-		public static explicit operator SmallDec(DependencyProperty v)
-		{
-			throw new NotImplementedException();
-		}
+		//public static explicit operator SmallDec(DependencyProperty v)
+		//{
+		//	throw new NotImplementedException();
+		//}
 
 		internal static SmallDec Pow(double self, double Value) { return SmallDec.Pow((SmallDec)self, (SmallDec)Value); }
 		internal static SmallDec Pow(SmallDec self, double Value) { return SmallDec.Pow(self, (SmallDec)Value); }
@@ -2783,6 +2783,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			{
 				return 1;
 			}
+		}
+
+		public byte GetBoolStatus()
+		{
+			return DecBoolStatus;
 		}
 	}
 }
