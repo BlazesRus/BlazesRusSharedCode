@@ -5,6 +5,47 @@ using System;
 
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
+	// SuperDec generic reused code section
+	public static dynamic ConditionalReturn(bool Condition, dynamic X, dynamic Y)
+	{
+		if (Condition)
+		{
+			return X;
+		}
+		else
+		{
+			return Y;
+		}
+	}
+
+	
+	//End of SuperDec generic reused code section
+	//Trigometric method section
+	public double static RadianToAngleAsDouble(dynamic Value)
+	{
+		double ConvertedValue = (double) Value;
+		
+		return 0.0;
+	}
+	public double static AngleToRadianAsFloat(dynamic Value)
+	{
+		double ConvertedValue = (double) Value;
+		
+		return 0.0;
+	}
+	public double static SinFromAngleAsDouble(dynamic Value)
+	{
+		double ConvertedValue = (double) Value;
+		
+		return 0.0;
+	}
+	public double static SinFromAngleAsDouble(dynamic Value)
+	{
+		double ConvertedValue = (double) Value;
+		
+		return 0.0;
+	}
+	//end of Trigometric method section
 	public struct SuperDecBase
 	{
 		//0 = Positive;1=Negative;Other states at higher then 1
@@ -21,6 +62,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			else { return false; }
 		}
 		
+		public bool IsNull()
+		{
+			if (DecBoolStatus==202) { return true; }
+			else { return false; }
+		}
+
+		
 		public byte GetBoolStatus()
 		{
 			return DecBoolStatus;
@@ -31,33 +79,27 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			if (DecBoolStatus == 1) { DecBoolStatus = 0; }
 			else { DecBoolStatus = 1; }
 		}
-	}
-	// SuperDec generic reused code section
-	public static dynamic ConditionalReturn(bool Condition, dynamic X, dynamic Y)
-	{
-		if (Condition)
-		{
-			return X;
-		}
-		else
-		{
-			return Y;
-		}
-	}
-	//End of SuperDec generic reused code section
-	//Trigometric method section
-	double RadianToAngleAsDouble(dynamic Value)
-	{
-		double ConvertedValue = (double) Value;
 		
-		return 0.0;
-	}
-	double AngleToRadianAsFloat(dynamic Value)
-	{
-		double ConvertedValue = (double) Value;
+		public static SuperDecBase FloatParse(string s, IFormatProvider provider)
+		{
+			SmallDec NewSelf = (SmallDec)float.Parse(s, provider);
+			return NewSelf;
+		}
+
+		public static SuperDecBase DoubleParse(string s, IFormatProvider provider)
+		{
+			SmallDec NewSelf = (SmallDec)double.Parse(s, provider);
+			return NewSelf;
+		}
 		
-		return 0.0;
+		public static dynamic ConditionalReturn(bool Condition, dynamic X, dynamic Y)
+		{
+			return CSharpGlobalCode.GlobalCode_ExperimentalCode.ConditionalReturn(Condition, X, Y);
+		}
+		
+		public dynamic DynamicConversion()
+		{
+			return this;
+		}
 	}
-	
-	//end of Trigometric method section
 }

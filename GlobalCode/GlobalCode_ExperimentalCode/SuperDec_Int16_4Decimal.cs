@@ -15,7 +15,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 	using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
 	//Aka SuperDec_Int16_4Decimal
-	public struct SmallDec : IComparable<SmallDec>
+	public struct SmallDec : IComparable<SmallDec>, SuperDecBase
 	{
 		//0 = Positive;1=Negative;Other states at higher then 1;254 = Positive Infinity;255 = Negative Infinity
 		public byte DecBoolStatus;
