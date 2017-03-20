@@ -25,6 +25,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public ushort IntValue;
 
+		public static SmallDec Sum(IEnumerable<SmallDec> Value)
+		{
+			SmallDec TotalSum = SmallDec.Zero();
+			foreach (var Element in Value)
+			{
+				TotalSum += Element;
+			}
+			return TotalSum;
+		}
+
 		public SmallDec Abs()
 		{
 			this.DecBoolStatus = 0;
@@ -37,8 +47,14 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return this;
 		}
 
+		public static SmallDec Parse(string value, CultureInfo invariantCulture)
+		{
+			SmallDec NewValue = SmallDec.StringToValue(value);
+			return NewValue;
+		}
+
 		// Returns rounded value with all fractional digits after specified precision cut off.
-		internal static SmallDec Floor(SmallDec value, int precision)
+		public static SmallDec Floor(SmallDec value, int precision)
 		{
 			
 			if(precision==0)
@@ -74,8 +90,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return this;
 		}
 
-		
-		internal static SmallDec Pow(SmallDec self, int Value)
+
+		public static SmallDec Pow(SmallDec self, int Value)
 		{
 			SmallDec NewSelf = self;
 			if (Value == 0)
@@ -100,17 +116,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return NewSelf;
 		}
 
-		//public static explicit operator SmallDec(DependencyProperty v)
-		//{
-		//	throw new NotImplementedException();
-		//}
+		public static explicit operator SmallDec(DependencyProperty v)
+		{
+			throw new NotImplementedException();
+		}
 
-		internal static SmallDec Pow(double self, double Value) { return SmallDec.Pow((SmallDec)self, (SmallDec)Value); }
-		internal static SmallDec Pow(SmallDec self, double Value) { return SmallDec.Pow(self, (SmallDec)Value); }
-		internal static SmallDec Pow(SmallDec self, float Value) { return SmallDec.Pow(self, (SmallDec)Value); }
+		public static SmallDec Pow(double self, double Value) { return SmallDec.Pow((SmallDec)self, (SmallDec)Value); }
+		public static SmallDec Pow(SmallDec self, double Value) { return SmallDec.Pow(self, (SmallDec)Value); }
+		public static SmallDec Pow(SmallDec self, float Value) { return SmallDec.Pow(self, (SmallDec)Value); }
 
 		//Approximate version of Math.Pow(double self, double Value)
-		internal static SmallDec Pow(SmallDec self, SmallDec Value)
+		public static SmallDec Pow(SmallDec self, SmallDec Value)
 		{
 			SmallDec NewSelf = self;
 			//SmallDec version of Math.Pow()
@@ -175,14 +191,14 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 		//SmallDec version of Math.Exp(double Value)
-		internal static SmallDec Exp(SmallDec Value)
+		public static SmallDec Exp(SmallDec Value)
 		{
 			double SelfAsDecimal = (double)Value;
 			SelfAsDecimal = Math.Exp(SelfAsDecimal);
 			return (SmallDec)SelfAsDecimal;
 		}
 
-		internal static SmallDec Max(dynamic LeftSide, dynamic RightSide)
+		public static SmallDec Max(dynamic LeftSide, dynamic RightSide)
 		{
 			SmallDec LeftSideAsType = (SmallDec)LeftSide;
 			SmallDec RightSideAsType = (SmallDec)RightSide;
@@ -190,12 +206,41 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			else { return RightSideAsType; }
 		}
 
-		internal static SmallDec Min(dynamic LeftSide, dynamic RightSide)
+		public static SmallDec Min(dynamic LeftSide, dynamic RightSide)
 		{
 			SmallDec LeftSideAsType = (SmallDec)LeftSide;
 			SmallDec RightSideAsType = (SmallDec)RightSide;
 			if (LeftSideAsType < RightSide) { return LeftSideAsType; }
 			else { return RightSideAsType; }
+		}
+
+		public static SmallDec Round(SmallDec val)
+		{
+			return val.Round();
+		}
+
+		public static SmallDec Round(SmallDec value, int Precision)
+		{
+			if(Precision==0)
+			{
+				return value.Round();
+			}
+			else
+			{
+				return SmallDec.Round(value, 1, MidpointRounding.AwayFromZero);
+			}
+		}
+
+		public static SmallDec RoundHalfDownValue(SmallDec value, int precision)
+		{
+			if (precision == 0)
+			{
+				return value.Floor();
+			}
+			else
+			{
+				return SmallDec.Round(value, precision, 1);
+			}
 		}
 
 		public SmallDec Round()
@@ -213,128 +258,126 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return this;
 		}
 
-		internal static SmallDec Round(SmallDec value, int precision, MidpointRounding RoundingMethod)
-		{
-			if (RoundingMethod == MidpointRounding.ToEven)
-			{
-				if (precision >= 4)
-				{//X.XXXX
-					return value;
-				}
-				else if (precision == 3)
-				{//X.XXX0
-					ushort NonRoundedPart = (ushort)(value.DecimalStatus / 10);
-					NonRoundedPart *= 10;
-					ushort RoundSection = (ushort)(value.DecimalStatus - NonRoundedPart);
-					throw new NotImplementedException();
-				}
-				else if (precision == 2)
-				{//X.XX00
-					ushort NonRoundedPart = (ushort)(value.DecimalStatus / 100);
-					NonRoundedPart *= 100;
-					ushort RoundSection = (ushort)(value.DecimalStatus - NonRoundedPart);
-					throw new NotImplementedException();
-				}
-				else if (precision == 1)
-				{//X.X000
-					ushort NonRoundedPart = (ushort)(value.DecimalStatus / 1000);
-					NonRoundedPart *= 1000;
-					ushort RoundSection = (ushort)(value.DecimalStatus - NonRoundedPart);
-					throw new NotImplementedException();
-				}
-				else
-				{
-					if (value.DecimalStatus >= 5000) { value.IntValue += 1; }
-					value.DecimalStatus = 0;
-				}
+		public static SmallDec Round(SmallDec value, int precision, int RoundingMethod)
+		{//https://en.wikipedia.org/wiki/Rounding
+			if (precision >= 4)
+			{//X.XXXX
+				return value;
 			}
-			else if (RoundingMethod==MidpointRounding.AwayFromZero)
-			{
-				if (precision >= 4)
-				{//X.XXXX
-					return value;
-				}
-				else if (precision == 3)
-				{//X.XXX0
-					ushort NonRoundedPart = (ushort)(value.DecimalStatus / 10);
-					NonRoundedPart *= 10;
-					ushort RoundSection = (ushort)(value.DecimalStatus - NonRoundedPart);
-					throw new NotImplementedException();
-				}
-				else if (precision == 2)
-				{//X.XX00
-					ushort NonRoundedPart = (ushort)(value.DecimalStatus / 100);
-					NonRoundedPart *= 100;
-					throw new NotImplementedException();
-				}
-				else if (precision == 1)
-				{//X.X000
-					ushort NonRoundedPart = (ushort)(value.DecimalStatus / 1000);
-					NonRoundedPart *= 1000;
-					ushort RoundSection = (ushort)(value.DecimalStatus - NonRoundedPart);
-					throw new NotImplementedException();
-				}
-				else
+			else if (precision == 3)
+			{//X.XXX0
+				ushort NonRoundedPart = (ushort)(value.DecimalStatus / 10);
+				NonRoundedPart *= 10;
+				ushort RoundSection = (ushort)(value.DecimalStatus - NonRoundedPart);
+				SmallDec NewValue = value;
+				NewValue.DecimalStatus = NonRoundedPart;
+				if (RoundingMethod == 0) { }
+				else if (RoundingMethod == 1)
 				{
-					if (value.DecimalStatus >= 5000) { value.IntValue += 1; }
-					value.DecimalStatus = 0;
+					if (RoundSection >= 5) { NewValue.DecimalStatus += 10; }
+					if (NewValue.DecimalStatus > 9999) { NewValue.DecimalStatus -= 10000; NewValue.IntValue += 1; }
 				}
+				return NewValue;
+			}
+			else if (precision == 2)
+			{//X.XX00
+				ushort NonRoundedPart = (ushort)(value.DecimalStatus / 100);
+				NonRoundedPart *= 100;
+				ushort RoundSection = (ushort)(value.DecimalStatus - NonRoundedPart);
+				SmallDec NewValue = value;
+				NewValue.DecimalStatus = NonRoundedPart;
+				if (RoundingMethod == 0) { }
+				else if (RoundingMethod == 1)
+				{
+					if (RoundSection >= 50) { NewValue.DecimalStatus += 100; }
+					if (NewValue.DecimalStatus > 9999) { NewValue.DecimalStatus -= 10000; NewValue.IntValue += 1; }
+				}
+				return NewValue;
+			}
+			else if (precision == 1)
+			{//X.X000
+				ushort NonRoundedPart = (ushort)(value.DecimalStatus / 1000);
+				NonRoundedPart *= 1000;
+				ushort RoundSection = (ushort)(value.DecimalStatus - NonRoundedPart);
+				SmallDec NewValue = value;
+				NewValue.DecimalStatus = NonRoundedPart;
+				if (RoundingMethod == 0) { }
+				else if (RoundingMethod == 1)
+				{
+					if (RoundSection >= 500) { NewValue.DecimalStatus += 1000; }
+					if (NewValue.DecimalStatus > 9999) { NewValue.DecimalStatus -= 10000; NewValue.IntValue += 1; }
+				}
+				else if(RoundingMethod==2)//Floor Round
+				{
+
+				}
+				else if(RoundingMethod==3)
+				{
+
+				}
+				else//round to nearest
+				{
+
+				}
+				return NewValue;
 			}
 			else
 			{
-				if (precision >= 4)
-				{//X.XXXX
-					return value;
-				}
-				else if (precision == 3)
-				{//X.XXX0
-					ushort NonRoundedPart = (ushort)(value.DecimalStatus / 10);
-					NonRoundedPart *= 10;
-					ushort RoundSection = (ushort)(value.DecimalStatus - NonRoundedPart);
-					throw new NotImplementedException();
-				}
-				else if (precision == 2)
-				{//X.XX00
-					ushort NonRoundedPart = (ushort)(value.DecimalStatus / 100);
-					NonRoundedPart *= 100;
-					ushort RoundSection = (ushort)(value.DecimalStatus - NonRoundedPart);
-					throw new NotImplementedException();
-				}
-				else if (precision == 1)
-				{//X.X000
-					ushort NonRoundedPart = (ushort)(value.DecimalStatus / 1000);
-					NonRoundedPart *= 1000;
-					throw new NotImplementedException();
-				}
-				else
+				switch (RoundingMethod)
 				{
-					if (value.DecimalStatus >= 5000) { value.IntValue += 1; }
-					value.DecimalStatus = 0;
+					case 0:
+
+						break;
+					case 1:
+						break;
+					case 2:
+						break;
+					case 3:
+						break;
+					case 4:
+						break;
+					default://round to nearest
+						if (value.DecimalStatus >= 5000) { value.IntValue += 1; }
+						value.DecimalStatus = 0;
+						break;
 				}
+				return value;
 			}
-			return value;
 		}
 
-		public SmallDec Convert(SuperDec_ExtraDec32_19Decimal Value)
+		public static SmallDec Round(SmallDec value, int precision, MidpointRounding RoundingMethod)
 		{
-			SmallDec NewSelf;
-			NewSelf.IntValue = (ushort)Value.IntValue;
-			ulong TempDec = Value.DecimalStatus;
-			TempDec /= 1000000000000000;
-			NewSelf.DecimalStatus = (ushort)TempDec;
-			NewSelf.DecBoolStatus = Value.DecBoolStatus;
-			return NewSelf;
+			if (RoundingMethod == MidpointRounding.ToEven) { return Round(value, precision, 0); }
+			else if (RoundingMethod == MidpointRounding.AwayFromZero)
+			{
+				return Round(value, precision, 1);
+			}
+			else
+			{
+				return Round(value, precision, 2);
+			}
 		}
 
-		public SmallDec Convert(SuperDec_ExtraDec64_19Decimal Value)
-		{
-			SmallDec NewSelf;
-			NewSelf.IntValue = (ushort)Value.IntValue;
-			ulong TempDec = Value.DecimalStatus / 100000000000000;
-			NewSelf.DecimalStatus = (ushort)TempDec;
-			NewSelf.DecBoolStatus = Value.DecBoolStatus;
-			return NewSelf;
-		}
+		//public SmallDec Convert(SuperDec_ExtraDec32_19Decimal Value)
+		//{
+		//	SmallDec NewSelf;
+		//	NewSelf.IntValue = (ushort)Value.IntValue;
+		//	ulong TempDec = Value.DecimalStatus;
+		//	TempDec /= 1000000000000000;
+		//	NewSelf.DecimalStatus = (ushort)TempDec;
+		//	NewSelf.DecBoolStatus = Value.DecBoolStatus;
+		//	return NewSelf;
+		//}
+
+		//public SmallDec Convert(SuperDec_ExtraDec64_19Decimal Value)
+		//{
+		//	SmallDec NewSelf;
+		//	NewSelf.IntValue = (ushort)Value.IntValue;
+		//	ulong TempDec = Value.DecimalStatus / 100000000000000;
+		//	NewSelf.DecimalStatus = (ushort)TempDec;
+		//	NewSelf.DecBoolStatus = Value.DecBoolStatus;
+		//	return NewSelf;
+		//}
 
 		public static SmallDec operator -(SmallDec Value)
 		{//Place DecBoolStatus>1 checks above in V2 of type
@@ -349,45 +392,45 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return Value;
 		}
 
-		//Limit CSharpGlobalCode.GlobalCode_ExperimentalCode explicit Conversions from other type to self (no OtherType(SelfType) explicit conversions)
-		public static SmallDec operator +(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
-		{
-			self += (SmallDec)y;
-			return self;
-		}
+		////Limit CSharpGlobalCode.GlobalCode_ExperimentalCode explicit Conversions from other type to self (no OtherType(SelfType) explicit conversions)
+		//public static SmallDec operator +(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
+		//{
+		//	self += (SmallDec)y;
+		//	return self;
+		//}
 
-		public static SmallDec operator -(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
-		{
-			self -= (SmallDec)y;
-			return self;
-		}
+		//public static SmallDec operator -(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
+		//{
+		//	self -= (SmallDec)y;
+		//	return self;
+		//}
 
-		public static SmallDec operator *(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
-		{
-			self *= (SmallDec)y;
-			return self;
-		}
+		//public static SmallDec operator *(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
+		//{
+		//	self *= (SmallDec)y;
+		//	return self;
+		//}
 
-		public static SmallDec operator /(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
-		{
-			self /= (SmallDec)y;
-			return self;
-		}
+		//public static SmallDec operator /(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
+		//{
+		//	self /= (SmallDec)y;
+		//	return self;
+		//}
 
-		public static explicit operator SmallDec(SuperDec_Int32_9Decimal Value)
-		{
-			return new SmallDec(Value);
-		}
+		//public static explicit operator SmallDec(SuperDec_Int32_9Decimal Value)
+		//{
+		//	return new SmallDec(Value);
+		//}
 
-		public static explicit operator SmallDec(SuperDec_ExtraDec32_19Decimal Value)
-		{
-			return new SmallDec().Convert(Value);
-		}
+		//public static explicit operator SmallDec(SuperDec_ExtraDec32_19Decimal Value)
+		//{
+		//	return new SmallDec().Convert(Value);
+		//}
 
-		public static explicit operator SmallDec(SuperDec_ExtraDec64_19Decimal Value)
-		{
-			return new SmallDec().Convert(Value);
-		}
+		//public static explicit operator SmallDec(SuperDec_ExtraDec64_19Decimal Value)
+		//{
+		//	return new SmallDec().Convert(Value);
+		//}
 
 		public static SmallDec StringToValue(string Value)
 		{
@@ -522,27 +565,27 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 					}
 				}
 			}
-			else if (Value is SuperDec_Int32_9Decimal)
-			{
-				IntValue = (ushort)Value.IntValue;
-				uint TempDec = Value.DecimalStatus / 100000;
-				DecimalStatus = (ushort)TempDec;
-				DecBoolStatus = Value.DecBoolStatus;
-			}
-			else if (Value is SuperDec_ExtraDec32_19Decimal)
-			{
-				IntValue = (ushort)Value.IntValue;
-				ulong TempDec = Value.DecimalStatus / 100000000000000;
-				DecimalStatus = (ushort)TempDec;
-				DecBoolStatus = Value.DecBoolStatus;
-			}
-			else if (Value is SuperDec_ExtraDec64_19Decimal)
-			{
-				IntValue = (ushort)Value.IntValue;
-				ulong TempDec = Value.DecimalStatus / 100000000000000;
-				DecimalStatus = (ushort)TempDec;
-				DecBoolStatus = Value.DecBoolStatus;
-			}
+			//else if (Value is SuperDec_Int32_9Decimal)
+			//{
+			//	IntValue = (ushort)Value.IntValue;
+			//	uint TempDec = Value.DecimalStatus / 100000;
+			//	DecimalStatus = (ushort)TempDec;
+			//	DecBoolStatus = Value.DecBoolStatus;
+			//}
+			//else if (Value is SuperDec_ExtraDec32_19Decimal)
+			//{
+			//	IntValue = (ushort)Value.IntValue;
+			//	ulong TempDec = Value.DecimalStatus / 100000000000000;
+			//	DecimalStatus = (ushort)TempDec;
+			//	DecBoolStatus = Value.DecBoolStatus;
+			//}
+			//else if (Value is SuperDec_ExtraDec64_19Decimal)
+			//{
+			//	IntValue = (ushort)Value.IntValue;
+			//	ulong TempDec = Value.DecimalStatus / 100000000000000;
+			//	DecimalStatus = (ushort)TempDec;
+			//	DecBoolStatus = Value.DecBoolStatus;
+			//}
 			else if (Value is decimal)
 			{
 				if (Value < 0)
@@ -1649,10 +1692,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return (string)this;
 		}
 
+		public string ToString(string s)
+		{
+			return (string)this;
+		}
+
 		internal string ToString(CultureInfo invariantCulture)
 		{
 			return (string)this;
 		}
+
+		public override string ToString(){ return (string)this; }
 
 		//public static SmallDec operator ?(bool Condition, dynamic X, dynamic Y)
 		//{
@@ -2700,28 +2750,28 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 		//Right side applications
-		public static SmallDec operator -(int y, SmallDec self)
+		public static SmallDec operator -(dynamic y, SmallDec self)
 		{
 			SmallDec YAsSuperDec = (SmallDec)y;
 			YAsSuperDec -= self;
 			return YAsSuperDec;
 		}
 
-		public static SmallDec operator +(int y, SmallDec self)
+		public static SmallDec operator +(dynamic y, SmallDec self)
 		{
 			SmallDec YAsSuperDec = (SmallDec)y;
 			YAsSuperDec += self;
 			return YAsSuperDec;
 		}
 
-		public static SmallDec operator *(int y, SmallDec self)
+		public static SmallDec operator *(dynamic y, SmallDec self)
 		{
 			SmallDec YAsSuperDec = (SmallDec)y;
 			YAsSuperDec += self;
 			return YAsSuperDec;
 		}
 
-		public static SmallDec operator /(int y, SmallDec self)
+		public static SmallDec operator /(dynamic y, SmallDec self)
 		{
 			SmallDec YAsSuperDec = (SmallDec)y;
 			YAsSuperDec += self;
@@ -2762,12 +2812,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return NewSelf;
 		}
 
-		public static SmallDec Zero()
+		public static SmallDec ZeroValue()
 		{
 			SmallDec NewSelf;
 			NewSelf.IntValue = 0; NewSelf.DecimalStatus = 0; NewSelf.DecBoolStatus = 0;
 			return NewSelf;
 		}
+
+		public static readonly SmallDec Zero = ZeroValue();
+
+		//public static SmallDec ZeroValue = Zero();
 
 		int IComparable<SmallDec>.CompareTo(SmallDec other)
 		{
@@ -2783,11 +2837,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			{
 				return 1;
 			}
-		}
-
-		public byte GetBoolStatus()
-		{
-			return DecBoolStatus;
 		}
 	}
 }

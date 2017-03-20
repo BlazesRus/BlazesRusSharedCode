@@ -66,19 +66,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		/// </summary>
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		//event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged
-		//{
-		//	add
-		//	{
-		//		throw new NotImplementedException();
-		//	}
-
-		//	remove
-		//	{
-		//		throw new NotImplementedException();
-		//	}
-		//}
-
 		public SmallDec Minimum
 		{
 			get { return (SmallDec)GetValue(MinimumProperty); }
@@ -107,11 +94,34 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				SetValue(ValueProperty, value);
 				if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("Minimum")); }
 			}
-	}
+		}
+
+		public SmallDec GetCurrentValue()
+		{
+			return Value;
+		}
 
 		public SmallDecSlider()
 		{
 			this.InitializeComponent();
+		}
+		
+		public static readonly DependencyProperty ExtraFeaturesSettingProp = DependencyProperty.Register("ExtraFeaturesSetting", typeof(byte), typeof(SmallDecSlider), new PropertyMetadata(0, OnValuePropertyChanged));
+		
+		public byte ExtraFeaturesSetting
+		{
+			get { return (byte)GetValue(ExtraFeaturesSettingProp); }
+			set
+			{
+				SetValue(ExtraFeaturesSettingProp, value);
+				if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("ExtraFeaturesSetting")); }
+			}
+		}
+		
+		public SmallDecSlider(byte OptionValue)
+		{
+			this.InitializeComponent();
+			if(OptionValue!=0){	ExtraFeaturesSetting = OptionValue; }
 		}
 
 		private static void OnValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -203,27 +213,38 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			get { return (double)GetValue(TickFrequencyProperty); }
 			set { SetValue(TickFrequencyProperty, value); }
 		}
-		public static readonly DependencyProperty SmallChangeProperty = DependencyProperty.Register("SmallChange", typeof(double), typeof(SmallDecSliderV2), new PropertyMetadata(0.01, OnValuePropertyChanged));
-		public static readonly DependencyProperty LargeChangeProperty = DependencyProperty.Register("SmallChange", typeof(double), typeof(SmallDecSliderV2), new PropertyMetadata(1.0, OnValuePropertyChanged));
-		public static readonly DependencyProperty TickFrequencyProperty = DependencyProperty.Register("TickFrequency", typeof(double), typeof(SmallDecSliderV2), new PropertyMetadata(10.0, OnValuePropertyChanged));
+		public static readonly DependencyProperty SmallChangeProperty = DependencyProperty.Register("SmallChange", typeof(double), typeof(SmallDecSlider), new PropertyMetadata(0.01, OnValuePropertyChanged));
+		public static readonly DependencyProperty LargeChangeProperty = DependencyProperty.Register("SmallChange", typeof(double), typeof(SmallDecSlider), new PropertyMetadata(1.0, OnValuePropertyChanged));
+		public static readonly DependencyProperty TickFrequencyProperty = DependencyProperty.Register("TickFrequency", typeof(double), typeof(SmallDecSlider), new PropertyMetadata(10.0, OnValuePropertyChanged));
 		public DoubleCollection Ticks
 		{
 			get { return (DoubleCollection)GetValue(TicksProperty); }
 			set { SetValue(TicksProperty, value); }
 		}
-		public static readonly DependencyProperty TicksProperty = DependencyProperty.Register("Ticks", typeof(DoubleCollection), typeof(SmallDecSliderV2), new PropertyMetadata(new DoubleCollection(), OnValuePropertyChanged));
+		public static readonly DependencyProperty TicksProperty = DependencyProperty.Register("Ticks", typeof(DoubleCollection), typeof(SmallDecSlider), new PropertyMetadata(new DoubleCollection(), OnValuePropertyChanged));
 		public string TickPlacement
 		{
 			get { return (string)GetValue(TickPlacementProperty); }
 			set { SetValue(TickPlacementProperty, value); }
 		}
-		public static readonly DependencyProperty TickPlacementProperty = DependencyProperty.Register("TickPlacement", typeof(string), typeof(SmallDecSliderV2), new PropertyMetadata("TopLeft", OnValuePropertyChanged));
+		public static readonly DependencyProperty TickPlacementProperty = DependencyProperty.Register("TickPlacement", typeof(string), typeof(SmallDecSlider), new PropertyMetadata("TopLeft", OnValuePropertyChanged));
 		public bool IsSnapToTickEnabled
 		{
 			get { return (bool)GetValue(IsSnapToTickEnabledProperty); }
 			set { SetValue(IsSnapToTickEnabledProperty, value); }
 		}
-		public static readonly DependencyProperty IsSnapToTickEnabledProperty = DependencyProperty.Register("IsSnapToTickEnabled", typeof(bool), typeof(SmallDecSliderV2), new PropertyMetadata(false, OnValuePropertyChanged));
+		public static readonly DependencyProperty IsSnapToTickEnabledProperty = DependencyProperty.Register("IsSnapToTickEnabled", typeof(bool), typeof(SmallDecSlider), new PropertyMetadata(false, OnValuePropertyChanged));
+
+		////Routed Event from http://stackoverflow.com/questions/21033509/routedevent-the-member-is-not-recognized-or-is-not-accessible
+		//public static readonly RoutedEvent fooEvent = EventManager.RegisterRoutedEvent("foo", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MainWindow));
+		//// Provide CLR accessors for the event 
+	   //public event RoutedEventHandler foo
+	   //{
+		  // add { AddHandler(fooEvent, value); }
+		  // remove { RemoveHandler(fooEvent, value); }
+	   //}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 		/// <summary>
 		/// Sets <paramref name="backingStore"/> to <paramref name="value"/> and
@@ -271,7 +292,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 	}
 }
-//Property change code for the most part from Notifier.cs in PoESkillTree code
+//Property change code for the most part from Notifier.cs in PoESkillTree code (required licease for related part of code below)
 //Copyright © 2012-2016 PoESkillTree Team
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
