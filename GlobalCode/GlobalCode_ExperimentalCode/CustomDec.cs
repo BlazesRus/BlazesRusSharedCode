@@ -11,11 +11,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 	using System.Globalization;
 	using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
-	public struct SuperDec_ExtraDec32_19Decimal
+	public struct SuperDec_ExtraDec32_19Decimal : SuperDecBase
 	{
 		//0 = Positive;1=Negative;Other states at higher then 1
-		public byte DecBoolStatus;
-
+		//public byte DecBoolStatus;
+		
 		//Stores decimal section info
 		public ulong DecimalStatus;
 
@@ -1912,11 +1912,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 		}
 
-		public byte GetDecBoolStatus()
-		{
-			return DecBoolStatus;
-		}
-
 		public ulong GetDecimalStatus()
 		{
 			return DecimalStatus;
@@ -1949,12 +1944,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return (int)IntValue;
 		}
 
-		public void SwapNegativeStatus()
-		{
-			if (DecBoolStatus == 1) { DecBoolStatus = 0; }
-			else { DecBoolStatus = 1; }
-		}
-
 		//Returns value of highest non-infinite/Special Decimal State Value that can store
 		public SuperDec_ExtraDec32_19Decimal Maximum()
 		{
@@ -1975,16 +1964,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return NewSelf;
 		}
 
-		public bool IsInfinity()
-		{
-			//Negative Infinity
-			if (DecBoolStatus == 255)
-			{ return true; }
-			//Positive Infinity
-			else if (DecBoolStatus == 254)
-			{ return true; }
-			else { return false; }
-		}
 		public static SuperDec_ExtraDec32_19Decimal FloatParse(string s, IFormatProvider provider)
 		{
 			SuperDec_ExtraDec32_19Decimal NewSelf = (SuperDec_ExtraDec32_19Decimal) float.Parse(s, provider);
@@ -2016,17 +1995,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		//		return Y;
 		//	}
 		//}
-		public static dynamic ConditionalReturn(bool Condition, dynamic X, dynamic Y)
-		{
-			if (Condition)
-			{
-				return X;
-			}
-			else
-			{
-				return Y;
-			}
-		}
 
 		public float AsFloat() { return (float)this; }
 		public double AsDouble() { return (double)this; }
