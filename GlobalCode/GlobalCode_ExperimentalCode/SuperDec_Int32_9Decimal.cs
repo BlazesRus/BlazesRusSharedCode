@@ -2026,6 +2026,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		public double AsDouble() { return (double)this; }
 		public int AsInt() { return (int)this; }
 		public string AsString() { return (string)this; }
-		public SmallDec AsSmallDec() { return (SmallDec)this; }
+		//public SmallDec AsSmallDec() { return (SmallDec)this; }
 	}
 }

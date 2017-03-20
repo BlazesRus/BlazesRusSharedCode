@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\CustomDec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDecGlobalCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_Int16_4Decimal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_Int32_9Decimal.cs" />
@@ -18,9 +19,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_StringFunctions\GlobalCode_MiscFunctions\MiscFunctions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_StringFunctions\StringFunctions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SmallDecCollection.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SmallDecCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SmallDecSlider.xaml.cs">
       <DependentUpon>SmallDecSlider.xaml</DependentUpon>
     </Compile>
+    <Page Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SmallDecSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

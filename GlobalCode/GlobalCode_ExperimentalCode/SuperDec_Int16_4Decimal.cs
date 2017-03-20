@@ -27,7 +27,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static SmallDec Sum(IEnumerable<SmallDec> Value)
 		{
-			SmallDec TotalSum = SmallDec.Zero();
+			SmallDec TotalSum = SmallDec.Zero;
 			foreach (var Element in Value)
 			{
 				TotalSum += Element;
@@ -116,10 +116,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return NewSelf;
 		}
 
-		public static explicit operator SmallDec(DependencyProperty v)
-		{
-			throw new NotImplementedException();
-		}
+		//public static explicit operator SmallDec(DependencyProperty v)
+		//{
+		//	throw new NotImplementedException();
+		//}
 
 		public static SmallDec Pow(double self, double Value) { return SmallDec.Pow((SmallDec)self, (SmallDec)Value); }
 		public static SmallDec Pow(SmallDec self, double Value) { return SmallDec.Pow(self, (SmallDec)Value); }
@@ -1734,7 +1734,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static SmallDec SumOfList(SmallDec[] self)
 		{
-			SmallDec Total = SmallDec.Zero();
+			SmallDec Total = SmallDec.Zero;
 			foreach(SmallDec Element in self)
 			{
 				Total += Element;
@@ -1744,7 +1744,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static SmallDec SumOfList(IEnumerable<SmallDec> self)
 		{
-			SmallDec Total = SmallDec.Zero();
+			SmallDec Total = SmallDec.Zero;
 			foreach (SmallDec Element in self)
 			{
 				Total += Element;
