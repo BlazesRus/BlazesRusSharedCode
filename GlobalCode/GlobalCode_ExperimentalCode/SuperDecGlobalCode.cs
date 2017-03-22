@@ -38,7 +38,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 			return 0.0;
 		}
-		public static double AngleToRadianAsFloat(dynamic Value)
+		public static double AngleToRadianAsDouble(dynamic Value)
 		{
 			double ConvertedValue = (double)Value;
 

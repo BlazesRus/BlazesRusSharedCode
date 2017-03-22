@@ -122,7 +122,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static SmallDec Pow(double self, double Value) { return SmallDec.Pow((SmallDec)self, (SmallDec)Value); }
 		public static SmallDec Pow(SmallDec self, double Value) { return SmallDec.Pow(self, (SmallDec)Value); }
-		public static SmallDec Pow(SmallDec self, float Value) { return SmallDec.Pow(self, (SmallDec)Value); }
+		//public static SmallDec Pow(SmallDec self, SmallDec Value) { return SmallDec.Pow(self, Value); }
 
 		//Approximate version of Math.Pow(double self, double Value)
 		public static SmallDec Pow(SmallDec self, SmallDec Value)
@@ -440,6 +440,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return new SmallDec(Value);
 		}
 
+		//Initialize constructor
 		public SmallDec(dynamic Value)
 		{
 			if (Value is string)
@@ -588,6 +589,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				this.IntValue = (ushort)Value;
 				this.DecimalStatus = 0;
 			}
+			else if(Value is SmallDec)
+			{
+				this.DecBoolStatus = Value.DecBoolStatus;
+				this.IntValue = Value.IntValue;
+				this.DecimalStatus = Value.DecimalStatus;
+			}
 			else
 			{
 				//Cap value if too big on initialize
@@ -601,6 +608,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 		}
 
+		//From this type to Standard types
+
 		public static explicit operator decimal(SmallDec self)
 		{
 			decimal Value = (decimal)self.IntValue;
@@ -609,7 +618,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return Value;
 		}
 
-		//explicit Conversion from this to double
 		public static explicit operator double(SmallDec self)
 		{
 			double Value = 0.0;
@@ -635,7 +643,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return Value;
 		}
 
-		//Explicit Conversion from this to int 64
 		public static explicit operator long(SmallDec self)
 		{
 			long Value = self.IntValue;
@@ -643,13 +650,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return Value;
 		}
 
-		//Explicit Conversion from this to uint
 		public static explicit operator uint(SmallDec self)
 		{
 			return self.IntValue;
 		}
 
-		//Explicit Conversion from this to unsigned int 64
 		public static explicit operator ulong(SmallDec self)
 		{
 			return self.IntValue;
@@ -704,12 +709,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return Value;
 		}
 
+		//From Standard types to this type 
 #if (BlazesGlobalCode_StandardExplicitConversionFrom)
 		public static explicit operator SmallDec(decimal Value)	{	return new SmallDec(Value);	}
 
 		public static explicit operator SmallDec(double Value)	{	return new SmallDec(Value);	}
 
-		public static explicit operator SmallDec(float Value)	{	return new SmallDec(Value);	}
+		public static explicit operator SmallDec(SmallDec Value)	{	return new SmallDec(Value);	}
 
 		public static explicit operator SmallDec(int Value)	{	return new SmallDec(Value);	}
 
@@ -726,6 +732,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		public static explicit operator SmallDec(sbyte Value)	{	return new SmallDec(Value);	}
 
 		public static explicit operator SmallDec(byte Value)	{	return new SmallDec(Value);	}
+
+		public static explicit operator SmallDec(string Value) { return new SmallDec(Value); }
 #else
 		public static implicit operator SmallDec(decimal Value) { return new SmallDec(Value); }
 
@@ -748,6 +756,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		public static implicit operator SmallDec(sbyte Value) { return new SmallDec(Value); }
 
 		public static implicit operator SmallDec(byte Value) { return new SmallDec(Value); }
+
+		public static implicit operator SmallDec(string Value) { return new SmallDec(Value); }
 #endif
 		// Self Less than Value
 		public static bool operator <(SmallDec self, SmallDec Value)
@@ -1606,13 +1616,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static SmallDec FloatParse(string s, IFormatProvider provider)
 		{
-			SmallDec NewSelf = (SmallDec)float.Parse(s, provider);
+			SmallDec NewSelf = float.Parse(s, provider);
 			return NewSelf;
 		}
 
 		public static SmallDec DoubleParse(string s, IFormatProvider provider)
 		{
-			SmallDec NewSelf = (SmallDec)double.Parse(s, provider);
+			SmallDec NewSelf = double.Parse(s, provider);
 			return NewSelf;
 		}
 
@@ -1627,6 +1637,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 		internal string ToString(CultureInfo invariantCulture)
+		{
+			return (string)this;
+		}
+
+		internal string ToString(NumberFormatInfo numberFormat)
 		{
 			return (string)this;
 		}
@@ -2052,7 +2067,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static SmallDec operator %(SmallDec self, dynamic y)
 		{
-			if (y is double || y is float || y is decimal)
+			if (y is double || y is SmallDec || y is decimal)
 			{
 				if (y == 0.0)
 				{
@@ -2152,7 +2167,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static SmallDec operator +(SmallDec self, dynamic y)
 		{
-			if (y is double || y is float || y is decimal)
+			if (y is double || y is SmallDec || y is decimal)
 			{
 				bool IsYNegative = (y < 0) ? true : false;
 				y = Math.Abs(y);
@@ -2316,7 +2331,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static SmallDec operator -(SmallDec self, dynamic y)
 		{
-			if (y is double || y is float || y is decimal)
+			if (y is double || y is SmallDec || y is decimal)
 			{
 				bool IsYNegative = (y < 0) ? true : false;
 				y = Math.Abs(y);
@@ -2484,7 +2499,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static SmallDec operator *(SmallDec self, dynamic y)
 		{
-			if (y is double || y is float || y is decimal)
+			if (y is double || y is SmallDec || y is decimal)
 			{
 				if (y == 0.0)
 				{
@@ -2584,7 +2599,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static SmallDec operator /(SmallDec self, dynamic y)
 		{
-			if (y is double || y is float || y is decimal)
+			if (y is double || y is SmallDec || y is decimal)
 			{
 				if (y == 0)
 				{
@@ -2707,9 +2722,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return YAsSuperDec;
 		}
 
-		public float AsFloat()
+		public SmallDec AsSmallDec()
 		{
-			return (float)this;
+			return (SmallDec)this;
 		}
 
 		public double AsDouble()
