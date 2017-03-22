@@ -21,6 +21,14 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		//Stores decimal section info (19 Decimal places stored)
 		public ulong DecimalStatus;
 
+		//Enable use of multiple Special Decimal States
+#		if (SuperDecPercentVal_EnableMultipleDecimalStatusFormulas)
+		//0 : Default
+		//1 : Storing Fractional
+		//2 : Storing Value higher than +-1.XXXX (Needs alternative code to store larger amount of digits such as Int128 based formula) 
+		public byte DecStatusType;
+#		endif
+
 		public static SuperDec_PercentVal Sum(IEnumerable<SuperDec_PercentVal> Value)
 		{
 			SuperDec_PercentVal TotalSum = SuperDec_PercentVal.Zero;

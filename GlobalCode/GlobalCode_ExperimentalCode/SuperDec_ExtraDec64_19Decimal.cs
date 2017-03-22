@@ -1997,8 +1997,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public void SwapNegativeStatus()
 		{
-			if (DecBoolStatus == 1) { DecBoolStatus = 0; }
-			else { DecBoolStatus = 1; }
+			if (DecBoolStatus%2=0) { DecBoolStatus += 1; }
+			else { DecBoolStatus -= 1; }
 		}
 	}
 }

@@ -77,7 +77,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				value.DecimalStatus *= 10;
 			}
 			return value;
-			throw new NotImplementedException();
 		}
 
 		public SmallDec Ceil()
@@ -116,10 +115,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return NewSelf;
 		}
 
-		//public static explicit operator SmallDec(DependencyProperty v)
-		//{
-		//	throw new NotImplementedException();
-		//}
+		public static explicit operator SmallDec(DependencyProperty v)
+		{
+			throw new NotImplementedException();
+		}
 
 		public static SmallDec Pow(double self, double Value) { return SmallDec.Pow((SmallDec)self, (SmallDec)Value); }
 		public static SmallDec Pow(SmallDec self, double Value) { return SmallDec.Pow(self, (SmallDec)Value); }
@@ -358,27 +357,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 		}
 
-		//public SmallDec Convert(SuperDec_ExtraDec32_19Decimal Value)
-		//{
-		//	SmallDec NewSelf;
-		//	NewSelf.IntValue = (ushort)Value.IntValue;
-		//	ulong TempDec = Value.DecimalStatus;
-		//	TempDec /= 1000000000000000;
-		//	NewSelf.DecimalStatus = (ushort)TempDec;
-		//	NewSelf.DecBoolStatus = Value.DecBoolStatus;
-		//	return NewSelf;
-		//}
-
-		//public SmallDec Convert(SuperDec_ExtraDec64_19Decimal Value)
-		//{
-		//	SmallDec NewSelf;
-		//	NewSelf.IntValue = (ushort)Value.IntValue;
-		//	ulong TempDec = Value.DecimalStatus / 100000000000000;
-		//	NewSelf.DecimalStatus = (ushort)TempDec;
-		//	NewSelf.DecBoolStatus = Value.DecBoolStatus;
-		//	return NewSelf;
-		//}
-
 		public static SmallDec operator -(SmallDec Value)
 		{//Place DecBoolStatus>1 checks above in V2 of type
 			if (Value.DecBoolStatus == 1)
@@ -391,46 +369,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 			return Value;
 		}
-
-		////Limit CSharpGlobalCode.GlobalCode_ExperimentalCode explicit Conversions from other type to self (no OtherType(SelfType) explicit conversions)
-		//public static SmallDec operator +(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
-		//{
-		//	self += (SmallDec)y;
-		//	return self;
-		//}
-
-		//public static SmallDec operator -(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
-		//{
-		//	self -= (SmallDec)y;
-		//	return self;
-		//}
-
-		//public static SmallDec operator *(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
-		//{
-		//	self *= (SmallDec)y;
-		//	return self;
-		//}
-
-		//public static SmallDec operator /(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
-		//{
-		//	self /= (SmallDec)y;
-		//	return self;
-		//}
-
-		//public static explicit operator SmallDec(SuperDec_Int32_9Decimal Value)
-		//{
-		//	return new SmallDec(Value);
-		//}
-
-		//public static explicit operator SmallDec(SuperDec_ExtraDec32_19Decimal Value)
-		//{
-		//	return new SmallDec().Convert(Value);
-		//}
-
-		//public static explicit operator SmallDec(SuperDec_ExtraDec64_19Decimal Value)
-		//{
-		//	return new SmallDec().Convert(Value);
-		//}
 
 		public static SmallDec StringToValue(string Value)
 		{
@@ -565,27 +503,29 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 					}
 				}
 			}
-			//else if (Value is SuperDec_Int32_9Decimal)
-			//{
-			//	IntValue = (ushort)Value.IntValue;
-			//	uint TempDec = Value.DecimalStatus / 100000;
-			//	DecimalStatus = (ushort)TempDec;
-			//	DecBoolStatus = Value.DecBoolStatus;
-			//}
-			//else if (Value is SuperDec_ExtraDec32_19Decimal)
-			//{
-			//	IntValue = (ushort)Value.IntValue;
-			//	ulong TempDec = Value.DecimalStatus / 100000000000000;
-			//	DecimalStatus = (ushort)TempDec;
-			//	DecBoolStatus = Value.DecBoolStatus;
-			//}
-			//else if (Value is SuperDec_ExtraDec64_19Decimal)
-			//{
-			//	IntValue = (ushort)Value.IntValue;
-			//	ulong TempDec = Value.DecimalStatus / 100000000000000;
-			//	DecimalStatus = (ushort)TempDec;
-			//	DecBoolStatus = Value.DecBoolStatus;
-			//}
+#			if (!BlazesGlobalCode_Disable128BitFeatures)
+			else if (Value is SuperDec_Int32_9Decimal)
+			{
+				IntValue = (ushort)Value.IntValue;
+				uint TempDec = Value.DecimalStatus / 100000;
+				DecimalStatus = (ushort)TempDec;
+				DecBoolStatus = Value.DecBoolStatus;
+			}
+			else if (Value is SuperDec_ExtraDec32_19Decimal)
+			{
+				IntValue = (ushort)Value.IntValue;
+				ulong TempDec = Value.DecimalStatus / 100000000000000;
+				DecimalStatus = (ushort)TempDec;
+				DecBoolStatus = Value.DecBoolStatus;
+			}
+			else if (Value is SuperDec_ExtraDec64_19Decimal)
+			{
+				IntValue = (ushort)Value.IntValue;
+				ulong TempDec = Value.DecimalStatus / 100000000000000;
+				DecimalStatus = (ushort)TempDec;
+				DecBoolStatus = Value.DecBoolStatus;
+			}
+#			endif
 			else if (Value is decimal)
 			{
 				if (Value < 0)
@@ -688,7 +628,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return Value;
 		}
 
-		//Explicit/explicit Conversion from this to int
 		public static explicit operator int(SmallDec self)
 		{
 			int Value = (int)self.IntValue;
@@ -765,61 +704,51 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return Value;
 		}
 
-		public static explicit operator SmallDec(decimal Value)
-		{
-			return new SmallDec(Value);
-		}
+#if (BlazesGlobalCode_StandardExplicitConversionFrom)
+		public static explicit operator SmallDec(decimal Value)	{	return new SmallDec(Value);	}
 
-		public static explicit operator SmallDec(double Value)
-		{
-			return new SmallDec(Value);
-		}
+		public static explicit operator SmallDec(double Value)	{	return new SmallDec(Value);	}
 
-		public static explicit operator SmallDec(float Value)
-		{
-			return new SmallDec(Value);
-		}
+		public static explicit operator SmallDec(float Value)	{	return new SmallDec(Value);	}
 
-		public static explicit operator SmallDec(int Value)
-		{
-			return new SmallDec(Value);
-		}
+		public static explicit operator SmallDec(int Value)	{	return new SmallDec(Value);	}
 
-		public static explicit operator SmallDec(uint Value)
-		{
-			return new SmallDec(Value);
-		}
+		public static explicit operator SmallDec(uint Value)	{	return new SmallDec(Value);	}
 
-		public static explicit operator SmallDec(long Value)
-		{
-			return new SmallDec(Value);
-		}
+		public static explicit operator SmallDec(long Value)	{	return new SmallDec(Value);	}
 
-		public static explicit operator SmallDec(ulong Value)
-		{
-			return new SmallDec(Value);
-		}
+		public static explicit operator SmallDec(ulong Value)	{	return new SmallDec(Value);	}
 
-		public static explicit operator SmallDec(ushort Value)
-		{
-			return new SmallDec(Value);
-		}
+		public static explicit operator SmallDec(ushort Value)	{	return new SmallDec(Value);	}
 
-		public static explicit operator SmallDec(short Value)
-		{
-			return new SmallDec(Value);
-		}
+		public static explicit operator SmallDec(short Value)	{	return new SmallDec(Value);	}
 
-		public static explicit operator SmallDec(sbyte Value)
-		{
-			return new SmallDec(Value);
-		}
+		public static explicit operator SmallDec(sbyte Value)	{	return new SmallDec(Value);	}
 
-		public static explicit operator SmallDec(byte Value)
-		{
-			return new SmallDec(Value);
-		}
+		public static explicit operator SmallDec(byte Value)	{	return new SmallDec(Value);	}
+#else
+		public static implicit operator SmallDec(decimal Value) { return new SmallDec(Value); }
 
+		public static implicit operator SmallDec(double Value) { return new SmallDec(Value); }
+
+		public static implicit operator SmallDec(float Value) { return new SmallDec(Value); }
+
+		public static implicit operator SmallDec(int Value) { return new SmallDec(Value); }
+
+		public static implicit operator SmallDec(uint Value) { return new SmallDec(Value); }
+
+		public static implicit operator SmallDec(long Value) { return new SmallDec(Value); }
+
+		public static implicit operator SmallDec(ulong Value) { return new SmallDec(Value); }
+
+		public static implicit operator SmallDec(ushort Value) { return new SmallDec(Value); }
+
+		public static implicit operator SmallDec(short Value) { return new SmallDec(Value); }
+
+		public static implicit operator SmallDec(sbyte Value) { return new SmallDec(Value); }
+
+		public static implicit operator SmallDec(byte Value) { return new SmallDec(Value); }
+#endif
 		// Self Less than Value
 		public static bool operator <(SmallDec self, SmallDec Value)
 		{
@@ -1640,8 +1569,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public void SwapNegativeStatus()
 		{
-			if (DecBoolStatus == 1) { DecBoolStatus = 0; }
-			else { DecBoolStatus = 1; }
+			if (DecBoolStatus%2==0) { DecBoolStatus += 1; }
+			else { DecBoolStatus -= 1; }
 		}
 
 		//Returns value of highest non-infinite/Special Decimal State Value that can store
@@ -2804,15 +2733,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			else { return false; }
 		}
 
-		public static SmallDec Null()
-		{
-			SmallDec NewSelf;
-			NewSelf.IntValue = 0; NewSelf.DecimalStatus = 0;
-			NewSelf.DecBoolStatus = 202;
-			return NewSelf;
-		}
-
-		public static SmallDec ZeroValue()
+		private static SmallDec ZeroValue()
 		{
 			SmallDec NewSelf;
 			NewSelf.IntValue = 0; NewSelf.DecimalStatus = 0; NewSelf.DecBoolStatus = 0;
@@ -2821,7 +2742,19 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static readonly SmallDec Zero = ZeroValue();
 
-		//public static SmallDec ZeroValue = Zero();
+		private static SmallDec NaNValue()
+		{
+			SmallDec NewSelf;
+			NewSelf.IntValue = 0; NewSelf.DecimalStatus = 0;
+#if (BlazesGlobalCode_SmallDec_EnableSpecialDecStates)
+			NewSelf.DecBoolStatus = 202;
+#else
+			NewSelf.DecBoolStatus = 0;
+#endif
+			return NewSelf;
+		}
+
+		public static readonly SmallDec NaN = NaNValue();
 
 		int IComparable<SmallDec>.CompareTo(SmallDec other)
 		{
@@ -2838,5 +2771,82 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				return 1;
 			}
 		}
+
+		public bool AlmostEquals(dynamic CompareTarget, dynamic RangeWithin)
+		{
+			SmallDec ConvertedTarget = (SmallDec)CompareTarget;
+			if(CompareTarget==this)	{	return true;	}
+			else
+			{
+				SmallDec LeftRange = CompareTarget - RangeWithin;
+				SmallDec RightRange = CompareTarget + RangeWithin;
+				if(this==LeftRange||this==RightRange) { return true; }
+				else if(CompareTarget> LeftRange&&CompareTarget< RightRange)	{	return true;	}
+				else {	return false;	}
+			}
+		}
+
+#if (!BlazesGlobalCode_Disable128BitFeatures)
+		public SmallDec Convert(SuperDec_ExtraDec32_19Decimal Value)
+		{
+			SmallDec NewSelf;
+			NewSelf.IntValue = (ushort)Value.IntValue;
+			ulong TempDec = Value.DecimalStatus;
+			TempDec /= 1000000000000000;
+			NewSelf.DecimalStatus = (ushort)TempDec;
+			NewSelf.DecBoolStatus = Value.DecBoolStatus;
+			return NewSelf;
+		}
+
+		public SmallDec Convert(SuperDec_ExtraDec64_19Decimal Value)
+		{
+			SmallDec NewSelf;
+			NewSelf.IntValue = (ushort)Value.IntValue;
+			ulong TempDec = Value.DecimalStatus / 100000000000000;
+			NewSelf.DecimalStatus = (ushort)TempDec;
+			NewSelf.DecBoolStatus = Value.DecBoolStatus;
+			return NewSelf;
+		}
+
+		//Limit CSharpGlobalCode.GlobalCode_ExperimentalCode explicit Conversions from other type to self (no OtherType(SelfType) explicit conversions)
+		public static SmallDec operator +(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
+		{
+			self += (SmallDec)y;
+			return self;
+		}
+
+		public static SmallDec operator -(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
+		{
+			self -= (SmallDec)y;
+			return self;
+		}
+
+		public static SmallDec operator *(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
+		{
+			self *= (SmallDec)y;
+			return self;
+		}
+
+		public static SmallDec operator /(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
+		{
+			self /= (SmallDec)y;
+			return self;
+		}
+
+		public static explicit operator SmallDec(SuperDec_Int32_9Decimal Value)
+		{
+			return new SmallDec(Value);
+		}
+
+		public static explicit operator SmallDec(SuperDec_ExtraDec32_19Decimal Value)
+		{
+			return new SmallDec().Convert(Value);
+		}
+
+		public static explicit operator SmallDec(SuperDec_ExtraDec64_19Decimal Value)
+		{
+			return new SmallDec().Convert(Value);
+		}
+#endif
 	}
 }

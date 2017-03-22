@@ -1944,6 +1944,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return (int)IntValue;
 		}
 
+		public void SwapNegativeStatus()
+		{
+			if (DecBoolStatus%2==0) { DecBoolStatus += 1; }
+			else { DecBoolStatus -= 1; }
+		}
+
 		//Returns value of highest non-infinite/Special Decimal State Value that can store
 		public SuperDec_ExtraDec32_19Decimal Maximum()
 		{
@@ -1962,6 +1968,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			NewSelf.DecimalStatus = 9999999999999999999;
 			NewSelf.DecBoolStatus = 1;
 			return NewSelf;
+		}
+
+		public bool IsInfinity()
+		{
+			//Negative Infinity
+			if (DecBoolStatus == 255)
+			{ return true; }
+			//Positive Infinity
+			else if (DecBoolStatus == 254)
+			{ return true; }
+			else { return false; }
 		}
 
 		public static SuperDec_ExtraDec32_19Decimal FloatParse(string s, IFormatProvider provider)
@@ -1984,33 +2001,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return (string)this;
 		}
 
-		//public static SuperDec_ExtraDec32_19Decimal operator ?(bool Condition, dynamic X, dynamic Y)
-		//{
-		//	if(Condition)
-		//	{
-		//		return X;
-		//	}
-		//	else
-		//	{
-		//		return Y;
-		//	}
-		//}
-
-		public float AsFloat() { return (float)this; }
-		public double AsDouble() { return (double)this; }
-		public int AsInt() { return (int)this; }
-		public string AsString() { return (string)this; }
-
-		public bool IsInfinity()
+		public static dynamic ConditionalReturn(bool Condition, dynamic X, dynamic Y)
 		{
-			//Negative Infinity
-			if (DecBoolStatus == 255)
-			{ return true; }
-			//Positive Infinity
-			else if (DecBoolStatus == 254)
-			{ return true; }
-			else { return false; }
+			if (Condition)	{	return X;	}
+			else	{	return Y;	}
 		}
+
+		public dynamic DynamicConversion() {return this;}
 
 		public bool IsNull()
 		{
@@ -2018,15 +2015,33 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			else { return false; }
 		}
 
+		private static SmallDec NullValue()
+		{
+			SmallDec NewSelf;
+			NewSelf.IntValue = 0; NewSelf.DecimalStatus = 0;
+			NewSelf.DecBoolStatus = 202;
+			return NewSelf;
+		}
+
+		public static readonly SmallDec Null = NullValue();
+
+		private static SmallDec ZeroValue()
+		{
+			SmallDec NewSelf;
+			NewSelf.IntValue = 0; NewSelf.DecimalStatus = 0; NewSelf.DecBoolStatus = 0;
+			return NewSelf;
+		}
+
+		public static readonly SmallDec Zero = ZeroValue();
+
 		public byte GetBoolStatus()
 		{
 			return DecBoolStatus;
 		}
 
-		public void SwapNegativeStatus()
-		{
-			if (DecBoolStatus == 1) { DecBoolStatus = 0; }
-			else { DecBoolStatus = 1; }
-		}
+		public float AsFloat() { return (float)this; }
+		public double AsDouble() { return (double)this; }
+		public int AsInt() { return (int)this; }
+		public string AsString() { return (string)this; }
 	}
 }

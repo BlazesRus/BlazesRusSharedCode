@@ -174,7 +174,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
 		{
-			var min = DragThumb(Thumb, SmallDec.Zero(), Maximum, e.HorizontalChange);
+			var min = DragThumb(Thumb, SmallDec.Zero, Maximum, e.HorizontalChange);
 			UpdateThumb(min, true);
 			Value = min.Round();
 		}
