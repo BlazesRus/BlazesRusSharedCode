@@ -41,6 +41,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return this;
 		}
 
+		public static SmallDec Abs(SmallDec Value)
+		{
+			return Value.Abs();
+		}
+
 		public SmallDec Floor()
 		{
 			this.DecimalStatus = 0;
@@ -115,7 +120,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return NewSelf;
 		}
 
-		public static explicit operator SmallDec(DependencyProperty v)
+		internal static bool TryParse(string s, object smallDec, CultureInfo invariantCulture, out SmallDec f)
 		{
 			throw new NotImplementedException();
 		}
@@ -443,7 +448,14 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		//Initialize constructor
 		public SmallDec(dynamic Value)
 		{
-			if (Value is string)
+			if (Value is DependencyProperty)
+			{
+				SmallDec NewValue = Value.ToString();
+				this.DecBoolStatus = NewValue.DecBoolStatus;
+				this.IntValue = NewValue.IntValue;
+				this.DecimalStatus = NewValue.DecimalStatus;
+			}
+			else if (Value is string)
 			{
 				IntValue = 0;
 				DecimalStatus = 0;
@@ -734,6 +746,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		public static explicit operator SmallDec(byte Value)	{	return new SmallDec(Value);	}
 
 		public static explicit operator SmallDec(string Value) { return new SmallDec(Value); }
+
+		public static explicit operator SmallDec(DependencyProperty Value)
+		{
+			SmallDec NewValue = Value.ToString();
+			return NewValue;
+		}
 #else
 		public static implicit operator SmallDec(decimal Value) { return new SmallDec(Value); }
 
@@ -758,6 +776,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		public static implicit operator SmallDec(byte Value) { return new SmallDec(Value); }
 
 		public static implicit operator SmallDec(string Value) { return new SmallDec(Value); }
+
+		public static implicit operator SmallDec(DependencyProperty Value)
+		{
+			SmallDec NewValue = Value.ToString();
+			return NewValue;
+		}
 #endif
 		// Self Less than Value
 		public static bool operator <(SmallDec self, SmallDec Value)
@@ -2720,11 +2744,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			SmallDec YAsSuperDec = (SmallDec)y;
 			YAsSuperDec += self;
 			return YAsSuperDec;
-		}
-
-		public SmallDec AsSmallDec()
-		{
-			return (SmallDec)this;
 		}
 
 		public double AsDouble()
