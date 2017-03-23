@@ -14,12 +14,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_Int16_4Decimal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_Int32_9Decimal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_LargeDec_OperatorFunctions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_MediumDec_OperatorFunctions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_SmallDec_OperatorFunctions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_SmallDec_TrigometricFunctions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_IniData\IniData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_MiscFunctions\MiscFunctions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_StringFunctions\GlobalCode_MiscFunctions\MiscFunctions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_StringFunctions\StringFunctions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cs" />
-	<Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SmallDecCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SmallDecCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SmallDecSlider.xaml.cs">
       <DependentUpon>SmallDecSlider.xaml</DependentUpon>
     </Compile>
