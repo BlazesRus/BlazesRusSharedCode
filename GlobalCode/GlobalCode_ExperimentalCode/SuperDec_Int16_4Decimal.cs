@@ -58,6 +58,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return NewValue;
 		}
 
+		public static bool TryParse(string value, object smallDec, CultureInfo invariantCulture, out SmallDec f)
+		{
+			f = Parse(value, invariantCulture);
+			return true;
+		}
+
 		// Returns rounded value with all fractional digits after specified precision cut off.
 		public static SmallDec Floor(SmallDec value, int precision)
 		{
@@ -94,6 +100,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return this;
 		}
 
+		public static SmallDec Ceiling(SmallDec value)
+		{
+			return value.Ceil();
+		}
 
 		public static SmallDec Pow(SmallDec self, int Value)
 		{
@@ -118,11 +128,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				}
 			}
 			return NewSelf;
-		}
-
-		internal static bool TryParse(string s, object smallDec, CultureInfo invariantCulture, out SmallDec f)
-		{
-			throw new NotImplementedException();
 		}
 
 		public static SmallDec Pow(double self, double Value) { return SmallDec.Pow((SmallDec)self, (SmallDec)Value); }
@@ -2818,6 +2823,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				else if(CompareTarget> LeftRange&&CompareTarget< RightRange)	{	return true;	}
 				else {	return false;	}
 			}
+		}
+
+		internal static SmallDec Floor(SmallDec smallDec)
+		{
+			throw new NotImplementedException();
 		}
 
 #if (!BlazesGlobalCode_Disable128BitFeatures)
