@@ -128,9 +128,14 @@ BlazesGlobalCode_Int128Version:
 ----C# Only based Preprocessors-------------------------------------------------------
 
 BlazesGlobalCode_Disable128BitFeatures: Disables related classes and functions that rely on 128+ bit int etc
-PoESkillTree_UseStandardValueTypesInsteadOfSmallDec : (For PoESkillTree) Enable use of float etc instead of usage of SmallDec etc.
-PoESkillTree_UseLocalGlobalCode : (For PoESkillTree) Use local files within folders instead of SharedProject version of BlazesGlobalCode
 BlazesGlobalCode_StandardExplicitConversionFrom : Limit SuperDec classes to explicit conversions from standard variable types
+
+---PoESkillTree Based Preprocessors-----
+//PoESkillTree_UseStandardValueTypesInsteadOfSmallDec : (For PoESkillTree) Enable use of float etc instead of usage of SmallDec etc.(Disabled)
+//PoESkillTree_UseLocalGlobalCode : (For PoESkillTree) Use local files within folders instead of SharedProject version of BlazesGlobalCode (Disabled)
+PoESkillTree_UseSmallDec_ForAttributes : Use SmallDec instead of float for Attribute variables
+PoESkillTree_UseSmallDec_ForUpdateDB
+
 
 --------Decimal Storage notes------
 (signed/unsigned) int 8 = can store 2 places (signed stores -128 to 127;unsigned stores 0 to 255)

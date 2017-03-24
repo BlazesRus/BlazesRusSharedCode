@@ -16,6 +16,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 	//Aka SuperDec_Int32_9Decimal
 	public partial struct MediumSuperDec : IComparable<MediumSuperDec>
 	{
+		public static bool operator <(MediumSuperDec self, MediumSuperDec Value)
+		{
+
+		}
+
 		// Self Less than Value
 		public static bool operator <(MediumSuperDec self, dynamic Value)
 		{
@@ -128,6 +133,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 		}
 
+		public static bool operator <=(MediumSuperDec self, MediumSuperDec Value)
+		{
+
+		}
+
 		// Self Less than or equal to Value
 		public static bool operator <=(MediumSuperDec self, dynamic Value)
 		{
@@ -238,6 +248,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 					}
 				}
 			}
+		}
+
+		public static bool operator >(MediumSuperDec self, MediumSuperDec Value)
+		{
+
 		}
 
 		// Self Greater than Value
@@ -356,6 +371,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 		}
 
+		public static bool operator >=(MediumSuperDec self, MediumSuperDec Value)
+		{
+
+		}
+
 		// Self Greater than or Equal to Value
 		public static bool operator >=(MediumSuperDec self, dynamic Value)
 		{
@@ -467,6 +487,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 		}
 
+		public static bool operator ==(MediumSuperDec self, MediumSuperDec Value)
+		{
+
+		}
+
 		// Equality operator for comparing self to int type value
 		public static bool operator ==(MediumSuperDec self, dynamic Value)
 		{
@@ -539,6 +564,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 					else { return false; }
 				}
 			}
+		}
+
+		public static bool operator !=(MediumSuperDec self, MediumSuperDec Value)
+		{
+
 		}
 
 		// Inequality operator for comparing self to multiple value types
@@ -614,7 +644,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				}
 			}
 		}
-
 
 		public static MediumSuperDec operator %(MediumSuperDec self, double y)
 		{
@@ -1628,6 +1657,49 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				}
 			}
 			return self;
+		}
+
+		//Right side applications
+		public static MediumSuperDec operator -(dynamic y, MediumSuperDec self)
+		{
+			MediumSuperDec YAsSuperDec = (SmallDec)y;
+			YAsSuperDec -= self;
+			return YAsSuperDec;
+		}
+
+		public static SmallDec operator +(dynamic y, MediumSuperDec self)
+		{
+			MediumSuperDec YAsSuperDec = (MediumSuperDec)y;
+			YAsSuperDec += self;
+			return YAsSuperDec;
+		}
+
+		public static MediumSuperDec operator *(dynamic y, MediumSuperDec self)
+		{
+			MediumSuperDec YAsSuperDec = (MediumSuperDec)y;
+			YAsSuperDec += self;
+			return YAsSuperDec;
+		}
+
+		public static MediumSuperDec operator /(dynamic y, MediumSuperDec self)
+		{
+			MediumSuperDec YAsSuperDec = (MediumSuperDec)y;
+			YAsSuperDec += self;
+			return YAsSuperDec;
+		}
+
+
+		public static MediumSuperDec operator -(MediumSuperDec Value)
+		{
+			if (Value.DecBoolStatus%2)//ODD
+			{
+				Value.DecBoolStatus -= 1;
+			}
+			else
+			{
+				Value.DecBoolStatus += 1;
+			}
+			return Value;
 		}
 
 	}
