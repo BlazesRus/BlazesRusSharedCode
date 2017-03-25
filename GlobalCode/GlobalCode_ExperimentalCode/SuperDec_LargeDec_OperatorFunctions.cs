@@ -17,7 +17,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 	//Aka SuperDec_Int16_4Decimal
 	public partial struct LargeSuperDec : IComparable<LargeSuperDec>
 	{
-
+#if (!BlazesGlobalCode_Disable128BitFeatures)
 		public static LargeSuperDec operator -(LargeSuperDec self, double y)
 		{
 			bool IsYNegative = (y < 0) ? true : false;
@@ -1629,6 +1629,19 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 					else { return true; }
 				}
 			}
+		}
+#endif
+		public static LargeSuperDec operator -(LargeSuperDec Value)
+		{
+			if (Value.DecBoolStatus % 2)//ODD
+			{
+				Value.DecBoolStatus -= 1;
+			}
+			else
+			{
+				Value.DecBoolStatus += 1;
+			}
+			return Value;
 		}
 	}
 }

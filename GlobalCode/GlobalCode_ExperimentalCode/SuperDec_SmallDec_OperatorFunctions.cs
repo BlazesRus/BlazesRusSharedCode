@@ -1813,13 +1813,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static SmallDec operator -(SmallDec Value)
 		{//Place DecBoolStatus>1 checks above in V2 of type
-			if (Value.DecBoolStatus == 1)
+			if (Value.DecBoolStatus % 2)//ODD
 			{
-				Value.DecBoolStatus = 0;
-			}//No negative zero
-			else if ((Value.DecimalStatus == 0 && Value.IntValue == 0) == false)
+				Value.DecBoolStatus -= 1;
+			}
+			else
 			{
-				Value.DecBoolStatus = 1;
+				Value.DecBoolStatus += 1;
 			}
 			return Value;
 		}
