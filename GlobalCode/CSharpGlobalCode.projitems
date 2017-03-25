@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_ModerateDec_OperatorFunctions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_PercentVal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_SmallDec_OperatorFunctions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_SmallDec_OtherConversions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_SmallDec_Rounding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_SmallDec_TrigometricFunctions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_IniData\IniData.cs" />

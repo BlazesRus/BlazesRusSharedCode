@@ -136,9 +136,10 @@ BlazesGlobalCode_StandardExplicitConversionFrom : Limit SuperDec classes to expl
 PoESkillTree_UseSmallDec_ForAttributes : Use SmallDec instead of float for Attribute variables
 PoESkillTree_UseSmallDec_ForAttributeViewModel: Use SmallDec for Attribute Viewmodel Delta
 PoESkillTree_UseSmallDec_ForSliderViewModel : Use SmallDec for SliderViewModel value
-PoESkillTree_UseSmallDec_ForListGroup
 PoESkillTree_UseSmallDec_ForUpdateDB : 
-PoESkillTree_WeightAsPercRatio: Replace weight values with alernative type that is only for storing +- 1.(19 Decimals stored) (from double)
+PoESkillTree_UseSmallDec_Csv:
+PoESkillTree_PreventRoundingOfImportantSmallDec: Prevent certain levels of rounding for important calculations.(Not implimented yet)
+PoESkillTree_WeightAsPercRatio: Replace weight values with alernative type that is only for storing +- 1.(19 Decimals stored) (from double) (Not completed yet)
 
 --------Decimal Storage notes------
 (signed/unsigned) int 8 = can store 2 places (signed stores -128 to 127;unsigned stores 0 to 255)
