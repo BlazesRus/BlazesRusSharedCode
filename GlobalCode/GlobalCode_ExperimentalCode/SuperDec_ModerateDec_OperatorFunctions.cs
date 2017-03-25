@@ -1,12 +1,10 @@
 ﻿/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
 	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
 */
-
 using System;
 
 //Requires BigMath library to compile
 
-//CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
 	using System.Collections.Generic;
@@ -14,8 +12,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 	using System.Windows;
 	using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
-	//Aka SuperDec_Int16_4Decimal
-	public partial struct LargeSuperDec : IComparable<LargeSuperDec>
+	//Aka SuperDec_Int32_9Decimal
+	public partial struct ModerateSuperDec : IComparable<ModerateSuperDec>
 	{
 #if (!BlazesGlobalCode_Disable128BitFeatures)
 		public static ulong ForceConvertFromInt256(BigMath.Int256 Value)
@@ -34,180 +32,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return ConvertedValue;
 		}
 
-		public static LargeSuperDec operator -(LargeSuperDec self, double y)
-		{
-			bool IsYNegative = (y < 0) ? true : false;
-			y = Math.Abs(y);
-			uint WholeHalfOfY = (uint)Math.Floor(y);
-			y -= WholeHalfOfY;
-			if (WholeHalfOfY == 0) { }
-			//ex. -9 - 9
-			else if (self.GetBoolStatus() == 1 && IsYNegative == false)
-			{// -X - Y
-				self.IntValue = self.GetIntValue() + WholeHalfOfY;
-			}//ex. 9 - (-1)
-			else if (self.GetBoolStatus() == 0 && IsYNegative)
-			{
-				//X - (-Y)
-				self.IntValue = self.GetIntValue() + WholeHalfOfY;
-			}
-			else
-			{
-				// X - (Y)
-				if (self.GetBoolStatus() == 0)
-				{
-					// ex. 8 - 9
-					if (WholeHalfOfY > self.GetIntValue())
-					{
-						self.IntValue = WholeHalfOfY - self.GetIntValue();
-						self.DecBoolStatus = 1;
-					} //ex. 8 - 7
-					else
-					{
-						self.IntValue = self.IntValue - WholeHalfOfY;
-					}
-				}// -X - (Y)
-				else
-				{
-					// ex. -8 - (-9)
-					if (self.IntValue > WholeHalfOfY)
-					{
-						self.IntValue = WholeHalfOfY - self.IntValue;
-						self.DecBoolStatus = 0;
-					}
-					else
-					{//ex. -8 - (-5)
-						self.IntValue = self.GetIntValue() - WholeHalfOfY;
-					}
-				}
-			}
-			//Decimal Calculation Section
-			ulong SecondDec = (ulong)(System.Math.Abs(y) - System.Math.Abs(WholeHalfOfY)) * 10000000000000000000;
-			if (self.GetDecimalStatus() != 0 || SecondDec != 0)
-			{
-				// ex. -0.5 - 0.6
-				if (self.GetBoolStatus() == 1 && IsYNegative == false)
-				{
-					//Potential Overflow check
-					BigMath.Int128 DecimalStatusTemp = self.GetDecimalStatus() + SecondDec;
-					if (DecimalStatusTemp > 999999999999999999)
-					{
-
-						DecimalStatusTemp -= 1000000000000000000;
-						self.IntValue += 1;
-					}
-					self.DecimalStatus = (ulong)DecimalStatusTemp;
-				}// ex. 0.5 - (-0.6)
-				else if (self.GetBoolStatus() == 0 && IsYNegative)
-				{
-					//Potential Overflow check
-					BigMath.Int128 DecimalStatusTemp = self.GetDecimalStatus() + SecondDec;
-					if (DecimalStatusTemp > 999999999999999999)
-					{
-						DecimalStatusTemp -= 1000000000000000000;
-						self.IntValue -= 1;
-					}
-					self.DecimalStatus = (ulong)DecimalStatusTemp;
-				}
-				else
-				{
-					if (IsYNegative)
-					{// ex. -0.7 - (-0.6)
-						if (self.GetDecimalStatus() >= SecondDec)
-						{
-							self.DecimalStatus = self.GetDecimalStatus() - SecondDec;
-						}
-						else
-						{
-							self.DecimalStatus = SecondDec - self.GetDecimalStatus();
-							if (self.IntValue == 0)
-							{
-								self.DecBoolStatus = 0;
-							}
-							else
-							{
-								self.IntValue -= 1;
-							}
-						}
-					}
-					else
-					{ //ex  0.6 - 0.5
-						if (self.GetDecimalStatus() >= SecondDec)
-						{
-							self.DecimalStatus = self.GetDecimalStatus() - SecondDec;
-						}
-						else
-						{
-							self.DecimalStatus = SecondDec - self.GetDecimalStatus();
-							if (self.IntValue == 0)
-							{
-								self.DecBoolStatus = 1;
-							}
-							else
-							{
-								self.IntValue -= 1;
-							}
-						}
-					}
-				}
-			}
-			//Fix potential negative zero
-			if (self.IntValue == 0 && self.DecBoolStatus == 1 && self.DecimalStatus == 0) { self.DecBoolStatus = 0; }
-			return self;
-		}
-
-		public static LargeSuperDec operator -(LargeSuperDec self, dynamic y)
-		{
-			//ex. -9 - 9
-			if (self.GetBoolStatus() == 1 && y >= 0)
-			{// -X - Y
-				self.IntValue = self.GetIntValue() + (uint)y;
-			}//ex. 9 - (-1)
-			else if (self.GetBoolStatus() == 0 && y < 0)
-			{
-				//X - (-Y)
-				self.IntValue = self.GetIntValue() + (uint)Math.Abs(y);
-			}
-			else
-			{
-				// X - (Y)
-				if (self.GetBoolStatus() == 0)
-				{
-					// ex. 8 - 9
-					if (y > self.GetIntValue())
-					{
-						self.IntValue = (uint)y - self.GetIntValue();
-						self.DecBoolStatus = 1;
-					} //ex. 8 - 7
-					else
-					{
-						self.IntValue = self.IntValue - (uint)y;
-					}
-				}// -X - (Y)
-				else
-				{
-					uint TempY = (uint)Math.Abs(y);
-					// ex. -8 - (-9)
-					if (self.IntValue > TempY)
-					{
-						self.IntValue = TempY - self.IntValue;
-						self.DecBoolStatus = 0;
-					}
-					else
-					{//ex. -8 - (-5)
-						self.IntValue = self.GetIntValue() - TempY;
-					}
-				}
-			}
-			//Fix potential negative zero
-			if (self.IntValue == 0 && self.DecBoolStatus == 1 && self.DecimalStatus == 0)
-			{
-				self.DecBoolStatus = 0;
-			}
-			return self;
-		}
-
-		public static LargeSuperDec operator %(LargeSuperDec self, int y)
+		public static ModerateSuperDec operator %(ModerateSuperDec self, int y)
 		{
 			if (y == 0)
 			{
@@ -240,7 +65,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return self;
 		}
 
-		public static LargeSuperDec operator %(LargeSuperDec self, double y)
+		public static ModerateSuperDec operator %(ModerateSuperDec self, double y)
 		{
 			if (y == 0.0)
 			{
@@ -308,7 +133,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return self;
 		}
 
-		public static LargeSuperDec operator %(LargeSuperDec self, LargeSuperDec y)
+		public static ModerateSuperDec operator %(ModerateSuperDec self, ModerateSuperDec y)
 		{
 			if (y.GetIntValue() == 0 && y.GetDecimalStatus() == 0)
 			{
@@ -318,7 +143,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 			else
 			{
-				if (y.GetBoolStatus() == 1) { self.SwapNegativeStatus(); }
+				if (y.DecBoolStatus == 1) { self.SwapNegativeStatus(); }
 				if (self.DecimalStatus == 0 && y.GetDecimalStatus() == 0)
 				{//Use normal simple (int value) * (int value) if not dealing with any decimals
 					self.IntValue %= y.IntValue;
@@ -355,7 +180,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return self;
 		}
 
-		public static LargeSuperDec operator *(LargeSuperDec self, LargeSuperDec y)
+		public static ModerateSuperDec operator *(ModerateSuperDec self, ModerateSuperDec y)
 		{
 			if (y.GetIntValue() == 0 && y.GetDecimalStatus() == 0)
 			{
@@ -365,7 +190,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 			else
 			{
-				if (y.GetBoolStatus() == 1) { self.SwapNegativeStatus(); }
+				if (y.DecBoolStatus == 1) { self.SwapNegativeStatus(); }
 				if (self.DecimalStatus == 0 && y.GetDecimalStatus() == 0)
 				{//Use normal simple (int value) * (int value) if not dealing with any decimals
 					self.IntValue *= y.IntValue;
@@ -403,7 +228,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return self;
 		}
 
-		public static LargeSuperDec operator *(LargeSuperDec self, int y)
+		public static ModerateSuperDec operator *(ModerateSuperDec self, int y)
 		{
 			if (y == 0)
 			{
@@ -436,7 +261,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return self;
 		}
 
-		public static LargeSuperDec operator *(LargeSuperDec self, double y)
+		public static ModerateSuperDec operator *(ModerateSuperDec self, double y)
 		{
 			if (y == 0.0)
 			{
@@ -505,7 +330,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return self;
 		}
 
-		public static LargeSuperDec operator /(LargeSuperDec self, LargeSuperDec y)
+		public static ModerateSuperDec operator /(ModerateSuperDec self, ModerateSuperDec y)
 		{
 			if (y.GetIntValue() == 0 && y.GetDecimalStatus() == 0)
 			{
@@ -513,7 +338,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 			else
 			{
-				if (y.GetBoolStatus() == 1) { self.SwapNegativeStatus(); }
+				if (y.DecBoolStatus == 1) { self.SwapNegativeStatus(); }
 				if (self.DecimalStatus == 0 && y.GetDecimalStatus() == 0)
 				{//Use normal simple (int value) * (int value) if not dealing with any decimals
 					self.IntValue /= y.IntValue;
@@ -551,7 +376,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return self;
 		}
 
-		public static LargeSuperDec operator /(LargeSuperDec self, int y)
+		public static ModerateSuperDec operator /(ModerateSuperDec self, int y)
 		{
 			if (y == 0)
 			{
@@ -581,7 +406,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return self;
 		}
 
-		public static LargeSuperDec operator /(LargeSuperDec self, double y)
+		public static ModerateSuperDec operator /(ModerateSuperDec self, double y)
 		{
 			if (y == 0)
 			{
@@ -647,290 +472,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return self;
 		}
 
-		public static LargeSuperDec operator +(LargeSuperDec self, double y)
-		{
-			bool IsYNegative = (y < 0) ? true : false;
-			y = Math.Abs(y);
-			uint WholeHalfOfY = (uint)Math.Floor(y);
-			y -= WholeHalfOfY;
-			if (WholeHalfOfY == 0) { }
-			else if (self.GetBoolStatus() == 1 && IsYNegative)
-			{// -X - Y (ex. -8 + -6)
-				self.IntValue = self.GetIntValue() + WholeHalfOfY;
-			}
-			else if (self.GetBoolStatus() == 0 && IsYNegative == false)
-			{
-				//X + Y (ex. 8 + 6)
-				self.IntValue = self.GetIntValue() + WholeHalfOfY;
-			}
-			else
-			{
-				// -X + Y
-				if (self.GetBoolStatus() == 1)
-				{   //ex. -8 + 9
-					if (y > self.GetIntValue())
-					{
-						self.IntValue = WholeHalfOfY - self.GetIntValue();
-						self.DecBoolStatus = 0;
-					}
-					else
-					{//ex. -8 +  4
-						self.IntValue = self.GetIntValue() - WholeHalfOfY;
-					}
-				}// X-Y
-				else
-				{
-					if (self.GetIntValue() > WholeHalfOfY)
-					{//ex. 9 + -6
-						self.IntValue = self.GetIntValue() - WholeHalfOfY;
-					}
-					else
-					{//ex. 9 + -10
-						self.IntValue = WholeHalfOfY - self.GetIntValue();
-						self.DecBoolStatus = 1;
-					}
-				}
-			}
-			//Decimal Calculation Section
-			if (self.GetBoolStatus() != 0 || y != 0)
-			{
-				ulong SecondDec = (ulong)(System.Math.Abs(y) - System.Math.Abs(WholeHalfOfY)) * 10000000000000000000;
-				// ?.XXXXXX + ?.YYYYYY
-				if (self.GetBoolStatus() == 0 && IsYNegative == false)
-				{
-					//Potential Overflow check
-					BigMath.Int128 DecimalStatusTemp = self.GetDecimalStatus() + SecondDec;
-					if (DecimalStatusTemp > 999999999999999999)
-					{
-						DecimalStatusTemp -= 999999999999999999;
-						self.IntValue += 1;
-					}
-					self.DecimalStatus = (ulong)DecimalStatusTemp;
-				}
-				// -?.XXXXXX - ?.YYYYYY
-				else if (self.GetBoolStatus() == 1 && IsYNegative == true)
-				{
-					//Potential Overflow check
-					BigMath.Int128 DecimalStatusTemp = self.GetDecimalStatus() + SecondDec;
-					if (DecimalStatusTemp > 999999999999999999)
-					{
-						DecimalStatusTemp -= 999999999999999999;
-						self.IntValue -= 1;
-					}
-					self.DecimalStatus = (ulong)DecimalStatusTemp;
-				}
-				else
-				{
-					if (IsYNegative)
-					{
-						// ex. 0.6 + -0.5
-						if (self.GetDecimalStatus() >= SecondDec)
-						{
-							self.DecimalStatus = self.GetDecimalStatus() - SecondDec;
-						}// ex. 0.6 + -.7
-						else
-						{
-							self.DecimalStatus = SecondDec - self.GetDecimalStatus();
-							if (self.IntValue == 0)
-							{
-								self.DecBoolStatus = 1;
-							}
-							else
-							{
-								self.IntValue -= 1;
-							}
-						}
-					}
-					else
-					{
-						if (self.GetDecimalStatus() >= SecondDec)
-						{
-							self.DecimalStatus = self.GetDecimalStatus() - SecondDec;
-						}// ex. -1.6 + 0.7
-						else
-						{
-							self.DecimalStatus = SecondDec - self.GetDecimalStatus();
-							if (self.IntValue == 0)
-							{
-								self.DecBoolStatus = 0;
-							}
-							else
-							{
-								self.IntValue -= 1;
-							}
-						}
-					}
-				}
-			}
-			//Fix potential negative zero
-			if (self.IntValue == 0 && self.DecBoolStatus == 1 && self.DecimalStatus == 0) { self.DecBoolStatus = 0; }
-			return self;
-		}
-
-		public static LargeSuperDec operator +(LargeSuperDec self, LargeSuperDec y)
-		{
-			bool IsYNegative = (y.GetBoolStatus() == 1) ? true : false;
-			if (self.GetBoolStatus() == 1 && IsYNegative)
-			{// -X - Y (ex. -8 + -6)
-				self.IntValue = self.GetIntValue() + y.GetIntValue();
-			}
-			else if (self.GetBoolStatus() == 0 && IsYNegative == false)
-			{
-				//X + Y (ex. 8 + 6)
-				self.IntValue = self.GetIntValue() + y.GetIntValue();
-			}
-			else
-			{
-				// -X + Y
-				if (self.GetBoolStatus() == 1)
-				{   //ex. -8 + 9
-					if (y.GetIntValue() > self.GetIntValue())
-					{
-						self.IntValue = y.GetIntValue() - self.GetIntValue();
-						self.DecBoolStatus = 0;
-					}
-					else
-					{//ex. -8 +  4
-						self.IntValue = self.GetIntValue() - y.GetIntValue();
-					}
-				}// X + -Y
-				else
-				{
-					if (self.GetIntValue() > y.GetIntValue())
-					{//ex. 9 + -6
-						self.IntValue = self.GetIntValue() - y.GetIntValue();
-					}
-					else
-					{//ex. 9 + -10
-						self.IntValue = y.GetIntValue() - self.IntValue;
-						self.DecBoolStatus = 1;
-					}
-				}
-			}
-			//Decimal Section
-			if (self.GetDecimalStatus() != 0 || y.GetDecimalStatus() != 0)
-			{
-				// ?.XXXXXX + ?.YYYYYY (ex. 0.9 + 0.2)
-				if (self.GetBoolStatus() == 0 && IsYNegative == false)
-				{
-					//Potential Overflow check
-					BigMath.Int128 DecimalStatusTemp = self.GetDecimalStatus() + y.GetDecimalStatus();
-					if (DecimalStatusTemp > 999999999999999999)
-					{
-						DecimalStatusTemp -= 999999999999999999;
-						self.IntValue += 1;
-					}
-					self.DecimalStatus = (ulong)DecimalStatusTemp;
-				}
-				// -?.XXXXXX - ?.YYYYYY (ex. -0.9 + -0.2)
-				else if (self.GetBoolStatus() == 1 && IsYNegative)
-				{
-					//Potential Overflow check
-					BigMath.Int128 DecimalStatusTemp = self.GetDecimalStatus() + y.GetDecimalStatus();
-					if (DecimalStatusTemp > 999999999999999999)
-					{
-						DecimalStatusTemp -= 999999999999999999;
-						self.IntValue -= 1;
-					}
-					self.DecimalStatus = (ulong)DecimalStatusTemp;
-				}
-				else
-				{
-					if (IsYNegative)
-					{
-						// ex. 0.6 + -0.5
-						if (self.GetDecimalStatus() >= y.GetDecimalStatus())
-						{
-							self.DecimalStatus = self.GetDecimalStatus() - y.GetDecimalStatus();
-						}// ex. 0.6 + -.7
-						else
-						{
-							self.DecimalStatus = y.GetDecimalStatus() - self.GetDecimalStatus();
-							if (self.IntValue == 0)
-							{
-								self.DecBoolStatus = 1;
-							}
-							else
-							{
-								self.IntValue -= 1;
-							}
-						}
-					}
-					else
-					{ //ex -0.6 + 0.5
-						if (self.GetDecimalStatus() >= y.GetDecimalStatus())
-						{
-							self.DecimalStatus = self.GetDecimalStatus() - y.GetDecimalStatus();
-						}// ex. -1.6 + 0.7
-						else
-						{
-							self.DecimalStatus = y.GetDecimalStatus() - self.GetDecimalStatus();
-							if (self.IntValue == 0)
-							{
-								self.DecBoolStatus = 0;
-							}
-							else
-							{
-								self.IntValue -= 1;
-							}
-						}
-					}
-				}
-			}
-			//Fix potential negative zero
-			if (self.IntValue == 0 && self.DecBoolStatus == 1 && self.DecimalStatus == 0) { self.DecBoolStatus = 0; }
-			return self;
-		}
-
-		public static LargeSuperDec operator +(LargeSuperDec self, dynamic y)
-		{
-			if (self.GetBoolStatus() == 1 && y < 0)
-			{// -X - Y (ex. -8 + -6)
-				self.IntValue = self.GetIntValue() + (uint)Math.Abs(y);
-			}
-			else if (self.GetBoolStatus() == 0 && y >= 0)
-			{
-				//X + Y (ex. 8 + 6)
-				self.IntValue = self.GetIntValue() + (uint)y;
-			}
-			else
-			{
-				// -X + Y
-				if (self.GetBoolStatus() == 1)
-				{   //ex. -8 + 9
-					if (y > self.GetIntValue())
-					{
-						self.IntValue = (uint)y - self.GetIntValue();
-						self.DecBoolStatus = 0;
-					}
-					else
-					{//ex. -8 +  4
-						self.IntValue = self.GetIntValue() - (uint)y;
-					}
-				}// X-Y
-				else
-				{
-					uint TempY = Math.Abs(y);
-					if (self.GetIntValue() > TempY)
-					{//ex. 9 + -6
-						self.IntValue = self.GetIntValue() - TempY;
-					}
-					else
-					{//ex. 9 + -10
-						self.IntValue = TempY - self.GetIntValue();
-						self.DecBoolStatus = 1;
-					}
-				}
-			}
-			//Fix potential negative zero
-			if (self.IntValue == 0 && self.DecBoolStatus == 1 && self.DecimalStatus == 0) { self.DecBoolStatus = 0; }
-			return self;
-		}
-
 		// Self Less than Value
-		public static bool operator <(LargeSuperDec self, dynamic Value)
+		public static bool operator <(ModerateSuperDec self, dynamic Value)
 		{
-			if (Value is LargeSuperDec)
+			if (Value is ModerateSuperDec)
 			{
 				if (self.DecBoolStatus == Value.DecBoolStatus && self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return false; }
 				else
@@ -1040,38 +585,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 		// Self Less than or equal to Value
-		public static bool operator <=(LargeSuperDec self, dynamic Value)
+		public static bool operator <=(ModerateSuperDec self, dynamic Value)
 		{
-			if (Value is LargeSuperDec)
-			{
-				if (self.DecBoolStatus == Value.DecBoolStatus && self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
-				else
-				{
-					// Positive Self <= -Value
-					if (Value.DecBoolStatus == 1 && self.DecBoolStatus == 0) { return false; }
-					// Negative Self <= Value
-					else if (Value.DecBoolStatus == 0 && self.DecBoolStatus == 1) { return true; }
-					else
-					{
-						BigMath.Int128 SelfAsInt256 = self.IntValue;
-						SelfAsInt256 *= 10000000000000000000;
-						SelfAsInt256 += self.DecimalStatus;
-						BigMath.Int128 ValueAsInt256 = Value.IntValue;
-						ValueAsInt256 *= 10000000000000000000;
-						ValueAsInt256 += Value.DecimalStatus;
-						//Both are either positive or negative numbers
-						if (self.DecBoolStatus == 0)
-						{
-							return SelfAsInt256 <= ValueAsInt256;
-						}
-						else
-						{//Larger number = farther down into negative
-							return !(SelfAsInt256 <= ValueAsInt256);
-						}
-					}
-				}
-			}
-			else if (Value is double)
+			if (Value is double||Value is float||Value is decimal)
 			{
 				if (Value < 0.0 && self.DecBoolStatus == 0) { return false; }
 				else if (Value >= 0.0 && self.DecBoolStatus == 1) { return true; }
@@ -1152,39 +668,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 		// Self Greater than Value
-		public static bool operator >(LargeSuperDec self, dynamic Value)
+		public static bool operator >(ModerateSuperDec self, dynamic Value)
 		{
-			if (Value is LargeSuperDec)
-			{
-				if (self.DecBoolStatus == Value.DecBoolStatus && self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return false; }
-				else
-				{
-					// Positive Self >= -Value
-					if (Value.DecBoolStatus == 1 && self.DecBoolStatus == 0) { return true; }
-					// Negative Self >= Value
-					else if (Value.DecBoolStatus == 0 && self.DecBoolStatus == 1) { return false; }
-					else
-					{
-						//((self.IntValue * 10000000000000000000)+self.DecimalStatus)*(DecimalAsInt+(WholeHalf*10000000000000000000))/10000000000000000000 = ((self.IntValue*10000000000000000000)+self.DecimalStatus))
-						BigMath.Int128 SelfAsInt256 = self.IntValue;
-						SelfAsInt256 *= 10000000000000000000;
-						SelfAsInt256 += self.DecimalStatus;
-						BigMath.Int128 ValueAsInt256 = Value.IntValue;
-						ValueAsInt256 *= 10000000000000000000;
-						ValueAsInt256 += Value.DecimalStatus;
-						//Both are either positive or negative numbers
-						if (self.DecBoolStatus == 0)
-						{
-							return SelfAsInt256 > ValueAsInt256;
-						}
-						else
-						{//Larger number = farther down into negative
-							return !(SelfAsInt256 > ValueAsInt256);
-						}
-					}
-				}
-			}
-			else if (Value is double)
+			if (Value is double||Value is float||Value is decimal)
 			{
 				// Positive Self >= -Value
 				if (Value < 0.0 && self.DecBoolStatus == 0) { return true; }
@@ -1269,38 +755,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 		// Self Greater than or Equal to Value
-		public static bool operator >=(LargeSuperDec self, dynamic Value)
+		public static bool operator >=(ModerateSuperDec self, dynamic Value)
 		{
-			if (Value is LargeSuperDec)
-			{
-				if (self.DecBoolStatus == Value.DecBoolStatus && self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
-				else
-				{
-					// Positive Self >= -Value
-					if (Value.DecBoolStatus == 1 && self.DecBoolStatus == 0) { return true; }
-					// Negative Self >= Value
-					else if (Value.DecBoolStatus == 0 && self.DecBoolStatus == 1) { return false; }
-					else
-					{
-						BigMath.Int128 SelfAsInt256 = self.IntValue;
-						SelfAsInt256 *= 10000000000000000000;
-						SelfAsInt256 += self.DecimalStatus;
-						BigMath.Int128 ValueAsInt256 = Value.IntValue;
-						ValueAsInt256 *= 10000000000000000000;
-						ValueAsInt256 += Value.DecimalStatus;
-						//Both are either positive or negative numbers
-						if (self.DecBoolStatus == 0)
-						{
-							return SelfAsInt256 >= ValueAsInt256;
-						}
-						else
-						{//Larger number = farther down into negative
-							return !(SelfAsInt256 >= ValueAsInt256);
-						}
-					}
-				}
-			}
-			else if (Value is double)
+			if (Value is double||Value is float||Value is decimal)
 			{
 				if (Value < 0.0 && self.DecBoolStatus == 0) { return true; }
 				else if (Value >= 0.0 && self.DecBoolStatus == 1) { return false; }
@@ -1381,14 +838,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 		// Equality operator for comparing self to int type value
-		public static bool operator ==(LargeSuperDec self, dynamic Value)
+		public static bool operator ==(ModerateSuperDec self, dynamic Value)
 		{
-			if (Value is LargeSuperDec)
-			{
-				if (self.DecBoolStatus == Value.DecBoolStatus && self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
-				else { return false; }
-			}
-			else if (Value is double)
+			if (Value is double||Value is float||Value is decimal)
 			{
 				if (Value < 0.0 && self.DecBoolStatus == 0) { return false; }
 				else if (Value >= 0.0 && self.DecBoolStatus == 1) { return false; }
@@ -1456,14 +908,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 		// Inequality operator for comparing self to multiple value types
-		public static bool operator !=(LargeSuperDec self, dynamic Value)
+		public static bool operator !=(ModerateSuperDec self, dynamic Value)
 		{
-			if (Value is LargeSuperDec)
-			{
-				if (self.DecBoolStatus != Value.DecBoolStatus || self.IntValue != Value.IntValue || self.DecimalStatus != Value.DecimalStatus) { return true; }
-				else { return false; }
-			}
-			else if (Value is double)
+			if (Value is double||Value is float||Value is decimal)
 			{
 				if (Value < 0.0 && self.DecBoolStatus == 0) { return true; }
 				else if (Value >= 0.0 && self.DecBoolStatus == 1) { return true; }
@@ -1529,135 +976,433 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				}
 			}
 		}
-
-		// Self Less than Value
-		public static bool operator <(LargeSuperDec self, LargeSuperDec Value)
-		{
-			if (self.DecBoolStatus == Value.DecBoolStatus && self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return false; }
-			else
-			{
-				// Positive Self <= -Value
-				if (Value.DecBoolStatus == 1 && self.DecBoolStatus == 0) { return false; }
-				// Negative Self <= Value
-				else if (Value.DecBoolStatus == 0 && self.DecBoolStatus == 1) { return true; }
-				else
-				{
-					BigMath.Int128 SelfAsInt256 = self.IntValue;
-					SelfAsInt256 *= 10000000000000000000;
-					SelfAsInt256 += self.DecimalStatus;
-					BigMath.Int128 ValueAsInt256 = Value.IntValue;
-					ValueAsInt256 *= 10000000000000000000;
-					ValueAsInt256 += Value.DecimalStatus;
-					//Both are either positive or negative numbers
-					if (self.DecBoolStatus == 0)
-					{
-						return SelfAsInt256 < ValueAsInt256;
-					}
-					else
-					{//Larger number = farther down into negative
-						return !(SelfAsInt256 < ValueAsInt256);
-					}
-				}
-			}
-		}
-
-		// Self Less than or equal to Value
-		public static bool operator <=(LargeSuperDec self, LargeSuperDec Value)
-		{
-			if (self.DecBoolStatus == Value.DecBoolStatus && self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
-			else
-			{
-				// Positive Self <= -Value
-				if (Value.DecBoolStatus == 1 && self.DecBoolStatus == 0) { return false; }
-				// Negative Self <= Value
-				else if (Value.DecBoolStatus == 0 && self.DecBoolStatus == 1) { return true; }
-				else
-				{
-					BigMath.Int128 SelfAsInt256 = self.IntValue;
-					SelfAsInt256 *= 10000000000000000000;
-					SelfAsInt256 += self.DecimalStatus;
-					BigMath.Int128 ValueAsInt256 = Value.IntValue;
-					ValueAsInt256 *= 10000000000000000000;
-					ValueAsInt256 += Value.DecimalStatus;
-					//Both are either positive or negative numbers
-					if (self.DecBoolStatus == 0)
-					{
-						return SelfAsInt256 <= ValueAsInt256;
-					}
-					else
-					{//Larger number = farther down into negative
-						return !(SelfAsInt256 <= ValueAsInt256);
-					}
-				}
-			}
-		}
-
-		// Self Greater than Value
-		public static bool operator >(LargeSuperDec self, LargeSuperDec Value)
-		{
-			if (self.DecBoolStatus == Value.DecBoolStatus && self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return false; }
-			else
-			{
-				// Positive Self >= -Value
-				if (Value.DecBoolStatus == 1 && self.DecBoolStatus == 0) { return true; }
-				// Negative Self >= Value
-				else if (Value.DecBoolStatus == 0 && self.DecBoolStatus == 1) { return false; }
-				else
-				{
-					//((self.IntValue * 10000000000000000000)+self.DecimalStatus)*(DecimalAsInt+(WholeHalf*10000000000000000000))/10000000000000000000 = ((self.IntValue*10000000000000000000)+self.DecimalStatus))
-					BigMath.Int128 SelfAsInt256 = self.IntValue;
-					SelfAsInt256 *= 10000000000000000000;
-					SelfAsInt256 += self.DecimalStatus;
-					BigMath.Int128 ValueAsInt256 = Value.IntValue;
-					ValueAsInt256 *= 10000000000000000000;
-					ValueAsInt256 += Value.DecimalStatus;
-					//Both are either positive or negative numbers
-					if (self.DecBoolStatus == 0)
-					{
-						return SelfAsInt256 > ValueAsInt256;
-					}
-					else
-					{//Larger number = farther down into negative
-						return !(SelfAsInt256 > ValueAsInt256);
-					}
-				}
-			}
-		}
-
-		// Self Greater than or Equal to Value
-		public static bool operator >=(LargeSuperDec self, LargeSuperDec Value)
-		{
-			if (self.DecBoolStatus == Value.DecBoolStatus && self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
-			else
-			{
-				// Positive Self >= -Value
-				if (Value.DecBoolStatus == 1 && self.DecBoolStatus == 0) { return true; }
-				// Negative Self >= Value
-				else if (Value.DecBoolStatus == 0 && self.DecBoolStatus == 1) { return false; }
-				else
-				{
-					BigMath.Int128 SelfAsInt256 = self.IntValue;
-					SelfAsInt256 *= 10000000000000000000;
-					SelfAsInt256 += self.DecimalStatus;
-					BigMath.Int128 ValueAsInt256 = Value.IntValue;
-					ValueAsInt256 *= 10000000000000000000;
-					ValueAsInt256 += Value.DecimalStatus;
-					//Both are either positive or negative numbers
-					if (self.DecBoolStatus == 0)
-					{
-						return SelfAsInt256 >= ValueAsInt256;
-					}
-					else
-					{//Larger number = farther down into negative
-						return !(SelfAsInt256 >= ValueAsInt256);
-					}
-				}
-			}
-		}
 #else
-
 #endif
-		public static LargeSuperDec operator +(LargeSuperDec self, LargeSuperDec y)
+		public static ModerateSuperDec operator +(ModerateSuperDec self, dynamic y)
+		{
+			if (y is double || y is float || y is decimal)
+			{
+				bool IsYNegative = (y < 0.0) ? true : false;
+				y = Math.Abs(y);
+				uint WholeHalfOfY = (uint)Math.Floor(y);
+				y -= WholeHalfOfY;
+				if (WholeHalfOfY == 0) { }
+				else if (self.DecBoolStatus == 1 && IsYNegative)
+				{// -X - Y (ex. -8 + -6)
+					self.IntValue = self.IntValue + WholeHalfOfY;
+				}
+				else if (self.DecBoolStatus == 0 && IsYNegative == false)
+				{
+					//X + Y (ex. 8 + 6)
+					self.IntValue = self.IntValue + WholeHalfOfY;
+				}
+				else
+				{
+					// -X + Y
+					if (self.DecBoolStatus == 1)
+					{   //ex. -8 + 9
+						if (y > self.IntValue)
+						{
+							self.IntValue = WholeHalfOfY - self.IntValue;
+							self.DecBoolStatus = 0;
+						}
+						else
+						{//ex. -8 +  4
+							self.IntValue = self.IntValue - WholeHalfOfY;
+						}
+					}// X-Y
+					else
+					{
+						if (self.IntValue > WholeHalfOfY)
+						{//ex. 9 + -6
+							self.IntValue = self.IntValue - WholeHalfOfY;
+						}
+						else
+						{//ex. 9 + -10
+							self.IntValue = WholeHalfOfY - self.IntValue;
+							self.DecBoolStatus = 1;
+						}
+					}
+				}
+				//Decimal Calculation Section
+				if (self.DecBoolStatus != 0 || y != 0)
+				{
+					ulong SecondDec = (ulong)(System.Math.Abs(y) - System.Math.Abs(WholeHalfOfY)) * 10000000000000000000;
+					if (self.GetBoolStatus() == 1 && IsYNegative == false)
+					{
+						//Potential Overflow check
+						try
+						{
+							ulong DecimalStatusTemp = self.GetDecimalStatus() + SecondDec;
+							if (DecimalStatusTemp > 9999999999999999999)
+							{
+								DecimalStatusTemp -= 10000000000000000000;
+								self.IntValue += 1;
+							}
+							self.DecimalStatus = DecimalStatusTemp;
+						}
+						catch
+						{
+							if (self.DecimalStatus >= 2000000000000000000)
+							{
+								self.DecimalStatus -= 2000000000000000000;
+							}
+							else
+							{
+								SecondDec -= 2000000000000000000;
+							}
+							ulong DecimalStatusTemp = self.GetDecimalStatus() + SecondDec;
+							if (DecimalStatusTemp > 9999999999999999999)
+							{
+								DecimalStatusTemp -= 10000000000000000000;
+								DecimalStatusTemp += 2000000000000000000;
+								self.IntValue += 1;
+							}
+							self.DecimalStatus = DecimalStatusTemp;
+						}
+					}// ex. 0.5 - (-0.6)
+					else if (self.GetBoolStatus() == 0 && IsYNegative)
+					{
+						if (self.GetBoolStatus() == 1 && IsYNegative == false)
+						{
+							//Potential Overflow check
+							try
+							{
+								ulong DecimalStatusTemp = self.GetDecimalStatus() + SecondDec;
+								if (DecimalStatusTemp > 9999999999999999999)
+								{
+									DecimalStatusTemp -= 10000000000000000000;
+									self.IntValue -= 1;
+								}
+								self.DecimalStatus = DecimalStatusTemp;
+							}
+							catch
+							{
+								if (self.DecimalStatus >= 2000000000000000000)
+								{
+									self.DecimalStatus -= 2000000000000000000;
+								}
+								else
+								{
+									SecondDec -= 2000000000000000000;
+								}
+								ulong DecimalStatusTemp = self.GetDecimalStatus() + SecondDec;
+								if (DecimalStatusTemp > 9999999999999999999)
+								{
+									DecimalStatusTemp -= 10000000000000000000;
+									DecimalStatusTemp += 2000000000000000000;
+									self.IntValue -= 1;
+								}
+								self.DecimalStatus = DecimalStatusTemp;
+							}
+						}
+					}
+					else
+					{
+						if (IsYNegative)
+						{
+							// ex. 0.6 + -0.5
+							if (self.DecimalStatus >= SecondDec)
+							{
+								self.DecimalStatus = self.DecimalStatus - SecondDec;
+							}// ex. 0.6 + -.7
+							else
+							{
+								self.DecimalStatus = SecondDec - self.DecimalStatus;
+								if (self.IntValue == 0)
+								{
+									self.DecBoolStatus = 1;
+								}
+								else
+								{
+									self.IntValue -= 1;
+								}
+							}
+						}
+						else
+						{
+							if (self.DecimalStatus >= SecondDec)
+							{
+								self.DecimalStatus = self.DecimalStatus - SecondDec;
+							}// ex. -1.6 + 0.7
+							else
+							{
+								self.DecimalStatus = SecondDec - self.DecimalStatus;
+								if (self.IntValue == 0)
+								{
+									self.DecBoolStatus = 0;
+								}
+								else
+								{
+									self.IntValue -= 1;
+								}
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				if (self.DecBoolStatus == 1 && y < 0)
+				{// -X - Y (ex. -8 + -6)
+					self.IntValue = self.IntValue + (uint)Math.Abs(y);
+				}
+				else if (self.DecBoolStatus == 0 && y >= 0)
+				{
+					//X + Y (ex. 8 + 6)
+					self.IntValue = self.IntValue + (uint)y;
+				}
+				else
+				{
+					// -X + Y
+					if (self.DecBoolStatus == 1)
+					{   //ex. -8 + 9
+						if (y > self.IntValue)
+						{
+							self.IntValue = (uint)y - self.IntValue;
+							self.DecBoolStatus = 0;
+						}
+						else
+						{//ex. -8 +  4
+							self.IntValue = self.IntValue - (uint)y;
+						}
+					}// X-Y
+					else
+					{
+						uint TempY = Math.Abs(y);
+						if (self.IntValue > TempY)
+						{//ex. 9 + -6
+							self.IntValue = self.IntValue - TempY;
+						}
+						else
+						{//ex. 9 + -10
+							self.IntValue = TempY - self.IntValue;
+							self.DecBoolStatus = 1;
+						}
+					}
+				}
+			}
+			//Fix potential negative zero
+			if (self.IntValue == 0 && self.DecBoolStatus == 1 && self.DecimalStatus == 0) { self.DecBoolStatus = 0; }
+			return self;
+		}
+
+		public static ModerateSuperDec operator -(ModerateSuperDec self, dynamic y)
+		{
+			if (y is double || y is float || y is decimal)
+			{
+				bool IsYNegative = (y < 0.0) ? true : false;
+				y = Math.Abs(y);
+				uint WholeHalfOfY = (uint)Math.Floor(y);
+				y -= WholeHalfOfY;
+				if (WholeHalfOfY == 0) { }
+				//ex. -9 - 9
+				else if (self.DecBoolStatus == 1 && IsYNegative == false)
+				{// -X - Y
+					self.IntValue = self.IntValue + WholeHalfOfY;
+				}//ex. 9 - (-1)
+				else if (self.DecBoolStatus == 0 && IsYNegative)
+				{
+					//X - (-Y)
+					self.IntValue = self.IntValue + WholeHalfOfY;
+				}
+				else
+				{
+					// X - (Y)
+					if (self.DecBoolStatus == 0)
+					{
+						// ex. 8 - 9
+						if (WholeHalfOfY > self.IntValue)
+						{
+							self.IntValue = WholeHalfOfY - self.IntValue;
+							self.DecBoolStatus = 1;
+						} //ex. 8 - 7
+						else
+						{
+							self.IntValue = self.IntValue - WholeHalfOfY;
+						}
+					}// -X - (Y)
+					else
+					{
+						// ex. -8 - (-9)
+						if (self.IntValue > WholeHalfOfY)
+						{
+							self.IntValue = WholeHalfOfY - self.IntValue;
+							self.DecBoolStatus = 0;
+						}
+						else
+						{//ex. -8 - (-5)
+							self.IntValue = self.IntValue - WholeHalfOfY;
+						}
+					}
+				}
+				//Decimal Calculation Section
+				ulong SecondDec = (ulong)(System.Math.Abs(y) - System.Math.Abs(WholeHalfOfY)) * 10000000000000000000;
+				if (self.DecimalStatus != 0 || SecondDec != 0)
+				{
+					if (self.DecBoolStatus == 0 && IsYNegative == false)
+					{
+						//Potential Overflow check
+						try
+						{
+							ulong DecimalStatusTemp = self.GetDecimalStatus() + SecondDec;
+							if (DecimalStatusTemp > 9999999999999999999)
+							{
+								DecimalStatusTemp -= 10000000000000000000;
+								self.IntValue += 1;
+							}
+							self.DecimalStatus = DecimalStatusTemp;
+						}
+						catch
+						{
+							if (self.DecimalStatus >= 2000000000000000000)
+							{
+								self.DecimalStatus -= 2000000000000000000;
+							}
+							else
+							{
+								SecondDec -= 2000000000000000000;
+							}
+							ulong DecimalStatusTemp = self.GetDecimalStatus() + SecondDec;
+							if (DecimalStatusTemp > 9999999999999999999)
+							{
+								DecimalStatusTemp -= 10000000000000000000;
+								DecimalStatusTemp += 2000000000000000000;
+								self.IntValue += 1;
+							}
+							self.DecimalStatus = DecimalStatusTemp;
+						}
+					}
+					// -?.XXXXXX - ?.YYYYYY (ex. -0.9 + -0.2)
+					else if (self.GetBoolStatus() == 1 && IsYNegative)
+					{
+						//Potential Overflow check
+						try
+						{
+							ulong DecimalStatusTemp = self.GetDecimalStatus() + y.GetDecimalStatus();
+							if (DecimalStatusTemp > 9999999999999999999)
+							{
+								DecimalStatusTemp -= 10000000000000000000;
+								self.IntValue -= 1;
+							}
+							self.DecimalStatus = DecimalStatusTemp;
+						}
+						catch
+						{
+							if (self.DecimalStatus >= 2000000000000000000)
+							{
+								self.DecimalStatus -= 2000000000000000000;
+							}
+							else
+							{
+								y.DecimalStatus -= 2000000000000000000;
+							}
+							ulong DecimalStatusTemp = self.GetDecimalStatus() + y.GetDecimalStatus();
+							if (DecimalStatusTemp > 9999999999999999999)
+							{
+								DecimalStatusTemp -= 10000000000000000000;
+								DecimalStatusTemp += 2000000000000000000;
+								self.IntValue -= 1;
+							}
+							self.DecimalStatus = DecimalStatusTemp;
+						}
+					}
+					else
+					{
+						if (IsYNegative)
+						{// ex. -0.7 - (-0.6)
+							if (self.DecimalStatus >= SecondDec)
+							{
+								self.DecimalStatus = self.DecimalStatus - SecondDec;
+							}
+							else
+							{
+								self.DecimalStatus = SecondDec - self.DecimalStatus;
+								if (self.IntValue == 0)
+								{
+									self.DecBoolStatus = 0;
+								}
+								else
+								{
+									self.IntValue -= 1;
+								}
+							}
+						}
+						else
+						{ //ex  0.6 - 0.5
+							if (self.DecimalStatus >= SecondDec)
+							{
+								self.DecimalStatus = self.DecimalStatus - SecondDec;
+							}
+							else
+							{
+								self.DecimalStatus = SecondDec - self.DecimalStatus;
+								if (self.IntValue == 0)
+								{
+									self.DecBoolStatus = 1;
+								}
+								else
+								{
+									self.IntValue -= 1;
+								}
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				//ex. -9 - 9
+				if (self.DecBoolStatus == 1 && y >= 0)
+				{// -X - Y
+					self.IntValue = self.IntValue + (uint)y;
+				}//ex. 9 - (-1)
+				else if (self.DecBoolStatus == 0 && y < 0)
+				{
+					//X - (-Y)
+					self.IntValue = self.IntValue + (uint)Math.Abs(y);
+				}
+				else
+				{
+					// X - (Y)
+					if (self.DecBoolStatus == 0)
+					{
+						// ex. 8 - 9
+						if (y > self.IntValue)
+						{
+							self.IntValue = (uint)y - self.IntValue;
+							self.DecBoolStatus = 1;
+						} //ex. 8 - 7
+						else
+						{
+							self.IntValue = self.IntValue - (uint)y;
+						}
+					}// -X - (Y)
+					else
+					{
+						uint TempY = (uint)Math.Abs(y);
+						// ex. -8 - (-9)
+						if (self.IntValue > TempY)
+						{
+							self.IntValue = TempY - self.IntValue;
+							self.DecBoolStatus = 0;
+						}
+						else
+						{//ex. -8 - (-5)
+							self.IntValue = self.IntValue - TempY;
+						}
+					}
+				}
+			}
+			//Fix potential negative zero
+			if (self.IntValue == 0 && self.DecBoolStatus == 1 && self.DecimalStatus == 0)
+			{
+				self.DecBoolStatus = 0;
+			}
+			return self;
+		}
+
+		public static ModerateSuperDec operator +(ModerateSuperDec self, ModerateSuperDec y)
 		{
 			bool IsYNegative = (y.GetBoolStatus() == 1) ? true : false;
 			if (self.GetBoolStatus() == 1 && IsYNegative)
@@ -1728,7 +1473,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 						if (DecimalStatusTemp > 9999999999999999999)
 						{
 							DecimalStatusTemp -= 10000000000000000000;
-							self.DecimalStatus += 2000000000000000000;
+							DecimalStatusTemp += 2000000000000000000;
 							self.IntValue += 1;
 						}
 						self.DecimalStatus = DecimalStatusTemp;
@@ -1762,7 +1507,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 						if (DecimalStatusTemp > 9999999999999999999)
 						{
 							DecimalStatusTemp -= 10000000000000000000;
-							self.DecimalStatus += 2000000000000000000;
+							DecimalStatusTemp += 2000000000000000000;
 							self.IntValue -= 1;
 						}
 						self.DecimalStatus = DecimalStatusTemp;
@@ -1815,7 +1560,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			if (self.IntValue == 0 && self.DecBoolStatus == 1 && self.DecimalStatus == 0) { self.DecBoolStatus = 0; }
 			return self;
 		}
-		public static LargeSuperDec operator -(LargeSuperDec self, LargeSuperDec y)
+		public static ModerateSuperDec operator -(ModerateSuperDec self, ModerateSuperDec y)
 		{
 			bool IsYNegative = (y.GetBoolStatus() == 1) ? true : false;
 			//ex. -9 - 9
@@ -1890,7 +1635,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 						if (DecimalStatusTemp > 9999999999999999999)
 						{
 							DecimalStatusTemp -= 10000000000000000000;
-							self.DecimalStatus += 2000000000000000000;
+							DecimalStatusTemp += 2000000000000000000;
 							self.IntValue += 1;
 						}
 						self.DecimalStatus = DecimalStatusTemp;
@@ -1925,7 +1670,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 							if (DecimalStatusTemp > 9999999999999999999)
 							{
 								DecimalStatusTemp -= 10000000000000000000;
-								self.DecimalStatus += 2000000000000000000;
+								DecimalStatusTemp += 2000000000000000000;
 								self.IntValue -= 1;
 							}
 							self.DecimalStatus = DecimalStatusTemp;
@@ -1978,23 +1723,24 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			if (self.IntValue == 0 && self.DecBoolStatus == 1 && self.DecimalStatus == 0) { self.DecBoolStatus = 0; }
 			return self;
 		}
+
 		// Equality operator for comparing self to int type value
-		public static bool operator ==(LargeSuperDec self, LargeSuperDec Value)
+		public static bool operator ==(ModerateSuperDec self, ModerateSuperDec Value)
 		{
 			if (self.DecBoolStatus == Value.DecBoolStatus && self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
 			else { return false; }
 		}
 
 		// Inequality operator for comparing self to multiple value types
-		public static bool operator !=(LargeSuperDec self, LargeSuperDec Value)
+		public static bool operator !=(ModerateSuperDec self, ModerateSuperDec Value)
 		{
 			if (self.DecBoolStatus != Value.DecBoolStatus || self.IntValue != Value.IntValue || self.DecimalStatus != Value.DecimalStatus) { return true; }
 			else { return false; }
 		}
 
-		public static LargeSuperDec operator -(LargeSuperDec Value)
+		public static ModerateSuperDec operator -(ModerateSuperDec Value)
 		{
-			if (Value.DecBoolStatus % 2==1)//ODD
+			if (Value.DecBoolStatus % 2 == 1)//ODD
 			{
 				Value.DecBoolStatus -= 1;
 			}

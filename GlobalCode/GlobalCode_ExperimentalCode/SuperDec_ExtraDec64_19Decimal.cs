@@ -24,6 +24,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public ulong IntValue;
 
+		public static LargeSuperDec Sum(IEnumerable<LargeSuperDec> Value)
+		{
+			LargeSuperDec TotalSum = LargeSuperDec.Zero;
+			foreach (var Element in Value)
+			{
+				TotalSum += Element;
+			}
+			return TotalSum;
+		}
+
 		public LargeSuperDec Abs()
 		{
 			this.DecBoolStatus = 0;
@@ -112,7 +122,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return NewSelf;
 		}
 
-		public static explicit operator LargeSuperDec(SuperDec_ExtraDec32_19Decimal self)
+		public static explicit operator LargeSuperDec(ModerateSuperDec self)
 		{
 			LargeSuperDec NewSelf;
 			NewSelf.IntValue = self.IntValue;
@@ -175,22 +185,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		public static explicit operator ulong(LargeSuperDec self)
 		{
 			return self.IntValue;
-		}
-
-		public static ulong ForceConvertFromInt256(BigMath.Int256 Value)
-		{
-			ulong ConvertedValue = 0;
-			//Larger than ulong (default to zero)
-			if (Value > 18446744073709551615)
-			{
-				Console.WriteLine("Overflow Detected");
-			}
-			else
-			{
-				BigMath.Int128 Value02 = (BigMath.Int128)Value;
-				ConvertedValue = (ulong)Value02;
-			}
-			return ConvertedValue;
 		}
 
 		static public explicit operator string(LargeSuperDec self)
@@ -406,8 +400,64 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public void SwapNegativeStatus()
 		{
-			if (DecBoolStatus%2=0) { DecBoolStatus += 1; }
+			if (DecBoolStatus%2==0) { DecBoolStatus += 1; }
 			else { DecBoolStatus -= 1; }
+		}
+
+		private static LargeSuperDec ZeroValue()
+		{
+			LargeSuperDec NewSelf;
+			NewSelf.IntValue = 0; NewSelf.DecimalStatus = 0; NewSelf.DecBoolStatus = 0;
+			return NewSelf;
+		}
+
+		public static readonly LargeSuperDec Zero = ZeroValue();
+
+		private static LargeSuperDec NaNValue()
+		{
+			LargeSuperDec NewSelf;
+			NewSelf.IntValue = 0; NewSelf.DecimalStatus = 0;
+#if (BlazesGlobalCode_LargeSuperDec_EnableSpecialDecStates)
+			NewSelf.DecBoolStatus = 202;
+#else
+			NewSelf.DecBoolStatus = 0;
+#endif
+			return NewSelf;
+		}
+
+		public static readonly LargeSuperDec NaN = NaNValue();
+
+		int IComparable<LargeSuperDec>.CompareTo(LargeSuperDec other)
+		{
+			if (other == this)
+			{
+				return 0;
+			}
+#if (BlazesGlobalCode_Disable128BitFeatures)
+#else
+			else if (this < other)
+			{
+				return -1;
+			}
+#endif
+			else
+			{
+				return 1;
+			}
+		}
+
+		public bool AlmostEquals(dynamic CompareTarget, dynamic RangeWithin)
+		{
+			LargeSuperDec ConvertedTarget = (LargeSuperDec)CompareTarget;
+			if (CompareTarget == this) { return true; }
+			else
+			{
+				LargeSuperDec LeftRange = CompareTarget - RangeWithin;
+				LargeSuperDec RightRange = CompareTarget + RangeWithin;
+				if (this == LeftRange || this == RightRange) { return true; }
+				else if (CompareTarget > LeftRange && CompareTarget < RightRange) { return true; }
+				else { return false; }
+			}
 		}
 	}
 }

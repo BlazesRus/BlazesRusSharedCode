@@ -24,6 +24,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public uint IntValue;
 
+		public static MediumSuperDec Sum(IEnumerable<MediumSuperDec> Value)
+		{
+			MediumSuperDec TotalSum = MediumSuperDec.Zero;
+			foreach (var Element in Value)
+			{
+				TotalSum += Element;
+			}
+			return TotalSum;
+		}
+
 		public MediumSuperDec Abs()
 		{
 			this.DecBoolStatus = 0;
@@ -430,5 +440,58 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		public int AsInt() { return (int)this; }
 		public string AsString() { return (string)this; }
 		//public SmallDec AsSmallDec() { return (SmallDec)this; }
+
+		private static MediumSuperDec ZeroValue()
+		{
+			MediumSuperDec NewSelf;
+			NewSelf.IntValue = 0; NewSelf.DecimalStatus = 0; NewSelf.DecBoolStatus = 0;
+			return NewSelf;
+		}
+
+		public static readonly MediumSuperDec Zero = ZeroValue();
+
+		private static MediumSuperDec NaNValue()
+		{
+			MediumSuperDec NewSelf;
+			NewSelf.IntValue = 0; NewSelf.DecimalStatus = 0;
+#if (BlazesGlobalCode_MediumSuperDec_EnableSpecialDecStates)
+			NewSelf.DecBoolStatus = 202;
+#else
+			NewSelf.DecBoolStatus = 0;
+#endif
+			return NewSelf;
+		}
+
+		public static readonly MediumSuperDec NaN = NaNValue();
+
+		int IComparable<MediumSuperDec>.CompareTo(MediumSuperDec other)
+		{
+			if (other == this)
+			{
+				return 0;
+			}
+			else if (this < other)
+			{
+				return -1;
+			}
+			else
+			{
+				return 1;
+			}
+		}
+
+		public bool AlmostEquals(dynamic CompareTarget, dynamic RangeWithin)
+		{
+			MediumSuperDec ConvertedTarget = (MediumSuperDec)CompareTarget;
+			if (CompareTarget == this) { return true; }
+			else
+			{
+				MediumSuperDec LeftRange = CompareTarget - RangeWithin;
+				MediumSuperDec RightRange = CompareTarget + RangeWithin;
+				if (this == LeftRange || this == RightRange) { return true; }
+				else if (CompareTarget > LeftRange && CompareTarget < RightRange) { return true; }
+				else { return false; }
+			}
+		}
 	}
 }

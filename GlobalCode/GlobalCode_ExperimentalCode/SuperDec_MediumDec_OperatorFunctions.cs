@@ -767,6 +767,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return self;
 		}
 
+#if (!BlazesGlobalCode_Disable128BitFeatures)
 		public static MediumSuperDec operator +(MediumSuperDec self, double y)
 		{
 			bool IsYNegative = (y < 0) ? true : false;
@@ -1340,7 +1341,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return self;
 		}
 
-#if (!BlazesGlobalCode_Disable128BitFeatures)
 		public static MediumSuperDec operator *(MediumSuperDec self, double y)
 		{
 			if (y == 0.0)
@@ -1662,7 +1662,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static MediumSuperDec operator -(MediumSuperDec Value)
 		{
-			if (Value.DecBoolStatus%2)//ODD
+			if (Value.DecBoolStatus%2==1)//ODD
 			{
 				Value.DecBoolStatus -= 1;
 			}

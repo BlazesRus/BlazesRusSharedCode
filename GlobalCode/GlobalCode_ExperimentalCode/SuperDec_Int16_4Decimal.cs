@@ -135,10 +135,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return NewSelf;
 		}
 
-		public static SmallDec Pow(double self, double Value) { return SmallDec.Pow((SmallDec)self, (SmallDec)Value); }
+		//public static SmallDec Pow(double self, double Value) { return SmallDec.Pow((SmallDec)self, (SmallDec)Value); }
 		public static SmallDec Pow(SmallDec self, double Value) { return SmallDec.Pow(self, (SmallDec)Value); }
-		//public static SmallDec Pow(SmallDec self, SmallDec Value) { return SmallDec.Pow(self, Value); }
-
+#if (BlazesGlobalCode_StandardExplicitConversionFrom)//Gets confused since it tries auto converting to SmallDec inside parameter first
+		public static SmallDec Pow(SmallDec self, SmallDec Value) { return SmallDec.Pow(self, Value); }
+#endif
 		//Approximate version of Math.Pow(double self, double Value)
 		public static SmallDec Pow(SmallDec self, SmallDec Value)
 		{
@@ -513,7 +514,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 					}
 				}
 			}
-#			if (!BlazesGlobalCode_Disable128BitFeatures)
+#if (!BlazesGlobalCode_Disable128BitFeatures)
 			else if (Value is MediumSuperDec)
 			{
 				IntValue = (ushort)Value.IntValue;
@@ -521,7 +522,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				DecimalStatus = (ushort)TempDec;
 				DecBoolStatus = Value.DecBoolStatus;
 			}
-			else if (Value is SuperDec_ExtraDec32_19Decimal)
+			else if (Value is ModerateSuperDec)
 			{
 				IntValue = (ushort)Value.IntValue;
 				ulong TempDec = Value.DecimalStatus / 100000000000000;
@@ -535,7 +536,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				DecimalStatus = (ushort)TempDec;
 				DecBoolStatus = Value.DecBoolStatus;
 			}
-#			endif
+#endif
 			else if (Value is decimal)
 			{
 				if (Value < 0)
@@ -1025,7 +1026,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 #if (!BlazesGlobalCode_Disable128BitFeatures)
-		public SmallDec Convert(SuperDec_ExtraDec32_19Decimal Value)
+		public SmallDec Convert(ModerateSuperDec Value)
 		{
 			SmallDec NewSelf;
 			NewSelf.IntValue = (ushort)Value.IntValue;
@@ -1047,25 +1048,25 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 		//Limit CSharpGlobalCode.GlobalCode_ExperimentalCode explicit Conversions from other type to self (no OtherType(SelfType) explicit conversions)
-		public static SmallDec operator +(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
+		public static SmallDec operator +(SmallDec self, ModerateSuperDec y)
 		{
 			self += (SmallDec)y;
 			return self;
 		}
 
-		public static SmallDec operator -(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
+		public static SmallDec operator -(SmallDec self, ModerateSuperDec y)
 		{
 			self -= (SmallDec)y;
 			return self;
 		}
 
-		public static SmallDec operator *(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
+		public static SmallDec operator *(SmallDec self, ModerateSuperDec y)
 		{
 			self *= (SmallDec)y;
 			return self;
 		}
 
-		public static SmallDec operator /(SmallDec self, SuperDec_ExtraDec32_19Decimal y)
+		public static SmallDec operator /(SmallDec self, ModerateSuperDec y)
 		{
 			self /= (SmallDec)y;
 			return self;
@@ -1076,7 +1077,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return new SmallDec(Value);
 		}
 
-		public static explicit operator SmallDec(SuperDec_ExtraDec32_19Decimal Value)
+		public static explicit operator SmallDec(ModerateSuperDec Value)
 		{
 			return new SmallDec().Convert(Value);
 		}
