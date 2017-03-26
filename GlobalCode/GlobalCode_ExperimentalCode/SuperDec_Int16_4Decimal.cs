@@ -15,6 +15,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 	using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
 	//Aka SuperDec_Int16_4Decimal
+	[System.ComponentModel.TypeConverter(typeof(SuperDec_SmallDec_TypeConverter))]
 	public partial struct SmallDec : IComparable<SmallDec>
 	{
 		//0 = Positive;1=Negative;Other states at higher then 1;254 = Positive Infinity;255 = Negative Infinity
@@ -330,7 +331,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				DecBoolStatus = Value.DecBoolStatus;
 			}
 #endif
-			else if (Value is decimal)
+			else if (Value is double || Value is float || Value is decimal)
 			{
 				if (Value < 0)
 				{
@@ -350,27 +351,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				Value -= WholeValue;
 				IntValue = (ushort)WholeValue;
 				DecimalStatus = (ushort)(Value * 10000);
-			}
-			else if (Value is double || Value is float)
-			{
-				if (Value < 0)
-				{
-					Value *= -1;
-					DecBoolStatus = 1;
-				}
-				else
-				{
-					DecBoolStatus = 0;
-				}
-				ulong WholeValue = (ulong)Math.Floor(Value);
-				//Cap value if too big on initialize (preventing overflow on conversion)
-				if (Value > 65535)
-				{
-					Value = 65535;
-				}
-				Value -= WholeValue;
-				IntValue = (ushort)WholeValue;
-				DecimalStatus = ExtractDecimalHalfV3(Value);
 			}
 			else if (Value is sbyte || Value is ushort || Value is int || Value is long)
 			{
@@ -662,36 +642,54 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			else { return false; }
 		}
 
-		public static SmallDec FloatParse(string s, IFormatProvider provider)
+		//Display string with empty decimal places removed
+		public string ToOptimalString()
 		{
-			SmallDec NewSelf = float.Parse(s, provider);
-			return NewSelf;
-		}
-
-		public static SmallDec DoubleParse(string s, IFormatProvider provider)
-		{
-			SmallDec NewSelf = double.Parse(s, provider);
-			return NewSelf;
+			System.String Value = "";
+			ushort IntegerHalf = IntValue;
+			byte CurrentDigit;
+			if (DecBoolStatus == 1) { Value += "-"; }
+			for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; Index--)
+			{
+				CurrentDigit = (byte)(IntegerHalf / Math.Pow(10, Index));
+				IntegerHalf -= (ushort)(CurrentDigit * Math.Pow(10, Index));
+				Value += DigitAsChar(CurrentDigit);
+			}
+			Value += ".";
+			ushort DecimalHalf = DecimalStatus;
+			if(DecimalStatus!=0)
+			{
+				for (sbyte Index = 3; Index >= 0; Index--)
+				{
+					if (DecimalStatus != 0)
+					{
+						CurrentDigit = (byte)(DecimalHalf / Math.Pow(10, Index));
+						DecimalHalf -= (ushort)(CurrentDigit * Math.Pow(10, Index));
+						Value += DigitAsChar(CurrentDigit);
+					}
+				}
+			}
+			return Value;
 		}
 
 		public string ToString(string s, IFormatProvider provider)
 		{
-			return (string)this;
+			return ToOptimalString();
 		}
 
 		public string ToString(string s)
 		{
-			return (string)this;
+			return ToOptimalString();
 		}
 
 		internal string ToString(CultureInfo invariantCulture)
 		{
-			return (string)this;
+			return ToOptimalString();
 		}
 
 		internal string ToString(NumberFormatInfo numberFormat)
 		{
-			return (string)this;
+			return ToOptimalString();
 		}
 
 		public override string ToString(){ return (string)this; }
@@ -711,6 +709,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		public dynamic DynamicConversion()
 		{
 			return this;
+		}
+
+		public static SmallDec DynamicConversionFrom(dynamic Value)
+		{
+			SmallDec NewSelf=(SmallDec) Value;
+			return NewSelf;
 		}
 
 		public static SmallDec SumOfList(SmallDec[] self)
@@ -807,7 +811,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 		}
 
-#if (!BlazesGlobalCode_Disable128BitFeatures)
 		public SmallDec Convert(ModerateSuperDec Value)
 		{
 			SmallDec NewSelf;
@@ -868,6 +871,5 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		{
 			return new SmallDec().Convert(Value);
 		}
-#endif
 	}
 }
