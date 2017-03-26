@@ -696,17 +696,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public override string ToString(){ return (string)this; }
 
-		//public static SmallDec operator ?(bool Condition, dynamic X, dynamic Y)
-		//{
-		//	if (Condition)
-		//	{
-		//		return X;
-		//	}
-		//	else
-		//	{
-		//		return Y;
-		//	}
-		//}
 		public static dynamic ConditionalReturn(bool Condition, dynamic X, dynamic Y)
 		{
 			if (Condition)

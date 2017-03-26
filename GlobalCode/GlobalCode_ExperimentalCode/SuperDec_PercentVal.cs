@@ -643,7 +643,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			{
 				throw new NotImplementedException();
 			}
-			return self;
+			//return self;
 		}
 
 		public static SuperDec_PercentVal operator +(SuperDec_PercentVal self, dynamic y)
@@ -656,7 +656,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			{
 				throw new NotImplementedException();
 			}
-			return self;
+			//return self;
 		}
 
 		public static SuperDec_PercentVal operator -(SuperDec_PercentVal self, dynamic y)
@@ -669,7 +669,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			{
 				throw new NotImplementedException();
 			}
-			return self;
+			//return self;
 		}
 
 		public static SuperDec_PercentVal operator *(SuperDec_PercentVal self, dynamic y)
@@ -682,7 +682,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			{
 				throw new NotImplementedException();
 			}
-			return self;
+			//return self;
 		}
 
 		public static SuperDec_PercentVal operator /(SuperDec_PercentVal self, dynamic y)
@@ -695,7 +695,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			{
 				throw new NotImplementedException();
 			}
-			return self;
+			//return self;
 		}
 
 		//Right side applications
