@@ -132,6 +132,7 @@ BlazesGlobalCode_StandardExplicitConversionFrom : Limit SuperDec classes to expl
 BlazesGlobalCode_SmallDecSliderEnableExtraFeatures
 SuperDecPercentVal_EnableMultipleDecimalStatusFormulas:
 SuperDecPercentVal_EnableNullAndInfinity:
+BlazesGlobalCode_ReducedSmallDecSize: Remove usage of BoolDecStatus and use alternative code to reduce byte size by 1 (at cost of slightly higher processing time for operations)
 
 ---PoESkillTree Based Preprocessors-----
 //PoESkillTree_UseStandardValueTypesInsteadOfSmallDec : (For PoESkillTree) Enable use of float etc instead of usage of SmallDec etc.(Disabled)
@@ -145,6 +146,8 @@ PoESkillTree_UseSmallDec_Csv:(Not Implimented yet)
 PoESkillTree_PreventRoundingOfImportantSmallDec: Prevent certain levels of rounding for important calculations.(Not implimented yet)
 PoESkillTree_WeightAsPercRatio: Replace weight values with alernative type that is only for storing +- 1.(19 Decimals stored) (from double) (Not completed yet)
 
+PoESkillTree_EnableTargetWeightAsSmallDec:
+//XXXXXX
 --------Decimal Storage notes------
 (signed/unsigned) int 8 = can store 2 places (signed stores -128 to 127;unsigned stores 0 to 255)
 (signed/unsigned) int 16 = can store 4 places (signed stores �32,768 to 32,767;unsigned stores 0 to 65,535)
