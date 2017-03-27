@@ -100,6 +100,24 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		{
 			return new SmallDec().Convert(Value);
 		}
+		public static List<SmallDec> CreateList(List<float> ListValue)
+		{
+			List<SmallDec> NewList = new List<SmallDec>();
+			foreach (var value in ListValue)
+			{
+				NewList.Add((SmallDec)value);
+			}
+			return NewList;
+		}
+		public static List<SmallDec> CreateList(List<dynamic> ListValue)
+		{
+			List<SmallDec> NewList = new List<SmallDec>();
+			foreach (var value in ListValue)
+			{
+				NewList.Add((SmallDec)value);
+			}
+			return NewList;
+		}
 	}
 	//class SmallDecTuple : Tuple<string, SmallDec>
 	//{

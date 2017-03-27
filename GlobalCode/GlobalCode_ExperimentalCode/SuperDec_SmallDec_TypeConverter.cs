@@ -2,13 +2,71 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Drawing;
-
+using System.Linq;
+using System.Windows.Data;
 
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
 	//Based on https://msdn.microsoft.com/en-us/library/ayybcxe5.aspx
-	class SuperDec_SmallDec_TypeConverter : System.ComponentModel.TypeConverter
+	//Pieces of ArithmeticConverter Combined from PoESkillTree Combined into it
+	class SuperDec_SmallDec_TypeConverter : System.ComponentModel.TypeConverter, IMultiValueConverter, IValueConverter
 	{
+		public static double MinimumDouble { private get; set; } = double.NegativeInfinity;
+
+		public double SumConvertConstant { private get; set; }
+
+		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (targetType != typeof(double))
+			{
+				if(targetType==typeof(SmallDec))
+				{
+					SmallDec sum = SmallDec.Zero;
+					foreach(var value in values)
+					{
+						sum += (SmallDec)value;
+					}
+					return sum;
+				}
+				return System.Windows.DependencyProperty.UnsetValue;
+			}
+			else
+			{
+				double sum = values.Sum(value => System.Convert.ToDouble(value));
+				if (parameter != null)
+				{
+					sum += System.Convert.ToDouble(parameter);
+				}
+				return Math.Max(sum + SumConvertConstant, MinimumDouble);
+			}
+		}
+
+		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+		{
+			throw new NotSupportedException();
+		}
+
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			if(targetType==typeof(SmallDec))
+			{
+				return (SmallDec)value;
+			}
+			else
+			{
+				return Convert(new[] { value }, targetType, parameter, culture);
+			}
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			double sum = System.Convert.ToDouble(value);
+			if (parameter != null)
+			{
+				sum -= System.Convert.ToDouble(parameter);
+			}
+			return sum - SumConvertConstant;
+		}
 		// Overrides the CanConvertFrom method of TypeConverter.
 		// The ITypeDescriptorContext interface provides the context for the
 		// conversion. Typically, this interface is used at design time to 
@@ -40,30 +98,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		{
 			//Console.WriteLine("Attempting convert from with context " + context.GetType().ToString() + " from type " + value.GetType().ToString());
 			return SmallDec.DynamicConversionFrom(value);
-			//if (value is string)
-			//{
-			//	return (SmallDec)value;
-			//}
-			//else if (value is double || value is float || value is decimal)
-			//{
-			//	return (SmallDec)value;
-			//}
-			//else if (value is SmallDec)
-			//{
-			//	return (SmallDec)value;
-			//}
-			//else if (value is int || value is uint || value is long || value is ulong || value is short || value is ushort)
-			//{
-			//	return (SmallDec)value;
-			//}
-			//else if (value is byte || value is sbyte)
-			//{
-			//	return (SmallDec)value;
-			//}
-			//else
-			//{
-			//	return base.ConvertFrom(context, culture, value);
-			//}
 		}
 
 		// Overrides the ConvertTo method of TypeConverter.
@@ -98,3 +132,24 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 	}
 }
+
+//Some Converter code from ArithmeticConverter.cs in PoESkillTree code (required license for related part of code below)
+//Copyright ©2012-2016 PoESkillTree Team
+//
+//Permission is hereby granted, free of charge, to any person obtaining a copy
+//of this software and associated documentation files (the "Software"), to deal
+//in the Software without restriction, including without limitation the rights
+//to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//copies of the Software, and to permit persons to whom the Software is
+//furnished to do so, subject to the following conditions:
+//
+//The above copyright notice and this permission notice shall be included in
+//all copies or substantial portions of the Software.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//THE SOFTWARE.

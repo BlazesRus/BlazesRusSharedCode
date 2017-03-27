@@ -471,25 +471,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		static public explicit operator string(SmallDec self)
 		{
-			System.String Value = "";
-			ushort IntegerHalf = self.IntValue;
-			byte CurrentDigit;
-			if (self.DecBoolStatus == 1) { Value += "-"; }
-			for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; Index--)
-			{
-				CurrentDigit = (byte)(IntegerHalf / Math.Pow(10, Index));
-				IntegerHalf -= (ushort)(CurrentDigit * Math.Pow(10, Index));
-				Value += DigitAsChar(CurrentDigit);
-			}
-			Value += ".";
-			ushort DecimalHalf = self.DecimalStatus;
-			for (sbyte Index = 3; Index >= 0; Index--)
-			{
-				CurrentDigit = (byte)(DecimalHalf / Math.Pow(10, Index));
-				DecimalHalf -= (ushort)(CurrentDigit * Math.Pow(10, Index));
-				Value += DigitAsChar(CurrentDigit);
-			}
-			return Value;
+			return self.ToOptimalString();
 		}
 
 		//From Standard types to this type 
@@ -655,10 +637,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				IntegerHalf -= (ushort)(CurrentDigit * Math.Pow(10, Index));
 				Value += DigitAsChar(CurrentDigit);
 			}
-			Value += ".";
 			ushort DecimalHalf = DecimalStatus;
 			if(DecimalStatus!=0)
 			{
+				Value += ".";
 				for (sbyte Index = 3; Index >= 0; Index--)
 				{
 					if (DecimalStatus != 0)
@@ -671,6 +653,31 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 			return Value;
 		}
+
+		//Display string with empty decimal places show
+		public string ToFullString()
+		{
+			System.String Value = "";
+			ushort IntegerHalf = IntValue;
+			byte CurrentDigit;
+			if (DecBoolStatus == 1) { Value += "-"; }
+			for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; Index--)
+			{
+				CurrentDigit = (byte)(IntegerHalf / Math.Pow(10, Index));
+				IntegerHalf -= (ushort)(CurrentDigit * Math.Pow(10, Index));
+				Value += DigitAsChar(CurrentDigit);
+			}
+			Value += ".";
+			ushort DecimalHalf = DecimalStatus;
+			for (sbyte Index = 3; Index >= 0; Index--)
+			{
+					CurrentDigit = (byte)(DecimalHalf / Math.Pow(10, Index));
+					DecimalHalf -= (ushort)(CurrentDigit * Math.Pow(10, Index));
+					Value += DigitAsChar(CurrentDigit);
+			}
+			return Value;
+		}
+
 
 		public string ToString(string s, IFormatProvider provider)
 		{
@@ -692,7 +699,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return ToOptimalString();
 		}
 
-		public override string ToString(){ return (string)this; }
+		public override string ToString() { return ToOptimalString(); }
 
 		public static dynamic ConditionalReturn(bool Condition, dynamic X, dynamic Y)
 		{
@@ -811,65 +818,5 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
 		}
 
-		public SmallDec Convert(ModerateSuperDec Value)
-		{
-			SmallDec NewSelf;
-			NewSelf.IntValue = (ushort)Value.IntValue;
-			ulong TempDec = Value.DecimalStatus;
-			TempDec /= 1000000000000000;
-			NewSelf.DecimalStatus = (ushort)TempDec;
-			NewSelf.DecBoolStatus = Value.DecBoolStatus;
-			return NewSelf;
-		}
-
-		public SmallDec Convert(LargeSuperDec Value)
-		{
-			SmallDec NewSelf;
-			NewSelf.IntValue = (ushort)Value.IntValue;
-			ulong TempDec = Value.DecimalStatus / 100000000000000;
-			NewSelf.DecimalStatus = (ushort)TempDec;
-			NewSelf.DecBoolStatus = Value.DecBoolStatus;
-			return NewSelf;
-		}
-
-		//Limit CSharpGlobalCode.GlobalCode_ExperimentalCode explicit Conversions from other type to self (no OtherType(SelfType) explicit conversions)
-		public static SmallDec operator +(SmallDec self, ModerateSuperDec y)
-		{
-			self += (SmallDec)y;
-			return self;
-		}
-
-		public static SmallDec operator -(SmallDec self, ModerateSuperDec y)
-		{
-			self -= (SmallDec)y;
-			return self;
-		}
-
-		public static SmallDec operator *(SmallDec self, ModerateSuperDec y)
-		{
-			self *= (SmallDec)y;
-			return self;
-		}
-
-		public static SmallDec operator /(SmallDec self, ModerateSuperDec y)
-		{
-			self /= (SmallDec)y;
-			return self;
-		}
-
-		public static explicit operator SmallDec(MediumSuperDec Value)
-		{
-			return new SmallDec(Value);
-		}
-
-		public static explicit operator SmallDec(ModerateSuperDec Value)
-		{
-			return new SmallDec().Convert(Value);
-		}
-
-		public static explicit operator SmallDec(LargeSuperDec Value)
-		{
-			return new SmallDec().Convert(Value);
-		}
 	}
 }

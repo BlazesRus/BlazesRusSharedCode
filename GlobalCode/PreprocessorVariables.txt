@@ -130,14 +130,18 @@ BlazesGlobalCode_Int128Version:
 BlazesGlobalCode_Disable128BitFeatures: Disables related classes and functions that rely on 128+ bit int etc
 BlazesGlobalCode_StandardExplicitConversionFrom : Limit SuperDec classes to explicit conversions from standard variable types
 BlazesGlobalCode_SmallDecSliderEnableExtraFeatures
+SuperDecPercentVal_EnableMultipleDecimalStatusFormulas:
+SuperDecPercentVal_EnableNullAndInfinity:
 
 ---PoESkillTree Based Preprocessors-----
 //PoESkillTree_UseStandardValueTypesInsteadOfSmallDec : (For PoESkillTree) Enable use of float etc instead of usage of SmallDec etc.(Disabled)
 //PoESkillTree_UseLocalGlobalCode : (For PoESkillTree) Use local files within folders instead of SharedProject version of BlazesGlobalCode (Disabled)
 PoESkillTree_UseSmallDec_ForAttributes : Use SmallDec instead of float for Attribute variables
-PoESkillTree_UseSmallDec_ForGeneratorBars:
+PoESkillTree_UseSmallDec_ForGeneratorBars: (Keeping floats used for bars separate from stored attributes when this is not set and PoESkillTree_UseSmallDec_ForAttributes is set;
+Item Attributes mostly stored in floats when both are set unless PoESkillTree_StoreItemAttributesInSmallDec is set)
+PoESkillTree_StoreItemAttributesInSmallDec : (Not Implimented yet)
 PoESkillTree_UseSmallDec_ForUpdateDB : 
-PoESkillTree_UseSmallDec_Csv:
+PoESkillTree_UseSmallDec_Csv:(Not Implimented yet)
 PoESkillTree_PreventRoundingOfImportantSmallDec: Prevent certain levels of rounding for important calculations.(Not implimented yet)
 PoESkillTree_WeightAsPercRatio: Replace weight values with alernative type that is only for storing +- 1.(19 Decimals stored) (from double) (Not completed yet)
 
