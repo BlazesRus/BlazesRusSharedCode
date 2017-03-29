@@ -332,7 +332,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 		//Returns value of highest non-infinite/Special Decimal State Value that can store
-		public ModerateSuperDec Maximum()
+		public static ModerateSuperDec Maximum()
 		{
 			ModerateSuperDec NewSelf;
 			NewSelf.IntValue = 4294967295;
@@ -342,7 +342,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 		//Returns value of minimum non-infinite/Special Decimal State Value that can store
-		public ModerateSuperDec Minimum()
+		public static ModerateSuperDec Minimum()
 		{
 			ModerateSuperDec NewSelf;
 			NewSelf.IntValue = 4294967295;

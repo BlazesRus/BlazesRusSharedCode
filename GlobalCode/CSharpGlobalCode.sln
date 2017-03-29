@@ -5,25 +5,25 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CSharpGlobalCode", "CSharpGlobalCode.shproj", "{1F56ECD0-AF20-4544-A747-E2C6434594C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExperimentalCodeTester", "C#ExperimentalCodeTester\ExperimentalCodeTester.csproj", "{6C1EA9ED-C97A-4198-8893-156B8C9AFDE2}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CSharpExperimentalCode", "CSharpExperimentalCode.shproj", "{FD7D8645-14F3-44D5-A676-3A64A18C4FE0}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CSharpGlobalCode_PoESkillTree", "CSharpGlobalCode_PoESkillTree.shproj", "{3337CBCA-373B-4EC8-9884-696F9EAA7C22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpGlobalCodeTester", "CSharpGlobalCodeTester\CSharpGlobalCodeTester.csproj", "{3BDE24C8-6C7C-452E-863A-04C8907108F9}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		CSharpGlobalCode.projitems*{6c1ea9ed-c97a-4198-8893-156b8c9afde2}*SharedItemsImports = 4
+		CSharpExperimentalCode.projitems*{fd7d8645-14f3-44d5-a676-3a64a18c4fe0}*SharedItemsImports = 13
 		CSharpGlobalCode.projitems*{1f56ecd0-af20-4544-a747-e2c6434594c6}*SharedItemsImports = 13
-		CSharpGlobalCode_PoESkillTree.projitems*{3337cbca-373b-4ec8-9884-696f9eaa7c22}*SharedItemsImports = 13
+		CSharpGlobalCode.projitems*{3bde24c8-6c7c-452e-863a-04c8907108f9}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6C1EA9ED-C97A-4198-8893-156B8C9AFDE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C1EA9ED-C97A-4198-8893-156B8C9AFDE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C1EA9ED-C97A-4198-8893-156B8C9AFDE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C1EA9ED-C97A-4198-8893-156B8C9AFDE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BDE24C8-6C7C-452E-863A-04C8907108F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BDE24C8-6C7C-452E-863A-04C8907108F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BDE24C8-6C7C-452E-863A-04C8907108F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BDE24C8-6C7C-452E-863A-04C8907108F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

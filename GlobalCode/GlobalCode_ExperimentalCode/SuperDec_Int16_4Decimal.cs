@@ -666,7 +666,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 		//Returns value of highest non-infinite/Special Decimal State Value that can store
-		public SmallDec Maximum()
+		public static SmallDec Maximum()
 		{
 			SmallDec NewSelf;
 			NewSelf.IntValue = 65535;
@@ -676,7 +676,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 		//Returns value of minimum non-infinite/Special Decimal State Value that can store
-		public SmallDec Minimum()
+		public static SmallDec Minimum()
 		{
 			SmallDec NewSelf;
 			NewSelf.IntValue = 65535;

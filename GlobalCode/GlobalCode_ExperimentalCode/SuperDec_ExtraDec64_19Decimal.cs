@@ -351,7 +351,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 		//Returns value of highest non-infinite/Special Decimal State Value that can store
-		public LargeSuperDec Maximum()
+		public static LargeSuperDec Maximum()
 		{
 			LargeSuperDec NewSelf;
 			NewSelf.IntValue = 18446744073709551615;
@@ -361,7 +361,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 		}
 
 		//Returns value of minimum non-infinite/Special Decimal State Value that can store
-		public LargeSuperDec Minimum()
+		public static LargeSuperDec Minimum()
 		{
 			LargeSuperDec NewSelf;
 			NewSelf.IntValue = 18446744073709551615;

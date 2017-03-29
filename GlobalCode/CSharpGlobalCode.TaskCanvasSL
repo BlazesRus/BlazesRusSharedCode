@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SerializableModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <tasks>
+    <tasks>
+      <Task>
+        <blocks />
+        <tabs>
+          <DocumentTab>
+            <name>SuperDec_Int16_4Decimal.cs</name>
+            <path>GlobalCode_ExperimentalCode\SuperDec_Int16_4Decimal.cs</path>
+            <absolutePath>C:\Users\BlazesRus\Documents\Visual Studio 2013\Projects\NifLibEnvironment\GlobalCode\GlobalCode_ExperimentalCode\SuperDec_Int16_4Decimal.cs</absolutePath>
+            <position>
+              <line>118</line>
+              <column>1</column>
+              <lineHash>bJIJouYVGnv3fOcBLiJHmadWvzr6qh11Q9R2Smm5j+I=</lineHash>
+            </position>
+          </DocumentTab>
+        </tabs>
+        <name>Misc</name>
+        <selectedBlock>-1</selectedBlock>
+        <selectedTab>-1</selectedTab>
+      </Task>
+    </tasks>
+    <selectedTask>0</selectedTask>
+  </tasks>
+</SerializableModel>
