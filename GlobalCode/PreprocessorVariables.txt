@@ -144,13 +144,14 @@ PoESkillTree_StoreItemAttributesInSmallDec : (Not Implimented yet)
 PoESkillTree_UseSmallDec_ForUpdateDB : 
 PoESkillTree_UseSmallDec_Csv:(Not Implimented yet)
 PoESkillTree_PreventRoundingOfImportantSmallDec: Prevent certain levels of rounding for important calculations.(Not implimented yet)
-PoESkillTree_WeightAsPercRatio: Replace weight values with alernative type that is only for storing +- 1.(19 Decimals stored) (from double) (Not completed yet)
+PoESkillTree_WeightAsPercRatio: Replace weight values with PercentValV2 that is only for storing +- 1.(18 Decimals stored) (from double) (Not completed yet)
 
-PoESkillTree_EnableTargetWeightAsSmallDec:
+PoESkillTree_EnableTargetValueAsSmallDec: Use SmallDec for TargetValueContraint
+PoESkillTree_EnableUseNewGUIFeatures
 //XXXXXX
 --------Decimal Storage notes------
 (signed/unsigned) int 8 = can store 2 places (signed stores -128 to 127;unsigned stores 0 to 255)
-(signed/unsigned) int 16 = can store 4 places (signed stores �32,768 to 32,767;unsigned stores 0 to 65,535)
-(signed/unsigned) int 32 = can store 9 places (signed stores �2,147,483,648 to 2,147,483,647;unsigned stores 0 to 4,294,967,295)
-signed int 64 = can store up to 18 places (�9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
+(signed/unsigned) int 16 = can store 4 places (signed stores -32,768 to 32,767;unsigned stores 0 to 65,535)
+(signed/unsigned) int 32 = can store 9 places (signed stores -2,147,483,648 to 2,147,483,647;unsigned stores 0 to 4,294,967,295)
+signed int 64 = can store up to 18 places (-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
 unsigned int 64 = can store up to 19 places (0 to 18,446,744,073,709,551,615)
