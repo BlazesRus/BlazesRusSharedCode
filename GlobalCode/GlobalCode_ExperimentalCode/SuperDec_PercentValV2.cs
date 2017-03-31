@@ -580,21 +580,25 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             ValueRep *= -1;
         }
 
-        //Returns value of highest non-infinite/Special Decimal State Value that can store
-        public static PercentValV2 Maximum()
+        private static PercentValV2 MaximumValue()
         {
             PercentValV2 self;
             self.ValueRep = 8999999999999999999;
             return self;
         }
 
-        //Returns value of minimum non-infinite/Special Decimal State Value that can store
-        public static PercentValV2 Minimum()
+        //Returns value of highest non-infinite/Special Decimal State Value that can stored
+        public static PercentValV2 Maximum = MaximumValue();
+
+        private static PercentValV2 MinimumValue()
         {
             PercentValV2 self;
             self.ValueRep = -8999999999999999999;
             return self;
         }
+
+        //Returns value of lowest non-infinite/Special Decimal State Value that can stored
+        public static PercentValV2 Minimum = MinimumValue();
 
         //Max/Min of long = Infinity
         public bool IsInfinity()

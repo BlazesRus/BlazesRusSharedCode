@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\CustomDec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\CustomJSONConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDecGlobalCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_Int16_4Decimal.cs" />
