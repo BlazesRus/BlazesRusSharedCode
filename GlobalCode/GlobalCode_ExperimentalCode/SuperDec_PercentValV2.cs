@@ -87,21 +87,21 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //    throw new NotImplementedException();
         //}
 
-        //public static PercentValV2 Max(dynamic LeftSide, dynamic RightSide)
-        //{
-        //    PercentValV2 LeftSideAsType = (PercentValV2)LeftSide;
-        //    PercentValV2 RightSideAsType = (PercentValV2)RightSide;
-        //    if (LeftSideAsType > RightSide) { return LeftSideAsType; }
-        //    else { return RightSideAsType; }
-        //}
+        public static PercentValV2 Max(dynamic LeftSide, dynamic RightSide)
+        {
+            PercentValV2 LeftSideAsType = (PercentValV2)LeftSide;
+            PercentValV2 RightSideAsType = (PercentValV2)RightSide;
+            if (LeftSideAsType > RightSide) { return LeftSideAsType; }
+            else { return RightSideAsType; }
+        }
 
-        //public static PercentValV2 Min(dynamic LeftSide, dynamic RightSide)
-        //{
-        //    PercentValV2 LeftSideAsType = (PercentValV2)LeftSide;
-        //    PercentValV2 RightSideAsType = (PercentValV2)RightSide;
-        //    if (LeftSideAsType < RightSide) { return LeftSideAsType; }
-        //    else { return RightSideAsType; }
-        //}
+        public static PercentValV2 Min(dynamic LeftSide, dynamic RightSide)
+        {
+            PercentValV2 LeftSideAsType = (PercentValV2)LeftSide;
+            PercentValV2 RightSideAsType = (PercentValV2)RightSide;
+            if (LeftSideAsType < RightSide) { return LeftSideAsType; }
+            else { return RightSideAsType; }
+        }
 
         //public static PercentValV2 Round(PercentValV2 val)
         //{
@@ -166,16 +166,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return Value;
         }
 
-        //public static PercentValV2 StringToValue(string Value)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        ////Method version to Initialize Type instead of with Explicit operators
-        //public static PercentValV2 Initialize(dynamic Value)
-        //{
-        //    return new PercentValV2(Value);
-        //}
+        //Method version to Initialize Type instead of with Explicit operators
+        public static PercentValV2 Initialize(dynamic Value)
+        {
+            return new PercentValV2(Value);
+        }
 
         public PercentValV2(dynamic Value)
         {
@@ -549,7 +544,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
         public override bool Equals(object obj)
         {
-            if (obj == null || GetType() != obj.GetType()) { return false; }
+            //Enable comparisons against other object types
+            //if (obj == null || GetType() != obj.GetType()) { return false; }
 
             try
             {
@@ -837,6 +833,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         {
             return this;
         }
+#if (BlazesGlobalCode_PercentValV2AsClass)
+        PercentValV2()
+        {
+
+        }
+#endif
     }
 
 }

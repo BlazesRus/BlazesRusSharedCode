@@ -27,7 +27,6 @@ namespace CSharpGlobalCodeTester
             FloatTest *= 1.5f;
             MediumSuperDec Value02 = (MediumSuperDec)Value01;
             Console.WriteLine("CurrentValue=" + (string)Value02);
-
             System.Threading.Thread.Sleep(4000);
         }
     }

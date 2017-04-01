@@ -16,7 +16,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 	//Aka SuperDec_Int16_4Decimal
 	[System.ComponentModel.TypeConverter(typeof(SuperDec_SmallDec_TypeConverter))]
-	public partial struct SmallDec : IComparable<SmallDec>
+    [Newtonsoft.Json.JsonConverter(typeof(CustomJSONConverter))]
+    public partial struct SmallDec : IComparable<SmallDec>
 	{
 #if (!BlazesGlobalCode_ReducedSmallDecSize)
 		//0 = Positive;1=Negative;Other states at higher then 1;254 = Positive Infinity;255 = Negative Infinity
@@ -40,7 +41,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		public static SmallDec Parse(string value, CultureInfo invariantCulture)
 		{
-			SmallDec NewValue = SmallDec.StringToValue(value);
+			SmallDec NewValue = SmallDec.Initialize(value);
 			return NewValue;
 		}
 
@@ -167,70 +168,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			SmallDec RightSideAsType = (SmallDec)RightSide;
 			if (LeftSideAsType < RightSide) { return LeftSideAsType; }
 			else { return RightSideAsType; }
-		}
-
-		public static SmallDec StringToValue(string Value)
-		{
-			SmallDec NewSelf;
-			NewSelf.IntValue = 0;
-			NewSelf.DecimalStatus = 0;
-			NewSelf.DecBoolStatus = 0;
-			sbyte PlaceNumber;
-			byte StringLength = (byte)Value.Length;
-			string WholeNumberBuffer = "";
-			string DecimalBuffer = "";
-			bool ReadingDecimal = false;
-			int TempInt;
-			int TempInt02;
-			foreach (char StringChar in Value)
-			{
-				if (IsDigit(StringChar))
-				{
-					if (ReadingDecimal)
-					{
-						DecimalBuffer += StringChar;
-					}
-					else
-					{
-						WholeNumberBuffer += StringChar;
-					}
-				}
-				else if (StringChar == '-')
-				{
-					NewSelf.DecBoolStatus = 1;
-				}
-				else if (StringChar == '.')
-				{
-					ReadingDecimal = true;
-				}
-			}
-			PlaceNumber = (sbyte)(WholeNumberBuffer.Length - 1);
-			foreach (char StringChar in WholeNumberBuffer)
-			{
-				TempInt = CharAsInt(StringChar);
-				TempInt02 = (ushort)(TempInt * Math.Pow(10, PlaceNumber));
-				if (StringChar != '0')
-				{
-					NewSelf.IntValue += (ushort)TempInt02;
-				}
-				PlaceNumber--;
-			}
-			PlaceNumber = 3;
-			foreach (char StringChar in DecimalBuffer)
-			{
-				//Limit stored decimal numbers to the amount it can store
-				if (PlaceNumber > -1)
-				{
-					TempInt = CharAsInt(StringChar);
-					TempInt02 = (ushort)(TempInt * Math.Pow(10, PlaceNumber));
-					if (StringChar != '0')
-					{
-						NewSelf.DecimalStatus += (ushort)TempInt02;
-					}
-					PlaceNumber--;
-				}
-			}
-			return NewSelf;
 		}
 
 		//Method version to Initialize Type instead of with Explicit operators
@@ -610,10 +547,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #endif
 		public override bool Equals(object obj)
 		{
-			if (obj == null || GetType() != obj.GetType()) { return false; }
+            //Enable comparisons against other object types
+            //if (obj == null || GetType() != obj.GetType()) { return false; }
 
-			try
-			{
+            try
+            {
 				return this == (SmallDec)obj;
 			}
 			catch
