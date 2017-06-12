@@ -232,7 +232,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="onChanged">Called after changing the value but before raising <see cref="PropertyChanged"/>.</param>
         /// <param name="onChanging">Called before changing the value and before raising <see cref="PropertyChanging"/> with <paramref name="value"/> as parameter.</param>
         /// <param name="propertyName">Name of the changed property</param>
-        protected void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, Action<T> onChanging = null, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        protected void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, Action<T> onChanging = null,
+        [System.Runtime.CompilerServices.CallerMemberName]
+        string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(backingStore, value)) return;
 

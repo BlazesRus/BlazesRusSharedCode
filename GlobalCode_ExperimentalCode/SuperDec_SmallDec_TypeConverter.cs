@@ -458,6 +458,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 string ConversionType = destinationType.ToString();
                 Console.WriteLine("Non-Detected conversion type found attempting to convert from SmallDec to type" + ConversionType + ".");
 #endif
+                //return CanC
                 return false;
             }
             

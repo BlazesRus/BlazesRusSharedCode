@@ -29,7 +29,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
     /// </summary>
     [System.ComponentModel.TypeConverter(typeof(SmallDec_TypeConverter))]
     //[System.Security.SecurityCriticalAttribute]//Allow reflection permissions ;Removing Security Critical status since messes up its usage inside xaml GUIs
-	[CLSCompliant(false)]
+    [CLSCompliant(false)]
     [SerializableAttribute]
     [BindableAttribute(true, BindingDirection.TwoWay)]
     public
@@ -215,9 +215,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public SmallDec(dynamic Value)
         {
             //Use to to detect different assembly versions of SmallDec class
-            string ValueType = (Value as object).GetType().FullName;
+            Type ValueType = (Value as object).GetType();
+            string ValueTypeName = ValueType.FullName;
             //((System.Runtime.Remoting.ObjectHandle)Value).Unwrap().GetType().ToString();
-            if (ValueType == "CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec")
+            if (ValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec")
             {
                 this.DecBoolStatus = Value.DecBoolStatus;
                 this.intValue = Value.IntValue;
@@ -246,9 +247,34 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 DecBoolStatus = Value.DecBoolStatus;
             }
 #endif
-            else
+            else if (Value == null)
             {
                 this = SmallDec.Zero;
+            }
+            else if (ValueType.IsValueType)
+            {
+                dynamic ConvertedValue = Activator.CreateInstance(ValueType);
+                ConvertedValue = System.Convert.ChangeType(Value, ValueType, CultureInfo.CurrentCulture);
+                this = ConvertedValue;
+            }
+            else
+            {
+                try
+                {
+                    //dynamic changedObj = System.Convert.ChangeType(this.ToOptimalString(), conversionType, provider);
+                    //this = changedObj;
+                    this = Value.ToString();
+                }
+                catch
+#if (DEBUG)
+                (System.Exception ex)
+#endif
+                {
+#if (DEBUG)
+                    Console.WriteLine("Failed to retrieve string of from " + ValueTypeName + " when converting to SmallDec with exception of "+ex.ToString());
+#endif
+                    this = SmallDec.Zero;
+                }
             }
         }
 
@@ -264,8 +290,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
             try
             {
-			    Type valueType = value.GetType();
-			    string FullValueTypeName = valueType.FullName;
+                Type valueType = value.GetType();
+                string FullValueTypeName = valueType.FullName;
                 if (FullValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec")//SmallDec to SmallDec Comparison
                 {
                     if (value.GetType() != typeof(SmallDec))//Alternative assembly version of SmallDec Detected
@@ -337,9 +363,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     {
                         return this == (char)(short)value;
                     }
-					//Dependency Property
-					else if(FullValueTypeName=="MS.Internal.NamedObject")
-					{
+                    //Dependency Property
+                    else if(FullValueTypeName=="MS.Internal.NamedObject")
+                    {
                         return this == SmallDec.Zero;
                     }
                     else
@@ -350,7 +376,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     }
                 }
             }
-            catch (Exception ex)
+            catch
+#if (DEBUG)
+            (Exception ex)
+#endif
             {
 #if (DEBUG)
                 Console.WriteLine("Exception named ");
@@ -808,9 +837,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 return (SmallDec)(char)(short)value;
             }
-			//Dependency Property with unset value?
-			else if(FullValueTypeName=="MS.Internal.NamedObject")
-			{
+            //Dependency Property with unset value?
+            else if(FullValueTypeName=="MS.Internal.NamedObject")
+            {
                 //if(value._name == "DependencyProperty.UnsetValue")//Initialyze at zero
                 //{
                 //	return SmallDec.Zero;

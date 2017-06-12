@@ -287,9 +287,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                         try
                         {
                             //bool IsValueType = conversionType.IsValueType;
-                            dynamic ConvertedValue = Activator.CreateInstance(conversionType);
-                            ConvertedValue = this;
-                            return ConvertedValue;
+                            if (conversionType.IsValueType)
+                            {
+                                dynamic ConvertedValue = Activator.CreateInstance(conversionType);
+                                ConvertedValue = System.Convert.ChangeType(this, conversionType, provider);
+                                return ConvertedValue;
+                            }
+                            else
+                            {
+                                dynamic changedObj = System.Convert.ChangeType(this.ToOptimalString(), conversionType, provider);
+                                return changedObj;
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -297,7 +305,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                             throw new InvalidCastException("Conversion to "+conversionType.Name+" is not supported.");
                         }
                     }
-                    //StackOverflow exception occurs if attempt flowing code
+                    //StackOverflow exception occurs if attempt following code here
                     //dynamic changedObj = System.Convert.ChangeType(this, conversionType, provider);
                     //return changedObj;
                 }
