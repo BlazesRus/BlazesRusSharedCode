@@ -372,7 +372,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     {
                         Console.WriteLine("Equals Comparison Test for " + valueType.ToString());
                         dynamic changedObj = System.Convert.ChangeType(value, value.GetType(), CultureInfo.InvariantCulture);
-                        return this == (SmallDec)changedObj;
+                        return this == SmallDec.Initialize(changedObj);
                     }
                 }
             }

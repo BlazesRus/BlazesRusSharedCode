@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_SmallDec_TrigometricFunctions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_SmallDec_TypeConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\ValidationOverride.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_VariableConversionFunctions\TypeDataInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cs" />
   </ItemGroup>
 </Project>

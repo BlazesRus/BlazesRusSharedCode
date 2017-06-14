@@ -302,7 +302,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                         catch (Exception ex)
                         {
                             Console.WriteLine("Exception of \n" + ex.ToString() + "\n occurred on attempting conversion of SmallDec to \n" + ConversionTypeString);
-                            throw new InvalidCastException("Conversion to "+conversionType.Name+" is not supported.");
+                            throw new InvalidCastException("Conversion to "+conversionType.Name+" is not supported.",ex);
                         }
                     }
                     //StackOverflow exception occurs if attempt following code here
@@ -318,6 +318,53 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 throw;
             }
 
+        }
+
+        class ConversionStatusValue
+        {
+            [Flags]
+            public enum ConversionStatusEnum
+            {
+                InitialTypeIsArray = 1,
+                TargetTypeIsArray = 1 << 1,
+            }
+            public ConversionStatusEnum ConversionStats;
+            public ConversionStatusValue(Type InitialType, Type TargetType)
+            {
+                if (InitialType.IsArray) { ConversionStats |= ConversionStatusEnum.InitialTypeIsArray; }
+                if (TargetType.IsArray) { ConversionStats |= ConversionStatusEnum.TargetTypeIsArray; }
+            }
+        }
+
+        /// <summary>
+        /// Convert from one Type to another
+        /// </summary>
+        /// <param name="InitialValue"></param>
+        /// <param name="TargetType"></param>
+        /// <returns></returns>
+        public static dynamic Convert(dynamic InitialValue, Type TargetType)
+        {
+            object value = InitialValue as object;
+            Type InitialType = value.GetType();
+            if (InitialType == TargetType)
+            {
+                return InitialValue;
+            }
+            else if (value is SmallDec)
+            {
+                return InitialValue.ToType(TargetType);
+            }
+            else if(TargetType==typeof(SmallDec))
+            {
+                return SmallDec.Initialize(InitialValue);
+            }
+            else
+            {
+                string InitialTypeName = InitialType.FullName;
+                string TargetTypeName = TargetType.FullName;
+                ConversionStatusValue ConversionStatus = new ConversionStatusValue(InitialType, TargetType);
+                return InitialValue.ToType(TargetType);
+            }
         }
     }
 }
