@@ -23,7 +23,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
     // Interaction logic for SmallDecUpdown.xaml (Parts of code based on SmallDecSlider code)/Replacement for metroControls:NumericUpDown
     // Parts of code/UI based on http://www.philosophicalgeek.com/2009/11/16/a-wpf-numeric-entry-control/
     //</summary>
-    public partial class SmallDecUpdown : UserControl, System.ComponentModel.INotifyPropertyChanged, System.ComponentModel.INotifyPropertyChanging, IConvertible, IEquatable<SmallDec>, IDataErrorInfo, IInputElement
+    public partial class SmallDecUpdown : SmallDecGUIElement
     {
         /// <summary>
         /// Dependency Property for Increment
@@ -47,7 +47,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             set
             {
                 SetValue(IncrementProperty, SmallDec.Initialize(value));
-                if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("IncrementProperty"));
+                ApplyPropertyChange("IncrementProperty");
             }
         }
 
@@ -61,103 +61,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             set
             {
                 SetValue(LargeIncrementProperty, SmallDec.Initialize(value));
-                if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("LargeIncrementProperty"));
+                ApplyPropertyChange("LargeIncrementProperty");
             }
         }
 
-        /// <summary>
-        /// Minimum Value Limit
-        /// </summary>
-        [System.ComponentModel.TypeConverter(typeof(SmallDec_TypeConverter))]
-        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum", typeof(SmallDec), typeof(SmallDecUpdown), new PropertyMetadata(SmallDec.Zero));
 
-        /// <summary>
-        /// Maximum Value Limit
-        /// </summary>
-        [System.ComponentModel.TypeConverter(typeof(SmallDec_TypeConverter))]
-        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(SmallDec), typeof(SmallDecUpdown), new PropertyMetadata(SmallDec.Maximum));
-
-        /// <summary>
-        /// Current Value
-        /// </summary>
-        [System.ComponentModel.TypeConverter(typeof(SmallDec_TypeConverter))]
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(SmallDec), typeof(SmallDecUpdown),
-        new FrameworkPropertyMetadata(SmallDec.Zero, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValuePropertyChanged));
-
-        /// <summary>
-        /// INotifyPropertyChanged event that is called right before a property is changed.
-        /// </summary>
-        public event PropertyChangingEventHandler PropertyChanging;
-
-        /// <summary>
-        /// INotifyPropertyChanged event that is called right after a property is changed.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Minimum Value Limit
-        /// </summary>
-        public SmallDec Minimum
-        {
-            get { return (SmallDec)GetValue(MinimumProperty); }
-            set
-            {
-                SetValue(MinimumProperty, value);
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Minimum"));
-            }
-        }
-
-        /// <summary>
-        /// Maximum Value Limit
-        /// </summary>
-        public SmallDec Maximum
-        {
-            get { return (SmallDec)GetValue(MaximumProperty); }
-            set
-            {
-                SetValue(MaximumProperty, value);
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Maximum"));
-            }
-        }
-
-        /// <summary>
-        /// Current Value
-        /// </summary>
-        public SmallDec Value
-        {
-            get { return (SmallDec)GetValue(ValueProperty); }
-            set
-            {
-                //object LocalValue = ReadLocalValue(ValueProperty);
-                //if (LocalValue == DependencyProperty.UnsetValue)
-                //{
-                //    Console.WriteLine("Local Value is set as " + LocalValue.ToString());
-                //    SetValue(ValueProperty, value);
-                //    //if (value == SmallDec.Zero)
-                //    //{
-                //    //    SetCurrentValue(ValueProperty, SmallDec.Zero);
-                //    //}
-                //}
-                //else
-                //{
-                //    SetCurrentValue(ValueProperty, value);
-                //}
-                SetValue(ValueProperty, value);
-#if(!SmallDecUpDown_DontPreviousValues)
-                _previousValue = Value;
-#endif
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Value"));
-            }
-        }
-
-        ///// <summary>
-        ///// Set Value hopefully while changing the value source(Not Tested yet)
-        ///// </summary>
-        ///// <param name="value"></param>
-        //public void SetValueSource(ref SmallDec value)
-        //{
-        //    SetValue(ValueProperty, value);
-        //}
 
         private DispatcherTimer _timer = new DispatcherTimer();
         private static int _delayRate = System.Windows.SystemParameters.KeyboardDelay;
@@ -165,7 +73,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         private bool _isIncrementing = false;
 
 #if(!SmallDecUpDown_DontPreviousValues)
-
         /// <summary>
         /// Previous value saved
         /// </summary>
@@ -318,67 +225,68 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             Value = SmallDec.Max(Value - Increment, Minimum);
         }
 
-        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        ///// <summary>
+        ///// Sets <paramref name="backingStore"/> to <paramref name="value"/> and raises 
+        ///// <see cref="PropertyChanging"/> before and <see cref="PropertyChanged"/> after setting the value.
+        ///// </summary>
+        ///// <param name="backingStore">Target variable</param>
+        ///// <param name="value">Source variable</param>
+        ///// <param name="onChanged">Called after changing the value but before raising <see cref="PropertyChanged"/>.</param>
+        ///// <param name="onChanging">
+        ///// Called before changing the value and before raising <see cref="PropertyChanging"/> with
+        ///// <paramref name="value"/> as parameter.
+        ///// </param>
+        ///// <param name="propertyName">Name of the changed property</param>
+        //protected void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, Action<T> onChanging = null, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        //{
+        //    if (EqualityComparer<T>.Default.Equals(backingStore, value)) return;
+
+        //    onChanging?.Invoke(value);
+        //    OnPropertyChanging(propertyName);
+
+        //    backingStore = value;
+
+        //    onChanged?.Invoke();
+        //    OnPropertyChanged(propertyName);
+        //}
 
         /// <summary>
-        /// Sets <paramref name="backingStore"/> to <paramref name="value"/> and raises 
-        /// <see cref="PropertyChanging"/> before and <see cref="PropertyChanged"/> after setting the value.
+        /// Method Invoked on changing property
         /// </summary>
-        /// <param name="backingStore">Target variable</param>
-        /// <param name="value">Source variable</param>
-        /// <param name="onChanged">Called after changing the value but before raising <see cref="PropertyChanged"/>.</param>
-        /// <param name="onChanging">
-        /// Called before changing the value and before raising <see cref="PropertyChanging"/> with
-        /// <paramref name="value"/> as parameter.
-        /// </param>
-        /// <param name="propertyName">Name of the changed property</param>
-        protected void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, Action<T> onChanging = null, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(backingStore, value)) return;
-
-            onChanging?.Invoke(value);
-            OnPropertyChanging(propertyName);
-
-            backingStore = value;
-
-            onChanged?.Invoke();
-            OnPropertyChanged(propertyName);
-        }
-
+        /// <param name="propertyName"></param>
         private void OnPropertyChanging(string propertyName)
         {
-            PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
+            base.OnPropertyChanging(propertyName);
         }
 
         /// <summary>
-        /// Method Invoked on Property Changes
+        /// Method Invoked when property changed
         /// </summary>
         /// <param name="propertyName"></param>
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            base.OnPropertyChanged(propertyName);
         }
 
         /// <summary>
         /// Equivalent to <c>o.MemberwiseClone()</c> except that events are set to null. Override if
         /// your subclass has events or if you need to re-register handlers.
         /// </summary>
-        protected virtual SmallDecUpdown SafeMemberwiseClone()
+        protected virtual new SmallDecUpdown SafeMemberwiseClone()
         {
             var t = (SmallDecUpdown)MemberwiseClone();
-            t.PropertyChanged = null;
-            t.PropertyChanging = null;
+            t.SetPropertyEventsToNull();
             return t;
         }
 
-        /// <summary>
-        /// Get Value as String
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return Value.ToOptimalString();
-        }
+        ///// <summary>
+        ///// Get Value as String
+        ///// </summary>
+        ///// <returns></returns>
+        //public override string ToString()
+        //{
+        //    return Value.ToOptimalString();
+        //}
 
         /// <summary>
         /// Added mostly for support of StringFormat parameter of UpDown
@@ -394,29 +302,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             set
             {
                 SetValue(StringFormatProperty, value);
-                if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("StringFormat")); }
+                ApplyPropertyChange("StringFormat");
             }
-        }
-
-        static void ValuePreviewTextInput(object self, TextCompositionEventArgs e)
-        {
-            if (!IsNumericInput(e.Text))
-            {
-                e.Handled = true;
-                return;
-            }
-        }
-
-        private static bool IsNumericInput(string text)
-        {
-            foreach (char c in text)
-            {
-                if (!char.IsDigit(c))
-                {
-                    return false;
-                }
-            }
-            return true;
         }
 
         private static void OnValuePropertyChanged(DependencyObject self, DependencyPropertyChangedEventArgs e)
@@ -425,240 +312,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             Self.ValueDisplay.Text = (string)Self.Value;
         }
 
-        /// <summary>
-        /// Returns the TypeCode for Value instance.
-        /// </summary>
-        /// <returns></returns>
-        public TypeCode GetTypeCode()
-        {
-            return TypeCode.Object;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public bool ToBoolean(IFormatProvider provider)
-        {
-            return (bool)Value;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public char ToChar(IFormatProvider provider)
-        {
-            return (char)(short)Value;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public sbyte ToSByte(IFormatProvider provider)
-        {
-            return (sbyte)Value;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public byte ToByte(IFormatProvider provider)
-        {
-            return (byte)Value;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public short ToInt16(IFormatProvider provider)
-        {
-            return (short)Value;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public ushort ToUInt16(IFormatProvider provider)
-        {
-            return (ushort)Value;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public int ToInt32(IFormatProvider provider)
-        {
-            return (int)Value;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public uint ToUInt32(IFormatProvider provider)
-        {
-            return (uint)Value;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public long ToInt64(IFormatProvider provider)
-        {
-            return (long)Value;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public ulong ToUInt64(IFormatProvider provider)
-        {
-            return (ulong)Value;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public float ToSingle(IFormatProvider provider)
-        {
-            return (float)Value;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public double ToDouble(IFormatProvider provider)
-        {
-            return (double)Value;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public decimal ToDecimal(IFormatProvider provider)
-        {
-            return (decimal)Value;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public DateTime ToDateTime(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="conversionType"></param>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public object ToType(Type conversionType, IFormatProvider provider)
-        {
-            dynamic changedObj = System.Convert.ChangeType(Value, conversionType, provider);
-            return changedObj;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="culture"></param>
-        /// <returns></returns>
-        public string ToString(CultureInfo culture)
-        {
-            return String.Format(culture, Value.ToOptimalString());//Ensure to reformat string based on culture
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="numberFormat"></param>
-        /// <returns></returns>
-        public string ToString(NumberFormatInfo numberFormat)
-        {
-            return String.Format(numberFormat, Value.ToOptimalString());//Ensure to reformat string based on format type
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public string ToString(IFormatProvider provider)
-        {
-            return String.Format(provider, Value.ToOptimalString());
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        public bool Equals(SmallDec other)
-        {
-            return Value == other;
-        }
-
-        /// <summary>
-        /// </summary>
-        public string Error
-        {
-            get
-            {
-                return (this as IDataErrorInfo).Error;
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="columnName"></param>
-        /// <returns></returns>
-        public string this[string columnName]
-        {
-            get
-            {
-                string ErrorType = (this as IDataErrorInfo)[columnName];
-                return ErrorType;
-            }
-        }
-
-        ////
-        ///// <summary>
-        ///// System.NullReferenceException occurs if attempt to load
-        ///// Used when Loaded="ValueDisplay_Loaded" is run on XAML
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        ///// <returns></returns>
-        //private void ValueDisplay_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    //            //ValidationOverride.InitializeValidation(sender);
-        //    //            //DependencyProperty property = GetDependencyPropertyByName(SelectedObject, "Value");
-        //    //            BindingGroup CurrentBindingGroup = ValueDisplay.BindingGroup;
-        //    //            if (CurrentBindingGroup.ValidationRules.Count >= 1)//Check if already have validation rules
-        //    //            {
-        //    //#if (DEBUG)
-        //    //                string RuleName;
-        //    //                foreach (ValidationRule rule in CurrentBindingGroup.ValidationRules)
-        //    //                {
-        //    //                    RuleName = rule.ToString();
-        //    //                    Console.WriteLine("Found validation rule named "+RuleName);
-        //    //                }
-        //    //#endif
-        //    //            }
-        //    //            CurrentBindingGroup.NotifyOnValidationError = true;
-        //    //            CurrentBindingGroup.ValidatesOnNotifyDataError = true;
-        //    //            CurrentBindingGroup.ValidationRules.Add(new ValidationOverride());
-        //    //            ValueDisplay.BindingGroup = CurrentBindingGroup;
-        //}
 
         /// <summary>
         /// </summary>
@@ -666,6 +319,24 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <returns></returns>
         protected override void OnInitialized(System.EventArgs e)
         {
+            //    //            //ValidationOverride.InitializeValidation(sender);
+            //    //            //DependencyProperty property = GetDependencyPropertyByName(SelectedObject, "Value");
+            //    //            BindingGroup CurrentBindingGroup = ValueDisplay.BindingGroup;
+            //    //            if (CurrentBindingGroup.ValidationRules.Count >= 1)//Check if already have validation rules
+            //    //            {
+            //    //#if (DEBUG)
+            //    //                string RuleName;
+            //    //                foreach (ValidationRule rule in CurrentBindingGroup.ValidationRules)
+            //    //                {
+            //    //                    RuleName = rule.ToString();
+            //    //                    Console.WriteLine("Found validation rule named "+RuleName);
+            //    //                }
+            //    //#endif
+            //    //            }
+            //    //            CurrentBindingGroup.NotifyOnValidationError = true;
+            //    //            CurrentBindingGroup.ValidatesOnNotifyDataError = true;
+            //    //            CurrentBindingGroup.ValidationRules.Add(new ValidationOverride());
+            //    //            ValueDisplay.BindingGroup = CurrentBindingGroup;
             base.OnInitialized(e);
         }
     }

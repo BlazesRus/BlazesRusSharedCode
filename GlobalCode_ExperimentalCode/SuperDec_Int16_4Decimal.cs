@@ -259,22 +259,27 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             else
             {
+#pragma warning disable EA002 // Swallow exceptions considered harmful
                 try
                 {
                     //dynamic changedObj = System.Convert.ChangeType(this.ToOptimalString(), conversionType, provider);
                     //this = changedObj;
-                    this = Value.ToString();
+                    dynamic ConvertedValue = default(ValueType);
+                    ConvertedValue = Value;
+                    this = ConvertedValue;
                 }
                 catch
-#if (DEBUG)
-                (System.Exception ex)
-#endif
                 {
-#if (DEBUG)
-                    Console.WriteLine("Failed to retrieve string of from " + ValueTypeName + " when converting to SmallDec with exception of "+ex.ToString());
-#endif
-                    this = SmallDec.Zero;
+                    try
+                    {
+                        this = Value.ToString();
+                    }
+                    catch
+                    {
+                        this = SmallDec.Zero;
+                    }
                 }
+#pragma warning restore EA002 // Swallow exceptions considered harmful
             }
         }
 

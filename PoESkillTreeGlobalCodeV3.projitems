@@ -9,6 +9,8 @@
     <Import_RootNamespace>CSharpGlobalCode</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\CustomDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\DynamicProperty.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SmallDec_IEquatable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SmallDec_MathBasedFunctions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SmallDec_StandardConversions.cs" />
