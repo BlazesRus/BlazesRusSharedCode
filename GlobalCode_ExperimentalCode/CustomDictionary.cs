@@ -10,10 +10,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// Holds an index referring to keys contained for optional ordered retrieval of values
         /// </summary>
         List<TKey> KeyIndex = new List<TKey>();
-        public void Add(TKey key, TValue value)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public new void Add(TKey key, TValue value)
         {
             KeyIndex.Add(key);
-            Base.Add(key, value);
+            base.Add(key, value);
         }
         /// <summary>
         /// Applies Add without recording into key index (default Dictionary Add operation)
@@ -22,12 +28,18 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="value"></param>
         public void AddUnindexed(TKey key, TValue value)
         {
-            Base.Add(key, value);
+            base.Add(key, value);
         }
-        public bool Remove(TKey key)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public new bool Remove(TKey key)
         {
             KeyIndex.Remove(key);
-            Base.Remove(key);
+            return base.Remove(key);
         }
         /// <summary>
         /// Applies Remove without removing from key index (default Dictionary Remove operation);Might causes errors for ValueAt operation
@@ -36,9 +48,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <returns></returns>
         public bool RemoveUnindexed(TKey key)
         {
-            Base.Remove(key);
+            return base.Remove(key);
         }
-        public void Clear()
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public new void Clear()
         {
             KeyIndex.Clear();
             base.Clear();
@@ -52,7 +68,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         {
             TKey IndexedKey = KeyIndex[index];
             TValue RetrievedValue = default(TValue);
-            TryGetValue(IndexedKey, RetrievedValue);
+            TryGetValue(IndexedKey, out RetrievedValue);
             return RetrievedValue;
         }
     }
