@@ -65,8 +65,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
         }
 
-
-
         private DispatcherTimer _timer = new DispatcherTimer();
         private static int _delayRate = System.Windows.SystemParameters.KeyboardDelay;
         private static int _repeatSpeed = Math.Max(1, System.Windows.SystemParameters.KeyboardSpeed);
