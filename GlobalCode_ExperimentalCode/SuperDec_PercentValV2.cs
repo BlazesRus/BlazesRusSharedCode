@@ -24,6 +24,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
     /// </summary>
     public partial struct PercentValV2 : IComparable<PercentValV2>
     {
+		private static PercentValV2 PIValue()
+		{
+			PercentValV2 NewSelf;
+			NewSelf.ValueRep = 3141592653589793238;
+			return NewSelf;
+		}
+		public static PercentValV2 PI = PIValue();
         /// <summary>
         /// Stores the value of both the decimal and whole number half
         /// </summary>

@@ -3,9 +3,8 @@
 */
 using System;
 
-//Requires BigMath library to compile
+//Requires BigMath library to compile unless BlazesGlobalCode_Disable128BitFeatures is enabled
 
-//CSharpGlobalCode.GlobalCode_ExperimentalCode.SuperDec_Int32_9Decimal
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
     using System.Collections.Generic;
@@ -815,8 +814,32 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         }
 
 #if (!BlazesGlobalCode_Disable128BitFeatures)
+        //Unfinished Codeblock
         public static MediumSuperDec operator +(MediumSuperDec self, MediumSuperDec y)
         {
+            if(self.DecBoolStatus==y.DecBoolStatus)//Both either negative or positive
+            {
+                self.IntValue += y.IntValue;
+                if (self.DecimalStatus!=0&&y.DecimalStatus!=0)//At Least one of values is decimal
+                {
+                    if(self.DecBoolStatus == 0)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            else if(self.DecBoolStatus== 0)//Self is positive while y is negative
+            {
+                bool ValueNowNegative = false;
+            }
+            else//Self is negative while y is positive
+            {
+                bool ValueNowNegative = false;
+            }
             //Fix potential negative zero
             if (self.IntValue == 0 && self.DecBoolStatus == 1 && self.DecimalStatus == 0) { self.DecBoolStatus = 0; }
             return self;
