@@ -1,0 +1,6 @@
+C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\BlazesCSharpGlobalCode\bin\x64\Release\BlazesCSharpGlobalCode.dll
+C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\BlazesCSharpGlobalCode\bin\x64\Release\BlazesCSharpGlobalCode.pdb
+C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\BlazesCSharpGlobalCode\obj\x64\Release\BlazesCSharpGlobalCode.csprojResolveAssemblyReference.cache
+C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\BlazesCSharpGlobalCode\obj\x64\Release\BlazesCSharpGlobalCode.csproj.CoreCompileInputs.cache
+C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\BlazesCSharpGlobalCode\obj\x64\Release\BlazesCSharpGlobalCode.dll
+C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\BlazesCSharpGlobalCode\obj\x64\Release\BlazesCSharpGlobalCode.pdb
