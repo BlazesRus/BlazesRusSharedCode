@@ -43,9 +43,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
     struct
 #endif
     SmallDec : IComparable<SmallDec>, IConvertible, IEquatable<SmallDec>, IFormattable
-#if (!SmallDec_DisableCustomTypeDescriptor)
-    , ICustomTypeDescriptor
-#endif
+//#if (!SmallDec_DisableCustomTypeDescriptor)
+//    , ICustomTypeDescriptor
+//#endif
     {
         ////Reference current assembly version of type (based on https://stackoverflow.com/questions/909555/how-can-i-get-the-assembly-file-version)
         //private System.Reflection.Assembly CurrentAssembly

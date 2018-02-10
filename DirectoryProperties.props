@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="UserMacros">
+    <PythonFolder>"C:\ProgrammingLanguages\Python37"</PythonFolder>
+    <PythonInclude>$(PythonFolder)\include</PythonInclude>
+    <ProjectsDirectory>$(SolutionDir)..</ProjectsDirectory>
+	<ProjectLibrary>$(ProjectsDirectory)\CompiledLibraries</ProjectLibrary>
+	<CPPSource>$(SolutionDir)\GlobalCode</CPPSource>
+	<CSharpSource>$(SolutionDir)\BlazesCSharpGlobalCode</CSharpSource>
+    <WTLFolder>$(ProjectDirectory)\WTL</WTLFolder>
+    <BoostFolder>$(ProjectDirectory)\boost_1_66_0</BoostFolder>
+    <BoostLib>$(BoostFolder)\lib</BoostLib>
+<!--     <OutputDirectory>$(SolutionDir)bin\$(Configuration)\$(OutputTag)</OutputDirectory>
+    <IntermediateDirectory>$(SolutionDir)bin\Intermediate\$(ProjectName)\$(Configuration)\</IntermediateDirectory> -->
+  </PropertyGroup>
+</Project>

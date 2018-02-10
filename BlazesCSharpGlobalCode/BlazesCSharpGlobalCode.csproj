@@ -1,6 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|AnyCPU">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -12,6 +30,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\DirectoryProperties.props" />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -66,27 +85,110 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GlobalCodeInfo\" />
-    <Folder Include="GlobalCode_ExperimentalCode\" />
-    <Folder Include="GlobalCode_IniData\" />
-    <Folder Include="GlobalCode_StringFunctions\" />
-    <Folder Include="GlobalCode_VariableConversionFunctions\" />
-    <Folder Include="GlobalCode_VariableLists\" />
-    <Folder Include="GlobalMiscCode\" />
+    <Compile Include="GlobalCode_ExperimentalCode\CustomDec.cs"/>
+<!--     <Compile Include="GlobalCode_ExperimentalCode\SmallDecCollection.cs"/>
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Compile> -->
+    <!--     <Compile Include="GlobalCode_ExperimentalCode\SmallDecSliderTickerFeatures.cs" > <Link>GlobalCode_ExperimentalCode\%(FileName)</Link></Compile> -->
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDecGlobalCode.cs"/>
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cs">
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_Int32_9Decimal.cs">
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_LargeDec_OperatorFunctions.cs">
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_MediumDec_AlternativeOperatorFunctions.cs">
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_MediumDec_OperatorFunctions.cs">
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_ModerateDec_OperatorFunctions.cs">
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_PercentValV2.cs">
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_PercentValV2_OtherCode.cs">
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_Int16_4Decimal.cs"/>
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_OperatorFunctions.cs"/>
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_OtherConversions.cs"/>
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_Rounding.cs"/>
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_TrigometricFunctions.cs"/>
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_TypeConverter.cs"/>
+  </ItemGroup>
+<!--   <ItemGroup Label="GUIElements">
+    <Compile Include="GlobalCode_ExperimentalCode\SmallDecGUIElement.xaml.cs">
+      <DependentUpon>SmallDecGUIElement.xaml</DependentUpon>
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Compile Include="GlobalCode_ExperimentalCode\SmallDecSlider.xaml.cs">
+      <DependentUpon>SmallDecSlider.xaml</DependentUpon>
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Compile Include="GlobalCode_ExperimentalCode\SmallDecUpdown.xaml.cs">
+      <DependentUpon>SmallDecGUIElement.xaml.cs</DependentUpon>
+      <DependentUpon>SmallDecUpdown.xaml</DependentUpon>
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Compile Include="GlobalCode_ExperimentalCode\SmallDecUpdownSlider.xaml.cs">
+      <DependentUpon>SmallDecUpdownSlider.xaml</DependentUpon>
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Page Include="GlobalCode_ExperimentalCode\SmallDecUpdown.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Page>
+    <Page Include="GlobalCode_ExperimentalCode\SmallDecUpdownSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Page>
+    <Page Include="GlobalCode_ExperimentalCode\SmallDecSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+    </Page>
+  </ItemGroup> -->
+  <ItemGroup>
+    <Compile Include="GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cs"/>
+    <Compile Include="GlobalCode_IniData\IniData.cs"/>
+    <Compile Include="GlobalCode_StringFunctions\StringFunctions.cs"/>
+    <Compile Include="GlobalCode_VariableConversionFunctions\*.*">
+        <Link>GlobalCode_VariableConversionFunctions\%(FileName)</Link>
+    </Compile>
+    <Compile Include="GlobalCode_VariableLists\*.*">
+        <Link>GlobalCode_VariableLists\%(FileName)</Link>
+    </Compile>
+<!--     <Compile Include="GlobalMiscCode\*.*">
+        <Link>GlobalMiscCode\%(FileName)</Link>
+    </Compile> -->
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
