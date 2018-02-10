@@ -1,0 +1,30 @@
+GlobalCode_ExperimentalCode:
+Contains experiment c++ classes such as SuperDec/CustomDec classes.
+(Files within subject to deletion)
+(Requires GlobalCode_VariableConversionFunctions)
+
+GlobalCode_IniData:
+(Requires GlobalCode_VariableLists)
+
+GlobalCode_MiscFunctions:
+Contains bunch of misc functions.
+
+GlobalCode_NodeTrees:
+(Requires GlobalCode_VariableLists)
+
+GlobalCode_QuadVector:
+(Requires GlobalCode_VariableLists)
+
+GlobalCode_StringFunctions:
+Contains bunch of functions for scanning/manipulating strings.
+
+GlobalCode_VariableConversionFunctions:
+Contains int to string functions etc.
+
+GlobalCode_VariableLists:
+Contains VariableList class etc.
+
+ThirdPartyCode:
+Contains 3rd party c++ header(s):
+https://sourceforge.net/projects/cpp-bigint/files/C%2B%2B%20BigInt%20Class/
+https://github.com/calccrypto/uint128_t

@@ -2,3 +2,13 @@ bin/
 obj/
 Lib/
 packages/
+/*.sdf
+/*.opensdf
+/*.obj
+/*.log
+/*.pdb
+/*.tlog
+/*.lastbuildstate
+/*.dll
+/*.lib
+/*.tlog
