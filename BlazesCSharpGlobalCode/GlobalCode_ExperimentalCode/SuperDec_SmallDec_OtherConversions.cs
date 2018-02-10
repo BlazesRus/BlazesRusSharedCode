@@ -14,7 +14,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
     using System.IO;
 
     // Represent +- 65535.999999(Can only represent +- 65535.9999 if SmallDec_ReducedSize or SmallDec_UseLegacyStorage set) with 100% consistency of accuracy
-    //(Aka SuperDec_Int16_4Decimal)
+    //(Aka SuperDec_Int16_9Decimal Or SuperDec_Int16_4Decimal)
     public
 #if (!BlazesGlobalCode_SmallDec_AsStruct)
     sealed
@@ -25,7 +25,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #else
     struct
 #endif
-    SmallDec : IFormattable
+    SmallDec : IFormattable, INotifyPropertyChanged
     {
         //        /// <summary>
         //        /// </summary>
@@ -42,29 +42,29 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //        //	return ConvertTuple(Value);
         //        //}
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="LeftSide"></param>
-        //        /// <param name="RightSide"></param>
-        //        /// <returns></returns>
-        //        public static dynamic DynamicMax(dynamic LeftSide, dynamic RightSide)
-        //        {
-        //            SmallDec LeftSideAsType = (SmallDec)LeftSide;
-        //            SmallDec RightSideAsType = (SmallDec)RightSide;
-        //            if (LeftSideAsType > RightSide) { return LeftSideAsType; }
-        //            else { return RightSideAsType; }
-        //        }
+        /// <summary>
+        /// </summary>
+        /// <param name="LeftSide"></param>
+        /// <param name="RightSide"></param>
+        /// <returns></returns>
+        public static dynamic DynamicMax(dynamic LeftSide, dynamic RightSide)
+        {
+            SmallDec LeftSideAsType = (SmallDec)LeftSide;
+            SmallDec RightSideAsType = (SmallDec)RightSide;
+            if (LeftSideAsType > RightSide) { return LeftSideAsType; }
+            else { return RightSideAsType; }
+        }
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="LeftSide"></param>
-        //        /// <param name="RightSide"></param>
-        //        /// <returns></returns>
-        //        public static dynamic DynamicMin(dynamic LeftSide, dynamic RightSide)
-        //        {
-        //            if (LeftSide < RightSide) { return LeftSide; }
-        //            else { return RightSide; }
-        //        }
+        /// <summary>
+        /// </summary>
+        /// <param name="LeftSide"></param>
+        /// <param name="RightSide"></param>
+        /// <returns></returns>
+        public static dynamic DynamicMin(dynamic LeftSide, dynamic RightSide)
+        {
+            if (LeftSide < RightSide) { return LeftSide; }
+            else { return RightSide; }
+        }
 
         //#if (!BlazesGlobalCode_RestrictConversionBetweenSuperDec)
         //        /// <summary>
@@ -306,20 +306,20 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //            return Sum;
         //        }
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="value"></param>
-        //        public static explicit operator SmallDec(bool value)
-        //        {
-        //            if (value == false)
-        //            {
-        //                return SmallDec.Zero;
-        //            }
-        //            else
-        //            {
-        //                return 1;
-        //            }
-        //        }
+        /// <summary>
+        /// </summary>
+        /// <param name="value"></param>
+        public static explicit operator SmallDec(bool value)
+        {
+            if (value == false)
+            {
+                return SmallDec.Zero;
+            }
+            else
+            {
+                return new SmallDec(1,0);
+            }
+        }
 
         //        /// <summary>
         //        /// </summary>
@@ -337,21 +337,21 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //            return (int)this;
         //        }
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="value"></param>
-        //        public static explicit operator SmallDec(BinaryReader value)
-        //        {
-        //            return (SmallDec)value.ToString();
-        //        }
+        /// <summary>
+        /// </summary>
+        /// <param name="value"></param>
+        public static explicit operator SmallDec(BinaryReader value)
+        {
+            return (SmallDec)value.ToString();
+        }
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="value"></param>
-        //        public static explicit operator SmallDec(Stream value)
-        //        {
-        //            return (SmallDec)value.ToString();
-        //        }
+        /// <summary>
+        /// </summary>
+        /// <param name="value"></param>
+        public static explicit operator SmallDec(Stream value)
+        {
+            return (SmallDec)value.ToString();
+        }
 
         //        /// <summary>
         //        /// Convert from List(SmallDec) to List(float)

@@ -12,8 +12,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
     using System.ComponentModel;
     using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
-    // Represent +- 65535.999999(Can only represent +- 65535.9999 if SmallDec_ReducedSize or SmallDec_UseLegacyStorage set) with 100% consistency of accuracy
-    //(Aka SuperDec_Int16_4Decimal)
+    // Represent +- 65535.999999999(Can only represent +- 65535.9999 if SmallDec_ReducedSize or SmallDec_UseLegacyStorage set) with 100% consistency of accuracy
+    //(Aka SuperDec_Int16_9Decimal Or SuperDec_Int16_4Decimal)
     public
 #if (!BlazesGlobalCode_SmallDec_AsStruct)
     sealed
@@ -24,7 +24,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #else
     struct
 #endif
-    SmallDec : IFormattable
+    SmallDec : IFormattable, INotifyPropertyChanged
     {
     //    // Self Less than Value
     //    /// <summary>

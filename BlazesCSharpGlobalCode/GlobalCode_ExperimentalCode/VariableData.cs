@@ -1,4 +1,6 @@
-    public class VariableData<T> : INotifyPropertyChanged
+using System.ComponentModel;
+
+public class VariableData<T> : INotifyPropertyChanged
     {
         /// <summary>
         /// Gets or sets the current value.

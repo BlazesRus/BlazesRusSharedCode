@@ -9,35 +9,23 @@ using System;
 //CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Globalization;
-    using System.Windows;
     using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
-#pragma warning disable CC0001 // You should use 'var' whenever possible.
-#pragma warning disable CC0105 // You should use 'var' whenever possible.
-#pragma warning disable CS3001 // Argument type is not CLS-compliant
-#pragma warning disable CS3002 // Return type is not CLS-compliant
-#pragma warning disable CS3003 // Type is not CLS-compliant
-#pragma warning disable CC0003 // Your catch should include an Exception
-#pragma warning disable CS0436 // Type conflicts with imported type
-#pragma warning disable CS3021 // Type or member does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute
-    //Aka SuperDec_Int16_4Decimal
+    // Represent +- 65535.999999999(Can only represent +- 65535.9999 if SmallDec_ReducedSize or SmallDec_UseLegacyStorage set) with 100% consistency of accuracy
+    //(Aka SuperDec_Int16_9Decimal Or SuperDec_Int16_4Decimal)
     public
-#if (BlazesGlobalCode_SmallDec_AsClass)
+#if (!BlazesGlobalCode_SmallDec_AsStruct)
     sealed
 #endif
     partial
-#if (BlazesGlobalCode_SmallDec_AsClass)
+#if (!BlazesGlobalCode_SmallDec_AsStruct)
     class
 #else
     struct
 #endif
-    SmallDec : IComparable<SmallDec>, IConvertible, IEquatable<SmallDec>
-#if (!SmallDec_DisableCustomTypeDescriptor)
-    , ICustomTypeDescriptor
-#endif
+    SmallDec : IFormattable, INotifyPropertyChanged
     {
         /// <summary>
         /// Display string with empty decimal places removed
@@ -49,11 +37,19 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             var builder = new System.Text.StringBuilder("");
             ushort IntegerHalf = intValue;
             byte CurrentDigit;
+#if (SmallDec_UseLegacyStorage)
             if (DecBoolStatus == 1)
             {
                 //Value += "-";
                 builder.Append("-");
             }
+#else
+            bool IsNegative = DecimalStatus < 0;
+            if (IsNegative)
+            {
+                builder.Append("-");
+            }
+#endif
 
             for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; Index--)
             {
@@ -62,9 +58,24 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 //Value += DigitAsChar(CurrentDigit);
                 builder.Append(DigitAsChar(CurrentDigit));
             }
-            ushort DecimalHalf = DecimalStatus;
+#if (SmallDec_UseLegacyStorage)
             if (DecimalStatus != 0)
+#else
+            if (DecimalStatus != 0 && DecimalStatus != NegativeWholeNumber)
+#endif
             {
+#if (SmallDec_UseLegacyStorage || SmallDec_ReducedSize)
+                ushort DecimalHalf =
+#if (SmallDec_ReducedSize)
+                (ushort)
+#endif
+                DecimalStatus;
+#else
+                uint DecimalHalf = (uint)DecimalStatus;
+#endif
+#if (SmallDec_UseLegacyStorage)
+                if (IsNegative&&DecimalStatus != NegativeWholeNumber) { DecimalHalf *= -1; }
+#endif
                 //Value += ".";
                 builder.Append(".");
                 for (sbyte Index = 3; Index >= 0; Index--)
@@ -72,7 +83,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     if (DecimalStatus != 0)
                     {
                         CurrentDigit = (byte)(DecimalHalf / Math.Pow(10, Index));
-                        DecimalHalf -= (ushort)(CurrentDigit * Math.Pow(10, Index));
+#if (SmallDec_UseLegacyStorage || SmallDec_ReducedSize)
+                        DecimalHalf -= (ushort)
+#else
+                        DecimalHalf -= (uint)
+#endif
+                        (CurrentDigit * Math.Pow(10, Index));
                         //Value += DigitAsChar(CurrentDigit);
                         builder.Append(DigitAsChar(CurrentDigit));
                     }
@@ -91,17 +107,43 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             string Value = "";
             ushort IntegerHalf = intValue;
             byte CurrentDigit;
-            if (DecBoolStatus == 1) { Value += "-"; }
+#if (SmallDec_UseLegacyStorage)
+            if (DecBoolStatus == 1)
+            {
+                Value += "-";
+            }
+#else
+            bool IsNegative = DecimalStatus < 0;
+            if (IsNegative)
+            {
+                Value += "-";
+            }
+#endif
             for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; Index--)
             {
                 CurrentDigit = (byte)(IntegerHalf / Math.Pow(10, Index));
                 IntegerHalf -= (ushort)(CurrentDigit * Math.Pow(10, Index));
                 Value += DigitAsChar(CurrentDigit);
             }
-            Value += ".";
+#if (SmallDec_UseLegacyStorage)
             if (DecimalStatus != 0)
+#else
+            if (DecimalStatus != 0 && DecimalStatus != NegativeWholeNumber)
+#endif
             {
-                ushort DecimalHalf = DecimalStatus;
+                Value += ".";
+#if (SmallDec_UseLegacyStorage || SmallDec_ReducedSize)
+                ushort DecimalHalf =
+#if (SmallDec_ReducedSize)
+                (ushort)
+#endif
+                DecimalStatus;
+#else
+                uint DecimalHalf = (uint)DecimalStatus;
+#endif
+#if (SmallDec_UseLegacyStorage)
+                if (IsNegative&&DecimalStatus != NegativeWholeNumber) { DecimalHalf *= -1; }
+#endif
                 for (sbyte Index = 3; Index >= 0; Index--)
                 {
                     CurrentDigit = (byte)(DecimalHalf / Math.Pow(10, Index));
@@ -111,14 +153,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             else
             {
-                Value += "0000";
+#if (SmallDec_UseLegacyStorage || SmallDec_ReducedSize)
+                Value += ".0000";
+#else
+                Value += ".000000000";
+#endif
             }
             return Value;
         }
 
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
@@ -138,7 +183,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override string ToString()
@@ -158,7 +203,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //}
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="culture"></param>
         /// <returns></returns>
@@ -168,7 +213,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="numberFormat"></param>
         /// <returns></returns>
@@ -177,270 +222,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return String.Format(numberFormat, this.ToOptimalString());//Ensure to reformat string based on format type
         }
 
-        //From this type to Standard types
-
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator decimal(SmallDec self)
-        {
-            decimal Value = (decimal)self.intValue;
-            Value += (decimal)(self.DecimalStatus * 0.0001);
-            if (self.DecBoolStatus == 1) { Value *= -1; }
-            return Value;
-        }
-
-        /// <summary>
-        /// SmallDec to double explicit conversion
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator double(SmallDec self)
-        {
-            double Value = 0.0;
-            Value += self.intValue;
-            Value += (self.DecimalStatus * 0.0001);
-            if (self.DecBoolStatus == 1) { Value *= -1; }
-            return Value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator float(SmallDec self)
-        {
-            float Value = 0.0f;
-            Value += self.intValue;
-            Value += (float)(self.DecimalStatus * 0.0001);
-            if (self.DecBoolStatus == 1) { Value *= -1; }
-            return Value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator int(SmallDec self)
-        {
-            int Value = (int)self.intValue;
-            if (self.DecimalStatus == 1) { Value *= -1; }
-            return Value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator long(SmallDec self)
-        {
-            long Value = self.intValue;
-            if (self.DecimalStatus == 1) { Value *= -1; }
-            return Value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator uint(SmallDec self)
-        {
-            return self.intValue;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator ulong(SmallDec self)
-        {
-            return self.intValue;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator byte(SmallDec self)
-        {
-            byte Value = (byte)self.intValue;
-            return Value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator sbyte(SmallDec self)
-        {
-            sbyte Value = (sbyte)self.intValue;
-            if (self.DecimalStatus == 1) { Value *= -1; }
-            return Value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator ushort(SmallDec self)
-        {
-            ushort Value = (ushort)self.intValue;
-            return Value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator short(SmallDec self)
-        {
-            short Value = (short)self.intValue;
-            if (self.DecimalStatus == 1) { Value *= -1; }
-            return Value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        static public explicit operator string(SmallDec self) => self.ToOptimalString();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator bool(SmallDec self)
-        {
-            return (int)self == 1;
-        }
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="self"></param>
-        //static public explicit operator dynamic(SmallDec self) => SmallDec.Initialize(self);
-
-        //From Standard types to this type 
-#if (BlazesGlobalCode_StandardExplicitConversionFrom)
-        public static explicit operator SmallDec(decimal Value)	{	return new SmallDec(Value);	}
-
-        public static explicit operator SmallDec(double Value)	{	return new SmallDec(Value);	}
-
-        public static explicit operator SmallDec(SmallDec Value)	{	return new SmallDec(Value);	}
-
-        public static explicit operator SmallDec(int Value)	{	return new SmallDec(Value);	}
-
-        public static explicit operator SmallDec(uint Value)	{	return new SmallDec(Value);	}
-
-        public static explicit operator SmallDec(long Value)	{	return new SmallDec(Value);	}
-
-        public static explicit operator SmallDec(ulong Value)	{	return new SmallDec(Value);	}
-
-        public static explicit operator SmallDec(ushort Value)	{	return new SmallDec(Value);	}
-
-        public static explicit operator SmallDec(short Value)	{	return new SmallDec(Value);	}
-
-        public static explicit operator SmallDec(sbyte Value)	{	return new SmallDec(Value);	}
-
-        public static explicit operator SmallDec(byte Value)	{	return new SmallDec(Value);	}
-
-        public static explicit operator SmallDec(string Value) { return new SmallDec(Value); }
-
-        public static explicit operator SmallDec(DependencyProperty Value)
-        {
-            SmallDec NewValue = Value.ToString();
-            return NewValue;
-        }
-#else
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator SmallDec(decimal Value) { return new SmallDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator SmallDec(double Value) { return new SmallDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator SmallDec(float Value) { return new SmallDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator SmallDec(int Value) { return new SmallDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator SmallDec(uint Value) { return new SmallDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator SmallDec(long Value) { return new SmallDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator SmallDec(ulong Value) { return new SmallDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator SmallDec(ushort Value) { return new SmallDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator SmallDec(short Value) { return new SmallDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator SmallDec(sbyte Value) { return new SmallDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator SmallDec(byte Value) { return new SmallDec(Value); }
-
-        /// <summary>
-        /// String converted to SmallDec
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator SmallDec(string Value) { return new SmallDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator SmallDec(DependencyProperty Value)
-        {
-            //Type PropertyType = Value.PropertyType;
-            SmallDec NewValue = Value.ToString();
-            return NewValue;
-        }
-#endif
-        /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Value"></param>
         public SmallDec(sbyte Value)
         {
+#if (SmallDec_UseLegacyStorage)
             if (Value < 0)
             {
                 this.DecBoolStatus = 1;
@@ -450,16 +238,22 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 this.DecBoolStatus = 0;
             }
+#else
+            if (Value < 0) { this.decimalStatus = NegativeWholeNumber; Value *= -1; }
+#endif
             this.intValue = (ushort)Value;
+#if (SmallDec_UseLegacyStorage)
             this.decimalStatus = 0;
+#endif
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Value"></param>
         public SmallDec(short Value)
         {
+#if (SmallDec_UseLegacyStorage)
             if (Value < 0)
             {
                 this.DecBoolStatus = 1;
@@ -469,16 +263,22 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 this.DecBoolStatus = 0;
             }
+#else
+            if (Value < 0) { this.decimalStatus = NegativeWholeNumber; Value *= -1; }
+#endif
             this.intValue = (ushort)Value;
+#if (SmallDec_UseLegacyStorage)
             this.decimalStatus = 0;
+#endif
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Value"></param>
         public SmallDec(int Value)
         {
+#if (SmallDec_UseLegacyStorage)
             if (Value < 0)
             {
                 this.DecBoolStatus = 1;
@@ -488,39 +288,48 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 this.DecBoolStatus = 0;
             }
+#else
+            if (Value < 0) { this.decimalStatus = NegativeWholeNumber; Value *= -1; }
+#endif
             //Cap value if too big on initialize
             if (Value > 65535)
             {
                 Value = 65535;
             }
             this.intValue = (ushort)Value;
+#if (SmallDec_UseLegacyStorage)
             this.decimalStatus = 0;
+#endif
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Value"></param>
         public SmallDec(byte Value)
         {
             this.intValue = (ushort)Value;
             this.decimalStatus = 0;
-            this.DecBoolStatus = 0;
+#if (SmallDec_UseLegacyStorage)
+            this.decimalStatus = 0;
+#endif
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Value"></param>
         public SmallDec(ushort Value)
         {
             this.intValue = Value;
             this.decimalStatus = 0;
+#if (SmallDec_UseLegacyStorage)
             this.DecBoolStatus = 0;
+#endif
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Value"></param>
         public SmallDec(uint Value)
@@ -532,11 +341,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             this.intValue = (ushort)Value;
             this.decimalStatus = 0;
+#if (SmallDec_UseLegacyStorage)
             this.DecBoolStatus = 0;
+#endif
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Value"></param>
         public SmallDec(ulong Value)
@@ -548,15 +359,18 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             this.intValue = (ushort)Value;
             this.decimalStatus = 0;
+#if (SmallDec_UseLegacyStorage)
             this.DecBoolStatus = 0;
+#endif
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Value"></param>
         public SmallDec(long Value)
         {
+#if (SmallDec_UseLegacyStorage)
             if (Value < 0)
             {
                 this.DecBoolStatus = 1;
@@ -566,21 +380,27 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 this.DecBoolStatus = 0;
             }
+#else
+            if (Value < 0) { this.decimalStatus = NegativeWholeNumber; Value *= -1; }
+#endif
             //Cap value if too big on initialize
             if (Value > 65535)
             {
                 Value = 65535;
             }
             this.intValue = (ushort)Value;
+#if (SmallDec_UseLegacyStorage)
             this.decimalStatus = 0;
+#endif
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Value"></param>
         public SmallDec(double Value)
         {
+#if (SmallDec_UseLegacyStorage)
             if (Value < 0)
             {
                 Value *= -1;
@@ -590,6 +410,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 DecBoolStatus = 0;
             }
+#else
+            bool IsNegative = Value < 0;
+            if (IsNegative) { Value *= -1.0; }
+#endif
             ulong WholeValue = (ulong)Math.Floor(Value);
             //Cap value if too big on initialize (preventing overflow on conversion)
             if (Value > 65535)
@@ -598,15 +422,35 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             Value -= WholeValue;
             intValue = (ushort)WholeValue;
+#if (SmallDec_UseLegacyStorage)
             decimalStatus = (ushort)(Value * 10000);
+#elif (SmallDec_ReducedSize)
+            decimalStatus = (short)(Value * 10000);
+#else
+            decimalStatus = (int)(Value * 10000000000);
+#endif
+#if (!SmallDec_UseLegacyStorage)
+            if (IsNegative)
+            {
+                if (decimalStatus == 0)
+                {
+                    decimalStatus = NegativeWholeNumber;
+                }
+                else
+                {
+                    decimalStatus *= -1;
+                }
+            }
+#endif
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Value"></param>
         public SmallDec(float Value)
         {
+#if (SmallDec_UseLegacyStorage)
             if (Value < 0.0f)
             {
                 Value *= -1;
@@ -616,6 +460,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 DecBoolStatus = 0;
             }
+#else
+            bool IsNegative = Value < 0;
+            if (IsNegative) { Value *= -1.0f; }
+#endif
             ulong WholeValue = (ulong)Math.Floor(Value);
             //Cap value if too big on initialize (preventing overflow on conversion)
             if (Value > 65535)
@@ -624,15 +472,35 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             Value -= WholeValue;
             intValue = (ushort)WholeValue;
+#if (SmallDec_UseLegacyStorage)
             decimalStatus = (ushort)(Value * 10000);
+#elif (SmallDec_ReducedSize)
+            decimalStatus = (short)(Value * 10000);
+#else
+            decimalStatus = (int)(Value * 10000000000);
+#endif
+#if (!SmallDec_UseLegacyStorage)
+            if (IsNegative)
+            {
+                if (decimalStatus == 0)
+                {
+                    decimalStatus = NegativeWholeNumber;
+                }
+                else
+                {
+                    decimalStatus *= -1;
+                }
+            }
+#endif
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Value"></param>
         public SmallDec(decimal Value)
         {
+#if (SmallDec_UseLegacyStorage)
             if (Value < 0.0M)
             {
                 Value *= -1;
@@ -642,6 +510,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 DecBoolStatus = 0;
             }
+#else
+            bool IsNegative = Value < 0;
+            if (IsNegative) { Value *= -1.0m; }
+#endif
             ulong WholeValue = (ulong)Math.Floor(Value);
             //Cap value if too big on initialize (preventing overflow on conversion)
             if (Value > 65535)
@@ -650,7 +522,26 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             Value -= WholeValue;
             intValue = (ushort)WholeValue;
+#if (SmallDec_UseLegacyStorage)
             decimalStatus = (ushort)(Value * 10000);
+#elif (SmallDec_ReducedSize)
+            decimalStatus = (short)(Value * 10000);
+#else
+            decimalStatus = (int)(Value * 10000000000);
+#endif
+#if (!SmallDec_UseLegacyStorage)
+            if (IsNegative)
+            {
+                if (decimalStatus == 0)
+                {
+                    decimalStatus = NegativeWholeNumber;
+                }
+                else
+                {
+                    decimalStatus *= -1;
+                }
+            }
+#endif
         }
 
         /// <summary>
@@ -661,7 +552,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         {
             intValue = 0;
             decimalStatus = 0;
+#if (SmallDec_UseLegacyStorage)
             DecBoolStatus = 0;
+#else
+            bool IsNegative = false;
+#endif
             sbyte PlaceNumber;
             //var StringLength = (byte)Value.Length;
             string WholeNumberBuffer = "";
@@ -687,7 +582,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 }
                 else if (StringChar == '-')
                 {
+#if (SmallDec_UseLegacyStorage)
                     DecBoolStatus = 1;
+#else
+                    IsNegative = true;
+#endif
                 }
                 else if (StringChar == '.')
                 {
@@ -722,25 +621,31 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     PlaceNumber--;
                 }
             }
+#if (!SmallDec_UseLegacyStorage)
+            if (IsNegative)
+            {
+                DecimalStatus *= -1;
+            }
+#endif
             //#if (DEBUG)
             //            PlaceNumber = 0;
             //#endif
         }
 
-        /// <summary>
-        /// Initialize constructor
-        /// </summary>
-        /// <param name="Value"></param>
-        public SmallDec(DependencyProperty Value)
-        {
-            var NewValue = (SmallDec)Value;
-            this.DecBoolStatus = NewValue.DecBoolStatus;
-            this.intValue = NewValue.intValue;
-            this.decimalStatus = NewValue.DecimalStatus;
-        }
+        ///// <summary>
+        ///// Initialize constructor
+        ///// </summary>
+        ///// <param name="Value"></param>
+        //public SmallDec(DependencyProperty Value)
+        //{
+        //    var NewValue = (SmallDec)Value;
+        //    this.DecBoolStatus = NewValue.DecBoolStatus;
+        //    this.intValue = NewValue.intValue;
+        //    this.decimalStatus = NewValue.DecimalStatus;
+        //}
 
         /////// <summary>
-        /////// 
+        ///////
         /////// </summary>
         /////// <param name="self"></param>
         /////// <param name="TargetProperty"></param>
@@ -749,5 +654,263 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //{
         //    SetValue(TargetProperty, self.ToString());
         //}
+
+        //        //From this type to Standard types
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="self"></param>
+        //        public static explicit operator decimal(SmallDec self)
+        //        {
+        //            decimal Value = (decimal)self.intValue;
+        //            Value += (decimal)(self.DecimalStatus * 0.0001);
+        //            if (self.DecBoolStatus == 1) { Value *= -1; }
+        //            return Value;
+        //        }
+
+        //        /// <summary>
+        //        /// SmallDec to double explicit conversion
+        //        /// </summary>
+        //        /// <param name="self"></param>
+        //        public static explicit operator double(SmallDec self)
+        //        {
+        //            double Value = 0.0;
+        //            Value += self.intValue;
+        //            Value += (self.DecimalStatus * 0.0001);
+        //            if (self.DecBoolStatus == 1) { Value *= -1; }
+        //            return Value;
+        //        }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="self"></param>
+        //        public static explicit operator float(SmallDec self)
+        //        {
+        //            float Value = 0.0f;
+        //            Value += self.intValue;
+        //            Value += (float)(self.DecimalStatus * 0.0001);
+        //            if (self.DecBoolStatus == 1) { Value *= -1; }
+        //            return Value;
+        //        }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="self"></param>
+        //        public static explicit operator int(SmallDec self)
+        //        {
+        //            int Value = (int)self.intValue;
+        //            if (self.DecimalStatus == 1) { Value *= -1; }
+        //            return Value;
+        //        }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="self"></param>
+        //        public static explicit operator long(SmallDec self)
+        //        {
+        //            long Value = self.intValue;
+        //            if (self.DecimalStatus == 1) { Value *= -1; }
+        //            return Value;
+        //        }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="self"></param>
+        //        public static explicit operator uint(SmallDec self)
+        //        {
+        //            return self.intValue;
+        //        }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="self"></param>
+        //        public static explicit operator ulong(SmallDec self)
+        //        {
+        //            return self.intValue;
+        //        }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="self"></param>
+        //        public static explicit operator byte(SmallDec self)
+        //        {
+        //            byte Value = (byte)self.intValue;
+        //            return Value;
+        //        }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="self"></param>
+        //        public static explicit operator sbyte(SmallDec self)
+        //        {
+        //            sbyte Value = (sbyte)self.intValue;
+        //            if (self.DecimalStatus == 1) { Value *= -1; }
+        //            return Value;
+        //        }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="self"></param>
+        //        public static explicit operator ushort(SmallDec self)
+        //        {
+        //            ushort Value = (ushort)self.intValue;
+        //            return Value;
+        //        }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="self"></param>
+        //        public static explicit operator short(SmallDec self)
+        //        {
+        //            short Value = (short)self.intValue;
+        //            if (self.DecimalStatus == 1) { Value *= -1; }
+        //            return Value;
+        //        }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="self"></param>
+        //        static public explicit operator string(SmallDec self) => self.ToOptimalString();
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="self"></param>
+        //        public static explicit operator bool(SmallDec self)
+        //        {
+        //            return (int)self == 1;
+        //        }
+
+        //        ///// <summary>
+        //        /////
+        //        ///// </summary>
+        //        ///// <param name="self"></param>
+        //        //static public explicit operator dynamic(SmallDec self) => SmallDec.Initialize(self);
+
+        //        //From Standard types to this type
+        //#if (BlazesGlobalCode_StandardExplicitConversionFrom)
+        //        public static explicit operator SmallDec(decimal Value)	{	return new SmallDec(Value);	}
+
+        //        public static explicit operator SmallDec(double Value)	{	return new SmallDec(Value);	}
+
+        //        public static explicit operator SmallDec(SmallDec Value)	{	return new SmallDec(Value);	}
+
+        //        public static explicit operator SmallDec(int Value)	{	return new SmallDec(Value);	}
+
+        //        public static explicit operator SmallDec(uint Value)	{	return new SmallDec(Value);	}
+
+        //        public static explicit operator SmallDec(long Value)	{	return new SmallDec(Value);	}
+
+        //        public static explicit operator SmallDec(ulong Value)	{	return new SmallDec(Value);	}
+
+        //        public static explicit operator SmallDec(ushort Value)	{	return new SmallDec(Value);	}
+
+        //        public static explicit operator SmallDec(short Value)	{	return new SmallDec(Value);	}
+
+        //        public static explicit operator SmallDec(sbyte Value)	{	return new SmallDec(Value);	}
+
+        //        public static explicit operator SmallDec(byte Value)	{	return new SmallDec(Value);	}
+
+        //        public static explicit operator SmallDec(string Value) { return new SmallDec(Value); }
+
+        //        public static explicit operator SmallDec(DependencyProperty Value)
+        //        {
+        //            SmallDec NewValue = Value.ToString();
+        //            return NewValue;
+        //        }
+        //#else
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="Value"></param>
+        //        public static implicit operator SmallDec(decimal Value) { return new SmallDec(Value); }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="Value"></param>
+        //        public static implicit operator SmallDec(double Value) { return new SmallDec(Value); }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="Value"></param>
+        //        public static implicit operator SmallDec(float Value) { return new SmallDec(Value); }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="Value"></param>
+        //        public static implicit operator SmallDec(int Value) { return new SmallDec(Value); }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="Value"></param>
+        //        public static implicit operator SmallDec(uint Value) { return new SmallDec(Value); }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="Value"></param>
+        //        public static implicit operator SmallDec(long Value) { return new SmallDec(Value); }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="Value"></param>
+        //        public static implicit operator SmallDec(ulong Value) { return new SmallDec(Value); }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="Value"></param>
+        //        public static implicit operator SmallDec(ushort Value) { return new SmallDec(Value); }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="Value"></param>
+        //        public static implicit operator SmallDec(short Value) { return new SmallDec(Value); }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="Value"></param>
+        //        public static implicit operator SmallDec(sbyte Value) { return new SmallDec(Value); }
+
+        //        /// <summary>
+        //        ///
+        //        /// </summary>
+        //        /// <param name="Value"></param>
+        //        public static implicit operator SmallDec(byte Value) { return new SmallDec(Value); }
+
+        //        /// <summary>
+        //        /// String converted to SmallDec
+        //        /// </summary>
+        //        /// <param name="Value"></param>
+        //        public static implicit operator SmallDec(string Value) { return new SmallDec(Value); }
+
+        //        ///// <summary>
+        //        /////
+        //        ///// </summary>
+        //        ///// <param name="Value"></param>
+        //        //public static implicit operator SmallDec(DependencyProperty Value)
+        //        //{
+        //        //    //Type PropertyType = Value.PropertyType;
+        //        //    SmallDec NewValue = Value.ToString();
+        //        //    return NewValue;
+        //        //}
+        //#endif
     }
 }

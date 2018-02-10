@@ -28,7 +28,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #else
     struct
 #endif
-    SmallDec : IFormattable
+    SmallDec : IFormattable, INotifyPropertyChanged
     {
 
     }

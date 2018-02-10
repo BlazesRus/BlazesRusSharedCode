@@ -11,17 +11,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
     using System.ComponentModel;
 
-#pragma warning disable CC0001 // You should use 'var' whenever possible.
-#pragma warning disable CC0105 // You should use 'var' whenever possible.
-#pragma warning disable CS3001 // Argument type is not CLS-compliant
-#pragma warning disable CS3002 // Return type is not CLS-compliant
-#pragma warning disable CS3003 // Type is not CLS-compliant
-#pragma warning disable CC0003 // Your catch should include an Exception
-#pragma warning disable CS0436 // Type conflicts with imported type
-#pragma warning disable CS3021 // Type or member does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute
-
     // Represent +- 65535.999999(Can only represent +- 65535.9999 if SmallDec_ReducedSize or SmallDec_UseLegacyStorage set) with 100% consistency of accuracy
-    //(Aka SuperDec_Int16_4Decimal)
+    //(Aka SuperDec_Int16_9Decimal Or SuperDec_Int16_4Decimal)
     public
 #if (!BlazesGlobalCode_SmallDec_AsStruct)
     sealed
@@ -32,7 +23,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #else
     struct
 #endif
-    SmallDec : IFormattable
+    SmallDec : IFormattable, INotifyPropertyChanged
     {
         ///// <summary>
         ///// </summary>
