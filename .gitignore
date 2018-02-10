@@ -12,3 +12,4 @@ packages/
 /*.dll
 /*.lib
 /*.tlog
+/.vs
