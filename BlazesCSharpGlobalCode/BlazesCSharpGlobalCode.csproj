@@ -6,7 +6,7 @@
       <Configuration>Debug</Configuration>
       <Platform>AnyCPU</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
+    <ProjectConfiguration Include="Release|AnyCPU">
       <Configuration>Release</Configuration>
       <Platform>AnyCPU</Platform>
     </ProjectConfiguration>
@@ -102,47 +102,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_Int16_4Decimal.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_OperatorFunctions.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_OtherConversions.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_Rounding.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_TrigometricFunctions.cs" />
+    <Compile Include="GlobalCode_IniData\IniData.cs" />
+    <Compile Include="GlobalCode_StringFunctions\StringFunctions.cs" />
+    <Compile Include="GlobalCode_VariableConversionFunctions\TypeDataInfo.cs" />
+    <Compile Include="GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="GlobalCode_ExperimentalCode\CustomDec.cs"/>
-<!--     <Compile Include="GlobalCode_ExperimentalCode\SmallDecCollection.cs"/>
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile> -->
-    <!--     <Compile Include="GlobalCode_ExperimentalCode\SmallDecSliderTickerFeatures.cs" > <Link>GlobalCode_ExperimentalCode\%(FileName)</Link></Compile> -->
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDecGlobalCode.cs"/>
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_Int32_9Decimal.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_LargeDec_OperatorFunctions.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_MediumDec_AlternativeOperatorFunctions.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_MediumDec_OperatorFunctions.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_ModerateDec_OperatorFunctions.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_PercentValV2.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_PercentValV2_OtherCode.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_Int16_4Decimal.cs"/>
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_OperatorFunctions.cs"/>
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_OtherConversions.cs"/>
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_Rounding.cs"/>
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_TrigometricFunctions.cs"/>
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_TypeConverter.cs"/>
-  </ItemGroup>
-<!--   <ItemGroup Label="GUIElements">
+  <!--   <ItemGroup Label="GUIElements">
     <Compile Include="GlobalCode_ExperimentalCode\SmallDecGUIElement.xaml.cs">
       <DependentUpon>SmallDecGUIElement.xaml</DependentUpon>
       <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
@@ -177,18 +148,8 @@
     </Page>
   </ItemGroup> -->
   <ItemGroup>
-    <Compile Include="GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cs"/>
-    <Compile Include="GlobalCode_IniData\IniData.cs"/>
-    <Compile Include="GlobalCode_StringFunctions\StringFunctions.cs"/>
-    <Compile Include="GlobalCode_VariableConversionFunctions\*.*">
-        <Link>GlobalCode_VariableConversionFunctions\%(FileName)</Link>
-    </Compile>
-    <Compile Include="GlobalCode_VariableLists\*.*">
-        <Link>GlobalCode_VariableLists\%(FileName)</Link>
-    </Compile>
-<!--     <Compile Include="GlobalMiscCode\*.*">
-        <Link>GlobalMiscCode\%(FileName)</Link>
-    </Compile> -->
+    <Folder Include="GlobalCode_VariableLists\" />
+    <Folder Include="GlobalMiscCode\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -15,87 +15,105 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
     using System.Windows;
     using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
-#pragma warning disable CC0001 // You should use 'var' whenever possible.
-#pragma warning disable CC0105 // You should use 'var' whenever possible.
-#pragma warning disable CS3001 // Argument type is not CLS-compliant
-#pragma warning disable CS3002 // Return type is not CLS-compliant
-#pragma warning disable CS3003 // Type is not CLS-compliant
-#pragma warning disable CC0003 // Your catch should include an Exception
-#pragma warning disable CS0436 // Type conflicts with imported type
-#pragma warning disable CS3021 // Type or member does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute
     /// <summary>
-    /// Represent +- 65535.9999 with 100% consistency of accuracy(or 6 decimal places worth if SmallDecExpandedDecimal preprocessor used(Not Implemented yet))
-    /// (Aka SuperDec_Int16_4Decimal)
+    /// Represent +- 65535.999999(Can only represent +- 65535.9999 if SmallDec_ReducedSize or SmallDec_UseLegacyStorage set) with 100% consistency of accuracy
+    /// <para/>(Aka SuperDec_Int16_4Decimal)
     /// </summary>
-    [System.ComponentModel.TypeConverter(typeof(SmallDec_TypeConverter))]
-    //[System.Security.SecurityCriticalAttribute]//Allow reflection permissions ;Removing Security Critical status since messes up its usage inside xaml GUIs
-    [CLSCompliant(false)]
-    [SerializableAttribute]
-    [BindableAttribute(true, BindingDirection.TwoWay)]
     public
-#if (BlazesGlobalCode_SmallDec_AsClass)
+#if (!BlazesGlobalCode_SmallDec_AsStruct)
     sealed
 #endif
     partial
-#if (BlazesGlobalCode_SmallDec_AsClass)
+#if (!BlazesGlobalCode_SmallDec_AsStruct)
     class
 #else
     struct
 #endif
-    SmallDec : IComparable<SmallDec>, IConvertible, IEquatable<SmallDec>, IFormattable
-//#if (!SmallDec_DisableCustomTypeDescriptor)
-//    , ICustomTypeDescriptor
-//#endif
+    SmallDec : IFormattable
     {
-        ////Reference current assembly version of type (based on https://stackoverflow.com/questions/909555/how-can-i-get-the-assembly-file-version)
-        //private System.Reflection.Assembly CurrentAssembly
-        //{
-        //    get
-        //    {
-        //        return System.Reflection.Assembly.GetExecutingAssembly();
-        //    }
-        //}
-
-        //private Type CurrentType
-        //{
-        //    get
-        //    {
-        //        return CurrentAssembly.GetType("CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec");
-        //    }
-        //}
-
         /// <summary>
         /// Static variable for displaying how alternative decimal states are handles and such
         /// (so that other assembly versions of the type can see how to handle conversions)<para/>
-        /// Default(0): Use  DecBoolStatus to store negative/positive status<para/>
-        /// (1) : Disable DecBoolStatus and instead use decimalStatus as short to store positive/negative status<para/>
-        /// (2) : Negative/Positive status stored inside decimalStatus as short with DecBoolStatus used to store additional decimal places when needed <para/>
+        /// Default(0): Negative/Positive status stored inside decimalStatus as short with DecBoolStatus used to store additional decimal places when needed <para/>
         /// (Extended to maximum 6 decimal places worth stored), and some additional value representations stored such as +/- Infinity<para/>
+        /// (1) : Disable DecBoolStatus and instead use decimalStatus as short to store positive/negative status<para/>
+        /// (2) : Use  DecBoolStatus to store negative/positive status<para/>
         /// </summary>
         public static byte AlternativeDecimalStateMode
-#if (SmallDec_DecimalStateMode_1)
+#if (SmallDec_ReducedSize)
         = 1;
-#elif (SmallDec_DecimalStateMode_2)
+#elif (SmallDec_UseLegacyStorage)
         = 2;
-#elif (SmallDec_DecimalStateMode_3)
-        = 3;
-#elif (SmallDec_DecimalStateMode_3)
-        = 4;
 #else
         = 0;
 #endif
 
-#if (!SmallDec_DecimalStateMode_1)
+#if (SmallDec_UseLegacyStorage)
         /// <summary>
         /// 0 = Positive;1=Negative;Other states at higher then 1;254 = Positive Infinity;255 = Negative Infinity
         /// </summary>
-        public byte DecBoolStatus;
+        public byte decBoolStatus;
+
+        /// <summary>
+        /// Stores whole half of number
+        /// </summary>
+        public byte DecBoolStatus
+        {
+            get
+            {
+                return intValue;
+            }
+
+            set
+            {
+                intValue = value;
+            }
+        }
 #endif
 
+#if (SmallDec_ReducedSize||SmallDec_UseLegacyStorage)
         /// <summary>
         /// Stores decimal section info (4 Decimal places stored)
         /// </summary>
         private ushort decimalStatus;
+
+        /// <summary>
+        /// Stores decimal section info (4 Decimal places stored)
+        /// </summary>
+        public ushort DecimalStatus
+        {
+            get
+            {
+                return decimalStatus;
+            }
+
+            set
+            {
+                decimalStatus = value;
+            }
+        }
+#else
+        /// <summary>
+        /// Stores decimal section info (6 Decimal places stored)
+        /// </summary>
+        private short decimalStatus;
+
+        /// <summary>
+        /// Stores decimal section info (6 Decimal places stored)
+        /// </summary>
+        public short DecimalStatus
+        {
+            get
+            {
+                return decimalStatus;
+            }
+
+            set
+            {
+                decimalStatus = value;
+            }
+        }
+#endif
 
         /// <summary>
         /// Stores whole half of number
@@ -115,22 +133,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             set
             {
                 intValue = value;
-            }
-        }
-
-        /// <summary>
-        /// Stores decimal section info (4 Decimal places stored)
-        /// </summary>
-        public ushort DecimalStatus
-        {
-            get
-            {
-                return decimalStatus;
-            }
-
-            set
-            {
-                decimalStatus = value;
             }
         }
 
@@ -218,47 +220,58 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             Type ValueType = (Value as object).GetType();
             string ValueTypeName = ValueType.FullName;
             //((System.Runtime.Remoting.ObjectHandle)Value).Unwrap().GetType().ToString();
-            if (ValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec")
+            if (ValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"|| ValueType == SmallDec.GetType())
             {
+#if (SmallDec_ReducedSize || SmallDec_UseLegacyStorage)
                 this.DecBoolStatus = Value.DecBoolStatus;
+#endif
                 this.intValue = Value.IntValue;
                 this.decimalStatus = Value.DecimalStatus;
             }
-#if (!BlazesGlobalCode_Disable128BitFeatures)
-            else if (Value is MediumSuperDec)
-            {
-                intValue = (ushort)Value.IntValue;
-                uint TempDec = Value.DecimalStatus / 100000;
-                DecimalStatus = (ushort)TempDec;
-                DecBoolStatus = Value.DecBoolStatus;
-            }
-            else if (Value is ModerateSuperDec)
-            {
-                intValue = (ushort)Value.IntValue;
-                ulong TempDec = Value.DecimalStatus / 100000000000000;
-                DecimalStatus = (ushort)TempDec;
-                DecBoolStatus = Value.DecBoolStatus;
-            }
-            else if (Value is LargeSuperDec)
-            {
-                intValue = (ushort)Value.IntValue;
-                ulong TempDec = Value.DecimalStatus / 100000000000000;
-                DecimalStatus = (ushort)TempDec;
-                DecBoolStatus = Value.DecBoolStatus;
-            }
-#endif
+//#if (!BlazesGlobalCode_Disable128BitFeatures)
+//            else if (Value is MediumSuperDec)
+//            {
+//                intValue = (ushort)Value.IntValue;
+//                uint TempDec = Value.DecimalStatus / 100000;
+//                DecimalStatus = (ushort)TempDec;
+//                DecBoolStatus = Value.DecBoolStatus;
+//            }
+//            else if (Value is ModerateSuperDec)
+//            {
+//                intValue = (ushort)Value.IntValue;
+//                ulong TempDec = Value.DecimalStatus / 100000000000000;
+//                DecimalStatus = (ushort)TempDec;
+//                DecBoolStatus = Value.DecBoolStatus;
+//            }
+//            else if (Value is LargeSuperDec)
+//            {
+//                intValue = (ushort)Value.IntValue;
+//                ulong TempDec = Value.DecimalStatus / 100000000000000;
+//                DecimalStatus = (ushort)TempDec;
+//                DecBoolStatus = Value.DecBoolStatus;
+//            }
+//#endif
             else if (Value == null)
             {
+#if (BlazesGlobalCode_SmallDec_AsStruct)
                 this = SmallDec.Zero;
+#else
+
+#endif
             }
             else if (ValueType.IsValueType)
             {
+#if (BlazesGlobalCode_SmallDec_AsStruct)
                 dynamic ConvertedValue = Activator.CreateInstance(ValueType);
                 ConvertedValue = System.Convert.ChangeType(Value, ValueType, CultureInfo.CurrentCulture);
                 this = ConvertedValue;
+#else
+
+#endif
             }
             else
             {
+#if (BlazesGlobalCode_SmallDec_AsStruct)
 #pragma warning disable EA002 // Swallow exceptions considered harmful
                 try
                 {
@@ -280,6 +293,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     }
                 }
 #pragma warning restore EA002 // Swallow exceptions considered harmful
+#else
+
+#endif
             }
         }
 
@@ -754,6 +770,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             this.intValue = value.IntValue;
             this.decimalStatus = value.DecimalStatus;
             this.DecBoolStatus = value.DecBoolStatus;
+        }
+
+        public SmallDec()
+        {
         }
 
         /// <summary>

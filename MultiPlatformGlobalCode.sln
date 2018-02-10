@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{39E2626F-3545-4960-A6E8-258AD8476CE5}") = "BlazesAndroidGlobalCode_CPP", "BlazesAndroidGlobalCode_CPP\BlazesAndroidGlobalCode_CPP.androidproj", "{A6E2D4F1-6EE1-4108-8D27-EE2EA69E6ABD}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PoESkillTreeGlobalCode", "..\BlazesCSharpGlobalCode\PoESkillTreeGlobalCode.shproj", "{5CB65268-B099-4B1C-A2AA-F5C95B887B5F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazesCSharpGlobalCode", "BlazesCSharpGlobalCode\BlazesCSharpGlobalCode.csproj", "{25767689-5C49-4AA6-952A-262BE9C2D682}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlazesCPPCLRGlobalCode", "BlazesCPPCLRGlobalCode\BlazesCPPCLRGlobalCode.vcxproj", "{143E6038-E5DB-49FE-BAD3-BF2D61278D8D}"
@@ -20,9 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GlobalCodeInfo", "GlobalCod
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\BlazesCSharpGlobalCode\PoESkillTreeGlobalCode.projitems*{5cb65268-b099-4b1c-a2aa-f5c95b887b5f}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
