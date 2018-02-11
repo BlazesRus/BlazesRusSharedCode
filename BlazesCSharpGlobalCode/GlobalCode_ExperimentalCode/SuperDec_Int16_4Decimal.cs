@@ -12,13 +12,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Globalization;
-    using System.Windows;
-    using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
     /// <summary>
     /// Represent +- 65535.999999999(Can only represent +- 65535.9999 if SmallDec_ReducedSize or SmallDec_UseLegacyStorage set) with 100% consistency of accuracy
     /// <para/>(Aka SuperDec_Int16_9Decimal Or SuperDec_Int16_4Decimal)
     /// </summary>
+    //[System.ComponentModel.TypeConverter(typeof(SmallDec_TypeConverter))]
+    ////[System.Security.SecurityCriticalAttribute]//Allow reflection permissions ;Removing Security Critical status since messes up its usage inside xaml GUIs
+    //[CLSCompliant(false)]
+    //[SerializableAttribute]
+    //[BindableAttribute(true, BindingDirection.TwoWay)]
     public
 #if (!BlazesGlobalCode_SmallDec_AsStruct)
     sealed
@@ -29,7 +32,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #else
     struct
 #endif
-    SmallDec : IFormattable, INotifyPropertyChanged
+    SmallDec : IFormattable, INotifyPropertyChanged, IComparable<SmallDec>, IConvertible, IEquatable<SmallDec>
     {
 #if (SmallDec_ReducedSize)
         static short NegativeWholeNumber = -10000;
@@ -51,6 +54,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         = 2;
 #else
         = 0;
+
 #endif
 
 #if (SmallDec_UseLegacyStorage)
@@ -119,6 +123,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
         }
 #else
+
         /// <summary>
         /// Stores decimal section info and Negative/Positive Status(9 Decimal places stored)
         /// </summary>
@@ -139,6 +144,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 decimalStatus = value;
             }
         }
+
 #endif
 
         /// <summary>
@@ -246,7 +252,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             Type ValueType = (Value as object).GetType();
             string ValueTypeName = ValueType.FullName;
             //((System.Runtime.Remoting.ObjectHandle)Value).Unwrap().GetType().ToString();
-            if (ValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"|| ValueType == typeof(SmallDec))
+            if (ValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec" || ValueType == typeof(SmallDec))
             {
 #if (SmallDec_ReducedSize || SmallDec_UseLegacyStorage)
                 this.DecBoolStatus = Value.DecBoolStatus;
@@ -254,29 +260,31 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 this.intValue = Value.IntValue;
                 this.decimalStatus = Value.DecimalStatus;
             }
-//#if (!BlazesGlobalCode_Disable128BitFeatures)
-//            else if (Value is MediumSuperDec)
-//            {
-//                intValue = (ushort)Value.IntValue;
-//                uint TempDec = Value.DecimalStatus / 100000;
-//                DecimalStatus = (ushort)TempDec;
-//                DecBoolStatus = Value.DecBoolStatus;
-//            }
-//            else if (Value is ModerateSuperDec)
-//            {
-//                intValue = (ushort)Value.IntValue;
-//                ulong TempDec = Value.DecimalStatus / 100000000000000;
-//                DecimalStatus = (ushort)TempDec;
-//                DecBoolStatus = Value.DecBoolStatus;
-//            }
-//            else if (Value is LargeSuperDec)
-//            {
-//                intValue = (ushort)Value.IntValue;
-//                ulong TempDec = Value.DecimalStatus / 100000000000000;
-//                DecimalStatus = (ushort)TempDec;
-//                DecBoolStatus = Value.DecBoolStatus;
-//            }
-//#endif
+#if (SmallDec_UseLegacyStorage)
+#if (!BlazesGlobalCode_Disable128BitFeatures)
+                        else if (Value is MediumSuperDec)
+                        {
+                            intValue = (ushort)Value.IntValue;
+                            uint TempDec = Value.DecimalStatus / 100000;
+                            DecimalStatus = (ushort)TempDec;
+                            DecBoolStatus = Value.DecBoolStatus;
+                        }
+                        else if (Value is ModerateSuperDec)
+                        {
+                            intValue = (ushort)Value.IntValue;
+                            ulong TempDec = Value.DecimalStatus / 100000000000000;
+                            DecimalStatus = (ushort)TempDec;
+                            DecBoolStatus = Value.DecBoolStatus;
+                        }
+                        else if (Value is LargeSuperDec)
+                        {
+                            intValue = (ushort)Value.IntValue;
+                            ulong TempDec = Value.DecimalStatus / 100000000000000;
+                            DecimalStatus = (ushort)TempDec;
+                            DecBoolStatus = Value.DecBoolStatus;
+                        }
+#endif
+#endif
             else if (Value == null)
             {
 #if (BlazesGlobalCode_SmallDec_AsStruct)
@@ -441,7 +449,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -460,7 +468,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     {
                         dynamic ConvertedValue = Activator.CreateInstance(value.GetType());
                         ConvertedValue = this;
-                        return this==(SmallDec)ConvertedValue;
+                        return this == (SmallDec)ConvertedValue;
                     }
                     else
                     {
@@ -526,7 +534,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                         return this == (char)(short)value;
                     }
                     //Dependency Property
-                    else if(FullValueTypeName=="MS.Internal.NamedObject")
+                    else if (FullValueTypeName == "MS.Internal.NamedObject")
                     {
                         return this == SmallDec.Zero;
                     }
@@ -589,13 +597,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public bool IsNegative()
         {
 #if (SmallDec_ReducedSize)
-            if(decimalStatus==–32768)//Negative WholeNumber
+            if(decimalStatus==NegativeWholeNumber)//Negative WholeNumber
             {
                 decimalStatus = 0;
             }
             else if(decimalStatus==0)//Positive WholeNumber
             {
-                decimalStatus = –32768
+                decimalStatus = NegativeWholeNumber
             }
             else//Non-WholeNumber
             {
@@ -614,24 +622,24 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public void SwapNegativeStatus()
         {
 #if (SmallDec_ReducedSize)
-                        if(decimalStatus==–32768)//Negative WholeNumber
-                        {
-                            decimalStatus = 0;
-                        }
-                        else if(decimalStatus==0)//Positive WholeNumber
-                        {
-                            decimalStatus = –32768
-                        }
-                        else//Non-WholeNumber
-                        {
-                            decimalStatus *= -1;
-                        }
+            if(decimalStatus==NegativeWholeNumber)//Negative WholeNumber
+            {
+                decimalStatus = 0;
+            }
+            else if(decimalStatus==0)//Positive WholeNumber
+            {
+                decimalStatus = NegativeWholeNumber;
+            }
+            else//Non-WholeNumber
+            {
+                decimalStatus *= -1;
+            }
+#elif (SmallDec_UseLegacyStorage)
+            if (DecBoolStatus == 0) { DecBoolStatus = 1; }
+            else { DecBoolStatus = 0; }
             //#if (BlazesGlobalCode_SmallDec_EnableSpecialDecStates||SmallDec_DecimalStateMode_3)
             //            if (DecBoolStatus % 2 == 0) { DecBoolStatus += 1; }
             //            else { DecBoolStatus -= 1; }
-#elif (SmallDec_UseLegacyStorage)
-                        if (DecBoolStatus == 0) { DecBoolStatus = 1; }
-                        else { DecBoolStatus = 0; }
 #else
             DecimalStatus *= -1;
 #endif
@@ -675,7 +683,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static readonly SmallDec Minimum = MinimumValue();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public bool IsInfinity()
@@ -689,7 +697,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 #if (SmallDec_ReducedSize || SmallDec_UseLegacyStorage)
         /// <summary>
-        /// Represents Positive Infinity(Only checked in in most methods if certain Preprocessor is set;Checks not implimented yet in code) 
+        /// Represents Positive Infinity(Only checked in in most methods if certain Preprocessor is set;Checks not implimented yet in code)
         /// </summary>
         /// <returns></returns>
         private static SmallDec PositiveInfinityValue()
@@ -703,7 +711,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static SmallDec PositiveInfinity = PositiveInfinityValue();
 
         /// <summary>
-        /// Represents Negative Infinity(Only checked in in most methods if certain Preprocessor is set;Checks not implimented yet in code) 
+        /// Represents Negative Infinity(Only checked in in most methods if certain Preprocessor is set;Checks not implimented yet in code)
         /// </summary>
         /// <returns></returns>
         private static SmallDec NegativeInfinityValue()
@@ -718,8 +726,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #else//No Negative and Positive Infinity Definitions for now
 
 #endif
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Condition"></param>
         /// <param name="X"></param>
@@ -730,51 +739,45 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return Condition ? X : Y;
         }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <returns></returns>
-        //public dynamic DynamicConversion() => this;
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Value"></param>
         /// <returns></returns>
         public static SmallDec DynamicConversionFrom(dynamic Value) => (SmallDec)Value;
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="self"></param>
-        ///// <returns></returns>
-        //public static SmallDec SumOfList(SmallDec[] self)
-        //{
-        //    var Total = SmallDec.Zero;
-        //    foreach (SmallDec Element in self)
-        //    {
-        //        Total += Element;
-        //    }
-        //    return Total;
-        //}
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="self"></param>
-        ///// <returns></returns>
-        //public static SmallDec SumOfList(IEnumerable<SmallDec> self)
-        //{
-        //    var Total = SmallDec.Zero;
-        //    foreach (SmallDec Element in self)
-        //    {
-        //        Total += Element;
-        //    }
-        //    return Total;
-        //}
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static SmallDec SumOfList(SmallDec[] self)
+        {
+            var Total = SmallDec.Zero;
+            foreach (SmallDec Element in self)
+            {
+                Total += Element;
+            }
+            return Total;
+        }
 
         /// <summary>
-        /// 
+        ///
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static SmallDec SumOfList(IEnumerable<SmallDec> self)
+        {
+            var Total = SmallDec.Zero;
+            foreach (SmallDec Element in self)
+            {
+                Total += Element;
+            }
+            return Total;
+        }
+
+        /// <summary>
+        ///
         /// </summary>
         /// <returns></returns>
         public bool IsNull()
@@ -809,7 +812,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return new SmallDec(0, 0);
 #endif
 #else//No NaN definition for now
-            return new SmallDec(0,0);
+            return new SmallDec(0, 0);
 #endif
         }
 
@@ -818,29 +821,29 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// </summary>
         public static readonly SmallDec NaN = NaNValue();
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="other"></param>
-        ///// <returns></returns>
-        //int IComparable<SmallDec>.CompareTo(SmallDec other)
-        //{
-        //    if (other == this)
-        //    {
-        //        return 0;
-        //    }
-        //    else if (this < other)
-        //    {
-        //        return -1;
-        //    }
-        //    else
-        //    {
-        //        return 1;
-        //    }
-        //}
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        int IComparable<SmallDec>.CompareTo(SmallDec other)
+        {
+            if (other == this)
+            {
+                return 0;
+            }
+            else if (this < other)
+            {
+                return -1;
+            }
+            else
+            {
+                return 1;
+            }
+        }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="CompareTarget"></param>
         /// <param name="RangeWithin"></param>
@@ -857,54 +860,55 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
         }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="value"></param>
-        ///// <returns></returns>
-        //public int CompareTo(object value)
-        //{
-        //    string FullValueTypeName = value.GetType().FullName;
-        //    SmallDec OtherAsSelfType = ObjectAsSmallDec(value);
-        //    switch (FullValueTypeName)
-        //    {
-        //        case "MS.Internal.NamedObject":
-        //            return this.decimalStatus==0?(this==SmallDec.Zero?0:1):-1;
-        //        default:
-        //            {
-        //                if (FullValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec")//SmallDec comparisons
-        //                {
-        //                    if (value.GetType() != typeof(SmallDec))//Alternative assembly version of SmallDec
-        //                    {
-        //                        SmallDec ValueAsThisType = SmallDec.ObjectAsSmallDec(value);
-        //                        return this.CompareTo(ValueAsThisType);
-        //                    }
-        //                    else
-        //                    {
-        //                        return this.CompareTo((SmallDec)value);
-        //                    }
-        //                }
-        //                else
-        //                {
-        //                    if (OtherAsSelfType == this)
-        //                    {
-        //                        return 0;
-        //                    }
-        //                    else if (this < OtherAsSelfType)
-        //                    {
-        //                        return -1;
-        //                    }
-        //                    else
-        //                    {
-        //                        return 1;
-        //                    }
-        //                }
-        //        }
-        //    }
-        //}
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public int CompareTo(object value)
+        {
+            string FullValueTypeName = value.GetType().FullName;
+            SmallDec OtherAsSelfType = ObjectAsSmallDec(value);
+            switch (FullValueTypeName)
+            {
+                case "MS.Internal.NamedObject":
+                    return this.decimalStatus == 0 ? (this == SmallDec.Zero ? 0 : 1) : -1;
+
+                default:
+                    {
+                        if (FullValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec")//SmallDec comparisons
+                        {
+                            if (value.GetType() != typeof(SmallDec))//Alternative assembly version of SmallDec
+                            {
+                                SmallDec ValueAsThisType = SmallDec.ObjectAsSmallDec(value);
+                                return this.CompareTo(ValueAsThisType);
+                            }
+                            else
+                            {
+                                return this.CompareTo((SmallDec)value);
+                            }
+                        }
+                        else
+                        {
+                            if (OtherAsSelfType == this)
+                            {
+                                return 0;
+                            }
+                            else if (this < OtherAsSelfType)
+                            {
+                                return -1;
+                            }
+                            else
+                            {
+                                return 1;
+                            }
+                        }
+                    }
+            }
+        }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
@@ -926,7 +930,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 #if (SmallDec_ReducedSize || SmallDec_UseLegacyStorage)
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IntValue"></param>
         /// <param name="DecimalStatus"></param>
@@ -940,24 +944,27 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #endif
         }
 #else
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IntValue"></param>
         /// <param name="DecimalStatus"></param>
-        SmallDec(ushort IntValue, int DecimalStatus)
+        private SmallDec(ushort IntValue, int DecimalStatus)
         {
             this.intValue = IntValue;
             this.decimalStatus = DecimalStatus;
         }
+
 #endif
 
 #if (!BlazesGlobalCode_SmallDec_AsStruct)
+
         /// <summary>
         /// Copy Constructor for class
         /// </summary>
         /// <param name="value"></param>
-        SmallDec(SmallDec value)
+        private SmallDec(SmallDec value)
         {
             this.intValue = value.IntValue;
             this.decimalStatus = value.DecimalStatus;
@@ -974,10 +981,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             this.decBoolStatus = 0;
 #endif
         }
+
 #endif
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
@@ -1063,9 +1071,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 return (SmallDec)(char)(short)value;
             }
             //Dependency Property with unset value?
-            else if(FullValueTypeName=="MS.Internal.NamedObject")
+            else if (FullValueTypeName == "MS.Internal.NamedObject")
             {
-
                 //if (value._name == "DependencyProperty.UnsetValue")//Initialize at zero
                 //{
                 //    return SmallDec.Zero;
