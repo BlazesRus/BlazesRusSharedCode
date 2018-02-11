@@ -265,12 +265,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                             return ConvertedValue;
                         }
                     }
-                    //Dependency Property with unset value?
-                    else if (FullValueTypeName == "MS.Internal.NamedObject")
-                    {
-                        return DependencyProperty.UnsetValue;
-                        //return SmallDec.Zero;
-                    }
+                    ////Dependency Property with unset value?
+                    //else if (FullValueTypeName == "MS.Internal.NamedObject")
+                    //{
+                    //    return DependencyProperty.UnsetValue;
+                    //    //return SmallDec.Zero;
+                    //}
                     else
                     {
                         string ConversionTypeString = conversionType.ToString();

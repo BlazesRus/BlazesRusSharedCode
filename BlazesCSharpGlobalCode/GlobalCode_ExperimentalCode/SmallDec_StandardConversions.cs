@@ -73,7 +73,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #else
                 uint DecimalHalf = (uint)DecimalStatus;
 #endif
-#if (SmallDec_UseLegacyStorage)
+#if (!SmallDec_UseLegacyStorage)
                 if (IsNegative&&DecimalStatus != NegativeWholeNumber) { DecimalHalf *= -1; }
 #endif
                 //Value += ".";
@@ -141,7 +141,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #else
                 uint DecimalHalf = (uint)DecimalStatus;
 #endif
-#if (SmallDec_UseLegacyStorage)
+#if (!SmallDec_UseLegacyStorage)
                 if (IsNegative&&DecimalStatus != NegativeWholeNumber) { DecimalHalf *= -1; }
 #endif
                 for (sbyte Index = 3; Index >= 0; Index--)
@@ -942,11 +942,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return new SmallDec(Value);
         }
 
-        public static explicit operator SmallDec(System.Windows.DependencyProperty Value)
-        {
-            SmallDec NewValue = (SmallDec)Value.ToString();
-            return NewValue;
-        }
+        //public static explicit operator SmallDec(System.Windows.DependencyProperty Value)
+        //{
+        //    SmallDec NewValue = (SmallDec)Value.ToString();
+        //    return NewValue;
+        //}
 #else
         /// <summary>
         ///

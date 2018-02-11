@@ -168,7 +168,6 @@ _pkginfo.txt
 !*.[Cc]ache/
 
 # Others
-ClientBin/
 ~$*
 *~
 *.dbmdl
@@ -176,5 +175,5 @@ ClientBin/
 *.pfx
 *.publishsettings
 node_modules/
-orleans.codegen.cs
+
 .vs/MultiPlatformGlobalCode/v15/.suo

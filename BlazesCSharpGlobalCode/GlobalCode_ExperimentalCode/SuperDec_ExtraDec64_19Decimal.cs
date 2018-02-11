@@ -438,15 +438,15 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="Value"></param>
         public static implicit operator LargeSuperDec(string Value) { return new LargeSuperDec(Value); }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator LargeSuperDec(DependencyProperty Value)
-        {
-            LargeSuperDec NewValue = Value.ToString();
-            return NewValue;
-        }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="Value"></param>
+        //public static implicit operator LargeSuperDec(DependencyProperty Value)
+        //{
+        //    LargeSuperDec NewValue = Value.ToString();
+        //    return NewValue;
+        //}
 #endif
 
         /// <summary>

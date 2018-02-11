@@ -66,12 +66,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         {
             get
             {
-                return intValue;
+                return decBoolStatus;
             }
 
             set
             {
-                intValue = value;
+                decBoolStatus = value;
             }
         }
 #endif

@@ -100,16 +100,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return this;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public MediumSuperDec(SmallDec Value)
-        {
-            IntValue = (uint)Value.IntValue;
-            DecimalStatus = (uint)Value.DecimalStatus * 100000;
-            DecBoolStatus = Value.DecBoolStatus;
-        }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="Value"></param>
+        //public MediumSuperDec(SmallDec Value)
+        //{
+        //    IntValue = (uint)Value.IntValue;
+        //    DecimalStatus = (uint)Value.DecimalStatus * 100000;
+        //    DecBoolStatus = Value.DecBoolStatus;
+        //}
 
         /// <summary>
         /// 
@@ -443,15 +443,15 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="Value"></param>
         public static implicit operator MediumSuperDec(string Value) { return new MediumSuperDec(Value); }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator MediumSuperDec(DependencyProperty Value)
-        {
-            MediumSuperDec NewValue = Value.ToString();
-            return NewValue;
-        }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="Value"></param>
+        //public static implicit operator MediumSuperDec(DependencyProperty Value)
+        //{
+        //    MediumSuperDec NewValue = Value.ToString();
+        //    return NewValue;
+        //}
 #endif
 
         /// <summary>
