@@ -153,29 +153,29 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static explicit operator ModerateSuperDec(SmallDec Value)
-        {
-            ModerateSuperDec NewSelf;
-            NewSelf.IntValue = Value.IntValue;
-            NewSelf.DecimalStatus = (ulong)Value.DecimalStatus * 1000000000000000;
-            NewSelf.DecBoolStatus = Value.DecBoolStatus;
-            return NewSelf;
-        }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="Value"></param>
+        //public static explicit operator ModerateSuperDec(SmallDec Value)
+        //{
+        //    ModerateSuperDec NewSelf;
+        //    NewSelf.IntValue = Value.IntValue;
+        //    NewSelf.DecimalStatus = (ulong)Value.DecimalStatus * 1000000000000000;
+        //    NewSelf.DecBoolStatus = Value.DecBoolStatus;
+        //    return NewSelf;
+        //}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public ModerateSuperDec(SmallDec Value)
-        {
-            IntValue = Value.IntValue;
-            DecimalStatus = (ulong)Value.DecimalStatus * 1000000000000000;
-            DecBoolStatus = Value.DecBoolStatus;
-        }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="Value"></param>
+        //public ModerateSuperDec(SmallDec Value)
+        //{
+        //    IntValue = Value.IntValue;
+        //    DecimalStatus = (ulong)Value.DecimalStatus * 1000000000000000;
+        //    DecBoolStatus = Value.DecBoolStatus;
+        //}
 
         //explicit Conversion from this to float
         /// <summary>
