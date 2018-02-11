@@ -1065,21 +1065,24 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             //Dependency Property with unset value?
             else if(FullValueTypeName=="MS.Internal.NamedObject")
             {
-                //if(value._name == "DependencyProperty.UnsetValue")//Initialyze at zero
+
+                //if (value._name == "DependencyProperty.UnsetValue")//Initialize at zero
                 //{
-                //	return SmallDec.Zero;
+                //    return SmallDec.Zero;
                 //}
                 //else
                 //{
-                //	return (SmallDec)value._name;
+                //    return (SmallDec)value._name;
                 //}
                 return SmallDec.Zero;
             }
-            //else if (valueType == typeof(DependencyProperty))
-            //{
-            //    DependencyProperty self = (DependencyProperty)value;
-            //    return (SmallDec)self;
-            //}
+#if (GlobalCode_EnableDependencyPropStuff)
+            else if (valueType == typeof(DependencyProperty))
+            {
+                DependencyProperty self = (DependencyProperty)value;
+                return (SmallDec)self;
+            }
+#endif
             //else if (FullValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec")//SmallDec conversion
             //{
             //    if (typeof(SmallDec) == value.GetType())

@@ -244,10 +244,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 {
                     return (char)(short)this;
                 }
-                //else if (conversionType == typeof(DependencyProperty))
-                //{
-                //    return (SmallDec)(DependencyProperty)this;
-                //}
+#if (GlobalCode_EnableDependencyPropStuff)
+                else if (conversionType == typeof(DependencyProperty))
+                {
+                    return (SmallDec)(DependencyProperty)this;
+                }
+#endif
                 else
                 {
                     string FullValueTypeName = conversionType.FullName;

@@ -359,11 +359,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
         public static explicit operator LargeSuperDec(string Value) { return new LargeSuperDec(Value); }
 
+#if (GlobalCode_EnableDependencyPropStuff)
         public static explicit operator LargeSuperDec(DependencyProperty Value)
         {
             LargeSuperDec NewValue = Value.ToString();
             return NewValue;
         }
+#endif
 #else
         /// <summary>
         /// 
@@ -438,15 +440,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="Value"></param>
         public static implicit operator LargeSuperDec(string Value) { return new LargeSuperDec(Value); }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="Value"></param>
-        //public static implicit operator LargeSuperDec(DependencyProperty Value)
-        //{
-        //    LargeSuperDec NewValue = Value.ToString();
-        //    return NewValue;
-        //}
+#if (GlobalCode_EnableDependencyPropStuff)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Value"></param>
+        public static implicit operator LargeSuperDec(DependencyProperty Value)
+        {
+            LargeSuperDec NewValue = Value.ToString();
+            return NewValue;
+        }
+#endif
 #endif
 
         /// <summary>

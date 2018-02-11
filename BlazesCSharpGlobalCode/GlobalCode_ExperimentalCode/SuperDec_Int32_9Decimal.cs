@@ -365,11 +365,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
         public static explicit operator MediumSuperDec(string Value) { return new MediumSuperDec(Value); }
 
+#if (GlobalCode_EnableDependencyPropStuff)
         public static explicit operator MediumSuperDec(DependencyProperty Value)
         {
             MediumSuperDec NewValue = Value.ToString();
             return NewValue;
         }
+#endif
 #else
         /// <summary>
         /// 
@@ -443,15 +445,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="Value"></param>
         public static implicit operator MediumSuperDec(string Value) { return new MediumSuperDec(Value); }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="Value"></param>
-        //public static implicit operator MediumSuperDec(DependencyProperty Value)
-        //{
-        //    MediumSuperDec NewValue = Value.ToString();
-        //    return NewValue;
-        //}
+#if (GlobalCode_EnableDependencyPropStuff)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Value"></param>
+        public static implicit operator MediumSuperDec(DependencyProperty Value)
+        {
+            MediumSuperDec NewValue = Value.ToString();
+            return NewValue;
+        }
+#endif
 #endif
 
         /// <summary>
