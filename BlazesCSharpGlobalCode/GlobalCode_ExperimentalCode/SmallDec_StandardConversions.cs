@@ -623,19 +623,21 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #endif
         }
 
-        ///// <summary>
-        ///// Initialize constructor
-        ///// </summary>
-        ///// <param name="Value"></param>
-        //public SmallDec(DependencyProperty Value)
-        //{
-        //    var NewValue = (SmallDec)Value;
-        //    this.DecBoolStatus = NewValue.DecBoolStatus;
-        //    this.intValue = NewValue.intValue;
-        //    this.decimalStatus = NewValue.DecimalStatus;
-        //}
+#if (GlobalCode_EnableDependencyPropStuff)
+        /// <summary>
+        /// Initialize constructor
+        /// </summary>
+        /// <param name="Value"></param>
+        public SmallDec(DependencyProperty Value)
+        {
+            var NewValue = (SmallDec)Value;
+            this.DecBoolStatus = NewValue.DecBoolStatus;
+            this.intValue = NewValue.intValue;
+            this.decimalStatus = NewValue.DecimalStatus;
+        }
+#endif
 
-        #region From this type to Standard types
+#region From this type to Standard types
 
         /// <summary>
         ///
