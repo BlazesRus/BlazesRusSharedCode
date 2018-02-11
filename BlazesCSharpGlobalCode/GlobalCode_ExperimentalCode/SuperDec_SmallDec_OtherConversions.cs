@@ -157,102 +157,102 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //        }
         //#endif
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="ListValue"></param>
-        //        /// <returns></returns>
-        //        public static List<SmallDec> CreateList(List<float> ListValue)
-        //        {
-        //            var NewList = new List<SmallDec>();
-        //            foreach (var value in ListValue)
-        //            {
-        //                NewList.Add((SmallDec)value);
-        //            }
-        //            return NewList;
-        //        }
+        /// <summary>
+        /// </summary>
+        /// <param name="ListValue"></param>
+        /// <returns></returns>
+        public static List<SmallDec> CreateList(List<float> ListValue)
+        {
+            var NewList = new List<SmallDec>();
+            foreach (var value in ListValue)
+            {
+                NewList.Add((SmallDec)value);
+            }
+            return NewList;
+        }
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="ListValue"></param>
-        //        /// <returns></returns>
-        //        public static List<SmallDec> CreateList(IReadOnlyList<float> ListValue)
-        //        {
-        //            var NewList = new List<SmallDec>();
-        //            foreach (var value in ListValue)
-        //            {
-        //                NewList.Add((SmallDec)value);
-        //            }
-        //            return NewList;
-        //        }
+        /// <summary>
+        /// </summary>
+        /// <param name="ListValue"></param>
+        /// <returns></returns>
+        public static List<SmallDec> CreateList(IReadOnlyList<float> ListValue)
+        {
+            var NewList = new List<SmallDec>();
+            foreach (var value in ListValue)
+            {
+                NewList.Add((SmallDec)value);
+            }
+            return NewList;
+        }
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="ListValue"></param>
-        //        /// <returns></returns>
-        //        public static List<SmallDec> CreateList(List<int> ListValue)
-        //        {
-        //            var NewList = new List<SmallDec>();
-        //            foreach (var value in ListValue)
-        //            {
-        //                NewList.Add((SmallDec)value);
-        //            }
-        //            return NewList;
-        //        }
+        /// <summary>
+        /// </summary>
+        /// <param name="ListValue"></param>
+        /// <returns></returns>
+        public static List<SmallDec> CreateList(List<int> ListValue)
+        {
+            var NewList = new List<SmallDec>();
+            foreach (var value in ListValue)
+            {
+                NewList.Add((SmallDec)value);
+            }
+            return NewList;
+        }
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="ListValue"></param>
-        //        /// <returns></returns>
-        //        public static List<SmallDec> CreateList(List<long> ListValue)
-        //        {
-        //            var NewList = new List<SmallDec>();
-        //            foreach (var value in ListValue)
-        //            {
-        //                NewList.Add((SmallDec)value);
-        //            }
-        //            return NewList;
-        //        }
+        /// <summary>
+        /// </summary>
+        /// <param name="ListValue"></param>
+        /// <returns></returns>
+        public static List<SmallDec> CreateList(List<long> ListValue)
+        {
+            var NewList = new List<SmallDec>();
+            foreach (var value in ListValue)
+            {
+                NewList.Add((SmallDec)value);
+            }
+            return NewList;
+        }
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="ListValue"></param>
-        //        /// <returns></returns>
-        //        public static List<SmallDec> CreateList(List<dynamic> ListValue)
-        //        {
-        //            var NewList = new List<SmallDec>();
-        //            foreach (var value in ListValue)
-        //            {
-        //                NewList.Add((SmallDec)value);
-        //            }
-        //            return NewList;
-        //        }
+        /// <summary>
+        /// </summary>
+        /// <param name="ListValue"></param>
+        /// <returns></returns>
+        public static List<SmallDec> CreateList(List<dynamic> ListValue)
+        {
+            var NewList = new List<SmallDec>();
+            foreach (var value in ListValue)
+            {
+                NewList.Add((SmallDec)value);
+            }
+            return NewList;
+        }
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="ListValue"></param>
-        //        /// <returns></returns>
-        //        public static List<SmallDec> CreateList(List<double> ListValue)
-        //        {
-        //            var NewList = new List<SmallDec>();
-        //            foreach (var value in ListValue)
-        //            {
-        //                NewList.Add((SmallDec)value);
-        //            }
-        //            return NewList;
-        //        }
+        /// <summary>
+        /// </summary>
+        /// <param name="ListValue"></param>
+        /// <returns></returns>
+        public static List<SmallDec> CreateList(List<double> ListValue)
+        {
+            var NewList = new List<SmallDec>();
+            foreach (var value in ListValue)
+            {
+                NewList.Add((SmallDec)value);
+            }
+            return NewList;
+        }
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="ListValue"></param>
-        //        public static explicit operator SmallDec(List<float> ListValue)
-        //        {
-        //            var Sum = SmallDec.Zero;
-        //            foreach (var value in ListValue)
-        //            {
-        //                Sum += value;
-        //            }
-        //            return Sum;
-        //        }
+        ///// <summary>
+        ///// </summary>
+        ///// <param name="ListValue"></param>
+        //public static explicit operator SmallDec(List<float> ListValue)
+        //{
+        //    var Sum = SmallDec.Zero;
+        //    foreach (var value in ListValue)
+        //    {
+        //        Sum += value;
+        //    }
+        //    return Sum;
+        //}
 
         //        /// <summary>
         //        /// </summary>
@@ -353,20 +353,35 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return (SmallDec)value.ToString();
         }
 
-        //        /// <summary>
-        //        /// Convert from List(SmallDec) to List(float)
-        //        /// </summary>
-        //        /// <param name="ListValue"></param>
-        //        /// <returns></returns>
-        //        public static List<float> ConvertToFloatList(List<SmallDec> ListValue)
-        //        {
-        //            List<float> NewList = new List<float>();
-        //            foreach (var value in ListValue)
-        //            {
-        //                NewList.Add((float)value);
-        //            }
-        //            return NewList;
-        //        }
+        /// <summary>
+        /// Convert from List(SmallDec) to List(float)
+        /// </summary>
+        /// <param name="ListValue"></param>
+        /// <returns></returns>
+        public static List<float> ConvertToFloatList(List<SmallDec> ListValue)
+        {
+            List<float> NewList = new List<float>();
+            foreach (var value in ListValue)
+            {
+                NewList.Add((float)value);
+            }
+            return NewList;
+        }
+
+        /// <summary>
+        /// Convert from List(SmallDec) to List(double)
+        /// </summary>
+        /// <param name="ListValue"></param>
+        /// <returns></returns>
+        public static List<double> ConvertToDoubleList(List<SmallDec> ListValue)
+        {
+            List<double> NewList = new List<double>();
+            foreach (var value in ListValue)
+            {
+                NewList.Add((double)value);
+            }
+            return NewList;
+        }
     }
 
     //class SmallDecTuple : Tuple<string, SmallDec>

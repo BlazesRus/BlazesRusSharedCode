@@ -29,128 +29,128 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #endif
     SmallDec : IFormattable, INotifyPropertyChanged
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="Value"></param>
-        /// <returns></returns>
-        public static SmallDec Pow(SmallDec self, int Value)
-        {
-            var NewSelf = self;
-            if (Value == 0)
-            {
-                NewSelf.intValue = 1;
-                NewSelf.DecBoolStatus = 0;
-            }
-            else if (Value < 0)
-            {
-                for (int NumberOfTimes = Value; NumberOfTimes > 0; --NumberOfTimes)
-                {
-                    NewSelf /= self;
-                }
-            }
-            else
-            {
-                for (int NumberOfTimes = Value; NumberOfTimes > 0; --NumberOfTimes)
-                {
-                    NewSelf *= self;
-                }
-            }
-            return NewSelf;
-        }
+//        /// <summary>
+//        /// 
+//        /// </summary>
+//        /// <param name="self"></param>
+//        /// <param name="Value"></param>
+//        /// <returns></returns>
+//        public static SmallDec Pow(SmallDec self, int Value)
+//        {
+//            var NewSelf = self;
+//            if (Value == 0)
+//            {
+//                NewSelf.intValue = 1;
+//                NewSelf.DecBoolStatus = 0;
+//            }
+//            else if (Value < 0)
+//            {
+//                for (int NumberOfTimes = Value; NumberOfTimes > 0; --NumberOfTimes)
+//                {
+//                    NewSelf /= self;
+//                }
+//            }
+//            else
+//            {
+//                for (int NumberOfTimes = Value; NumberOfTimes > 0; --NumberOfTimes)
+//                {
+//                    NewSelf *= self;
+//                }
+//            }
+//            return NewSelf;
+//        }
 
-        //public static SmallDec Pow(double self, double Value) { return SmallDec.Pow((SmallDec)self, (SmallDec)Value); }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="Value"></param>
-        /// <returns></returns>
-        public static SmallDec Pow(SmallDec self, double Value) => SmallDec.Pow(self, (SmallDec)Value);
-#if (BlazesGlobalCode_StandardExplicitConversionFrom)//Gets confused since it tries auto converting to SmallDec inside parameter first
-        public static SmallDec Pow(SmallDec self, SmallDec Value) { return SmallDec.Pow(self, Value); }
-#endif
-        /// <summary>
-        /// Approximate version of Math.Pow(double self, double Value)
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="Value"></param>
-        /// <returns></returns>
-        public static SmallDec Pow(SmallDec self, SmallDec Value)
-        {
-            var NewSelf = self;
-            //SmallDec version of Math.Pow()
-            if (Value.DecimalStatus == 0)
-            {
-                if (Value.intValue == 0)
-                {
-                    NewSelf.intValue = 1;
-                    NewSelf.DecBoolStatus = 0;
-                }
-                else if (Value.DecBoolStatus == 0)
-                {
-                    for (ushort NumberOfTimes = Value.intValue; NumberOfTimes > 0; --NumberOfTimes)
-                    {
-                        NewSelf *= self;
-                    }
-                }
-                else
-                {
-                    for (ushort NumberOfTimes = Value.intValue; NumberOfTimes > 0; --NumberOfTimes)
-                    {
-                        NewSelf /= self;
-                    }
-                }
-            }
-            else
-            {//To-Do need to finish remaining power part of code
-             //decimal SelfAsDecimal = (decimal) self;
-                if (Value.intValue == 0)
-                {
-                    NewSelf.intValue = 1;
-                    NewSelf.DecBoolStatus = 0;
-                }
-                else if (Value.DecBoolStatus == 0)
-                {
-                    for (ushort NumberOfTimes = Value.intValue; NumberOfTimes > 0; --NumberOfTimes)
-                    {
-                        NewSelf *= self;
-                    }
-                }
-                else
-                {
-                    for (ushort NumberOfTimes = Value.intValue; NumberOfTimes > 0; --NumberOfTimes)
-                    {
-                        NewSelf /= self;
-                    }
-                }
-                //Now need to deal with the remaining "power"
-                Value.intValue = 0;
-                //Number is less then NewSelf Currently is (Sloping Curve in closeness to next power)
-                double TempDouble = Math.Pow((double)self, (double)Value);
-                if (Value.DecBoolStatus == 0)
-                {
-                    NewSelf *= TempDouble;
-                }
-                else
-                {
-                    NewSelf /= TempDouble;
-                }
-            }
-            return NewSelf;
-        }
+//        //public static SmallDec Pow(double self, double Value) { return SmallDec.Pow((SmallDec)self, (SmallDec)Value); }
+//        /// <summary>
+//        /// 
+//        /// </summary>
+//        /// <param name="self"></param>
+//        /// <param name="Value"></param>
+//        /// <returns></returns>
+//        public static SmallDec Pow(SmallDec self, double Value) => SmallDec.Pow(self, (SmallDec)Value);
+//#if (BlazesGlobalCode_StandardExplicitConversionFrom)//Gets confused since it tries auto converting to SmallDec inside parameter first
+//        public static SmallDec Pow(SmallDec self, SmallDec Value) { return SmallDec.Pow(self, Value); }
+//#endif
+//        /// <summary>
+//        /// Approximate version of Math.Pow(double self, double Value)
+//        /// </summary>
+//        /// <param name="self"></param>
+//        /// <param name="Value"></param>
+//        /// <returns></returns>
+//        public static SmallDec Pow(SmallDec self, SmallDec Value)
+//        {
+//            var NewSelf = self;
+//            //SmallDec version of Math.Pow()
+//            if (Value.DecimalStatus == 0)
+//            {
+//                if (Value.intValue == 0)
+//                {
+//                    NewSelf.intValue = 1;
+//                    NewSelf.DecBoolStatus = 0;
+//                }
+//                else if (Value.DecBoolStatus == 0)
+//                {
+//                    for (ushort NumberOfTimes = Value.intValue; NumberOfTimes > 0; --NumberOfTimes)
+//                    {
+//                        NewSelf *= self;
+//                    }
+//                }
+//                else
+//                {
+//                    for (ushort NumberOfTimes = Value.intValue; NumberOfTimes > 0; --NumberOfTimes)
+//                    {
+//                        NewSelf /= self;
+//                    }
+//                }
+//            }
+//            else
+//            {//To-Do need to finish remaining power part of code
+//             //decimal SelfAsDecimal = (decimal) self;
+//                if (Value.intValue == 0)
+//                {
+//                    NewSelf.intValue = 1;
+//                    NewSelf.DecBoolStatus = 0;
+//                }
+//                else if (Value.DecBoolStatus == 0)
+//                {
+//                    for (ushort NumberOfTimes = Value.intValue; NumberOfTimes > 0; --NumberOfTimes)
+//                    {
+//                        NewSelf *= self;
+//                    }
+//                }
+//                else
+//                {
+//                    for (ushort NumberOfTimes = Value.intValue; NumberOfTimes > 0; --NumberOfTimes)
+//                    {
+//                        NewSelf /= self;
+//                    }
+//                }
+//                //Now need to deal with the remaining "power"
+//                Value.intValue = 0;
+//                //Number is less then NewSelf Currently is (Sloping Curve in closeness to next power)
+//                double TempDouble = Math.Pow((double)self, (double)Value);
+//                if (Value.DecBoolStatus == 0)
+//                {
+//                    NewSelf *= TempDouble;
+//                }
+//                else
+//                {
+//                    NewSelf /= TempDouble;
+//                }
+//            }
+//            return NewSelf;
+//        }
 
-        /// <summary>
-        /// SmallDec version of Math.Exp(double Value)
-        /// </summary>
-        /// <param name="Value"></param>
-        /// <returns></returns>
-        public static SmallDec Exp(SmallDec Value)
-        {
-            double SelfAsDecimal = (double)Value;
-            SelfAsDecimal = Math.Exp(SelfAsDecimal);
-            return (SmallDec)SelfAsDecimal;
-        }
+//        /// <summary>
+//        /// SmallDec version of Math.Exp(double Value)
+//        /// </summary>
+//        /// <param name="Value"></param>
+//        /// <returns></returns>
+//        public static SmallDec Exp(SmallDec Value)
+//        {
+//            double SelfAsDecimal = (double)Value;
+//            SelfAsDecimal = Math.Exp(SelfAsDecimal);
+//            return (SmallDec)SelfAsDecimal;
+//        }
     }
 }

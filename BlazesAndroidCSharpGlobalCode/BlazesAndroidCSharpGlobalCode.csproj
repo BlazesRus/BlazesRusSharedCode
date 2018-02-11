@@ -41,7 +41,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UsingAndroidPlatform</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UsingAndroidPlatform;SmallDec_UseLegacyStorage;BlazesGlobalCode_Disable128BitFeatures</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -49,7 +49,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;UsingAndroidPlatform</DefineConstants>
+    <DefineConstants>TRACE;UsingAndroidPlatform;SmallDec_UseLegacyStorage;BlazesGlobalCode_Disable128BitFeatures</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -83,117 +83,11 @@
     <None Include="Resources\AboutResources.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\CustomDec.cs">
+<!--     <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SmallDecV2.cs">
       <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SmallDecCollection.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <!--     <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SmallDecSliderTickerFeatures.cs" > <Link>GlobalCode_ExperimentalCode\%(FileName)</Link></Compile> -->
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SmallDecV2.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SuperDecGlobalCode.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SuperDec_Int16_4Decimal.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SuperDec_Int32_9Decimal.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SuperDec_LargeDec_OperatorFunctions.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SuperDec_MediumDec_AlternativeOperatorFunctions.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SuperDec_MediumDec_OperatorFunctions.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SuperDec_ModerateDec_OperatorFunctions.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SuperDec_PercentValV2.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SuperDec_PercentValV2_OtherCode.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SuperDec_SmallDec_OperatorFunctions.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SuperDec_SmallDec_OtherConversions.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SuperDec_SmallDec_Rounding.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SuperDec_SmallDec_TrigometricFunctions.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SuperDec_SmallDec_TypeConverter.cs">
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-  </ItemGroup>
-<!--   <ItemGroup Label="GUIElements">
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SmallDecGUIElement.xaml.cs">
-      <DependentUpon>SmallDecGUIElement.xaml</DependentUpon>
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SmallDecSlider.xaml.cs">
-      <DependentUpon>SmallDecSlider.xaml</DependentUpon>
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SmallDecUpdown.xaml.cs">
-      <DependentUpon>SmallDecGUIElement.xaml.cs</DependentUpon>
-      <DependentUpon>SmallDecUpdown.xaml</DependentUpon>
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SmallDecUpdownSlider.xaml.cs">
-      <DependentUpon>SmallDecUpdownSlider.xaml</DependentUpon>
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Compile>
-    <Page Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SmallDecUpdown.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Page>
-    <Page Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SmallDecUpdownSlider.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Page>
-    <Page Include="$(CSharpSource)\GlobalCode_ExperimentalCode\SmallDecSlider.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
-    </Page>
-  </ItemGroup> -->
-  <ItemGroup>
-    <Compile Include="$(CSharpSource)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cs">
-      <Link>GlobalCode_VariableConversionFunctions\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_IniData\IniData.cs">
-      <Link>GlobalCode_IniData\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_StringFunctions\*.*">
-        <Link>GlobalCode_StringFunctions\(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_VariableConversionFunctions\*.*">
-        <Link>GlobalCode_VariableConversionFunctions\%(FileName)</Link>
-    </Compile>
-    <Compile Include="$(CSharpSource)\GlobalCode_VariableLists\*.*">
-        <Link>GlobalCode_VariableLists\%(FileName)</Link>
-    </Compile>
-<!--     <Compile Include="$(CSharpSource)\GlobalMiscCode\*.*">
-        <Link>GlobalMiscCode\%(FileName)</Link>
     </Compile> -->
-  </ItemGroup>
   <ItemGroup>
+    <Folder Include="GlobalCode_ExperimentalCode\" />
     <Folder Include="GlobalCode_IniData\" />
     <Folder Include="GlobalCode_StringFunctions\" />
     <Folder Include="GlobalCode_VariableConversionFunctions\" />

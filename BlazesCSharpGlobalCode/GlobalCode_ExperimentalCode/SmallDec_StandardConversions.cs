@@ -627,9 +627,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 DecimalStatus *= -1;
             }
 #endif
-            //#if (DEBUG)
-            //            PlaceNumber = 0;
-            //#endif
         }
 
         ///// <summary>
@@ -644,273 +641,395 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //    this.decimalStatus = NewValue.DecimalStatus;
         //}
 
-        /////// <summary>
-        ///////
-        /////// </summary>
-        /////// <param name="self"></param>
-        /////// <param name="TargetProperty"></param>
-        /////// <returns></returns>
-        //public static void SetValueOfProperty(SmallDec self, ref DependencyProperty TargetProperty)
+        #region From this type to Standard types
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="self"></param>
+        public static explicit operator decimal(SmallDec self)
+        {
+            decimal Value = (decimal)self.IntValue;
+#if (SmallDec_UseLegacyStorage)
+            Value += (decimal)(self.DecimalStatus * 0.0001);
+            if (self.DecBoolStatus == 1) { Value *= -1.0M; }
+#else
+            if(self.DecimalStatus<0)
+            {
+                if(self.DecimalStatus== NegativeWholeNumber)
+                {
+                    Value *= -1;
+                }
+                else
+                {
+                    self.DecimalStatus *= -1;
+#if (SmallDec_ReducedSize)
+                    Value += (decimal)(self.DecimalStatus * 0.0001M);
+#else
+                    Value += (decimal)(self.DecimalStatus * 0.000000001M);
+#endif
+                    Value *= -1.0M;
+                }
+            }
+            else
+            {
+#if (SmallDec_ReducedSize)
+                Value += (decimal)(self.DecimalStatus * 0.0001M);
+#else
+                Value += (decimal)(self.DecimalStatus * 0.000000001M);
+#endif
+            }
+#endif
+            return Value;
+        }
+
+        /// <summary>
+        /// SmallDec to double explicit conversion
+        /// </summary>
+        /// <param name="self"></param>
+        public static explicit operator double(SmallDec self)
+        {
+            double Value = (double)self.IntValue;
+#if (SmallDec_UseLegacyStorage)
+            Value += (double)(self.DecimalStatus * 0.0001);
+            if (self.DecBoolStatus == 1) { Value *= -1.0; }
+#else
+            if (self.DecimalStatus < 0)
+            {
+                if (self.DecimalStatus == NegativeWholeNumber)
+                {
+                    Value *= -1;
+                }
+                else
+                {
+                    self.DecimalStatus *= -1;
+#if (SmallDec_ReducedSize)
+                    Value += (double)(self.DecimalStatus * 0.0001);
+#else
+                    Value += (double)(self.DecimalStatus * 0.000000001);
+#endif
+                    Value *= -1.0;
+                }
+            }
+            else
+            {
+#if (SmallDec_ReducedSize)
+                Value += (double)(self.DecimalStatus * 0.0001);
+#else
+                Value += (double)(self.DecimalStatus * 0.000000001);
+#endif
+            }
+#endif
+            return Value;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="self"></param>
+        public static explicit operator float(SmallDec self)
+        {
+            float Value = (float)self.IntValue;
+#if (SmallDec_UseLegacyStorage)
+            Value += (float)(self.DecimalStatus * 0.0001f);
+            if (self.DecBoolStatus == 1) { Value *= -1.0f; }
+#else
+            if (self.DecimalStatus < 0)
+            {
+                if (self.DecimalStatus == NegativeWholeNumber)
+                {
+                    Value *= -1;
+                }
+                else
+                {
+                    self.DecimalStatus *= -1;
+#if (SmallDec_ReducedSize)
+                    Value += (float)(self.DecimalStatus * 0.0001f);
+#else
+                    Value += (float)(self.DecimalStatus * 0.000000001f);
+#endif
+                    Value *= -1.0f;
+                }
+            }
+            else
+            {
+#if (SmallDec_ReducedSize)
+                Value += (float)(self.DecimalStatus * 0.0001f);
+#else
+                Value += (float)(self.DecimalStatus * 0.000000001f);
+#endif
+            }
+#endif
+            return Value;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="self"></param>
+        public static explicit operator int(SmallDec self)
+        {
+            int Value = (int)self.intValue;
+#if (SmallDec_UseLegacyStorage)
+            if (self.DecBoolStatus == 1) { Value *= -1; }
+#else
+            if (self.DecimalStatus < 0) { Value *= -1; }
+#endif
+            return Value;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="self"></param>
+        public static explicit operator long(SmallDec self)
+        {
+            long Value = self.intValue;
+#if (SmallDec_UseLegacyStorage)
+            if (self.DecBoolStatus == 1) { Value *= -1; }
+#else
+            if (self.DecimalStatus < 0) { Value *= -1; }
+#endif
+            return Value;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="self"></param>
+        public static explicit operator uint(SmallDec self)
+        {
+            return self.intValue;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="self"></param>
+        public static explicit operator ulong(SmallDec self)
+        {
+            return self.intValue;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="self"></param>
+        public static explicit operator byte(SmallDec self)
+        {
+            byte Value = (byte)self.intValue;
+            return Value;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="self"></param>
+        public static explicit operator sbyte(SmallDec self)
+        {
+            sbyte Value = (sbyte)self.intValue;
+#if (SmallDec_UseLegacyStorage)
+            if (self.DecBoolStatus == 1) { Value *= -1; }
+#else
+            if (self.DecimalStatus < 0) { Value *= -1; }
+#endif
+            return Value;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="self"></param>
+        public static explicit operator ushort(SmallDec self)
+        {
+            ushort Value = (ushort)self.intValue;
+            return Value;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="self"></param>
+        public static explicit operator short(SmallDec self)
+        {
+            short Value = (short)self.intValue;
+#if (SmallDec_UseLegacyStorage)
+            if (self.DecBoolStatus == 1) { Value *= -1; }
+#else
+            if (self.DecimalStatus < 0) { Value *= -1; }
+#endif
+            return Value;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="self"></param>
+        static public explicit operator string(SmallDec self) => self.ToOptimalString();
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="self"></param>
+        public static explicit operator bool(SmallDec self)
+        {
+            return (int)self == 1;
+        }
+
+        ///// <summary>
+        /////
+        ///// </summary>
+        ///// <param name="self"></param>
+        //static public explicit operator dynamic(SmallDec self) => SmallDec.Initialize(self);
+
+#endregion From this type to Standard types
+
+        //From Standard types to this type
+#if (!BlazesGlobalCode_ImplicitConversionFrom)
+
+        public static explicit operator SmallDec(decimal Value)
+        {
+            return new SmallDec(Value);
+        }
+
+        public static explicit operator SmallDec(double Value)
+        {
+            return new SmallDec(Value);
+        }
+
+        public static explicit operator SmallDec(int Value)
+        {
+            return new SmallDec(Value);
+        }
+
+        public static explicit operator SmallDec(uint Value)
+        {
+            return new SmallDec(Value);
+        }
+
+        public static explicit operator SmallDec(long Value)
+        {
+            return new SmallDec(Value);
+        }
+
+        public static explicit operator SmallDec(ulong Value)
+        {
+            return new SmallDec(Value);
+        }
+
+        public static explicit operator SmallDec(ushort Value)
+        {
+            return new SmallDec(Value);
+        }
+
+        public static explicit operator SmallDec(short Value)
+        {
+            return new SmallDec(Value);
+        }
+
+        public static explicit operator SmallDec(sbyte Value)
+        {
+            return new SmallDec(Value);
+        }
+
+        public static explicit operator SmallDec(byte Value)
+        {
+            return new SmallDec(Value);
+        }
+
+        public static explicit operator SmallDec(string Value)
+        {
+            return new SmallDec(Value);
+        }
+
+        public static explicit operator SmallDec(System.Windows.DependencyProperty Value)
+        {
+            SmallDec NewValue = (SmallDec)Value.ToString();
+            return NewValue;
+        }
+#else
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="Value"></param>
+        public static implicit operator SmallDec(decimal Value) { return new SmallDec(Value); }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="Value"></param>
+        public static implicit operator SmallDec(double Value) { return new SmallDec(Value); }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="Value"></param>
+        public static implicit operator SmallDec(float Value) { return new SmallDec(Value); }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="Value"></param>
+        public static implicit operator SmallDec(int Value) { return new SmallDec(Value); }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="Value"></param>
+        public static implicit operator SmallDec(uint Value) { return new SmallDec(Value); }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="Value"></param>
+        public static implicit operator SmallDec(long Value) { return new SmallDec(Value); }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="Value"></param>
+        public static implicit operator SmallDec(ulong Value) { return new SmallDec(Value); }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="Value"></param>
+        public static implicit operator SmallDec(ushort Value) { return new SmallDec(Value); }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="Value"></param>
+        public static implicit operator SmallDec(short Value) { return new SmallDec(Value); }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="Value"></param>
+        public static implicit operator SmallDec(sbyte Value) { return new SmallDec(Value); }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="Value"></param>
+        public static implicit operator SmallDec(byte Value) { return new SmallDec(Value); }
+
+        /// <summary>
+        /// String converted to SmallDec
+        /// </summary>
+        /// <param name="Value"></param>
+        public static implicit operator SmallDec(string Value) { return new SmallDec(Value); }
+
+        ///// <summary>
+        /////
+        ///// </summary>
+        ///// <param name="Value"></param>
+        //public static implicit operator SmallDec(DependencyProperty Value)
         //{
-        //    SetValue(TargetProperty, self.ToString());
+        //    //Type PropertyType = Value.PropertyType;
+        //    SmallDec NewValue = Value.ToString();
+        //    return NewValue;
         //}
-
-        //        //From this type to Standard types
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="self"></param>
-        //        public static explicit operator decimal(SmallDec self)
-        //        {
-        //            decimal Value = (decimal)self.intValue;
-        //            Value += (decimal)(self.DecimalStatus * 0.0001);
-        //            if (self.DecBoolStatus == 1) { Value *= -1; }
-        //            return Value;
-        //        }
-
-        //        /// <summary>
-        //        /// SmallDec to double explicit conversion
-        //        /// </summary>
-        //        /// <param name="self"></param>
-        //        public static explicit operator double(SmallDec self)
-        //        {
-        //            double Value = 0.0;
-        //            Value += self.intValue;
-        //            Value += (self.DecimalStatus * 0.0001);
-        //            if (self.DecBoolStatus == 1) { Value *= -1; }
-        //            return Value;
-        //        }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="self"></param>
-        //        public static explicit operator float(SmallDec self)
-        //        {
-        //            float Value = 0.0f;
-        //            Value += self.intValue;
-        //            Value += (float)(self.DecimalStatus * 0.0001);
-        //            if (self.DecBoolStatus == 1) { Value *= -1; }
-        //            return Value;
-        //        }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="self"></param>
-        //        public static explicit operator int(SmallDec self)
-        //        {
-        //            int Value = (int)self.intValue;
-        //            if (self.DecimalStatus == 1) { Value *= -1; }
-        //            return Value;
-        //        }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="self"></param>
-        //        public static explicit operator long(SmallDec self)
-        //        {
-        //            long Value = self.intValue;
-        //            if (self.DecimalStatus == 1) { Value *= -1; }
-        //            return Value;
-        //        }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="self"></param>
-        //        public static explicit operator uint(SmallDec self)
-        //        {
-        //            return self.intValue;
-        //        }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="self"></param>
-        //        public static explicit operator ulong(SmallDec self)
-        //        {
-        //            return self.intValue;
-        //        }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="self"></param>
-        //        public static explicit operator byte(SmallDec self)
-        //        {
-        //            byte Value = (byte)self.intValue;
-        //            return Value;
-        //        }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="self"></param>
-        //        public static explicit operator sbyte(SmallDec self)
-        //        {
-        //            sbyte Value = (sbyte)self.intValue;
-        //            if (self.DecimalStatus == 1) { Value *= -1; }
-        //            return Value;
-        //        }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="self"></param>
-        //        public static explicit operator ushort(SmallDec self)
-        //        {
-        //            ushort Value = (ushort)self.intValue;
-        //            return Value;
-        //        }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="self"></param>
-        //        public static explicit operator short(SmallDec self)
-        //        {
-        //            short Value = (short)self.intValue;
-        //            if (self.DecimalStatus == 1) { Value *= -1; }
-        //            return Value;
-        //        }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="self"></param>
-        //        static public explicit operator string(SmallDec self) => self.ToOptimalString();
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="self"></param>
-        //        public static explicit operator bool(SmallDec self)
-        //        {
-        //            return (int)self == 1;
-        //        }
-
-        //        ///// <summary>
-        //        /////
-        //        ///// </summary>
-        //        ///// <param name="self"></param>
-        //        //static public explicit operator dynamic(SmallDec self) => SmallDec.Initialize(self);
-
-        //        //From Standard types to this type
-        //#if (BlazesGlobalCode_StandardExplicitConversionFrom)
-        //        public static explicit operator SmallDec(decimal Value)	{	return new SmallDec(Value);	}
-
-        //        public static explicit operator SmallDec(double Value)	{	return new SmallDec(Value);	}
-
-        //        public static explicit operator SmallDec(SmallDec Value)	{	return new SmallDec(Value);	}
-
-        //        public static explicit operator SmallDec(int Value)	{	return new SmallDec(Value);	}
-
-        //        public static explicit operator SmallDec(uint Value)	{	return new SmallDec(Value);	}
-
-        //        public static explicit operator SmallDec(long Value)	{	return new SmallDec(Value);	}
-
-        //        public static explicit operator SmallDec(ulong Value)	{	return new SmallDec(Value);	}
-
-        //        public static explicit operator SmallDec(ushort Value)	{	return new SmallDec(Value);	}
-
-        //        public static explicit operator SmallDec(short Value)	{	return new SmallDec(Value);	}
-
-        //        public static explicit operator SmallDec(sbyte Value)	{	return new SmallDec(Value);	}
-
-        //        public static explicit operator SmallDec(byte Value)	{	return new SmallDec(Value);	}
-
-        //        public static explicit operator SmallDec(string Value) { return new SmallDec(Value); }
-
-        //        public static explicit operator SmallDec(DependencyProperty Value)
-        //        {
-        //            SmallDec NewValue = Value.ToString();
-        //            return NewValue;
-        //        }
-        //#else
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="Value"></param>
-        //        public static implicit operator SmallDec(decimal Value) { return new SmallDec(Value); }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="Value"></param>
-        //        public static implicit operator SmallDec(double Value) { return new SmallDec(Value); }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="Value"></param>
-        //        public static implicit operator SmallDec(float Value) { return new SmallDec(Value); }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="Value"></param>
-        //        public static implicit operator SmallDec(int Value) { return new SmallDec(Value); }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="Value"></param>
-        //        public static implicit operator SmallDec(uint Value) { return new SmallDec(Value); }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="Value"></param>
-        //        public static implicit operator SmallDec(long Value) { return new SmallDec(Value); }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="Value"></param>
-        //        public static implicit operator SmallDec(ulong Value) { return new SmallDec(Value); }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="Value"></param>
-        //        public static implicit operator SmallDec(ushort Value) { return new SmallDec(Value); }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="Value"></param>
-        //        public static implicit operator SmallDec(short Value) { return new SmallDec(Value); }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="Value"></param>
-        //        public static implicit operator SmallDec(sbyte Value) { return new SmallDec(Value); }
-
-        //        /// <summary>
-        //        ///
-        //        /// </summary>
-        //        /// <param name="Value"></param>
-        //        public static implicit operator SmallDec(byte Value) { return new SmallDec(Value); }
-
-        //        /// <summary>
-        //        /// String converted to SmallDec
-        //        /// </summary>
-        //        /// <param name="Value"></param>
-        //        public static implicit operator SmallDec(string Value) { return new SmallDec(Value); }
-
-        //        ///// <summary>
-        //        /////
-        //        ///// </summary>
-        //        ///// <param name="Value"></param>
-        //        //public static implicit operator SmallDec(DependencyProperty Value)
-        //        //{
-        //        //    //Type PropertyType = Value.PropertyType;
-        //        //    SmallDec NewValue = Value.ToString();
-        //        //    return NewValue;
-        //        //}
-        //#endif
+#endif
     }
 }

@@ -1075,11 +1075,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 //}
                 return SmallDec.Zero;
             }
-            else if (valueType == typeof(DependencyProperty))
-            {
-                DependencyProperty self = (DependencyProperty)value;
-                return (SmallDec)self;
-            }
+            //else if (valueType == typeof(DependencyProperty))
+            //{
+            //    DependencyProperty self = (DependencyProperty)value;
+            //    return (SmallDec)self;
+            //}
             //else if (FullValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec")//SmallDec conversion
             //{
             //    if (typeof(SmallDec) == value.GetType())
