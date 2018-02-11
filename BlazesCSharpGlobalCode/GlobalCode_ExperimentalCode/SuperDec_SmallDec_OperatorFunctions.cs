@@ -79,10 +79,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     if (ValueIsWholeN) { Value.DecimalStatus = 0; }
                     else { Value.DecimalStatus *= -1; }
                 }
-                // Positive Self <= -Value
                 if (ValueIsNegative && SelfIsNegative == false) { return false; }
-                // Negative Self <= Value
-                else if (ValueIsNegative==false && SelfIsNegative == true) { return true; }
+                else if (ValueIsNegative==false && SelfIsNegative) { return true; }
                 else
                 {//Both are either positive or negative
                     if (SelfIsNegative)
@@ -91,13 +89,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                         {
                             return true;
                         }
-                        else if (self.IntValue == Value.IntValue)
-                        {
-                            return SelfIsWholeN && ValueIsWholeN ? false : self.DecimalStatus > Value.DecimalStatus;
-                        }
                         else
                         {
-                            return false;
+                            return self.DecimalStatus > Value.DecimalStatus;
                         }
                     }
                     else
@@ -106,13 +100,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                         {
                             return true;
                         }
-                        else if (self.IntValue == Value.IntValue)
-                        {
-                            return SelfIsWholeN && ValueIsWholeN ? false: self.DecimalStatus < Value.DecimalStatus;
-                        }
                         else
                         {
-                            return false;
+                            return self.DecimalStatus < Value.DecimalStatus;
                         }
                     }
                 }
@@ -159,6 +149,55 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             if (self.intValue == Value.intValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
             else
             {
+                bool SelfIsNegative = self.DecimalStatus < 0;
+                bool ValueIsNegative = Value.DecimalStatus < 0;
+                bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
+                bool ValueIsWholeN = self.DecimalStatus == NegativeWholeNumber;
+                if (SelfIsNegative)
+                {
+                    if (SelfIsWholeN) { self.DecimalStatus = 0; }
+                    else { self.DecimalStatus *= -1; }
+                }
+                if (ValueIsNegative)
+                {
+                    if (ValueIsWholeN) { Value.DecimalStatus = 0; }
+                    else { Value.DecimalStatus *= -1; }
+                }
+                if (ValueIsNegative && SelfIsNegative == false) { return false; }
+                else if (ValueIsNegative == false && SelfIsNegative) { return true; }
+                else
+                {//Both are either positive or negative
+                    if (SelfIsNegative)
+                    {//Larger number = farther down into negative
+                        if (self.IntValue > Value.IntValue)
+                        {
+                            return true;
+                        }
+                        else if (self.IntValue == Value.IntValue)
+                        {
+                            return SelfIsWholeN && ValueIsWholeN ? false : self.DecimalStatus > Value.DecimalStatus;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if (self.IntValue < Value.IntValue)
+                        {
+                            return true;
+                        }
+                        else if (self.IntValue == Value.IntValue)
+                        {
+                            return SelfIsWholeN && ValueIsWholeN ? false : self.DecimalStatus < Value.DecimalStatus;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
             }
 #endif
             }
