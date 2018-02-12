@@ -2756,7 +2756,14 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 Value.DecBoolStatus += 1;
             }
 #else
-            Value.DecimalStatus *= -1;
+            if (Value.DecimalStatus == NegativeWholeNumber)
+            {
+                Value.DecimalStatus = 0;
+            }
+			else
+			{
+                Value.DecimalStatus *= -1;
+            }
 #endif
             return Value;
         }

@@ -116,8 +116,6 @@
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_Int16_4Decimal.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_Int32_9Decimal.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_LargeDec_OperatorFunctions.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_MediumDec_AlternativeOperatorFunctions.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_MediumDec_OperatorFunctions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_ModerateDec_OperatorFunctions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_OperatorFunctions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_OtherConversions.cs" />
