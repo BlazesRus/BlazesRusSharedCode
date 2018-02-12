@@ -11,16 +11,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
     using System.Windows;
     using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
-    public partial struct MediumSuperDec : IComparable<MediumSuperDec>
+    public partial struct MediumDec : IComparable<MediumDec>
     {
-        //public static MediumSuperDec operator +(MediumSuperDec self, MediumSuperDec y)
+        //public static MediumDec operator +(MediumDec self, MediumDec y)
         //{
         //    //Fix potential negative zero
         //    if (self.IntValue == 0 && self.DecBoolStatus == 1 && self.DecimalStatus == 0) { self.DecBoolStatus = 0; }
         //    return self;
         //}
 
-        //public static MediumSuperDec operator +(MediumSuperDec self, dynamic y)
+        //public static MediumDec operator +(MediumDec self, dynamic y)
         //{
         //    if (y is double||y is float||y is decimal)
         //    {
@@ -184,7 +184,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //    return self;
         //}
 
-        //public static MediumSuperDec operator -(MediumSuperDec self, MediumSuperDec y)
+        //public static MediumDec operator -(MediumDec self, MediumDec y)
         //{
         //    bool IsYNegative = (y.DecBoolStatus == 1) ? true : false;
         //    //ex. -9 - 9
@@ -300,7 +300,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //    return self;
         //}
 
-        //public static MediumSuperDec operator -(MediumSuperDec self, dynamic y)
+        //public static MediumDec operator -(MediumDec self, dynamic y)
         //{
         //    if (y is double||y is float||y is decimal)
         //    {
@@ -468,7 +468,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //    return self;
         //}
 
-        //public static MediumSuperDec operator *(MediumSuperDec self, MediumSuperDec y)
+        //public static MediumDec operator *(MediumDec self, MediumDec y)
         //{
         //    if (y.IntValue == 0 && y.DecimalStatus == 0)
         //    {
@@ -516,7 +516,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //    return self;
         //}
 
-        //public static MediumSuperDec operator *(MediumSuperDec self, dynamic y)
+        //public static MediumDec operator *(MediumDec self, dynamic y)
         //{
         //    if (y is double||y is float||y is decimal)
         //    {
@@ -617,7 +617,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //    return self;
         //}
 
-        //public static MediumSuperDec operator /(MediumSuperDec self, double y)
+        //public static MediumDec operator /(MediumDec self, double y)
         //{
         //    if (y == 0)
         //    {
@@ -682,9 +682,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //    return self;
         //}
 
-        //public static MediumSuperDec operator /(MediumSuperDec self, dynamic y)
+        //public static MediumDec operator /(MediumDec self, dynamic y)
         //{
-        //    if (y is MediumSuperDec)
+        //    if (y is MediumDec)
         //    {
         //        if (y.IntValue == 0 && y.DecimalStatus == 0)
         //        {
@@ -758,16 +758,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //    return self;
         //}
 
-        //public static MediumSuperDec operator *(dynamic y, MediumSuperDec self)
+        //public static MediumDec operator *(dynamic y, MediumDec self)
         //{
-        //    MediumSuperDec YAsSuperDec = (MediumSuperDec)y;
+        //    MediumDec YAsSuperDec = (MediumDec)y;
         //    YAsSuperDec += self;
         //    return YAsSuperDec;
         //}
 
-        //public static MediumSuperDec operator /(dynamic y, MediumSuperDec self)
+        //public static MediumDec operator /(dynamic y, MediumDec self)
         //{
-        //    MediumSuperDec YAsSuperDec = (MediumSuperDec)y;
+        //    MediumDec YAsSuperDec = (MediumDec)y;
         //    YAsSuperDec += self;
         //    return YAsSuperDec;
         //}

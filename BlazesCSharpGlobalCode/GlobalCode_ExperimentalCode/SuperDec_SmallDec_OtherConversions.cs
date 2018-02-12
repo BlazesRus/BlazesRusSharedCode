@@ -135,7 +135,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //        /// <summary>
         //        /// </summary>
         //        /// <param name="Value"></param>
-        //        public static explicit operator SmallDec(MediumSuperDec Value)
+        //        public static explicit operator SmallDec(MediumDec Value)
         //        {
         //            return new SmallDec(Value);
         //        }

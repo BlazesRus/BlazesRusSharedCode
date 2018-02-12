@@ -187,7 +187,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// 
         /// </summary>
         /// <param name="self"></param>
-        public static explicit operator LargeSuperDec(MediumSuperDec self)
+        public static explicit operator LargeSuperDec(MediumDec self)
         {
             LargeSuperDec NewSelf;
             NewSelf.IntValue = self.IntValue;

@@ -1,481 +1,464 @@
 ﻿/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
     Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
 */
+
 using System;
 
-//Requires BigMath library to compile
+//Does not need BigMath library to compile
 
-//CSharpGlobalCode.GlobalCode_ExperimentalCode.SuperDec_Int32_9Decimal
+//CSharpGlobalCode.GlobalCode_ExperimentalCode.MediumDec
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Globalization;
-    using System.Windows;
-    using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
-#pragma warning disable CC0001 // You should use 'var' whenever possible.
-#pragma warning disable CC0105 // You should use 'var' whenever possible.
-#pragma warning disable CS3001 // Argument type is not CLS-compliant
-#pragma warning disable CS3002 // Return type is not CLS-compliant
-#pragma warning disable CS3003 // Type is not CLS-compliant
-#pragma warning disable CS0436 // Type conflicts with imported type
     /// <summary>
     /// Represent +- 4294967295.999999999 with 100% consistency of accuracy
-    /// (Aka SuperDec_Int32_9Decimal)
+    /// <para/>(Aka (Aka SuperDec_Int32_9Decimal))
+	/// <para/>Requires BigMath library to compile for operation functionality other than +- unless use alternative code
     /// </summary>
-    public partial struct MediumSuperDec : IComparable<MediumSuperDec>
+    //[System.ComponentModel.TypeConverter(typeof(MediumDec_TypeConverter))]
+    ////[System.Security.SecurityCriticalAttribute]//Allow reflection permissions ;Removing Security Critical status since messes up its usage inside xaml GUIs
+    //[CLSCompliant(false)]
+    //[SerializableAttribute]
+    //[BindableAttribute(true, BindingDirection.TwoWay)]
+    public
+#if (!BlazesGlobalCode_MediumDec_AsStruct)
+    sealed
+#endif
+    partial
+#if (!BlazesGlobalCode_MediumDec_AsStruct)
+    class
+#else
+    struct
+#endif
+    MediumDec : INotifyPropertyChanged//, IComparable<MediumDec>,IConvertible, IEquatable<MediumDec>, IFormattable
     {
-        /// <summary>
-        /// 0 = Positive;1=Negative;Other states at higher then 1;254 = Positive Infinity;255 = Negative Infinity
-        /// </summary>
-        public byte DecBoolStatus;
+        static int NegativeWholeNumber = -1000000000;
+        static int DecimalOverflow = 1000000000;
 
         /// <summary>
-        /// Stores decimal section info (9 Decimal places stored)
+        /// Stores decimal section info and Negative/Positive Status(9 Decimal places stored)
         /// </summary>
-        public uint DecimalStatus;
+        private int decimalStatus;
+
+        /// <summary>
+        /// Stores decimal section info and Negative/Positive Status(9 Decimal places stored)
+        /// </summary>
+        public int DecimalStatus
+        {
+            get
+            {
+                return decimalStatus;
+            }
+
+            set
+            {
+                decimalStatus = value;
+            }
+        }
 
         /// <summary>
         /// Stores whole half of number
         /// </summary>
-        public uint IntValue;
+        private uint intValue;
 
         /// <summary>
-        /// 
+        /// Stores whole half of number
         /// </summary>
-        /// <param name="Value"></param>
-        /// <returns></returns>
-        public static MediumSuperDec Sum(IEnumerable<MediumSuperDec> Value)
+        public uint IntValue
         {
-            MediumSuperDec TotalSum = MediumSuperDec.Zero;
-            foreach (var Element in Value)
+            get
             {
-                TotalSum += Element;
+                return intValue;
             }
-            return TotalSum;
-        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public MediumSuperDec Abs()
-        {
-            this.DecBoolStatus = 0;
-            return this;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public MediumSuperDec Floor()
-        {
-            this.DecimalStatus = 0;
-            return this;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public MediumSuperDec Ceil()
-        {
-            if (this.DecimalStatus != 0)
+            set
             {
-                this.DecimalStatus = 0;
-                this.IntValue += 1;
+                intValue = value;
             }
-            return this;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public MediumSuperDec Round()
-        {
-            if (DecimalStatus >= 500000000) { this.IntValue += 1; }
-            this.DecimalStatus = 0;
-            return this;
         }
 
         ///// <summary>
-        ///// 
+        ///// Finds sum of Value Container
         ///// </summary>
         ///// <param name="Value"></param>
-        //public MediumSuperDec(SmallDec Value)
+        ///// <returns></returns>
+        //public static MediumDec Sum(IEnumerable<MediumDec> Value)
         //{
-        //    IntValue = (uint)Value.IntValue;
-        //    DecimalStatus = (uint)Value.DecimalStatus * 100000;
-        //    DecBoolStatus = Value.DecBoolStatus;
+        //    var TotalSum = MediumDec.Zero;
+        //    foreach (var Element in Value)
+        //    {
+        //        TotalSum += Element;
+        //    }
+        //    return TotalSum;
         //}
 
         /// <summary>
-        /// 
+        /// Parses string value into MediumDec
         /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator MediumSuperDec(SmallDec self)
+        /// <param name="value"></param>
+        /// <param name="invariantCulture"></param>
+        /// <returns></returns>
+        public static MediumDec Parse(string value, CultureInfo invariantCulture)
         {
-            return new MediumSuperDec(self);
+            MediumDec NewValue = MediumDec.Initialize(value);
+            return NewValue;
         }
 
         /// <summary>
-        /// 
+        /// Parses string value into MediumDec
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="MediumDec"></param>
+        /// <param name="culture"></param>
+        /// <param name="OutputValue"></param>
+        /// <returns></returns>
+        public static bool TryParse(string value, object MediumDec, CultureInfo culture, out MediumDec OutputValue)
+        {
+            OutputValue = Parse(value, culture);
+            return true;
+        }
+
+        /// <summary>
+        /// Return largest of parameters
+        /// </summary>
+        /// <param name="LeftSide"></param>
+        /// <param name="RightSide"></param>
+        /// <returns></returns>
+        public static MediumDec Max(dynamic LeftSide, dynamic RightSide)
+        {
+            var LeftSideAsType = (MediumDec)LeftSide;
+            var RightSideAsType = (MediumDec)RightSide;
+            return LeftSideAsType > RightSide ? LeftSideAsType : RightSideAsType;
+        }
+
+        /// <summary>
+        /// Return the smallest of parameters
+        /// </summary>
+        /// <param name="LeftSide"></param>
+        /// <param name="RightSide"></param>
+        /// <returns></returns>
+        public static MediumDec Min(dynamic LeftSide, dynamic RightSide)
+        {
+            var LeftSideAsType = (MediumDec)LeftSide;
+            var RightSideAsType = (MediumDec)RightSide;
+            return LeftSideAsType < RightSide ? LeftSideAsType : RightSideAsType;
+        }
+
+        /// <summary>
+        /// Method version to Initialize Type instead of with Explicit operators
         /// </summary>
         /// <param name="Value"></param>
-        public MediumSuperDec(dynamic Value)
+        /// <returns></returns>
+        public static MediumDec Initialize(dynamic Value) => new MediumDec(Value);
+
+        /// <summary>
+        /// Initialize constructor
+        /// </summary>
+        /// <param name="Value"></param>
+        public MediumDec(dynamic Value)
         {
-            if (Value is double || Value is float|| Value is decimal)
+            //Use to to detect different assembly versions of MediumDec class
+            Type ValueType = (Value as object).GetType();
+            string ValueTypeName = ValueType.FullName;
+            //((System.Runtime.Remoting.ObjectHandle)Value).Unwrap().GetType().ToString();
+            if (ValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.MediumDec" || ValueType == typeof(MediumDec))
             {
-                if (Value < 0)
-                {
-                    Value *= -1;
-                    DecBoolStatus = 1;
-                }
-                else
-                {
-                    DecBoolStatus = 0;
-                }
-                IntValue = (uint)System.Math.Floor(Value);
-                Value -= IntValue;
-                DecimalStatus = ExtractDecimalHalfV2(Value);
+                this.intValue = Value.IntValue;
+                this.decimalStatus = Value.DecimalStatus;
             }
-            else if (Value is sbyte || Value is ushort || Value is int || Value is long)
+            else if (Value == null)
             {
-                if (Value < 0)
-                {
-                    this.DecBoolStatus = 1;
-                    Value *= -1;
-                }
-                else
-                {
-                    this.DecBoolStatus = 0;
-                }
-                //Cap value if too big on initialize
-                if (Value > 4294967295)
-                {
-                    Value = 4294967295;
-                }
-                this.DecBoolStatus = 0;
-                this.IntValue = (uint)Value;
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = MediumDec.Zero;
+#else
+                this.IntValue = 0;
                 this.DecimalStatus = 0;
+#endif
+            }
+            else if (ValueType == typeof(string))
+            {
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = (string)Value;
+#else
+                MediumDec TempSelf = (MediumDec)Value;
+                this.intValue = TempSelf.IntValue;
+                this.decimalStatus = TempSelf.DecimalStatus;
+#endif
+            }
+            else if (ValueType == typeof(float))
+            {
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = (float)Value;
+#else
+                MediumDec TempSelf = (MediumDec)Value;
+                this.intValue = TempSelf.IntValue;
+                this.decimalStatus = TempSelf.DecimalStatus;
+#endif
+            }
+            else if (ValueType == typeof(double))
+            {
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = (double)Value;
+#else
+                MediumDec TempSelf = (MediumDec)Value;
+                this.intValue = TempSelf.IntValue;
+                this.decimalStatus = TempSelf.DecimalStatus;
+#endif
+            }
+            else if (ValueType == typeof(decimal))
+            {
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = (decimal)Value;
+#else
+                MediumDec TempSelf = (MediumDec)Value;
+                this.intValue = TempSelf.IntValue;
+                this.decimalStatus = TempSelf.DecimalStatus;
+#endif
+            }
+            else if (ValueType == typeof(int))
+            {
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = (int)Value;
+#else
+                MediumDec TempSelf = (MediumDec)Value;
+                this.intValue = TempSelf.IntValue;
+                this.decimalStatus = TempSelf.DecimalStatus;
+#endif
+            }
+            else if (ValueType == typeof(long))
+            {
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = (long)Value;
+#else
+                MediumDec TempSelf = (MediumDec)Value;
+                this.intValue = TempSelf.IntValue;
+                this.decimalStatus = TempSelf.DecimalStatus;
+#endif
+            }
+            else if (ValueType == typeof(uint))
+            {
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = (uint)Value;
+#else
+                MediumDec TempSelf = (MediumDec)Value;
+                this.intValue = TempSelf.IntValue;
+#endif
+            }
+            else if (ValueType == typeof(ulong))
+            {
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = (ulong)Value;
+#else
+                MediumDec TempSelf = (MediumDec)Value;
+                this.intValue = TempSelf.IntValue;
+#endif
+            }
+            else if (ValueType == typeof(byte))
+            {
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = (byte)Value;
+#else
+                MediumDec TempSelf = (MediumDec)Value;
+                this.intValue = TempSelf.IntValue;
+#endif
+            }
+            else if (ValueType == typeof(sbyte))
+            {
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = (sbyte)Value;
+#else
+                MediumDec TempSelf = (MediumDec)Value;
+                this.intValue = TempSelf.IntValue;
+#endif
+            }
+            else if (ValueType == typeof(short))
+            {
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = (short)Value;
+#else
+
+#endif
+            }
+            else if (ValueType == typeof(ushort))
+            {
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = (ushort)Value;
+#else
+
+#endif
+            }
+            else if (ValueType == typeof(bool))
+            {
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = (MediumDec)(bool)Value;
+#else
+
+#endif
+            }
+            else if (ValueType == typeof(char))
+            {
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = (char)(short)Value;
+#else
+
+#endif
+            }
+            else if (ValueType.IsValueType)
+            {
+                dynamic ConvertedValue = Activator.CreateInstance(ValueType);
+                ConvertedValue = System.Convert.ChangeType(Value, ValueType, CultureInfo.CurrentCulture);
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+                this = ConvertedValue;
+#else
+                this.IntValue = 0;
+                this.DecimalStatus = 0;
+#endif
             }
             else
             {
-                //Cap value if too big on initialize
-                if (Value > 4294967295)
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+#pragma warning disable EA002 // Swallow exceptions considered harmful
+                try
                 {
-                    Value = 4294967295;
+                    //dynamic changedObj = System.Convert.ChangeType(this.ToOptimalString(), conversionType, provider);
+                    //this = changedObj;
+                    dynamic ConvertedValue = default(ValueType);
+                    ConvertedValue = Value;
+                    this = ConvertedValue;
                 }
-                this.DecBoolStatus = 0;
-                this.IntValue = (uint)Value;
-                this.DecimalStatus = 0;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator decimal(MediumSuperDec self)
-        {
-            decimal Value = 0.0M;
-            Value += self.IntValue;
-            Value += (self.DecimalStatus * 0.000000001M);
-            if (self.DecBoolStatus == 1) { Value *= -1; }
-            return Value;
-        }
-
-        /// <summary>
-        /// Explicit Conversion from this to double
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator double(MediumSuperDec self)
-        {
-            double Value = 0.0;
-            Value += self.IntValue;
-            Value += (self.DecimalStatus * 0.000000001);
-            if (self.DecBoolStatus == 1) { Value *= -1; }
-            return Value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator float(MediumSuperDec self)
-        {
-            float Value = 0.0f;
-            Value += self.IntValue;
-            Value += (float)(self.DecimalStatus * 0.000000001);
-            if (self.DecBoolStatus == 1) { Value *= -1; }
-            return Value;
-        }
-
-        //
-        /// <summary>
-        /// Conversion from this to int
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator int(MediumSuperDec self)
-        {
-            int Value = (int)self.IntValue;
-            if (self.DecimalStatus == 1) { Value *= -1; }
-            return Value;
-        }
-
-        /// <summary>
-        /// Conversion from this to int 64
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator long(MediumSuperDec self)
-        {
-            long Value = self.IntValue;
-            if (self.DecimalStatus == 1) { Value *= -1; }
-            return Value;
-        }
-
-        /// <summary>
-        /// Explicit Conversion from this to uint
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator uint(MediumSuperDec self)
-        {
-            return self.IntValue;
-        }
-
-        /// <summary>
-        /// Explicit Conversion from this to unsigned int 64
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator ulong(MediumSuperDec self)
-        {
-            return self.IntValue;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator byte(MediumSuperDec self)
-        {
-            byte Value = (byte)self.IntValue;
-            return Value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator sbyte(MediumSuperDec self)
-        {
-            sbyte Value = (sbyte)self.IntValue;
-            if (self.DecimalStatus == 1) { Value *= -1; }
-            return Value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator ushort(MediumSuperDec self)
-        {
-            ushort Value = (ushort)self.IntValue;
-            return Value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator short(MediumSuperDec self)
-        {
-            short Value = (short)self.IntValue;
-            if (self.DecimalStatus == 1) { Value *= -1; }
-            return Value;
-        }
-
-        //public static ulong ForceConvertFromInt256(BigMath.Int256 Value)
-        //{
-        //	ulong ConvertedValue = 0;
-        //	//Larger than ulong (default to zero)
-        //	if (Value > 18446744073709551615)
-        //	{
-        //		Console.WriteLine("Overflow Detected");
-        //	}
-        //	else
-        //	{
-        //		BigMath.Int128 Value02 = (BigMath.Int128)Value;
-        //		ConvertedValue = (ulong)Value02;
-        //	}
-        //	return ConvertedValue;
-        //}
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        static public explicit operator string(MediumSuperDec self)
-        {
-            System.String Value = "";
-            uint IntegerHalf = self.IntValue;
-            byte CurrentDigit;
-            if (self.DecBoolStatus == 1) { Value += "-"; }
-            for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; Index--)
-            {
-                CurrentDigit = (byte)(IntegerHalf / Math.Pow(10, Index));
-                IntegerHalf -= (uint)(CurrentDigit * Math.Pow(10, Index));
-                Value += DigitAsChar(CurrentDigit);
-            }
-            Value += ".";
-            uint DecimalHalf = self.DecimalStatus;
-            for (sbyte Index = 8; Index >= 0; Index--)
-            {
-                CurrentDigit = (byte)(DecimalHalf / Math.Pow(10, Index));
-                DecimalHalf -= (uint)(CurrentDigit * Math.Pow(10, Index));
-                Value += DigitAsChar(CurrentDigit);
-            }
-            return Value;
-        }
-
-        //From Standard types to this type 
-#if (BlazesGlobalCode_StandardExplicitConversionFrom)
-        public static explicit operator MediumSuperDec(decimal Value)	{	return new MediumSuperDec(Value);	}
-
-        public static explicit operator MediumSuperDec(double Value)	{	return new MediumSuperDec(Value);	}
-
-        public static explicit operator MediumSuperDec(MediumSuperDec Value)	{	return new MediumSuperDec(Value);	}
-
-        public static explicit operator MediumSuperDec(int Value)	{	return new MediumSuperDec(Value);	}
-
-        public static explicit operator MediumSuperDec(uint Value)	{	return new MediumSuperDec(Value);	}
-
-        public static explicit operator MediumSuperDec(long Value)	{	return new MediumSuperDec(Value);	}
-
-        public static explicit operator MediumSuperDec(ulong Value)	{	return new MediumSuperDec(Value);	}
-
-        public static explicit operator MediumSuperDec(ushort Value)	{	return new MediumSuperDec(Value);	}
-
-        public static explicit operator MediumSuperDec(short Value)	{	return new MediumSuperDec(Value);	}
-
-        public static explicit operator MediumSuperDec(sbyte Value)	{	return new MediumSuperDec(Value);	}
-
-        public static explicit operator MediumSuperDec(byte Value)	{	return new MediumSuperDec(Value);	}
-
-        public static explicit operator MediumSuperDec(string Value) { return new MediumSuperDec(Value); }
-
-#if (GlobalCode_EnableDependencyPropStuff)
-        public static explicit operator MediumSuperDec(DependencyProperty Value)
-        {
-            MediumSuperDec NewValue = Value.ToString();
-            return NewValue;
-        }
-#endif
+                catch
+                {
+                    try
+                    {
+                        this = Value.ToString();
+                    }
+                    catch
+                    {
+                        this = MediumDec.Zero;
+                    }
+                }
+#pragma warning restore EA002 // Swallow exceptions considered harmful
 #else
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator MediumSuperDec(decimal Value) { return new MediumSuperDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator MediumSuperDec(double Value) { return new MediumSuperDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator MediumSuperDec(float Value) { return new MediumSuperDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator MediumSuperDec(int Value) { return new MediumSuperDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator MediumSuperDec(uint Value) { return new MediumSuperDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator MediumSuperDec(long Value) { return new MediumSuperDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator MediumSuperDec(ulong Value) { return new MediumSuperDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator MediumSuperDec(ushort Value) { return new MediumSuperDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator MediumSuperDec(short Value) { return new MediumSuperDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator MediumSuperDec(sbyte Value) { return new MediumSuperDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator MediumSuperDec(byte Value) { return new MediumSuperDec(Value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator MediumSuperDec(string Value) { return new MediumSuperDec(Value); }
-
-#if (GlobalCode_EnableDependencyPropStuff)
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator MediumSuperDec(DependencyProperty Value)
-        {
-            MediumSuperDec NewValue = Value.ToString();
-            return NewValue;
-        }
+                this.IntValue = 0;
+                this.DecimalStatus = 0;
 #endif
-#endif
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || GetType() != obj.GetType()) { return false; }
-
-            try
-            {
-                return this == (MediumSuperDec)obj;
-            }
-            catch
-            {
-                return false;
             }
         }
+
+//        /// <summary>
+//        ///
+//        /// </summary>
+//        /// <param name="value"></param>
+//        /// <returns></returns>
+//        public override bool Equals(object value)
+//        {
+//            //Enable comparisons against other object types
+//            if (value == null) { return false; }
+
+//            try
+//            {
+//                Type valueType = value.GetType();
+//                string FullValueTypeName = valueType.FullName;
+//                if (FullValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.MediumDec")//MediumDec to MediumDec Comparison
+//                {
+//                    if (value.GetType() != typeof(MediumDec))//Alternative assembly version of MediumDec Detected
+//                    {
+//                        dynamic ConvertedValue = Activator.CreateInstance(value.GetType());
+//                        ConvertedValue = this;
+//                        return this == (MediumDec)ConvertedValue;
+//                    }
+//                    else
+//                    {
+//                        return this == (MediumDec)value;
+//                    }
+//                }
+//                else
+//                {
+//                    if (valueType == typeof(string))
+//                    {
+//                        return this == (string)value;
+//                    }
+//                    else if (valueType == typeof(float))
+//                    {
+//                        return this == (float)value;
+//                    }
+//                    else if (valueType == typeof(double))
+//                    {
+//                        return this == (double)value;
+//                    }
+//                    else if (valueType == typeof(decimal))
+//                    {
+//                        return this == (decimal)value;
+//                    }
+//                    else if (valueType == typeof(int))
+//                    {
+//                        return this == (int)value;
+//                    }
+//                    else if (valueType == typeof(long))
+//                    {
+//                        return this == (long)value;
+//                    }
+//                    else if (valueType == typeof(uint))
+//                    {
+//                        return this == (uint)value;
+//                    }
+//                    else if (valueType == typeof(ulong))
+//                    {
+//                        return this == (ulong)value;
+//                    }
+//                    else if (valueType == typeof(byte))
+//                    {
+//                        return this == (byte)value;
+//                    }
+//                    else if (valueType == typeof(sbyte))
+//                    {
+//                        return this == (sbyte)value;
+//                    }
+//                    else if (valueType == typeof(short))
+//                    {
+//                        return this == (short)value;
+//                    }
+//                    else if (valueType == typeof(ushort))
+//                    {
+//                        return this == (ushort)value;
+//                    }
+//                    else if (valueType == typeof(bool))
+//                    {
+//                        return this == (MediumDec)(bool)value;
+//                    }
+//                    else if (valueType == typeof(char))
+//                    {
+//                        return this == (char)(short)value;
+//                    }
+//                    //Dependency Property
+//                    else if (FullValueTypeName == "MS.Internal.NamedObject")
+//                    {
+//                        return this == MediumDec.Zero;
+//                    }
+//                    else
+//                    {
+//                        Console.WriteLine("Equals Comparison Test for " + valueType.ToString());
+//                        dynamic changedObj = System.Convert.ChangeType(value, value.GetType(), CultureInfo.InvariantCulture);
+//                        return this == MediumDec.Initialize(changedObj);
+//                    }
+//                }
+//            }
+//            catch
+//#if (DEBUG)
+//            (Exception ex)
+//#endif
+//            {
+//#if (DEBUG)
+//                Console.WriteLine("Exception named ");
+//                Console.WriteLine(ex.ToString());
+//                Console.WriteLine("caught in Equals Method.");
+//#endif
+//                return false;
+//            }
+//        }
 
         /// <summary>
         /// Override the Object.GetHashCode() method
@@ -483,85 +466,71 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <returns></returns>
         public override int GetHashCode()
         {
-            if (DecBoolStatus == 1)
-            {
-                return (int)(IntValue / 2 - 2147483648);
-            }
-            else
-            {
-                return (int)(IntValue / 2);
-            }
+            return DecimalStatus;
         }
 
         /// <summary>
-        /// Negative Operator
+        /// Return value as signed int 32 value
+        /// </summary>
+        /// <returns></returns>
+        public int GetIntValueAsInt32()
+        {
+            return (int)intValue;
+        }
+
+        /// <summary>
+        /// Method check that returns if represented number is negative
+        /// </summary>
+        /// <returns></returns>
+        public bool IsNegative()
+        {
+            return DecimalStatus < 0;
+        }
+
+        /// <summary>
+        /// Switch from positive to negative and back
         /// </summary>
         public void SwapNegativeStatus()
         {
-            if (DecBoolStatus == 1) { DecBoolStatus = 0; }
-            else { DecBoolStatus = 1; }
-        }
-
-        //Returns value of highest non-infinite/Special Decimal State Value that can store
-        private static MediumSuperDec MaximumValue()
-        {
-            MediumSuperDec NewSelf;
-            NewSelf.IntValue = 4294967295;
-            NewSelf.DecimalStatus = 999999999;
-            NewSelf.DecBoolStatus = 0;
-            return NewSelf;
+            DecimalStatus *= -1;
         }
 
         /// <summary>
         /// Returns value of highest non-infinite/Special Decimal State Value that can store
         /// </summary>
-        public static readonly MediumSuperDec Maximum = MaximumValue();
+        /// <returns></returns>
+        private static MediumDec MaximumValue()
+        {
+            return new MediumDec(4294967295, 999999999);
+        }
+
+        /// <summary>
+        /// Returns value of highest non-infinite/Special Decimal State Value that can store
+        /// </summary>
+        public static MediumDec Maximum = MaximumValue();
 
         //Returns value of lowest non-infinite/Special Decimal State Value that can store
-        private static MediumSuperDec MinimumValue()
+        private static MediumDec MinimumValue()
         {
-            MediumSuperDec NewSelf; 
-            NewSelf.IntValue = 4294967295;
-            NewSelf.DecimalStatus = 999999999;
-            NewSelf.DecBoolStatus = 1;
-            return NewSelf;
+            return new MediumDec(4294967295, -999999999);
         }
 
         /// <summary>
         /// Returns value of lowest non-infinite/Special Decimal State Value that can store
         /// </summary>
-        public static readonly MediumSuperDec Minimum = MinimumValue();
+        public static readonly MediumDec Minimum = MinimumValue();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public bool IsInfinity()
         {
-            return DecBoolStatus == 255 ? true : DecBoolStatus == 254 ? true : false;
+            return false;
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public string ToString(string s, IFormatProvider provider)
-        {
-            //float SelfAsFloat = this;
-            //string StringValue = SelfAsFloat.ToString(s, provider);
-            //return StringValue;
-            return (string)this;
-        }
-
-        internal string ToString(CultureInfo invariantCulture)
-        {
-            return (string)this;
-        }
-
-        /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Condition"></param>
         /// <param name="X"></param>
@@ -573,93 +542,340 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
+        /// <param name="Value"></param>
         /// <returns></returns>
-        public float AsFloat() { return (float)this; }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public double AsDouble() { return (double)this; }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public int AsInt() { return (int)IntValue; }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string AsString() { return (string)this; }
-        //public SmallDec AsSmallDec() { return (SmallDec)this; }
+        public static MediumDec DynamicConversionFrom(dynamic Value) => (MediumDec)Value;
 
-        private static MediumSuperDec ZeroValue()
+        //      /// <summary>
+        //      ///
+        //      /// </summary>
+        //      /// <param name="self"></param>
+        //      /// <returns></returns>
+        //      public static MediumDec SumOfList(MediumDec[] self)
+        //      {
+        //          var Total = MediumDec.Zero;
+        //          foreach (MediumDec Element in self)
+        //          {
+        //              Total += Element;
+        //          }
+        //          return Total;
+        //      }
+
+        //      /// <summary>
+        //      ///
+        //      /// </summary>
+        //      /// <param name="self"></param>
+        //      /// <returns></returns>
+        //      public static MediumDec SumOfList(IEnumerable<MediumDec> self)
+        //      {
+        //          var Total = MediumDec.Zero;
+        //          foreach (MediumDec Element in self)
+        //          {
+        //              Total += Element;
+        //          }
+        //          return Total;
+        //      }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public bool IsNull()
         {
-            MediumSuperDec NewSelf;
-            NewSelf.IntValue = 0; NewSelf.DecimalStatus = 0; NewSelf.DecBoolStatus = 0;
-            return NewSelf;
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+            return false;
+#else
+            return this == null;
+#endif
+        }
+
+        private static MediumDec ZeroValue()
+        {
+            return new MediumDec(0, 0);
         }
 
         /// <summary>
         /// Value at zero
         /// </summary>
-        public static readonly MediumSuperDec Zero = ZeroValue();
+        public static readonly MediumDec Zero = ZeroValue();
 
-        private static MediumSuperDec NaNValue()
+        private static MediumDec NaNValue()
+        {//No NaN definition for now
+            return new MediumDec(0, 0);
+        }
+
+        /// <summary>
+        /// Value at either zero or NaN (depending on preprocessor settings)
+        /// </summary>
+        public static readonly MediumDec NaN = NaNValue();
+
+        ///// <summary>
+        /////
+        ///// </summary>
+        ///// <param name="other"></param>
+        ///// <returns></returns>
+        //int IComparable<MediumDec>.CompareTo(MediumDec other)
+        //{
+        //    if (other == this)
+        //    {
+        //        return 0;
+        //    }
+        //    else if (this < other)
+        //    {
+        //        return -1;
+        //    }
+        //    else
+        //    {
+        //        return 1;
+        //    }
+        //}
+
+        ///// <summary>
+        /////
+        ///// </summary>
+        ///// <param name="CompareTarget"></param>
+        ///// <param name="RangeWithin"></param>
+        ///// <returns></returns>
+        //public bool AlmostEquals(dynamic CompareTarget, dynamic RangeWithin)
+        //{
+        //    MediumDec ConvertedTarget = (MediumDec)CompareTarget;
+        //    if (ConvertedTarget == this) { return true; }
+        //    else
+        //    {
+        //        MediumDec LeftRange = ConvertedTarget - RangeWithin;
+        //        MediumDec RightRange = ConvertedTarget + RangeWithin;
+        //        return this == LeftRange || this == RightRange ? true : this > LeftRange && this < RightRange ? true : false;
+        //    }
+        //}
+
+        ///// <summary>
+        /////
+        ///// </summary>
+        ///// <param name="value"></param>
+        ///// <returns></returns>
+        //public int CompareTo(object value)
+        //{
+        //    string FullValueTypeName = value.GetType().FullName;
+        //    MediumDec OtherAsSelfType = ObjectAsMediumDec(value);
+        //    switch (FullValueTypeName)
+        //    {
+        //        case "MS.Internal.NamedObject":
+        //            return this.decimalStatus == 0 ? (this == MediumDec.Zero ? 0 : 1) : -1;
+
+        //        default:
+        //            {
+        //                if (FullValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.MediumDec")//MediumDec comparisons
+        //                {
+        //                    if (value.GetType() != typeof(MediumDec))//Alternative assembly version of MediumDec
+        //                    {
+        //                        MediumDec ValueAsThisType = MediumDec.ObjectAsMediumDec(value);
+        //                        return this.CompareTo(ValueAsThisType);
+        //                    }
+        //                    else
+        //                    {
+        //                        return this.CompareTo((MediumDec)value);
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    if (OtherAsSelfType == this)
+        //                    {
+        //                        return 0;
+        //                    }
+        //                    else if (this < OtherAsSelfType)
+        //                    {
+        //                        return -1;
+        //                    }
+        //                    else
+        //                    {
+        //                        return 1;
+        //                    }
+        //                }
+        //            }
+        //    }
+        //}
+
+        ///// <summary>
+        /////
+        ///// </summary>
+        ///// <param name="other"></param>
+        ///// <returns></returns>
+        //public int CompareTo(MediumDec other)
+        //{
+        //    if (other == this)
+        //    {
+        //        return 0;
+        //    }
+        //    else if (this < other)
+        //    {
+        //        return -1;
+        //    }
+        //    else
+        //    {
+        //        return 1;
+        //    }
+        //}
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="IntValue"></param>
+        /// <param name="DecimalStatus"></param>
+        private MediumDec(uint IntValue, int DecimalStatus)
         {
-            MediumSuperDec NewSelf;
-            NewSelf.IntValue = 0; NewSelf.DecimalStatus = 0;
-#if (BlazesGlobalCode_MediumSuperDec_EnableSpecialDecStates)
-            NewSelf.DecBoolStatus = 202;
-#else
-            NewSelf.DecBoolStatus = 0;
+            this.intValue = IntValue;
+            this.decimalStatus = DecimalStatus;
+        }
+
+#if (!BlazesGlobalCode_MediumDec_AsStruct)
+
+        /// <summary>
+        /// Copy Constructor for class
+        /// </summary>
+        /// <param name="value"></param>
+        private MediumDec(MediumDec value)
+        {
+            this.intValue = value.IntValue;
+            this.decimalStatus = value.DecimalStatus;
+        }
+
+        public MediumDec()
+        {
+            this.intValue = 0;
+            this.decimalStatus = 0;
+        }
+
 #endif
-            return NewSelf;
-        }
 
         /// <summary>
-        /// Value at zero or NaN (depends on preprocessor flags)
+        ///
         /// </summary>
-        public static readonly MediumSuperDec NaN = NaNValue();
-
-        int IComparable<MediumSuperDec>.CompareTo(MediumSuperDec other)
-        {
-            if (other == this)
-            {
-                return 0;
-            }
-            else if (this < other)
-            {
-                return -1;
-            }
-            else
-            {
-                return 1;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="CompareTarget"></param>
-        /// <param name="RangeWithin"></param>
+        /// <param name="other"></param>
         /// <returns></returns>
-        public bool AlmostEquals(dynamic CompareTarget, dynamic RangeWithin)
+        public bool Equals(MediumDec other)
         {
-            var ConvertedTarget = (MediumSuperDec)CompareTarget;
-            if (CompareTarget == this) { return true; }
-            else
+            return this == other;
+        }
+
+        ///// <summary>
+        ///// Change variable into string with certain formating style with culture info set
+        ///// </summary>
+        ///// <param name="format"></param>
+        ///// <param name="formatProvider"></param>
+        ///// <returns></returns>
+        //public string ToString(string format, IFormatProvider formatProvider)
+        //{
+        //    return String.Format(formatProvider, this.ToOptimalString());
+        //}
+
+//        /// <summary>
+//        /// Convert Object into MediumDec for comparison etc
+//        /// </summary>
+//        /// <param name="value"></param>
+//        /// <returns></returns>
+//        public static MediumDec ObjectAsMediumDec(object value)
+//        {
+//            Type valueType = value.GetType();
+//            string FullValueTypeName = valueType.FullName;
+//            if (valueType == typeof(string))
+//            {
+//                return (MediumDec)(string)value;
+//            }
+//            else if (valueType == typeof(float))
+//            {
+//                return (MediumDec)(float)value;
+//            }
+//            else if (valueType == typeof(double))
+//            {
+//                return (MediumDec)(double)value;
+//            }
+//            else if (valueType == typeof(decimal))
+//            {
+//                return (MediumDec)(decimal)value;
+//            }
+//            else if (valueType == typeof(int))
+//            {
+//                return (MediumDec)(int)value;
+//            }
+//            else if (valueType == typeof(long))
+//            {
+//                return (MediumDec)(long)value;
+//            }
+//            else if (valueType == typeof(uint))
+//            {
+//                return (MediumDec)(uint)value;
+//            }
+//            else if (valueType == typeof(ulong))
+//            {
+//                return (MediumDec)(ulong)value;
+//            }
+//            else if (valueType == typeof(byte))
+//            {
+//                return (MediumDec)(byte)value;
+//            }
+//            else if (valueType == typeof(sbyte))
+//            {
+//                return (MediumDec)(sbyte)value;
+//            }
+//            else if (valueType == typeof(short))
+//            {
+//                return (MediumDec)(short)value;
+//            }
+//            else if (valueType == typeof(ushort))
+//            {
+//                return (MediumDec)(ushort)value;
+//            }
+//            else if (valueType == typeof(bool))
+//            {
+//                return (MediumDec)(bool)value;
+//            }
+//            else if (valueType == typeof(char))
+//            {
+//                return (MediumDec)(char)(short)value;
+//            }
+//            //Dependency Property with unset value?
+//            else if (FullValueTypeName == "MS.Internal.NamedObject")
+//            {
+//                //if (value._name == "DependencyProperty.UnsetValue")//Initialize at zero
+//                //{
+//                //    return MediumDec.Zero;
+//                //}
+//                //else
+//                //{
+//                //    return (MediumDec)value._name;
+//                //}
+//                return MediumDec.Zero;
+//            }
+//#if (GlobalCode_EnableDependencyPropStuff)
+//            else if (valueType == typeof(DependencyProperty))
+//            {
+//                DependencyProperty self = (DependencyProperty)value;
+//                return (MediumDec)self;
+//            }
+//#endif
+//            else
+//            {
+//                dynamic changedObj = System.Convert.ChangeType(value, value.GetType(), CultureInfo.InvariantCulture);
+//                return (MediumDec)changedObj;
+//            }
+//        }
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// Need to implement this interface in order to get data binding
+        /// to work properly.
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
             {
-                MediumSuperDec LeftRange = CompareTarget - RangeWithin;
-                MediumSuperDec RightRange = CompareTarget + RangeWithin;
-                return this == LeftRange || this == RightRange ? true : CompareTarget > LeftRange && CompareTarget < RightRange ? true : false;
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        #endregion INotifyPropertyChanged Members
     }
-#pragma warning restore CC0001 // You should use 'var' whenever possible.
-#pragma warning restore CC0105 // You should use 'var' whenever possible.
-#pragma warning restore CS3001 // Argument type is not CLS-compliant
-#pragma warning restore CS3002 // Return type is not CLS-compliant
-#pragma warning restore CS3003 // Type is not CLS-compliant
 }

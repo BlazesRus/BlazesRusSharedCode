@@ -12,7 +12,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
     using System.Windows;
     using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
-    public partial struct MediumSuperDec : IComparable<MediumSuperDec>
+    public partial struct MediumDec : IComparable<MediumDec>
     {
 #pragma warning disable CC0001 // You should use 'var' whenever possible.
 #pragma warning disable CC0105 // You should use 'var' whenever possible.
@@ -26,7 +26,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="self"></param>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public static bool operator <(MediumSuperDec self, MediumSuperDec Value)
+        public static bool operator <(MediumDec self, MediumDec Value)
         {
             if (self.DecBoolStatus == Value.DecBoolStatus && self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return false; }
             else
@@ -62,7 +62,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="self"></param>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public static bool operator <(MediumSuperDec self, dynamic Value)
+        public static bool operator <(MediumDec self, dynamic Value)
         {
             if (Value is double || Value is float || Value is decimal)
             {
@@ -147,7 +147,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="self"></param>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public static bool operator <=(MediumSuperDec self, MediumSuperDec Value)
+        public static bool operator <=(MediumDec self, MediumDec Value)
         {
             if (self.DecBoolStatus == Value.DecBoolStatus && self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
             else
@@ -183,7 +183,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="self"></param>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public static bool operator <=(MediumSuperDec self, dynamic Value)
+        public static bool operator <=(MediumDec self, dynamic Value)
         {
             if (Value is double || Value is float || Value is decimal)
             {
@@ -261,7 +261,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="self"></param>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public static bool operator >(MediumSuperDec self, MediumSuperDec Value)
+        public static bool operator >(MediumDec self, MediumDec Value)
         {
             if (self.DecBoolStatus == Value.DecBoolStatus && self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return false; }
             else
@@ -297,7 +297,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="self"></param>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public static bool operator >(MediumSuperDec self, dynamic Value)
+        public static bool operator >(MediumDec self, dynamic Value)
         {
             if (Value is double || Value is float || Value is decimal)
             {
@@ -380,7 +380,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="self"></param>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public static bool operator >=(MediumSuperDec self, MediumSuperDec Value)
+        public static bool operator >=(MediumDec self, MediumDec Value)
         {
             if (self.DecBoolStatus == Value.DecBoolStatus && self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
             else
@@ -416,7 +416,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="self"></param>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public static bool operator >=(MediumSuperDec self, dynamic Value)
+        public static bool operator >=(MediumDec self, dynamic Value)
         {
             if (Value is double||Value is float||Value is decimal)
             {
@@ -494,7 +494,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="self"></param>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public static bool operator ==(MediumSuperDec self, MediumSuperDec Value)
+        public static bool operator ==(MediumDec self, MediumDec Value)
         {
             return self.DecBoolStatus == Value.DecBoolStatus && self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus;
         }
@@ -506,7 +506,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="self"></param>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public static bool operator ==(MediumSuperDec self, dynamic Value)
+        public static bool operator ==(MediumDec self, dynamic Value)
         {
             if (Value is double || Value is float || Value is decimal)
             {
@@ -579,7 +579,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="self"></param>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public static bool operator !=(MediumSuperDec self, MediumSuperDec Value) => self.DecBoolStatus != Value.DecBoolStatus || self.IntValue != Value.IntValue || self.DecimalStatus != Value.DecimalStatus;
+        public static bool operator !=(MediumDec self, MediumDec Value) => self.DecBoolStatus != Value.DecBoolStatus || self.IntValue != Value.IntValue || self.DecimalStatus != Value.DecimalStatus;
 
         // Inequality operator for comparing self to multiple value types
         /// <summary>
@@ -588,7 +588,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="self"></param>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public static bool operator !=(MediumSuperDec self, dynamic Value)
+        public static bool operator !=(MediumDec self, dynamic Value)
         {
             if (Value is double || Value is float || Value is decimal)
             {
@@ -640,7 +640,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             else if (Value is string)
             {
-                return self!=(MediumSuperDec)Value;
+                return self!=(MediumDec)Value;
             }
             else
             {
@@ -661,7 +661,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="self"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static MediumSuperDec operator %(MediumSuperDec self, double y)
+        public static MediumDec operator %(MediumDec self, double y)
         {
             if (y == 0.0)
             {
@@ -734,9 +734,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="self"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static MediumSuperDec operator %(MediumSuperDec self, dynamic y)
+        public static MediumDec operator %(MediumDec self, dynamic y)
         {
-            if (y is MediumSuperDec)
+            if (y is MediumDec)
             {
                 if (y.IntValue == 0 && y.DecimalStatus == 0)
                 {
@@ -1604,9 +1604,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="y"></param>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static MediumSuperDec operator -(dynamic y, MediumSuperDec self)
+        public static MediumDec operator -(dynamic y, MediumDec self)
         {
-            var YAsSuperDec = (MediumSuperDec)y;
+            var YAsSuperDec = (MediumDec)y;
             YAsSuperDec -= self;
             return YAsSuperDec;
         }
@@ -1617,9 +1617,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="y"></param>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static MediumSuperDec operator +(dynamic y, MediumSuperDec self)
+        public static MediumDec operator +(dynamic y, MediumDec self)
         {
-            //var YAsSuperDec = (MediumSuperDec)y;
+            //var YAsSuperDec = (MediumDec)y;
             //YAsSuperDec += self;
             return self+y;
         }
@@ -1629,7 +1629,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// </summary>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public static MediumSuperDec operator -(MediumSuperDec Value)
+        public static MediumDec operator -(MediumDec Value)
         {
             Value.SwapNegativeStatus();
             return Value;

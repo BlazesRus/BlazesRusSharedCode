@@ -12,7 +12,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
     using System.Windows;
     using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
-    //Aka SuperDec_Int32_9Decimal
+    //Aka SuperDec_Int32_19Decimal
     public partial struct ModerateSuperDec : IComparable<ModerateSuperDec>
     {
 #pragma warning disable CC0001 // You should use 'var' whenever possible.
