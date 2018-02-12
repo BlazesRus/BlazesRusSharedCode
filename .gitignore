@@ -178,3 +178,4 @@ node_modules/
 
 .vs/MultiPlatformGlobalCode/v15/.suo
 *.cache
+BlazesCSharpGlobalCode/obj/x64/Release/BlazesCSharpGlobalCode.csproj.CoreCompileInputs.cache

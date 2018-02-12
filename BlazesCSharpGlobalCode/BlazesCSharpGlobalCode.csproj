@@ -105,6 +105,7 @@
     <Compile Include="GlobalCode_ExperimentalCode\CustomDec.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\CustomDictionary.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\CustomListSet.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_StandardConversions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\PrivateFieldAccessor.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SmallDecCollection.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SmallDec_IEquatable.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_Int16_4Decimal.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_Int32_9Decimal.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_LargeDec_OperatorFunctions.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_MediumDec_OperatorFunctions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_ModerateDec_OperatorFunctions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_OperatorFunctions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_OtherConversions.cs" />

@@ -4,7 +4,6 @@
 
 using System;
 
-//CSharpGlobalCode.GlobalCode_ExperimentalCode.MediumDec
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
     using System.ComponentModel;
