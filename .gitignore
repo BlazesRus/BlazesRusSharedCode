@@ -177,3 +177,4 @@ _pkginfo.txt
 node_modules/
 
 .vs/MultiPlatformGlobalCode/v15/.suo
+*.cache
