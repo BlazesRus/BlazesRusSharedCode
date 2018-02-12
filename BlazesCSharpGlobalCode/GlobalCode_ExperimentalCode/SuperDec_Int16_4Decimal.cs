@@ -39,6 +39,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #elif(!SmallDec_UseLegacyStorage)
         static int NegativeWholeNumber = -1000000000;
 #endif
+#if (SmallDec_ReducedSize)
+        static short DecimalOverflow = 10000;
+#elif(!SmallDec_UseLegacyStorage)
+        static int DecimalOverflow = 1000000000;
+#endif
 
         /// <summary>
         /// Static variable for displaying how alternative decimal states are handles and such
