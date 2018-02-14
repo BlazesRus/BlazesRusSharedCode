@@ -22,8 +22,83 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #else
     struct
 #endif
-    MediumDec : INotifyPropertyChanged//, IComparable<MediumDec>,IConvertible, IEquatable<MediumDec>, IFormattable
+    MediumDec : INotifyPropertyChanged, IComparable<MediumDec>, IEquatable<MediumDec>, IFormattable//,IConvertible
     {
+        public static MediumDec GetValueFromString(string Value)
+        {
+#if (BlazesGlobalCode_MediumDec_AsStruct)
+            MediumDec NewSelf = MediumDec.Zero;
+#else
+            MediumDec NewSelf = new MediumDec();
+#endif
+            bool IsNegative = false;
+            sbyte PlaceNumber;
+            //var StringLength = (byte)Value.Length;
+            string WholeNumberBuffer = "";
+            string DecimalBuffer = "";
+
+            bool ReadingDecimal = false;
+            int TempInt;
+            int TempInt02;
+            var Decimalbuilder = new System.Text.StringBuilder("");
+            var WholeNumberbuilder = new System.Text.StringBuilder("");
+            foreach (char StringChar in Value)
+            {
+                if (IsDigit(StringChar))
+                {
+                    if (ReadingDecimal)
+                    {
+                        Decimalbuilder.Append(StringChar);
+                    }
+                    else
+                    {
+                        WholeNumberbuilder.Append(StringChar);
+                    }
+                }
+                else if (StringChar == '-')
+                {
+                    IsNegative = true;
+                }
+                else if (StringChar == '.')
+                {
+                    ReadingDecimal = true;
+                }
+            }
+            WholeNumberBuffer = WholeNumberbuilder.ToString();
+            DecimalBuffer = Decimalbuilder.ToString();
+            PlaceNumber = (sbyte)(WholeNumberBuffer.Length - 1);
+            foreach (char StringChar in WholeNumberBuffer)
+            {
+                TempInt = CharAsInt(StringChar);
+                TempInt02 = (ushort)(TempInt * Math.Pow(10, PlaceNumber));
+                if (StringChar != '0')
+                {
+                    NewSelf.IntValue += (uint)TempInt02;
+                }
+                PlaceNumber--;
+            }
+            PlaceNumber = 3;
+            foreach (char StringChar in DecimalBuffer)
+            {
+                //Limit stored decimal numbers to the amount it can store
+                if (PlaceNumber > -1)
+                {
+                    TempInt = CharAsInt(StringChar);
+                    TempInt02 = (ushort)(TempInt * Math.Pow(10, PlaceNumber));
+                    if (StringChar != '0')
+                    {
+                        NewSelf.DecimalStatus += TempInt02;
+                    }
+                    PlaceNumber--;
+                }
+            }
+            if (IsNegative)
+            {
+                NewSelf.DecimalStatus *= -1;
+            }
+            return NewSelf;
+        }
+
         /// <summary>
         /// Display string with empty decimal places removed
         /// </summary>
@@ -135,16 +210,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return ToOptimalString();
         }
 
-        ///// <summary>
-        ///// Change variable into string with certain formating style with culture info set
-        ///// </summary>
-        ///// <param name="FormatStyle"></param>
-        ///// <param name="culture"></param>
-        ///// <returns></returns>
-        //public string ToString(string FormatStyle, CultureInfo culture)
-        //{
-        //    return String.Format(culture, this.ToOptimalString());//Ensure to reformat string based on culture
-        //}
+        /// <summary>
+        /// Change variable into string with certain formating style with culture info set
+        /// </summary>
+        /// <param name="FormatStyle"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
+        public string ToString(string FormatStyle, CultureInfo culture)
+        {
+            return String.Format(culture, this.ToOptimalString());//Ensure to reformat string based on culture
+        }
 
         /// <summary>
         ///
@@ -421,6 +496,23 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="Value"></param>
+        public MediumDec(bool Value)
+        {
+            if (Value == true)
+            {
+                this.IntValue = 1;
+            }
+            else
+            {
+                this.IntValue = 0;
+            }
+            this.DecimalStatus = 0;
+        }
+
 #if (GlobalCode_EnableDependencyPropStuff)
         /// <summary>
         /// Initialize constructor
@@ -435,7 +527,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         }
 #endif
 
-#region From this type to Standard types
+        #region From this type to Standard types
 
         /// <summary>
         ///
@@ -681,6 +773,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return new MediumDec(Value);
         }
 
+        public static explicit operator MediumDec(bool Value)
+        {
+            return new MediumDec(Value);
+        }
+
 #if (GlobalCode_EnableDependencyPropStuff)
         public static explicit operator MediumDec(System.Windows.DependencyProperty Value)
         {
@@ -760,6 +857,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// </summary>
         /// <param name="Value"></param>
         public static implicit operator MediumDec(string Value) { return new MediumDec(Value); }
+
+        public static implicit operator MediumDec(bool Value) { return new MediumDec(Value); }
 
 #if (GlobalCode_EnableDependencyPropStuff)
         /// <summary>

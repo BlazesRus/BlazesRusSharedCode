@@ -35,14 +35,14 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
     SmallDec : IFormattable, INotifyPropertyChanged, IComparable<SmallDec>, IConvertible, IEquatable<SmallDec>
     {
 #if (SmallDec_ReducedSize)
-        static short NegativeWholeNumber = -10000;
+        public static short NegativeWholeNumber = -10000;
 #elif(!SmallDec_UseLegacyStorage)
-        static int NegativeWholeNumber = -1000000000;
+        public static int NegativeWholeNumber = -1000000000;
 #endif
 #if (SmallDec_ReducedSize)
-        static short DecimalOverflow = 10000;
+        public static short DecimalOverflow = 10000;
 #elif(!SmallDec_UseLegacyStorage)
-        static int DecimalOverflow = 1000000000;
+        public static int DecimalOverflow = 1000000000;
 #endif
 
         /// <summary>
@@ -192,11 +192,15 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// Parses string value into SmallDec
         /// </summary>
         /// <param name="value"></param>
-        /// <param name="invariantCulture"></param>
+        /// <param name="TargetCulture"></param>
         /// <returns></returns>
-        public static SmallDec Parse(string value, CultureInfo invariantCulture)
+        public static SmallDec Parse(string value, CultureInfo TargetCulture = null)
         {
-            SmallDec NewValue = SmallDec.Initialize(value);
+            //if(TargetCulture==null)
+            //{
+            //    TargetCulture = CultureInfo.CurrentUICulture;
+            //}
+            SmallDec NewValue = SmallDec.GetValueFromString(value);
             return NewValue;
         }
 
@@ -253,44 +257,50 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="Value"></param>
         public SmallDec(dynamic Value)
         {
-            //Use to to detect different assembly versions of SmallDec class
-            Type ValueType = (Value as object).GetType();
-            string ValueTypeName = ValueType.FullName;
-            //((System.Runtime.Remoting.ObjectHandle)Value).Unwrap().GetType().ToString();
-            if (ValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec" || ValueType == typeof(SmallDec))
+            TypeCode typeCode = Type.GetTypeCode(Value.GetType());
+            int typeCodeValue = (int)typeCode;
+#if (!BlazesGlobalCode_SmallDec_AsStruct)
+            if (typeCodeValue >= 3 && typeCodeValue <= 12)//Integer based Value types+Bool
             {
-#if (SmallDec_ReducedSize || SmallDec_UseLegacyStorage)
+                if (Value < 0)
+                {
+                    Value *= -1;
+                    this.IntValue = Value;
+                    this.DecimalStatus = NegativeWholeNumber;
+                }
+                else
+                {
+                    this.IntValue = Value;
+                    this.DecimalStatus = 0;
+                }
+            }
+            else if (typeCodeValue >= 13 && typeCodeValue <= 15)//Floating Point based Value types
+            {
+                SmallDec NewSelf = new SmallDec();
+                switch (typeCode)
+                {
+                    case TypeCode.Single:
+                        NewSelf = (SmallDec)(float)Value; break;
+                    case TypeCode.Double:
+                        NewSelf = (SmallDec)(double)Value; break;
+                    case TypeCode.Decimal:
+                        NewSelf = (SmallDec)(decimal)Value; break;
+                    default:
+                        NewSelf = (SmallDec)Value; break;
+                }
+            }
+            else if (typeCode == TypeCode.String)
+            {
+                SmallDec NewSelf = SmallDec.GetValueFromString(Value as string);
+                this.IntValue = NewSelf.IntValue;
+                this.DecimalStatus = NewSelf.DecimalStatus;
+#if (SmallDec_UseLegacyStorage)
                 this.DecBoolStatus = Value.DecBoolStatus;
 #endif
-                this.intValue = Value.IntValue;
-                this.decimalStatus = Value.DecimalStatus;
             }
-#if (SmallDec_UseLegacyStorage)
-#if (!BlazesGlobalCode_Disable128BitFeatures)
-                        else if (Value is MediumSuperDec)
-                        {
-                            intValue = (ushort)Value.IntValue;
-                            uint TempDec = Value.DecimalStatus / 100000;
-                            DecimalStatus = (ushort)TempDec;
-                            DecBoolStatus = Value.DecBoolStatus;
-                        }
-                        else if (Value is ModerateSuperDec)
-                        {
-                            intValue = (ushort)Value.IntValue;
-                            ulong TempDec = Value.DecimalStatus / 100000000000000;
-                            DecimalStatus = (ushort)TempDec;
-                            DecBoolStatus = Value.DecBoolStatus;
-                        }
-                        else if (Value is LargeSuperDec)
-                        {
-                            intValue = (ushort)Value.IntValue;
-                            ulong TempDec = Value.DecimalStatus / 100000000000000;
-                            DecimalStatus = (ushort)TempDec;
-                            DecBoolStatus = Value.DecBoolStatus;
-                        }
+            else
 #endif
-#endif
-            else if (Value == null)
+                if (Value == null)
             {
 #if (BlazesGlobalCode_SmallDec_AsStruct)
                 this = SmallDec.Zero;
@@ -299,131 +309,121 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 this.DecimalStatus = 0;
 #endif
             }
-            else if (ValueType == typeof(string))
+            else
             {
-#if (BlazesGlobalCode_SmallDec_AsStruct)
-                this = (string)Value;
-#else
-
+                //Use to to detect different assembly versions of SmallDec class
+                Type ValueType = (Value as object).GetType();
+                string ValueTypeName = ValueType.FullName;
+                if (ValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec" || ValueType == typeof(SmallDec))
+                {
+#if (SmallDec_ReducedSize || SmallDec_UseLegacyStorage)
+                this.DecBoolStatus = Value.DecBoolStatus;
 #endif
-            }
-            else if (ValueType == typeof(float))
-            {
-#if (BlazesGlobalCode_SmallDec_AsStruct)
-                this = (float)Value;
-#else
-
+                    this.intValue = Value.IntValue;
+                    this.decimalStatus = Value.DecimalStatus;
+                }
+#if (SmallDec_UseLegacyStorage)
+#if (!BlazesGlobalCode_Disable128BitFeatures)
+                else if (Value is MediumDec)
+                {
+                    intValue = (ushort)Value.IntValue;
+                    uint TempDec = Value.DecimalStatus / 100000;
+                    DecimalStatus = (ushort)TempDec;
+                    DecBoolStatus = Value.DecBoolStatus;
+                }
+                else if (Value is ModerateSuperDec)
+                {
+                    intValue = (ushort)Value.IntValue;
+                    ulong TempDec = Value.DecimalStatus / 100000000000000;
+                    DecimalStatus = (ushort)TempDec;
+                    DecBoolStatus = Value.DecBoolStatus;
+                }
+                else if (Value is LargeSuperDec)
+                {
+                    intValue = (ushort)Value.IntValue;
+                    ulong TempDec = Value.DecimalStatus / 100000000000000;
+                    DecimalStatus = (ushort)TempDec;
+                    DecBoolStatus = Value.DecBoolStatus;
+                }
 #endif
-            }
-            else if (ValueType == typeof(double))
-            {
-#if (BlazesGlobalCode_SmallDec_AsStruct)
-                this = (double)Value;
-#else
-
 #endif
-            }
-            else if (ValueType == typeof(decimal))
-            {
 #if (BlazesGlobalCode_SmallDec_AsStruct)
-                this = (decimal)Value;
+                else if (ValueType == typeof(string))
+                {
+                    this = (string)Value;
+                }
+                else if (ValueType == typeof(float))
+                {
+                    this = (float)Value;
+                }
+                else if (ValueType == typeof(double))
+                {
+                    this = (double)Value;
+                }
+                else if (ValueType == typeof(decimal))
+                {
+                    this = (decimal)Value;
+                }
+                else if (ValueType == typeof(int))
+                {
+                    this = (int)Value;
+                }
+                else if (ValueType == typeof(long))
+                {
+                    this = (long)Value;
+                }
+                else if (ValueType == typeof(uint))
+                {
+                    this = (uint)Value;
+                }
+                else if (ValueType == typeof(ulong))
+                {
+                    this = (ulong)Value;
+                }
+                else if (ValueType == typeof(byte))
+                {
+                    this = (byte)Value;
+                }
+                else if (ValueType == typeof(sbyte))
+                {
+                    this = (sbyte)Value;
+                }
+                else if (ValueType == typeof(short))
+                {
+                    this = (short)Value;
+                }
+                else if (ValueType == typeof(ushort))
+                {
+                    this = (ushort)Value;
+                }
+                else if (ValueType == typeof(bool))
+                {
+                    this = (SmallDec)(bool)Value;
+                }
+                else if (ValueType == typeof(char))
+                {
+                    this = (char)(short)Value;
+                }
 #else
-
+                else if (ValueType == typeof(char))
+                {
+                    SmallDec NewSelf = new SmallDec();
+                    NewSelf = (SmallDec)(char)(short)Value;
+                }
 #endif
-            }
-            else if (ValueType == typeof(int))
-            {
-#if (BlazesGlobalCode_SmallDec_AsStruct)
-                this = (int)Value;
-#else
-
-#endif
-            }
-            else if (ValueType == typeof(long))
-            {
-#if (BlazesGlobalCode_SmallDec_AsStruct)
-                this = (long)Value;
-#else
-
-#endif
-            }
-            else if (ValueType == typeof(uint))
-            {
-#if (BlazesGlobalCode_SmallDec_AsStruct)
-                this = (uint)Value;
-#else
-
-#endif
-            }
-            else if (ValueType == typeof(ulong))
-            {
-#if (BlazesGlobalCode_SmallDec_AsStruct)
-                this = (ulong)Value;
-#else
-
-#endif
-            }
-            else if (ValueType == typeof(byte))
-            {
-#if (BlazesGlobalCode_SmallDec_AsStruct)
-                this = (byte)Value;
-#else
-
-#endif
-            }
-            else if (ValueType == typeof(sbyte))
-            {
-#if (BlazesGlobalCode_SmallDec_AsStruct)
-                this = (sbyte)Value;
-#else
-
-#endif
-            }
-            else if (ValueType == typeof(short))
-            {
-#if (BlazesGlobalCode_SmallDec_AsStruct)
-                this = (short)Value;
-#else
-
-#endif
-            }
-            else if (ValueType == typeof(ushort))
-            {
-#if (BlazesGlobalCode_SmallDec_AsStruct)
-                this = (ushort)Value;
-#else
-
-#endif
-            }
-            else if (ValueType == typeof(bool))
-            {
-#if (BlazesGlobalCode_SmallDec_AsStruct)
-                this = (SmallDec)(bool)Value;
-#else
-
-#endif
-            }
-            else if (ValueType == typeof(char))
-            {
-#if (BlazesGlobalCode_SmallDec_AsStruct)
-                this = (char)(short)Value;
-#else
-
-#endif
-            }
-            else if (ValueType.IsValueType)
-            {
-                dynamic ConvertedValue = Activator.CreateInstance(ValueType);
-                ConvertedValue = System.Convert.ChangeType(Value, ValueType, CultureInfo.CurrentCulture);
+                else if (ValueType.IsValueType)
+                {
+                    dynamic ConvertedValue = Activator.CreateInstance(ValueType);
+                    ConvertedValue = System.Convert.ChangeType(Value, ValueType, CultureInfo.CurrentCulture);
 #if (BlazesGlobalCode_SmallDec_AsStruct)
                 this = ConvertedValue;
 #else
-                this.IntValue = 0;
-                this.DecimalStatus = 0;
+                    this.IntValue = 0;
+                    this.DecimalStatus = 0;
 #endif
-            }
-            else
-            {
+                }
+                else
+                {
 #if (BlazesGlobalCode_SmallDec_AsStruct)
 #pragma warning disable EA002 // Swallow exceptions considered harmful
                 try
@@ -447,10 +447,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 }
 #pragma warning restore EA002 // Swallow exceptions considered harmful
 #else
-                this.IntValue = 0;
-                this.DecimalStatus = 0;
+                    this.IntValue = 0;
+                    this.DecimalStatus = 0;
 #endif
+                }
             }
+
+            //((System.Runtime.Remoting.ObjectHandle)Value).Unwrap().GetType().ToString();
         }
 
         /// <summary>
@@ -1118,7 +1121,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
         }
 
-#region INotifyPropertyChanged Members
+        #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -1132,6 +1135,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
         }
 
-#endregion INotifyPropertyChanged Members
+        #endregion INotifyPropertyChanged Members
     }
 }

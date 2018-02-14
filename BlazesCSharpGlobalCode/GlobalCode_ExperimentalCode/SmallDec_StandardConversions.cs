@@ -27,6 +27,91 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #endif
     SmallDec : IFormattable, INotifyPropertyChanged
     {
+        public static SmallDec GetValueFromString(string Value)
+        {
+#if (BlazesGlobalCode_SmallDec_AsStruct)
+            SmallDec NewSelf = SmallDec.Zero;
+#else
+            SmallDec NewSelf = new SmallDec();
+#endif
+#if (SmallDec_UseLegacyStorage)
+            DecBoolStatus = 0;
+#else
+            bool IsNegative = false;
+#endif
+            sbyte PlaceNumber;
+            //var StringLength = (byte)Value.Length;
+            string WholeNumberBuffer = "";
+            string DecimalBuffer = "";
+
+            bool ReadingDecimal = false;
+            int TempInt;
+            int TempInt02;
+            var Decimalbuilder = new System.Text.StringBuilder("");
+            var WholeNumberbuilder = new System.Text.StringBuilder("");
+            foreach (char StringChar in Value)
+            {
+                if (IsDigit(StringChar))
+                {
+                    if (ReadingDecimal)
+                    {
+                        Decimalbuilder.Append(StringChar);
+                    }
+                    else
+                    {
+                        WholeNumberbuilder.Append(StringChar);
+                    }
+                }
+                else if (StringChar == '-')
+                {
+#if (SmallDec_UseLegacyStorage)
+                    DecBoolStatus = 1;
+#else
+                    IsNegative = true;
+#endif
+                }
+                else if (StringChar == '.')
+                {
+                    ReadingDecimal = true;
+                }
+            }
+            WholeNumberBuffer = WholeNumberbuilder.ToString();
+            DecimalBuffer = Decimalbuilder.ToString();
+            PlaceNumber = (sbyte)(WholeNumberBuffer.Length - 1);
+            foreach (char StringChar in WholeNumberBuffer)
+            {
+                TempInt = CharAsInt(StringChar);
+                TempInt02 = (ushort)(TempInt * Math.Pow(10, PlaceNumber));
+                if (StringChar != '0')
+                {
+                    NewSelf.IntValue += (ushort)TempInt02;
+                }
+                PlaceNumber--;
+            }
+            PlaceNumber = 3;
+            foreach (char StringChar in DecimalBuffer)
+            {
+                //Limit stored decimal numbers to the amount it can store
+                if (PlaceNumber > -1)
+                {
+                    TempInt = CharAsInt(StringChar);
+                    TempInt02 = (ushort)(TempInt * Math.Pow(10, PlaceNumber));
+                    if (StringChar != '0')
+                    {
+                        NewSelf.DecimalStatus += (ushort)TempInt02;
+                    }
+                    PlaceNumber--;
+                }
+            }
+#if (!SmallDec_UseLegacyStorage)
+            if (IsNegative)
+            {
+                NewSelf.DecimalStatus *= -1;
+            }
+#endif
+            return NewSelf;
+        }
+
         /// <summary>
         /// Display string with empty decimal places removed
         /// </summary>
@@ -621,6 +706,26 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 DecimalStatus *= -1;
             }
 #endif
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="Value"></param>
+        public SmallDec(bool Value)
+        {
+#if (SmallDec_UseLegacyStorage)
+            this.DecBoolStatus = 0;
+#endif
+            if(Value==true)
+            {
+                this.IntValue = 1;
+            }
+            else
+            {
+                this.IntValue = 0;
+            }
+            this.DecimalStatus = 0;
         }
 
 #if (GlobalCode_EnableDependencyPropStuff)

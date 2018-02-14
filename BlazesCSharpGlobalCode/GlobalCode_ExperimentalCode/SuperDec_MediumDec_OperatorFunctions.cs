@@ -21,7 +21,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #else
     struct
 #endif
-    MediumDec : INotifyPropertyChanged//, IComparable<MediumDec>,IConvertible, IEquatable<MediumDec>, IFormattable
+    MediumDec : INotifyPropertyChanged, IComparable<MediumDec>, IEquatable<MediumDec>, IFormattable//,IConvertible
     {
         // Self Less than Value
         /// <summary>
