@@ -10,7 +10,6 @@ using System;
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
     using System.ComponentModel;
-    using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
     // Represent +- 65535.999999999(Can only represent +- 65535.9999 if SmallDec_ReducedSize or SmallDec_UseLegacyStorage set) with 100% consistency of accuracy
     //(Aka SuperDec_Int16_9Decimal Or SuperDec_Int16_4Decimal)
@@ -1387,24 +1386,24 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 else { y.DecimalStatus *= -1; }
             }
             bool PerformDecimalHalf = true;
-            if((SelfIsNegative&& ValueIsNegative)||(SelfIsNegative==false&& ValueIsNegative==false))
+            if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
             {
                 self.IntValue += y.IntValue;
                 self.DecimalStatus += y.DecimalStatus;
-                if(self.DecimalStatus>= DecimalOverflow)
+                if (self.DecimalStatus >= DecimalOverflow)
                 {
                     self.DecimalStatus -= DecimalOverflow;
                     ++self.IntValue;
                 }
                 PerformDecimalHalf = false;
             }
-            else if(SelfIsNegative)//-X + Y
+            else if (SelfIsNegative)//-X + Y
             {
-                if(self.IntValue== y.IntValue)
+                if (self.IntValue == y.IntValue)
                 {
                     self.IntValue = 0;
                 }
-                else if(self.IntValue> y.IntValue)
+                else if (self.IntValue > y.IntValue)
                 {
                     self.IntValue -= y.IntValue;
                 }
@@ -1475,7 +1474,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 }
             }
             if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
-            if(self.DecimalStatus>0&& SelfIsNegative)
+            if (self.DecimalStatus > 0 && SelfIsNegative)
             {
                 self.DecimalStatus *= -1;
             }
@@ -2546,16 +2545,67 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             int typeCodeValue = (int)typeCode;
             if (typeCodeValue >= 4 && typeCodeValue <= 12)//Integer based Value types
             {
-                bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-                if (SelfIsNegative)
+                if (self.DecimalStatus == 0)
                 {
-                    if (SelfIsWholeN) { self.DecimalStatus = 0; }
-                    else { self.DecimalStatus *= -1; }
+                    if (y < 0)
+                    {
+                        self.IntValue *= (y * -1);
+                        self.DecimalStatus = NegativeWholeNumber;
+                    }
+                    else
+                    {
+                        self.IntValue *= y;
+                    }
                 }
+                else if (self.DecimalStatus == NegativeWholeNumber)
+                {
+                    if (y < 0)
+                    {
+                        self.IntValue *= (y * -1);
+                        self.DecimalStatus = 0;
+                    }
+                    else
+                    {
+                        self.IntValue *= y;
+                    }
+                }
+                else
+                {
+                    if (SelfIsNegative)
+                    {
+                        self.DecimalStatus *= -1;
+                    }
+                    self.IntValue *= y;
 #if (SmallDec_ReducedSize)
+                int TempDec = (int)self.DecimalStatus;
 #else
-
+                    long TempDec = (long)self.DecimalStatus;
 #endif
+                    TempDec *= y;
+                    if (TempDec >= DecimalOverflow)
+                    {
+#if (SmallDec_ReducedSize)
+                        int
+#else
+                        long
+#endif
+                        OverflowVal = TempDec / DecimalOverflow;
+                        TempDec -= OverflowVal * DecimalOverflow;
+                        self.IntValue += (ushort)OverflowVal;
+                    }
+                    if (TempDec == 0) { self.DecimalStatus = 0; }
+                    else
+                    {
+                        if (SelfIsNegative) { TempDec *= -1; }
+                        self.DecimalStatus =
+#if (SmallDec_ReducedSize)
+                        (short)
+#else
+                        (int)
+#endif
+                        TempDec;
+                    }
+                }
             }
             //else if (typeCodeValue >= 13 && typeCodeValue <= 15)//Floating Point based formula value types
             //{
@@ -2760,8 +2810,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 Value.DecimalStatus = 0;
             }
-			else
-			{
+            else
+            {
                 Value.DecimalStatus *= -1;
             }
 #endif
