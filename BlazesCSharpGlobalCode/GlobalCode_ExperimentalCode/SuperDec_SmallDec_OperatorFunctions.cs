@@ -1230,28 +1230,33 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 //Prevent dividing/multiplying value into nothing by dividing too small (set to .0001 instead of having value set as zero)
                 if (self.intValue == 0 && self.DecimalStatus == 0) { self.DecimalStatus = 1; }
             }
-#else
-            bool SelfIsNegative = self.DecimalStatus < 0;
-            bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-            if (SelfIsNegative)
-            {
-                if (SelfIsWholeN) { self.DecimalStatus = 0; }
-                else { self.DecimalStatus *= -1; }
-            }
-            bool ValueIsNegative = y.DecimalStatus < 0;
-            bool ValueIsWholeN = y.DecimalStatus == NegativeWholeNumber;
-            if (ValueIsNegative)
-            {
-                if (ValueIsWholeN) { y.DecimalStatus = 0; }
-                else { y.DecimalStatus *= -1; }
-            }
-#if (SmallDec_ReducedSize)
-#else
-
-#endif
-            if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
-#endif
             return self;
+#else
+            SmallDec NewSelf = self / y;
+            if (NewSelf.IntValue < 1)
+            {
+                if (y.DecimalStatus < 0)
+                {
+                    if (self.DecimalStatus == NegativeWholeNumber)
+                    {
+                        self.DecimalStatus = 0;
+                    }
+                    else if (self.DecimalStatus == 0)
+                    {
+                        self.DecimalStatus = NegativeWholeNumber;
+                    }
+                    else
+                    {
+                        self.DecimalStatus *= -1;
+                    }
+                }
+                return self;
+            }
+            else
+            {
+                return self - (NewSelf.IntValue * y);
+            }
+#endif
         }
 
         /// <summary>
@@ -1965,34 +1970,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     if (self.intValue == 0 && self.DecimalStatus == 0) { self.DecimalStatus = 1; }
                 }
             }
-#else
-            bool SelfIsNegative = self.DecimalStatus < 0;
-            TypeCode typeCode = Type.GetTypeCode(y.GetType());
-            int typeCodeValue = (int)typeCode;
-            if (typeCodeValue >= 4 && typeCodeValue <= 12)//Integer based Value types
-            {
-                bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-                if (SelfIsNegative)
-                {
-                    if (SelfIsWholeN) { self.DecimalStatus = 0; }
-                    else { self.DecimalStatus *= -1; }
-                }
-#if (SmallDec_ReducedSize)
-#else
-
-#endif
-            }
-            //else if (typeCodeValue >= 13 && typeCodeValue <= 15)//Floating Point based formula value types
-            //{
-            //    return self %= (SmallDec)y;
-            //}
-            else
-            {
-                return self %= (SmallDec)y;
-            }
-            if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
-#endif
             return self;
+#else
+            return self %= (SmallDec)y;
+#endif
         }
 
         /// <summary>

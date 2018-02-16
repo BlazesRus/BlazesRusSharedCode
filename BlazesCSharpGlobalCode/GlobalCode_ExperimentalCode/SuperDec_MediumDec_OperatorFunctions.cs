@@ -620,23 +620,30 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <returns></returns>
         public static MediumDec operator %(MediumDec self, MediumDec y)
         {
-            bool SelfIsNegative = self.DecimalStatus < 0;
-            bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-            if (SelfIsNegative)
+            MediumDec NewSelf = self / y;
+            if (NewSelf.IntValue < 1)
             {
-                if (SelfIsWholeN) { self.DecimalStatus = 0; }
-                else { self.DecimalStatus *= -1; }
+                if (y.DecimalStatus < 0)
+                {
+                    if (self.DecimalStatus == NegativeWholeNumber)
+                    {
+                        self.DecimalStatus = 0;
+                    }
+                    else if (self.DecimalStatus == 0)
+                    {
+                        self.DecimalStatus = NegativeWholeNumber;
+                    }
+                    else
+                    {
+                        self.DecimalStatus *= -1;
+                    }
+                }
+                return self;
             }
-            bool ValueIsNegative = y.DecimalStatus < 0;
-            bool ValueIsWholeN = y.DecimalStatus == NegativeWholeNumber;
-            if (ValueIsNegative)
+            else
             {
-                if (ValueIsWholeN) { y.DecimalStatus = 0; }
-                else { y.DecimalStatus *= -1; }
+                return self - (NewSelf.IntValue * y);
             }
-			
-            if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
-            return self;
         }
 
         /// <summary>
@@ -929,29 +936,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <returns></returns>
         public static MediumDec operator %(MediumDec self, dynamic y)
         {
-            bool SelfIsNegative = self.DecimalStatus < 0;
-            TypeCode typeCode = Type.GetTypeCode(y.GetType());
-            int typeCodeValue = (int)typeCode;
-            if (typeCodeValue >= 4 && typeCodeValue <= 12)//Integer based Value types
-            {
-                bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-                if (SelfIsNegative)
-                {
-                    if (SelfIsWholeN) { self.DecimalStatus = 0; }
-                    else { self.DecimalStatus *= -1; }
-                }
-
-            }
-            //else if (typeCodeValue >= 13 && typeCodeValue <= 15)//Floating Point based formula value types
-            //{
-            //    return self %= (MediumDec)y;
-            //}
-            else
-            {
-                return self %= (MediumDec)y;
-            }
-            if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
-            return self;
+            return self %= (MediumDec)y;
         }
 
         /// <summary>
@@ -1110,7 +1095,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 }
                 if (self.DecimalStatus == 0 || self.DecimalStatus == NegativeWholeNumber)//Only need to deal with Integer half of value
                 {
-                    long ValueRep = (long)self.IntValue * DecimalOverflow;
+                    long ValueRep = self.IntValue * DecimalOverflow;
                     ValueRep /= y;
                     long WholeHalf = ValueRep / DecimalOverflow;
                     self.IntValue = (ushort)WholeHalf;
