@@ -70,7 +70,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             foreach (char StringChar in WholeNumberBuffer)
             {
                 TempInt = CharAsInt(StringChar);
-                TempInt02 = (ushort)(TempInt * Math.Pow(10, PlaceNumber));
+                TempInt02 = (TempInt * SuperDecGlobalCode.PowerOfTens[PlaceNumber]);
                 if (StringChar != '0')
                 {
                     NewSelf.IntValue += (uint)TempInt02;
@@ -84,7 +84,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 if (PlaceNumber > -1)
                 {
                     TempInt = CharAsInt(StringChar);
-                    TempInt02 = (ushort)(TempInt * Math.Pow(10, PlaceNumber));
+                    TempInt02 = (TempInt * SuperDecGlobalCode.PowerOfTens[PlaceNumber]);
                     if (StringChar != '0')
                     {
                         NewSelf.DecimalStatus += TempInt02;
@@ -117,23 +117,22 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
             for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; Index--)
             {
-                CurrentDigit = (byte)(IntegerHalf / Math.Pow(10, Index));
-                IntegerHalf -= (uint)(CurrentDigit * Math.Pow(10, Index));
+                CurrentDigit = (byte)(IntegerHalf / SuperDecGlobalCode.PowerOfTens[Index]);
+                IntegerHalf -= (CurrentDigit * (uint)SuperDecGlobalCode.PowerOfTens[Index]);
                 //Value += DigitAsChar(CurrentDigit);
                 builder.Append(DigitAsChar(CurrentDigit));
             }
             if (DecimalStatus != 0 && DecimalStatus != NegativeWholeNumber)
             {
-                uint DecimalHalf = (uint)DecimalStatus;
+                int DecimalHalf = DecimalStatus;
                 //Value += ".";
                 builder.Append(".");
                 for (sbyte Index = 3; Index >= 0; Index--)
                 {
                     if (DecimalStatus != 0)
                     {
-                        CurrentDigit = (byte)(DecimalHalf / Math.Pow(10, Index));
-                        DecimalHalf -= (uint)
-                        (CurrentDigit * Math.Pow(10, Index));
+                        CurrentDigit = (byte)(DecimalHalf / SuperDecGlobalCode.PowerOfTens[Index]);
+                        DecimalHalf -= (CurrentDigit * SuperDecGlobalCode.PowerOfTens[Index]);
                         //Value += DigitAsChar(CurrentDigit);
                         builder.Append(DigitAsChar(CurrentDigit));
                     }
@@ -468,7 +467,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             foreach (char StringChar in WholeNumberBuffer)
             {
                 TempInt = CharAsInt(StringChar);
-                TempInt02 = (int)(TempInt * Math.Pow(10, PlaceNumber));
+                TempInt02 = (TempInt * SuperDecGlobalCode.PowerOfTens[PlaceNumber]);
                 if (StringChar != '0')
                 {
                     intValue += (uint)TempInt02;
@@ -482,7 +481,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 if (PlaceNumber > -1)
                 {
                     TempInt = CharAsInt(StringChar);
-                    TempInt02 = (int)(TempInt * Math.Pow(10, PlaceNumber));
+                    TempInt02 = (TempInt * SuperDecGlobalCode.PowerOfTens[PlaceNumber]);
                     if (StringChar != '0')
                     {
                         DecimalStatus += TempInt02;

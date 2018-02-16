@@ -12,7 +12,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
     using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
     /// <summary>
-    /// GlobalCode to reuse between SuperDec typenames
+    /// GlobalCode to reuse between SuperDec type names
     /// </summary>
     public static class SuperDecGlobalCode
     {
@@ -90,7 +90,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
             return 0.0;
         }
-        //end of Trigonometrical method section	
+        //end of Trigonometrical method section
+        public static int[] PowerOfTens = { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000 };
+        public static long[] PowerOfTens64Bit = { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000, 100000000000, 1000000000000, 10000000000000, 100000000000000, 1000000000000000, 10000000000000000, 100000000000000000, 1000000000000000000 };
     }
     //public interface SuperDecBase
     //{

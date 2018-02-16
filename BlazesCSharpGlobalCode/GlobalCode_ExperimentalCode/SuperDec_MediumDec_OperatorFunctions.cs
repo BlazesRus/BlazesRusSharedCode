@@ -1094,11 +1094,32 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             int typeCodeValue = (int)typeCode;
             if (typeCodeValue >= 4 && typeCodeValue <= 12)//Integer based Value types
             {
-                bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-                if (SelfIsNegative)
+                //bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
+                //if (SelfIsNegative)
+                //{
+                //    if (SelfIsWholeN) { self.DecimalStatus = 0; }
+                //    else { self.DecimalStatus *= -1; }
+                //}
+                if (y < 0)
                 {
-                    if (SelfIsWholeN) { self.DecimalStatus = 0; }
-                    else { self.DecimalStatus *= -1; }
+                    if (SelfIsNegative) { SelfIsNegative = false; }
+                    else { SelfIsNegative = true; }
+                    if (self.DecimalStatus == NegativeWholeNumber) { self.DecimalStatus = 0; }
+                    else if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+                    y *= -1;
+                }
+                if (self.DecimalStatus == 0 || self.DecimalStatus == NegativeWholeNumber)//Only need to deal with Integer half of value
+                {
+                    long ValueRep = (long)self.IntValue * DecimalOverflow;
+                    ValueRep /= y;
+                    long WholeHalf = ValueRep / DecimalOverflow;
+                    self.IntValue = (ushort)WholeHalf;
+                    ValueRep -= WholeHalf;
+                    self.DecimalStatus = (int) WholeHalf;
+                }
+                else
+                {
+                    return self /= (MediumDec)y;
                 }
             }
             //else if (typeCodeValue >= 13 && typeCodeValue <= 15)//Floating Point based formula value types
