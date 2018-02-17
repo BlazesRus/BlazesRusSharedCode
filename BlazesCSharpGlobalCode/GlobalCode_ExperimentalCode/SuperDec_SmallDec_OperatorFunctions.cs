@@ -1182,10 +1182,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static bool operator !=(dynamic Value, SmallDec self) => self != Value;
 
         /// <summary>
+        /// Implements the operator %.
         /// </summary>
-        /// <param name="self"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
+        /// <param name="self">The self.</param>
+        /// <param name="y">The y.</param>
+        /// <returns>
+        /// The result of the operator.
+        /// </returns>
         public static SmallDec operator %(SmallDec self, SmallDec y)
         {
 #if (SmallDec_UseLegacyStorage)
@@ -1260,10 +1263,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         }
 
         /// <summary>
+        /// Implements the operator +.(Self+TargetValue)
         /// </summary>
-        /// <param name="self"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
+        /// <param name="self">Self.</param>
+        /// <param name="y">The TargetValue.</param>
+        /// <returns>
+        /// The result of the operator.
+        /// </returns>
         public static SmallDec operator +(SmallDec self, SmallDec y)
         {
 #if (SmallDec_UseLegacyStorage)
@@ -1488,10 +1494,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         }
 
         /// <summary>
+        /// Implements the operator -.(Self-TargetValue)
         /// </summary>
-        /// <param name="self"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
+        /// <param name="self">The self.</param>
+        /// <param name="y">The TargetValue.</param>
+        /// <returns>
+        /// The result of the operator.
+        /// </returns>
         public static SmallDec operator -(SmallDec self, SmallDec y)
         {
 #if (SmallDec_UseLegacyStorage)
@@ -1718,10 +1727,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         }
 
         /// <summary>
+        /// Implements the operator *.(Self*TargetValue)
         /// </summary>
-        /// <param name="self"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
+        /// <param name="self">The self.</param>
+        /// <param name="y">The y.</param>
+        /// <returns>
+        /// The result of the operator.
+        /// </returns>
         public static SmallDec operator *(SmallDec self, SmallDec y)
         {
 #if (SmallDec_UseLegacyStorage)
@@ -1782,11 +1794,128 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 if (ValueIsWholeN) { y.DecimalStatus = 0; }
                 else { y.DecimalStatus *= -1; }
             }
+            if (self.DecimalStatus == 0)
+            {
+                if (y.DecimalStatus == 0)
+                {
+                    y.IntValue *= self.IntValue;
+                }
+                else
+                {
+                    y.IntValue *= self.IntValue;
 #if (SmallDec_ReducedSize)
+                    int TempDec = (int)y.DecimalStatus;
 #else
-
+                    long TempDec = (long)y.DecimalStatus;
 #endif
-            if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+                    TempDec *= self.IntValue;
+                    if (TempDec >= DecimalOverflow)
+                    {
+#if (SmallDec_ReducedSize)
+                        int
+#else
+                        long
+#endif
+                        OverflowVal = TempDec / DecimalOverflow;
+                        TempDec -= OverflowVal * DecimalOverflow;
+                        y.IntValue += (ushort)OverflowVal;
+                    }
+                    if (TempDec == 0) { y.DecimalStatus = 0; }
+                    else
+                    {
+                        if (SelfIsNegative) { TempDec *= -1; }
+                        y.DecimalStatus =
+#if (SmallDec_ReducedSize)
+                        (short)
+#else
+                        (int)
+#endif
+                    TempDec;
+                    }
+                    self = y;
+                }
+            }
+            else if (y.DecimalStatus == 0)
+            {
+                self.IntValue *= y.IntValue;
+#if (SmallDec_ReducedSize)
+                int TempDec = (int)self.DecimalStatus;
+#else
+                long TempDec = (long)self.DecimalStatus;
+#endif
+                TempDec *= y.IntValue;
+                if (TempDec >= DecimalOverflow)
+                {
+#if (SmallDec_ReducedSize)
+                    int
+#else
+                    long
+#endif
+                    OverflowVal = TempDec / DecimalOverflow;
+                    TempDec -= OverflowVal * DecimalOverflow;
+                    self.IntValue += (ushort)OverflowVal;
+                }
+                if (TempDec == 0) { self.DecimalStatus = 0; }
+                else
+                {
+                    if (SelfIsNegative) { TempDec *= -1; }
+                    self.DecimalStatus =
+#if (SmallDec_ReducedSize)
+                    (short)
+#else
+                    (int)
+#endif
+                    TempDec;
+                }
+            }
+            else
+            {//Need to test for potential overflow problems (need larger storage to prevent overflow depending on values)
+             //                    long XRep = self.IntValue * DecimalOverflow;
+             //                    long YRep = self.DecimalStatus;
+             //                    long ZRep = y.IntValue * DecimalOverflow;
+             //                    //X.Y * Z.V = (X * Z) + (X * .V) + (.Y * Z) + (.Y * .V)
+             //                    long TotalRepresentation = XRep * ZRep;
+             //                    long VRep = y.DecimalStatus;
+             //                    TotalRepresentation += XRep * VRep;
+             //                    TotalRepresentation += YRep * ZRep;
+             //                    TotalRepresentation += YRep * VRep;
+             //                    long IntRep = TotalRepresentation / DecimalOverflow;
+             //                    TotalRepresentation -= IntRep * DecimalOverflow;
+             //                    self.IntValue = (ushort)IntRep;
+             //                    self.DecimalStatus =
+             //#if (SmallDec_ReducedSize)
+             //                    (short)
+             //#else
+             //                    (int)
+             //#endif
+             //                    TotalRepresentation;
+                SmallDec XRep = (SmallDec)self.IntValue;
+                SmallDec ZRep = (SmallDec)y.IntValue;
+                SmallDec TotalRep = XRep * ZRep;
+                TotalRep += (XRep * y.DecimalStatus) / DecimalOverflow;
+                TotalRep += (ZRep * self.DecimalStatus) / DecimalOverflow;
+                long YVRep = self.DecimalStatus * y.DecimalStatus;
+                YVRep /= DecimalOverflow;
+                TotalRep.DecimalStatus +=
+#if (SmallDec_ReducedSize)
+                (short)
+#else
+                (int)
+#endif
+                YVRep;
+                if(TotalRep.DecimalStatus> DecimalOverflow)
+                {
+                    int DOverflow = TotalRep.DecimalStatus / DecimalOverflow;
+                    TotalRep += DOverflow;
+                    TotalRep.DecimalStatus -= DecimalOverflow;
+                }
+                self = TotalRep;
+            }
+            if (ValueIsNegative)
+            {
+                SelfIsNegative = !SelfIsNegative;
+            }
+            if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
 #endif
             return self;
         }
@@ -2703,15 +2832,15 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 //    if (SelfIsWholeN) { self.DecimalStatus = 0; }
                 //    else { self.DecimalStatus *= -1; }
                 //}
-                if(y<0)
+                if (y < 0)
                 {
                     if (SelfIsNegative) { SelfIsNegative = false; }
                     else { SelfIsNegative = true; }
-                    if(self.DecimalStatus == NegativeWholeNumber) { self.DecimalStatus = 0; }
-                    else if(self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+                    if (self.DecimalStatus == NegativeWholeNumber) { self.DecimalStatus = 0; }
+                    else if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
                     y *= -1;
                 }
-                if (self.DecimalStatus == 0|| self.DecimalStatus == NegativeWholeNumber)//Only need to deal with Integer half of value
+                if (self.DecimalStatus == 0 || self.DecimalStatus == NegativeWholeNumber)//Only need to deal with Integer half of value
                 {
 #if (SmallDec_ReducedSize)
                     int ValueRep = (int)self.IntValue * DecimalOverflow;
@@ -2725,7 +2854,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     long
 #endif
                     WholeHalf = ValueRep / DecimalOverflow;
-                    self.IntValue = (ushort) WholeHalf;
+                    self.IntValue = (ushort)WholeHalf;
                     ValueRep -= WholeHalf;
                     self.DecimalStatus =
 #if (SmallDec_ReducedSize)
@@ -2739,7 +2868,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 {
                     return self /= (SmallDec)y;
                 }
-
             }
             //else if (typeCodeValue >= 13 && typeCodeValue <= 15)//Floating Point based formula value types
             //{
@@ -2751,7 +2879,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
 #endif
-                    return self;
+            return self;
         }
 
         //Right side applications
