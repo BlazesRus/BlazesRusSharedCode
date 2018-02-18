@@ -1894,7 +1894,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 SmallDec TotalRep = XRep * ZRep;
                 TotalRep += (XRep * y.DecimalStatus) / DecimalOverflow;
                 TotalRep += (ZRep * self.DecimalStatus) / DecimalOverflow;
-                long YVRep = self.DecimalStatus * y.DecimalStatus;
+                long YVRep = (long)self.DecimalStatus * (long)y.DecimalStatus;
                 YVRep /= DecimalOverflow;
                 TotalRep.DecimalStatus +=
 #if (SmallDec_ReducedSize)

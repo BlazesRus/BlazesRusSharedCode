@@ -128,6 +128,7 @@ BlazesGlobalCode_Int128Version:
 ----C# Only based Preprocessors-------------------------------------------------------
 
 BlazesGlobalCode_Disable128BitFeatures: Disables related classes and functions that rely on 128+ bit int etc
+BlazesGlobalCode_Enable128BitFeatures: Force option code to use 128+ bit instead of trying to stay within 64 bit storage(Requires BigInteger Library)
 BlazesGlobalCode_StandardExplicitConversionFrom : Limit SuperDec classes to explicit conversions from standard variable types
 BlazesGlobalCode_SmallDecSliderEnableExtraFeatures
 SuperDecPercentVal_EnableMultipleDecimalStatusFormulas:

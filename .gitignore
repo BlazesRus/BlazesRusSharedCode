@@ -181,3 +181,5 @@ node_modules/
 BlazesCSharpGlobalCode/obj/x64/Release/BlazesCSharpGlobalCode.csproj.CoreCompileInputs.cache
 *.dll
 *.dat
+#Other project
+Galculator/
