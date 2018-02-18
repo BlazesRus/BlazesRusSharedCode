@@ -183,18 +183,18 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return NewSelf;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        public static explicit operator LargeSuperDec(MediumDec self)
-        {
-            LargeSuperDec NewSelf;
-            NewSelf.IntValue = self.IntValue;
-            NewSelf.DecimalStatus = (ulong)self.DecimalStatus*10000000000;
-            NewSelf.DecBoolStatus = self.DecBoolStatus;
-            return NewSelf;
-        }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="self"></param>
+        //public static explicit operator LargeSuperDec(MediumDec self)
+        //{
+        //    LargeSuperDec NewSelf;
+        //    NewSelf.IntValue = self.IntValue;
+        //    NewSelf.DecimalStatus = (ulong)self.DecimalStatus*10000000000;
+        //    NewSelf.DecBoolStatus = self.DecBoolStatus;
+        //    return NewSelf;
+        //}
 
         /// <summary>
         /// 
