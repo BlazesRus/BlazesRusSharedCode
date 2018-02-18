@@ -1868,41 +1868,57 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     TempDec;
                 }
             }
+            else if(self.IntValue==0&&y.IntValue==0)//Fractional Multiplied by Fractional (will only be at or above DecimalOverflow if error in calculation)
+            {
+                long DTemp = self.DecimalStatus;
+                DTemp *= y.DecimalStatus;
+                DTemp /= DecimalOverflow;
+                self = new SmallDec(0, (int)DTemp);
+            }
+            else if (self.IntValue == 0|| y.IntValue == 0)
+            {
+                long DTemp;
+                long DTemp02;
+                if(self.IntValue == 0)
+                {
+                    DTemp = self.DecimalStatus;
+                    DTemp *= y.IntValue;
+                    DTemp02 = self.DecimalStatus;
+                    DTemp02 *= y.DecimalStatus;
+                    DTemp02 /= DecimalOverflow;
+                }
+                else
+                {
+                    DTemp = y.DecimalStatus;
+                    DTemp *= self.IntValue;
+                    DTemp02 = y.DecimalStatus;
+                    DTemp02 *= self.DecimalStatus;
+                    DTemp02 /= DecimalOverflow;
+                }
+                long DecimalTotal = DTemp + DTemp02;
+                if (DecimalTotal > DecimalOverflow)
+                {
+                    long OverflowedInt = DecimalTotal / DecimalOverflow;
+                    DecimalTotal -= OverflowedInt * DecimalOverflow;
+                    self = new SmallDec((ushort)OverflowedInt, (int)DecimalTotal);
+                }
+                else
+                {
+                    self = new SmallDec(0, (int)DecimalTotal);
+                }
+
+            }
             else
-            {//Need to test for potential overflow problems (need larger storage to prevent overflow depending on values)
-             //                    long XRep = self.IntValue * DecimalOverflow;
-             //                    long YRep = self.DecimalStatus;
-             //                    long ZRep = y.IntValue * DecimalOverflow;
-             //                    //X.Y * Z.V = (X * Z) + (X * .V) + (.Y * Z) + (.Y * .V)
-             //                    long TotalRepresentation = XRep * ZRep;
-             //                    long VRep = y.DecimalStatus;
-             //                    TotalRepresentation += XRep * VRep;
-             //                    TotalRepresentation += YRep * ZRep;
-             //                    TotalRepresentation += YRep * VRep;
-             //                    long IntRep = TotalRepresentation / DecimalOverflow;
-             //                    TotalRepresentation -= IntRep * DecimalOverflow;
-             //                    self.IntValue = (ushort)IntRep;
-             //                    self.DecimalStatus =
-             //#if (SmallDec_ReducedSize)
-             //                    (short)
-             //#else
-             //                    (int)
-             //#endif
-             //                    TotalRepresentation;
+            {
                 SmallDec XRep = (SmallDec)self.IntValue;
                 SmallDec ZRep = (SmallDec)y.IntValue;
+                SmallDec YRep = new SmallDec(0, self.DecimalStatus);
+                SmallDec VRep = new SmallDec(0, y.DecimalStatus);
+                //X.Y * Z.V == ((X * Z) + (X * .V) + (.Y * Z) + (.Y * .V))
                 SmallDec TotalRep = XRep * ZRep;
-                TotalRep += (XRep * y.DecimalStatus) / DecimalOverflow;
-                TotalRep += (ZRep * self.DecimalStatus) / DecimalOverflow;
-                long YVRep = (long)self.DecimalStatus * (long)y.DecimalStatus;
-                YVRep /= DecimalOverflow;
-                TotalRep.DecimalStatus +=
-#if (SmallDec_ReducedSize)
-                (short)
-#else
-                (int)
-#endif
-                YVRep;
+                TotalRep += XRep * VRep;
+                TotalRep += ZRep * YRep;
+                TotalRep += YRep * VRep;
                 if(TotalRep.DecimalStatus> DecimalOverflow)
                 {
                     int DOverflow = TotalRep.DecimalStatus / DecimalOverflow;
@@ -1917,7 +1933,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
 #endif
-            return self;
+                return self;
         }
 
         /// <summary>
