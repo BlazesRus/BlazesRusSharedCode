@@ -1769,7 +1769,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     YAsInt += y.DecimalStatus;
                     SelfAsInt *= YAsInt;
                     SelfAsInt /= 10000;
-                    ulong TempStorage = SelfAsInt / 10000;
+                    ulong TempStorage = SelfAsInt / DecimalOverflow;
                     self.intValue = (ushort)TempStorage;
                     TempStorage = self.intValue;
                     TempStorage *= 10000;
@@ -1780,6 +1780,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 if (self.intValue == 0 && self.DecimalStatus == 0) { self.DecimalStatus = 1; }
             }
 #else
+            if (y.intValue == 0 && y.DecimalStatus == 0)
+            {
+                self.intValue = 0;
+                self.DecimalStatus = 0;
+                return self;
+            }
             bool SelfIsNegative = self.DecimalStatus < 0;
             bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
             if (SelfIsNegative)
@@ -1794,146 +1800,137 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 if (ValueIsWholeN) { y.DecimalStatus = 0; }
                 else { y.DecimalStatus *= -1; }
             }
-            if (self.DecimalStatus == 0)
-            {
-                if (y.DecimalStatus == 0)
-                {
-                    y.IntValue *= self.IntValue;
-                }
-                else
-                {
-                    y.IntValue *= self.IntValue;
-#if (SmallDec_ReducedSize)
-                    int TempDec = (int)y.DecimalStatus;
-#else
-                    long TempDec = (long)y.DecimalStatus;
-#endif
-                    TempDec *= self.IntValue;
-                    if (TempDec >= DecimalOverflow)
-                    {
-#if (SmallDec_ReducedSize)
-                        int
-#else
-                        long
-#endif
-                        OverflowVal = TempDec / DecimalOverflow;
-                        TempDec -= OverflowVal * DecimalOverflow;
-                        y.IntValue += (ushort)OverflowVal;
-                    }
-                    if (TempDec == 0) { y.DecimalStatus = 0; }
-                    else
-                    {
-                        if (SelfIsNegative) { TempDec *= -1; }
-                        y.DecimalStatus =
-#if (SmallDec_ReducedSize)
-                        (short)
-#else
-                        (int)
-#endif
-                    TempDec;
-                    }
-                    self = y;
-                }
-            }
-            else if (y.DecimalStatus == 0)
+            if(self.DecimalStatus==0&& y.DecimalStatus == 0)
             {
                 self.IntValue *= y.IntValue;
-#if (SmallDec_ReducedSize)
-                int TempDec = (int)self.DecimalStatus;
-#else
-                long TempDec = (long)self.DecimalStatus;
-#endif
-                TempDec *= y.IntValue;
-                if (TempDec >= DecimalOverflow)
-                {
-#if (SmallDec_ReducedSize)
-                    int
-#else
-                    long
-#endif
-                    OverflowVal = TempDec / DecimalOverflow;
-                    TempDec -= OverflowVal * DecimalOverflow;
-                    self.IntValue += (ushort)OverflowVal;
-                }
-                if (TempDec == 0) { self.DecimalStatus = 0; }
-                else
-                {
-                    if (SelfIsNegative) { TempDec *= -1; }
-                    self.DecimalStatus =
-#if (SmallDec_ReducedSize)
-                    (short)
-#else
-                    (int)
-#endif
-                    TempDec;
-                }
             }
-            else if(self.IntValue==0&&y.IntValue==0)//Fractional Multiplied by Fractional (will only be at or above DecimalOverflow if error in calculation)
-            {
-                long DTemp = self.DecimalStatus;
-                DTemp *= y.DecimalStatus;
-                DTemp /= DecimalOverflow;
-                self = new SmallDec(0, (int)DTemp);
-            }
-            else if (self.IntValue == 0|| y.IntValue == 0)
-            {
-                long DTemp;
-                long DTemp02;
-                if(self.IntValue == 0)
-                {
-                    DTemp = self.DecimalStatus;
-                    DTemp *= y.IntValue;
-                    DTemp02 = self.DecimalStatus;
-                    DTemp02 *= y.DecimalStatus;
-                    DTemp02 /= DecimalOverflow;
-                }
-                else
-                {
-                    DTemp = y.DecimalStatus;
-                    DTemp *= self.IntValue;
-                    DTemp02 = y.DecimalStatus;
-                    DTemp02 *= self.DecimalStatus;
-                    DTemp02 /= DecimalOverflow;
-                }
-                long DecimalTotal = DTemp + DTemp02;
-                if (DecimalTotal > DecimalOverflow)
-                {
-                    long OverflowedInt = DecimalTotal / DecimalOverflow;
-                    DecimalTotal -= OverflowedInt * DecimalOverflow;
-                    self = new SmallDec((ushort)OverflowedInt, (int)DecimalTotal);
-                }
-                else
-                {
-                    self = new SmallDec(0, (int)DecimalTotal);
-                }
-
-            }
+#if (SmallDec_ReducedSize)
             else
             {
-                SmallDec XRep = new SmallDec(self.IntValue,0);
-                SmallDec ZRep = new SmallDec(y.IntValue, 0);
-                SmallDec YRep = new SmallDec(0, self.DecimalStatus);
-                SmallDec VRep = new SmallDec(0, y.DecimalStatus);
-                //X.Y * Z.V == ((X * Z) + (X * .V) + (.Y * Z) + (.Y * .V))
-                SmallDec TotalRep = XRep * ZRep;
-                TotalRep += XRep * VRep;
-                TotalRep += ZRep * YRep;
-                TotalRep += YRep * VRep;
-                if(TotalRep.DecimalStatus> DecimalOverflow)
+                long SRep = self.IntValue* DecimalOverflow;
+                SRep += self.DecimalStatus;
+                long YRep = y.IntValue * DecimalOverflow;
+                YRep += y.DecimalStatus;
+                SRep *= YRep;
+                if (SRep >= DecimalOverflow)
                 {
-                    int DOverflow = TotalRep.DecimalStatus / DecimalOverflow;
-                    TotalRep += DOverflow;
-                    TotalRep.DecimalStatus -= DecimalOverflow;
+                    long OverflowVal = SRep / DecimalOverflow;
+                    SRep -= OverflowVal * DecimalOverflow;
+                    self.IntValue = (ushort)OverflowVal;
+                    self.DecimalStatus = (short)SRep;
                 }
-                self = TotalRep;
             }
+#else
+            //            else if (self.DecimalStatus == 0)
+            //            {
+            //                    y.IntValue *= self.IntValue;
+            //#if (SmallDec_ReducedSize)
+            //                    int TempDec = (int)y.DecimalStatus;
+            //#else
+            //                    long TempDec = (long)y.DecimalStatus;
+            //#endif
+            //                    TempDec *= self.IntValue;
+            //                    if (TempDec >= DecimalOverflow)
+            //                    {
+            //                        long OverflowVal = TempDec / DecimalOverflow;
+            //                        TempDec -= OverflowVal * DecimalOverflow;
+            //                        y.IntValue += (ushort)OverflowVal;
+            //                    }
+            //                    if (TempDec == 0) { y.DecimalStatus = 0; }
+            //                    else
+            //                    {
+            //                        if (SelfIsNegative) { TempDec *= -1; }
+            //                        y.DecimalStatus = (int) TempDec;
+            //                    }
+            //                    self = y;
+            //            }
+            //            else if (y.DecimalStatus == 0)
+            //            {
+            //                self.IntValue *= y.IntValue;
+            //                long TempDec = (long)self.DecimalStatus;
+            //                TempDec *= y.IntValue;
+            //                if (TempDec >= DecimalOverflow)
+            //                {
+            //                    long OverflowVal = TempDec / DecimalOverflow;
+            //                    TempDec -= OverflowVal * DecimalOverflow;
+            //                    self.IntValue += (ushort)OverflowVal;
+            //                }
+            //                if (TempDec == 0) { self.DecimalStatus = 0; }
+            //                else
+            //                {
+            //                    if (SelfIsNegative) { TempDec *= -1; }
+            //                    self.DecimalStatus =
+            //                    (int)
+            //                    TempDec;
+            //                }
+            //            }
+            //            else if(self.IntValue==0&&y.IntValue==0)//Fractional Multiplied by Fractional (will only be at or above DecimalOverflow if error in calculation)
+            //            {
+            //                long DTemp = self.DecimalStatus;
+            //                DTemp *= y.DecimalStatus;
+            //                DTemp /= DecimalOverflow;
+            //                self = new SmallDec(0, (int)DTemp);
+            //            }
+            //            else if (self.IntValue == 0|| y.IntValue == 0)
+            //            {
+            //                long DTemp;
+            //                long DTemp02;
+            //                if(self.IntValue == 0)
+            //                {
+            //                    DTemp = self.DecimalStatus;
+            //                    DTemp *= y.IntValue;
+            //                    DTemp02 = self.DecimalStatus;
+            //                    DTemp02 *= y.DecimalStatus;
+            //                    DTemp02 /= DecimalOverflow;
+            //                }
+            //                else
+            //                {
+            //                    DTemp = y.DecimalStatus;
+            //                    DTemp *= self.IntValue;
+            //                    DTemp02 = y.DecimalStatus;
+            //                    DTemp02 *= self.DecimalStatus;
+            //                    DTemp02 /= DecimalOverflow;
+            //                }
+            //                long DecimalTotal = DTemp + DTemp02;
+            //                if (DecimalTotal > DecimalOverflow)
+            //                {
+            //                    long OverflowedInt = DecimalTotal / DecimalOverflow;
+            //                    DecimalTotal -= OverflowedInt * DecimalOverflow;
+            //                    self = new SmallDec((ushort)OverflowedInt, (int)DecimalTotal);
+            //                }
+            //                else
+            //                {
+            //                    self = new SmallDec(0, (int)DecimalTotal);
+            //                }
+
+            //            }
+            //            else
+            //            {
+            //                SmallDec XRep = new SmallDec(self.IntValue,0);
+            //                SmallDec ZRep = new SmallDec(y.IntValue, 0);
+            //                SmallDec YRep = new SmallDec(0, self.DecimalStatus);
+            //                SmallDec VRep = new SmallDec(0, y.DecimalStatus);
+            //                //X.Y * Z.V == ((X * Z) + (X * .V) + (.Y * Z) + (.Y * .V))
+            //                SmallDec TotalRep = XRep * ZRep;
+            //                TotalRep += XRep * VRep;
+            //                TotalRep += ZRep * YRep;
+            //                TotalRep += YRep * VRep;
+            //                if(TotalRep.DecimalStatus> DecimalOverflow)
+            //                {
+            //                    int DOverflow = TotalRep.DecimalStatus / DecimalOverflow;
+            //                    TotalRep += DOverflow;
+            //                    TotalRep.DecimalStatus -= DecimalOverflow;
+            //                }
+            //                self = TotalRep;
+            //            }
+#endif
             if (ValueIsNegative)
             {
                 SelfIsNegative = !SelfIsNegative;
             }
             if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
 #endif
-                return self;
+            return self;
         }
 
         /// <summary>
@@ -1985,6 +1982,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 if (self.intValue == 0 && self.DecimalStatus == 0) { self.DecimalStatus = 1; }
             }
 #else
+
+            if (y.intValue == 0 && y.DecimalStatus == 0)
+            {
+#if (SmallDec_PreventDivideByZeroException)
+                Console.WriteLine("Prevented dividing by zero");
+                return self;
+#else
+                throw new DivideByZeroException("SmallDec value can not be divided by zero");
+#endif
+            }
             bool SelfIsNegative = self.DecimalStatus < 0;
             bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
             if (SelfIsNegative)
@@ -1999,139 +2006,41 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 if (ValueIsWholeN) { y.DecimalStatus = 0; }
                 else { y.DecimalStatus *= -1; }
             }
-            if (self.DecimalStatus == 0)
+            if (self.DecimalStatus == 0 && y.DecimalStatus == 0)
             {
-                if (y.DecimalStatus == 0)
+                //self.IntValue /= y.IntValue;
+                long SRep = self.IntValue * DecimalOverflow;
+                long YRep = y.IntValue;
+                SRep /= y.IntValue;
+                if (SRep >= DecimalOverflow)
                 {
-                    self.IntValue /= y.IntValue;
-                }
-                else
-                {
-                    self.IntValue /= y.IntValue;
+                    long OverflowVal = SRep / DecimalOverflow;
+                    SRep -= OverflowVal * DecimalOverflow;
+                    self.IntValue = (ushort)OverflowVal;
 #if (SmallDec_ReducedSize)
-                    int TempDec = (int)y.DecimalStatus;
+                    self.DecimalStatus = (int)SRep;
 #else
-                    long TempDec = (long)y.DecimalStatus;
+                    self.DecimalStatus = (short)SRep;
 #endif
-                    TempDec *= self.IntValue;
-                    if (TempDec >= DecimalOverflow)
-                    {
-#if (SmallDec_ReducedSize)
-                        int
-#else
-                        long
-#endif
-                        OverflowVal = TempDec / DecimalOverflow;
-                        TempDec -= OverflowVal * DecimalOverflow;
-                        y.IntValue += (ushort)OverflowVal;
-                    }
-                    if (TempDec == 0) { y.DecimalStatus = 0; }
-                    else
-                    {
-                        if (SelfIsNegative) { TempDec *= -1; }
-                        y.DecimalStatus =
-#if (SmallDec_ReducedSize)
-                        (short)
-#else
-                        (int)
-#endif
-                    TempDec;
-                    }
-                    self = y;
                 }
             }
-            else if (y.DecimalStatus == 0)
-            {
-                self.IntValue /= y.IntValue;
 #if (SmallDec_ReducedSize)
-                int TempDec = (int)self.DecimalStatus;
-#else
-                long TempDec = (long)self.DecimalStatus;
-#endif
-                TempDec /= y.IntValue;
-                if (TempDec >= DecimalOverflow)
-                {
-#if (SmallDec_ReducedSize)
-                    int
-#else
-                    long
-#endif
-                    OverflowVal = TempDec / DecimalOverflow;
-                    TempDec -= OverflowVal * DecimalOverflow;
-                    self.IntValue += (ushort)OverflowVal;
-                }
-                if (TempDec == 0) { self.DecimalStatus = 0; }
-                else
-                {
-                    if (SelfIsNegative) { TempDec *= -1; }
-                    self.DecimalStatus =
-#if (SmallDec_ReducedSize)
-                    (short)
-#else
-                    (int)
-#endif
-                    TempDec;
-                }
-            }
-            else if (self.IntValue == 0 && y.IntValue == 0)//Fractional Multiplied by Fractional (will only be at or above DecimalOverflow if error in calculation)
-            {
-                long DTemp = self.DecimalStatus;
-                DTemp /= y.DecimalStatus;
-                DTemp /= DecimalOverflow;
-                self = new SmallDec(0, (int)DTemp);
-            }
-            else if (self.IntValue == 0 || y.IntValue == 0)
-            {
-                long DTemp;
-                long DTemp02;
-                if (self.IntValue == 0)
-                {
-                    DTemp = self.DecimalStatus;
-                    DTemp /= y.IntValue;
-                    DTemp02 = self.DecimalStatus;
-                    DTemp02 /= y.DecimalStatus;
-                    DTemp02 /= DecimalOverflow;
-                }
-                else
-                {
-                    DTemp = y.DecimalStatus;
-                    DTemp /= self.IntValue;
-                    DTemp02 = y.DecimalStatus;
-                    DTemp02 /= self.DecimalStatus;
-                    DTemp02 /= DecimalOverflow;
-                }
-                long DecimalTotal = DTemp + DTemp02;
-                if (DecimalTotal > DecimalOverflow)
-                {
-                    long OverflowedInt = DecimalTotal / DecimalOverflow;
-                    DecimalTotal -= OverflowedInt * DecimalOverflow;
-                    self = new SmallDec((ushort)OverflowedInt, (int)DecimalTotal);
-                }
-                else
-                {
-                    self = new SmallDec(0, (int)DecimalTotal);
-                }
-
-            }
             else
             {
-                SmallDec XRep = (SmallDec)self.IntValue;
-                SmallDec ZRep = (SmallDec)y.IntValue;
-                SmallDec YRep = new SmallDec(0, self.DecimalStatus);
-                SmallDec VRep = new SmallDec(0, y.DecimalStatus);
-                //X.Y * Z.V == ((X * Z) + (X * .V) + (.Y * Z) + (.Y * .V))
-                SmallDec TotalRep = XRep / ZRep;
-                TotalRep += XRep / VRep;
-                TotalRep += ZRep / YRep;
-                TotalRep += YRep / VRep;
-                if (TotalRep.DecimalStatus > DecimalOverflow)
+                long SRep = self.IntValue* DecimalOverflow;
+                SRep += self.DecimalStatus;
+                long YRep = y.IntValue * DecimalOverflow;
+                YRep += y.DecimalStatus;
+                SRep *= YRep;
+                if (SRep >= DecimalOverflow)
                 {
-                    int DOverflow = TotalRep.DecimalStatus / DecimalOverflow;
-                    TotalRep += DOverflow;
-                    TotalRep.DecimalStatus -= DecimalOverflow;
+                    long OverflowVal = SRep / DecimalOverflow;
+                    SRep -= OverflowVal * DecimalOverflow;
+                    self.IntValue = (ushort)OverflowVal;
+                    self.DecimalStatus = (short)SRep;
                 }
-                self = TotalRep;
             }
+#else
             if (ValueIsNegative)
             {
                 SelfIsNegative = !SelfIsNegative;
