@@ -297,6 +297,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return String.Format(numberFormat, this.ToOptimalString());//Ensure to reformat string based on format type
         }
 
+        #region From Standard types to this type
         /// <summary>
         ///
         /// </summary>
@@ -496,7 +497,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 Value = 65535;
             }
             Value -= WholeValue;
-            intValue = (ushort)WholeValue;
+            IntValue = (ushort)WholeValue;
 #if (SmallDec_UseLegacyStorage)
             decimalStatus = (ushort)(Value * 10000);
 #elif (SmallDec_ReducedSize)
@@ -517,6 +518,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 }
             }
 #endif
+
         }
 
         /// <summary>
@@ -724,6 +726,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             this.DecimalStatus = 0;
         }
 
+        #endregion From Standard types to this type
 #if (GlobalCode_EnableDependencyPropStuff)
         /// <summary>
         /// Initialize constructor
@@ -738,7 +741,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         }
 #endif
 
-#region From this type to Standard types
+        #region From this type to Standard types
 
         /// <summary>
         ///
