@@ -1800,7 +1800,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 if (ValueIsWholeN) { y.DecimalStatus = 0; }
                 else { y.DecimalStatus *= -1; }
             }
-            if(self.DecimalStatus==0&& y.DecimalStatus == 0)
+            if (self.DecimalStatus == 0 && y.DecimalStatus == 0)
             {
                 self.IntValue *= y.IntValue;
             }
@@ -2046,6 +2046,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 SelfIsNegative = !SelfIsNegative;
             }
             if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
+#endif
 #endif
             return self;
         }

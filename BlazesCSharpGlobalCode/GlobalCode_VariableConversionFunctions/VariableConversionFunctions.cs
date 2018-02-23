@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -264,8 +265,8 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             byte CurrentDigit;
             for(sbyte Index= NumberOfPlaces(IntegerHalf);Index>=0;Index--)
             {
-                CurrentDigit = (byte)(IntegerHalf / Math.Pow(10, Index));
-                IntegerHalf -= (uint) (CurrentDigit * Math.Pow(10, Index));
+                CurrentDigit = (byte)(IntegerHalf / SuperDecGlobalCode.PowerOfTens[Index]);
+                IntegerHalf -= (uint) (CurrentDigit * SuperDecGlobalCode.PowerOfTens[Index]);
                 Value += DigitAsChar(CurrentDigit);
             }
             Value += ".";
@@ -273,7 +274,7 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             sbyte DecimalPlaces = NumberOfDecimalPlaces(DecimalHalf);
             for(byte Index = 0; Index < DecimalPlaces; ++Index)
             {
-                CurrentDigit = (byte) Math.Floor(DecimalHalf*(10*Math.Pow(10,Index)));
+                CurrentDigit = (byte) Math.Floor(DecimalHalf* SuperDecGlobalCode.PowerOfTens[Index+1]);
                 Value += DigitAsChar(CurrentDigit);
             }
             return Value;
@@ -292,9 +293,9 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             byte ValueDigit = 18;
             for (byte Index = 0; Index < 19; ++Index)
             {
-                CurrentDigit = (byte)Math.Floor(TempValue * (10 * Math.Pow(10, Index)));
-                CurrentDecimalSection = CurrentDigit * Math.Pow(10, (Index*-1)-1);
-                TempStorage = (ulong) (Math.Pow(10, ValueDigit))* CurrentDigit;
+                CurrentDigit = (byte)Math.Floor(TempValue * SuperDecGlobalCode.PowerOfTens[Index+1]);
+                CurrentDecimalSection = CurrentDigit * SuperDecGlobalCode.PowerOfTens[(Index * -1) - 1];
+                TempStorage = (ulong) (SuperDecGlobalCode.PowerOfTens[Index]) * CurrentDigit;
                 //Console.WriteLine("Index:" + Index + " CurrentDecimalSection:" + CurrentDecimalSection + " CurrentDigit:" + CurrentDigit + " TempStorage:" + TempStorage);
                 TempValue -= CurrentDecimalSection;
                 DecimalHalf += TempStorage;
@@ -313,9 +314,9 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             byte ValueDigit = 8;
             for (byte Index = 0; Index < 9; ++Index)
             {
-                CurrentDigit = (byte)Math.Floor(TempValue * (10 * Math.Pow(10, Index)));
-                CurrentDecimalSection = CurrentDigit * Math.Pow(10, (Index*-1)-1);
-                TempStorage = (uint) (Math.Pow(10, ValueDigit))* CurrentDigit;
+                CurrentDigit = (byte)Math.Floor(TempValue * (10 * SuperDecGlobalCode.PowerOfTens[Index]));
+                CurrentDecimalSection = CurrentDigit * SuperDecGlobalCode.PowerOfTens[(Index * -1) - 1];
+                TempStorage = (uint) (SuperDecGlobalCode.PowerOfTens[Index]) * CurrentDigit;
                 //Console.WriteLine("Index:" + Index + " CurrentDecimalSection:" + CurrentDecimalSection + " CurrentDigit:" + CurrentDigit + " TempStorage:" + TempStorage);
                 TempValue -= CurrentDecimalSection;
                 DecimalHalf += TempStorage;
@@ -334,9 +335,9 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             byte ValueDigit = 3;
             for (byte Index = 0; Index < 4; ++Index)
             {
-                CurrentDigit = (byte)Math.Floor(TempValue * (10 * Math.Pow(10, Index)));
-                CurrentDecimalSection = CurrentDigit * Math.Pow(10, (Index * -1) - 1);
-                TempStorage = (ushort)((Math.Pow(10, ValueDigit)) * CurrentDigit);
+                CurrentDigit = (byte)Math.Floor(TempValue * (10 * SuperDecGlobalCode.PowerOfTens[Index]));
+                CurrentDecimalSection = CurrentDigit * SuperDecGlobalCode.PowerOfTens[(Index*-1)-1];
+                TempStorage = (ushort)(SuperDecGlobalCode.PowerOfTens[Index] * CurrentDigit);
                 //Console.WriteLine("Index:" + Index + " CurrentDecimalSection:" + CurrentDecimalSection + " CurrentDigit:" + CurrentDigit + " TempStorage:" + TempStorage);
                 TempValue -= CurrentDecimalSection;
                 DecimalHalf += TempStorage;
@@ -361,10 +362,10 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             byte CurrentDigit;
             var builder = new StringBuilder();
             builder.Append(Value);
-            for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; Index--)
+            for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; --Index)
             {
-                CurrentDigit = (byte)(IntegerHalf / Math.Pow(10, Index));
-                IntegerHalf -= (uint)(CurrentDigit * Math.Pow(10, Index));
+                CurrentDigit = (byte)(IntegerHalf / SuperDecGlobalCode.PowerOfTens[Index]);
+                IntegerHalf -= (uint)(CurrentDigit * SuperDecGlobalCode.PowerOfTens[Index]);
                 builder.Append(DigitAsChar(CurrentDigit));
             }
             Value = builder.ToString();
@@ -384,16 +385,17 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             //if (self.DecBoolStatus == 1) { Value += "-"; }
             var builder = new StringBuilder();
             builder.Append("");
-            for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; Index--)
+            for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; --Index)
             {
-                CurrentDigit = (byte)(IntegerHalf / Math.Pow(10, Index));
-                IntegerHalf -= (uint)(CurrentDigit * Math.Pow(10, Index));
+                CurrentDigit = (byte)(IntegerHalf / SuperDecGlobalCode.PowerOfTens[Index]);
+                IntegerHalf -= (uint)(CurrentDigit * SuperDecGlobalCode.PowerOfTens[Index]);
                 builder.Append(DigitAsChar(CurrentDigit));
             }
             builder.Append(".");
 
             return builder.ToString();
         }
+
 
     }
 }
