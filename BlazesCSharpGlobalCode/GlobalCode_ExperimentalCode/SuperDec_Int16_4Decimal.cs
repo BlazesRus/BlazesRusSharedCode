@@ -825,6 +825,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         }
 
         /// <summary>
+        /// Value at one
+        /// </summary>
+        public static readonly SmallDec One = OneValue();
+
+        private static SmallDec OneValue() => new SmallDec(1, 0);
+
+        /// <summary>
         /// Value at either zero or NaN (depending on preprocessor settings)
         /// </summary>
         public static readonly SmallDec NaN = NaNValue();

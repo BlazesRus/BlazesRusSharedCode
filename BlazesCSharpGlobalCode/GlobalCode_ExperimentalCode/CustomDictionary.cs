@@ -2,7 +2,7 @@
 
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
-    class CustomDictionary<TKey, TValue> : Dictionary<TKey, TValue>
+    public class CustomDictionary<TKey, TValue> : Dictionary<TKey, TValue>
     {
         /// <summary>
         /// Holds an index referring to keys contained for optional ordered retrieval of values
@@ -10,7 +10,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         List<TKey> KeyIndex = new List<TKey>();
 
         /// <summary>
-        /// 
+        /// Applies Add while recording into key index
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
@@ -19,6 +19,26 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             KeyIndex.Add(key);
             base.Add(key, value);
         }
+
+        ///// <summary>
+        ///// Applies Add while recording into key index or combine key contents into value if already exists
+        ///// </summary>
+        ///// <param name="key"></param>
+        ///// <param name="value"></param>
+        //public void CombineOrAdd(TKey key, TValue value)
+        //{
+        //    if(this.ContainsKey(key))
+        //    {
+        //        var KeyContents  = this[key];
+        //        KeyContents += value;
+        //        this[key] = this[key]+value;
+        //    }
+        //    else
+        //    {
+        //        this.Add(key, value);
+        //    }
+        //}
+
         /// <summary>
         /// Applies Add without recording into key index (default Dictionary Add operation)
         /// </summary>

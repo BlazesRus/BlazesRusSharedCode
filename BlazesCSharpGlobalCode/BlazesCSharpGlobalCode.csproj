@@ -129,6 +129,7 @@
     <Compile Include="GlobalCode_StringFunctions\StringFunctions.cs" />
     <Compile Include="GlobalCode_VariableConversionFunctions\TypeDataInfo.cs" />
     <Compile Include="GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cs" />
+    <Compile Include="GlobalMiscCode\FileAccessCommands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <!--   <ItemGroup Label="GUIElements">
@@ -167,7 +168,6 @@
   </ItemGroup> -->
   <ItemGroup>
     <Folder Include="GlobalCode_VariableLists\" />
-    <Folder Include="GlobalMiscCode\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

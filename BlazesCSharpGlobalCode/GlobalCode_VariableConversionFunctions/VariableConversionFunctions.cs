@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
 {
-    struct VariableConversionFunctions
+    public struct VariableConversionFunctions
     {
         //************************************
         // Method:    NumberOfPlaces
@@ -191,16 +191,50 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
         //// Parameter: string TempString
         ////************************************
         //static double ReadDoubleFromString(string TempString);
-        ////Returns Integer value version of String
-        ////************************************
-        //// Method:    ReadIntFromString
-        //// FullName:  VariableConversionFunctions::ReadIntFromString
-        //// Access:    public static 
-        //// Returns:   int
-        //// Qualifier:
-        //// Parameter: string TempString
-        ////************************************
-        //static int ReadIntFromString(string TempString);
+        /// <summary>
+        /// Reads the int from string.
+        /// </summary>
+        /// <param name="Value">The value to convert into Interger.</param>
+        /// <returns></returns>
+        public static int ReadIntFromString(string Value)
+        {
+            int ReturnValue = 0;
+            bool IsNegative = false;
+            sbyte PlaceNumber;
+            string WholeNumberBuffer = "";
+
+            int TempInt;
+            int TempInt02;
+            var builder = new System.Text.StringBuilder("");
+            foreach (char StringChar in Value)
+            {
+                if (IsDigit(StringChar))
+                {
+                    builder.Append(StringChar);
+                }
+                else if (StringChar == '-')
+                {
+                    IsNegative = true;
+                }
+            }
+            WholeNumberBuffer = builder.ToString();
+            PlaceNumber = (sbyte)(WholeNumberBuffer.Length - 1);
+            foreach (char StringChar in WholeNumberBuffer)
+            {
+                TempInt = CharAsInt(StringChar);
+                TempInt02 = (TempInt * SuperDecGlobalCode.PowerOfTens[PlaceNumber]);
+                if (StringChar != '0')
+                {
+                    ReturnValue += TempInt02;
+                }
+                PlaceNumber--;
+            }
+            if(IsNegative)
+            {
+                ReturnValue *= -1;
+            }
+            return ReturnValue;
+        }
         ////Returns first string of either true,false,1, or 0 in string; if no value found returns false
         ////************************************
         //// Method:    ReadBoolFromString
