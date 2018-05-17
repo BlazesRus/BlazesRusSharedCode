@@ -242,6 +242,7 @@ namespace BlazesMultiTool
     public class WFWeaponStatus
     {
         public WFBaseWeapon EquippedWeapon;
+        public WFBaseWeapon AlternativeWeaponMode;
         /// <summary>
         /// Weapon Damage+Multi-shot effective multiplier to damage
         /// </summary>
@@ -300,12 +301,69 @@ namespace BlazesMultiTool
         public SmallDec BaseDamage;
         public SmallDec CombinedRawDamage;
         /// <summary>
-        /// The combined raw DPS without accounting for accuracy or reloading(assuming have infinite magazine buff)
+        /// The combined infinite magazine DPS without critical damage or accuracy calculated in 
         /// </summary>
         public SmallDec RawDPSWithoutReload;
+
+        /// <summary>
+        /// Shots per second (or Attack Speed in case of Melee)
+        /// </summary>
+        public SmallDec AlternativeSpeed;
+        public SmallDec AlternativeCritMultiplier;
+        public SmallDec AlternativeCritChance;
+        public SmallDec AlternativePunctureDamage;
+        public SmallDec AlternativeImpactDamage;
+        public SmallDec AlternativeSlashDamage;
+
+        //Primary Elemental Damages
+        public SmallDec AlternativePoisonDamage;
+        /// <summary>
+        /// Electricity Damage
+        /// </summary>
+        public SmallDec AlternativeLightningDamage;
+        public SmallDec AlternativeFireDamage;
+        public SmallDec AlternativeColdDamage;
+
+        //Secondary Elemental Damages
+        /// <summary>
+        /// (Fire+Cold)
+        /// </summary>
+        public SmallDec AlternativeBlastDamage;
+        /// <summary>
+        /// (Fire+Poison)
+        /// </summary>
+        public SmallDec AlternativeGasDamage;
+        /// <summary>
+        /// (Cold+Poison)
+        /// </summary>
+        public SmallDec AlternativeViralDamage;
+        /// <summary>
+        /// (Lightning+Poison)
+        /// </summary>
+        public SmallDec AlternativeCorrosiveDamage;
+        /// <summary>
+        /// (Lightning+Cold)
+        /// </summary>
+        public SmallDec AlternativeMagneticDamage;
+        /// <summary>
+        /// (Lightning+Fire)
+        /// </summary>
+        public SmallDec AlternativeRadiationDamage;
+        /// <summary>
+        /// The effective status chance after Multishot mods applied
+        /// </summary>
+        public SmallDec AlternativeEffectiveStatusChance;
+        /// <summary>
+        /// Base damage of weapon determines added elemental damage to weapon
+        /// </summary>
+        public SmallDec AlternativeBaseDamage;
+        public SmallDec AlternativeCombinedRawDamage;
+        /// <summary>
+        /// The combined infinite magazine DPS without critical damage or accuracy calculated in for Alternative fire mode ()
+        /// </summary>
+        public SmallDec AlternativeRawDPSWithoutReload;
         public WFModSetup EquippedMods;
         private PreferedSecondaryCombination primaryPref = PreferedSecondaryCombination.CorrosiveDamage;
-        private PreferedSecondaryCombination secondaryPref = PreferedSecondaryCombination.BlastDamage;
 
         /// <summary>
         /// Gets or sets the primary elemental combination preference
@@ -394,12 +452,6 @@ namespace BlazesMultiTool
                         CurrentPref = SecondaryPref;
                         break;
                 }
-                //if (EquippedWeapon.CorrosiveDamage > SmallDec.Zero){}
-                //else if (EquippedWeapon.BlastDamage > SmallDec.Zero){}
-                //else if (EquippedWeapon.RadiationDamage > SmallDec.Zero){}
-                //else if (EquippedWeapon.ViralDamage > SmallDec.Zero){}
-                //else if (EquippedWeapon.GasDamage > SmallDec.Zero){}
-                //else if (EquippedWeapon.MagneticDamage > SmallDec.Zero){}
                 if(CurrentPref== PreferedSecondaryCombination.BlastDamage&&FireDamage>SmallDec.Zero&&ColdDamage>SmallDec.Zero)
                 {
                     BlastDamage += FireDamage + ColdDamage;
@@ -431,7 +483,82 @@ namespace BlazesMultiTool
                     PoisonDamage = SmallDec.Zero; ColdDamage = SmallDec.Zero;
                 }
             }
-
+            //Calculate Alternative Fire DPS as well if weapon has alternative fire mode
+            if (AlternativeWeaponMode != null)
+            {
+                AlternativeEffectiveStatusChance = EffectiveStatusChance * AlternativeWeaponMode.StatusChance;
+                if (EquippedMods.TotalStats.ContainsKey("Increased Fire Rate") && AlternativeWeaponMode.WeaponType != WeaponTypeStatus.Melee)
+                {
+                    AlternativeSpeed = (SmallDec.One + EquippedMods.TotalStats["Increased Fire Rate"] / 100) * AlternativeWeaponMode.Speed;
+                }
+                else if (EquippedMods.TotalStats.ContainsKey("Increased Attack Speed") && AlternativeWeaponMode.WeaponType == WeaponTypeStatus.Melee)
+                {
+                    AlternativeSpeed = (SmallDec.One + EquippedMods.TotalStats["Increased Attack Speed"] / 100) * AlternativeWeaponMode.Speed;
+                }
+                else
+                {
+                    AlternativeSpeed = AlternativeWeaponMode.Speed;
+                }
+                AlternativeBaseDamage = AlternativeWeaponMode.SlashDamage + AlternativeWeaponMode.ImpactDamage + AlternativeWeaponMode.PunctureDamage;
+                AlternativeBaseDamage += AlternativeWeaponMode.PoisonDamage + AlternativeWeaponMode.LightningDamage + AlternativeWeaponMode.FireDamage + AlternativeWeaponMode.ColdDamage;
+                AlternativeBaseDamage += AlternativeWeaponMode.BlastDamage + AlternativeWeaponMode.CorrosiveDamage + AlternativeWeaponMode.GasDamage
+                + AlternativeWeaponMode.MagneticDamage + AlternativeWeaponMode.RadiationDamage + AlternativeWeaponMode.ViralDamage;
+                AlternativeSlashDamage = EquippedMods.TotalStats.ContainsKey("Increased Slash Damage") ? (SmallDec.One + EquippedMods.TotalStats["Increased Slash Damage"] / 100) * AlternativeWeaponMode.SlashDamage : AlternativeWeaponMode.SlashDamage;
+                AlternativeImpactDamage = EquippedMods.TotalStats.ContainsKey("Increased Impact Damage") ? (SmallDec.One + EquippedMods.TotalStats["Increased Impact Damage"] / 100) * AlternativeWeaponMode.ImpactDamage : AlternativeWeaponMode.ImpactDamage;
+                AlternativePunctureDamage = EquippedMods.TotalStats.ContainsKey("Increased Puncture Damage") ? (SmallDec.One + EquippedMods.TotalStats["Increased Puncture Damage"] / 100) * AlternativeWeaponMode.PunctureDamage : AlternativeWeaponMode.PunctureDamage;
+                AlternativeSlashDamage *= EffectiveMultiplier; AlternativeImpactDamage *= EffectiveMultiplier; AlternativePunctureDamage *= EffectiveMultiplier;
+                //Add Elemental Damage based on Base Damage
+                AlternativePoisonDamage = EquippedMods.TotalStats.ContainsKey("Increased Poison Damage") ? ((SmallDec.One + EquippedMods.TotalStats["Increased Poison Damage"] / 100) * AlternativeBaseDamage) + AlternativeWeaponMode.PoisonDamage : AlternativeWeaponMode.PoisonDamage;
+                AlternativeLightningDamage = EquippedMods.TotalStats.ContainsKey("Increased Lightning Damage") ? ((SmallDec.One + EquippedMods.TotalStats["Increased Lightning Damage"] / 100) * AlternativeBaseDamage) + AlternativeWeaponMode.LightningDamage : AlternativeWeaponMode.LightningDamage;
+                AlternativeFireDamage = EquippedMods.TotalStats.ContainsKey("Increased Fire Damage") ? ((SmallDec.One + EquippedMods.TotalStats["Increased Lightning Damage"] / 100) * AlternativeBaseDamage) + AlternativeWeaponMode.LightningDamage : AlternativeWeaponMode.LightningDamage;
+                AlternativeColdDamage = EquippedMods.TotalStats.ContainsKey("Increased Cold Damage") ? ((SmallDec.One + EquippedMods.TotalStats["Increased Cold Damage"] / 100) * AlternativeBaseDamage) + AlternativeWeaponMode.ColdDamage : AlternativeWeaponMode.ColdDamage;
+                AlternativePoisonDamage *= EffectiveMultiplier; AlternativeLightningDamage *= EffectiveMultiplier; AlternativeFireDamage *= EffectiveMultiplier; AlternativeColdDamage *= EffectiveMultiplier;
+                AlternativeBlastDamage = AlternativeWeaponMode.BlastDamage * EffectiveMultiplier; AlternativeRadiationDamage = AlternativeWeaponMode.RadiationDamage * EffectiveMultiplier; AlternativeViralDamage = AlternativeWeaponMode.ViralDamage * EffectiveMultiplier;
+                AlternativeCorrosiveDamage = AlternativeWeaponMode.CorrosiveDamage * EffectiveMultiplier; AlternativeGasDamage = AlternativeWeaponMode.GasDamage * EffectiveMultiplier; AlternativeMagneticDamage = AlternativeWeaponMode.MagneticDamage * EffectiveMultiplier;
+                AlternativeCombinedRawDamage = AlternativeSlashDamage + AlternativeImpactDamage + AlternativePunctureDamage + AlternativePoisonDamage + AlternativeLightningDamage + AlternativeFireDamage + AlternativeColdDamage + AlternativeBlastDamage + AlternativeRadiationDamage + AlternativeCorrosiveDamage + AlternativeGasDamage + AlternativeViralDamage + AlternativeMagneticDamage;
+                AlternativeRawDPSWithoutReload = AlternativeCombinedRawDamage * AlternativeSpeed;
+                //Calculate Final Secondary Elemental Damage based on mod order preference etc
+                CurrentPref = PrimaryPref;
+                for (int PrefNum = 0; PrefNum < 2; ++PrefNum)
+                {
+                    switch (PrefNum)
+                    {
+                        case 1:
+                            CurrentPref = SecondaryPref;
+                            break;
+                    }
+                    if (CurrentPref == PreferedSecondaryCombination.BlastDamage && AlternativeFireDamage > SmallDec.Zero && AlternativeColdDamage > SmallDec.Zero)
+                    {
+                        AlternativeBlastDamage += AlternativeFireDamage + AlternativeColdDamage;
+                        AlternativeFireDamage = SmallDec.Zero; AlternativeColdDamage = SmallDec.Zero;
+                    }
+                    else if (CurrentPref == PreferedSecondaryCombination.CorrosiveDamage && AlternativeLightningDamage > SmallDec.Zero && AlternativePoisonDamage > SmallDec.Zero)
+                    {
+                        AlternativeCorrosiveDamage += AlternativeLightningDamage + AlternativePoisonDamage;
+                        AlternativeLightningDamage = SmallDec.Zero; AlternativePoisonDamage = SmallDec.Zero;
+                    }
+                    else if (CurrentPref == PreferedSecondaryCombination.GasDamage && AlternativeFireDamage > SmallDec.Zero && AlternativePoisonDamage > SmallDec.Zero)
+                    {
+                        AlternativeGasDamage += AlternativeFireDamage + AlternativePoisonDamage;
+                        AlternativeFireDamage = SmallDec.Zero; AlternativePoisonDamage = SmallDec.Zero;
+                    }
+                    else if (CurrentPref == PreferedSecondaryCombination.MagneticDamage && AlternativeLightningDamage > SmallDec.Zero && AlternativeColdDamage > SmallDec.Zero)
+                    {
+                        AlternativeMagneticDamage += AlternativeLightningDamage + AlternativeColdDamage;
+                        AlternativeLightningDamage = SmallDec.Zero; AlternativeColdDamage = SmallDec.Zero;
+                    }
+                    else if (CurrentPref == PreferedSecondaryCombination.RadiationDamage && AlternativeFireDamage > SmallDec.Zero && AlternativeLightningDamage > SmallDec.Zero)
+                    {
+                        AlternativeRadiationDamage += AlternativeFireDamage + AlternativeLightningDamage;
+                        AlternativeFireDamage = SmallDec.Zero; AlternativeLightningDamage = SmallDec.Zero;
+                    }
+                    else if (CurrentPref == PreferedSecondaryCombination.ViralDamage && AlternativePoisonDamage > SmallDec.Zero && AlternativeColdDamage > SmallDec.Zero)
+                    {
+                        AlternativeViralDamage += AlternativePoisonDamage + AlternativeColdDamage;
+                        AlternativePoisonDamage = SmallDec.Zero; AlternativeColdDamage = SmallDec.Zero;
+                    }
+                }
+            }
         }
     }
 }
