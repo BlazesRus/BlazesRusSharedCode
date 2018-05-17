@@ -304,8 +304,49 @@ namespace BlazesMultiTool
         /// </summary>
         public SmallDec RawDPSWithoutReload;
         public WFModSetup EquippedMods;
-        public PreferedSecondaryCombination PrimaryPref= PreferedSecondaryCombination.CorrosiveDamage;
+        private PreferedSecondaryCombination primaryPref = PreferedSecondaryCombination.CorrosiveDamage;
+        private PreferedSecondaryCombination secondaryPref = PreferedSecondaryCombination.BlastDamage;
+
+        /// <summary>
+        /// Gets or sets the primary elemental combination preference
+        /// </summary>
+        /// <value>
+        /// The secondary elemental combination preference
+        /// </value>
+        public PreferedSecondaryCombination PrimaryPref
+        { get => primaryPref;
+            set
+            {
+                primaryPref = value;
+                //Determine Secondary Preference based on remaining combinations
+                switch(value)
+                {
+                    case PreferedSecondaryCombination.BlastDamage:
+                        SecondaryPref = PreferedSecondaryCombination.CorrosiveDamage;
+                        break;
+                    case PreferedSecondaryCombination.CorrosiveDamage:
+                        SecondaryPref = PreferedSecondaryCombination.BlastDamage;
+                        break;
+                    case PreferedSecondaryCombination.GasDamage:
+                        SecondaryPref = PreferedSecondaryCombination.MagneticDamage;
+                        break;
+                    case PreferedSecondaryCombination.MagneticDamage:
+                        SecondaryPref = PreferedSecondaryCombination.GasDamage;
+                        break;
+                    case PreferedSecondaryCombination.RadiationDamage:
+                        SecondaryPref = PreferedSecondaryCombination.ViralDamage;
+                        break;
+                    case PreferedSecondaryCombination.ViralDamage:
+                        SecondaryPref = PreferedSecondaryCombination.RadiationDamage;
+                        break;
+                }
+            }
+        }
+        /// <summary>
+        /// The secondary elemental combination preference (automatically set when PrimaryPref is set with remaining possible dual combinations of elements)
+        /// </summary>
         public PreferedSecondaryCombination SecondaryPref = PreferedSecondaryCombination.BlastDamage;
+
         public void CalculateFinalModifiers()
         {
             EquippedMods.CalculateModTotal();
@@ -344,45 +385,50 @@ namespace BlazesMultiTool
             CombinedRawDamage = SlashDamage + ImpactDamage + PunctureDamage + PoisonDamage + LightningDamage + FireDamage + ColdDamage + BlastDamage + RadiationDamage + CorrosiveDamage + GasDamage + ViralDamage + MagneticDamage;
             RawDPSWithoutReload = CombinedRawDamage * Speed;
             //Calculate Final Secondary Elemental Damage based on mod order preference etc
-            PreferedSecondaryCombination CurrentPref;
+            PreferedSecondaryCombination CurrentPref = PrimaryPref;
             for (int PrefNum=0;PrefNum<2;++PrefNum)
             {
                 switch(PrefNum)
                 {
-                    case 0:
-                        CurrentPref = PrimaryPref;
-                        break;
                     case 1:
                         CurrentPref = SecondaryPref;
                         break;
                 }
-                if (EquippedWeapon.CorrosiveDamage > SmallDec.Zero)
+                //if (EquippedWeapon.CorrosiveDamage > SmallDec.Zero){}
+                //else if (EquippedWeapon.BlastDamage > SmallDec.Zero){}
+                //else if (EquippedWeapon.RadiationDamage > SmallDec.Zero){}
+                //else if (EquippedWeapon.ViralDamage > SmallDec.Zero){}
+                //else if (EquippedWeapon.GasDamage > SmallDec.Zero){}
+                //else if (EquippedWeapon.MagneticDamage > SmallDec.Zero){}
+                if(CurrentPref== PreferedSecondaryCombination.BlastDamage&&FireDamage>SmallDec.Zero&&ColdDamage>SmallDec.Zero)
                 {
-
+                    BlastDamage += FireDamage + ColdDamage;
+                    FireDamage = SmallDec.Zero; ColdDamage = SmallDec.Zero;
                 }
-                else if (EquippedWeapon.BlastDamage > SmallDec.Zero)
+                else if (CurrentPref == PreferedSecondaryCombination.CorrosiveDamage && LightningDamage > SmallDec.Zero && PoisonDamage > SmallDec.Zero)
                 {
-
+                    CorrosiveDamage += LightningDamage + PoisonDamage;
+                    LightningDamage = SmallDec.Zero; PoisonDamage = SmallDec.Zero;
                 }
-                else if (EquippedWeapon.RadiationDamage > SmallDec.Zero)
+                else if (CurrentPref == PreferedSecondaryCombination.GasDamage && FireDamage > SmallDec.Zero && PoisonDamage > SmallDec.Zero)
                 {
-
+                    GasDamage += FireDamage + PoisonDamage;
+                    FireDamage = SmallDec.Zero; PoisonDamage = SmallDec.Zero;
                 }
-                else if (EquippedWeapon.ViralDamage > SmallDec.Zero)
+                else if (CurrentPref == PreferedSecondaryCombination.MagneticDamage && LightningDamage > SmallDec.Zero && ColdDamage > SmallDec.Zero)
                 {
-
+                    MagneticDamage += LightningDamage + ColdDamage;
+                    LightningDamage = SmallDec.Zero; ColdDamage = SmallDec.Zero;
                 }
-                else if (EquippedWeapon.GasDamage > SmallDec.Zero)
+                else if (CurrentPref == PreferedSecondaryCombination.RadiationDamage && FireDamage > SmallDec.Zero && LightningDamage > SmallDec.Zero)
                 {
-
+                    RadiationDamage += FireDamage + LightningDamage;
+                    FireDamage = SmallDec.Zero; LightningDamage = SmallDec.Zero;
                 }
-                else if (EquippedWeapon.MagneticDamage > SmallDec.Zero)
+                else if (CurrentPref == PreferedSecondaryCombination.ViralDamage && PoisonDamage > SmallDec.Zero && ColdDamage > SmallDec.Zero)
                 {
-
-                }
-                else
-                {
-
+                    ViralDamage += PoisonDamage + ColdDamage;
+                    PoisonDamage = SmallDec.Zero; ColdDamage = SmallDec.Zero;
                 }
             }
 
