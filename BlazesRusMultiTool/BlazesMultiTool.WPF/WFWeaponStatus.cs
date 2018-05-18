@@ -316,6 +316,16 @@ namespace BlazesMultiTool
         public SmallDec RawDPSWithoutReload;
 
         /// <summary>
+        /// The combined infinite magazine DPS with smeeta 200% critical chance buff applied without accuracy etc calculated in
+        /// </summary>
+        public SmallDec SmeetaRawCritDPSOnInfMag;
+
+        /// <summary>
+        /// The combined infinite magazine DPS with smeeta 200% critical chance buff applied without accuracy etc calculated in for Alternative fire mode
+        /// </summary>
+        public SmallDec AlternativeSmeetaRawCritDPSOnInfMag;
+
+        /// <summary>
         /// Shots per second (or Attack Speed in case of Melee)
         /// </summary>
         public SmallDec AlternativeSpeed;
@@ -369,7 +379,7 @@ namespace BlazesMultiTool
         public SmallDec AlternativeBaseDamage;
         public SmallDec AlternativeCombinedRawDamage;
         /// <summary>
-        /// The combined infinite magazine DPS without critical damage or accuracy calculated in for Alternative fire mode ()
+        /// The combined infinite magazine DPS without critical damage or accuracy calculated in for Alternative fire mode
         /// </summary>
         public SmallDec AlternativeRawDPSWithoutReload;
         public WFModSetup EquippedMods;
@@ -422,17 +432,29 @@ namespace BlazesMultiTool
             EffectiveStatusChance = EquippedMods.TotalStats.ContainsKey("Multishot") ? (SmallDec.One + EquippedMods.TotalStats["Multishot"] / 100) * (1+EquippedMods.TotalStats["Status Chance"]/100): (1 + EquippedMods.TotalStats["Status Chance"] / 100);
             //Combined EffectiveStatusMultiplier from mods to weapon status
             EffectiveStatusChance *= EquippedWeapon.StatusChance;
-            if(EquippedMods.TotalStats.ContainsKey("Increased Fire Rate")&& EquippedWeapon.WeaponType!= WeaponTypeStatus.Melee)
+            if(EquippedMods.TotalStats.ContainsKey("Increased Speed"))
             {
-                Speed = (SmallDec.One + EquippedMods.TotalStats["Increased Fire Rate"] / 100)*EquippedWeapon.Speed;
-            }
-            else if (EquippedMods.TotalStats.ContainsKey("Increased Attack Speed") && EquippedWeapon.WeaponType == WeaponTypeStatus.Melee)
-            {
-                Speed = (SmallDec.One + EquippedMods.TotalStats["Increased Attack Speed"] / 100) * EquippedWeapon.Speed;
+                Speed = (SmallDec.One + EquippedMods.TotalStats["Increased Speed"] / 100)*EquippedWeapon.Speed;
             }
             else
             {
                 Speed = EquippedWeapon.Speed;
+            }
+            if (EquippedMods.TotalStats.ContainsKey("Increased Critical Damage"))
+            {
+                CritMultiplier = (SmallDec.One + EquippedMods.TotalStats["Increased Critical Damage"] / 100) * EquippedWeapon.CritMultiplier;
+            }
+            else
+            {
+                CritMultiplier = EquippedWeapon.CritMultiplier;
+            }
+            if (EquippedMods.TotalStats.ContainsKey("Increased Critical Chance"))
+            {
+                CritChance = (SmallDec.One + EquippedMods.TotalStats["Increased Critical Chance"] / 100) * EquippedWeapon.CritChance;
+            }
+            else
+            {
+                CritChance = EquippedWeapon.CritChance;
             }
             BaseDamage = EquippedWeapon.SlashDamage + EquippedWeapon.ImpactDamage + EquippedWeapon.PunctureDamage;
             BaseDamage += EquippedWeapon.PoisonDamage + EquippedWeapon.LightningDamage + EquippedWeapon.FireDamage + EquippedWeapon.ColdDamage;
@@ -493,21 +515,35 @@ namespace BlazesMultiTool
                     PoisonDamage = SmallDec.Zero; ColdDamage = SmallDec.Zero;
                 }
             }
+            //Smeeta 200% Critical Chance applied (http://warframe.wikia.com/wiki/Critical#Orange_.26_Red_Crits)
+            SmeetaRawCritDPSOnInfMag = RawDPSWithoutReload * (2*(CritMultiplier-1)+1);
             //Calculate Alternative Fire DPS as well if weapon has alternative fire mode
             if (AlternativeWeaponMode != null)
             {
                 AlternativeEffectiveStatusChance = EffectiveStatusChance * AlternativeWeaponMode.StatusChance;
-                if (EquippedMods.TotalStats.ContainsKey("Increased Fire Rate") && AlternativeWeaponMode.WeaponType != WeaponTypeStatus.Melee)
+                if (EquippedMods.TotalStats.ContainsKey("Increased Speed"))
                 {
-                    AlternativeSpeed = (SmallDec.One + EquippedMods.TotalStats["Increased Fire Rate"] / 100) * AlternativeWeaponMode.Speed;
-                }
-                else if (EquippedMods.TotalStats.ContainsKey("Increased Attack Speed") && AlternativeWeaponMode.WeaponType == WeaponTypeStatus.Melee)
-                {
-                    AlternativeSpeed = (SmallDec.One + EquippedMods.TotalStats["Increased Attack Speed"] / 100) * AlternativeWeaponMode.Speed;
+                    AlternativeSpeed = (SmallDec.One + EquippedMods.TotalStats["Increased Speed"] / 100) * AlternativeWeaponMode.Speed;
                 }
                 else
                 {
                     AlternativeSpeed = AlternativeWeaponMode.Speed;
+                }
+                if (EquippedMods.TotalStats.ContainsKey("Increased Critical Damage"))
+                {
+                    AlternativeCritMultiplier = (SmallDec.One + EquippedMods.TotalStats["Increased Critical Damage"] / 100) * AlternativeWeaponMode.CritMultiplier;
+                }
+                else
+                {
+                    AlternativeCritMultiplier = AlternativeWeaponMode.CritMultiplier;
+                }
+                if (EquippedMods.TotalStats.ContainsKey("Increased Critical Chance"))
+                {
+                    AlternativeCritChance = (SmallDec.One + EquippedMods.TotalStats["Increased Critical Chance"] / 100) * AlternativeWeaponMode.CritChance;
+                }
+                else
+                {
+                    AlternativeCritChance = AlternativeWeaponMode.CritChance;
                 }
                 AlternativeBaseDamage = AlternativeWeaponMode.SlashDamage + AlternativeWeaponMode.ImpactDamage + AlternativeWeaponMode.PunctureDamage;
                 AlternativeBaseDamage += AlternativeWeaponMode.PoisonDamage + AlternativeWeaponMode.LightningDamage + AlternativeWeaponMode.FireDamage + AlternativeWeaponMode.ColdDamage;
@@ -527,7 +563,7 @@ namespace BlazesMultiTool
                 AlternativeCorrosiveDamage = AlternativeWeaponMode.CorrosiveDamage * EffectiveMultiplier; AlternativeGasDamage = AlternativeWeaponMode.GasDamage * EffectiveMultiplier; AlternativeMagneticDamage = AlternativeWeaponMode.MagneticDamage * EffectiveMultiplier;
                 AlternativeCombinedRawDamage = AlternativeSlashDamage + AlternativeImpactDamage + AlternativePunctureDamage + AlternativePoisonDamage + AlternativeLightningDamage + AlternativeFireDamage + AlternativeColdDamage + AlternativeBlastDamage + AlternativeRadiationDamage + AlternativeCorrosiveDamage + AlternativeGasDamage + AlternativeViralDamage + AlternativeMagneticDamage;
                 AlternativeRawDPSWithoutReload = AlternativeCombinedRawDamage * AlternativeSpeed;
-                //Calculate Final Secondary Elemental Damage based on mod order preference etc
+                AlternativeSmeetaRawCritDPSOnInfMag = RawDPSWithoutReload * (2 * (AlternativeCritMultiplier - 1) + 1);
                 CurrentPref = PrimaryPref;
                 for (int PrefNum = 0; PrefNum < 2; ++PrefNum)
                 {
