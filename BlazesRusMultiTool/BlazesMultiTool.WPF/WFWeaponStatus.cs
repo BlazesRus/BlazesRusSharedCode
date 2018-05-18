@@ -241,6 +241,16 @@ namespace BlazesMultiTool
     /// </summary>
     public class WFWeaponStatus
     {
+        public WFWeaponStatus(string FileName)
+        {
+            EquippedWeapon = new WFBaseWeapon(FileName);
+            EquippedMods = new WFModSetup();
+        }
+        public WFWeaponStatus()
+        {
+            EquippedWeapon = new WFBaseWeapon();
+            EquippedMods = new WFModSetup();
+        }
         public WFBaseWeapon EquippedWeapon;
         public WFBaseWeapon AlternativeWeaponMode;
         /// <summary>

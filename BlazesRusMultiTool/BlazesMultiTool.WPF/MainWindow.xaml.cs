@@ -46,7 +46,7 @@ namespace BlazesMultiTool
             /// <param name="value">The value.</param>
             public StringData(string value) { CurrentValue = value; }
 
-            #region INotifyPropertyChanged Members
+#region INotifyPropertyChanged Members
 
             public event PropertyChangedEventHandler PropertyChanged;
 
@@ -60,9 +60,9 @@ namespace BlazesMultiTool
                 }
             }
 
-            #endregion INotifyPropertyChanged Members
+#endregion INotifyPropertyChanged Members
 
-            #region Convert to/from other types
+#region Convert to/from other types
 
             /// <summary>
             /// Performs an explicit conversion from <see cref="StringData"/> to <see cref="System.String"/>.
@@ -88,9 +88,9 @@ namespace BlazesMultiTool
                 return new StringData(self);
             }
 
-            #endregion Convert to/from other types
+#endregion Convert to/from other types
 
-            #region Operator Functionality
+#region Operator Functionality
             //public static bool operator ==(StringData self, string Value)
             //{
             //    return self.CurrentValue == Value;
@@ -115,7 +115,7 @@ namespace BlazesMultiTool
                 return new StringData(Total);
             }
 
-            #endregion Operator Functionality
+#endregion Operator Functionality
         }
 
         public sealed class StringDataAsString : IValueConverter

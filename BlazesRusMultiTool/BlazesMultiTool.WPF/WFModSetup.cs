@@ -20,6 +20,15 @@ namespace BlazesMultiTool
         {
             TotalStats = new Dictionary<string, SmallDec>();
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WFModSetup"/> class and load info of Mod setup from file at FilePath
+        /// </summary>
+        /// <param name="FilePath">The file path of file containing mod setup info</param>
+        public WFModSetup(string FilePath)
+        {
+            TotalStats = new Dictionary<string, SmallDec>();
+        }
         /// <summary>
         /// Calculates the mod stat total.
         /// </summary>
