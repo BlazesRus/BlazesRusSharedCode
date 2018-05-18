@@ -173,20 +173,20 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
         }
 
-        ///// <summary>
-        ///// Finds sum of Value Container
-        ///// </summary>
-        ///// <param name="Value"></param>
-        ///// <returns></returns>
-        //public static SmallDec Sum(IEnumerable<SmallDec> Value)
-        //{
-        //    var TotalSum = SmallDec.Zero;
-        //    foreach (var Element in Value)
-        //    {
-        //        TotalSum += Element;
-        //    }
-        //    return TotalSum;
-        //}
+        /// <summary>
+        /// Finds sum of Value Container
+        /// </summary>
+        /// <param name="Value"></param>
+        /// <returns></returns>
+        public static SmallDec Sum(IEnumerable<SmallDec> Value)
+        {
+            var TotalSum = SmallDec.Zero;
+            foreach (var Element in Value)
+            {
+                TotalSum += Element;
+            }
+            return TotalSum;
+        }
 
         /// <summary>
         /// Parses string value into SmallDec
