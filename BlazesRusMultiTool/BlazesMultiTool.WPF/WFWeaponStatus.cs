@@ -43,6 +43,10 @@ namespace BlazesMultiTool
         string Name;
         public WeaponTypeStatus WeaponType;
         public SmallDec Speed;
+        /// <summary>
+        /// The charge rate of Weapon (Zero means not used)
+        /// </summary>
+        public SmallDec ChargeRate = SmallDec.Zero;
         public SmallDec PunctureDamage;
         public SmallDec ImpactDamage;
         public SmallDec SlashDamage;
@@ -261,6 +265,7 @@ namespace BlazesMultiTool
         /// Shots per second (or Attack Speed in case of Melee)
         /// </summary>
         public SmallDec Speed;
+        public SmallDec ChargeRate = SmallDec.Zero;
         public SmallDec CritMultiplier;
         public SmallDec CritChance;
         public SmallDec PunctureDamage;

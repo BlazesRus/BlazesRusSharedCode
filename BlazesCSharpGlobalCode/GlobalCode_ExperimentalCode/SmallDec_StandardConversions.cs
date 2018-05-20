@@ -168,7 +168,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #endif
                 //Value += ".";
                 builder.Append(".");
-                for (sbyte Index = 3; Index >= 0; Index--)
+#if (SmallDec_UseLegacyStorage || SmallDec_ReducedSize)
+                for (sbyte Index = 3; Index >= 0; --Index)
+#else
+                for (sbyte Index = 8; Index >= 0; --Index)
+#endif
                 {
                     if (DecimalStatus != 0)
                     {
@@ -227,7 +231,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 (int)
 #endif
                 DecimalStatus;
-                for (sbyte Index = 3; Index >= 0; Index--)
+#if (SmallDec_UseLegacyStorage || SmallDec_ReducedSize)
+                for (sbyte Index = 3; Index >= 0; --Index)
+#else
+                for (sbyte Index = 8; Index >= 0; --Index)
+#endif
                 {
                     CurrentDigit = (byte)(DecimalHalf / SuperDecGlobalCode.PowerOfTens[Index]);
                     DecimalHalf -= (CurrentDigit * SuperDecGlobalCode.PowerOfTens[Index]);
