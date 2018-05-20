@@ -1,5 +1,5 @@
-﻿/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
-    Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+﻿/*	Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+    Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
 
 using System;
@@ -48,7 +48,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <summary>
         /// Static variable for displaying how alternative decimal states are handles and such
         /// (so that other assembly versions of the type can see how to handle conversions)<para/>
-        /// Default(0): Store 6 Decimal Places and negative/positive status inside int value<para/>
+        /// Default(0): Store 9 Decimal Places and negative/positive status inside int value<para/>
         /// SmallDec_ReducedSize(1) : Disable DecBoolStatus and instead use decimalStatus as short to store positive/negative status<para/>
         /// SmallDec_UseLegacyStorage(2) : Use  DecBoolStatus to store negative/positive status<para/>
         /// </summary>

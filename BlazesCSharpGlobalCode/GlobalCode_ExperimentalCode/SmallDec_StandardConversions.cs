@@ -1,5 +1,5 @@
-﻿/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
-    Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+﻿/*	Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+    Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
 
 using System;
@@ -88,7 +88,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 }
                 PlaceNumber--;
             }
+#if (SmallDec_ReducedSize||SmallDec_UseLegacyStorage)
             PlaceNumber = 3;
+#else
+            PlaceNumber = 8;
+#endif
             foreach (char StringChar in DecimalBuffer)
             {
                 //Limit stored decimal numbers to the amount it can store
@@ -98,7 +102,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     TempInt02 = (TempInt * SuperDecGlobalCode.PowerOfTens[PlaceNumber]);
                     if (StringChar != '0')
                     {
+#if (SmallDec_ReducedSize || SmallDec_UseLegacyStorage)
                         NewSelf.DecimalStatus += (ushort)TempInt02;
+#else
+                        NewSelf.DecimalStatus += (int)TempInt02;
+#endif
                     }
                     PlaceNumber--;
                 }
@@ -297,7 +305,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return String.Format(numberFormat, this.ToOptimalString());//Ensure to reformat string based on format type
         }
 
-        #region From Standard types to this type
+#region From Standard types to this type
         /// <summary>
         ///
         /// </summary>
@@ -683,7 +691,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 }
                 PlaceNumber--;
             }
+#if (SmallDec_ReducedSize || SmallDec_UseLegacyStorage)
             PlaceNumber = 3;
+#else
+            PlaceNumber = 8;
+#endif
+            int StartingDigit = (Decimalbuilder.Length - 1);
             foreach (char StringChar in DecimalBuffer)
             {
                 //Limit stored decimal numbers to the amount it can store
@@ -693,7 +706,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     TempInt02 = (TempInt * SuperDecGlobalCode.PowerOfTens[PlaceNumber]);
                     if (StringChar != '0')
                     {
+#if (SmallDec_ReducedSize || SmallDec_UseLegacyStorage)
                         DecimalStatus += (ushort)TempInt02;
+#else
+                        DecimalStatus += TempInt02;
+#endif
                     }
                     PlaceNumber--;
                 }
@@ -726,7 +743,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             this.DecimalStatus = 0;
         }
 
-        #endregion From Standard types to this type
+#endregion From Standard types to this type
 #if (GlobalCode_EnableDependencyPropStuff)
         /// <summary>
         /// Initialize constructor
@@ -741,7 +758,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         }
 #endif
 
-        #region From this type to Standard types
+#region From this type to Standard types
 
         /// <summary>
         ///
