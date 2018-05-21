@@ -1,4 +1,7 @@
-﻿using System;
+﻿/*	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;

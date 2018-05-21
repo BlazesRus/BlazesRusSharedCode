@@ -1,5 +1,5 @@
-﻿/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
-    Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+﻿/*	Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+    Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
 
 using System;

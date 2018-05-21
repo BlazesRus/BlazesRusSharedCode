@@ -1,5 +1,5 @@
-﻿/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
-    Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+﻿/*	Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+    Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
 
 using System;
@@ -30,6 +30,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #endif
     SmallDec : IFormattable, INotifyPropertyChanged
     {
-
+        /// <summary>
+        /// PI value (3.141592654)
+        /// </summary>
+        /// <returns></returns>
+        private static SmallDec PIValue()
+        {
+            return new SmallDec(3, 141592654);
+        }
+        /// <summary>
+        /// PI value (about 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513)
+        /// </summary>
+        public static SmallDec PI = PIValue();
     }
 }

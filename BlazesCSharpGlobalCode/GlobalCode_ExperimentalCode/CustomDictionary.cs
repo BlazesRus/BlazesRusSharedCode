@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿/*	Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+    Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+*/
+
+using System.Collections.Generic;
 
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
