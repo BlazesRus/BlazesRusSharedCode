@@ -29,7 +29,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
     struct
 #endif
     SmallDec : IFormattable, INotifyPropertyChanged
-    {
+    {//https://revisionmaths.com/gcse-maths-revision/trigonometry/sin-cos-and-tan
+
         /// <summary>
         /// PI value (3.141592654)
         /// </summary>
@@ -41,6 +42,114 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <summary>
         /// PI value (about 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513)
         /// </summary>
-        public static SmallDec PI = PIValue();
+        public static readonly SmallDec PI = PIValue();
+
+        /// <summary>
+        /// Value at one
+        /// </summary>
+        public static readonly SmallDec NegativeOne = NegativeOneValue();
+
+        private static SmallDec NegativeOneValue() => new SmallDec(1, SmallDec.NegativeWholeNumber);
+
+        public static SmallDec SinFromAngle(SmallDec Value)
+        {
+            if(Value.DecimalStatus==SmallDec.NegativeWholeNumber)
+            {
+                Value.DecimalStatus = 0;
+                Value.IntValue %= 360;
+                Value.IntValue = (ushort)(360 - (int)Value.IntValue);
+                if(Value.IntValue==360) { Value.IntValue = 0; }
+            }
+            else
+            {
+                Value %= 360;
+            }
+            if (Value == SmallDec.Zero) { return SmallDec.Zero; }
+            else if(Value.IntValue==90&&Value.DecimalStatus==0)
+            {
+                return SmallDec.One;
+            }
+            else if (Value.IntValue == 180 && Value.DecimalStatus == 0)
+            {
+                return SmallDec.Zero;
+            }
+            else if (Value.IntValue == 270 && Value.DecimalStatus == 0)
+            {
+                return SmallDec.NegativeOne;
+            }
+            else
+            {
+                SmallDec NewSelf = new SmallDec();//Unfinished
+                return NewSelf;
+            }
+        }
+
+        public static SmallDec CosFromAngle(SmallDec Value)
+        {
+            if (Value.DecimalStatus == SmallDec.NegativeWholeNumber)
+            {
+                Value.DecimalStatus = 0;
+                Value.IntValue %= 360;
+                Value.IntValue = (ushort)(360 - (int)Value.IntValue);
+                if (Value.IntValue == 360) { Value.IntValue = 0; }
+            }
+            else
+            {
+                Value %= 360;
+            }
+            if (Value == SmallDec.Zero) { return SmallDec.One; }
+            else if (Value.IntValue == 90 && Value.DecimalStatus == 0)
+            {
+                return SmallDec.Zero;
+            }
+            else if (Value.IntValue == 180 && Value.DecimalStatus == 0)
+            {
+                return SmallDec.NegativeOne;
+            }
+            else if (Value.IntValue == 270 && Value.DecimalStatus == 0)
+            {
+                return SmallDec.Zero;
+            }
+            else
+            {
+                SmallDec NewSelf = new SmallDec();//Unfinished
+                return NewSelf;
+            }
+        }
+
+
+
+        public static SmallDec TanFromAngle(SmallDec Value)
+        {
+            if (Value.DecimalStatus == SmallDec.NegativeWholeNumber)
+            {
+                Value.DecimalStatus = 0;
+                Value.IntValue %= 360;
+                Value.IntValue = (ushort)(360 - (int)Value.IntValue);
+                if (Value.IntValue == 360) { Value.IntValue = 0; }
+            }
+            else
+            {
+                Value %= 360;
+            }
+            if (Value == SmallDec.Zero) { return SmallDec.Zero; }
+            else if (Value.IntValue == 90 && Value.DecimalStatus == 0)
+            {
+                return SmallDec.NaN;//Positive Infinity on left of;Negative Infinity on right
+            }
+            else if (Value.IntValue == 180 && Value.DecimalStatus == 0)
+            {
+                return SmallDec.Zero;
+            }
+            else if (Value.IntValue == 270 && Value.DecimalStatus == 0)
+            {
+                return SmallDec.NaN;//Positive Infinity on left of;Negative Infinity on right
+            }
+            else
+            {
+                SmallDec NewSelf = new SmallDec();//Unfinished
+                return NewSelf;
+            }
+        }
     }
 }

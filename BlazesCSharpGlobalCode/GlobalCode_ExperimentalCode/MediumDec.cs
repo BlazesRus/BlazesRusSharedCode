@@ -585,7 +585,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
         private static MediumDec NaNValue()
         {
+#if !BlazesGlobalCode_SmallDec_AsStruct && !BlazesGlobalCode_ZeroAtNaN
+            return null;//NaN is Null unless preprocessor switch is set for BlazesGlobalCode_ZeroAtNaN when is class
+#else
             return new MediumDec(0, 0);
+#endif
         }
 
         /// <summary>

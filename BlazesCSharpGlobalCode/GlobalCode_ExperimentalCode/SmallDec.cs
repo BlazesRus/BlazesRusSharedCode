@@ -811,6 +811,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// </summary>
         public static readonly SmallDec Zero = ZeroValue();
 
+        /// <summary>
+        /// Value at one
+        /// </summary>
+        public static readonly SmallDec One = OneValue();
+
+        private static SmallDec OneValue() => new SmallDec(1, 0);
+
         private static SmallDec NaNValue()
         {
 #if (SmallDec_ReducedSize || SmallDec_UseLegacyStorage)
@@ -819,17 +826,14 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #else
             return new SmallDec(0, 0);
 #endif
-#else//No NaN definition for now
+#else
+#if !BlazesGlobalCode_SmallDec_AsStruct && !BlazesGlobalCode_ZeroAtNaN
+            return null;//NaN is Null unless preprocessor switch is set for BlazesGlobalCode_ZeroAtNaN when is class
+#else
             return new SmallDec(0, 0);
 #endif
+#endif
         }
-
-        /// <summary>
-        /// Value at one
-        /// </summary>
-        public static readonly SmallDec One = OneValue();
-
-        private static SmallDec OneValue() => new SmallDec(1, 0);
 
         /// <summary>
         /// Value at either zero or NaN (depending on preprocessor settings)
