@@ -382,6 +382,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             return NewList;
         }
+
+#if (!SmallDec_UseLegacyStorage && !SmallDec_ReducedSize)
+        public static explicit operator SmallDec(MediumDec Value)
+        {
+            return new SmallDec((ushort)Value.IntValue, Value.DecimalStatus);
+        }
+#endif
     }
 
     //class SmallDecTuple : Tuple<string, SmallDec>

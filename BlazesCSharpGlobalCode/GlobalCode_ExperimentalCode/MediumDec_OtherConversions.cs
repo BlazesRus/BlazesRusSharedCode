@@ -382,6 +382,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             return NewList;
         }
+
+        public static explicit operator MediumDec(SmallDec Value)
+        {
+            return new MediumDec(Value.IntValue, Value.DecimalStatus);
+        }
     }
 
     //class MediumDecTuple : Tuple<string, MediumDec>

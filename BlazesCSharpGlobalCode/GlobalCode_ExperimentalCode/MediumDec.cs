@@ -430,7 +430,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             catch
 #if (DEBUG)
-                                    (Exception ex)
+            (Exception ex)
 #endif
             {
 #if (DEBUG)
