@@ -131,7 +131,6 @@
     <Compile Include="GlobalCode_ExperimentalCode\SmallDec_OtherConversions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SmallDec_Rounding.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SmallDec_TrigometricFunctions.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_OperatorFunctions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\ValidationOverride.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\VariableData.cs" />
     <Compile Include="GlobalCode_IniData\IniData.cs" />

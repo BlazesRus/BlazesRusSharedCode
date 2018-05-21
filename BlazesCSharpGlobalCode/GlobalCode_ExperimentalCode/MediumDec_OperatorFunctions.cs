@@ -652,7 +652,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             SelfRep -= IntResult * ValueRep;
             long IntHalf = SelfRep / DecimalOverflow;
             SelfRep -= IntHalf * (long)DecimalOverflow;
-            self.IntValue = (ushort)IntHalf;
+            self.IntValue = (uint)IntHalf;
             self.DecimalStatus = (int)SelfRep;
             return self;
         }
@@ -703,7 +703,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 }
                 else
                 {
-                    self.IntValue = (ushort)(y.IntValue - self.IntValue);
+                    self.IntValue = (uint)(y.IntValue - self.IntValue);
                     SelfIsNegative = false;
                 }
             }
@@ -719,7 +719,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 }
                 else
                 {
-                    self.IntValue = (ushort)(y.IntValue - self.IntValue);
+                    self.IntValue = (uint)(y.IntValue - self.IntValue);
                     SelfIsNegative = true;
                 }
             }
@@ -822,7 +822,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 }
                 else
                 {
-                    self.IntValue = (ushort)(y.IntValue - self.IntValue);
+                    self.IntValue = (uint)(y.IntValue - self.IntValue);
                     SelfIsNegative = false;
                 }
             }
@@ -838,7 +838,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 }
                 else
                 {
-                    self.IntValue = (ushort)(y.IntValue - self.IntValue);
+                    self.IntValue = (uint)(y.IntValue - self.IntValue);
                     SelfIsNegative = true;
                 }
             }
@@ -901,110 +901,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <returns></returns>
         public static MediumDec operator %(MediumDec self, dynamic y)
         {
-#if (MediumDec_UseLegacyStorage)
-            if (y is double || y is float || y is decimal)
-            {
-                if (y == 0.0)
-                {
-                    self.intValue = 0;
-                    self.DecimalStatus = 0;
-                    self.DecBoolStatus = 0;
-                }
-                else
-                {
-                    if (y < 0.0) { self.SwapNegativeStatus(); y *= -1.0; }
-                    ushort WholeHalf = (ushort)y;
-                    //Use x Int Operation instead if y has no decimal places
-                    if (WholeHalf == y)
-                    {
-                        if (self.DecimalStatus == 0)
-                        {
-                            //Use normal simple (int value) * (int value) if not dealing with any decimals
-                            self.intValue %= WholeHalf;
-                        }
-                        else
-                        {
-                            uint SelfAsInt = self.DecimalStatus;
-                            SelfAsInt += (uint)(self.intValue * 10000);
-                            SelfAsInt %= WholeHalf;
-                            self.intValue = (ushort)(SelfAsInt / 1000);
-                            SelfAsInt -= (uint)(self.intValue * 10000);
-                            self.DecimalStatus = (ushort)SelfAsInt;
-                        }
-                    }
-                    else
-                    {
-                        y -= WholeHalf;
-                        ushort Decimalhalf;
-                        if (y == 0.25)
-                        {
-                            Decimalhalf = 2500;
-                        }
-                        else if (y == 0.5)
-                        {
-                            Decimalhalf = 5000;
-                        }
-                        else
-                        {
-                            Decimalhalf = ExtractDecimalHalfV3(y);
-                        }
-                        ulong SelfAsInt = self.intValue;
-                        SelfAsInt *= 10000;
-                        SelfAsInt += self.DecimalStatus;
-                        ulong YAsInt = WholeHalf;
-                        YAsInt *= 10000;
-                        YAsInt += Decimalhalf;
-                        SelfAsInt %= YAsInt;
-                        SelfAsInt /= 10000;
-                        ulong TempStorage = SelfAsInt / 10000;
-                        self.intValue = (ushort)TempStorage;
-                        TempStorage = self.intValue;
-                        TempStorage *= 10000;
-                        SelfAsInt -= TempStorage;
-                        self.DecimalStatus = (ushort)SelfAsInt;
-                    }
-                    //Prevent dividing/multiplying value into nothing by dividing too small (set to .0001 instead of having value set as zero)
-                    if (self.intValue == 0 && self.DecimalStatus == 0) { self.DecimalStatus = 1; }
-                }
-            }
-            else if (y is string)
-            {
-                self %= (MediumDec)y;
-            }
-            else
-            {
-                if (y == 0)
-                {
-                    self.intValue = 0;
-                    self.DecimalStatus = 0;
-                    self.DecBoolStatus = 0;
-                }
-                else
-                {
-                    if (y < 0) { self.SwapNegativeStatus(); y *= -1; }
-                    if (self.DecimalStatus == 0)
-                    {//Use normal simple (int value) * (int value) if not dealing with any decimals
-                        self.intValue %= (ushort)y;
-                    }
-                    else
-                    {
-                        uint SelfAsInt = self.DecimalStatus;
-                        SelfAsInt += (uint)(self.intValue * 10000);
-                        SelfAsInt %= y;
-                        uint TempStorage = SelfAsInt / 10000;
-                        self.intValue = (ushort)TempStorage;
-                        TempStorage *= 10000;
-                        SelfAsInt -= TempStorage;
-                        self.DecimalStatus = (ushort)SelfAsInt;
-                    }
-                    //Prevent dividing/multiplying value into nothing by dividing too small (set to .0001 instead of having value set as zero)
-                    if (self.intValue == 0 && self.DecimalStatus == 0) { self.DecimalStatus = 1; }
-                }
-            }
-            return self;
-#else
             return self %= (MediumDec)y;
-#endif
         }
 
         /// <summary>
@@ -1014,171 +911,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <returns></returns>
         public static MediumDec operator +(MediumDec self, dynamic y)
         {
-#if (MediumDec_UseLegacyStorage)
-            if (y is double || y is MediumDec || y is decimal)
-            {
-                bool IsYNegative = (y < 0) ? true : false;
-                y = Math.Abs(y);
-                ushort WholeHalfOfY = (ushort)Math.Floor(y);
-                y -= WholeHalfOfY;
-                if (WholeHalfOfY == 0) { }
-                else if (self.DecBoolStatus == 1 && IsYNegative)
-                {// -X - Y (ex. -8 + -6)
-                    self.intValue = (ushort)(self.intValue + WholeHalfOfY);
-                }
-                else if (self.DecBoolStatus == 0 && IsYNegative == false)
-                {
-                    //X + Y (ex. 8 + 6)
-                    self.intValue = (ushort)(self.intValue + WholeHalfOfY);
-                }
-                else
-                {
-                    // -X + Y
-                    if (self.DecBoolStatus == 1)
-                    {   //ex. -8 + 9
-                        if (y > self.intValue)
-                        {
-                            self.intValue = (ushort)(WholeHalfOfY - self.intValue);
-                            self.DecBoolStatus = 0;
-                        }
-                        else
-                        {//ex. -8 +  4
-                            self.intValue = (ushort)(self.intValue - WholeHalfOfY);
-                        }
-                    }// X-Y
-                    else
-                    {
-                        if (self.intValue > WholeHalfOfY)
-                        {//ex. 9 + -6
-                            self.intValue = (ushort)(self.intValue - WholeHalfOfY);
-                        }
-                        else
-                        {//ex. 9 + -10
-                            self.intValue = (ushort)(WholeHalfOfY - self.intValue);
-                            self.DecBoolStatus = 1;
-                        }
-                    }
-                }
-                //Decimal Calculation Section
-                if (self.DecBoolStatus != 0 || y != 0)
-                {
-                    ushort SecondDec = (ushort)((System.Math.Abs(y) - System.Math.Abs(WholeHalfOfY)) * 10000);
-                    // ?.XXXXXX + ?.YYYYYY
-                    if (self.DecBoolStatus == 0 && IsYNegative == false)
-                    {
-                        //Potential Overflow check
-                        ushort DecimalStatusTemp = (ushort)(self.DecimalStatus + SecondDec);
-                        if (DecimalStatusTemp > 9999)
-                        {
-                            DecimalStatusTemp -= 10000;
-                            self.intValue += 1;
-                        }
-                        self.DecimalStatus = DecimalStatusTemp;
-                    }
-                    // -?.XXXXXX - ?.YYYYYY
-                    else if (self.DecBoolStatus == 1 && IsYNegative == true)
-                    {
-                        //Potential Overflow check
-                        ushort DecimalStatusTemp = (ushort)(self.DecimalStatus + SecondDec);
-                        if (DecimalStatusTemp > 9999)
-                        {
-                            DecimalStatusTemp -= 10000;
-                            self.intValue += 1;
-                        }
-                        self.DecimalStatus = DecimalStatusTemp;
-                    }
-                    else
-                    {
-                        if (IsYNegative)
-                        {
-                            // ex. 0.6 + -0.5
-                            if (self.DecimalStatus >= SecondDec)
-                            {
-                                self.DecimalStatus = (ushort)(self.DecimalStatus - SecondDec);
-                            }// ex. 0.6 + -.7
-                            else
-                            {
-                                self.DecimalStatus = (ushort)(SecondDec - self.DecimalStatus);
-                                if (self.intValue == 0)
-                                {
-                                    self.DecBoolStatus = 1;
-                                }
-                                else
-                                {
-                                    self.intValue -= 1;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (self.DecimalStatus >= SecondDec)
-                            {
-                                self.DecimalStatus = (ushort)(self.DecimalStatus - SecondDec);
-                            }// ex. -1.6 + 0.7
-                            else
-                            {
-                                self.DecimalStatus = (ushort)(SecondDec - self.DecimalStatus);
-                                if (self.intValue == 0)
-                                {
-                                    self.DecBoolStatus = 0;
-                                }
-                                else
-                                {
-                                    self.intValue -= 1;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            else if (y is string)
-            {
-                self += (MediumDec)y;
-            }
-            else
-            {
-                if (self.DecBoolStatus == 1 && y < 0)
-                {// -X - Y (ex. -8 + -6)
-                    self.intValue = (ushort)(self.intValue + (ushort)Math.Abs(y));
-                }
-                else if (self.DecBoolStatus == 0 && y >= 0)
-                {
-                    //X + Y (ex. 8 + 6)
-                    self.intValue = (ushort)(self.intValue + y);
-                }
-                else
-                {
-                    // -X + Y
-                    if (self.DecBoolStatus == 1)
-                    {   //ex. -8 + 9
-                        if (y > self.intValue)
-                        {
-                            self.intValue = (ushort)(y - self.intValue);
-                            self.DecBoolStatus = 0;
-                        }
-                        else
-                        {//ex. -8 +  4
-                            self.intValue = (ushort)(self.intValue - y);
-                        }
-                    }// X-Y
-                    else
-                    {
-                        ushort TempY = Math.Abs(y);
-                        if (self.intValue > TempY)
-                        {//ex. 9 + -6
-                            self.intValue = (ushort)(self.intValue - TempY);
-                        }
-                        else
-                        {//ex. 9 + -10
-                            self.intValue = (ushort)(TempY - self.intValue);
-                            self.DecBoolStatus = 1;
-                        }
-                    }
-                }
-            }
-            //Fix potential negative zero
-            if (self.intValue == 0 && self.DecBoolStatus == 1 && self.DecimalStatus == 0) { self.DecBoolStatus = 0; }
-#else
             TypeCode typeCode = Type.GetTypeCode(y.GetType());
             int typeCodeValue = (int)typeCode;
             if (typeCodeValue >= 4 && typeCodeValue <= 12)//Integer based Value types
@@ -1202,7 +934,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     }
                     else
                     {
-                        self.IntValue = (ushort)(y.IntValue - self.IntValue);
+                        self.IntValue = (uint)(y.IntValue - self.IntValue);
                         SelfIsNegative = false;
                     }
                 }
@@ -1218,7 +950,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     }
                     else
                     {
-                        self.IntValue = (ushort)(y.IntValue - self.IntValue);
+                        self.IntValue = (uint)(y.IntValue - self.IntValue);
                         SelfIsNegative = true;
                     }
                 }
@@ -1235,7 +967,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 return self += (MediumDec)y;
             }
-#endif
             return self;
         }
 
@@ -1246,175 +977,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <returns></returns>
         public static MediumDec operator -(MediumDec self, dynamic y)
         {
-#if (MediumDec_UseLegacyStorage)
-            if (y is double || y is MediumDec || y is decimal)
-            {
-                bool IsYNegative = (y < 0.0) ? true : false;
-                y = Math.Abs(y);
-                ushort WholeHalfOfY = (ushort)(Math.Floor(y));
-                y -= WholeHalfOfY;
-                if (WholeHalfOfY == 0) { }
-                //ex. -9 - 9
-                else if (self.DecBoolStatus == 1 && IsYNegative == false)
-                {// -X - Y
-                    self.intValue = (ushort)(self.intValue + WholeHalfOfY);
-                }//ex. 9 - (-1)
-                else if (self.DecBoolStatus == 0 && IsYNegative)
-                {
-                    //X - (-Y)
-                    self.intValue = (ushort)(self.intValue + WholeHalfOfY);
-                }
-                else
-                {
-                    // X - (Y)
-                    if (self.DecBoolStatus == 0)
-                    {
-                        // ex. 8 - 9
-                        if (WholeHalfOfY > self.intValue)
-                        {
-                            self.intValue = (ushort)(WholeHalfOfY - self.intValue);
-                            self.DecBoolStatus = 1;
-                        } //ex. 8 - 7
-                        else
-                        {
-                            self.intValue = (ushort)(self.intValue - WholeHalfOfY);
-                        }
-                    }// -X - (Y)
-                    else
-                    {
-                        // ex. -8 - (-9)
-                        if (self.intValue > WholeHalfOfY)
-                        {
-                            self.intValue = (ushort)(WholeHalfOfY - self.intValue);
-                            self.DecBoolStatus = 0;
-                        }
-                        else
-                        {//ex. -8 - (-5)
-                            self.intValue = (ushort)(self.intValue - WholeHalfOfY);
-                        }
-                    }
-                }
-                //Decimal Calculation Section
-                ushort SecondDec = (ushort)((System.Math.Abs(y) - System.Math.Abs(WholeHalfOfY)) * 10000);
-                if (self.DecimalStatus != 0 || SecondDec != 0)
-                {
-                    // ex. -0.5 - 0.6
-                    if (self.DecBoolStatus == 1 && IsYNegative == false)
-                    {
-                        //Potential Overflow check
-                        ushort DecimalStatusTemp = (ushort)(self.DecimalStatus + SecondDec);
-                        if (DecimalStatusTemp > 9999)
-                        {
-                            DecimalStatusTemp -= 10000;
-                            self.intValue += 1;
-                        }
-                        self.DecimalStatus = DecimalStatusTemp;
-                    }// ex. 0.5 - (-0.6)
-                    else if (self.DecBoolStatus == 0 && IsYNegative)
-                    {
-                        //Potential Overflow check
-                        ushort DecimalStatusTemp = (ushort)(self.DecimalStatus + SecondDec);
-                        if (DecimalStatusTemp > 9999)
-                        {
-                            DecimalStatusTemp -= 10000;
-                            self.intValue += 1;
-                        }
-                        self.DecimalStatus = DecimalStatusTemp;
-                    }
-                    else
-                    {
-                        if (IsYNegative)
-                        {// ex. -0.7 - (-0.6)
-                            if (self.DecimalStatus >= SecondDec)
-                            {
-                                self.DecimalStatus = (ushort)(self.DecimalStatus - SecondDec);
-                            }
-                            else
-                            {
-                                self.DecimalStatus = (ushort)(SecondDec - self.DecimalStatus);
-                                if (self.intValue == 0)
-                                {
-                                    self.DecBoolStatus = 0;
-                                }
-                                else
-                                {
-                                    self.intValue -= 1;
-                                }
-                            }
-                        }
-                        else
-                        { //ex  0.6 - 0.5
-                            if (self.DecimalStatus >= SecondDec)
-                            {
-                                self.DecimalStatus = (ushort)(self.DecimalStatus - SecondDec);
-                            }
-                            else
-                            {
-                                self.DecimalStatus = (ushort)(SecondDec - self.DecimalStatus);
-                                if (self.intValue == 0)
-                                {
-                                    self.DecBoolStatus = 1;
-                                }
-                                else
-                                {
-                                    self.intValue -= 1;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            else if (y is string)
-            {
-                self -= (MediumDec)y;
-            }
-            else
-            {
-                //ex. -9 - 9
-                if (self.DecBoolStatus == 1 && y >= 0)
-                {// -X - Y
-                    self.intValue = (ushort)(self.intValue + y);
-                }//ex. 9 - (-1)
-                else if (self.DecBoolStatus == 0 && y < 0)
-                {
-                    //X - (-Y)
-                    self.intValue = (ushort)(self.intValue + Math.Abs(y));
-                }
-                else
-                {
-                    // X - (Y)
-                    if (self.DecBoolStatus == 0)
-                    {
-                        // ex. 8 - 9
-                        if (y > self.intValue)
-                        {
-                            self.intValue = (ushort)(y - self.intValue);
-                            self.DecBoolStatus = 1;
-                        } //ex. 8 - 7
-                        else
-                        {
-                            self.intValue = (ushort)(self.intValue - y);
-                        }
-                    }// -X - (Y)
-                    else
-                    {
-                        ushort TempY = Math.Abs(y);
-                        // ex. -8 - (-9)
-                        if (self.intValue > TempY)
-                        {
-                            self.intValue = (ushort)(TempY - self.intValue);
-                            self.DecBoolStatus = 0;
-                        }
-                        else
-                        {//ex. -8 - (-5)
-                            self.intValue = (ushort)(self.intValue - TempY);
-                        }
-                    }
-                }
-            }
-            //Fix potential negative zero
-            if (self.intValue == 0 && self.DecBoolStatus == 1 && self.DecimalStatus == 0) { self.DecBoolStatus = 0; }
-#else
             bool SelfIsNegative = self.DecimalStatus < 0;
             TypeCode typeCode = Type.GetTypeCode(y.GetType());
             int typeCodeValue = (int)typeCode;
@@ -1426,10 +988,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     if (SelfIsWholeN) { self.DecimalStatus = 0; }
                     else { self.DecimalStatus *= -1; }
                 }
-#if (MediumDec_ReducedSize)
-#else
-
-#endif
             }
             //else if (typeCodeValue >= 13 && typeCodeValue <= 15)//Floating Point based formula value types
             //{
@@ -1440,7 +998,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 return self -= (MediumDec)y;
             }
             if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
-#endif
             return self;
         }
 
@@ -1451,107 +1008,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <returns></returns>
         public static MediumDec operator *(MediumDec self, dynamic y)
         {
-#if (MediumDec_UseLegacyStorage)
-            if (y is double || y is MediumDec || y is decimal)
-            {
-                if (y == 0.0)
-                {
-                    self.intValue = 0;
-                    self.DecimalStatus = 0;
-                    self.DecBoolStatus = 0;
-                }
-                else
-                {
-                    if (y < 0.0) { self.SwapNegativeStatus(); y *= -1.0; }
-                    ushort WholeHalf = (ushort)Math.Floor(y);
-                    //Use x Int Operation instead if y has no decimal places
-                    if (WholeHalf == y)
-                    {
-                        if (self.DecimalStatus == 0)
-                        {
-                            //Use normal simple (int value) * (int value) if not dealing with any decimals
-                            self.intValue *= WholeHalf;
-                        }
-                        else
-                        {
-                            uint SelfAsInt = self.DecimalStatus;
-                            SelfAsInt += (uint)(self.intValue * 10000);
-                            SelfAsInt *= WholeHalf;
-                            self.intValue = (ushort)(SelfAsInt / 1000);
-                            SelfAsInt -= (uint)(self.intValue * 10000);
-                            self.DecimalStatus = (ushort)SelfAsInt;
-                        }
-                    }
-                    else
-                    {
-                        y -= WholeHalf;
-                        ushort Decimalhalf;
-                        if (y == 0.25)
-                        {
-                            Decimalhalf = 2500;
-                        }
-                        else if (y == 0.5)
-                        {
-                            Decimalhalf = 5000;
-                        }
-                        else
-                        {
-                            Decimalhalf = ExtractDecimalHalfV3(y);
-                        }
-                        ulong SelfAsInt = self.intValue;
-                        SelfAsInt *= 10000;
-                        SelfAsInt += self.DecimalStatus;
-                        uint YAsInt = WholeHalf;
-                        YAsInt *= 10000;
-                        YAsInt += Decimalhalf;
-                        SelfAsInt *= YAsInt;
-                        SelfAsInt /= 10000;
-                        ulong TempStorage = SelfAsInt / 10000;
-                        self.intValue = (ushort)TempStorage;
-                        TempStorage = self.intValue;
-                        TempStorage *= 10000;
-                        SelfAsInt -= TempStorage;
-                        self.DecimalStatus = (ushort)SelfAsInt;
-                    }
-                    //Prevent dividing/multiplying value into nothing by dividing too small (set to .0001 instead of having value set as zero)
-                    if (self.intValue == 0 && self.DecimalStatus == 0) { self.DecimalStatus = 1; }
-                }
-            }
-            else if (y is string)
-            {
-                self *= (MediumDec)y;
-            }
-            else
-            {
-                if (y == 0)
-                {
-                    self.intValue = 0;
-                    self.DecimalStatus = 0;
-                    self.DecBoolStatus = 0;
-                }
-                else
-                {
-                    if (y < 0) { self.SwapNegativeStatus(); y *= -1; }
-                    if (self.DecimalStatus == 0)
-                    {//Use normal simple (int value) * (int value) if not dealing with any decimals
-                        self.intValue *= y;
-                    }
-                    else
-                    {
-                        uint SelfAsInt = self.DecimalStatus;
-                        SelfAsInt += (uint)(self.intValue * 10000);
-                        SelfAsInt *= y;
-                        uint TempStorage = SelfAsInt / 10000;
-                        self.intValue = (ushort)TempStorage;
-                        TempStorage *= 10000;
-                        SelfAsInt -= TempStorage;
-                        self.DecimalStatus = (ushort)SelfAsInt;
-                    }
-                    //Prevent dividing/multiplying value into nothing by dividing too small (set to .0001 instead of having value set as zero)
-                    if (self.intValue == 0 && self.DecimalStatus == 0) { self.DecimalStatus = 1; }
-                }
-            }
-#else
             bool SelfIsNegative = self.DecimalStatus < 0;
             TypeCode typeCode = Type.GetTypeCode(y.GetType());
             int typeCodeValue = (int)typeCode;
@@ -1588,34 +1044,19 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                         self.DecimalStatus *= -1;
                     }
                     self.IntValue *= y;
-#if (MediumDec_ReducedSize)
-                int TempDec = (int)self.DecimalStatus;
-#else
                     long TempDec = (long)self.DecimalStatus;
-#endif
                     TempDec *= y;
                     if (TempDec >= DecimalOverflow)
                     {
-#if (MediumDec_ReducedSize)
-                        int
-#else
-                        long
-#endif
-                        OverflowVal = TempDec / DecimalOverflow;
+                        long OverflowVal = TempDec / DecimalOverflow;
                         TempDec -= OverflowVal * DecimalOverflow;
-                        self.IntValue += (ushort)OverflowVal;
+                        self.IntValue += (uint)OverflowVal;
                     }
                     if (TempDec == 0) { self.DecimalStatus = 0; }
                     else
                     {
                         if (SelfIsNegative) { TempDec *= -1; }
-                        self.DecimalStatus =
-#if (MediumDec_ReducedSize)
-                        (short)
-#else
-                        (int)
-#endif
-                        TempDec;
+                        self.DecimalStatus = (int) TempDec;
                     }
                 }
             }
@@ -1627,7 +1068,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 return self *= (MediumDec)y;
             }
-#endif
             return self;
         }
 
@@ -1638,91 +1078,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <returns></returns>
         public static MediumDec operator /(MediumDec self, dynamic y)
         {
-#if (MediumDec_UseLegacyStorage)
-            if (y is double || y is MediumDec || y is decimal)
-            {
-                if (y == 0)
-                {
-                    Console.WriteLine("Prevented dividing by zero");
-                }
-                else
-                {
-                    if (y < 0.0) { self.SwapNegativeStatus(); y *= -1.0; }
-                    ushort WholeHalf = (ushort)Math.Floor(y);
-                    //Use x Int Operation instead if y has no decimal places
-                    if (WholeHalf == y)
-                    {
-                        if (self.DecimalStatus == 0)
-                        {
-                            //Use normal simple (int value) * (int value) if not dealing with any decimals
-                            self.intValue /= WholeHalf;
-                        }
-                        else
-                        {
-                            uint SelfAsInt = self.DecimalStatus;
-                            SelfAsInt += (uint)(self.intValue * 10000);
-                            SelfAsInt /= WholeHalf;
-                            self.intValue = (ushort)(SelfAsInt / 1000);
-                            SelfAsInt -= (uint)(self.intValue * 10000);
-                            self.DecimalStatus = (ushort)SelfAsInt;
-                        }
-                    }
-                    else
-                    {
-                        y -= WholeHalf;
-                        ushort Decimalhalf = ExtractDecimalHalfV3(y);
-                        ulong SelfAsInt = self.intValue;
-                        SelfAsInt *= 10000;
-                        SelfAsInt += self.DecimalStatus;
-                        uint YAsInt = WholeHalf;
-                        YAsInt *= 10000;
-                        YAsInt += Decimalhalf;
-                        SelfAsInt /= YAsInt;
-                        SelfAsInt /= 10000;
-                        ulong TempStorage = SelfAsInt / 10000;
-                        self.intValue = (ushort)TempStorage;
-                        TempStorage = self.intValue;
-                        TempStorage *= 10000;
-                        SelfAsInt -= TempStorage;
-                        self.DecimalStatus = (ushort)SelfAsInt;
-                    }
-                    //Prevent dividing/multiplying value into nothing by dividing too small (set to .0001 instead of having value set as zero)
-                    if (self.intValue == 0 && self.DecimalStatus == 0) { self.DecimalStatus = 1; }
-                }
-            }
-            else if (y is string)
-            {
-                self /= (MediumDec)y;
-            }
-            else
-            {
-                if (y == 0)
-                {
-                    Console.WriteLine("Prevented dividing by zero");
-                }
-                else
-                {
-                    if (y < 0) { self.SwapNegativeStatus(); y *= -1; }
-                    if (self.DecimalStatus == 0)
-                    {//Use normal simple (int value) * (int value) if not dealing with any decimals
-                        self.intValue /= (ushort)y;
-                    }
-                    else
-                    {
-                        uint SelfAsInt = self.DecimalStatus;
-                        SelfAsInt += (uint)(self.intValue * 10000);
-                        SelfAsInt /= y;
-                        uint TempStorage = SelfAsInt / 10000;
-                        self.intValue = (ushort)TempStorage;
-                        TempStorage *= 10000;
-                        SelfAsInt -= TempStorage;
-                        self.DecimalStatus = (ushort)SelfAsInt;
-                    }
-                    //Prevent dividing/multiplying value into nothing by dividing too small (set to .0001 instead of having value set as zero)
-                    if (self.intValue == 0 && self.DecimalStatus == 0) { self.DecimalStatus = 1; }
-                }
-            }
-#else
             bool SelfIsNegative = self.DecimalStatus < 0;
             TypeCode typeCode = Type.GetTypeCode(y.GetType());
             int typeCodeValue = (int)typeCode;
@@ -1744,27 +1099,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 }
                 if (self.DecimalStatus == 0 || self.DecimalStatus == NegativeWholeNumber)//Only need to deal with Integer half of value
                 {
-#if (MediumDec_ReducedSize)
-                    int ValueRep = (int)self.IntValue * DecimalOverflow;
-#else
                     long ValueRep = (long)self.IntValue * DecimalOverflow;
-#endif
                     ValueRep /= y;
-#if (MediumDec_ReducedSize)
-                    int
-#else
-                    long
-#endif
-                    WholeHalf = ValueRep / DecimalOverflow;
-                    self.IntValue = (ushort)WholeHalf;
+                    long WholeHalf = ValueRep / DecimalOverflow;
+                    self.IntValue = (uint)WholeHalf;
                     ValueRep -= WholeHalf;
-                    self.DecimalStatus =
-#if (MediumDec_ReducedSize)
-                    (short)
-#else
-                    (int)
-#endif
-                    WholeHalf;
+                    self.DecimalStatus = (int) WholeHalf;
                 }
                 else
                 {
@@ -1780,7 +1120,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 return self /= (MediumDec)y;
             }
             if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
-#endif
             return self;
         }
 
@@ -1839,16 +1178,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <returns></returns>
         public static MediumDec operator -(MediumDec Value)
         {//Place DecBoolStatus>1 checks above in V2 of type
-#if (MediumDec_UseLegacyStorage)
-            if (Value.DecBoolStatus % 2 == 1)//ODD
-            {
-                Value.DecBoolStatus -= 1;
-            }
-            else
-            {
-                Value.DecBoolStatus += 1;
-            }
-#else
             if (Value.DecimalStatus == NegativeWholeNumber)
             {
                 Value.DecimalStatus = 0;
@@ -1857,7 +1186,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 Value.DecimalStatus *= -1;
             }
-#endif
             return Value;
         }
     }
