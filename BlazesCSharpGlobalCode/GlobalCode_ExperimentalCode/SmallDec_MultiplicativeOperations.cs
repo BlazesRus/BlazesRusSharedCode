@@ -296,6 +296,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 SelfRep = ((long)self.IntValue * DecimalOverflow) + self.DecimalStatus;
                 long Temp01 = (long)IntResult * ValueRep;
                 SelfRep -= Temp01;
+                SelfRep *= DecimalOverflow;
                 SelfRep /= ValueRep;
                 self.IntValue = IntResult;
                 self.DecimalStatus = (int)SelfRep;//4.44
