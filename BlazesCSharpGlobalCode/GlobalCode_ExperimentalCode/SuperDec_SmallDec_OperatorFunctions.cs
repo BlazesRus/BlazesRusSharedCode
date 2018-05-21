@@ -1234,7 +1234,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 if (self.intValue == 0 && self.DecimalStatus == 0) { self.DecimalStatus = 1; }
             }
             return self;
-#else
+#elif(SmallDec_ReducedSize)
             SmallDec NewSelf = self / y;
             if (NewSelf.IntValue < 1)
             {
@@ -1259,6 +1259,37 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 return self - (NewSelf.IntValue * y);
             }
+#else
+            if (y.intValue == 0 && y.DecimalStatus == 0)
+            {
+                return SmallDec.Zero;//Return zero instead of N/A
+            }
+            bool SelfIsNegative = self.DecimalStatus < 0;
+            bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
+            if (SelfIsNegative)
+            {
+                if (SelfIsWholeN) { self.DecimalStatus = 0; }
+                else { self.DecimalStatus *= -1; }
+            }
+            bool ValueIsNegative = y.DecimalStatus < 0;
+            bool ValueIsWholeN = y.DecimalStatus == NegativeWholeNumber;
+            if (ValueIsNegative)
+            {
+                if (ValueIsWholeN) { y.DecimalStatus = 0; }
+                else { y.DecimalStatus *= -1; }
+            }
+
+            long SelfRep = ((long)self.IntValue * DecimalOverflow) + self.DecimalStatus;
+            long ValueRep = ((long)y.IntValue * DecimalOverflow) + y.DecimalStatus;
+            SelfRep /= ValueRep;
+            long IntResult = SelfRep;
+            SelfRep = ((long)self.IntValue * DecimalOverflow) + self.DecimalStatus;
+            SelfRep -= IntResult * ValueRep;
+            long IntHalf = SelfRep / DecimalOverflow;
+            SelfRep -= IntHalf * (long)DecimalOverflow;
+            self.IntValue = (ushort)IntHalf;
+            self.DecimalStatus = (int)SelfRep;
+            return self;
 #endif
         }
 

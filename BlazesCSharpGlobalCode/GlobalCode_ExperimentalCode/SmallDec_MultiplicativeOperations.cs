@@ -133,7 +133,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 y *= self.IntValue;
                 self = y;
             }
-            else if(y.IntValue==0&&self.IntValue==0)
+            else if (y.IntValue == 0 && self.IntValue == 0)
             {
                 long Temp04 = (long)self.DecimalStatus * (long)y.DecimalStatus;
                 Temp04 /= DecimalOverflow;
@@ -274,49 +274,31 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #else
             else if (y.DecimalStatus == 0)//Y is integer
             {
-                //long IntHalf = (long)self.IntValue* DecimalOverflow;
-                //long DecimalHalf = (long)self.DecimalStatus;
-                ////XXXXXXXXXXX00000000 * y.Int
-                ////00000000000YYYYYYYY * y.int
                 self /= y.IntValue;
             }
-            else if (y.IntValue == 0 && self.IntValue == 0)
-            {
-                long Temp04 = (long)self.DecimalStatus / (long)y.DecimalStatus;
-                Temp04 *= DecimalOverflow;
-                long IntHalf = Temp04 / DecimalOverflow;
-                Temp04 -= IntHalf * DecimalOverflow;
+            else if (self.IntValue < 10 && y.IntValue == 0)//Using this method would cause overflow of SelfRep if more in most cases
+            {//this part seems to work unless y.int is more than 0 for some reason
+                long SelfRep = (long)(self.IntValue * DecimalOverflow) + self.DecimalStatus;
+                SelfRep *= DecimalOverflow;
+                long ValueRep = (long)(y.IntValue * DecimalOverflow) + y.DecimalStatus;
+                SelfRep /= ValueRep;
+                long IntHalf = SelfRep / DecimalOverflow;
+                SelfRep -= IntHalf * (long)DecimalOverflow;
                 self.IntValue = (ushort)IntHalf;
-                self.DecimalStatus = (int)Temp04;
-            }
-            else if (y.IntValue == 0)
-            {
-                //X.Y *.V
-                long Temp03 = (long)(self.IntValue * DecimalOverflow) / y.DecimalStatus;//Temp03 holds long version of X *.V
-                long Temp04 = (long)self.DecimalStatus / (long)y.DecimalStatus;
-                Temp04 *= DecimalOverflow;
-                //Temp04 holds long version of .Y * .V
-                long IntegerRep = Temp03 + Temp04;
-                long IntHalf = IntegerRep / DecimalOverflow;
-                IntegerRep -= IntHalf * (long)DecimalOverflow;
-                self.IntValue = (ushort)IntHalf;
-                self.DecimalStatus = (int)IntegerRep;
+                self.DecimalStatus = (int)SelfRep;
             }
             else
             {
-                //X.Y * Z.V == ((X * Z) + (X * .V) + (.Y * Z) + (.Y * .V))
-                long Temp02 = (long)(self.IntValue * DecimalOverflow) + self.DecimalStatus;
-                Temp02 /= y.IntValue;//Temp02 holds long version of X.Y * Z
-                //X.Y *.V
-                long Temp03 = (long)(self.IntValue * DecimalOverflow) / y.DecimalStatus;//Temp03 holds long version of X *.V
-                long Temp04 = (long)self.DecimalStatus / (long)y.DecimalStatus;
-                Temp04 *= DecimalOverflow;
-                //Temp04 holds long version of .Y * .V
-                long IntegerRep = Temp02 + Temp03 + Temp04;
-                long IntHalf = IntegerRep / DecimalOverflow;
-                IntegerRep -= IntHalf * (long)DecimalOverflow;
-                self.IntValue = (ushort)IntHalf;
-                self.DecimalStatus = (int)IntegerRep;
+                long SelfRep = ((long)self.IntValue * DecimalOverflow) + self.DecimalStatus;//5550000000
+                long ValueRep = ((long)y.IntValue * DecimalOverflow) + y.DecimalStatus; //1250000000
+                SelfRep /= ValueRep;
+                ushort IntResult = (ushort)SelfRep;
+                SelfRep = ((long)self.IntValue * DecimalOverflow) + self.DecimalStatus;
+                long Temp01 = (long)IntResult * ValueRep;
+                SelfRep -= Temp01;
+                SelfRep /= ValueRep;
+                self.IntValue = IntResult;
+                self.DecimalStatus = (int)SelfRep;//4.44
             }
             if (ValueIsNegative)
             {
