@@ -105,7 +105,11 @@
     <Compile Include="GlobalCode_ExperimentalCode\CustomDec.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\CustomDictionary.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\CustomListSet.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_IEquatable.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_MathBasedFunctions.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_MultiplicativeOperations.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\MediumDec_StandardConversions.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_TypeDescriptors.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\PrivateFieldAccessor.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SmallDecCollection.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SmallDec_IEquatable.cs" />
@@ -115,10 +119,13 @@
     <Compile Include="GlobalCode_ExperimentalCode\SmallDec_TypeDescriptors.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDecGlobalCode.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_Int16_4Decimal.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_Int32_9Decimal.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\SmallDec.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\MediumDec.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_LargeDec_OperatorFunctions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_MediumDec_OperatorFunctions.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_MediumDec_OtherConversions.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_MediumDec_Rounding.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_MediumDec_TrigometricFunctions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_ModerateDec_OperatorFunctions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_OperatorFunctions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDec_SmallDec_OtherConversions.cs" />

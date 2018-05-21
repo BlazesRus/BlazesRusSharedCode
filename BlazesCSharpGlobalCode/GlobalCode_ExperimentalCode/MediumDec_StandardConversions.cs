@@ -1,9 +1,12 @@
-﻿/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
-    Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+﻿/*	Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+    Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
 
 using System;
 
+//Does not need BigMath library to compile
+
+//CSharpGlobalCode.GlobalCode_ExperimentalCode.MediumDec
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
     using System.ComponentModel;
@@ -11,7 +14,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
     using static GlobalCode_VariableConversionFunctions.VariableConversionFunctions;
 
     // Represent +- 4294967295.999999999 with 100% consistency of accuracy
-    //(Aka (Aka SuperDec_Int32_9Decimal))
+    //(Aka SuperDec_Int32_9Decimal)
     public
 #if (!BlazesGlobalCode_MediumDec_AsStruct)
     sealed
@@ -22,7 +25,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #else
     struct
 #endif
-    MediumDec : INotifyPropertyChanged, IComparable<MediumDec>, IEquatable<MediumDec>, IFormattable//,IConvertible
+    MediumDec : IFormattable, INotifyPropertyChanged
     {
         public static MediumDec GetValueFromString(string Value)
         {
@@ -73,11 +76,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 TempInt02 = (TempInt * SuperDecGlobalCode.PowerOfTens[PlaceNumber]);
                 if (StringChar != '0')
                 {
-                    NewSelf.IntValue += (uint)TempInt02;
+                    NewSelf.IntValue += (ushort)TempInt02;
                 }
                 PlaceNumber--;
             }
-            PlaceNumber = 3;
+            PlaceNumber = 8;
             foreach (char StringChar in DecimalBuffer)
             {
                 //Limit stored decimal numbers to the amount it can store
@@ -87,14 +90,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     TempInt02 = (TempInt * SuperDecGlobalCode.PowerOfTens[PlaceNumber]);
                     if (StringChar != '0')
                     {
-                        NewSelf.DecimalStatus += TempInt02;
+                        NewSelf.DecimalStatus += (int)TempInt02;
                     }
                     PlaceNumber--;
                 }
-            }
-            if (IsNegative)
-            {
-                NewSelf.DecimalStatus *= -1;
             }
             return NewSelf;
         }
@@ -115,24 +114,24 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 builder.Append("-");
             }
 
-            for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; Index--)
+            for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; --Index)
             {
-                CurrentDigit = (byte)(IntegerHalf / SuperDecGlobalCode.PowerOfTens[Index]);
-                IntegerHalf -= (CurrentDigit * (uint)SuperDecGlobalCode.PowerOfTens[Index]);
+                CurrentDigit = (byte)(IntegerHalf / Math.Pow(10, Index));
+                IntegerHalf -= (ushort)(CurrentDigit * Math.Pow(10, Index));
                 //Value += DigitAsChar(CurrentDigit);
                 builder.Append(DigitAsChar(CurrentDigit));
             }
             if (DecimalStatus != 0 && DecimalStatus != NegativeWholeNumber)
             {
-                int DecimalHalf = DecimalStatus;
+                uint DecimalHalf = (uint)DecimalStatus;
                 //Value += ".";
                 builder.Append(".");
-                for (sbyte Index = 3; Index >= 0; Index--)
+                for (sbyte Index = 8; Index >= 0; --Index)
                 {
                     if (DecimalStatus != 0)
                     {
-                        CurrentDigit = (byte)(DecimalHalf / SuperDecGlobalCode.PowerOfTens[Index]);
-                        DecimalHalf -= (CurrentDigit * SuperDecGlobalCode.PowerOfTens[Index]);
+                        CurrentDigit = (byte) (DecimalHalf / Math.Pow(10, Index));
+                        DecimalHalf -= (uint) (CurrentDigit * Math.Pow(10, Index));
                         //Value += DigitAsChar(CurrentDigit);
                         builder.Append(DigitAsChar(CurrentDigit));
                     }
@@ -158,18 +157,19 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; Index--)
             {
-                CurrentDigit = (byte)(IntegerHalf / Math.Pow(10, Index));
-                IntegerHalf -= (uint)(CurrentDigit * Math.Pow(10, Index));
+                CurrentDigit = (byte)(IntegerHalf / SuperDecGlobalCode.PowerOfTens[Index]);
+                IntegerHalf -= (ushort)(CurrentDigit * SuperDecGlobalCode.PowerOfTens[Index]);
                 Value += DigitAsChar(CurrentDigit);
             }
             if (DecimalStatus != 0 && DecimalStatus != NegativeWholeNumber)
             {
                 Value += ".";
-                uint DecimalHalf = (uint)DecimalStatus;
-                for (sbyte Index = 3; Index >= 0; Index--)
+                int DecimalHalf =
+                DecimalStatus;
+                for (sbyte Index = 8; Index >= 0; --Index)
                 {
-                    CurrentDigit = (byte)(DecimalHalf / Math.Pow(10, Index));
-                    DecimalHalf -= (uint)(CurrentDigit * Math.Pow(10, Index));
+                    CurrentDigit = (byte)(DecimalHalf / SuperDecGlobalCode.PowerOfTens[Index]);
+                    DecimalHalf -= (CurrentDigit * SuperDecGlobalCode.PowerOfTens[Index]);
                     Value += DigitAsChar(CurrentDigit);
                 }
             }
@@ -209,16 +209,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return ToOptimalString();
         }
 
-        /// <summary>
-        /// Change variable into string with certain formating style with culture info set
-        /// </summary>
-        /// <param name="FormatStyle"></param>
-        /// <param name="culture"></param>
-        /// <returns></returns>
-        public string ToString(string FormatStyle, CultureInfo culture)
-        {
-            return String.Format(culture, this.ToOptimalString());//Ensure to reformat string based on culture
-        }
+        ///// <summary>
+        ///// Change variable into string with certain formating style with culture info set
+        ///// </summary>
+        ///// <param name="FormatStyle"></param>
+        ///// <param name="culture"></param>
+        ///// <returns></returns>
+        //public string ToString(string FormatStyle, CultureInfo culture)
+        //{
+        //    return String.Format(culture, this.ToOptimalString());//Ensure to reformat string based on culture
+        //}
 
         /// <summary>
         ///
@@ -240,6 +240,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return String.Format(numberFormat, this.ToOptimalString());//Ensure to reformat string based on format type
         }
 
+#region From Standard types to this type
         /// <summary>
         ///
         /// </summary>
@@ -247,7 +248,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public MediumDec(sbyte Value)
         {
             if (Value < 0) { this.decimalStatus = NegativeWholeNumber; Value *= -1; }
-            this.intValue = (uint)Value;
+            this.intValue = (ushort)Value;
         }
 
         /// <summary>
@@ -257,7 +258,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public MediumDec(short Value)
         {
             if (Value < 0) { this.decimalStatus = NegativeWholeNumber; Value *= -1; }
-            this.intValue = (uint)Value;
+            this.intValue = (ushort)Value;
         }
 
         /// <summary>
@@ -267,7 +268,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public MediumDec(int Value)
         {
             if (Value < 0) { this.decimalStatus = NegativeWholeNumber; Value *= -1; }
-            this.intValue = (uint)Value;
+            //Cap value if too big on initialize
+            if (Value > 65535)
+            {
+                Value = 65535;
+            }
+            this.intValue = (ushort)Value;
         }
 
         /// <summary>
@@ -276,7 +282,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="Value"></param>
         public MediumDec(byte Value)
         {
-            this.intValue = Value;
+            this.intValue = (ushort)Value;
             this.decimalStatus = 0;
         }
 
@@ -296,7 +302,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="Value"></param>
         public MediumDec(uint Value)
         {
-            this.intValue = Value;
+            //Cap value if too big on initialize
+            if (Value > 65535)
+            {
+                Value = 65535;
+            }
+            this.intValue = (ushort)Value;
             this.decimalStatus = 0;
         }
 
@@ -307,11 +318,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public MediumDec(ulong Value)
         {
             //Cap value if too big on initialize
-            if (Value > 4294967295)
+            if (Value > 65535)
             {
-                Value = 4294967295;
+                Value = 65535;
             }
-            this.intValue = (uint)Value;
+            this.intValue = (ushort)Value;
             this.decimalStatus = 0;
         }
 
@@ -323,11 +334,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         {
             if (Value < 0) { this.decimalStatus = NegativeWholeNumber; Value *= -1; }
             //Cap value if too big on initialize
-            if (Value > 4294967295)
+            if (Value > 65535)
             {
-                Value = 4294967295;
+                Value = 65535;
             }
-            this.intValue = (uint)Value;
+            this.intValue = (ushort)Value;
         }
 
         /// <summary>
@@ -340,24 +351,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             if (IsNegative) { Value *= -1.0; }
             ulong WholeValue = (ulong)Math.Floor(Value);
             //Cap value if too big on initialize (preventing overflow on conversion)
-            if (Value > 4294967295)
+            if (Value > 65535)
             {
-                Value = 4294967295;
+                Value = 65535;
             }
             Value -= WholeValue;
-            intValue = (uint)WholeValue;
+            IntValue = (ushort)WholeValue;
             decimalStatus = (int)(Value * 10000000000);
-            if (IsNegative)
-            {
-                if (decimalStatus == 0)
-                {
-                    decimalStatus = NegativeWholeNumber;
-                }
-                else
-                {
-                    decimalStatus *= -1;
-                }
-            }
         }
 
         /// <summary>
@@ -370,24 +370,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             if (IsNegative) { Value *= -1.0f; }
             ulong WholeValue = (ulong)Math.Floor(Value);
             //Cap value if too big on initialize (preventing overflow on conversion)
-            if (Value > 4294967295)
+            if (Value > 65535)
             {
-                Value = 4294967295;
+                Value = 65535;
             }
             Value -= WholeValue;
-            intValue = (uint)WholeValue;
+            intValue = (ushort)WholeValue;
             decimalStatus = (int)(Value * 10000000000);
-            if (IsNegative)
-            {
-                if (decimalStatus == 0)
-                {
-                    decimalStatus = NegativeWholeNumber;
-                }
-                else
-                {
-                    decimalStatus *= -1;
-                }
-            }
         }
 
         /// <summary>
@@ -396,17 +385,36 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="Value"></param>
         public MediumDec(decimal Value)
         {
+#if (MediumDec_UseLegacyStorage)
+            if (Value < 0.0M)
+            {
+                Value *= -1;
+                DecBoolStatus = 1;
+            }
+            else
+            {
+                DecBoolStatus = 0;
+            }
+#else
             bool IsNegative = Value < 0;
             if (IsNegative) { Value *= -1.0m; }
+#endif
             ulong WholeValue = (ulong)Math.Floor(Value);
             //Cap value if too big on initialize (preventing overflow on conversion)
-            if (Value > 4294967295)
+            if (Value > 65535)
             {
-                Value = 4294967295;
+                Value = 65535;
             }
             Value -= WholeValue;
-            intValue = (uint)WholeValue;
+            intValue = (ushort)WholeValue;
+#if (MediumDec_UseLegacyStorage)
+            decimalStatus = (ushort)(Value * 10000);
+#elif (MediumDec_ReducedSize)
+            decimalStatus = (short)(Value * 10000);
+#else
             decimalStatus = (int)(Value * 10000000000);
+#endif
+#if (!MediumDec_UseLegacyStorage)
             if (IsNegative)
             {
                 if (decimalStatus == 0)
@@ -418,6 +426,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     decimalStatus *= -1;
                 }
             }
+#endif
         }
 
         /// <summary>
@@ -428,7 +437,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         {
             intValue = 0;
             decimalStatus = 0;
+#if (MediumDec_UseLegacyStorage)
+            DecBoolStatus = 0;
+#else
             bool IsNegative = false;
+#endif
             sbyte PlaceNumber;
             //var StringLength = (byte)Value.Length;
             string WholeNumberBuffer = "";
@@ -454,7 +467,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 }
                 else if (StringChar == '-')
                 {
+#if (MediumDec_UseLegacyStorage)
+                    DecBoolStatus = 1;
+#else
                     IsNegative = true;
+#endif
                 }
                 else if (StringChar == '.')
                 {
@@ -470,11 +487,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 TempInt02 = (TempInt * SuperDecGlobalCode.PowerOfTens[PlaceNumber]);
                 if (StringChar != '0')
                 {
-                    intValue += (uint)TempInt02;
+                    intValue += (ushort)TempInt02;
                 }
                 PlaceNumber--;
             }
+#if (MediumDec_ReducedSize || MediumDec_UseLegacyStorage)
             PlaceNumber = 3;
+#else
+            PlaceNumber = 8;
+#endif
+            int StartingDigit = (Decimalbuilder.Length - 1);
             foreach (char StringChar in DecimalBuffer)
             {
                 //Limit stored decimal numbers to the amount it can store
@@ -484,15 +506,21 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     TempInt02 = (TempInt * SuperDecGlobalCode.PowerOfTens[PlaceNumber]);
                     if (StringChar != '0')
                     {
+#if (MediumDec_ReducedSize || MediumDec_UseLegacyStorage)
+                        DecimalStatus += (ushort)TempInt02;
+#else
                         DecimalStatus += TempInt02;
+#endif
                     }
                     PlaceNumber--;
                 }
             }
+#if (!MediumDec_UseLegacyStorage)
             if (IsNegative)
             {
                 DecimalStatus *= -1;
             }
+#endif
         }
 
         /// <summary>
@@ -501,7 +529,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="Value"></param>
         public MediumDec(bool Value)
         {
-            if (Value == true)
+#if (MediumDec_UseLegacyStorage)
+            this.DecBoolStatus = 0;
+#endif
+            if(Value==true)
             {
                 this.IntValue = 1;
             }
@@ -512,6 +543,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             this.DecimalStatus = 0;
         }
 
+#endregion From Standard types to this type
 #if (GlobalCode_EnableDependencyPropStuff)
         /// <summary>
         /// Initialize constructor
@@ -526,7 +558,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         }
 #endif
 
-        #region From this type to Standard types
+#region From this type to Standard types
 
         /// <summary>
         ///
@@ -535,6 +567,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static explicit operator decimal(MediumDec self)
         {
             decimal Value = (decimal)self.IntValue;
+#if (MediumDec_UseLegacyStorage)
+            Value += (decimal)(self.DecimalStatus * 0.0001);
+            if (self.DecBoolStatus == 1) { Value *= -1.0M; }
+#else
             if(self.DecimalStatus<0)
             {
                 if(self.DecimalStatus== NegativeWholeNumber)
@@ -544,14 +580,23 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 else
                 {
                     self.DecimalStatus *= -1;
+#if (MediumDec_ReducedSize)
+                    Value += (decimal)(self.DecimalStatus * 0.0001M);
+#else
                     Value += (decimal)(self.DecimalStatus * 0.000000001M);
+#endif
                     Value *= -1.0M;
                 }
             }
             else
             {
+#if (MediumDec_ReducedSize)
+                Value += (decimal)(self.DecimalStatus * 0.0001M);
+#else
                 Value += (decimal)(self.DecimalStatus * 0.000000001M);
+#endif
             }
+#endif
             return Value;
         }
 
@@ -562,6 +607,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static explicit operator double(MediumDec self)
         {
             double Value = (double)self.IntValue;
+#if (MediumDec_UseLegacyStorage)
+            Value += (double)(self.DecimalStatus * 0.0001);
+            if (self.DecBoolStatus == 1) { Value *= -1.0; }
+#else
             if (self.DecimalStatus < 0)
             {
                 if (self.DecimalStatus == NegativeWholeNumber)
@@ -571,14 +620,23 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 else
                 {
                     self.DecimalStatus *= -1;
+#if (MediumDec_ReducedSize)
+                    Value += (double)(self.DecimalStatus * 0.0001);
+#else
                     Value += (double)(self.DecimalStatus * 0.000000001);
+#endif
                     Value *= -1.0;
                 }
             }
             else
             {
+#if (MediumDec_ReducedSize)
+                Value += (double)(self.DecimalStatus * 0.0001);
+#else
                 Value += (double)(self.DecimalStatus * 0.000000001);
+#endif
             }
+#endif
             return Value;
         }
 
@@ -589,6 +647,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static explicit operator float(MediumDec self)
         {
             float Value = (float)self.IntValue;
+#if (MediumDec_UseLegacyStorage)
+            Value += (float)(self.DecimalStatus * 0.0001f);
+            if (self.DecBoolStatus == 1) { Value *= -1.0f; }
+#else
             if (self.DecimalStatus < 0)
             {
                 if (self.DecimalStatus == NegativeWholeNumber)
@@ -598,14 +660,23 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 else
                 {
                     self.DecimalStatus *= -1;
+#if (MediumDec_ReducedSize)
+                    Value += (float)(self.DecimalStatus * 0.0001f);
+#else
                     Value += (float)(self.DecimalStatus * 0.000000001f);
+#endif
                     Value *= -1.0f;
                 }
             }
             else
             {
+#if (MediumDec_ReducedSize)
+                Value += (float)(self.DecimalStatus * 0.0001f);
+#else
                 Value += (float)(self.DecimalStatus * 0.000000001f);
+#endif
             }
+#endif
             return Value;
         }
 
@@ -616,7 +687,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static explicit operator int(MediumDec self)
         {
             int Value = (int)self.intValue;
+#if (MediumDec_UseLegacyStorage)
+            if (self.DecBoolStatus == 1) { Value *= -1; }
+#else
             if (self.DecimalStatus < 0) { Value *= -1; }
+#endif
             return Value;
         }
 
@@ -627,7 +702,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static explicit operator long(MediumDec self)
         {
             long Value = self.intValue;
+#if (MediumDec_UseLegacyStorage)
+            if (self.DecBoolStatus == 1) { Value *= -1; }
+#else
             if (self.DecimalStatus < 0) { Value *= -1; }
+#endif
             return Value;
         }
 
@@ -666,7 +745,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static explicit operator sbyte(MediumDec self)
         {
             sbyte Value = (sbyte)self.intValue;
+#if (MediumDec_UseLegacyStorage)
+            if (self.DecBoolStatus == 1) { Value *= -1; }
+#else
             if (self.DecimalStatus < 0) { Value *= -1; }
+#endif
             return Value;
         }
 
@@ -687,7 +770,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static explicit operator short(MediumDec self)
         {
             short Value = (short)self.intValue;
+#if (MediumDec_UseLegacyStorage)
+            if (self.DecBoolStatus == 1) { Value *= -1; }
+#else
             if (self.DecimalStatus < 0) { Value *= -1; }
+#endif
             return Value;
         }
 
@@ -772,11 +859,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return new MediumDec(Value);
         }
 
-        public static explicit operator MediumDec(bool Value)
-        {
-            return new MediumDec(Value);
-        }
-
 #if (GlobalCode_EnableDependencyPropStuff)
         public static explicit operator MediumDec(System.Windows.DependencyProperty Value)
         {
@@ -857,19 +939,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="Value"></param>
         public static implicit operator MediumDec(string Value) { return new MediumDec(Value); }
 
-        public static implicit operator MediumDec(bool Value) { return new MediumDec(Value); }
-
 #if (GlobalCode_EnableDependencyPropStuff)
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="Value"></param>
-        public static implicit operator MediumDec(DependencyProperty Value)
-        {
-            //Type PropertyType = Value.PropertyType;
-            MediumDec NewValue = Value.ToString();
-            return NewValue;
-        }
+        ///// <summary>
+        /////
+        ///// </summary>
+        ///// <param name="Value"></param>
+        //public static implicit operator MediumDec(DependencyProperty Value)
+        //{
+        //    //Type PropertyType = Value.PropertyType;
+        //    MediumDec NewValue = Value.ToString();
+        //    return NewValue;
+        //}
 #endif
 #endif
     }

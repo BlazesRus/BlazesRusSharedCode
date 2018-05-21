@@ -1,5 +1,5 @@
-﻿/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
-    Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+﻿/*	Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+    Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
 
 using System;
@@ -15,8 +15,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
     /// <summary>
     /// Represent +- 4294967295.999999999 with 100% consistency of accuracy
-    /// <para/>(Aka (Aka SuperDec_Int32_9Decimal))
-	/// <para/>Requires BigMath library to compile for operation functionality other than +- unless use alternative code
+    /// <para/>(Aka SuperDec_Int32_9Decimal)
     /// </summary>
     //[System.ComponentModel.TypeConverter(typeof(MediumDec_TypeConverter))]
     ////[System.Security.SecurityCriticalAttribute]//Allow reflection permissions ;Removing Security Critical status since messes up its usage inside xaml GUIs
@@ -33,9 +32,10 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #else
     struct
 #endif
-    MediumDec : INotifyPropertyChanged, IComparable<MediumDec>, IEquatable<MediumDec>, IFormattable//,IConvertible
+    MediumDec : IFormattable, INotifyPropertyChanged, IComparable<MediumDec>, IConvertible, IEquatable<MediumDec>
     {
         public static int NegativeWholeNumber = -1000000000;
+
         public static int DecimalOverflow = 1000000000;
 
         /// <summary>
@@ -99,11 +99,15 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// Parses string value into MediumDec
         /// </summary>
         /// <param name="value"></param>
-        /// <param name="invariantCulture"></param>
+        /// <param name="TargetCulture"></param>
         /// <returns></returns>
-        public static MediumDec Parse(string value, CultureInfo invariantCulture = null)
+        public static MediumDec Parse(string value, CultureInfo TargetCulture = null)
         {
-            MediumDec NewValue = MediumDec.Initialize(value);
+            //if(TargetCulture==null)
+            //{
+            //    TargetCulture = CultureInfo.CurrentUICulture;
+            //}
+            MediumDec NewValue = MediumDec.GetValueFromString(value);
             return NewValue;
         }
 
@@ -180,7 +184,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             else if (typeCodeValue >= 13 && typeCodeValue <= 15)//Floating Point based Value types
             {
                 MediumDec NewSelf = new MediumDec();
-                NewSelf = (MediumDec)Value;
+                switch (typeCode)
+                {
+                    case TypeCode.Single:
+                        NewSelf = (MediumDec)(float)Value; break;
+                    case TypeCode.Double:
+                        NewSelf = (MediumDec)(double)Value; break;
+                    case TypeCode.Decimal:
+                        NewSelf = (MediumDec)(decimal)Value; break;
+                    default:
+                        NewSelf = (MediumDec)Value; break;
+                }
             }
             else if (typeCode == TypeCode.String)
             {
@@ -190,7 +204,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             else
 #endif
-                if (Value == null)
+            if (Value == null)
             {
 #if (BlazesGlobalCode_MediumDec_AsStruct)
                 this = MediumDec.Zero;
@@ -266,6 +280,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 {
                     this = (char)(short)Value;
                 }
+#else
+                else if (ValueType == typeof(char))
+                {
+                    MediumDec NewSelf = new MediumDec();
+                    NewSelf = (MediumDec)(char)(short)Value;
+                }
 #endif
                 else if (ValueType.IsValueType)
                 {
@@ -308,6 +328,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #endif
                 }
             }
+            //((System.Runtime.Remoting.ObjectHandle)Value).Unwrap().GetType().ToString();
         }
 
         /// <summary>
@@ -319,7 +340,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         {
             //Enable comparisons against other object types
             if (value == null) { return false; }
-
             try
             {
                 Type valueType = value.GetType();
@@ -389,7 +409,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     }
                     else if (valueType == typeof(bool))
                     {
-                        return this == (bool)value;
+                        return this == (MediumDec)(bool)value;
                     }
                     else if (valueType == typeof(char))
                     {
@@ -410,7 +430,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             catch
 #if (DEBUG)
-            (Exception ex)
+                                    (Exception ex)
 #endif
             {
 #if (DEBUG)
@@ -564,9 +584,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static readonly MediumDec Zero = ZeroValue();
 
         private static MediumDec NaNValue()
-        {//No NaN definition for now
+        {
             return new MediumDec(0, 0);
         }
+
+        /// <summary>
+        /// Value at one
+        /// </summary>
+        public static readonly MediumDec One = OneValue();
+
+        private static MediumDec OneValue() => new MediumDec(1, 0);
 
         /// <summary>
         /// Value at either zero or NaN (depending on preprocessor settings)
@@ -811,12 +838,28 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 return MediumDec.Zero;
             }
 #if (GlobalCode_EnableDependencyPropStuff)
-                    else if (valueType == typeof(DependencyProperty))
-                    {
-                        DependencyProperty self = (DependencyProperty)value;
-                        return (MediumDec)self;
-                    }
+            else if (valueType == typeof(DependencyProperty))
+            {
+                DependencyProperty self = (DependencyProperty)value;
+                return (MediumDec)self;
+            }
 #endif
+            //else if (FullValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.MediumDec")//MediumDec conversion
+            //{
+            //    if (typeof(MediumDec) == value.GetType())
+            //    {
+            //        return (MediumDec)value;
+            //    }
+            //    else
+            //    {
+            //        MediumDec OtherValue = MediumDec.Zero;
+            //        dynamic changedObj = System.Convert.ChangeType(value, value.GetType(), CultureInfo.InvariantCulture);
+            //        OtherValue.IntValue = changedObj.IntValue;
+            //        OtherValue.DecBoolStatus = changedObj.DecBoolStatus;
+            //        OtherValue.DecimalStatus = changedObj.DecimalStatus;
+            //        return OtherValue;
+            //    }
+            //}
             else
             {
                 dynamic changedObj = System.Convert.ChangeType(value, value.GetType(), CultureInfo.InvariantCulture);

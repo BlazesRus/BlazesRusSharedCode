@@ -6,24 +6,24 @@ using System;
 
 //Does not need BigMath library to compile
 
-//CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec
+//CSharpGlobalCode.GlobalCode_ExperimentalCode.MediumDec
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
     using System.ComponentModel;
 
-    // Represent +- 65535.999999999(Can only represent +- 65535.9999 if SmallDec_ReducedSize or SmallDec_UseLegacyStorage set) with 100% consistency of accuracy
-    //(Aka SuperDec_Int16_9Decimal Or SuperDec_Int16_4Decimal)
+    // Represent +- 4294967295.999999999 with 100% consistency of accuracy
+    //(Aka SuperDec_Int32_9Decimal)
     public
-#if (!BlazesGlobalCode_SmallDec_AsStruct)
+#if (!BlazesGlobalCode_MediumDec_AsStruct)
     sealed
 #endif
     partial
-#if (!BlazesGlobalCode_SmallDec_AsStruct)
+#if (!BlazesGlobalCode_MediumDec_AsStruct)
     class
 #else
     struct
 #endif
-    SmallDec : IFormattable, INotifyPropertyChanged
+    MediumDec : IFormattable, INotifyPropertyChanged
     {
         /// <summary>
         /// Implements the operator *.(Self*TargetValue)
@@ -33,52 +33,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <returns>
         /// The result of the operator.
         /// </returns>
-        public static SmallDec operator *(SmallDec self, SmallDec y)
+        public static MediumDec operator *(MediumDec self, MediumDec y)
         {
-#if (SmallDec_UseLegacyStorage)
-            if (y.intValue == 0 && y.DecimalStatus == 0)
-            {
-                self.intValue = 0;
-                self.DecimalStatus = 0;
-                self.DecBoolStatus = 0;
-            }
-            else
-            {
-                if (y.DecBoolStatus == 1) { self.SwapNegativeStatus(); }
-                if (self.DecimalStatus == 0 && y.DecimalStatus == 0)
-                {//Use normal simple (int value) * (int value) if not dealing with any decimals
-                    self.intValue *= y.intValue;
-                }
-                else if (y.DecimalStatus == 0)
-                {
-                    uint SelfAsInt = self.DecimalStatus;
-                    SelfAsInt += (uint)(self.intValue * 10000);
-                    SelfAsInt *= y.intValue;
-                    self.intValue = (ushort)(SelfAsInt / 1000);
-                    SelfAsInt -= (uint)(self.intValue * 10000);
-                    self.DecimalStatus = (ushort)SelfAsInt;
-                }
-                else
-                {
-                    ulong SelfAsInt = self.intValue;
-                    SelfAsInt *= 10000;
-                    SelfAsInt += self.DecimalStatus;
-                    uint YAsInt = y.intValue;
-                    YAsInt *= 10000;
-                    YAsInt += y.DecimalStatus;
-                    SelfAsInt *= YAsInt;
-                    SelfAsInt /= 10000;
-                    ulong TempStorage = SelfAsInt / DecimalOverflow;
-                    self.intValue = (ushort)TempStorage;
-                    TempStorage = self.intValue;
-                    TempStorage *= 10000;
-                    SelfAsInt -= TempStorage;
-                    self.DecimalStatus = (ushort)SelfAsInt;
-                }
-                //Prevent dividing/multiplying value into nothing by dividing too small (set to .0001 instead of having value set as zero)
-                if (self.intValue == 0 && self.DecimalStatus == 0) { self.DecimalStatus = 1; }
-            }
-#else
             if (y.intValue == 0 && y.DecimalStatus == 0)
             {
                 self.intValue = 0;
@@ -103,23 +59,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 self.IntValue *= y.IntValue;
             }
-#if (SmallDec_ReducedSize)
-            else
-            {
-                long SRep = self.IntValue* DecimalOverflow;
-                SRep += self.DecimalStatus;
-                long YRep = y.IntValue * DecimalOverflow;
-                YRep += y.DecimalStatus;
-                SRep *= YRep;
-                if (SRep >= DecimalOverflow)
-                {
-                    long OverflowVal = SRep / DecimalOverflow;
-                    SRep -= OverflowVal * DecimalOverflow;
-                    self.IntValue = (ushort)OverflowVal;
-                    self.DecimalStatus = (short)SRep;
-                }
-            }
-#else
             else if (y.DecimalStatus == 0)//Y is integer
             {
                 //long IntHalf = (long)self.IntValue* DecimalOverflow;
@@ -155,13 +94,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 self.IntValue = (ushort)IntHalf;
                 self.DecimalStatus = (int)IntegerRep;
             }
-#endif
             if (ValueIsNegative)
             {
                 SelfIsNegative = !SelfIsNegative;
             }
             if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
-#endif
             return self;
         }
 
@@ -170,58 +107,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <param name="self"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static SmallDec operator /(SmallDec self, SmallDec y)
+        public static MediumDec operator /(MediumDec self, MediumDec y)
         {
-#if (SmallDec_UseLegacyStorage)
-            if (y.intValue == 0 && y.DecimalStatus == 0)
-            {
-                Console.WriteLine("Prevented dividing by zero");
-            }
-            else
-            {
-                if (y.DecBoolStatus == 1) { self.SwapNegativeStatus(); }
-                if (self.DecimalStatus == 0 && y.DecimalStatus == 0)
-                {//Use normal simple (int value) * (int value) if not dealing with any decimals
-                    self.intValue /= y.intValue;
-                }
-                else if (y.DecimalStatus == 0)
-                {
-                    uint SelfAsInt = self.DecimalStatus;
-                    SelfAsInt += (uint)(self.intValue * 10000);
-                    SelfAsInt /= y.intValue;
-                    self.intValue = (ushort)(SelfAsInt / 1000);
-                    SelfAsInt -= (uint)(self.intValue * 10000);
-                    self.DecimalStatus = (ushort)SelfAsInt;
-                }
-                else
-                {
-                    ulong SelfAsInt = self.intValue;
-                    SelfAsInt *= 10000;
-                    SelfAsInt += self.DecimalStatus;
-                    uint YAsInt = y.intValue;
-                    YAsInt *= 10000;
-                    YAsInt += y.DecimalStatus;
-                    SelfAsInt /= YAsInt;
-                    SelfAsInt /= 10000;
-                    ulong TempStorage = SelfAsInt / 10000;
-                    self.intValue = (ushort)TempStorage;
-                    TempStorage = self.intValue;
-                    TempStorage *= 10000;
-                    SelfAsInt -= TempStorage;
-                    self.DecimalStatus = (ushort)SelfAsInt;
-                }
-                //Prevent dividing/multiplying value into nothing by dividing too small (set to .0001 instead of having value set as zero)
-                if (self.intValue == 0 && self.DecimalStatus == 0) { self.DecimalStatus = 1; }
-            }
-#else
 
             if (y.intValue == 0 && y.DecimalStatus == 0)
             {
-#if (SmallDec_PreventDivideByZeroException)
+#if (MediumDec_PreventDivideByZeroException)
                 Console.WriteLine("Prevented dividing by zero");
                 return self;
 #else
-                throw new DivideByZeroException("SmallDec value can not be divided by zero");
+                throw new DivideByZeroException("MediumDec value can not be divided by zero");
 #endif
             }
             bool SelfIsNegative = self.DecimalStatus < 0;
@@ -248,30 +143,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     long OverflowVal = SRep / DecimalOverflow;
                     SRep -= OverflowVal * DecimalOverflow;
                     self.IntValue = (ushort)OverflowVal;
-#if (SmallDec_ReducedSize)
-                    self.DecimalStatus = (int)SRep;
-#else
-                    self.DecimalStatus = (short)SRep;
-#endif
-                }
-            }
-#if (SmallDec_ReducedSize)
-            else
-            {
-                long SRep = self.IntValue* DecimalOverflow;
-                SRep += self.DecimalStatus;
-                long YRep = y.IntValue * DecimalOverflow;
-                YRep += y.DecimalStatus;
-                SRep *= YRep;
-                if (SRep >= DecimalOverflow)
-                {
-                    long OverflowVal = SRep / DecimalOverflow;
-                    SRep -= OverflowVal * DecimalOverflow;
-                    self.IntValue = (ushort)OverflowVal;
                     self.DecimalStatus = (short)SRep;
                 }
             }
-#else
             else if (y.DecimalStatus == 0)//Y is integer
             {
                 self /= y.IntValue;
@@ -306,8 +180,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 SelfIsNegative = !SelfIsNegative;
             }
             if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
-#endif
-#endif
             return self;
         }
     }
