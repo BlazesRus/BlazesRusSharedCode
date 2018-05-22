@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\GlobalCode_ExperimentalCode">
+      <UniqueIdentifier>{9d439afa-83b0-406f-9a85-f4849f86776d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlazesCPPCLRGlobalCode.h">
@@ -24,6 +27,27 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\GlobalCode\DLLAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\DecBase.h">
+      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\DoubleFloatingInt.h">
+      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\MediumDec.h">
+      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\QuadFloatingInt.h">
+      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\SuperDecHex.h">
+      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\VariableListV2.h">
+      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlazesCPPCLRGlobalCode.cpp">
@@ -34,6 +58,12 @@
     </ClCompile>
     <ClCompile Include="Stdafx.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GlobalCode\GlobalCode_ExperimentalCode\DecBase.cpp">
+      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GlobalCode\GlobalCode_ExperimentalCode\SuperDecHex.cpp">
+      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

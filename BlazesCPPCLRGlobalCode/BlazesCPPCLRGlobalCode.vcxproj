@@ -88,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions);BLAZESGLOBALCODE_LIBRARY</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -99,7 +99,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions);BLAZESGLOBALCODE_LIBRARY</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -110,7 +110,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions);BLAZESGLOBALCODE_LIBRARY</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -120,7 +120,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions);BLAZESGLOBALCODE_LIBRARY</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -133,11 +133,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\GlobalCode\DLLAPI.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\DecBase.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\DoubleFloatingInt.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\MediumDec.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\QuadFloatingInt.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\SuperDecHex.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\VariableListV2.h" />
     <ClInclude Include="BlazesCPPCLRGlobalCode.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\GlobalCode\GlobalCode_ExperimentalCode\DecBase.cpp" />
+    <ClCompile Include="..\GlobalCode\GlobalCode_ExperimentalCode\SuperDecHex.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="BlazesCPPCLRGlobalCode.cpp" />
     <ClCompile Include="Stdafx.cpp">

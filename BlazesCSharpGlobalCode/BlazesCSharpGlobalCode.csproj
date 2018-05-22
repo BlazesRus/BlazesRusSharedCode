@@ -115,6 +115,7 @@
     <Compile Include="GlobalCode_ExperimentalCode\SmallDec_IEquatable.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SmallDec_MathBasedFunctions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SmallDec_MultiplicativeOperations.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\SmallDec_OtherFormulas.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SmallDec_StandardConversions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SmallDec_TypeDescriptors.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\SuperDecGlobalCode.cs" />
