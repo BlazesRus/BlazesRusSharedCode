@@ -486,6 +486,35 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #endif
         }
 
+#if (!SmallDec_ReducedSize && !SmallDec_UseLegacyStorage)//Only enable for current implementation of SmallDec
+        public void AssignFromVal(double Value)
+        {
+            bool IsNegative = Value < 0;
+            if (IsNegative) { Value *= -1.0; }
+            ulong WholeValue = (ulong)Math.Floor(Value);
+            //Cap value if too big on initialize (preventing overflow on conversion)
+            if (Value > 65535)
+            {
+                Value = 65535;
+            }
+            Value -= WholeValue;
+            IntValue = (ushort)WholeValue;
+            decimalStatus = (int)(Value * 10000000000);
+
+            if (IsNegative)
+            {
+                if (decimalStatus == 0)
+                {
+                    decimalStatus = NegativeWholeNumber;
+                }
+                else
+                {
+                    decimalStatus *= -1;
+                }
+            }
+        }
+#endif
+
         /// <summary>
         ///
         /// </summary>
@@ -534,7 +563,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 }
             }
 #endif
-
         }
 
         /// <summary>

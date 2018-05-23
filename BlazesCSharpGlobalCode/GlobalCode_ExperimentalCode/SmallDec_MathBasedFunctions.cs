@@ -90,73 +90,62 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// </summary>
         public void Sqrt()
         {//Unfinished
-            if (IntValue == 0)
+            if(DecimalStatus==0)
             {
-
-            }
-            else if (IntValue==1 && DecimalStatus==0)
-            {
-                IntValue = 1;
-            }
-            else if (IntValue == 4 && DecimalStatus == 0)
-            {
-                IntValue = 2;
-            }
-            else if(IntValue<4)
-            {
-                IntValue = 1;//Unfinished
-            }
-            else if (IntValue == 9 && DecimalStatus == 0)
-            {
-                IntValue = 3;
-            }
-            else if(IntValue<9)
-            {
-                IntValue = 2;//Unfinished
-            }
-            else if (IntValue == 16 && DecimalStatus == 0)
-            {
-                IntValue = 4;
-            }
-            else if(IntValue<16)
-            {
-                IntValue = 3;//Unfinished
-            }
-            else if (IntValue == 25 && DecimalStatus == 0)
-            {
-                IntValue = 5;
-            }
-            else if(IntValue<25)
-            {
-                IntValue = 4;//Unfinished
-            }
-            else if (IntValue == 36 && DecimalStatus == 0)
-            {
-                IntValue = 6;
-            }
-            else if (IntValue < 36)
-            {
-                IntValue = 5;//Unfinished
-            }
-            else if (IntValue == 49 && DecimalStatus == 0)
-            {
-                IntValue = 7;
-            }
-            else if (IntValue < 49)
-            {
-                IntValue = 6;//Unfinished
-            }
-            else if (IntValue == 64 && DecimalStatus == 0)
-            {
-                IntValue = 8;
-            }
-            else if (IntValue < 64)
-            {
-                IntValue = 7;//Unfinished
+                switch(IntValue)
+                {
+                    case 1: IntValue = 1; break;
+                    case 4: IntValue = 2; break;
+                    case 9: IntValue = 3; break;
+                    case 16: IntValue = 4; break;
+                    case 25: IntValue = 5; break;
+                    case 36: IntValue = 6; break;
+                    case 49: IntValue = 7; break;
+                    case 64: IntValue = 8; break;
+                    case 81: IntValue = 9; break;
+                    case 100: IntValue = 10; break;
+                    default:
+                        double Temp = Math.Sqrt((double)this);//Just use Math.Sqrt(double Value) for now
+                        AssignFromVal(Temp);
+                        break;
+                }
             }
             else
             {
-                //Unfinished
+                //if (IntValue == 0)
+                //{
+                //    //Unfinished
+                //}
+                //else if (IntValue < 4)
+                //{
+                //    IntValue = 1;//Unfinished
+                //}
+                //else if (IntValue < 9)
+                //{
+                //    IntValue = 2;//Unfinished
+                //}
+                //else if (IntValue < 16)
+                //{
+                //    IntValue = 3;//Unfinished
+                //}
+                //else if (IntValue < 25)
+                //{
+                //    IntValue = 4;//Unfinished
+                //}
+                //else if (IntValue < 36)
+                //{
+                //    IntValue = 5;//Unfinished
+                //}
+                //else if (IntValue < 49)
+                //{
+                //    IntValue = 6;//Unfinished
+                //}
+                //else if (IntValue < 64)
+                //{
+                //    IntValue = 7;//Unfinished
+                //}
+                double Temp = Math.Sqrt((double)this);//Just use Math.Sqrt(double Value) for now
+                AssignFromVal(Temp);
             }
         }
 
