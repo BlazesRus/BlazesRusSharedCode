@@ -29,18 +29,48 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #endif
     SmallDec : IFormattable, INotifyPropertyChanged
     {
+#if (!SmallDec_ReducedSize && !SmallDec_UseLegacyStorage)//Only enable for current implementation of SmallDec
         /// <summary>
-        /// Perform absolute value on self
+        /// Removes decimal place info on self
         /// </summary>
-        public void Abs()
+        public void Ceil()
         {
-            if(DecimalStatus<0)
+            if (DecimalStatus < 0)
             {
-                DecimalStatus = NegativeWholeNumber;
+                if(IntValue==0)
+                {
+                    DecimalStatus = 0;
+                }
+                else
+                {
+                    DecimalStatus = NegativeWholeNumber;
+                }
             }
             else
             {
                 DecimalStatus = 0;
+            }
+        }
+
+        /// <summary>
+        /// Removes decimal place info from Value
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns></returns>
+        public static SmallDec Ceil(SmallDec Value)
+        {
+            Value.Ceil();
+            return Value;
+        }
+
+        /// <summary>
+        /// Converts any negative number into positive
+        /// </summary>
+        public void Abs()
+        {
+            if (DecimalStatus < 0)
+            {
+                DecimalStatus *= -1;
             }
         }
 
@@ -54,7 +84,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             Value.Abs();
             return Value;
         }
-#if (!SmallDec_ReducedSize && !SmallDec_UseLegacyStorage)//Only enable for current implementation of SmallDec
+
         /// <summary>
         /// Perform square root on this instance.
         /// </summary>
