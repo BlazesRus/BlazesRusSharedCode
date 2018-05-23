@@ -90,7 +90,74 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// </summary>
         public void Sqrt()
         {//Unfinished
+            if (IntValue == 0)
+            {
 
+            }
+            else if (IntValue==1 && DecimalStatus==0)
+            {
+                IntValue = 1;
+            }
+            else if (IntValue == 4 && DecimalStatus == 0)
+            {
+                IntValue = 2;
+            }
+            else if(IntValue<4)
+            {
+                IntValue = 1;//Unfinished
+            }
+            else if (IntValue == 9 && DecimalStatus == 0)
+            {
+                IntValue = 3;
+            }
+            else if(IntValue<9)
+            {
+                IntValue = 2;//Unfinished
+            }
+            else if (IntValue == 16 && DecimalStatus == 0)
+            {
+                IntValue = 4;
+            }
+            else if(IntValue<16)
+            {
+                IntValue = 3;//Unfinished
+            }
+            else if (IntValue == 25 && DecimalStatus == 0)
+            {
+                IntValue = 5;
+            }
+            else if(IntValue<25)
+            {
+                IntValue = 4;//Unfinished
+            }
+            else if (IntValue == 36 && DecimalStatus == 0)
+            {
+                IntValue = 6;
+            }
+            else if (IntValue < 36)
+            {
+                IntValue = 5;//Unfinished
+            }
+            else if (IntValue == 49 && DecimalStatus == 0)
+            {
+                IntValue = 7;
+            }
+            else if (IntValue < 49)
+            {
+                IntValue = 6;//Unfinished
+            }
+            else if (IntValue == 64 && DecimalStatus == 0)
+            {
+                IntValue = 8;
+            }
+            else if (IntValue < 64)
+            {
+                IntValue = 7;//Unfinished
+            }
+            else
+            {
+                //Unfinished
+            }
         }
 
         /// <summary>
