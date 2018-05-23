@@ -30,15 +30,6 @@
     <ClInclude Include="..\GlobalCode\DLLAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\DecBase.h">
-      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\DoubleFloatingInt.h">
-      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\MediumDec.h">
-      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
-    </ClInclude>
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\QuadFloatingInt.h">
       <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
     </ClInclude>
@@ -46,6 +37,9 @@
       <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
     </ClInclude>
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\VariableListV2.h">
+      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\MediumDec.h">
       <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,10 +53,10 @@
     <ClCompile Include="Stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\GlobalCode\GlobalCode_ExperimentalCode\DecBase.cpp">
+    <ClCompile Include="..\GlobalCode\GlobalCode_ExperimentalCode\SuperDecHex.cpp">
       <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\GlobalCode\GlobalCode_ExperimentalCode\SuperDecHex.cpp">
+    <ClCompile Include="..\GlobalCode\GlobalCode_ExperimentalCode\MediumDec.cpp">
       <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
     </ClCompile>
   </ItemGroup>

@@ -151,5 +151,15 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 return NewSelf;
             }
         }
+
+        public static SmallDec ATan(SmallDec Value)
+        {
+            return SmallDec.Zero;//Unfinished (placeholder)
+        }
+
+        public static SmallDec ACos(SmallDec Value)
+        {
+            return SmallDec.Zero;//Unfinished (placeholder)
+        }
     }
 }

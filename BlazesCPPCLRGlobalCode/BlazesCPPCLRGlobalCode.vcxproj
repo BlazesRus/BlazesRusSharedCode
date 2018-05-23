@@ -134,8 +134,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GlobalCode\DLLAPI.h" />
-    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\DecBase.h" />
-    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\DoubleFloatingInt.h" />
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\MediumDec.h" />
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\QuadFloatingInt.h" />
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\SuperDecHex.h" />
@@ -145,7 +143,7 @@
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\GlobalCode\GlobalCode_ExperimentalCode\DecBase.cpp" />
+    <ClCompile Include="..\GlobalCode\GlobalCode_ExperimentalCode\MediumDec.cpp" />
     <ClCompile Include="..\GlobalCode\GlobalCode_ExperimentalCode\SuperDecHex.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="BlazesCPPCLRGlobalCode.cpp" />
