@@ -60,6 +60,14 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 Value.IntValue = (ushort)(360 - (int)Value.IntValue);
                 if(Value.IntValue==360) { Value.IntValue = 0; }
             }
+            else if (Value.DecimalStatus < 0)
+            {
+                Value.DecimalStatus = NegativeWholeNumber + Value.DecimalStatus;
+                ++Value.IntValue;
+                Value.IntValue %= 360;
+                Value.IntValue = (ushort)(360 - (int)Value.IntValue);
+                if (Value.IntValue == 360) { Value.IntValue = 0; }
+            }
             else
             {
                 Value %= 360;
@@ -79,8 +87,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             else
             {
-                SmallDec NewSelf = new SmallDec();//Unfinished
-                return NewSelf;
+                double Temp = Math.Sin(Math.PI * (double)Value / 180.0);//Converting from Angle to Radians (https://msdn.microsoft.com/en-us/library/system.math.cos(v=vs.110).aspx)
+                return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code
             }
         }
 
@@ -89,6 +97,14 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             if (Value.DecimalStatus == SmallDec.NegativeWholeNumber)
             {
                 Value.DecimalStatus = 0;
+                Value.IntValue %= 360;
+                Value.IntValue = (ushort)(360 - (int)Value.IntValue);
+                if (Value.IntValue == 360) { Value.IntValue = 0; }
+            }
+            else if (Value.DecimalStatus < 0)
+            {
+                Value.DecimalStatus = NegativeWholeNumber + Value.DecimalStatus;
+                ++Value.IntValue;
                 Value.IntValue %= 360;
                 Value.IntValue = (ushort)(360 - (int)Value.IntValue);
                 if (Value.IntValue == 360) { Value.IntValue = 0; }
@@ -112,8 +128,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             else
             {
-                SmallDec NewSelf = new SmallDec();//Unfinished
-                return NewSelf;
+                double Temp = Math.Cos(Math.PI * (double)Value / 180.0);//Converting from Angle to Radians (https://msdn.microsoft.com/en-us/library/system.math.cos(v=vs.110).aspx)
+                return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code
             }
         }
 
@@ -124,6 +140,14 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             if (Value.DecimalStatus == SmallDec.NegativeWholeNumber)
             {
                 Value.DecimalStatus = 0;
+                Value.IntValue %= 360;
+                Value.IntValue = (ushort)(360 - (int)Value.IntValue);
+                if (Value.IntValue == 360) { Value.IntValue = 0; }
+            }
+            else if(Value.DecimalStatus<0)
+            {
+                Value.DecimalStatus = NegativeWholeNumber + Value.DecimalStatus;
+                ++Value.IntValue;
                 Value.IntValue %= 360;
                 Value.IntValue = (ushort)(360 - (int)Value.IntValue);
                 if (Value.IntValue == 360) { Value.IntValue = 0; }
@@ -147,19 +171,21 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             else
             {
-                SmallDec NewSelf = new SmallDec();//Unfinished
-                return NewSelf;
+                double Temp = Math.Tan(Math.PI * (double)Value / 180.0);//Converting from Angle to Radians (https://msdn.microsoft.com/en-us/library/system.math.cos(v=vs.110).aspx)
+                return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code
             }
         }
 
         public static SmallDec ATan(SmallDec Value)
         {
-            return SmallDec.Zero;//Unfinished (placeholder)
+            double Temp = Math.Atan((double)Value);
+            return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code 
         }
 
         public static SmallDec ACos(SmallDec Value)
         {
-            return SmallDec.Zero;//Unfinished (placeholder)
+            double Temp = Math.Acos((double)Value);
+            return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code
         }
     }
 }
