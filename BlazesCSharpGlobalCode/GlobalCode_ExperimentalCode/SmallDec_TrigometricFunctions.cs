@@ -45,6 +45,19 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static readonly SmallDec PI = PIValue();
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private static SmallDec EValue()
+        {
+            return new SmallDec(2, 718281828);
+        }
+        /// <summary>
+        /// (2.7182818284590451)
+        /// </summary>
+        public static readonly SmallDec E = EValue();
+
+        /// <summary>
         /// Value at one
         /// </summary>
         public static readonly SmallDec NegativeOne = NegativeOneValue();

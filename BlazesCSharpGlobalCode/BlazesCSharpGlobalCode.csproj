@@ -103,7 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalCode_ExperimentalCode\CustomDec.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\CustomDictionary.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\CustomOrderedDictionary.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\CustomListSet.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\MediumDec_IEquatable.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\MediumDec_MathBasedFunctions.cs" />

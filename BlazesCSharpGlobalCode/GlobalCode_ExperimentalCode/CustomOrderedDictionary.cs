@@ -6,7 +6,8 @@ using System.Collections.Generic;
 
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
-    public class CustomDictionary<TKey, TValue> : Dictionary<TKey, TValue>
+    //Similar to https://msdn.microsoft.com/en-us/library/system.collections.specialized.ordereddictionary(v=vs.110).aspx
+    public class CustomOrderedDictionary<TKey, TValue> : Dictionary<TKey, TValue>
     {
         /// <summary>
         /// Holds an index referring to keys contained for optional ordered retrieval of values

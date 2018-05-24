@@ -86,8 +86,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         }
 
         /// <summary>
-        /// Perform square root on this instance.
+        /// Perform square root on this instance. 
+        /// Info on Related Formulas:
+        /// https://jacksondunstan.com/articles/1217
+        /// https://en.wikipedia.org/wiki/Nth_root_algorithm
         /// </summary>
+#if !BlazesGlobalCode_PostCompileBasedSqrt
         public void Sqrt()
         {//Unfinished
             if(DecimalStatus==0)
@@ -148,6 +152,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 AssignFromVal(Temp);
             }
         }
+#else
+        public void Sqrt()
+        {
+        }
+#endif
 
         /// <summary>
         /// Gets the square root of the specified value.
@@ -159,38 +168,58 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             Value.Sqrt();
             return Value;
         }
+
         /// <summary>
-        /// 
+        /// Self multiplied by itself Value number of times
+        /// Related Formula info:
+        /// https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+        /// https://en.wikipedia.org/wiki/Exponentiation_by_squaring
+        /// https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
         /// </summary>
         /// <param name="self"></param>
         /// <param name="Value"></param>
         /// <returns></returns>
         public static SmallDec Pow(SmallDec self, int Value)
         {
-            var NewSelf = self;
-            if (Value == 0)
+            if(Value>0)
             {
-                NewSelf.intValue = 1;
-                NewSelf.DecimalStatus = 0;
+                //Code based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+                SmallDec res = SmallDec.One; // Initialize result
+                while (Value > 0)
+                {
+                    // If Value is odd, multiply self with result
+                    if (Value % 2 == 1)
+                        res = res * self;
+
+                    // n must be even now
+                    Value = Value >> 1; // y = y/2
+                    self = self * self; // Change x to x^2
+                }
+                return res;
+                //Old code:
+                //for (int NumberOfTimes = Value; NumberOfTimes > 0; --NumberOfTimes)
+                //{
+                //    NewSelf *= self;
+                //}
             }
-            else if (Value < 0)
+            else if (Value == 0)
             {
+                return SmallDec.One;
+            }
+            else
+            {//Negative Power
+                var NewSelf = self;
                 for (int NumberOfTimes = Value; NumberOfTimes > 0; --NumberOfTimes)
                 {
                     NewSelf /= self;
                 }
+                return NewSelf;
             }
-            else
-            {
-                for (int NumberOfTimes = Value; NumberOfTimes > 0; --NumberOfTimes)
-                {
-                    NewSelf *= self;
-                }
-            }
-            return NewSelf;
         }
 
-        //        //public static SmallDec Pow(double self, double Value) { return SmallDec.Pow((SmallDec)self, (SmallDec)Value); }
+#if EnableIncompletePowCode
+#if (!BlazesGlobalCode_ImplicitConversionFrom)//Gets confused since it tries auto converting to SmallDec inside parameter first if Explicitly converts
+        public static SmallDec Pow(double self, double Value) { return SmallDec.Pow((SmallDec)self, (SmallDec)Value); }
 
         ///// <summary>
         ///// 
@@ -198,92 +227,75 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         ///// <param name="self"></param>
         ///// <param name="Value"></param>
         ///// <returns></returns>
-        //public static SmallDec Pow(SmallDec self, double Value) => SmallDec.Pow(self, (SmallDec)Value);
-        //#if (BlazesGlobalCode_StandardExplicitConversionFrom)//Gets confused since it tries auto converting to SmallDec inside parameter first
-        //        public static SmallDec Pow(SmallDec self, SmallDec Value) { return SmallDec.Pow(self, Value); }
-        //#endif
-
-        ///// <summary>
-        ///// Approximate version of Math.Pow(double self, double Value)
-        ///// </summary>
-        ///// <param name="self"></param>
-        ///// <param name="Value"></param>
-        ///// <returns></returns>
-        //public static SmallDec Pow(SmallDec self, SmallDec Value)
-        //{
-        //    var NewSelf = self;
-        //    //SmallDec version of Math.Pow()
-        //    if (Value.DecimalStatus == 0)
-        //    {
-        //        if (Value.intValue == 0)
-        //        {
-        //            NewSelf.intValue = 1;
-        //            NewSelf.DecimalStatus = 0;
-        //        }
-        //        else if (Value.DecimalStatus == 0)
-        //        {
-        //            for (ushort NumberOfTimes = Value.intValue; NumberOfTimes > 0; --NumberOfTimes)
-        //            {
-        //                NewSelf *= self;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            for (ushort NumberOfTimes = Value.intValue; NumberOfTimes > 0; --NumberOfTimes)
-        //            {
-        //                NewSelf /= self;
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {//To-Do need to finish remaining power part of code
-        //     //decimal SelfAsDecimal = (decimal) self;
-        //        if (Value.intValue == 0)
-        //        {
-        //            NewSelf.intValue = 1;
-        //            NewSelf.DecimalStatus = 0;
-        //        }
-        //        else if (Value.DecimalStatus == 0)
-        //        {
-        //            for (ushort NumberOfTimes = Value.intValue; NumberOfTimes > 0; --NumberOfTimes)
-        //            {
-        //                NewSelf *= self;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            for (ushort NumberOfTimes = Value.intValue; NumberOfTimes > 0; --NumberOfTimes)
-        //            {
-        //                NewSelf /= self;
-        //            }
-        //        }
-        //        //Now need to deal with the remaining "power"
-        //        Value.intValue = 0;
-        //        //Number is less then NewSelf Currently is (Sloping Curve in closeness to next power)
-        //        SmallDec TempDouble = Math.Pow((double)self, (double)Value);
-        //        if (Value.DecimalStatus == 0)
-        //        {
-        //            NewSelf *= TempDouble;
-        //        }
-        //        else
-        //        {
-        //            NewSelf /= TempDouble;
-        //        }
-        //    }
-        //    return NewSelf;
-        //}
-
-        //        /// <summary>
-        //        /// SmallDec version of Math.Exp(double Value)
-        //        /// </summary>
-        //        /// <param name="Value"></param>
-        //        /// <returns></returns>
-        //        public static SmallDec Exp(SmallDec Value)
-        //        {
-        //            double SelfAsDecimal = (double)Value;
-        //            SelfAsDecimal = Math.Exp(SelfAsDecimal);
-        //            return (SmallDec)SelfAsDecimal;
-        //        }
-    }
+        public static SmallDec Pow(SmallDec self, double Value) => SmallDec.Pow(self, (SmallDec)Value);
 #endif
-}
+        /// <summary>
+        /// Pow function with Values of less than One
+        /// </summary>
+        /// <param name="self">The self.</param>
+        /// <param name="Value">The value.</param>
+        /// <returns></returns>
+        public static SmallDec PartialPow(SmallDec self, SmallDec Value)
+        {
+        }
+
+
+        /// <summary>
+        /// Approximate version of Math.Pow(double self, double Value) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+        /// and https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="Value"></param>
+        /// <returns></returns>
+        public static SmallDec Pow(SmallDec self, SmallDec Value)
+        {
+            if(Value.DecimalStatus==0)
+            {
+                return SmallDec.Pow(self, Value.IntValue);
+            }
+            else if(Value.DecimalStatus==NegativeWholeNumber)
+            {
+                return SmallDec.Pow(self, Value.IntValue*-1);
+            }
+            else if(Value.DecimalStatus>0)//Positive Non-Whole Number Value
+            {
+                //Separate Value into Fractional
+                //long ValueAsIntRep = Value.IntValue * DecimalOverflow + Value.DecimalStatus;
+                long PartOne;
+                long PartTwo;
+                if(Value.IntValue<10)
+                {
+
+                }
+                else if(Value.IntValue<100)
+                {
+
+                }
+                else if(Value.IntValue<1000)
+                {
+
+                }
+                else if(Value.IntValue)
+            }
+            //else//Negative Non-Whole Number Value
+            //{
+
+            //}
+        }
+#endif
+
+        /// <summary>
+        /// SmallDec version of Math.Exp(double Value)
+        /// </summary>
+        /// <param name="Value"></param>
+        /// <returns></returns>
+        public static SmallDec Exp(SmallDec Value)
+        {//Working placeholder code for now
+            double SelfAsDecimal = (double)Value;
+            SelfAsDecimal = Math.Exp(SelfAsDecimal);
+            return (SmallDec)SelfAsDecimal;
+        }
+    }
+
+#endif
+    }
