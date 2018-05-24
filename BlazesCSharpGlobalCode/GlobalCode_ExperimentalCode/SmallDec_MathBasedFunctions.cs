@@ -37,7 +37,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         {
             if (DecimalStatus < 0)
             {
-                if(IntValue==0)
+                if (IntValue == 0)
                 {
                     DecimalStatus = 0;
                 }
@@ -94,9 +94,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #if !BlazesGlobalCode_PostCompileBasedSqrt
         public void Sqrt()
         {//Unfinished
-            if(DecimalStatus==0)
+            if (DecimalStatus == 0)
             {
-                switch(IntValue)
+                switch (IntValue)
                 {
                     case 1: IntValue = 1; break;
                     case 4: IntValue = 2; break;
@@ -181,7 +181,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// <returns></returns>
         public static SmallDec Pow(SmallDec self, int Value)
         {
-            if(Value>0)
+            if (Value > 0)
             {
                 //Code based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
                 SmallDec res = SmallDec.One; // Initialize result
@@ -217,7 +217,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
         }
 
-#if EnableIncompletePowCode
 #if (!BlazesGlobalCode_ImplicitConversionFrom)//Gets confused since it tries auto converting to SmallDec inside parameter first if Explicitly converts
         public static SmallDec Pow(double self, double Value) { return SmallDec.Pow((SmallDec)self, (SmallDec)Value); }
 
@@ -229,15 +228,23 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         ///// <returns></returns>
         public static SmallDec Pow(SmallDec self, double Value) => SmallDec.Pow(self, (SmallDec)Value);
 #endif
-        /// <summary>
-        /// Pow function with Values of less than One
-        /// </summary>
-        /// <param name="self">The self.</param>
-        /// <param name="Value">The value.</param>
-        /// <returns></returns>
-        public static SmallDec PartialPow(SmallDec self, SmallDec Value)
-        {
-        }
+
+        ///// <summary>
+        ///// Pow function with Values of less than One
+        ///// </summary>
+        ///// <param name="self">The self.</param>
+        ///// <param name="Value">The value.</param>
+        ///// <returns></returns>
+        //public static SmallDec PartialPow(SmallDec self, SmallDec Value)
+        //{
+        //}
+
+        //public struct Fractional
+        //{
+        //}
+        //public static Fractional ConvertValueIntoFractional()
+        //{
+        //}
 
 
         /// <summary>
@@ -259,30 +266,38 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             else if(Value.DecimalStatus>0)//Positive Non-Whole Number Value
             {
-                //Separate Value into Fractional
-                //long ValueAsIntRep = Value.IntValue * DecimalOverflow + Value.DecimalStatus;
-                long PartOne;
-                long PartTwo;
-                if(Value.IntValue<10)
-                {
+                ////Separate Value into Fractional
+                ////long ValueAsIntRep = Value.IntValue * DecimalOverflow + Value.DecimalStatus;
+                //long PartOne;
+                //long PartTwo;
+                //if(Value.IntValue<10)
+                //{
 
-                }
-                else if(Value.IntValue<100)
-                {
+                //}
+                //else if(Value.IntValue<100)
+                //{
 
-                }
-                else if(Value.IntValue<1000)
-                {
+                //}
+                //else if(Value.IntValue<1000)
+                //{
 
-                }
-                else if(Value.IntValue)
+                //}
+                //else if(Value.IntValue)
+                //Working placeholder code for now
+                double SelfAsDecimal = (double)self;
+                double ValueAsDecimal = (double)Value;
+                SelfAsDecimal = Math.Pow(SelfAsDecimal, ValueAsDecimal);
+                return (SmallDec)SelfAsDecimal;
             }
-            //else//Negative Non-Whole Number Value
-            //{
-
-            //}
+            else//Negative Non-Whole Number Value
+            {
+                //Working placeholder code for now
+                double SelfAsDecimal = (double)self;
+                double ValueAsDecimal = (double)Value;
+                SelfAsDecimal = Math.Pow(SelfAsDecimal, ValueAsDecimal);
+                return (SmallDec)SelfAsDecimal;
+            }
         }
-#endif
 
         /// <summary>
         /// SmallDec version of Math.Exp(double Value)
