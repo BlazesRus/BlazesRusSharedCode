@@ -247,37 +247,16 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //{
         //}
 
-        //public struct Fractional
-        //{
-        //}
-        //public static Fractional ConvertValueIntoFractional()
-        //{
-        //}
-
-        /// <summary>
-        /// Approximate version of Math.Pow(double self, double Value) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
-        /// and https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="Value"></param>
-        /// <returns></returns>
-        public static SmallDec Pow(SmallDec self, SmallDec Value)
+        public class Fractional
         {
-            if (Value.DecimalStatus == 0)
+            public long Part01;
+            public long Part02;
+            public Fractional(SmallDec Value)
             {
-                return SmallDec.Pow(self, Value.IntValue);
-            }
-            else if (Value.DecimalStatus == NegativeWholeNumber)
-            {
-                return SmallDec.Pow(self, Value.IntValue * -1);
-            }
-            else if (Value.DecimalStatus > 0)//Positive Non-Whole Number Value
-            {
-                //Separate Value into Fractional
                 //long ValueAsIntRep = Value.IntValue * DecimalOverflow + Value.DecimalStatus;
                 //Value = (Value.DecimalStatus * DecimalOverflow)/ 0.DecimalStatus * DecimalOverflow
                 long PartOne = (long)Value.IntValue * DecimalOverflow;
-                long PartTwo = Value.DecimalStatus+ PartOne;
+                long PartTwo = Value.DecimalStatus + PartOne;
                 bool TryToDecreasePlacement = true;
                 bool KeepAttempting = true;
                 for (int Attempts = 0; Attempts < 14 && KeepAttempting; ++Attempts)//Reduce Fractional Size
@@ -310,6 +289,29 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                         }
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Approximate version of Math.Pow(double self, double Value) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+        /// and https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="Value"></param>
+        /// <returns></returns>
+        public static SmallDec Pow(SmallDec self, SmallDec Value)
+        {
+            if (Value.DecimalStatus == 0)
+            {
+                return SmallDec.Pow(self, Value.IntValue);
+            }
+            else if (Value.DecimalStatus == NegativeWholeNumber)
+            {
+                return SmallDec.Pow(self, Value.IntValue * -1);
+            }
+            else if (Value.DecimalStatus > 0)//Positive Non-Whole Number Value
+            {
+                //In many cases splitting into Fractional to perform Pow might cause overflows(so need to limit which cases uses Fractional based Pow)
                 //Working placeholder code for now
                 double SelfAsDecimal = (double)self;
                 double ValueAsDecimal = (double)Value;
