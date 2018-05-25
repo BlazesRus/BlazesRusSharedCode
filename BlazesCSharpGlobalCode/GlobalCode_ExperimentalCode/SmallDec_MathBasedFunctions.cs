@@ -277,7 +277,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 //long ValueAsIntRep = Value.IntValue * DecimalOverflow + Value.DecimalStatus;
                 //Value = (Value.DecimalStatus * DecimalOverflow)/ 0.DecimalStatus * DecimalOverflow
                 long PartOne = (long)Value.IntValue * DecimalOverflow;
-                long PartTwo = Value.DecimalStatus;
+                long PartTwo = Value.DecimalStatus+ PartOne;
                 bool TryToDecreasePlacement = true;
                 bool KeepAttempting = true;
                 for (int Attempts = 0; Attempts < 14 && KeepAttempting; ++Attempts)//Reduce Fractional Size
