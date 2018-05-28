@@ -599,10 +599,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
         private static MediumDec OneValue() => new MediumDec(1, 0);
 
-        /// <summary>
-        /// Value at either zero or NaN (depending on preprocessor settings)
-        /// </summary>
-        public static readonly MediumDec NaN = NaNValue();
+		/// <summary>
+		/// .000001000
+		/// </summary>
+		public static readonly MediumDec OneMillionth = OneMillionthValue();
+
+		private static MediumDec OneMillionthValue() => new MediumDec(0, 1000);
+
+		/// <summary>
+		/// Value at either zero or NaN (depending on preprocessor settings)
+		/// </summary>
+		public static readonly MediumDec NaN = NaNValue();
 
         /// <summary>
         ///

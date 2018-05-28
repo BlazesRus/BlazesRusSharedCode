@@ -80,74 +80,98 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return Value;
         }
 
-        //		/// <summary>
-        //		/// Perform square root on this instance.
-        //		/// Info on Related Formulas:
-        //		/// https://jacksondunstan.com/articles/1217
-        //		/// https://en.wikipedia.org/wiki/Nth_root_algorithm
-        //		/// </summary>
-        //#if !BlazesGlobalCode_PostCompileBasedSqrt
-        //		public void Sqrt()
-        //		{//Unfinished
-        //			if (DecimalStatus == 0)
-        //			{
-        //				switch (IntValue)
-        //				{
-        //					case 1: IntValue = 1; break;
-        //					case 4: IntValue = 2; break;
-        //					case 9: IntValue = 3; break;
-        //					case 16: IntValue = 4; break;
-        //					case 25: IntValue = 5; break;
-        //					case 36: IntValue = 6; break;
-        //					case 49: IntValue = 7; break;
-        //					case 64: IntValue = 8; break;
-        //					case 81: IntValue = 9; break;
-        //					case 100: IntValue = 10; break;
-        //					default:
-        //						double Temp = Math.Sqrt((double)this);//Just use Math.Sqrt(double Value) for now
-        //						AssignFromVal(Temp);
-        //						break;
-        //				}
-        //			}
-        //			else
-        //			{
-        //				double Temp = Math.Sqrt((double)this);//Just use Math.Sqrt(double Value) for now
-        //				AssignFromVal(Temp);
-        //			}
-        //		}
+		/// <summary>
+		/// Perform square root on this instance.
+		/// </summary>
+		public void Sqrt()
+		{
+			if (DecimalStatus == 0)
+			{
+				switch (IntValue)
+				{
+					case 1: IntValue = 1; break;
+					case 4: IntValue = 2; break;
+					case 9: IntValue = 3; break;
+					case 16: IntValue = 4; break;
+					case 25: IntValue = 5; break;
+					case 36: IntValue = 6; break;
+					case 49: IntValue = 7; break;
+					case 64: IntValue = 8; break;
+					case 81: IntValue = 9; break;
+					case 100: IntValue = 10; break;
+					case 121: IntValue = 11; break;
+					case 144: IntValue = 12; break;
+					case 196: IntValue = 13; break;
+					case 225: IntValue = 15; break;
+					case 256: IntValue = 16; break;
+					case 289: IntValue = 17; break;
+					case 324: IntValue = 18; break;
+					case 361: IntValue = 19; break;
+					case 400: IntValue = 20; break;
+					default:
+						NthRoot(this, 2);
+						break;
+				}
+			}
+			else
+			{
+				NthRoot(this, 2);
+			}
+		}
 
-        //#else
-        //        public void Sqrt()
-        //        {
-        //        }
-        //#endif
+		/// <summary>
+		/// Get the (Value)th Root
+		/// Code based mostly from https://rosettacode.org/wiki/Nth_root#C.23
+		/// </summary>
+		/// <param name="self">The self.</param>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static MediumDec NthRoot(MediumDec self, MediumDec Value, MediumDec Precision)
+		{
+			MediumDec[] x = new MediumDec[2];
+			x[0] = self;
+			x[1] = self / Value;
+			while (MediumDec.Abs(x[0] - x[1]) > Precision)
+			{
+				x[1] = x[0];
+				x[0] = (1 / Value) * (((Value - 1) * x[1]) + (self / MediumDec.Pow(x[1], Value - 1)));
 
-        //public static MediumDec NthRoot(MediumDec self, int Value)
-        //{
-        //}
+			}
+			return x[0];
+		}
 
-        ///// <summary>
-        ///// Gets the square root of the specified value.
-        ///// </summary>
-        ///// <param name="Value">The value.</param>
-        ///// <returns></returns>
-        //public static MediumDec Sqrt(MediumDec Value)
-        //{
-        //	Value.Sqrt();
-        //	return Value;
-        //}
+		public static MediumDec NthRoot(MediumDec self, MediumDec Value)
+		{
+			return NthRoot(self, Value, OneMillionth);
+		}
 
-        /// <summary>
-        /// Self multiplied by itself Value number of times
-        /// Related Formula info:
-        /// https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
-        /// https://en.wikipedia.org/wiki/Exponentiation_by_squaring
-        /// https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="Value"></param>
-        /// <returns></returns>
-        public static MediumDec Pow(MediumDec self, int Value)
+		public static MediumDec NthRoot(MediumDec self, int Value)
+		{
+			return NthRoot(self, (MediumDec)Value, OneMillionth);
+		}
+
+		/// <summary>
+		/// Gets the square root of the specified value.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static MediumDec Sqrt(MediumDec Value)
+		{
+			Value.Sqrt();
+			return Value;
+		}
+
+		/// <summary>
+		/// Self multiplied by itself Value number of times
+		/// Related Formula info:
+		/// https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+		/// https://en.wikipedia.org/wiki/Exponentiation_by_squaring
+		/// https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
+		/// </summary>
+		/// <param name="self"></param>
+		/// <param name="Value"></param>
+		/// <returns></returns>
+		public static MediumDec Pow(MediumDec self, int Value)
         {
             if (Value > 0)
             {

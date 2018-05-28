@@ -818,7 +818,14 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
         private static SmallDec OneValue() => new SmallDec(1, 0);
 
-        private static SmallDec NaNValue()
+		/// <summary>
+		/// .000001000
+		/// </summary>
+		public static readonly SmallDec OneMillionth = OneMillionthValue();
+
+		private static SmallDec OneMillionthValue() => new SmallDec(0, 1000);
+
+		private static SmallDec NaNValue()
         {
 #if (SmallDec_ReducedSize || SmallDec_UseLegacyStorage)
 #if (BlazesGlobalCode_SmallDec_EnableSpecialDecStates)

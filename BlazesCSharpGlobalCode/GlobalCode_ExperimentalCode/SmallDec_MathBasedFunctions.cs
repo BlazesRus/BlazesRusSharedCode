@@ -84,14 +84,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
         /// <summary>
         /// Perform square root on this instance.
-        /// Info on Related Formulas:
-        /// https://jacksondunstan.com/articles/1217
-        /// https://en.wikipedia.org/wiki/Nth_root_algorithm
         /// </summary>
-#if !BlazesGlobalCode_PostCompileBasedSqrt
-
         public void Sqrt()
-        {//Unfinished
+        {
             if (DecimalStatus == 0)
             {
                 switch (IntValue)
@@ -106,67 +101,63 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     case 64: IntValue = 8; break;
                     case 81: IntValue = 9; break;
                     case 100: IntValue = 10; break;
-                    default:
-                        double Temp = Math.Sqrt((double)this);//Just use Math.Sqrt(double Value) for now
-                        AssignFromVal(Temp);
+					case 121: IntValue = 11; break;
+					case 144: IntValue = 12; break;
+					case 196: IntValue = 13; break;
+					case 225: IntValue = 15; break;
+					case 256: IntValue = 16; break;
+					case 289: IntValue = 17; break;
+					case 324: IntValue = 18; break;
+					case 361: IntValue = 19; break;
+					case 400: IntValue = 20; break;
+					default:
+						NthRoot(this, 2);
                         break;
                 }
             }
             else
             {
-                //if (IntValue == 0)
-                //{
-                //    //Unfinished
-                //}
-                //else if (IntValue < 4)
-                //{
-                //    IntValue = 1;//Unfinished
-                //}
-                //else if (IntValue < 9)
-                //{
-                //    IntValue = 2;//Unfinished
-                //}
-                //else if (IntValue < 16)
-                //{
-                //    IntValue = 3;//Unfinished
-                //}
-                //else if (IntValue < 25)
-                //{
-                //    IntValue = 4;//Unfinished
-                //}
-                //else if (IntValue < 36)
-                //{
-                //    IntValue = 5;//Unfinished
-                //}
-                //else if (IntValue < 49)
-                //{
-                //    IntValue = 6;//Unfinished
-                //}
-                //else if (IntValue < 64)
-                //{
-                //    IntValue = 7;//Unfinished
-                //}
-                double Temp = Math.Sqrt((double)this);//Just use Math.Sqrt(double Value) for now
-                AssignFromVal(Temp);
-            }
+				NthRoot(this, 2);
+			}
         }
 
-#else
-        public void Sqrt()
-        {
-        }
-#endif
+		/// <summary>
+		/// Get the (Value)th Root
+		/// Code based mostly from https://rosettacode.org/wiki/Nth_root#C.23
+		/// </summary>
+		/// <param name="self">The self.</param>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static SmallDec NthRoot(SmallDec self, SmallDec Value, SmallDec Precision)
+		{
+			SmallDec[] x = new SmallDec[2];
+			x[0] = self;
+			x[1] = self / Value;
+			while (SmallDec.Abs(x[0] - x[1]) > Precision)
+			{
+				x[1] = x[0];
+				x[0] = (1 / Value) * (((Value - 1) * x[1]) + (self / SmallDec.Pow(x[1], Value - 1)));
 
-        //public static SmallDec NthRoot(SmallDec self, int Value)
-        //{
-        //}
+			}
+			return x[0];
+		}
 
-        /// <summary>
-        /// Gets the square root of the specified value.
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <returns></returns>
-        public static SmallDec Sqrt(SmallDec Value)
+		public static SmallDec NthRoot(SmallDec self, SmallDec Value)
+		{
+			return NthRoot(self, Value, OneMillionth);
+		}
+
+		public static SmallDec NthRoot(SmallDec self, int Value)
+		{
+			return NthRoot(self, (SmallDec) Value, OneMillionth);
+		}
+
+		/// <summary>
+		/// Gets the square root of the specified value.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static SmallDec Sqrt(SmallDec Value)
         {
             Value.Sqrt();
             return Value;
