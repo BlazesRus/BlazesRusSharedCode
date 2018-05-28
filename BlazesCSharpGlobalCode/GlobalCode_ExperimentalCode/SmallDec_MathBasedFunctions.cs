@@ -281,110 +281,104 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //    }
         //}
 
-		public class Fractional
-		{
-			public int Part01;
-			public SmallDec Part02;
+        public class Fractional
+        {
+            public int Part01;
+            public SmallDec Part02;
 
-			/// <summary>
-			/// Initializes a new instance of the <see cref="FractionalV2"/> class.
-			/// Self ^ Value = Self ^ Part01) ^ (1/Part02)
-			/// </summary>
-			/// <param name="Value">The value.</param>
-			/// <param name="self">The self.</param>
-			public Fractional(SmallDec Value, SmallDec self)
-			{
-				//Limit Part01 based on self to prevent overflow from first Pow integer operation
-				int PowLimit = 25;
-				switch (self.IntValue)
-				{
-					case 0: PowLimit = 999; break;//Could go even higher without overflow(although more lost to decimal places) but not worth processing time cost
-					case 1:
-						if (self.DecimalStatus < 25000000)
-						{
-							PowLimit = 49; break;//1.25^49 = ~56k
-						}
-						else if (self.DecimalStatus < 50000000)
-						{
-							PowLimit = 27; break;//1.5^27 = ~57k
-						}
-						else if (self.DecimalStatus < 80000000)
-						{
-							PowLimit = 18; break;//1.8^18 = ~39k
-						}
-						else
-						{
-							PowLimit = 15; break;//2^16 = 65536
-						}
-					case 2:
-						PowLimit = 10; break;//3^10 = 59k
-					case 3:
-						if (self.DecimalStatus < 50000000)
-						{
-							PowLimit = 8; break;//2.5^8 = ~22k
-						}
-						else
-						{
-							PowLimit = 7; break;//4^8 = 65536
-						}
-					case 4:
-						PowLimit = (self.DecimalStatus < 50000000)?7:6; break;
-					case 5:
-						PowLimit = 6; break;
-					case 6:
-					case 7:
-					case 8:
-						PowLimit = 5; break;
+            /// <summary>
+            /// Initializes a new instance of the <see cref="FractionalV2"/> class.
+            /// Self ^ Value = Self ^ Part01) ^ (1/Part02)
+            /// </summary>
+            /// <param name="Value">The value.</param>
+            /// <param name="self">The self.</param>
+            public Fractional(SmallDec Value, SmallDec self)
+            {
+                //Limit Part01 based on self to prevent overflow from first Pow integer operation
+                int PowLimit = 25;
+                switch (self.IntValue)
+                {
+                    case 0: PowLimit = 999; break;//Could go even higher without overflow(although more lost to decimal places) but not worth processing time cost
+                    case 1:
+                        if (self.DecimalStatus < 250000000)
+                        {
+                            PowLimit = 49; break;//1.25^49 = ~56k
+                        }
+                        else if (self.DecimalStatus < 500000000)
+                        {
+                            PowLimit = 27; break;//1.5^27 = ~57k
+                        }
+                        else if (self.DecimalStatus < 850000000)
+                        {
+                            PowLimit = 18; break;
+                        }
+                        else
+                        {
+                            PowLimit = 15; break;//2^16 = 65536
+                        }
+                    case 2:
+                        PowLimit = 10; break;//3^10 = 59k
+                    case 3:
+                        if (self.DecimalStatus < 500000000)
+                        {
+                            PowLimit = 8; break;//2.5^8 = ~22k
+                        }
+                        else
+                        {
+                            PowLimit = 7; break;//4^8 = 65536
+                        }
+                    case 4:
+                        PowLimit = (self.DecimalStatus < 500000000) ? 7 : 6; break;
+                    case 5:
+                        PowLimit = 6; break;
+                    case 6:
+                    case 7:
+                    case 8:
+                        PowLimit = 5; break;
 
-					case 9:
-					case 10:
-					case 11:
-					case 12:
-					case 13:
-					case 14:
-						PowLimit = 4; break;
-					case 15://16^4 = 65536
-						PowLimit = (self.DecimalStatus <= 999900000) ? 4:3; break;
-					default:
-						if (self.IntValue < 39)
-						{
-							PowLimit = 3;
-						}
-						else if (self.IntValue < 254)//256^2 = = 65536
-						{
-							PowLimit = 2;
-						}
-						else if (self.IntValue == 255 && self.DecimalStatus <= 998000000)
-						{
-							PowLimit = 2;
-						}
-						else
-						{
-							PowLimit = 1;
-						}
-						break;
-				}
-				if (Value.IntValue == 0)
-				{
-					for (Part01 = 1; Part01 < PowLimit||Part02.DecimalStatus==0; ++Part01)
-					{
-						Part02 = Part01 / Value;
-					}
-				}
-				else
-				{
-				}
-			}
-		}
+                    case 9:
+                    case 10:
+                    case 11:
+                    case 12:
+                    case 13:
+                    case 14:
+                        PowLimit = 4; break;
+                    case 15://16^4 = 65536
+                        PowLimit = (self.DecimalStatus <= 999900000) ? 4 : 3; break;
+                    default:
+                        if (self.IntValue < 39)
+                        {
+                            PowLimit = 3;
+                        }
+                        else if (self.IntValue < 254)
+                        {
+                            PowLimit = 2;
+                        }
+                        else if (self.IntValue == 255 && self.DecimalStatus <= 998000000)//256^2 = = 65536
+                        {
+                            PowLimit = 2;
+                        }
+                        else
+                        {
+                            PowLimit = 1;
+                        }
+                        break;
+                }
+                for (Part01 = 1; Part01 < PowLimit || Part02.DecimalStatus == 0; ++Part01)
+                {
+                    Part02 = Part01 / Value;
+                }
+            }
+        }
 
-		/// <summary>
-		/// Approximate version of Math.Pow(double self, double Value) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
-		/// and https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
-		/// </summary>
-		/// <param name="self"></param>
-		/// <param name="Value"></param>
-		/// <returns></returns>
-		public static SmallDec Pow(SmallDec self, SmallDec Value)
+        /// <summary>
+        /// Approximate version of Math.Pow(double self, double Value) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+        /// and https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="Value"></param>
+        /// <returns></returns>
+        public static SmallDec Pow(SmallDec self, SmallDec Value)
         {
             if (Value.DecimalStatus == 0)
             {
