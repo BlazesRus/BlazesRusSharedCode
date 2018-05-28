@@ -343,21 +343,20 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             else if (Value.DecimalStatus > 0)//Positive Non-Whole Number Value
             {
-                //In many cases splitting into Fractional to perform Pow might cause overflows(so need to limit which cases uses Fractional based Pow)
-                //Working placeholder code for now
-                double SelfAsDecimal = (double)self;
-                double ValueAsDecimal = (double)Value;
-                SelfAsDecimal = Math.Pow(SelfAsDecimal, ValueAsDecimal);
-                return (MediumDec)SelfAsDecimal;
+				Fractional ValueSplit = new Fractional(Value, self);
+				MediumDec NewSelf = Pow(self, ValueSplit.Part01);
+				return NthRoot(NewSelf, ValueSplit.Part02);
             }
             else//Negative Non-Whole Number Value
             {
-                //Working placeholder code for now
-                double SelfAsDecimal = (double)self;
-                double ValueAsDecimal = (double)Value;
-                SelfAsDecimal = Math.Pow(SelfAsDecimal, ValueAsDecimal);
-                return (MediumDec)SelfAsDecimal;
-            }
+				Fractional ValueSplit = new Fractional(Value, self);
+				MediumDec NewSelf = Pow(self, ValueSplit.Part01);
+				NewSelf = NthRoot(NewSelf, ValueSplit.Part02);
+				double SelfAsDecimal = (double)self;
+				double ValueAsDecimal = (double)Value;
+				SelfAsDecimal = Math.Pow(SelfAsDecimal, ValueAsDecimal);//Debug checking difference between code outputs
+				return NewSelf;
+			}
         }
 
         /// <summary>

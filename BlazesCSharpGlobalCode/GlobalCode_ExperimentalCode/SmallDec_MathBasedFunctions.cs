@@ -362,48 +362,47 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
         }
 
-        /// <summary>
-        /// Approximate version of Math.Pow(double self, double Value) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
-        /// and https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="Value"></param>
-        /// <returns></returns>
-        public static SmallDec Pow(SmallDec self, SmallDec Value)
-        {
-            if (Value.DecimalStatus == 0)
-            {
-                return SmallDec.Pow(self, Value.IntValue);
-            }
-            else if (Value.DecimalStatus == NegativeWholeNumber)
-            {
-                return SmallDec.Pow(self, Value.IntValue * -1);
-            }
-            else if (Value.DecimalStatus > 0)//Positive Non-Whole Number Value
-            {
-                //In many cases splitting into Fractional to perform Pow might cause overflows(so need to limit which cases uses Fractional based Pow)
-                //Working placeholder code for now
-                double SelfAsDecimal = (double)self;
-                double ValueAsDecimal = (double)Value;
-                SelfAsDecimal = Math.Pow(SelfAsDecimal, ValueAsDecimal);
-                return (SmallDec)SelfAsDecimal;
-            }
-            else//Negative Non-Whole Number Value
-            {
-                //Working placeholder code for now
-                double SelfAsDecimal = (double)self;
-                double ValueAsDecimal = (double)Value;
-                SelfAsDecimal = Math.Pow(SelfAsDecimal, ValueAsDecimal);
-                return (SmallDec)SelfAsDecimal;
-            }
-        }
+		/// <summary>
+		/// Approximate version of Math.Pow(double self, double Value) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+		/// and https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
+		/// </summary>
+		/// <param name="self"></param>
+		/// <param name="Value"></param>
+		/// <returns></returns>
+		public static SmallDec Pow(SmallDec self, SmallDec Value)
+		{
+			if (Value.DecimalStatus == 0)
+			{
+				return SmallDec.Pow(self, Value.IntValue);
+			}
+			else if (Value.DecimalStatus == NegativeWholeNumber)
+			{
+				return SmallDec.Pow(self, Value.IntValue * -1);
+			}
+			else if (Value.DecimalStatus > 0)//Positive Non-Whole Number Value
+			{
+				Fractional ValueSplit = new Fractional(Value, self);
+				SmallDec NewSelf = Pow(self, ValueSplit.Part01);
+				return NthRoot(NewSelf, ValueSplit.Part02);
+			}
+			else//Negative Non-Whole Number Value
+			{
+				Fractional ValueSplit = new Fractional(Value, self);
+				SmallDec NewSelf = Pow(self, ValueSplit.Part01);
+				NewSelf = NthRoot(NewSelf, ValueSplit.Part02);
+				double SelfAsDecimal = (double)self;
+				double ValueAsDecimal = (double)Value;
+				SelfAsDecimal = Math.Pow(SelfAsDecimal, ValueAsDecimal);//Debug checking difference between code outputs
+				return NewSelf;
+			}
+		}
 
-        /// <summary>
-        /// SmallDec version of Math.Exp(double Value)
-        /// </summary>
-        /// <param name="Value"></param>
-        /// <returns></returns>
-        public static SmallDec Exp(SmallDec Value)
+		/// <summary>
+		/// SmallDec version of Math.Exp(double Value)
+		/// </summary>
+		/// <param name="Value"></param>
+		/// <returns></returns>
+		public static SmallDec Exp(SmallDec Value)
         {//Working placeholder code for now
             double SelfAsDecimal = (double)Value;
             SelfAsDecimal = Math.Exp(SelfAsDecimal);
