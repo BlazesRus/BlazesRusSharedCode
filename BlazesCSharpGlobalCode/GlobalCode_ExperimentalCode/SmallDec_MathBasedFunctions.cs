@@ -236,70 +236,155 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static SmallDec Pow(SmallDec self, double Value) => SmallDec.Pow(self, (SmallDec)Value);
 
 #endif
-
-        ///// <summary>
-        ///// Pow function with Values of less than One
-        ///// </summary>
-        ///// <param name="self">The self.</param>
-        ///// <param name="Value">The value.</param>
-        ///// <returns></returns>
-        //public static SmallDec PartialPow(SmallDec self, SmallDec Value)
+        //public class FractionalV1
         //{
+        //    public long Part01;
+        //    public long Part02;
+        //    public FractionalV1(SmallDec Value)
+        //    {
+        //        //long ValueAsIntRep = Value.IntValue * DecimalOverflow + Value.DecimalStatus;
+        //        //Value = (Value.DecimalStatus * DecimalOverflow)/ 0.DecimalStatus * DecimalOverflow
+        //        long PartOne = (long)Value.IntValue * DecimalOverflow;
+        //        long PartTwo = Value.DecimalStatus + PartOne;
+        //        bool TryToDecreasePlacement = true;
+        //        bool KeepAttempting = true;
+        //        for (int Attempts = 0; Attempts < 14 && KeepAttempting; ++Attempts)//Reduce Fractional Size
+        //        {
+        //            if (TryToDecreasePlacement)//Try to remove excess decimal places first
+        //            {
+        //                if (PartTwo % 100000 == 0 && PartOne % 100000 == 0) { PartTwo /= 100000; PartOne /= 100000; }
+        //                else if (PartTwo % 100 == 0 && PartOne % 100 == 0) { PartTwo /= 100; PartOne /= 100; }
+        //                else if (PartTwo % 10 == 0 && PartOne % 10 == 0) { PartTwo /= 10; PartOne /= 10; }
+        //                else
+        //                {
+        //                    TryToDecreasePlacement = false;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                if (PartTwo % 7 == 0 && PartOne % 7 == 0) { PartTwo /= 7; PartOne /= 7; }
+        //                else if (PartTwo % 5 == 0 && PartOne % 5 == 0) { PartTwo /= 5; PartOne /= 5; }
+        //                else if (PartTwo % 3 == 0 && PartOne % 3 == 0) { PartTwo /= 3; PartOne /= 3; }
+        //                else if (PartTwo % 2 == 0 && PartOne % 2 == 0) { PartTwo /= 2; PartOne /= 2; }
+        //                else if (PartTwo % 11 == 0 && PartOne % 11 == 0) { PartTwo /= 11; PartOne /= 11; }
+        //                else if (PartTwo % 13 == 0 && PartOne % 13 == 0) { PartTwo /= 13; PartOne /= 13; }
+        //                else if (PartTwo % 17 == 0 && PartOne % 17 == 0) { PartTwo /= 17; PartOne /= 17; }
+        //                else if (PartTwo % 23 == 0 && PartOne % 23 == 0) { PartTwo /= 23; PartOne /= 23; }
+        //                else if (PartTwo % 29 == 0 && PartOne % 29 == 0) { PartTwo /= 29; PartOne /= 29; }
+        //                else if (PartTwo % 31 == 0 && PartOne % 31 == 0) { PartTwo /= 31; PartOne /= 31; }
+        //                else
+        //                {
+        //                    KeepAttempting = false;
+        //                }
+        //            }
+        //        }
+        //    }
         //}
 
-        public class Fractional
-        {
-            public long Part01;
-            public long Part02;
-            public Fractional(SmallDec Value)
-            {
-                //long ValueAsIntRep = Value.IntValue * DecimalOverflow + Value.DecimalStatus;
-                //Value = (Value.DecimalStatus * DecimalOverflow)/ 0.DecimalStatus * DecimalOverflow
-                long PartOne = (long)Value.IntValue * DecimalOverflow;
-                long PartTwo = Value.DecimalStatus + PartOne;
-                bool TryToDecreasePlacement = true;
-                bool KeepAttempting = true;
-                for (int Attempts = 0; Attempts < 14 && KeepAttempting; ++Attempts)//Reduce Fractional Size
-                {
-                    if (TryToDecreasePlacement)//Try to remove excess decimal places first
-                    {
-                        if (PartTwo % 100000 == 0 && PartOne % 100000 == 0) { PartTwo /= 100000; PartOne /= 100000; }
-                        else if (PartTwo % 100 == 0 && PartOne % 100 == 0) { PartTwo /= 100; PartOne /= 100; }
-                        else if (PartTwo % 10 == 0 && PartOne % 10 == 0) { PartTwo /= 10; PartOne /= 10; }
-                        else
-                        {
-                            TryToDecreasePlacement = false;
-                        }
-                    }
-                    else
-                    {
-                        if (PartTwo % 7 == 0 && PartOne % 7 == 0) { PartTwo /= 7; PartOne /= 7; }
-                        else if (PartTwo % 5 == 0 && PartOne % 5 == 0) { PartTwo /= 5; PartOne /= 5; }
-                        else if (PartTwo % 3 == 0 && PartOne % 3 == 0) { PartTwo /= 3; PartOne /= 3; }
-                        else if (PartTwo % 2 == 0 && PartOne % 2 == 0) { PartTwo /= 2; PartOne /= 2; }
-                        else if (PartTwo % 11 == 0 && PartOne % 11 == 0) { PartTwo /= 11; PartOne /= 11; }
-                        else if (PartTwo % 13 == 0 && PartOne % 13 == 0) { PartTwo /= 13; PartOne /= 13; }
-                        else if (PartTwo % 17 == 0 && PartOne % 17 == 0) { PartTwo /= 17; PartOne /= 17; }
-                        else if (PartTwo % 23 == 0 && PartOne % 23 == 0) { PartTwo /= 23; PartOne /= 23; }
-                        else if (PartTwo % 29 == 0 && PartOne % 29 == 0) { PartTwo /= 29; PartOne /= 29; }
-                        else if (PartTwo % 31 == 0 && PartOne % 31 == 0) { PartTwo /= 31; PartOne /= 31; }
-                        else
-                        {
-                            KeepAttempting = false;
-                        }
-                    }
-                }
-            }
-        }
+		public class Fractional
+		{
+			public int Part01;
+			public SmallDec Part02;
 
-        /// <summary>
-        /// Approximate version of Math.Pow(double self, double Value) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
-        /// and https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="Value"></param>
-        /// <returns></returns>
-        public static SmallDec Pow(SmallDec self, SmallDec Value)
+			/// <summary>
+			/// Initializes a new instance of the <see cref="FractionalV2"/> class.
+			/// Self ^ Value = Self ^ Part01) ^ (1/Part02)
+			/// </summary>
+			/// <param name="Value">The value.</param>
+			/// <param name="self">The self.</param>
+			public Fractional(SmallDec Value, SmallDec self)
+			{
+				//Limit Part01 based on self to prevent overflow from first Pow integer operation
+				int PowLimit = 25;
+				switch (self.IntValue)
+				{
+					case 0: PowLimit = 999; break;//Could go even higher without overflow(although more lost to decimal places) but not worth processing time cost
+					case 1:
+						if (self.DecimalStatus < 25000000)
+						{
+							PowLimit = 49; break;//1.25^49 = ~56k
+						}
+						else if (self.DecimalStatus < 50000000)
+						{
+							PowLimit = 27; break;//1.5^27 = ~57k
+						}
+						else if (self.DecimalStatus < 80000000)
+						{
+							PowLimit = 18; break;//1.8^18 = ~39k
+						}
+						else
+						{
+							PowLimit = 15; break;//2^16 = 65536
+						}
+					case 2:
+						PowLimit = 10; break;//3^10 = 59k
+					case 3:
+						if (self.DecimalStatus < 50000000)
+						{
+							PowLimit = 8; break;//2.5^8 = ~22k
+						}
+						else
+						{
+							PowLimit = 7; break;//4^8 = 65536
+						}
+					case 4:
+						PowLimit = (self.DecimalStatus < 50000000)?7:6; break;
+					case 5:
+						PowLimit = 6; break;
+					case 6:
+					case 7:
+					case 8:
+						PowLimit = 5; break;
+
+					case 9:
+					case 10:
+					case 11:
+					case 12:
+					case 13:
+					case 14:
+						PowLimit = 4; break;
+					case 15://16^4 = 65536
+						PowLimit = (self.DecimalStatus <= 999900000) ? 4:3; break;
+					default:
+						if (self.IntValue < 39)
+						{
+							PowLimit = 3;
+						}
+						else if (self.IntValue < 254)//256^2 = = 65536
+						{
+							PowLimit = 2;
+						}
+						else if (self.IntValue == 255 && self.DecimalStatus <= 998000000)
+						{
+							PowLimit = 2;
+						}
+						else
+						{
+							PowLimit = 1;
+						}
+						break;
+				}
+				if (Value.IntValue == 0)
+				{
+					for (Part01 = 1; Part01 < PowLimit||Part02.DecimalStatus==0; ++Part01)
+					{
+						Part02 = Part01 / Value;
+					}
+				}
+				else
+				{
+				}
+			}
+		}
+
+		/// <summary>
+		/// Approximate version of Math.Pow(double self, double Value) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+		/// and https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
+		/// </summary>
+		/// <param name="self"></param>
+		/// <param name="Value"></param>
+		/// <returns></returns>
+		public static SmallDec Pow(SmallDec self, SmallDec Value)
         {
             if (Value.DecimalStatus == 0)
             {
