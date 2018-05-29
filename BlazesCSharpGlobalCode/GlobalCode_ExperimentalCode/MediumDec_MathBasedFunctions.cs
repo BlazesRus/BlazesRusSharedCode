@@ -228,7 +228,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
 		private static MediumDec LN10Value() => new MediumDec(2, 302585093);
 
-
 		/// <summary>
 		/// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
 		/// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having

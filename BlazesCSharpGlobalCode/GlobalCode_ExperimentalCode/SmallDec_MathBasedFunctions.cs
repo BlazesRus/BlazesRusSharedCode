@@ -101,63 +101,63 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                     case 64: IntValue = 8; break;
                     case 81: IntValue = 9; break;
                     case 100: IntValue = 10; break;
-					case 121: IntValue = 11; break;
-					case 144: IntValue = 12; break;
-					case 196: IntValue = 13; break;
-					case 225: IntValue = 15; break;
-					case 256: IntValue = 16; break;
-					case 289: IntValue = 17; break;
-					case 324: IntValue = 18; break;
-					case 361: IntValue = 19; break;
-					case 400: IntValue = 20; break;
-					default:
-						NthRoot(this, 2);
+                    case 121: IntValue = 11; break;
+                    case 144: IntValue = 12; break;
+                    case 196: IntValue = 13; break;
+                    case 225: IntValue = 15; break;
+                    case 256: IntValue = 16; break;
+                    case 289: IntValue = 17; break;
+                    case 324: IntValue = 18; break;
+                    case 361: IntValue = 19; break;
+                    case 400: IntValue = 20; break;
+                    default:
+                        NthRoot(this, 2);
                         break;
                 }
             }
             else
             {
-				NthRoot(this, 2);
-			}
+                NthRoot(this, 2);
+            }
         }
 
-		/// <summary>
-		/// Get the (Value)th Root
-		/// Code based mostly from https://rosettacode.org/wiki/Nth_root#C.23
-		/// </summary>
-		/// <param name="self">The self.</param>
-		/// <param name="Value">The value.</param>
-		/// <returns></returns>
-		public static SmallDec NthRoot(SmallDec self, SmallDec Value, SmallDec Precision)
-		{
-			SmallDec[] x = new SmallDec[2];
-			x[0] = self;
-			x[1] = self / Value;
-			while (SmallDec.Abs(x[0] - x[1]) > Precision)
-			{
-				x[1] = x[0];
-				x[0] = (1 / Value) * (((Value - 1) * x[1]) + (self / SmallDec.Pow(x[1], Value - 1)));
+        /// <summary>
+        /// Get the (Value)th Root
+        /// Code based mostly from https://rosettacode.org/wiki/Nth_root#C.23
+        /// </summary>
+        /// <param name="self">The self.</param>
+        /// <param name="Value">The value.</param>
+        /// <returns></returns>
+        public static SmallDec NthRoot(SmallDec self, SmallDec Value, SmallDec Precision)
+        {
+            SmallDec[] x = new SmallDec[2];
+            x[0] = self;
+            x[1] = self / Value;
+            while (SmallDec.Abs(x[0] - x[1]) > Precision)
+            {
+                x[1] = x[0];
+                x[0] = (1 / Value) * (((Value - 1) * x[1]) + (self / SmallDec.Pow(x[1], Value - 1)));
 
-			}
-			return x[0];
-		}
+            }
+            return x[0];
+        }
 
-		public static SmallDec NthRoot(SmallDec self, SmallDec Value)
-		{
-			return NthRoot(self, Value, OneMillionth);
-		}
+        public static SmallDec NthRoot(SmallDec self, SmallDec Value)
+        {
+            return NthRoot(self, Value, OneMillionth);
+        }
 
-		public static SmallDec NthRoot(SmallDec self, int Value)
-		{
-			return NthRoot(self, (SmallDec) Value, OneMillionth);
-		}
+        public static SmallDec NthRoot(SmallDec self, int Value)
+        {
+            return NthRoot(self, (SmallDec) Value, OneMillionth);
+        }
 
-		/// <summary>
-		/// Gets the square root of the specified value.
-		/// </summary>
-		/// <param name="Value">The value.</param>
-		/// <returns></returns>
-		public static SmallDec Sqrt(SmallDec Value)
+        /// <summary>
+        /// Gets the square root of the specified value.
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns></returns>
+        public static SmallDec Sqrt(SmallDec Value)
         {
             Value.Sqrt();
             return Value;
@@ -227,76 +227,75 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static SmallDec Pow(SmallDec self, double Value) => SmallDec.Pow(self, (SmallDec)Value);
 
 #endif
-		/// <summary>
-		/// 2.3025850929940456840179914546844
-		/// (Based on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having)
-		/// </summary>
-		public static readonly SmallDec LN10 = LN10Value();
+        /// <summary>
+        /// 2.3025850929940456840179914546844
+        /// (Based on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having)
+        /// </summary>
+        public static readonly SmallDec LN10 = LN10Value();
 
-		private static SmallDec LN10Value() => new SmallDec(2, 302585093);
+        private static SmallDec LN10Value() => new SmallDec(2, 302585093);
 
+        /// <summary>
+        /// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
+        /// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns></returns>
+        public static SmallDec Ln(SmallDec Value)
+        {
+            SmallDec old_sum = SmallDec.Zero;
+            SmallDec xmlxpl = (Value - 1) / (Value + 1);
+            SmallDec xmlxpl_2 = xmlxpl * xmlxpl;
+            SmallDec denom = SmallDec.One;
+            SmallDec frac = xmlxpl;
+            SmallDec term = frac;                 // denom start from 1.0
+            SmallDec sum = term;
 
-		/// <summary>
-		/// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
-		/// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having
-		/// </summary>
-		/// <param name="Value">The value.</param>
-		/// <returns></returns>
-		public static SmallDec Ln(SmallDec Value)
-		{
-			SmallDec old_sum = SmallDec.Zero;
-			SmallDec xmlxpl = (Value - 1) / (Value + 1);
-			SmallDec xmlxpl_2 = xmlxpl * xmlxpl;
-			SmallDec denom = SmallDec.One;
-			SmallDec frac = xmlxpl;
-			SmallDec term = frac;                 // denom start from 1.0
-			SmallDec sum = term;
+            while (sum != old_sum)
+            {
+                old_sum = sum;
+                denom += 2.0;
+                frac *= xmlxpl_2;
+                sum += frac / denom;
+            }
+            return 2.0 * sum;
+        }
 
-			while (sum != old_sum)
-			{
-				old_sum = sum;
-				denom += 2.0;
-				frac *= xmlxpl_2;
-				sum += frac / denom;
-			}
-			return 2.0 * sum;
-		}
+        /// <summary>
+        /// Log Base 10 of Value
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns></returns>
+        public static SmallDec Log10(SmallDec Value)
+        {
+            return Ln(Value) / LN10;
+        }
 
-		/// <summary>
-		/// Log Base 10 of Value
-		/// </summary>
-		/// <param name="Value">The value.</param>
-		/// <returns></returns>
-		public static SmallDec Log10(SmallDec Value)
-		{
-			return Ln(Value) / LN10;
-		}
+        /// <summary>
+        /// Log with Base of BaseVal of Value
+        /// Based on http://home.windstream.net/okrebs/page57.html
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <param name="BaseVal">The base of Log</param>
+        /// <returns></returns>
+        public static SmallDec Log(SmallDec Value, SmallDec BaseVal)
+        {
+            return Log10(Value) / Log10(BaseVal);
+        }
 
-		/// <summary>
-		/// Log with Base of BaseVal of Value
-		/// Based on http://home.windstream.net/okrebs/page57.html
-		/// </summary>
-		/// <param name="Value">The value.</param>
-		/// <param name="BaseVal">The base of Log</param>
-		/// <returns></returns>
-		public static SmallDec Log(SmallDec Value, SmallDec BaseVal)
-		{
-			return Log10(Value) / Log10(BaseVal);
-		}
+        /// <summary>
+        /// Log with Base of BaseVal of Value
+        /// Based on http://home.windstream.net/okrebs/page57.html
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <param name="BaseVal">The base of Log</param>
+        /// <returns></returns>
+        public static SmallDec Log(SmallDec Value, int BaseVal)
+        {
+            return Log10(Value) / Log10((SmallDec)BaseVal);
+        }
 
-		/// <summary>
-		/// Log with Base of BaseVal of Value
-		/// Based on http://home.windstream.net/okrebs/page57.html
-		/// </summary>
-		/// <param name="Value">The value.</param>
-		/// <param name="BaseVal">The base of Log</param>
-		/// <returns></returns>
-		public static SmallDec Log(SmallDec Value, int BaseVal)
-		{
-			return Log10(Value) / Log10((SmallDec)BaseVal);
-		}
-
-		public class Fractional
+        public class Fractional
         {
             public int Part01;
             public SmallDec Part02;
@@ -386,47 +385,47 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
         }
 
-		/// <summary>
-		/// Approximate version of Math.Pow(double self, double Value) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
-		/// and https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
-		/// </summary>
-		/// <param name="self"></param>
-		/// <param name="Value"></param>
-		/// <returns></returns>
-		public static SmallDec Pow(SmallDec self, SmallDec Value)
-		{
-			if (Value.DecimalStatus == 0)
-			{
-				return SmallDec.Pow(self, Value.IntValue);
-			}
-			else if (Value.DecimalStatus == NegativeWholeNumber)
-			{
-				return SmallDec.Pow(self, Value.IntValue * -1);
-			}
-			else if (Value.DecimalStatus > 0)//Positive Non-Whole Number Value
-			{
-				Fractional ValueSplit = new Fractional(Value, self);
-				SmallDec NewSelf = Pow(self, ValueSplit.Part01);
-				return NthRoot(NewSelf, ValueSplit.Part02);
-			}
-			else//Negative Non-Whole Number Value
-			{
-				Fractional ValueSplit = new Fractional(Value, self);
-				SmallDec NewSelf = Pow(self, ValueSplit.Part01);
-				NewSelf = NthRoot(NewSelf, ValueSplit.Part02);
-				double SelfAsDecimal = (double)self;
-				double ValueAsDecimal = (double)Value;
-				SelfAsDecimal = Math.Pow(SelfAsDecimal, ValueAsDecimal);//Debug checking difference between code outputs
-				return NewSelf;
-			}
-		}
+        /// <summary>
+        /// Approximate version of Math.Pow(double self, double Value) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+        /// and https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="Value"></param>
+        /// <returns></returns>
+        public static SmallDec Pow(SmallDec self, SmallDec Value)
+        {
+            if (Value.DecimalStatus == 0)
+            {
+                return SmallDec.Pow(self, Value.IntValue);
+            }
+            else if (Value.DecimalStatus == NegativeWholeNumber)
+            {
+                return SmallDec.Pow(self, Value.IntValue * -1);
+            }
+            else if (Value.DecimalStatus > 0)//Positive Non-Whole Number Value
+            {
+                Fractional ValueSplit = new Fractional(Value, self);
+                SmallDec NewSelf = Pow(self, ValueSplit.Part01);
+                return NthRoot(NewSelf, ValueSplit.Part02);
+            }
+            else//Negative Non-Whole Number Value
+            {
+                Fractional ValueSplit = new Fractional(Value, self);
+                SmallDec NewSelf = Pow(self, ValueSplit.Part01);
+                NewSelf = NthRoot(NewSelf, ValueSplit.Part02);
+                double SelfAsDecimal = (double)self;
+                double ValueAsDecimal = (double)Value;
+                SelfAsDecimal = Math.Pow(SelfAsDecimal, ValueAsDecimal);//Debug checking difference between code outputs
+                return NewSelf;
+            }
+        }
 
-		/// <summary>
-		/// SmallDec version of Math.Exp(double Value)
-		/// </summary>
-		/// <param name="Value"></param>
-		/// <returns></returns>
-		public static SmallDec Exp(SmallDec Value)
+        /// <summary>
+        /// SmallDec version of Math.Exp(double Value)
+        /// </summary>
+        /// <param name="Value"></param>
+        /// <returns></returns>
+        public static SmallDec Exp(SmallDec Value)
         {//Working placeholder code for now
             double SelfAsDecimal = (double)Value;
             SelfAsDecimal = Math.Exp(SelfAsDecimal);
