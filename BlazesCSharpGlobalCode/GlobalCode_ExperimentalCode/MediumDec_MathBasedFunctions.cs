@@ -220,8 +220,76 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static MediumDec Pow(MediumDec self, double Value) => MediumDec.Pow(self, (MediumDec)Value);
 
 #endif
+		/// <summary>
+		/// 2.3025850929940456840179914546844
+		/// (Based on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having)
+		/// </summary>
+		public static readonly MediumDec LN10 = LN10Value();
 
-        public class Fractional
+		private static MediumDec LN10Value() => new MediumDec(2, 302585093);
+
+
+		/// <summary>
+		/// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
+		/// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static MediumDec Ln(MediumDec Value)
+		{
+			MediumDec old_sum = MediumDec.Zero;
+			MediumDec xmlxpl = (Value - 1) / (Value + 1);
+			MediumDec xmlxpl_2 = xmlxpl * xmlxpl;
+			MediumDec denom = MediumDec.One;
+			MediumDec frac = xmlxpl;
+			MediumDec term = frac;                 // denom start from 1.0
+			MediumDec sum = term;
+
+			while (sum != old_sum)
+			{
+				old_sum = sum;
+				denom += 2.0;
+				frac *= xmlxpl_2;
+				sum += frac / denom;
+			}
+			return 2.0 * sum;
+		}
+
+		/// <summary>
+		/// Log Base 10 of Value
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static MediumDec Log10(MediumDec Value)
+		{
+			return Ln(Value) / LN10;
+		}
+
+		/// <summary>
+		/// Log with Base of BaseVal of Value
+		/// Based on http://home.windstream.net/okrebs/page57.html
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <param name="BaseVal">The base of Log</param>
+		/// <returns></returns>
+		public static MediumDec Log(MediumDec Value, MediumDec BaseVal)
+		{
+			return Log10(Value) / Log10(BaseVal);
+		}
+
+		/// <summary>
+		/// Log with Base of BaseVal of Value
+		/// Based on http://home.windstream.net/okrebs/page57.html
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <param name="BaseVal">The base of Log</param>
+		/// <returns></returns>
+		public static MediumDec Log(MediumDec Value, int BaseVal)
+		{
+			return Log10(Value) / Log10((MediumDec)BaseVal);
+		}
+
+		public class Fractional
         {
             public int Part01;
             public MediumDec Part02;

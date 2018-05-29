@@ -227,52 +227,76 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static SmallDec Pow(SmallDec self, double Value) => SmallDec.Pow(self, (SmallDec)Value);
 
 #endif
-        //public class FractionalV1
-        //{
-        //    public long Part01;
-        //    public long Part02;
-        //    public FractionalV1(SmallDec Value)
-        //    {
-        //        //long ValueAsIntRep = Value.IntValue * DecimalOverflow + Value.DecimalStatus;
-        //        //Value = (Value.DecimalStatus * DecimalOverflow)/ 0.DecimalStatus * DecimalOverflow
-        //        long PartOne = (long)Value.IntValue * DecimalOverflow;
-        //        long PartTwo = Value.DecimalStatus + PartOne;
-        //        bool TryToDecreasePlacement = true;
-        //        bool KeepAttempting = true;
-        //        for (int Attempts = 0; Attempts < 14 && KeepAttempting; ++Attempts)//Reduce Fractional Size
-        //        {
-        //            if (TryToDecreasePlacement)//Try to remove excess decimal places first
-        //            {
-        //                if (PartTwo % 100000 == 0 && PartOne % 100000 == 0) { PartTwo /= 100000; PartOne /= 100000; }
-        //                else if (PartTwo % 100 == 0 && PartOne % 100 == 0) { PartTwo /= 100; PartOne /= 100; }
-        //                else if (PartTwo % 10 == 0 && PartOne % 10 == 0) { PartTwo /= 10; PartOne /= 10; }
-        //                else
-        //                {
-        //                    TryToDecreasePlacement = false;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                if (PartTwo % 7 == 0 && PartOne % 7 == 0) { PartTwo /= 7; PartOne /= 7; }
-        //                else if (PartTwo % 5 == 0 && PartOne % 5 == 0) { PartTwo /= 5; PartOne /= 5; }
-        //                else if (PartTwo % 3 == 0 && PartOne % 3 == 0) { PartTwo /= 3; PartOne /= 3; }
-        //                else if (PartTwo % 2 == 0 && PartOne % 2 == 0) { PartTwo /= 2; PartOne /= 2; }
-        //                else if (PartTwo % 11 == 0 && PartOne % 11 == 0) { PartTwo /= 11; PartOne /= 11; }
-        //                else if (PartTwo % 13 == 0 && PartOne % 13 == 0) { PartTwo /= 13; PartOne /= 13; }
-        //                else if (PartTwo % 17 == 0 && PartOne % 17 == 0) { PartTwo /= 17; PartOne /= 17; }
-        //                else if (PartTwo % 23 == 0 && PartOne % 23 == 0) { PartTwo /= 23; PartOne /= 23; }
-        //                else if (PartTwo % 29 == 0 && PartOne % 29 == 0) { PartTwo /= 29; PartOne /= 29; }
-        //                else if (PartTwo % 31 == 0 && PartOne % 31 == 0) { PartTwo /= 31; PartOne /= 31; }
-        //                else
-        //                {
-        //                    KeepAttempting = false;
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
+		/// <summary>
+		/// 2.3025850929940456840179914546844
+		/// (Based on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having)
+		/// </summary>
+		public static readonly SmallDec LN10 = LN10Value();
 
-        public class Fractional
+		private static SmallDec LN10Value() => new SmallDec(2, 302585093);
+
+
+		/// <summary>
+		/// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
+		/// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static SmallDec Ln(SmallDec Value)
+		{
+			SmallDec old_sum = SmallDec.Zero;
+			SmallDec xmlxpl = (Value - 1) / (Value + 1);
+			SmallDec xmlxpl_2 = xmlxpl * xmlxpl;
+			SmallDec denom = SmallDec.One;
+			SmallDec frac = xmlxpl;
+			SmallDec term = frac;                 // denom start from 1.0
+			SmallDec sum = term;
+
+			while (sum != old_sum)
+			{
+				old_sum = sum;
+				denom += 2.0;
+				frac *= xmlxpl_2;
+				sum += frac / denom;
+			}
+			return 2.0 * sum;
+		}
+
+		/// <summary>
+		/// Log Base 10 of Value
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static SmallDec Log10(SmallDec Value)
+		{
+			return Ln(Value) / LN10;
+		}
+
+		/// <summary>
+		/// Log with Base of BaseVal of Value
+		/// Based on http://home.windstream.net/okrebs/page57.html
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <param name="BaseVal">The base of Log</param>
+		/// <returns></returns>
+		public static SmallDec Log(SmallDec Value, SmallDec BaseVal)
+		{
+			return Log10(Value) / Log10(BaseVal);
+		}
+
+		/// <summary>
+		/// Log with Base of BaseVal of Value
+		/// Based on http://home.windstream.net/okrebs/page57.html
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <param name="BaseVal">The base of Log</param>
+		/// <returns></returns>
+		public static SmallDec Log(SmallDec Value, int BaseVal)
+		{
+			return Log10(Value) / Log10((SmallDec)BaseVal);
+		}
+
+		public class Fractional
         {
             public int Part01;
             public SmallDec Part02;
