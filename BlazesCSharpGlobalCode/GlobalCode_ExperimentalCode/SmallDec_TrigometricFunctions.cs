@@ -64,7 +64,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 
         private static SmallDec NegativeOneValue() => new SmallDec(1, SmallDec.NegativeWholeNumber);
 
-        public static SmallDec SinFromAngle(SmallDec Value)
+		/// <summary>
+		/// Get Sin from Value of angle.
+		/// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static SmallDec SinFromAngle(SmallDec Value)
         {
             if(Value.DecimalStatus==SmallDec.NegativeWholeNumber)
             {
@@ -85,27 +91,45 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 Value %= 360;
             }
-            if (Value == SmallDec.Zero) { return SmallDec.Zero; }
-            else if(Value.IntValue==90&&Value.DecimalStatus==0)
-            {
-                return SmallDec.One;
-            }
-            else if (Value.IntValue == 180 && Value.DecimalStatus == 0)
-            {
-                return SmallDec.Zero;
-            }
-            else if (Value.IntValue == 270 && Value.DecimalStatus == 0)
-            {
-                return SmallDec.NegativeOne;
-            }
-            else
-            {
-                double Temp = Math.Sin(Math.PI * (double)Value / 180.0);//Converting from Angle to Radians (https://msdn.microsoft.com/en-us/library/system.math.cos(v=vs.110).aspx)
-                return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code
-            }
+			if (Value == SmallDec.Zero) { return SmallDec.Zero; }
+			else if (Value.IntValue == 30 && Value.DecimalStatus == 0)
+			{
+				return new SmallDec(0, 500000000);
+			}
+			else if (Value.IntValue == 90 && Value.DecimalStatus == 0)
+			{
+				return SmallDec.One;
+			}
+			else if (Value.IntValue == 180 && Value.DecimalStatus == 0)
+			{
+				return SmallDec.Zero;
+			}
+			else if (Value.IntValue == 270 && Value.DecimalStatus == 0)
+			{
+				return SmallDec.NegativeOne;
+			}
+			else
+			{
+				SmallDec NewValue = SmallDec.Zero;
+				//Angle as Radian
+				SmallDec Radius = SmallDec.PI * Value / 180; 
+				for (int i = 0; i < 7; ++i)
+				{ // That's Taylor series!!
+					NewValue += Pow(-1, i) * Pow(Radius, 2 * i + 1) / SuperDecGlobalCode.Fact(2 * i + 1);
+				}
+				return NewValue;
+				//double Temp = Math.Sin(Math.PI * (double)Value / 180.0);//Converting from Angle to Radians (https://msdn.microsoft.com/en-us/library/system.math.cos(v=vs.110).aspx)
+				//return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code
+			}
         }
 
-        public static SmallDec CosFromAngle(SmallDec Value)
+		/// <summary>
+		/// Get Cos() from Value of Angle
+		/// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static SmallDec CosFromAngle(SmallDec Value)
         {
             if (Value.DecimalStatus == SmallDec.NegativeWholeNumber)
             {
@@ -141,9 +165,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             else
             {
-                double Temp = Math.Cos(Math.PI * (double)Value / 180.0);//Converting from Angle to Radians (https://msdn.microsoft.com/en-us/library/system.math.cos(v=vs.110).aspx)
-                return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code
-            }
+				SmallDec NewValue = SmallDec.Zero;
+				//Angle as Radian
+				SmallDec Radius = SmallDec.PI * Value / 180;
+				for (int i = 0; i < 7; ++i)
+				{ // That's also Taylor series!!
+					NewValue += Pow(-1, i) * Pow(Radius, 2 * i) / SuperDecGlobalCode.Fact(2 * i);
+				}
+				return NewValue;
+				//double Temp = Math.Cos(Math.PI * (double)Value / 180.0);//Converting from Angle to Radians (https://msdn.microsoft.com/en-us/library/system.math.cos(v=vs.110).aspx)
+				//return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code
+			}
         }
 
 
@@ -189,7 +221,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
         }
 
-        public static SmallDec ATan(SmallDec Value)
+		public static SmallDec ASin(SmallDec Value)
+		{
+			double Temp = Math.Asin((double)Value);
+			return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code 
+		}
+
+		public static SmallDec ATan(SmallDec Value)
         {
             double Temp = Math.Atan((double)Value);
             return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code 

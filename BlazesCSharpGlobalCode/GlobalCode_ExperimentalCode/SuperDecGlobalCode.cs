@@ -93,7 +93,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         //end of Trigonometrical method section
         public static int[] PowerOfTens = { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000 };
         public static long[] PowerOfTens64Bit = { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000, 100000000000, 1000000000000, 10000000000000, 100000000000000, 1000000000000000, 10000000000000000, 100000000000000000, 1000000000000000000 };
-    }
+		/// <summary>
+		/// Returns the factorial Number from N
+		/// (From https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h Answer for using in Taylor series)
+		/// </summary>
+		/// <param name="n">The n.</param>
+		/// <returns></returns>
+		public static int Fact(int n)
+		{
+			return n <= 0 ? 1 : n * Fact(n - 1);
+		}
+	}
     //public interface SuperDecBase
     //{
     //    //public static SuperDecBase Sum(IEnumerable<SuperDecBase> Value);
