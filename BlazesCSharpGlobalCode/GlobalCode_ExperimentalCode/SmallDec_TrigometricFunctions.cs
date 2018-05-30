@@ -199,6 +199,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return SinValue / CosValue;
 		}
 
+		//Attempt to merge Sin and Cos loops together
+		public static SmallDec MergedTan(SmallDec Value)
+		{
+			SmallDec Output = SmallDec.Zero;
+			for (int i = 0; i < 7; ++i)
+			{
+				Output += (Pow(Value, 2 * i + 1) / SuperDecGlobalCode.Fact(2 * i + 1))/(Pow(Value, 2 * i) / SuperDecGlobalCode.Fact(2 * i));
+			}
+			return Output;
+		}
+
 		/// <summary>
 		/// Get Tangent from Value in Degrees (SlopeInPercent:http://communityviz.city-explained.com/communityviz/s360webhelp4-2/formulas/function_library/atan_function.htm)
 		/// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
@@ -248,10 +259,25 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
         }
 
+		/// <summary>
+		/// Arc Sine (http://communityviz.city-explained.com/communityviz/s360webhelp4-2/formulas/function_library/asin_function.htm)
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
 		public static SmallDec ASin(SmallDec Value)
 		{
 			double Temp = Math.Asin((double)Value);
 			return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code 
+		}
+
+		/// <summary>
+		/// Arc Sine from Value in Degrees
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static SmallDec ASinFromDegrees(SmallDec Value)
+		{
+			return ASin(SmallDec.PI * Value / 180);
 		}
 
 		/// <summary>
@@ -306,6 +332,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             double Temp = Math.Acos((double)Value);
             return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code
         }
+
+
+		/// <summary>
+		/// Arc Sine from Value in Degrees
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static SmallDec ACosFromDegrees(SmallDec Value)
+		{
+			return ACos(SmallDec.PI * Value / 180);
+		}
 
 		/// <summary>
 		/// atan2 calculation with self normalization
