@@ -178,9 +178,34 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			}
         }
 
+		/// <summary>
+		/// Get Tan from Value in Radians
+		/// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static SmallDec Tan(SmallDec Value)
+		{
+			SmallDec SinValue = SmallDec.Zero;
+			SmallDec CosValue = SmallDec.Zero;
+			for (int i = 0; i < 7; ++i)
+			{
+				SinValue += Pow(-1, i) * Pow(Value, 2 * i + 1) / SuperDecGlobalCode.Fact(2 * i + 1);
+			}
+			for (int i = 0; i < 7; ++i)
+			{
+				CosValue += Pow(-1, i) * Pow(Value, 2 * i) / SuperDecGlobalCode.Fact(2 * i);
+			}
+			return SinValue / CosValue;
+		}
 
-
-        public static SmallDec TanFromAngle(SmallDec Value)
+		/// <summary>
+		/// Get Tangent from Value in Degrees (SlopeInPercent:http://communityviz.city-explained.com/communityviz/s360webhelp4-2/formulas/function_library/atan_function.htm)
+		/// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static SmallDec TanFromAngle(SmallDec Value)
         {
             if (Value.DecimalStatus == SmallDec.NegativeWholeNumber)
             {
@@ -216,9 +241,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             else
             {
-                double Temp = Math.Tan(Math.PI * (double)Value / 180.0);//Converting from Angle to Radians (https://msdn.microsoft.com/en-us/library/system.math.cos(v=vs.110).aspx)
-                return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code
-            }
+				//int QuadrantNum = Value.IntValue < 90? 1: (Value < 180? 2 : (Value < 270 ? 3: 4));
+				//double Temp = Math.Tan(Math.PI * (double)Value / 180.0);//Converting from Angle to Radians (https://msdn.microsoft.com/en-us/library/system.math.cos(v=vs.110).aspx)
+				//            return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code
+				return Tan(SmallDec.PI * Value / 180);
+			}
         }
 
 		public static SmallDec ASin(SmallDec Value)
@@ -227,16 +254,89 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 			return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code 
 		}
 
-		public static SmallDec ATan(SmallDec Value)
+		/// <summary>
+		/// Gets Inverse Tangent from Value of Angle
+		/// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static SmallDec ATanFromDegrees(SmallDec Value)
         {
-            double Temp = Math.Atan((double)Value);
-            return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code 
-        }
+			return ATan(SmallDec.PI * Value / 180);
+		}
 
-        public static SmallDec ACos(SmallDec Value)
+		/// <summary>
+		/// Gets Inverse Tangent from Value in Radians
+		/// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static SmallDec ATan(SmallDec Value)
+		{
+			//double Temp = Math.Atan((double)Value);
+			//return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code 
+			SmallDec SinValue = SmallDec.Zero;
+			SmallDec CosValue = SmallDec.Zero;
+			//Angle as Radian
+			for (int i = 0; i < 7; ++i)
+			{ // That's Taylor series!!
+				SinValue += Pow(-1, i) * Pow(Value, 2 * i + 1) / SuperDecGlobalCode.Fact(2 * i + 1);
+			}
+			for (int i = 0; i < 7; ++i)
+			{ // That's also Taylor series!!
+				CosValue += Pow(-1, i) * Pow(Value, 2 * i) / SuperDecGlobalCode.Fact(2 * i);
+			}
+			return CosValue / SinValue;
+		}
+
+		/// <summary>
+		/// Get the slope in degrees from percentage of slope (Based on formula from http://communityviz.city-explained.com/communityviz/s360webhelp4-2/formulas/function_library/atan_function.htm)
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static SmallDec SlopeInDegrees(SmallDec Value) => ATan(Value) * 180 / PI;
+
+		/// <summary>
+		/// Arc Cosine(http://communityviz.city-explained.com/communityviz/s360webhelp4-2/formulas/function_library/acos_function.htm)
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static SmallDec ACos(SmallDec Value)
         {
             double Temp = Math.Acos((double)Value);
             return new SmallDec(Temp);//Working Placeholder code for now until change later to other formula based code
         }
+
+		/// <summary>
+		/// atan2 calculation with self normalization
+		/// Application: Used when one wants to compute the 4-quadrant arctangent of a complex number (or any number with x-y coordinates) with a self-normalizing function.
+		/// Example Applications: digital FM demodulation, phase angle computations
+		/// Code from http://dspguru.com/dsp/tricks/fixed-point-atan2-with-self-normalization/ with some slight edit to get working
+		/// </summary>
+		/// <param name="y">The y.</param>
+		/// <param name="X">The x.</param>
+		/// <returns></returns>
+		public static SmallDec ArcTan2(SmallDec y, SmallDec x)
+		{
+			SmallDec coeff_1 = SmallDec.PI / 4;
+			SmallDec coeff_2 = 3 * coeff_1;
+			SmallDec abs_y = Abs(y) + new SmallDec(0,1);// kludge to prevent 0/0 condition
+			SmallDec r;
+			SmallDec angle;
+			if (x >= 0)
+			{
+				r = (x - abs_y) / (x + abs_y);
+				angle = coeff_1 - coeff_1 * r;
+			}
+			else
+			{
+				r = (x + abs_y) / (abs_y - x);
+				angle = coeff_2 - coeff_1 * r;
+			}
+			if (y < 0)
+				return -angle;     // negate if in quad III or IV
+			else
+				return angle;
+		}
     }
 }
