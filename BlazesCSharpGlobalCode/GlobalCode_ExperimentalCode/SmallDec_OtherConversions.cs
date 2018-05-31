@@ -241,75 +241,75 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return NewList;
         }
 
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="ListValue"></param>
-        //public static explicit operator SmallDec(List<float> ListValue)
-        //{
-        //    var Sum = SmallDec.Zero;
-        //    foreach (var value in ListValue)
-        //    {
-        //        Sum += value;
-        //    }
-        //    return Sum;
-        //}
+		/// <summary>
+		/// </summary>
+		/// <param name="ListValue"></param>
+		public static explicit operator SmallDec(List<float> ListValue)
+		{
+			var Sum = SmallDec.Zero;
+			foreach (var value in ListValue)
+			{
+				Sum += value;
+			}
+			return Sum;
+		}
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="ListValue"></param>
-        //        public static explicit operator SmallDec(List<double> ListValue)
-        //        {
-        //            var Sum = SmallDec.Zero;
-        //            foreach (var value in ListValue)
-        //            {
-        //                Sum += value;
-        //            }
-        //            return Sum;
-        //        }
+		/// <summary>
+		/// </summary>
+		/// <param name="ListValue"></param>
+		public static explicit operator SmallDec(List<double> ListValue)
+		{
+			var Sum = SmallDec.Zero;
+			foreach (var value in ListValue)
+			{
+				Sum += value;
+			}
+			return Sum;
+		}
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="ListValue"></param>
-        //        public static explicit operator SmallDec(List<decimal> ListValue)
-        //        {
-        //            var Sum = SmallDec.Zero;
-        //            foreach (var value in ListValue)
-        //            {
-        //                Sum += value;
-        //            }
-        //            return Sum;
-        //        }
+		/// <summary>
+		/// </summary>
+		/// <param name="ListValue"></param>
+		public static explicit operator SmallDec(List<decimal> ListValue)
+		{
+			var Sum = SmallDec.Zero;
+			foreach (var value in ListValue)
+			{
+				Sum += value;
+			}
+			return Sum;
+		}
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="ListValue"></param>
-        //        public static explicit operator SmallDec(List<int> ListValue)
-        //        {
-        //            var Sum = SmallDec.Zero;
-        //            foreach (var value in ListValue)
-        //            {
-        //                Sum += value;
-        //            }
-        //            return Sum;
-        //        }
+		/// <summary>
+		/// </summary>
+		/// <param name="ListValue"></param>
+		public static explicit operator SmallDec(List<int> ListValue)
+		{
+			var Sum = SmallDec.Zero;
+			foreach (var value in ListValue)
+			{
+				Sum += value;
+			}
+			return Sum;
+		}
 
-        //        /// <summary>
-        //        /// </summary>
-        //        /// <param name="ListValue"></param>
-        //        public static explicit operator SmallDec(List<long> ListValue)
-        //        {
-        //            var Sum = SmallDec.Zero;
-        //            foreach (var value in ListValue)
-        //            {
-        //                Sum += value;
-        //            }
-        //            return Sum;
-        //        }
+		/// <summary>
+		/// </summary>
+		/// <param name="ListValue"></param>
+		public static explicit operator SmallDec(List<long> ListValue)
+		{
+			var Sum = SmallDec.Zero;
+			foreach (var value in ListValue)
+			{
+				Sum += value;
+			}
+			return Sum;
+		}
 
-        /// <summary>
-        /// </summary>
-        /// <param name="value"></param>
-        public static explicit operator SmallDec(bool value)
+		/// <summary>
+		/// </summary>
+		/// <param name="value"></param>
+		public static explicit operator SmallDec(bool value)
         {
             if (value == false)
             {

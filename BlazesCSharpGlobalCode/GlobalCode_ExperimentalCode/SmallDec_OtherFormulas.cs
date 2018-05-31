@@ -176,7 +176,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                         //Side1=((TargetRef.GetPos x), (TargetRef.GetPos y), (ProjRef.GetPos z))
                         temp2 = ((DifX * DifX) + (DifY * DifY));
                         S1 = SmallDec.Sqrt(temp2);
-                        if (S1 != 0.0)//Avoid Divide by Zero Error
+                        if (S1 != SmallDec.Zero)//Avoid Divide by Zero Error
                         {
                             temp = (DifZ * DifZ);//Side 3=DifZ, Side2=Distance
                                                  //Law of Cosines=acos ((S1^2+S2^2-S3^2)/(2*S1*S2));Side3=SideOppositeAngle
