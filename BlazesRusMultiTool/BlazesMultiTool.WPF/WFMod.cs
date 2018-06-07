@@ -91,7 +91,8 @@ namespace BlazesMultiTool
                         {
                             ModStats.Add(AttributeName, AlternativeFormat ? ValueField : (SmallDec)builder.ToString());
                         }
-                    }
+						builder.Clear();
+					}
                     else
                     {
                         switch (builder.Length)
