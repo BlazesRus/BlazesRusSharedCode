@@ -4,14 +4,6 @@ using System.Text;
 
 namespace CSharpGlobalCode.GlobalCode_IniData
 {
-    //class IniDataElement
-    //{
-    //	bool IsIniCategory = false;
-    //	std::string IniSetting;
-    //	std::string IniValue;
-    //	//IniDataElement();
-    //	//~IniDataElement();
-    //};
     public class IniDataElement
     {
         public string IniSetting;
@@ -138,18 +130,6 @@ namespace CSharpGlobalCode.GlobalCode_IniData
 					}
 				}
 			}
-
-			//    VariableList<string> TargetSettings;
-			//    TargetSettings.LoadFileDataV2(FileName);
-			//    //First part of command;Syntax:[IniSetting=IniValue]
-			//    string IniSetting = "";
-			//    //Command Value;Syntax:[IniSetting=IniValue]
-			//    string IniValue = "";
-			//    //CommandScan Stage (limited to value of 255 to save little ram)
-			//    byte CommandStage = 0;
-			//    string LineString = "";
-			//    int LineSize;
-			//    char LineChar;
 		}
 
 		bool CheckIfElementExists(string Value)
@@ -190,10 +170,4 @@ namespace CSharpGlobalCode.GlobalCode_IniData
 		}
 		public IniData() {}
     }
-    //class IniData : public VariableList<IniDataElement>
-    //{
-    //	unsigned __int8 IniType = 0;
-
-
-    //};
 }
