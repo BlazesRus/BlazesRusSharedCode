@@ -296,7 +296,17 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         {
             return new MediumDec(Value.IntValue, Value.DecimalStatus);
         }
-    }
+
+		internal static bool IsInfinity(MediumDec magnitude)
+		{
+			throw new NotImplementedException();
+		}
+
+		internal static bool IsNaN(MediumDec magnitude)
+		{
+			throw new NotImplementedException();
+		}
+	}
 
     //class MediumDecTuple : Tuple<string, MediumDec>
     //{
