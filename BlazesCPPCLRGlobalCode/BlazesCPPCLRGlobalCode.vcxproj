@@ -138,6 +138,16 @@
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\QuadFloatingInt.h" />
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\SuperDecHex.h" />
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\VariableListV2.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_NodeTrees\TagNodeTreeTemplate.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_NodeTrees\TagPosition.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_NodeTrees\VariableData.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_NodeTrees\XMLOption.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_NodeTrees\XMLTagTree.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_VariableLists\StringVectorList.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_VariableLists\VariableList.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_VariableLists\VariableTypeLists.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_VariableLists\VariableVectorFunctions.h" />
     <ClInclude Include="BlazesCPPCLRGlobalCode.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
@@ -145,6 +155,13 @@
   <ItemGroup>
     <ClCompile Include="..\GlobalCode\GlobalCode_ExperimentalCode\MediumDec.cpp" />
     <ClCompile Include="..\GlobalCode\GlobalCode_ExperimentalCode\SuperDecHex.cpp" />
+    <ClCompile Include="..\GlobalCode\GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp" />
+    <ClCompile Include="..\GlobalCode\GlobalCode_NodeTrees\TagPosition.cpp" />
+    <ClCompile Include="..\GlobalCode\GlobalCode_NodeTrees\VariableData.cpp" />
+    <ClCompile Include="..\GlobalCode\GlobalCode_NodeTrees\XMLOption.cpp" />
+    <ClCompile Include="..\GlobalCode\GlobalCode_VariableLists\StringVectorList.cpp" />
+    <ClCompile Include="..\GlobalCode\GlobalCode_VariableLists\VariableTypeLists.cpp" />
+    <ClCompile Include="..\GlobalCode\GlobalCode_VariableLists\VariableVectorFunctions.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="BlazesCPPCLRGlobalCode.cpp" />
     <ClCompile Include="Stdafx.cpp">

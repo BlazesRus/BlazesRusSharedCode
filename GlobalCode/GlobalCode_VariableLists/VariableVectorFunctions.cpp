@@ -4,7 +4,7 @@
 
 #include "VariableVectorFunctions.h"
 #include <string>
-#include "StringFunctions.h"
+//#include "StringFunctions.h"
 
 //Inside this ifdef block holds GlobalCode Environment library version of header structure (preprocessor defined inside all GlobalCode library configs)
 #ifdef BLAZESGLOBALCODE_LIBRARY
@@ -203,7 +203,7 @@ StringVectorList VariableVectorFunctions::IniInfoFromString(string LineString)
 	bool IgnoreWhitespace = true;
 	for(size_t i = 0; i < StringLength; ++i)
 	{
-		StringChar = "" + LineString.at(i);
+		StringChar = LineString.at(i);
 		if(StringChar == "=")
 		{
 			ParamList.Add(TempString);

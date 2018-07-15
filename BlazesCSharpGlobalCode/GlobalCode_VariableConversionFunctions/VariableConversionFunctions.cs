@@ -235,63 +235,106 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             }
             return ReturnValue;
         }
-        ////Returns first string of either true,false,1, or 0 in string; if no value found returns false
-        ////************************************
-        //// Method:    ReadBoolFromString
-        //// FullName:  VariableConversionFunctions::ReadBoolFromString
-        //// Access:    public static 
-        //// Returns:   bool
-        //// Qualifier:
-        //// Parameter: string LineString
-        ////************************************
-        //static bool ReadBoolFromString(string LineString);
-        ////Returns long long int value from string(int 64 bit)
-        ////************************************
-        //// Method:    ReadXIntFromString
-        //// FullName:  VariableConversionFunctions::ReadXIntFromString
-        //// Access:    public static 
-        //// Returns:   long long int
-        //// Qualifier:
-        //// Parameter: string TempString
-        ////************************************
-        //static long long int ReadXIntFromString(string TempString);
-        ////************************************
-        //// Scan int for bool value
-        //// Method:    ReadBoolFromInt
-        //// FullName:  VariableConversionFunctions::ReadBoolFromInt
-        //// Access:    public static 
-        //// Returns:   bool
-        //// Qualifier:
-        //// Parameter: int Temp
-        ////************************************
-        //static bool ReadBoolFromInt(int Temp);
-        ////************************************
-        //// Method:    DoubleAsString
-        //// FullName:  VariableConversionFunctions::DoubleAsString
-        //// Access:    public static 
-        //// Returns:   string
-        //// Qualifier:
-        //// Parameter: double TempValue
-        ////************************************
-        //static string DoubleAsString(double TempValue);
-        ////************************************
-        //// Method:    BoolAsString
-        //// FullName:  VariableConversionFunctions::BoolAsString
-        //// Access:    public static 
-        //// Returns:   string
-        //// Qualifier:
-        //// Parameter: bool TempValue
-        ////************************************
-        //static string BoolAsString(bool TempValue);
-        //************************************
-        // Method:    DoubleToStringConversion
-        // FullName:  VariableConversionFunctions::DoubleToStringConversion
-        // Access:    public static 
-        // Returns:   string
-        // Qualifier:
-        // Parameter: double TempValue
-        //************************************
-        static string DoubleToStringConversion(double TempValue)
+		////Returns first string of either true,false,1, or 0 in string; if no value found returns false
+		////************************************
+		//// Method:    ReadBoolFromString
+		//// FullName:  VariableConversionFunctions::ReadBoolFromString
+		//// Access:    public static 
+		//// Returns:   bool
+		//// Qualifier:
+		//// Parameter: string LineString
+		////************************************
+		//static bool ReadBoolFromString(string LineString);
+		//Returns long value from string(int 64 bit)
+		//************************************
+		// Method:    ReadXIntFromString
+		// FullName:  VariableConversionFunctions::ReadXIntFromString
+		// Access:    public static 
+		// Returns:   long long int
+		// Qualifier:
+		// Parameter: string TempString
+		//************************************
+		/// <summary>
+		/// Reads the long from string.
+		/// </summary>
+		/// <param name="Value">The value to convert into 64 bit Interger.</param>
+		/// <returns></returns>
+		static long ReadXIntFromString(string Value)
+		{
+			long ReturnValue = 0;
+			bool IsNegative = false;
+			sbyte PlaceNumber;
+			string WholeNumberBuffer = "";
+
+			long TempInt;
+			long TempInt02;
+			var builder = new System.Text.StringBuilder("");
+			foreach (char StringChar in Value)
+			{
+				if (IsDigit(StringChar))
+				{
+					builder.Append(StringChar);
+				}
+				else if (StringChar == '-')
+				{
+					IsNegative = true;
+				}
+			}
+			WholeNumberBuffer = builder.ToString();
+			PlaceNumber = (sbyte)(WholeNumberBuffer.Length - 1);
+			foreach (char StringChar in WholeNumberBuffer)
+			{
+				TempInt = CharAsInt(StringChar);
+				TempInt02 = (TempInt * SuperDecGlobalCode.PowerOfTens64Bit[PlaceNumber]);
+				if (StringChar != '0')
+				{
+					ReturnValue += TempInt02;
+				}
+				PlaceNumber--;
+			}
+			if (IsNegative)
+			{
+				ReturnValue *= -1;
+			}
+			return ReturnValue;
+		}
+		////************************************
+		//// Scan int for bool value
+		//// Method:    ReadBoolFromInt
+		//// FullName:  VariableConversionFunctions::ReadBoolFromInt
+		//// Access:    public static 
+		//// Returns:   bool
+		//// Qualifier:
+		//// Parameter: int Temp
+		////************************************
+		//static bool ReadBoolFromInt(int Temp);
+		////************************************
+		//// Method:    DoubleAsString
+		//// FullName:  VariableConversionFunctions::DoubleAsString
+		//// Access:    public static 
+		//// Returns:   string
+		//// Qualifier:
+		//// Parameter: double TempValue
+		////************************************
+		//static string DoubleAsString(double TempValue);
+		////************************************
+		//// Method:    BoolAsString
+		//// FullName:  VariableConversionFunctions::BoolAsString
+		//// Access:    public static 
+		//// Returns:   string
+		//// Qualifier:
+		//// Parameter: bool TempValue
+		////************************************
+		//static string BoolAsString(bool TempValue);
+		//************************************
+		// Method:    DoubleToStringConversion
+		// FullName:  VariableConversionFunctions::DoubleToStringConversion
+		// Access:    public static 
+		// Returns:   string
+		// Qualifier:
+		// Parameter: double TempValue
+		//************************************
+		static string DoubleToStringConversion(double TempValue)
         {
             System.String Value = "";
             if (TempValue<0) { Value += "-"; TempValue *=-1;}
@@ -405,14 +448,47 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             Value = builder.ToString();
             return Value;
         }
-        //string DisplayFullValues_Vector(float x, float y, float z, float w);
-        //string DisplayFullValues_Vector(float x, float y, float z);
-        //string DisplayFullValues_Vector(float x, float y);
-        //string DisplayFullValues(float x, float y, float z, float w);
-        //string DisplayFullValues(float x, float y, float z);
-        //string DisplayFullValues(float x, float y);
 
-        public static string DoubleToStringV2(double Value)
+		public static string LongToStringConversion(long IntegerHalf)
+		{
+			var Value = "";
+			if (IntegerHalf < 0) { Value += "-"; IntegerHalf *= -1; }
+			byte CurrentDigit;
+			var builder = new StringBuilder();
+			builder.Append(Value);
+			for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; --Index)
+			{
+				CurrentDigit = (byte)(IntegerHalf / SuperDecGlobalCode.PowerOfTens64Bit[Index]);
+				IntegerHalf -= (uint)(CurrentDigit * SuperDecGlobalCode.PowerOfTens64Bit[Index]);
+				builder.Append(DigitAsChar(CurrentDigit));
+			}
+			Value = builder.ToString();
+			return Value;
+		}
+
+		public static string UlongToStringConversion(ulong IntegerHalf)
+		{
+			var Value = "";
+			byte CurrentDigit;
+			var builder = new StringBuilder();
+			builder.Append(Value);
+			for (sbyte Index = NumberOfPlaces(IntegerHalf); Index >= 0; --Index)
+			{
+				CurrentDigit = (byte)(IntegerHalf / (ulong)SuperDecGlobalCode.PowerOfTens64Bit[Index]);
+				IntegerHalf -= (uint)(CurrentDigit * SuperDecGlobalCode.PowerOfTens64Bit[Index]);
+				builder.Append(DigitAsChar(CurrentDigit));
+			}
+			Value = builder.ToString();
+			return Value;
+		}
+		//string DisplayFullValues_Vector(float x, float y, float z, float w);
+		//string DisplayFullValues_Vector(float x, float y, float z);
+		//string DisplayFullValues_Vector(float x, float y);
+		//string DisplayFullValues(float x, float y, float z, float w);
+		//string DisplayFullValues(float x, float y, float z);
+		//string DisplayFullValues(float x, float y);
+
+		public static string DoubleToStringV2(double Value)
         {
             uint IntegerHalf = (uint) Value;
             byte CurrentDigit;

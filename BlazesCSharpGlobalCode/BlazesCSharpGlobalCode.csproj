@@ -105,6 +105,9 @@
     <Compile Include="GlobalCode_ExperimentalCode\CustomDec.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\CustomOrderedDictionary.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\CustomListSet.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\Formula.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\MediumDecPoint.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\MediumDecVector.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\MediumDec_IEquatable.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\MediumDec_MathBasedFunctions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\MediumDec_MultiplicativeOperations.cs" />
@@ -135,9 +138,17 @@
     <Compile Include="GlobalCode_ExperimentalCode\ValidationOverride.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\VariableData.cs" />
     <Compile Include="GlobalCode_IniData\IniData.cs" />
+    <Compile Include="GlobalCode_NodeTrees\LooseNodeTreeTemplate.cs" />
+    <Compile Include="GlobalCode_NodeTrees\TagNodeTreeTemplate.cs" />
+    <Compile Include="GlobalCode_NodeTrees\TagPosition.cs" />
+    <Compile Include="GlobalCode_NodeTrees\VariableData.cs" />
+    <Compile Include="GlobalCode_NodeTrees\XMLOption.cs" />
+    <Compile Include="GlobalCode_NodeTrees\XMLTagTree.cs" />
     <Compile Include="GlobalCode_StringFunctions\StringFunctions.cs" />
     <Compile Include="GlobalCode_VariableConversionFunctions\TypeDataInfo.cs" />
     <Compile Include="GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cs" />
+    <Compile Include="GlobalCode_VariableLists\StringVectorList.cs" />
+    <Compile Include="GlobalCode_VariableLists\XIntegerList.cs" />
     <Compile Include="GlobalMiscCode\FileAccessCommands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -175,8 +186,6 @@
       <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
     </Page>
   </ItemGroup> -->
-  <ItemGroup>
-    <Folder Include="GlobalCode_VariableLists\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
