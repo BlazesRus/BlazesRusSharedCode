@@ -12,14 +12,14 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 	{
 #if (!NodeTree_AlternativeInternalName && !NodeTree_AlternativeInternalNameV2)
 		//InternalName of child elements to this node
-		StringList ChildInternalNames;
+		public StringList ChildInternalNames;
 		//AutoGenerate InternalName based on XMLPosition unless specified(InternalName must be unique;Required for pointer fixes)
 		//Example: ParentIndexPositionString-ListPosition ("-0" for first Tag in menu)
 		//Use GenerateUnusedInternalName(BaseInternalName) to ensure unique InternalName or Use AutoGenInternalNameFromNode() to generate based on TagPosition(might have conflicts if nodes removed but will auto-rename as needed) as long as doesn't reach over 18,446,744,073,709,551,615 attempts
-		string InternalName = "";
+		public string InternalName = "";
 		//InternalName of parent(fix for pointer invalidation);"(Core)"=Connected at base of NodeTree;"(LooseNodes)"=Connected to LooseNodes (not part of main 3d NodeTree)
 		//Reserve "(InvalidPointer)" for non-existing Internal names of Pointers
-		string ParentInternalName = "";
+		public string ParentInternalName = "";
 		bool IsLooseNode()
 		{
 			if (ParentInternalName == "LooseNodes" || ParentInternalName == "")
@@ -68,9 +68,9 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 		ulong ParentInternalID = 18446744073709551615;
 #endif
 		//Note:Position data will be messed up if some nodes are destroyed in some situations(would need to recalculate position in such cases) 
-		TagPosition PositionInTree;
+		public TagPosition PositionInTree;
 		//Name of Node
-		string NodeName = "";
+		public string NodeName = "";
 		//////************************************
 		////// Templated Function (NodeTreeType = NodeTree)
 		////// Used by NodeTree::DestroyNodeAndAllItsChildren to obtain child nodes within

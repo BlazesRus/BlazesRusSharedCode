@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CSharpGlobalCode.GlobalCode_StringFunctions;
+using CSharpGlobalCode.GlobalCode_VariableLists;
 
 namespace CSharpGlobalCode.GlobalCode_NodeTrees
 {
@@ -18,9 +20,9 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 		public long TabLevel = 0;
 	};
 
-	class Node
+	class Node<NodeTreeType, LooseNodeTreeType> : LooseNode<LooseNodeTreeType>
 	{
-		public List<Node> NodeLists;
+		public List<Node<NodeTreeType, LooseNodeTreeType>> NodeLists;
 
 		//Internal Name of Tag Closing Tag Connected To(Used for Destroying Closing Tag when destroying NodesWithin)
 		public string InternalNameOfTagClosed = "";
@@ -81,7 +83,7 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 		// Qualifier:
 		// Parameter: Node * TargetNode
 		//************************************
-		public void CopyOtherDataFromNode(Node TargetNode)
+		public void CopyOtherDataFromNode(Node<NodeTreeType, LooseNodeTreeType> TargetNode)
 		{
 			TagContent = TargetNode.TagContent;
 			SelfContainedTag = TargetNode.SelfContainedTag;
@@ -104,22 +106,16 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 			}
 		}
 
-		////************************************
-		//// Method:    DetectTagContentTypesWithin
-		//// FullName:  TagNodeTreeTemplateData::Node::DetectTagContentTypesWithin
-		//// Access:    public
-		//// Returns:   void
-		//// Qualifier:
-		//// Parameter: NodeTreeType & NodeTreeTarget
-		////************************************
-		//template<typename NodeTreeType>
-
+		///// <summary>
+		///// Detects the tag content types within.
+		///// </summary>
+		///// <param name="NodeTreeTarget">The node tree target.</param>
 		//public void DetectTagContentTypesWithin(NodeTreeType NodeTreeTarget)
 		//{
 		//	string TargetNameTemp;
-		//	Node TargetNode;
+		//	Node<NodeTreeType, LooseNodeTreeType> TargetNode;
 		//	DetectTagContentType();
-		//	const int ChildListSize = ChildInternalNames.Size();
+		//	int ChildListSize = ChildInternalNames.Count;
 		//	for (int Index = 0; Index < ChildListSize; ++Index)
 		//	{
 		//		TargetNameTemp = ChildInternalNames.ElementAt(Index);
@@ -131,36 +127,27 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 		//	}
 		//}
 
-		////************************************
-		//// Alternative version of DetectTagContentType designed to use extra contents from hkparam tags as part of detection of ContentType
-		//// Method:    DetectTagContentTypeV2
-		//// FullName:  TagNodeTreeTemplateData::Node::DetectTagContentTypeV2
-		//// Access:    public
-		//// Returns:   void
-		//// Qualifier:
-		////************************************
+		///// <summary>
+		///// Alternative version of DetectTagContentType designed to use extra contents from hkparam tags as part of detection of ContentType
+		///// </summary>
+		///// <param name="">The .</param>
+		///// <param name="">The .</param>
 		//public void DetectTagContentTypeV2(OptimizationData& SharedData)
 		//{
 		//}
 
-		////************************************
-		//// Alternative version of DetectTagContentTypesWithin designed to use extra contents from hkparam tags as part of detection of ContentType
-		//// Method:    DetectTagContentTypesWithinV2
-		//// FullName:  TagNodeTreeTemplateData::Node::DetectTagContentTypesWithinV2
-		//// Access:    public
-		//// Returns:   void
-		//// Qualifier:
-		//// Parameter: NodeTreeType & NodeTreeTarget
-		//// Parameter: OptimizationData & SharedData
-		////************************************
-		//template<typename NodeTreeType>
-
-		//public void DetectTagContentTypesWithinV2(NodeTreeType* NodeTreeTarget, OptimizationData& SharedData)
+		///// <summary>
+		///// Alternative version of DetectTagContentTypesWithin designed to use extra contents from hkparam tags as part of detection of ContentType
+		///// </summary>
+		///// <param name="NodeTreeTarget">The node tree target.</param>
+		///// <param name="">The .</param>
+		///// <param name="">The .</param>
+		//public void DetectTagContentTypesWithinV2(NodeTreeType NodeTreeTarget, OptimizationData& SharedData)
 		//{
 		//	string TargetNameTemp;
-		//	Node TargetNode;
+		//	Node<NodeTreeType, LooseNodeTreeType> TargetNode;
 		//	DetectTagContentTypeV2(&SharedData);
-		//	const int ChildListSize = ChildInternalNames.Size();
+		//	const int ChildListSize = ChildInternalNames.Count;
 		//	for (int Index = 0; Index < ChildListSize; ++Index)
 		//	{
 		//		TargetNameTemp = ChildInternalNames.ElementAt(Index);
@@ -186,27 +173,14 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 		//{
 		//}
 
-		////************************************
-		//// Method:    GenerateHTMLDocWithin
-		//// FullName:  TagNodeTreeTemplateData::Node::GenerateHTMLDocWithin
-		//// Access:    public
-		//// Returns:   void
-		//// Qualifier:
-		//// Parameter: NodeTreeType * NodeTreeTarget
-		//// Parameter: StringList & OutputBuffer
-		//// Parameter: int & OutputLvl
-		//// Parameter: const unsigned __int8 & GenerationOptions
-		////************************************
-		//template<typename NodeTreeType>
-
 		//public void GenerateHTMLDocWithin(NodeTreeType* NodeTreeTarget, StringList OutputBuffer, int OutputLvl, byte GenerationOptions = 0)
 		//{
 		//	string TargetNameTemp;
-		//	Node TargetNode;
+		//	Node<NodeTreeType, LooseNodeTreeType> TargetNode;
 
 		//	GenerateHTMLDoc(OutputBuffer, OutputLvl, GenerationOptions);
 
-		//	int ChildListSize = ChildInternalNames.Size();
+		//	int ChildListSize = ChildInternalNames.Count;
 		//	for (int Index = 0; Index < ChildListSize; ++Index)
 		//	{
 		//		TargetNameTemp = ChildInternalNames.ElementAt(Index);
