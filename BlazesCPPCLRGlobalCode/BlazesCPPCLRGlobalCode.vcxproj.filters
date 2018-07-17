@@ -36,9 +36,6 @@
     <ClInclude Include="..\GlobalCode\DLLAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\QuadFloatingInt.h">
-      <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
-    </ClInclude>
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\SuperDecHex.h">
       <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
     </ClInclude>

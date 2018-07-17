@@ -10,9 +10,9 @@
 #else
 	//Headers for Library Version here
 	#ifndef BlazesGlobalCode_FileStructureVersion || BlazesGlobalCode_FileStructureVersion == 0
-		#include "VariableConversionFunctions.h"
-	#elif BlazesGlobalCode_FileStructureVersion == 1
 		#include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
+	#elif BlazesGlobalCode_FileStructureVersion == 1
+		#include "VariableConversionFunctions.h"
 	#elif BlazesGlobalCode_FileStructureVersion == 2
 		#include "..\..\niflib\GlobalCode\VariableConversionFunctions.h"
 	#endif

@@ -208,7 +208,7 @@
 	}
 
 	/// <summary>
-	/// MediumDec version of a 3 Point based Vector with Cartesian coordinate system in three-dimensions and Euclidian geometry.<para/>
+	/// MediumDec version of a 3 Point based Vector with Cartesian coordinate system in three-dimensions and Euclidean geometry.<para/>
 	/// Some code based on https://www.codeproject.com/Articles/17425/A-Vector-Type-for-C and https://gist.github.com/chafdev/dcffdd38ab4097df5c36f94e609d58b0
 	/// </summary>
 	public

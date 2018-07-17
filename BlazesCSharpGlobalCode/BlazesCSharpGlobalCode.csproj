@@ -139,9 +139,9 @@
     <Compile Include="GlobalCode_ExperimentalCode\VariableData.cs" />
     <Compile Include="GlobalCode_IniData\IniData.cs" />
     <Compile Include="GlobalCode_NodeTrees\LooseNodeTreeTemplate.cs" />
-    <Compile Include="GlobalCode_NodeTrees\TagNodeTreeTemplate.cs" />
     <Compile Include="GlobalCode_NodeTrees\TagPosition.cs" />
     <Compile Include="GlobalCode_NodeTrees\VariableData.cs" />
+    <Compile Include="GlobalCode_NodeTrees\XMLNodeTreeV2.cs" />
     <Compile Include="GlobalCode_NodeTrees\XMLOption.cs" />
     <Compile Include="GlobalCode_NodeTrees\XMLTagTree.cs" />
     <Compile Include="GlobalCode_StringFunctions\StringFunctions.cs" />

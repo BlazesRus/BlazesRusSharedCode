@@ -135,7 +135,6 @@
   <ItemGroup>
     <ClInclude Include="..\GlobalCode\DLLAPI.h" />
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\MediumDec.h" />
-    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\QuadFloatingInt.h" />
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\SuperDecHex.h" />
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\VariableListV2.h" />
     <ClInclude Include="..\GlobalCode\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h" />

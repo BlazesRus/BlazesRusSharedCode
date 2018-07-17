@@ -21,7 +21,7 @@
 #endif
 
 #include <string>
-#include "VariableList.h"
+#include "..\GlobalCode_VariableLists\VariableList.h"
 
 class DLL_API XMLOption
 {

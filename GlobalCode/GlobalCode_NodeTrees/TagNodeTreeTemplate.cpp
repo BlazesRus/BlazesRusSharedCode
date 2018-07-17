@@ -2,7 +2,8 @@
 	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
 */
 #include "TagNodeTreeTemplate.h"
-#include "VariableVectorFunctions.h"
+
+#include "..\GlobalCode_VariableLists\VariableVectorFunctions.h"
 using std::string;
 
 void TagNodeTreeTemplateData::Node::DetectTagContentTypeV2(OptimizationData& SharedData)
@@ -143,7 +144,7 @@ void TagNodeTreeTemplateData::Node::GenerateHTMLDoc(StringVectorList& OutputBuff
 			//StringVectorList TempList;
 			switch(TagContentType)
 			{
-				case 14://Generate link to havok class
+				case 14://Generate link to Havok class
 				{
 					TempTag += "<a href=\"#\"";
 					TempTag += TagContent;
@@ -152,7 +153,7 @@ void TagNodeTreeTemplateData::Node::GenerateHTMLDoc(StringVectorList& OutputBuff
 					TempTag += "</a>";
 					break;
 				}
-				case 15://Generate linked havok classes
+				case 15://Generate linked Havok classes
 				{
 					StringVectorList TempList = VariableVectorFunctions::ConvertStringToStringVectorList(TagContent);
 					SizeTemp = TempList.Size();
