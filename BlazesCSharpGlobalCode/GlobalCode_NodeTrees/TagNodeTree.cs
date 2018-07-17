@@ -1,28 +1,26 @@
-﻿using CSharpGlobalCode.GlobalCode_StringFunctions;
-using CSharpGlobalCode.GlobalCode_VariableLists;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CSharpGlobalCode.GlobalCode_NodeTrees
 {
-	////Send and share Data through Node optimization (less complicated detection of TagContent variable types)
-	//public class OptimizationData
-	//{
-	//	public string CurrentHavokClass = "";
-	//	public string CurrentActionDataSection_01 = "";
-	//};
-
-	//public class TagNodeTreeSharedData
-	//{
-	//	public long TabLevel = 0;
-	//};
-
-	/// <summary>
-	/// Alternative version of Node class for containing XML like node with Lists of nodes within each
-	/// </summary>
-	public class NodeV2<NodeTreeType>
+	//Send and share Data through Node optimization (less complicated detection of TagContent variable types)
+	public class OptimizationData
 	{
-		public List<NodeV2<NodeTreeType>> NodeLists;
+		public string CurrentHavokClass = "";
+		public string CurrentActionDataSection_01 = "";
+	};
+
+	public class TagNodeTreeSharedData
+	{
+		public long TabLevel = 0;
+	};
+
+	class Node
+	{
+		public List<Node> NodeLists;
 
 		//Internal Name of Tag Closing Tag Connected To(Used for Destroying Closing Tag when destroying NodesWithin)
 		public string InternalNameOfTagClosed = "";
@@ -83,7 +81,7 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 		// Qualifier:
 		// Parameter: Node * TargetNode
 		//************************************
-		public void CopyOtherDataFromNode(NodeV2<NodeTreeType> TargetNode)
+		public void CopyOtherDataFromNode(Node TargetNode)
 		{
 			TagContent = TargetNode.TagContent;
 			SelfContainedTag = TargetNode.SelfContainedTag;
@@ -106,18 +104,20 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 			}
 		}
 
-		//////************************************
-		////// Method:    DetectTagContentTypesWithin
-		////// FullName:  TagNodeTreeTemplateData::Node::DetectTagContentTypesWithin
-		////// Access:    public
-		////// Returns:   void
-		////// Qualifier:
-		////// Parameter: NodeTreeType & NodeTreeTarget
-		//////************************************
+		////************************************
+		//// Method:    DetectTagContentTypesWithin
+		//// FullName:  TagNodeTreeTemplateData::Node::DetectTagContentTypesWithin
+		//// Access:    public
+		//// Returns:   void
+		//// Qualifier:
+		//// Parameter: NodeTreeType & NodeTreeTarget
+		////************************************
+		//template<typename NodeTreeType>
+
 		//public void DetectTagContentTypesWithin(NodeTreeType NodeTreeTarget)
 		//{
 		//	string TargetNameTemp;
-		//	NodeV2<NodeTreeType> TargetNode;
+		//	Node TargetNode;
 		//	DetectTagContentType();
 		//	const int ChildListSize = ChildInternalNames.Size();
 		//	for (int Index = 0; Index < ChildListSize; ++Index)
@@ -153,10 +153,12 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 		//// Parameter: NodeTreeType & NodeTreeTarget
 		//// Parameter: OptimizationData & SharedData
 		////************************************
+		//template<typename NodeTreeType>
+
 		//public void DetectTagContentTypesWithinV2(NodeTreeType* NodeTreeTarget, OptimizationData& SharedData)
 		//{
 		//	string TargetNameTemp;
-		//	NodeV2<NodeTreeType> TargetNode;
+		//	Node TargetNode;
 		//	DetectTagContentTypeV2(&SharedData);
 		//	const int ChildListSize = ChildInternalNames.Size();
 		//	for (int Index = 0; Index < ChildListSize; ++Index)
@@ -196,10 +198,11 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 		//// Parameter: const unsigned __int8 & GenerationOptions
 		////************************************
 		//template<typename NodeTreeType>
+
 		//public void GenerateHTMLDocWithin(NodeTreeType* NodeTreeTarget, StringList OutputBuffer, int OutputLvl, byte GenerationOptions = 0)
 		//{
 		//	string TargetNameTemp;
-		//	NodeV2<NodeTreeType> TargetNode;
+		//	Node TargetNode;
 
 		//	GenerateHTMLDoc(OutputBuffer, OutputLvl, GenerationOptions);
 
@@ -218,22 +221,7 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 		//}
 	}
 
-	/// <summary>
-	/// Create a NodeTree for storing xml like layout info (alternative version that contains nodes holding other node lists)
-	/// </summary>
-	/// <typeparam name="NodeType">Either NodeV2 or a derivative.</typeparam>
-	public class NodeTreeV2<NodeType>
+	class TagNodeTree<NodeType> : LooseNodeTree<NodeType>
 	{
-		public List<NodeType> RootNodes;
-
-		public void LoadXMLData(string FileName)
-		{
-		}
-
-		public List<string> GenerateXMLStringList()
-		{
-			List<string> LineDataList = new List<string>();
-			return LineDataList;
-		}
 	}
 }

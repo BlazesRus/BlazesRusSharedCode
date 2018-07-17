@@ -14,7 +14,7 @@
 #include "..\GlobalCode_StringFunctions\StringFunctions.h"
 #include "..\GlobalCode_NodeTrees\XMLOption.h"
 #include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
-//#include <typeinfo>//Might be needed if doesn't update dervived class Type name of NodeTree
+//#include <typeinfo>//Might be needed if doesn't update derived class Type name of NodeTree
 #include "..\DLLAPI.h"
 
 //Contains LooseNodeTree BaseData for templating
