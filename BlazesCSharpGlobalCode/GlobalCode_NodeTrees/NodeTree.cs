@@ -195,7 +195,7 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 		//}
 	}
 
-	class TagNodeTree<NodeType> : LooseNodeTree<NodeType>
+	class NodeTree<NodeType> : LooseNodeTree<NodeType>
 	{
 	}
 }
