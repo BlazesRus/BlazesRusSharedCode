@@ -244,22 +244,14 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
 		//// Qualifier:
 		//// Parameter: string LineString
 		////************************************
-		//static bool ReadBoolFromString(string LineString);
-		//Returns long value from string(int 64 bit)
-		//************************************
-		// Method:    ReadXIntFromString
-		// FullName:  VariableConversionFunctions::ReadXIntFromString
-		// Access:    public static 
-		// Returns:   long long int
-		// Qualifier:
-		// Parameter: string TempString
-		//************************************
+		//public static bool ReadBoolFromString(string LineString);
+
 		/// <summary>
-		/// Reads the long from string.
+		/// Returns long value from string(int 64 bit)
 		/// </summary>
 		/// <param name="Value">The value to convert into 64 bit Interger.</param>
 		/// <returns></returns>
-		static long ReadXIntFromString(string Value)
+		public static long ReadLongFromString(string Value)
 		{
 			long ReturnValue = 0;
 			bool IsNegative = false;
@@ -307,7 +299,7 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
 		//// Qualifier:
 		//// Parameter: int Temp
 		////************************************
-		//static bool ReadBoolFromInt(int Temp);
+		//public static bool ReadBoolFromInt(int Temp);
 		////************************************
 		//// Method:    DoubleAsString
 		//// FullName:  VariableConversionFunctions::DoubleAsString
@@ -316,7 +308,7 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
 		//// Qualifier:
 		//// Parameter: double TempValue
 		////************************************
-		//static string DoubleAsString(double TempValue);
+		//public static string DoubleAsString(double TempValue);
 		////************************************
 		//// Method:    BoolAsString
 		//// FullName:  VariableConversionFunctions::BoolAsString
@@ -325,7 +317,7 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
 		//// Qualifier:
 		//// Parameter: bool TempValue
 		////************************************
-		//static string BoolAsString(bool TempValue);
+		//public static string BoolAsString(bool TempValue);
 		//************************************
 		// Method:    DoubleToStringConversion
 		// FullName:  VariableConversionFunctions::DoubleToStringConversion
@@ -334,7 +326,7 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
 		// Qualifier:
 		// Parameter: double TempValue
 		//************************************
-		static string DoubleToStringConversion(double TempValue)
+		public static string DoubleToStringConversion(double TempValue)
         {
             System.String Value = "";
             if (TempValue<0) { Value += "-"; TempValue *=-1;}

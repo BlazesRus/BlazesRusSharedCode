@@ -4,7 +4,8 @@
 #include "VariableTypeLists.h"
 #include <iostream>
 #include <fstream>
-#include "VariableConversionFunctions.h"
+//#include "VariableConversionFunctions.h"
+#include "../GlobalCode_VariableConversionFunctions/VariableConversionFunctions.h"
 
 using std::cout;
 using std::string;

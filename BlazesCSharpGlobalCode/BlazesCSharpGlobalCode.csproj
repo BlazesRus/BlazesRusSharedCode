@@ -151,7 +151,8 @@
     <Compile Include="GlobalCode_StringFunctions\StringFunctions.cs" />
     <Compile Include="GlobalCode_VariableConversionFunctions\TypeDataInfo.cs" />
     <Compile Include="GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cs" />
-    <Compile Include="GlobalCode_VariableLists\QuadList.cs" />
+    <Compile Include="GlobalCode_VariableLists\MediumDecList.cs" />
+    <Compile Include="GlobalCode_VariableLists\QuadVector.cs" />
     <Compile Include="GlobalCode_VariableLists\StringList.cs" />
     <Compile Include="GlobalCode_VariableLists\XIntegerList.cs" />
     <Compile Include="GlobalMiscCode\FileAccessCommands.cs" />

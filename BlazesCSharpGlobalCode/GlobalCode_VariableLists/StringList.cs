@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CSharpGlobalCode.GlobalCode_VariableLists
 {
-	class StringList : List<string>
+	public class StringList : List<string>
 	{
 	}
 }

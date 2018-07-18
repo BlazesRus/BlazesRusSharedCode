@@ -1,11 +1,13 @@
-﻿using System;
+﻿using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using CSharpGlobalCode.GlobalCode_VariableConversionFunctions;
+using System.Threading.Tasks;
 
 namespace CSharpGlobalCode.GlobalCode_VariableLists
 {
-	public class XIntegerList : List<long>
+	class MediumDecList : List<MediumDec>
 	{
 		//************************************
 		// Method:    AddData
@@ -17,8 +19,7 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
 		public int AddData()
 		{
 			int Index = Count;
-			long TempValue = 0;
-			Add(TempValue);
+			Add(MediumDec.Zero);
 			return Index;
 		}
 
@@ -69,7 +70,7 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
 			int TempInt = Count;
 			for (int i = 0; i < TempInt; ++i)
 			{
-				TempString = VariableConversionFunctions.LongToStringConversion(this[i]);
+				TempString = (string)this[i];
 				TempStringList.Add(TempString);
 			}
 			return TempStringList;
@@ -85,7 +86,7 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
 		//************************************
 		public void AddEntry()
 		{
-			this.Add(0);
+			this.Add(MediumDec.Zero);
 		}
 
 		//************************************
@@ -97,7 +98,7 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
 		// Parameter: int TempValue
 		// Edits last value in List(Used mainly for InfiniteScopePosInt)
 		//************************************
-		public void EditLastEntry(long TempValue)
+		public void EditLastEntry(MediumDec TempValue)
 		{
 			int LastIndex = Count - 1;
 			this[LastIndex] = TempValue;
@@ -106,8 +107,8 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
 		public void IncreaseLastEntry()
 		{
 			int LastIndex = this.Count - 1;
-			long TempValue = this[LastIndex];
-			TempValue++;
+			MediumDec TempValue = this[LastIndex];
+			TempValue += 1;
 			this[LastIndex] = TempValue;
 		}
 
@@ -122,19 +123,19 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
 		public string GenerateAsString()
 		{
 			string ListString = "";
-			long TempValue;
+			MediumDec TempValue;
 			int TempSize = this.Count;
 			for (int i = 0; i < TempSize; ++i)
 			{
 				TempValue = this[i];
 				if (i == 0)
 				{
-					ListString = VariableConversionFunctions.LongToStringConversion(TempValue);
+					ListString = (string)TempValue;
 				}
 				else
 				{
 					ListString += "_";
-					ListString += VariableConversionFunctions.LongToStringConversion(TempValue);
+					ListString += (string)TempValue;
 				}
 			}
 			return ListString;
@@ -169,7 +170,7 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
 					}
 					else
 					{
-						Add(VariableConversionFunctions.ReadLongFromString(CurrentAsString));
+						Add((MediumDec)CurrentAsString);
 						CurrentElement.Clear();
 					}
 				}
