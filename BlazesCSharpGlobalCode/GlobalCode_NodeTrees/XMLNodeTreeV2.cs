@@ -235,5 +235,10 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 			List<string> LineDataList = new List<string>();
 			return LineDataList;
 		}
+
+		public void Clear()
+		{
+			RootNodes.Clear();
+		}
 	}
 }

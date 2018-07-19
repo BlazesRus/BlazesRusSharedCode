@@ -185,3 +185,4 @@ BlazesCSharpGlobalCode/obj/x64/Release/BlazesCSharpGlobalCode.csproj.CoreCompile
 Galculator/
 RYLTableGenerator/
 *Havok*
+BlazesCSharpGlobalCode/GlobalCode_NodeTrees/NodeTreeGlobals.cs

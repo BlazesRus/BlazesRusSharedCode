@@ -143,6 +143,7 @@
     <Compile Include="GlobalCode_NodeTrees\LooseNodeTreeTemplate.cs" />
     <Compile Include="GlobalCode_NodeTrees\NifNodeTree.cs" />
     <Compile Include="GlobalCode_NodeTrees\NodeTree.cs" />
+    <Compile Include="GlobalCode_NodeTrees\NodeTreeGlobals.cs" />
     <Compile Include="GlobalCode_NodeTrees\TagPosition.cs" />
     <Compile Include="GlobalCode_NodeTrees\VariableData.cs" />
     <Compile Include="GlobalCode_NodeTrees\XMLNodeTreeV2.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="GlobalCode_StringFunctions\StringFunctions.cs" />
     <Compile Include="GlobalCode_VariableConversionFunctions\TypeDataInfo.cs" />
     <Compile Include="GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cs" />
+    <Compile Include="GlobalCode_VariableLists\IntegerList.cs" />
     <Compile Include="GlobalCode_VariableLists\MediumDecList.cs" />
     <Compile Include="GlobalCode_VariableLists\QuadVector.cs" />
     <Compile Include="GlobalCode_VariableLists\StringList.cs" />
