@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace CSharpGlobalCode.GlobalCode_NodeTrees
 {
-    public class NifNode
+    public class StringNode : NodeV2<StringTree>
     {
-        public List<NifNode> NodeLists;
     }
-    public class NifNodeTree
+
+    public class StringTree : NodeTreeV2<StringNode>
     {
-        public List<NifNode> RootNodes;
     }
 }

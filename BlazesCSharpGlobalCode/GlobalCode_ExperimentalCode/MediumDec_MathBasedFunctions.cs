@@ -80,98 +80,98 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return Value;
         }
 
-		/// <summary>
-		/// Perform square root on this instance.
-		/// </summary>
-		public void Sqrt()
-		{
-			if (DecimalStatus == 0)
-			{
-				switch (IntValue)
-				{
-					case 1: IntValue = 1; break;
-					case 4: IntValue = 2; break;
-					case 9: IntValue = 3; break;
-					case 16: IntValue = 4; break;
-					case 25: IntValue = 5; break;
-					case 36: IntValue = 6; break;
-					case 49: IntValue = 7; break;
-					case 64: IntValue = 8; break;
-					case 81: IntValue = 9; break;
-					case 100: IntValue = 10; break;
-					case 121: IntValue = 11; break;
-					case 144: IntValue = 12; break;
-					case 196: IntValue = 13; break;
-					case 225: IntValue = 15; break;
-					case 256: IntValue = 16; break;
-					case 289: IntValue = 17; break;
-					case 324: IntValue = 18; break;
-					case 361: IntValue = 19; break;
-					case 400: IntValue = 20; break;
-					default:
-						NthRoot(this, 2);
-						break;
-				}
-			}
-			else
-			{
-				NthRoot(this, 2);
-			}
-		}
+        /// <summary>
+        /// Perform square root on this instance.
+        /// </summary>
+        public void Sqrt()
+        {
+            if (DecimalStatus == 0)
+            {
+                switch (IntValue)
+                {
+                    case 1: IntValue = 1; break;
+                    case 4: IntValue = 2; break;
+                    case 9: IntValue = 3; break;
+                    case 16: IntValue = 4; break;
+                    case 25: IntValue = 5; break;
+                    case 36: IntValue = 6; break;
+                    case 49: IntValue = 7; break;
+                    case 64: IntValue = 8; break;
+                    case 81: IntValue = 9; break;
+                    case 100: IntValue = 10; break;
+                    case 121: IntValue = 11; break;
+                    case 144: IntValue = 12; break;
+                    case 196: IntValue = 13; break;
+                    case 225: IntValue = 15; break;
+                    case 256: IntValue = 16; break;
+                    case 289: IntValue = 17; break;
+                    case 324: IntValue = 18; break;
+                    case 361: IntValue = 19; break;
+                    case 400: IntValue = 20; break;
+                    default:
+                        NthRoot(this, 2);
+                        break;
+                }
+            }
+            else
+            {
+                NthRoot(this, 2);
+            }
+        }
 
-		/// <summary>
-		/// Get the (Value)th Root
-		/// Code based mostly from https://rosettacode.org/wiki/Nth_root#C.23
-		/// </summary>
-		/// <param name="self">The self.</param>
-		/// <param name="Value">The value.</param>
-		/// <returns></returns>
-		public static MediumDec NthRoot(MediumDec self, MediumDec Value, MediumDec Precision)
-		{
-			MediumDec[] x = new MediumDec[2];
-			x[0] = self;
-			x[1] = self / Value;
-			while (MediumDec.Abs(x[0] - x[1]) > Precision)
-			{
-				x[1] = x[0];
-				x[0] = (1 / Value) * (((Value - 1) * x[1]) + (self / MediumDec.Pow(x[1], Value - 1)));
+        /// <summary>
+        /// Get the (Value)th Root
+        /// Code based mostly from https://rosettacode.org/wiki/Nth_root#C.23
+        /// </summary>
+        /// <param name="self">The self.</param>
+        /// <param name="Value">The value.</param>
+        /// <returns></returns>
+        public static MediumDec NthRoot(MediumDec self, MediumDec Value, MediumDec Precision)
+        {
+            MediumDec[] x = new MediumDec[2];
+            x[0] = self;
+            x[1] = self / Value;
+            while (MediumDec.Abs(x[0] - x[1]) > Precision)
+            {
+                x[1] = x[0];
+                x[0] = (1 / Value) * (((Value - 1) * x[1]) + (self / MediumDec.Pow(x[1], Value - 1)));
 
-			}
-			return x[0];
-		}
+            }
+            return x[0];
+        }
 
-		public static MediumDec NthRoot(MediumDec self, MediumDec Value)
-		{
-			return NthRoot(self, Value, OneMillionth);
-		}
+        public static MediumDec NthRoot(MediumDec self, MediumDec Value)
+        {
+            return NthRoot(self, Value, OneMillionth);
+        }
 
-		public static MediumDec NthRoot(MediumDec self, int Value)
-		{
-			return NthRoot(self, (MediumDec)Value, OneMillionth);
-		}
+        public static MediumDec NthRoot(MediumDec self, int Value)
+        {
+            return NthRoot(self, (MediumDec)Value, OneMillionth);
+        }
 
-		/// <summary>
-		/// Gets the square root of the specified value.
-		/// </summary>
-		/// <param name="Value">The value.</param>
-		/// <returns></returns>
-		public static MediumDec Sqrt(MediumDec Value)
-		{
-			Value.Sqrt();
-			return Value;
-		}
+        /// <summary>
+        /// Gets the square root of the specified value.
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns></returns>
+        public static MediumDec Sqrt(MediumDec Value)
+        {
+            Value.Sqrt();
+            return Value;
+        }
 
-		/// <summary>
-		/// Self multiplied by itself Value number of times
-		/// Related Formula info:
-		/// https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
-		/// https://en.wikipedia.org/wiki/Exponentiation_by_squaring
-		/// https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
-		/// </summary>
-		/// <param name="self"></param>
-		/// <param name="Value"></param>
-		/// <returns></returns>
-		public static MediumDec Pow(MediumDec self, int Value)
+        /// <summary>
+        /// Self multiplied by itself Value number of times
+        /// Related Formula info:
+        /// https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+        /// https://en.wikipedia.org/wiki/Exponentiation_by_squaring
+        /// https://stackoverflow.com/questions/3606734/calculate-fractional-exponent-in-for-loop-without-power-function
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="Value"></param>
+        /// <returns></returns>
+        public static MediumDec Pow(MediumDec self, int Value)
         {
             if (Value > 0)
             {
@@ -220,75 +220,75 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public static MediumDec Pow(MediumDec self, double Value) => MediumDec.Pow(self, (MediumDec)Value);
 
 #endif
-		/// <summary>
-		/// 2.3025850929940456840179914546844
-		/// (Based on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having)
-		/// </summary>
-		public static readonly MediumDec LN10 = LN10Value();
+        /// <summary>
+        /// 2.3025850929940456840179914546844
+        /// (Based on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having)
+        /// </summary>
+        public static readonly MediumDec LN10 = LN10Value();
 
-		private static MediumDec LN10Value() => new MediumDec(2, 302585093);
+        private static MediumDec LN10Value() => new MediumDec(2, 302585093);
 
-		/// <summary>
-		/// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
-		/// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having
-		/// </summary>
-		/// <param name="Value">The value.</param>
-		/// <returns></returns>
-		public static MediumDec Ln(MediumDec Value)
-		{
-			MediumDec old_sum = MediumDec.Zero;
-			MediumDec xmlxpl = (Value - 1) / (Value + 1);
-			MediumDec xmlxpl_2 = xmlxpl * xmlxpl;
-			MediumDec denom = MediumDec.One;
-			MediumDec frac = xmlxpl;
-			MediumDec term = frac;                 // denom start from 1.0
-			MediumDec sum = term;
+        /// <summary>
+        /// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
+        /// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns></returns>
+        public static MediumDec Ln(MediumDec Value)
+        {
+            MediumDec old_sum = MediumDec.Zero;
+            MediumDec xmlxpl = (Value - 1) / (Value + 1);
+            MediumDec xmlxpl_2 = xmlxpl * xmlxpl;
+            MediumDec denom = MediumDec.One;
+            MediumDec frac = xmlxpl;
+            MediumDec term = frac;                 // denom start from 1.0
+            MediumDec sum = term;
 
-			while (sum != old_sum)
-			{
-				old_sum = sum;
-				denom += 2.0;
-				frac *= xmlxpl_2;
-				sum += frac / denom;
-			}
-			return 2.0 * sum;
-		}
+            while (sum != old_sum)
+            {
+                old_sum = sum;
+                denom += 2.0;
+                frac *= xmlxpl_2;
+                sum += frac / denom;
+            }
+            return 2.0 * sum;
+        }
 
-		/// <summary>
-		/// Log Base 10 of Value
-		/// </summary>
-		/// <param name="Value">The value.</param>
-		/// <returns></returns>
-		public static MediumDec Log10(MediumDec Value)
-		{
-			return Ln(Value) / LN10;
-		}
+        /// <summary>
+        /// Log Base 10 of Value
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns></returns>
+        public static MediumDec Log10(MediumDec Value)
+        {
+            return Ln(Value) / LN10;
+        }
 
-		/// <summary>
-		/// Log with Base of BaseVal of Value
-		/// Based on http://home.windstream.net/okrebs/page57.html
-		/// </summary>
-		/// <param name="Value">The value.</param>
-		/// <param name="BaseVal">The base of Log</param>
-		/// <returns></returns>
-		public static MediumDec Log(MediumDec Value, MediumDec BaseVal)
-		{
-			return Log10(Value) / Log10(BaseVal);
-		}
+        /// <summary>
+        /// Log with Base of BaseVal of Value
+        /// Based on http://home.windstream.net/okrebs/page57.html
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <param name="BaseVal">The base of Log</param>
+        /// <returns></returns>
+        public static MediumDec Log(MediumDec Value, MediumDec BaseVal)
+        {
+            return Log10(Value) / Log10(BaseVal);
+        }
 
-		/// <summary>
-		/// Log with Base of BaseVal of Value
-		/// Based on http://home.windstream.net/okrebs/page57.html
-		/// </summary>
-		/// <param name="Value">The value.</param>
-		/// <param name="BaseVal">The base of Log</param>
-		/// <returns></returns>
-		public static MediumDec Log(MediumDec Value, int BaseVal)
-		{
-			return Log10(Value) / Log10((MediumDec)BaseVal);
-		}
+        /// <summary>
+        /// Log with Base of BaseVal of Value
+        /// Based on http://home.windstream.net/okrebs/page57.html
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <param name="BaseVal">The base of Log</param>
+        /// <returns></returns>
+        public static MediumDec Log(MediumDec Value, int BaseVal)
+        {
+            return Log10(Value) / Log10((MediumDec)BaseVal);
+        }
 
-		public class Fractional
+        public class Fractional
         {
             public int Part01;
             public MediumDec Part02;
@@ -410,20 +410,20 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             else if (Value.DecimalStatus > 0)//Positive Non-Whole Number Value
             {
-				Fractional ValueSplit = new Fractional(Value, self);
-				MediumDec NewSelf = Pow(self, ValueSplit.Part01);
-				return NthRoot(NewSelf, ValueSplit.Part02);
+                Fractional ValueSplit = new Fractional(Value, self);
+                MediumDec NewSelf = Pow(self, ValueSplit.Part01);
+                return NthRoot(NewSelf, ValueSplit.Part02);
             }
             else//Negative Non-Whole Number Value
             {
-				Fractional ValueSplit = new Fractional(Value, self);
-				MediumDec NewSelf = Pow(self, ValueSplit.Part01);
-				NewSelf = NthRoot(NewSelf, ValueSplit.Part02);
-				double SelfAsDecimal = (double)self;
-				double ValueAsDecimal = (double)Value;
-				SelfAsDecimal = Math.Pow(SelfAsDecimal, ValueAsDecimal);//Debug checking difference between code outputs
-				return NewSelf;
-			}
+                Fractional ValueSplit = new Fractional(Value, self);
+                MediumDec NewSelf = Pow(self, ValueSplit.Part01);
+                NewSelf = NthRoot(NewSelf, ValueSplit.Part02);
+                double SelfAsDecimal = (double)self;
+                double ValueAsDecimal = (double)Value;
+                SelfAsDecimal = Math.Pow(SelfAsDecimal, ValueAsDecimal);//Debug checking difference between code outputs
+                return NewSelf;
+            }
         }
 
         /// <summary>

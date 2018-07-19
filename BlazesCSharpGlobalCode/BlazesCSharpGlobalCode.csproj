@@ -144,6 +144,7 @@
     <Compile Include="GlobalCode_NodeTrees\NifNodeTree.cs" />
     <Compile Include="GlobalCode_NodeTrees\NodeTree.cs" />
     <Compile Include="GlobalCode_NodeTrees\NodeTreeGlobals.cs" />
+    <Compile Include="GlobalCode_NodeTrees\StringTree.cs" />
     <Compile Include="GlobalCode_NodeTrees\TagPosition.cs" />
     <Compile Include="GlobalCode_NodeTrees\VariableData.cs" />
     <Compile Include="GlobalCode_NodeTrees\XMLNodeTreeV2.cs" />

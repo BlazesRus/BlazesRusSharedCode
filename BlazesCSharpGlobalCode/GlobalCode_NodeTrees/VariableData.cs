@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CSharpGlobalCode.GlobalCode_NodeTrees
 {
-	class VariableData
-	{
-	}
+    class VariableData
+    {
+    }
 }

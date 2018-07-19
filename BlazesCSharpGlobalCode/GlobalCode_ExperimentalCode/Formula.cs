@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
-	class FormulaDatabase
-	{
-		Dictionary<string, MediumDec> VariableStorage = new Dictionary<string, MediumDec>();
-		class Formula
-		{
-		}
-		Dictionary<string, Formula> FormulaStorage = new Dictionary<string, Formula>();
-	}
+    class FormulaDatabase
+    {
+        Dictionary<string, MediumDec> VariableStorage = new Dictionary<string, MediumDec>();
+        class Formula
+        {
+        }
+        Dictionary<string, Formula> FormulaStorage = new Dictionary<string, Formula>();
+    }
 }
