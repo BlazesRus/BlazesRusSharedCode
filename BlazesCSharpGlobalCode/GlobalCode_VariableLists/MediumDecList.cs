@@ -89,16 +89,6 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             this.Add(MediumDec.Zero);
         }
 
-        public MediumDecList(string Value)
-        {
-            ConvertStringToList(Value);
-        }
-
-        public static explicit operator MediumDecList(string Value)
-        {
-            return new MediumDecList(Value);
-        }
-
         //************************************
         // Method:    EditLastEntry
         // FullName:  IntegerList::EditLastEntry
@@ -186,5 +176,17 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
                 }
             }
         }
-    }
+
+		public MediumDecList(string Value)
+		{
+			ConvertStringToList(Value);
+		}
+
+		public static explicit operator MediumDecList(string Value)
+		{
+			return new MediumDecList(Value);
+		}
+
+		public MediumDecList() {}
+	}
 }
