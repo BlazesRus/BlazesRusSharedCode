@@ -101,12 +101,12 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             }
         }
 
-		public static explicit operator QuadVector(string LineString)
-		{
-			return new QuadVector(LineString);
-		}
+        public static explicit operator QuadVector(string LineString)
+        {
+            return new QuadVector(LineString);
+        }
 
-		public QuadVector(string LineString)
+        public QuadVector(string LineString)
         {
             //Current character loaded in steam
             char StringChar;
@@ -169,11 +169,11 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             return Index;
         }
 
-		/// <summary>
-		/// Converts one or more lines of QuadVectors into QuadVectorList for LineString
-		/// </summary>
-		/// <param name="LineString">The line string.</param>
-		public void ConvertStringToList(string LineString)
+        /// <summary>
+        /// Converts one or more lines of QuadVectors into QuadVectorList for LineString
+        /// </summary>
+        /// <param name="LineString">The line string.</param>
+        public void ConvertStringToList(string LineString)
         {
             if (Count != 0)
             {
@@ -227,16 +227,16 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             }
         }
 
-		public QuadVectorList(string Value)
-		{
-			ConvertStringToList(Value);
-		}
+        public QuadVectorList(string Value)
+        {
+            ConvertStringToList(Value);
+        }
 
-		public static explicit operator QuadVectorList(string Value)
-		{
-			return new QuadVectorList(Value);
-		}
+        public static explicit operator QuadVectorList(string Value)
+        {
+            return new QuadVectorList(Value);
+        }
 
-		public QuadVectorList() { }
-	}
+        public QuadVectorList() { }
+    }
 }

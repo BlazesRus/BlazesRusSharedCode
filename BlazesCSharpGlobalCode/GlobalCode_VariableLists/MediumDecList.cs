@@ -177,16 +177,16 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             }
         }
 
-		public MediumDecList(string Value)
-		{
-			ConvertStringToList(Value);
-		}
+        public MediumDecList(string Value)
+        {
+            ConvertStringToList(Value);
+        }
 
-		public static explicit operator MediumDecList(string Value)
-		{
-			return new MediumDecList(Value);
-		}
+        public static explicit operator MediumDecList(string Value)
+        {
+            return new MediumDecList(Value);
+        }
 
-		public MediumDecList() {}
-	}
+        public MediumDecList() {}
+    }
 }

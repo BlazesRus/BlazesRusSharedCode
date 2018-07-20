@@ -139,8 +139,6 @@
     <Compile Include="GlobalCode_ExperimentalCode\VariableData.cs" />
     <Compile Include="GlobalCode_IniData\IniData.cs" />
     <Compile Include="GlobalCode_NodeTrees\HavokActionTree.cs" />
-    <None Include="GlobalCode_NodeTrees\HavokTagTree.cs" />
-    <Compile Include="GlobalCode_NodeTrees\LooseNodeTreeTemplate.cs" />
     <Compile Include="GlobalCode_NodeTrees\NifNodeTree.cs" />
     <Compile Include="GlobalCode_NodeTrees\NodeTree.cs" />
     <Compile Include="GlobalCode_NodeTrees\NodeTreeGlobals.cs" />

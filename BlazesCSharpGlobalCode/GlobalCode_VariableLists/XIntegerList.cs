@@ -176,15 +176,15 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             }
         }
 
-		public XIntegerList(string Value)
-		{
-			ConvertStringToList(Value);
-		}
+        public XIntegerList(string Value)
+        {
+            ConvertStringToList(Value);
+        }
 
-		public static explicit operator XIntegerList(string Value)
-		{
-			return new XIntegerList(Value);
-		}
-		public XIntegerList() { }
-	}
+        public static explicit operator XIntegerList(string Value)
+        {
+            return new XIntegerList(Value);
+        }
+        public XIntegerList() { }
+    }
 }

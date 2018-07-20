@@ -187,6 +187,6 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             return new IntegerList(Value);
         }
 
-		public IntegerList(){}
+        public IntegerList(){}
     }
 }
