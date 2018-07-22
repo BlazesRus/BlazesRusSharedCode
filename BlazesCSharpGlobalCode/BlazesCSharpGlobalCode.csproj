@@ -145,7 +145,7 @@
     <Compile Include="GlobalCode_NodeTrees\StringTree.cs" />
     <Compile Include="GlobalCode_NodeTrees\TagPosition.cs" />
     <Compile Include="GlobalCode_NodeTrees\VariableData.cs" />
-    <Compile Include="GlobalCode_NodeTrees\XMLNodeTreeV2.cs" />
+    <Compile Include="GlobalCode_NodeTrees\NodeTreeV2.cs" />
     <Compile Include="GlobalCode_NodeTrees\XMLOption.cs" />
     <Compile Include="GlobalCode_NodeTrees\XMLTagTree.cs" />
     <Compile Include="GlobalCode_StringFunctions\StringFunctions.cs" />
