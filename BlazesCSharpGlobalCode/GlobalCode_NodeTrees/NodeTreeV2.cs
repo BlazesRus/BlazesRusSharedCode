@@ -29,12 +29,6 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 		/// NodeLists containing other Nodes of itself or derived classes
 		/// </summary>
 		public List<CurrentType> NodeLists;
-
-		//public abstract List<T> NodeLists {}
-
-		//public abstract void GenerateHTMLDocWithin(int targetBhvNum, int generationOptions);
-
-
 	}
 
     /// <summary>
