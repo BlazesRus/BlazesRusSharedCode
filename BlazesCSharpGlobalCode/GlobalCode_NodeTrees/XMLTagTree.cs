@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace CSharpGlobalCode.GlobalCode_NodeTrees
 {
-    internal class XMLNode : NodeV2<XMLTagTree, XMLNode>
+    public class XMLNode : NodeV2<XMLTagTree, XMLNode>
     {
         public string NodeName = "";
 
@@ -105,7 +105,7 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
         }
 
         /// <summary>
-        /// Alternative version of DetectTagContentTypesWithin designed to use extra contents from hkparam tags as part of detection of ContentType
+        /// Detect Tag Content of Node and child nodes
         /// </summary>
         public void DetectTagContentTypesWithin()
         {
@@ -117,19 +117,14 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
             }
         }
 
-        //************************************
-        // Method:    GenerateHTMLDoc
-        // FullName:  TagNodeTreeTemplateData::Node::GenerateHTMLDoc
-        // Access:    public
-        // Returns:   void
-        // Qualifier:
-        // Parameter: StringVectorList & OutputBuffer
-        // Parameter: int & OutputLvl
-        // Parameter: const byte & GenerationOptions
-        //************************************
-        private StringList GenerateHTMLDoc(StringList OutputBuffer, int TargetBhvNum = 0, int GenerationOptions = 0)
+        /// <summary>
+        /// Generates the HTML document.
+        /// </summary>
+        /// <param name="HTMLForm">The HTML form.</param>
+        /// <param name="OutputLvl">The output level.</param>
+        /// <returns></returns>
+        private StringList GenerateHTMLDoc(StringList HTMLForm, int OutputLvl)
         {
-            int OutputLvl = 0;
             string TempTag;
             int SizeTemp;
             TempTag = "<code>";
@@ -166,7 +161,7 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
             if (SelfContainedTag)
             {
                 TempTag += "/>";
-                TempTag += "<br>"; OutputBuffer.Add(TempTag);
+                TempTag += "<br>"; HTMLForm.Add(TempTag);
             }
             else if (ClosingStatus != 1)
             {
@@ -174,7 +169,7 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
                 TempTag += "</code>";
                 if (!((TagContentType >= 1 && TagContentType <= 14) || TagContentType == 252))
                 {//Don't Separate line for known single-line Tags
-                    TempTag += "<br>"; OutputBuffer.Add(TempTag);
+                    TempTag += "<br>"; HTMLForm.Add(TempTag);
                     TempTag = "<code>";
                     TempTag += StringFunctions.CreateTabSpace(OutputLvl + 1);
                     TempTag += "</code>";
@@ -202,7 +197,7 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
                             {
                                 if (LineIndex == 16)
                                 {
-                                    TempTag += "<br>"; OutputBuffer.Add(TempTag);
+                                    TempTag += "<br>"; HTMLForm.Add(TempTag);
                                     TempTag = "<code>";
                                     TempTag += StringFunctions.CreateTabSpace(OutputLvl + 1);
                                     TempTag += "</code>";
@@ -219,7 +214,7 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
                                 TempTag += "</a>";
                                 ++LineIndex;
                             }
-                            TempTag += "<br>"; OutputBuffer.Add(TempTag);
+                            TempTag += "<br>"; HTMLForm.Add(TempTag);
                             TempTag = "<code>";
                             TempTag += StringFunctions.CreateTabSpace(OutputLvl + 1);
                             TempTag += "</code>";
@@ -269,7 +264,7 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
                     default:
                         {
                             TempTag += TagContent;
-                            TempTag += "<br>"; OutputBuffer.Add(TempTag);
+                            TempTag += "<br>"; HTMLForm.Add(TempTag);
                             break;
                         }
                 }
@@ -279,11 +274,11 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
                 if (!((TagContentType >= 1 && TagContentType <= 14) || TagContentType == 252))
                 {//Don't Separate line for known single-line Tags
                     TempTag += TagContent;
-                    TempTag += "<br>"; OutputBuffer.Add(TempTag);
+                    TempTag += "<br>"; HTMLForm.Add(TempTag);
                 }
             }
             //}
-            return OutputBuffer;
+            return HTMLForm;
         }
 
         //************************************
@@ -297,15 +292,15 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
         // Parameter: int & OutputLvl
         // Parameter: const byte & GenerationOptions
         //************************************
-        private StringList GenerateHTMLDocWithin(StringList OutputBuffer, int TargetBhvNum = 0, int GenerationOptions = 0)
+        public StringList GenerateHTMLDocWithin(StringList HTMLForm, int OutputLvl)
         {
-            OutputBuffer = GenerateHTMLDoc(OutputBuffer, TargetBhvNum, GenerationOptions);
+            HTMLForm = GenerateHTMLDoc(HTMLForm, OutputLvl);
             int ChildListSize = this.NodeLists.Count;
             for (int Index = 0; Index < ChildListSize; ++Index)
             {
-                OutputBuffer = this.NodeLists[Index].GenerateHTMLDocWithin(OutputBuffer, TargetBhvNum, GenerationOptions);
+                HTMLForm = this.NodeLists[Index].GenerateHTMLDocWithin(HTMLForm, OutputLvl);
             }
-            return OutputBuffer;
+            return HTMLForm;
         }
 
         /// <summary>
@@ -328,7 +323,67 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
         }
     }
 
-    internal class XMLTagTree : NodeTreeV2<XMLNode>
+    public class XMLTagTree : NodeTreeV2<XMLNode>
     {
+        /// <summary>
+        /// Generates the HTML document.
+        /// </summary>
+        /// <param name="FileName">Name of the file.</param>
+        /// <param name="AddHeaderInfo">if set to <c>true</c> [add header information].</param>
+        public void GenerateHTMLDoc(string FileName, bool AddHeaderInfo = false)
+        {
+            StringList HTMLForm = new StringList();
+            if (AddHeaderInfo)
+            {
+                HTMLForm.Add("<HTML>");
+                HTMLForm.Add("/t<HEAD>");
+                HTMLForm.Add("/t/t<TITLE>XML Tag Tree</TITLE>");
+                HTMLForm.Add("/t</HEAD>");
+                HTMLForm.Add("/t<BODY>");
+            }
+            int OutputLvl = AddHeaderInfo ? 2 : 0;
+            int ChildListSize = this.RootNodes.Count;
+            for (int Index = 0; Index < ChildListSize; ++Index)
+            {
+                HTMLForm = this.RootNodes[Index].GenerateHTMLDocWithin(HTMLForm, OutputLvl);
+            }
+            if (AddHeaderInfo)
+            {
+                HTMLForm.Add("/t</BODY>");
+                HTMLForm.Add("</HTML>");
+            }
+            HTMLForm.SaveFileData(FileName);
+        }
+
+        /// <summary>
+        /// Generates the HTML document.
+        /// </summary>
+        /// <param name="FileName">Name of the file.</param>
+        /// <param name="AddHeaderInfo">if set to <c>true</c> [add header information].</param>
+        public StringList GenerateHTMLStringList(string FileName, bool AddHeaderInfo = false)
+        {
+            StringList HTMLForm = new StringList();
+            if (AddHeaderInfo)
+            {
+                HTMLForm.Add("<HTML>");
+                HTMLForm.Add("/t<HEAD>");
+                HTMLForm.Add("/t/t<TITLE>XML Tag Tree</TITLE>");
+                HTMLForm.Add("/t</HEAD>");
+                HTMLForm.Add("/t<BODY>");
+            }
+            int OutputLvl = AddHeaderInfo ? 2 : 0;
+            int ChildListSize = this.RootNodes.Count;
+            for (int Index = 0; Index < ChildListSize; ++Index)
+            {
+                HTMLForm = this.RootNodes[Index].GenerateHTMLDocWithin(HTMLForm, OutputLvl);
+            }
+            if (AddHeaderInfo)
+            {
+                HTMLForm.Add("/t</BODY>");
+                HTMLForm.Add("</HTML>");
+            }
+            //HTMLForm.SaveDataToFileV3(FileName);
+            return HTMLForm;
+        }
     }
 }
