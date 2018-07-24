@@ -892,6 +892,11 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
         }
 
-        #endregion INotifyPropertyChanged Members
-    }
+		#endregion INotifyPropertyChanged Members
+
+		/// <summary>
+		/// 16 x 1 Matrix with Values at Zero
+		/// </summary>
+		public static MediumDec[] ZeroMatrix16 = { MediumDec.Zero, MediumDec.Zero, MediumDec.Zero, MediumDec.Zero, MediumDec.Zero, MediumDec.Zero, MediumDec.Zero, MediumDec.Zero, MediumDec.Zero, MediumDec.Zero, MediumDec.Zero, MediumDec.Zero, MediumDec.Zero, MediumDec.Zero, MediumDec.Zero, MediumDec.Zero };
+	}
 }

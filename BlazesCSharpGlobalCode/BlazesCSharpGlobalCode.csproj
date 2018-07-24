@@ -111,6 +111,7 @@
     <Compile Include="GlobalCode_ExperimentalCode\MediumDec_IEquatable.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\MediumDec_MathBasedFunctions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\MediumDec_MultiplicativeOperations.cs" />
+    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_OtherFormulas.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\MediumDec_StandardConversions.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\MediumDec_TypeDescriptors.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\PrivateFieldAccessor.cs" />
@@ -140,7 +141,6 @@
     <Compile Include="GlobalCode_IniData\IniData.cs" />
     <Compile Include="GlobalCode_NodeTrees\HavokActionTree.cs" />
     <Compile Include="GlobalCode_NodeTrees\NifNodeTree.cs" />
-    <Compile Include="GlobalCode_NodeTrees\NodeTree.cs" />
     <Compile Include="GlobalCode_NodeTrees\NodeTreeGlobals.cs" />
     <Compile Include="GlobalCode_NodeTrees\StringTree.cs" />
     <Compile Include="GlobalCode_NodeTrees\TagPosition.cs" />

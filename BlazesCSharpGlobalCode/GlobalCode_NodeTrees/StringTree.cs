@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CSharpGlobalCode.GlobalCode_NodeTrees
 {
-    public class StringNode : NodeV2<StringTree>
+    public class StringNode : NodeV2<StringTree, StringNode>
     {
     }
 
