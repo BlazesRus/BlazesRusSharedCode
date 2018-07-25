@@ -44,18 +44,18 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// </summary>
         public static readonly SmallDec PI = PIValue();
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        private static SmallDec EValue()
+		/// <summary>
+		/// (About 2.71828182845904523536028747135266249775724709369995) 
+		/// </summary>
+		/// <returns></returns>
+		private static SmallDec EValue()
         {
             return new SmallDec(2, 718281828);
         }
-        /// <summary>
-        /// (2.7182818284590451)
-        /// </summary>
-        public static readonly SmallDec E = EValue();
+		/// <summary>
+		/// Euler's number (2.7182818284590451)
+		/// </summary>
+		public static readonly SmallDec E = EValue();
 
         /// <summary>
         /// Value at one

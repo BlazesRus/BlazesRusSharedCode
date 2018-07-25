@@ -4,9 +4,6 @@
 
 using System;
 
-//Does not need BigMath library to compile
-
-//CSharpGlobalCode.GlobalCode_ExperimentalCode.MediumDec
 namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 {
     using System.Collections.Generic;
@@ -297,15 +294,23 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return new MediumDec(Value.IntValue, Value.DecimalStatus);
         }
 
-        internal static bool IsInfinity(MediumDec magnitude)
-        {
-            throw new NotImplementedException();
-        }
+		/// <summary>
+		/// Determines whether the specified value is infinity.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns>
+		///   <c>true</c> if the specified value is infinity; otherwise, <c>false</c>.
+		/// </returns>
+		public bool IsInfinity(MediumDec Value) => false;
 
-        internal static bool IsNaN(MediumDec magnitude)
-        {
-            throw new NotImplementedException();
-        }
+		/// <summary>
+		/// Determines whether [the specified value] is NaN.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns>
+		///   <c>true</c> if [is na n] [the specified value]; otherwise, <c>false</c>.
+		/// </returns>
+		public bool IsNaN(MediumDec Value) => this == null ? true : false;
     }
 
     //class MediumDecTuple : Tuple<string, MediumDec>
