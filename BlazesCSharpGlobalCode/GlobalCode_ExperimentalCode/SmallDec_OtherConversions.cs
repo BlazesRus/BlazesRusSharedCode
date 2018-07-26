@@ -389,24 +389,24 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return new SmallDec((ushort)Value.IntValue, Value.DecimalStatus);
         }
 #endif
-		/// <summary>
-		/// Determines whether the specified value is infinity.
-		/// </summary>
-		/// <param name="Value">The value.</param>
-		/// <returns>
-		///   <c>true</c> if the specified value is infinity; otherwise, <c>false</c>.
-		/// </returns>
-		public bool IsInfinity(SmallDec Value) => false;
+        /// <summary>
+        /// Determines whether the specified value is infinity.
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified value is infinity; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsInfinity(SmallDec Value) => false;
 
-		/// <summary>
-		/// Determines whether [the specified value] is NaN.
-		/// </summary>
-		/// <param name="Value">The value.</param>
-		/// <returns>
-		///   <c>true</c> if [is na n] [the specified value]; otherwise, <c>false</c>.
-		/// </returns>
-		public bool IsNaN(SmallDec Value) => this == null ? true : false;
-	}
+        /// <summary>
+        /// Determines whether [the specified value] is NaN.
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>
+        ///   <c>true</c> if [is na n] [the specified value]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsNaN(SmallDec Value) => this == null ? true : false;
+    }
 
     //class SmallDecTuple : Tuple<string, SmallDec>
     //{

@@ -96,12 +96,12 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         ///// <returns></returns>
         //public SmallDec Ceil()
         //{
-        //    if (this.DecimalStatus != 0)
-        //    {
-        //        this.DecimalStatus = 0;
-        //        this.intValue += 1;
-        //    }
-        //    return this;
+        //	if (this.DecimalStatus != 0)
+        //	{
+        //		this.DecimalStatus = 0;
+        //		this.intValue += 1;
+        //	}
+        //	return this;
         //}
 
         ///// <summary>
@@ -110,7 +110,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         ///// <returns></returns>
         //public static SmallDec Ceiling(SmallDec value)
         //{
-        //    return value.Ceil();
+        //	return value.Ceil();
         //}
 
         ///// <summary>

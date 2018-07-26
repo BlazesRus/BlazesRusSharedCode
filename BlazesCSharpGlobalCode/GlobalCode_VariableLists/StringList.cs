@@ -121,94 +121,94 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
         {
         }
 
-		public void SaveFileData(string FileName)
-		{
-			byte[] encodedText;
-			int NumberLines = Count;
-
-			if (File.Exists(FileName))
-			{
-				using (FileStream sourceStream = new FileStream(FileName, FileMode.CreateNew, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true))
-				{
-				}
-			}
-			else
-			{
-				using (FileStream sourceStream = new FileStream(FileName, FileMode.Truncate, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true))
-				{
-				}
-			}
-			using (FileStream sourceStream = new FileStream(FileName, FileMode.Append, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: false))
-			{
-				for (int i = 0; i < NumberLines; ++i)
-				{
-					encodedText = Encoding.ASCII.GetBytes(this[i]);
-					sourceStream.Write(encodedText, 0, encodedText.Length);
-				}
-			};
-		}
-
-		public async System.Threading.Tasks.Task SaveFileDataAsync(string FileName)
-		{
-			byte[] encodedText;
-			int NumberLines = Count;
-
-			if (File.Exists(FileName))
-			{
-				using (FileStream sourceStream = new FileStream(FileName, FileMode.CreateNew, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true))
-				{
-				}
-			}
-			else
-			{
-				using (FileStream sourceStream = new FileStream(FileName, FileMode.Truncate, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true))
-				{
-				}
-			}
-
-			using (FileStream sourceStream = new FileStream(FileName, FileMode.Append, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true))
-			{
-				for (int i = 0; i < NumberLines; ++i)
-				{
-					encodedText = Encoding.ASCII.GetBytes(this[i]);
-					await sourceStream.WriteAsync(encodedText, 0, encodedText.Length);
-				}
-			};
-		}
-
-		/// <summary>
-		/// Loads the all file data into StringList 
-		/// </summary>
-		/// <param name="FileName">Name of the file.</param>
-		public void LoadFileData(string FileName)
-		{
-			this.Clear();
-			/// <summary>
-			/// Indicates that
-			/// 1. The file is to be accessed sequentially from beginning to end.
-			/// </summary>
-			const FileOptions FileLoadOptions = FileOptions.SequentialScan;
-			// Open the FileStream with the same FileMode, FileAccess
-			// and FileShare as a call to File.OpenText would've done.
-			using (var stream = new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileLoadOptions))
-			using (var reader = new StreamReader(stream, Encoding.UTF8))
-			{
-				string line;
-				while ((line = reader.ReadLine()) != null)
-				{
-					this.Add(line);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Loads the file data with optional Comment Exclusion later
-		/// </summary>
-		/// <param name="FileName">Name of the file.</param>
-		/// <param name="ConfigSetting">The configuration setting.</param>
-		public void LoadFileDataV2(string FileName, byte ConfigSetting/*=0*/)
+        public void SaveFileData(string FileName)
         {
-			this.Clear();
+            byte[] encodedText;
+            int NumberLines = Count;
+
+            if (File.Exists(FileName))
+            {
+                using (FileStream sourceStream = new FileStream(FileName, FileMode.CreateNew, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true))
+                {
+                }
+            }
+            else
+            {
+                using (FileStream sourceStream = new FileStream(FileName, FileMode.Truncate, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true))
+                {
+                }
+            }
+            using (FileStream sourceStream = new FileStream(FileName, FileMode.Append, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: false))
+            {
+                for (int i = 0; i < NumberLines; ++i)
+                {
+                    encodedText = Encoding.ASCII.GetBytes(this[i]);
+                    sourceStream.Write(encodedText, 0, encodedText.Length);
+                }
+            };
+        }
+
+        public async System.Threading.Tasks.Task SaveFileDataAsync(string FileName)
+        {
+            byte[] encodedText;
+            int NumberLines = Count;
+
+            if (File.Exists(FileName))
+            {
+                using (FileStream sourceStream = new FileStream(FileName, FileMode.CreateNew, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true))
+                {
+                }
+            }
+            else
+            {
+                using (FileStream sourceStream = new FileStream(FileName, FileMode.Truncate, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true))
+                {
+                }
+            }
+
+            using (FileStream sourceStream = new FileStream(FileName, FileMode.Append, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true))
+            {
+                for (int i = 0; i < NumberLines; ++i)
+                {
+                    encodedText = Encoding.ASCII.GetBytes(this[i]);
+                    await sourceStream.WriteAsync(encodedText, 0, encodedText.Length);
+                }
+            };
+        }
+
+        /// <summary>
+        /// Loads the all file data into StringList 
+        /// </summary>
+        /// <param name="FileName">Name of the file.</param>
+        public void LoadFileData(string FileName)
+        {
+            this.Clear();
+            /// <summary>
+            /// Indicates that
+            /// 1. The file is to be accessed sequentially from beginning to end.
+            /// </summary>
+            const FileOptions FileLoadOptions = FileOptions.SequentialScan;
+            // Open the FileStream with the same FileMode, FileAccess
+            // and FileShare as a call to File.OpenText would've done.
+            using (var stream = new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileLoadOptions))
+            using (var reader = new StreamReader(stream, Encoding.UTF8))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    this.Add(line);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Loads the file data with optional Comment Exclusion later
+        /// </summary>
+        /// <param name="FileName">Name of the file.</param>
+        /// <param name="ConfigSetting">The configuration setting.</param>
+        public void LoadFileDataV2(string FileName, byte ConfigSetting/*=0*/)
+        {
+            this.Clear();
             //char LineChar;
             string CommentBuffer = "";
             const string XMLCommentHeader = "<!--";
@@ -257,29 +257,29 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
                                 }
                             }
                         }
-						else if (ConfigSetting != 0 && LineChar == '*' && CommentBuffer == "/")
-						{
-							LineCommentType = false;
-							ScanningComments02 = true;
-						}
-						else if (ConfigSetting != 0 && LineChar == '/' )
-						{
-							CommentBuffer += '/';
-							if (CommentBuffer == "//")
-							{
-								LineCommentType = true;
-								ScanningComments02 = true;
-							}
-							else if (CommentBuffer != "/")
-							{//Force buffer as "/" if anything other
-								CommentBuffer = "/";
-							}
-							else if (CommentBuffer.Length > 2)
-							{
-								CommentBuffer = "";
-							}
-						}
-						else if (ScanningXMLComments)
+                        else if (ConfigSetting != 0 && LineChar == '*' && CommentBuffer == "/")
+                        {
+                            LineCommentType = false;
+                            ScanningComments02 = true;
+                        }
+                        else if (ConfigSetting != 0 && LineChar == '/' )
+                        {
+                            CommentBuffer += '/';
+                            if (CommentBuffer == "//")
+                            {
+                                LineCommentType = true;
+                                ScanningComments02 = true;
+                            }
+                            else if (CommentBuffer != "/")
+                            {//Force buffer as "/" if anything other
+                                CommentBuffer = "/";
+                            }
+                            else if (CommentBuffer.Length > 2)
+                            {
+                                CommentBuffer = "";
+                            }
+                        }
+                        else if (ScanningXMLComments)
                         {
                             if (LineChar == XMLCommentFooter[CommentIndex])
                             {

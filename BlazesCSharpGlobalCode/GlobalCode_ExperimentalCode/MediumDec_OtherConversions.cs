@@ -294,23 +294,23 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return new MediumDec(Value.IntValue, Value.DecimalStatus);
         }
 
-		/// <summary>
-		/// Determines whether the specified value is infinity.
-		/// </summary>
-		/// <param name="Value">The value.</param>
-		/// <returns>
-		///   <c>true</c> if the specified value is infinity; otherwise, <c>false</c>.
-		/// </returns>
-		public bool IsInfinity(MediumDec Value) => false;
+        /// <summary>
+        /// Determines whether the specified value is infinity.
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified value is infinity; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsInfinity(MediumDec Value) => false;
 
-		/// <summary>
-		/// Determines whether [the specified value] is NaN.
-		/// </summary>
-		/// <param name="Value">The value.</param>
-		/// <returns>
-		///   <c>true</c> if [is na n] [the specified value]; otherwise, <c>false</c>.
-		/// </returns>
-		public bool IsNaN(MediumDec Value) => this == null ? true : false;
+        /// <summary>
+        /// Determines whether [the specified value] is NaN.
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>
+        ///   <c>true</c> if [is na n] [the specified value]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsNaN(MediumDec Value) => this == null ? true : false;
     }
 
     //class MediumDecTuple : Tuple<string, MediumDec>

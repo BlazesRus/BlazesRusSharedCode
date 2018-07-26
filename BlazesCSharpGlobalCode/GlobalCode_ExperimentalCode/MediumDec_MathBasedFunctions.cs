@@ -48,7 +48,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         }
 
         /// <summary>
-        /// Removes decimal place info from Value
+        /// Removes decimal place info from Value and increases value by one if had any decimal info
         /// </summary>
         /// <param name="Value">The value.</param>
         /// <returns></returns>
@@ -56,6 +56,58 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         {
             Value.Ceil();
             return Value;
+        }
+
+        /// <summary>
+        /// Removes decimal place info from Value
+        /// </summary>
+        public void Floor()
+        {
+            this.DecimalStatus = 0;
+        }
+
+        /// <summary>
+        /// Removes decimal place info from Value
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns></returns>
+        public static MediumDec Floor(MediumDec Value)
+        {
+            Value.Floor();
+            return Value;
+        }
+
+        /// <summary>
+        /// Returns floored value with all fractional digits after specified precision cut off.
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <param name="precision">The precision.</param>
+        /// <returns></returns>
+        public static MediumDec Floor(MediumDec Value, int precision)
+        {
+            Value.Floor(precision);
+            return Value;
+        }
+
+        /// <summary>
+        /// Returns floored value with all fractional digits after specified precision cut off.
+        /// </summary>
+        /// <param name="precision">The precision.</param>
+        public void Floor(int precision)
+        {
+            switch (precision)
+            {
+                case 9: break;
+                case 8: this.DecimalStatus /= 10; this.DecimalStatus *= 10; break;
+                case 7: this.DecimalStatus /= 100; this.DecimalStatus *= 100; break;
+                case 6: this.DecimalStatus /= 1000; this.DecimalStatus *= 1000; break;
+                case 5: this.DecimalStatus /= 10000; this.DecimalStatus *= 10000; break;
+                case 4: this.DecimalStatus /= 100000; this.DecimalStatus *= 100000; break;
+                case 3: this.DecimalStatus /= 1000000; this.DecimalStatus *= 1000000; break;
+                case 2: this.DecimalStatus /= 10000000; this.DecimalStatus *= 10000000; break;
+                case 1: this.DecimalStatus /= 100000000; this.DecimalStatus *= 100000000; break;
+                default: this.DecimalStatus = 0; break;
+            }
         }
 
         /// <summary>
