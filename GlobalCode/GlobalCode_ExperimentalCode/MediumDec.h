@@ -23,8 +23,8 @@
 #include <math.h>
 #include <iostream>
 #include <string>
-#include "SuperDecHex.h"
 
+#include "SuperDecHex.h"
 
 namespace CPlusGlobalCode_ExperimentalCode
 {

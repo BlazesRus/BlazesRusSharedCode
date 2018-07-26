@@ -5,6 +5,19 @@
 #ifndef LooseNodeTreeTemplate_IncludeGuard
 #define LooseNodeTreeTemplate_IncludeGuard
 
+//#include <typeinfo>//Might be needed if doesn't update derived class Type name of NodeTree
+
+#ifdef BLAZESGLOBALCODE_LIBRARY
+	#include "..\DLLAPI.h"
+#else
+//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
+	#ifndef DLL_API
+		#define DLL_API
+	#endif
+#endif
+
+#ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
+#else
 #include "..\GlobalCode_VariableLists\StringVectorList.h"
 #include "..\GlobalCode_VariableLists\VariableList.h"
 #include "..\GlobalCode_VariableLists\VariableTypeLists.h"
@@ -14,8 +27,7 @@
 #include "..\GlobalCode_StringFunctions\StringFunctions.h"
 #include "..\GlobalCode_NodeTrees\XMLOption.h"
 #include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
-//#include <typeinfo>//Might be needed if doesn't update derived class Type name of NodeTree
-#include "..\DLLAPI.h"
+#endif
 
 //Contains LooseNodeTree BaseData for templating
 struct DLL_API LooseNodeTreeTemplate

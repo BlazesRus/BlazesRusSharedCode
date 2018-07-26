@@ -6,7 +6,15 @@
 #define TagNodeTreeTemplate_IncludeGuard
 
 #include "LooseNodeTreeTemplate.h"
-#include "..\DLLAPI.h"
+
+#ifdef BLAZESGLOBALCODE_LIBRARY
+	#include "..\DLLAPI.h"
+#else
+//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
+	#ifndef DLL_API
+		#define DLL_API
+	#endif
+#endif
 
 //Derivative of LooseNodeTree for XML style data (with TagContent etc)
 //Main additions from derived code -> to TagContent related code/variables

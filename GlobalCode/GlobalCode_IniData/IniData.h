@@ -3,12 +3,6 @@
 #ifndef IniData_IncludeGuard
 #define IniData_IncludeGuard
 
-#ifndef BlazesGlobalCode_FileStructureVersion
-	#define BlazesGlobalCode_FileStructureVersion 0
-	//FileStructureVersion 0 = Refers to required files set up similar/same as Library Versions of files
-	//FileStructureVersion 1 = All required files from GlobalCode within same folder locally
-#endif
-
 #ifdef BLAZESGLOBALCODE_LIBRARY
 	#include "..\DLLAPI.h"
 #else
@@ -18,13 +12,10 @@
 	#endif
 #endif
 
-
-
-//Non-Alternating headers above (Structure based headers in this section)
-#ifndef BlazesGlobalCode_FileStructureVersion || BlazesGlobalCode_FileStructureVersion == 0//(library style  layout)
+#ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
 	#include "..\GlobalCode_VariableLists\VariableList.h"
 	#include "..\GlobalCode_VariableLists\StringVectorList.h"
-#elif BlazesGlobalCode_FileStructureVersion == 1//(Local version style layout)
+#else
 	#include "VariableList.h"
 	#include "StringVectorList.h"
 #endif

@@ -10,12 +10,6 @@
 //#include <math.h>
 //#include <iostream>
 
-#ifndef BlazesGlobalCode_FileStructureVersion
-	#define BlazesGlobalCode_FileStructureVersion 0
-	//FileStructureVersion 0 = Refers to required files set up similar/same as Library Versions of files
-	//FileStructureVersion 1 = All required files from GlobalCode within same folder locally
-#endif
-
 #ifdef BLAZESGLOBALCODE_LIBRARY
 	#include "..\DLLAPI.h"
 #else
@@ -23,6 +17,10 @@
 	#ifndef DLL_API
 		#define DLL_API
 	#endif
+#endif
+
+#ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
+#else
 #endif
 
 struct SuperDecHex

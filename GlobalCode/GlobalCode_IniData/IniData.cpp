@@ -4,7 +4,6 @@
 #include "IniData.h"
 #include <string>
 
-
 void IniData::LoadIniData(std::string FileName)
 {
 	StringVectorList TargetSettings;
