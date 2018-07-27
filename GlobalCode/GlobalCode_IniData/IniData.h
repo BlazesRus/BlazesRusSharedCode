@@ -1,4 +1,14 @@
-//Code Created by James Michael Armstrong(Skyrim nexus name:BlazesRus)
+/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)(https://github.com/BlazesRus)
+	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+*/
+#ifdef BlazesGlobalCode_UsePreprocessor
+#ifdef BlazesGlobalCode_LocalLayout
+	#include "stdafx.h"
+#else
+	#include "..\stdafx.h"
+#endif
+#endif
+
 #pragma once
 #ifndef IniData_IncludeGuard
 #define IniData_IncludeGuard

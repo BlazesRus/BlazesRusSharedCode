@@ -1,6 +1,14 @@
-/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
-	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)(https://github.com/BlazesRus)
+	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
+#ifdef BlazesGlobalCode_UsePreprocessor
+#ifdef BlazesGlobalCode_LocalLayout
+	#include "stdafx.h"
+#else
+	#include "..\stdafx.h"
+#endif
+#endif
+
 #pragma once
 #ifndef QuadVectorFunctions_IncludeGuard
 #define QuadVectorFunctions_IncludeGuard

@@ -1,24 +1,11 @@
-/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
-	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
+/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)(https://github.com/BlazesRus)
+	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
-
 #include "FileName.h"
 
-#ifdef BLAZESGLOBALCODE_LIBRARY
-	//Headers for Library Version here
-	//#ifndef BlazesGlobalCode_FileStructureVersion || BlazesGlobalCode_FileStructureVersion == 0
-	//	//Place Local version layout here
-	//#elif BlazesGlobalCode_FileStructureVersion == 1
-	//	//Place Separate library Style header layout here
-	//#endif
-	
-	
+#ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
+
 #else
 
-	//Headers for Library Version here
-	#ifndef BlazesGlobalCode_FileStructureVersion || BlazesGlobalCode_FileStructureVersion == 0
-	
-	#elif BlazesGlobalCode_FileStructureVersion == 1
-	
-	#endif
 #endif
+

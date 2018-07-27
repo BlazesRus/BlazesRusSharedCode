@@ -1,8 +1,8 @@
-BlazesGlobalCode_FileStructureVersion 0:
-GlobalCode is separated into subfolders based on code usage(default)
+BlazesGlobalCode_LocalLayout:
+All GlobalCode is inside same folder (old structure for local files) (Folder separated otherwise)
 
-BlazesGlobalCode_FileStructureVersion 1:
-All GlobalCode is inside same folder (old structure for local files)
+BlazesGlobalCode_UsePreprocessor:
+Use stdafx.h precompile (inside directory outside current folder or inside same folder if BlazesGlobalCode_LocalLayout set as well)
 
 BlazesGlobalCode_CSharpCode:
 Use C# version of code
@@ -12,9 +12,6 @@ Compile code as dll library
 
 IntegerList_AddBinaryFunctions:
 Enable Binary Function features of IntegerList class
-
-BlazesGlobalCode_VS2015FeaturesOn:
-Enable alternative code that requires VS 2015 and higher
 
 -------------------------------------------------Experimental SuperDec Custom Preprocessors (for CustomDec.h)--------------
 CustomDec_NegativeCalculationMethod(Not Impliemented Yet)
