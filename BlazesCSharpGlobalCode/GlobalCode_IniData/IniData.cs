@@ -18,7 +18,7 @@ namespace CSharpGlobalCode.GlobalCode_IniData
 
     public class IniData : List<IniDataElement>
     {
-        byte IniType = 0;
+        //byte IniType = 0;
 
         /// <summary>
         /// Loads the Ini data.
@@ -28,7 +28,7 @@ namespace CSharpGlobalCode.GlobalCode_IniData
         /// 0 = IniSetting:IniValue; format(Default)
         /// 1= [IniSetting=IniValue] format (based on my old C++ code)
         /// </param>
-        void LoadIniData(string FileName, byte IniFormat = 0)
+        public void LoadIniData(string FileName, byte IniFormat = 0)
         {
             List<string> FileData = CSharpGlobalCode.GlobalMiscCode.FileAccessCommands.ReturnFileContentsAsList(FileName);
             string LineData;
@@ -132,7 +132,7 @@ namespace CSharpGlobalCode.GlobalCode_IniData
             }
         }
 
-        bool CheckIfElementExists(string Value)
+        public bool CheckIfElementExists(string Value)
         {
             int ListSize = this.Count;
             IniDataElement ElementData;
@@ -147,7 +147,7 @@ namespace CSharpGlobalCode.GlobalCode_IniData
             }
             return ElementExists;
         }
-        string GetElementData(string Value)
+        public string GetElementData(string Value)
         {
             int ListSize = this.Count;
             string ElementValue = "";

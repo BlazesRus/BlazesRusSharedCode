@@ -139,6 +139,7 @@
     <Compile Include="GlobalCode_ExperimentalCode\ValidationOverride.cs" />
     <Compile Include="GlobalCode_ExperimentalCode\VariableData.cs" />
     <Compile Include="GlobalCode_IniData\IniData.cs" />
+    <Compile Include="GlobalCode_IniData\IniDataV2.cs" />
     <Compile Include="GlobalCode_NodeTrees\HavokActionTree.cs" />
     <Compile Include="GlobalCode_NodeTrees\NifNodeTree.cs" />
     <Compile Include="GlobalCode_NodeTrees\NodeTreeGlobals.cs" />
