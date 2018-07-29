@@ -1,13 +1,18 @@
 /*	Code Created by James Michael Armstrong (NexusName:BlazesRus)(https://github.com/BlazesRus)
 	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
-
-#include "StringVectorList.h"
 #include <iostream>
 #include <fstream>
-#include "StringFunctions.h"
 #include <iosfwd>
 #include <sys/stat.h>
+
+#ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
+#include "StringVectorList.h"
+#include "StringFunctions.h"
+#else
+#include "..\GlobalCode_VariableLists\StringVectorList.h"
+#include "..\GlobalCode_StringFunctions\StringFunctions.h"
+#endif
 
 using std::cout;
 using std::string;
