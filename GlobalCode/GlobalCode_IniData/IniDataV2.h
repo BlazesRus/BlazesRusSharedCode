@@ -1,14 +1,6 @@
 /*	Code Created by James Michael Armstrong (NexusName:BlazesRus)(https://github.com/BlazesRus)
     Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
-#ifdef BlazesGlobalCode_UsePreprocessor
-#ifdef BlazesGlobalCode_LocalLayout
-#include "stdafx.h"
-#else
-#include "..\stdafx.h"
-#endif
-#endif
-
 #pragma once
 #ifndef IniDataV2_IncludeGuard
 #define IniDataV2_IncludeGuard
