@@ -13,11 +13,11 @@
 /// 0 = IniSetting:IniValue; format(Default)
 /// 1= [IniSetting=IniValue] format (based on my old C++ code)
 /// </param>
-
-inline void IniDataV2::LoadIniData(std::string FileName, unsigned _int8 IniFormat)
+inline bool IniDataV2::LoadIniData(std::string FileName, unsigned _int8 IniFormat)
 {
     StringVectorList FileData;
-    FileData.LoadFileDataV2(FileName);
+    bool FileLoaded = FileData.LoadFileDataV2(FileName,1);
+	if (FileLoaded == false) {return false;}
     std::string LineData;
     std::string IniSetting = "";
     std::string IniValue = "";
@@ -176,6 +176,7 @@ inline void IniDataV2::LoadIniData(std::string FileName, unsigned _int8 IniForma
             }
         }
     }
+	return true;
 }
 
 inline bool IniDataV2::CheckIfElementExists(std::string Value)

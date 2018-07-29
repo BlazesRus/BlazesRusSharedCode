@@ -1,5 +1,5 @@
-/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)(https://github.com/BlazesRus)
-	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
+	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
 */
 #include <iostream>
 #include <fstream>
@@ -763,7 +763,7 @@ void StringVectorList::SaveDataToFileV3(std::string FileName, bool Verbose/*=fal
 	}
 }
 
-void StringVectorList::LoadFileDataV2(std::string FileName, unsigned short ConfigSetting/*=0*/, bool Verbose/*=false*/)
+bool StringVectorList::LoadFileDataV2(std::string FileName, unsigned short ConfigSetting/*=0*/, bool Verbose/*=false*/)
 {
 	FileName = StringFunctions::CheckAndCorrectFilepath(FileName);
 	std::string LineString;
@@ -899,6 +899,7 @@ void StringVectorList::LoadFileDataV2(std::string FileName, unsigned short Confi
 					LineString += LineChar;
 				}
 			}
+			return true;
 		}
 		else
 		{
@@ -906,11 +907,14 @@ void StringVectorList::LoadFileDataV2(std::string FileName, unsigned short Confi
 			else if(LoadedFileStream.fail()) { std::cout << "Failed format based Error!\n"; }
 			else if(LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
 			else if(LoadedFileStream.eof()) {/*Send debug message of reaching end of file?*/ }
+			return false;
 		}
 		LoadedFileStream.close();
 	}
 	else
 	{
 		cout << "Failed to open filepath:" << FileName << "\n";
+		return false;
 	}
+	return true;
 }

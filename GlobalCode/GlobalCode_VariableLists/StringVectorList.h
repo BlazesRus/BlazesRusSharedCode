@@ -1,5 +1,5 @@
-/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)(https://github.com/BlazesRus)
-	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
+	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
 */
 #pragma once
 #ifndef StringVectorList_IncludeGuard
@@ -63,18 +63,13 @@ public:
 	bool AddFileData(std::string FileName);
 	//Load file data without XML/C++ style comments stored
 	void LoadFileWithoutComments(std::string InputFile);
-	//Load file data(if ConfigSetting is greater than 0 acts like LoadFileWithoutComments)
-	//************************************
-	// Method:    LoadFileDataV2
-	// FullName:  StringVectorList::LoadFileDataV2
-	// Access:    public 
-	// Returns:   void
-	// Qualifier:
-	// Parameter: std::string FileName
-	// Parameter: unsigned short ConfigSetting
-	// Parameter: bool Verbose
-	//************************************
-	void LoadFileDataV2(std::string FileName, unsigned short ConfigSetting=0, bool Verbose=false);
+/// <summary>
+/// Load file data(if ConfigSetting is greater than 0 acts like LoadFileWithoutComments)
+/// </summary>
+/// <param name="FileName">Name of the file.</param>
+/// <param name="ConfigSetting">The configuration setting.</param>
+/// <param name="Verbose">if set to <c>true</c> [verbose].</param>
+	bool LoadFileDataV2(std::string FileName, unsigned short ConfigSetting = 0, bool Verbose = false);
 	std::string ConvertToString();
 	size_t AddData();
 	//************************************

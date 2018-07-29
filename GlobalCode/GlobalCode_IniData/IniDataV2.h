@@ -40,16 +40,16 @@ public:
     /// IniSettings with string values and key linkage to IniSettings
     /// </summary>
     CustomDictionary<std::string, std::string> self = {};
-    /// <summary>
-    /// Loads the Ini data.
-    /// </summary>
-    /// <param name="FileName">Name of the file.</param>
-    /// <param name="IniFormat">The ini storage format.
-    /// (TypeDeclaration) + Other Formating
-    /// 0 = IniSetting:IniValue; format(Default)
-    /// 1= [IniSetting=IniValue] format (based on my old C++ code)
-    /// </param>
-    void LoadIniData(std::string FileName, unsigned _int8 IniFormat = 0);
+	/// <summary>
+	/// Loads the Ini data. (Returns false if fails to load data from file)
+	/// </summary>
+	/// <param name="FileName">Name of the file.</param>
+	/// <param name="IniFormat">The ini storage format.
+	/// (TypeDeclaration) + Other Formating
+	/// 0 = IniSetting:IniValue; with single line comments removed(default)
+	/// 1= [IniSetting=IniValue] format (based on my old C++ code)</param>
+	/// <returns></returns>
+	bool LoadIniData(std::string FileName, unsigned _int8 IniFormat = 0);
 
     bool CheckIfElementExists(std::string Value);
     ///// <summary>
