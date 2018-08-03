@@ -15,6 +15,7 @@
 #endif
 
 #include "VariableList.h"
+
 #include <string>
 
 class DLL_API StringVectorList : public VariableList < std::string >

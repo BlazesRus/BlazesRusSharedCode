@@ -1,5 +1,5 @@
-/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)(https://github.com/BlazesRus)
-	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
+	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
 */
 #pragma once
 #ifndef VariableList_IncludeGuard
@@ -17,6 +17,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <sstream>//std::ostringstream definition
 #include <fstream>
 #include <typeinfo>
 #include <memory>
@@ -40,7 +41,7 @@ public:
 	//************************************
 	VariableType elementAt(size_t index)
 	{
-		return at(index);
+		return this->at(index);
 	}
 	//	Returns the value at the specified index.
 	//************************************
@@ -53,7 +54,7 @@ public:
 	//************************************
 	VariableType ElementAt(size_t index)
 	{
-		return at(index);
+		return this->at(index);
 	}
 	//	Adds Value at end of vector
 	//************************************
@@ -66,7 +67,7 @@ public:
 	//************************************
 	void Add(VariableType TempValue)
 	{
-		push_back(TempValue);
+		this->push_back(TempValue);
 	}
 	// Assign Value at index in vector (Alias for setElementAt)
 	//************************************
@@ -80,7 +81,7 @@ public:
 	//************************************
 	void Set(int index, VariableType ElementValue)
 	{
-		return SetElementAt(index, ElementValue);
+		return this->SetElementAt(index, ElementValue);
 	}
 	// (Alias for returning size of vector)
 	//************************************
@@ -92,7 +93,7 @@ public:
 	//************************************
 	size_t length()
 	{
-		return size();
+		return this->size();
 	}
 	//Returns the length of this string.(alias for size()) (size_t = unsigned long long int)
 	//************************************
@@ -104,7 +105,7 @@ public:
 	//************************************
 	size_t Size()
 	{
-		return size();
+		return this->size();
 	}
 	//Returns true if, and only if, length() is 0.
 	//************************************
@@ -116,7 +117,7 @@ public:
 	//************************************
 	bool isEmpty()
 	{
-		return empty();
+		return this->empty();
 	}
 	//************************************
 	// Method:    Reset
@@ -129,7 +130,7 @@ public:
 	{
 		if(!isEmpty())
 		{
-			clear();
+			this->clear();
 		}
 	}
 	//************************************
@@ -143,10 +144,10 @@ public:
 	{
 		if(!isEmpty())
 		{
-			int TempInt = size();
+			int TempInt = this->size();
 			for(int i = 0; i < TempInt; i++)
 			{
-				ostringstream out;
+				std::ostringstream out;
 				out << elementAt(i);
 			}
 		}
@@ -490,7 +491,8 @@ public:
 			return nullptr;
 		}
 	}
-	//Alternative function for return Pointer to Element Index in array. Returns nullptr if use invalid Index.(Tested to work with VariableList<Variable> Lists)
+#ifdef BlazesGlobalCode_EnableGetElementPointerV2
+	//Alternative function for return Pointer to Element Index in array. Returns nullptr if use invalid Index.(Tested to work with VariableList<Variable> Lists)(No longer working as is)
 	//************************************
 	// Method:    GetElementPointerV2
 	// FullName:  VariableList<VariableType>::GetElementPointer
@@ -503,8 +505,7 @@ public:
 	{
 		if(index < Size())
 		{
-			VariableList::iterator VectorIterator;
-			VectorIterator = this->begin() + index;
+			VariableList<VariableType>::iterator VectorIterator = this->begin() + index;
 			return &(*VectorIterator);
 		}
 		else
@@ -513,6 +514,7 @@ public:
 			return nullptr;
 		}
 	}
+#endif
 	//// copy constructor
 	//VariableList(VariableList<VariableType> &other)
 	//{
@@ -540,7 +542,7 @@ public:
 	//}
 	std::vector<VariableType> CastAsVector()
 	{
-		vector <VariableType> NewVector;
+		std::vector <VariableType> NewVector;
 		const size_t SizeTemp = Size();
 		VariableType* CurrentElement;
 		for(size_t Index = 0; Index < SizeTemp;++Index)

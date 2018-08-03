@@ -10,8 +10,8 @@
 #endif
 
 #pragma once
-#ifndef CustomDictionary_IncludeGuard
-#define CustomDictionary_IncludeGuard
+#ifndef CustomOrderedDictionary_IncludeGuard
+#define CustomOrderedDictionary_IncludeGuard
 
 #ifdef BLAZESGLOBALCODE_LIBRARY
     #include "..\DLLAPI.h"
@@ -22,7 +22,7 @@
     #endif
 #endif
 
-#include <unordered_map>
+#include "..\tsl\ordered_map.h"//Ordered map from https://github.com/Tessil/ordered-map
 
 #ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
 
@@ -31,7 +31,7 @@
 #endif
 
 template <typename EntryType, typename ValueType>
-class DLL_API CustomDictionary : public std::unordered_map<EntryType, ValueType>
+class DLL_API CustomOrderedDictionary : public tsl ::ordered_map<EntryType, ValueType>
 {
 public:
 	/// <summary>
@@ -45,27 +45,18 @@ public:
 		if (!p.second) {
 			// overwrite previous value
 			p.first->second = Value;
-
 		}
     }
-	bool AddOnlyNew(EntryType First, ValueType Second)
+	void AddOnlyNew(EntryType First, ValueType Second)
 	{
 		std::pair<EntryType, ValueType> Value = { First, Second };
-		auto p = this->insert(Value);
-		if (p.second)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		this->insert(Value);
 	}
 	//int operator[](const string key) 
 	//{
 	//	return 
 	//}
-	CustomDictionary(){}
-	~CustomDictionary(){}
+	CustomOrderedDictionary(){}
+	~CustomOrderedDictionary(){}
 };
 #endif

@@ -251,6 +251,88 @@ double VariableConversionFunctions::ReadDoubleFromString(string TempString)
 	cout << "\n";
 	return CalculatedValue;
 }
+float VariableConversionFunctions::ReadFloatFromString(std::string TempString)
+{
+	int WholeNumberPart = 0;
+	float DecimalPart = 0.0;
+	int PlaceNumber = 0;
+	float CalculatedValue;
+	bool IsNegative = false;
+	string StringChar;
+	size_t StringLength;
+	StringLength = TempString.length();
+	string WholeNumberBuffer = "";
+	string DecimalBuffer = "";
+	bool ReadingDecimal = false;
+	int TempInt;
+	int TempInt02;
+	float Tempfloat;
+	//cout << "WholeNumber Part:";
+	for (size_t i = 0; i < StringLength; ++i)
+	{
+		StringChar = TempString.at(i);
+		if (IsDigit(StringChar))
+		{
+			std::cout << StringChar;
+			if (ReadingDecimal)
+			{
+				DecimalBuffer += StringChar;
+			}
+			else
+			{
+				WholeNumberBuffer += StringChar;
+			}
+		}
+		else if (StringChar == "-")
+		{
+			IsNegative = true;
+		}
+		else if (StringChar == ".")
+		{
+			ReadingDecimal = true;
+			//cout << "\nDecimal Part:";
+		}
+	}
+	//cout << "\nWhole Number Calculations:\n";
+	for (size_t i = WholeNumberBuffer.length() - 1; i >= 0; --i)
+	{
+		StringChar = WholeNumberBuffer.at(i);
+		TempInt = CharAsInt(StringChar.at(0));
+		TempInt02 = TempInt * pow(10, PlaceNumber);
+		//cout << "StringChar:" << TempInt << " PlaceNumber:" << PlaceNumber << " +=" << TempInt02<<"\n";
+		if (StringChar != "0")
+		{
+			WholeNumberPart += TempInt02;
+		}
+		PlaceNumber++;
+	}
+	//cout << "\nEnd of WholeNumber Calculations\n";
+	StringLength = DecimalBuffer.length();
+	PlaceNumber = -1;
+	for (size_t i = 0; i < StringLength; i++)
+	{
+		StringChar = DecimalBuffer.at(i);
+		TempInt = CharAsInt(StringChar.at(0));
+		Tempfloat = TempInt * pow(10, PlaceNumber);
+		//cout << "StringChar:" << TempInt << " PlaceNumber:" << PlaceNumber << " +=" << Tempfloat << "\n";
+		if (IsDigit(StringChar))
+		{
+			if (StringChar != "0")
+			{
+				DecimalPart += (float)TempInt*pow(10, PlaceNumber);
+			}
+			PlaceNumber--;
+		}
+	}
+	//cout << "\nEnd of Decimal Calculations\n";
+	CalculatedValue = (float)WholeNumberPart + DecimalPart;
+	if (IsNegative == true)
+	{
+		CalculatedValue *= -1.0;
+	}
+	cout << "\n";
+	return CalculatedValue;
+}
 /** Returns Integer value version of String
  * @param TempString
  * @return
@@ -626,6 +708,34 @@ std::string VariableConversionFunctions::BoolAsString(bool TempValue)
 	}
 	return TempString;
 }
+
+//FloatToDouble code from https://github.com/PIlin/nanopb/blob/master/example_avr_double/double_conversion.c
+//Licease from project code is From:
+//Copyright(c) 2011 Petteri Aimonen <jpa at nanopb.mail.kapsi.fi>
+//
+//This software is provided 'as-is', without any express or
+//implied warranty.In no event will the authors be held liable
+//for any damages arising from the use of this software.
+//
+//Permission is granted to anyone to use this software for any
+//purpose, including commercial applications, and to alter it and
+//redistribute it freely, subject to the following restrictions :
+//
+//1. The origin of this software must not be misrepresented; you
+//must not claim that you wrote the original software.If you use
+//this software in a product, an acknowledgment in the product
+//documentation would be appreciated but is not required.
+//
+//2. Altered source versions must be plainly marked as such, and
+//must not be misrepresented as being the original software.
+//
+//3. This notice may not be removed or altered from any source
+//distribution.
+typedef union conversion_t
+{
+	float f;
+	uint32_t i;
+};
 
 /* Note: IEE 754 standard specifies float formats as follows:
  * Single precision: sign,  8-bit exp, 23-bit frac.

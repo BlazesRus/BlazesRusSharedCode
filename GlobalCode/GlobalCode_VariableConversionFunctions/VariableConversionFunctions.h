@@ -1,6 +1,3 @@
-/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)(https://github.com/BlazesRus)
-	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
-*/
 #pragma once
 #ifndef VariableConversionFunctions_IncludeGuard
 #define VariableConversionFunctions_IncludeGuard
@@ -131,6 +128,8 @@ public:
 	// Parameter: std::string TempString
 	//************************************
 	static double ReadDoubleFromString(std::string TempString);
+
+	static float ReadFloatFromString(std::string TempString);
 	//Returns Integer value version of String
 	//************************************
 	// Method:    ReadIntFromString
@@ -234,33 +233,7 @@ public:
 	// Parameter: size_t TempValue
 	//************************************
 	static std::string XIntToStringConversion(size_t TempValue);
-	//FloatToDouble code from https://github.com/PIlin/nanopb/blob/master/example_avr_double/double_conversion.c
-	//Licease from project code is From:
-	//Copyright(c) 2011 Petteri Aimonen <jpa at nanopb.mail.kapsi.fi>
-	//
-	//This software is provided 'as-is', without any express or
-	//implied warranty.In no event will the authors be held liable
-	//for any damages arising from the use of this software.
-	//
-	//Permission is granted to anyone to use this software for any
-	//purpose, including commercial applications, and to alter it and
-	//redistribute it freely, subject to the following restrictions :
-	//
-	//1. The origin of this software must not be misrepresented; you
-	//must not claim that you wrote the original software.If you use
-	//this software in a product, an acknowledgment in the product
-	//documentation would be appreciated but is not required.
-	//
-	//2. Altered source versions must be plainly marked as such, and
-	//must not be misrepresented as being the original software.
-	//
-	//3. This notice may not be removed or altered from any source
-	//distribution.
-	typedef union conversion_t
-	{
-		float f;
-		uint32_t i;
-	};
+
 	//************************************
 	//FloatToDouble code from https://github.com/PIlin/nanopb/blob/master/example_avr_double/double_conversion.c
 	// Method:    float_to_double
