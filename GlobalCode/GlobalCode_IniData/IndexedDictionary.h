@@ -41,16 +41,16 @@ public:
 	{
 		//if(ReverseIndexSearch){}else{}
 		bool Success = AddOnlyNew(NextIndex,Value);
-		if(Success){NextIndex++;continue;)
+		if(Success){NextIndex++;return;)
 		int LastIndexSlot = NextIndex;//Check higher indexes first so save information of last index to check in reverse later
 		for(Success=false;!Success||NextIndex==4294967295;Success=AddOnlyNew(NextIndex,Value))
 		{
 			NextIndex++;
 		}
-		if(Success){NextIndex++;continue;)
+		if(Success){NextIndex++;return;)
 		Success = AddOnlyNew(4294967295,Value);
 		//ReverseIndexSearch = true;
-		if(Success){continue;)
+		if(Success){return;)
 		NextIndex = LastIndexSlot;
 		for (Success = false; !Success || NextIndex == 0; Success = AddOnlyNew(NextIndex, Value))//Search in reverse for slots now
 		{
@@ -84,16 +84,16 @@ public:
 	{
 		//if(ReverseIndexSearch){}else{}
 		bool Success = AddOnlyNew(NextIndex,Value);
-		if(Success){NextIndex++;continue;)
+		if(Success){NextIndex++;return;)
 		int LastIndexSlot = NextIndex;//Check higher indexes first so save information of last index to check in reverse later
 		for(Success=false;!Success||NextIndex==4294967295;Success=AddOnlyNew(NextIndex,Value))
 		{
 			NextIndex++;
 		}
-		if(Success){NextIndex++;continue;)
+		if(Success){NextIndex++;return;)
 		Success = AddOnlyNew(4294967295,Value);
 		//ReverseIndexSearch = true;
-		if(Success){continue;)
+		if(Success){return;)
 		NextIndex = LastIndexSlot;
 		for (Success = false; !Success || NextIndex == 0; Success = AddOnlyNew(NextIndex, Value))//Search in reverse for slots now
 		{
@@ -126,15 +126,15 @@ public:
 	void Add(ValueType Value)
 	{
 		bool Success = AddOnlyNew(NextIndex,Value);
-		if(Success){NextIndex++;continue;)
+		if(Success){NextIndex++;return;)
 		int LastIndexSlot = NextIndex;//Check higher indexes first so save information of last index to check in reverse later
 		for(Success=false;!Success||NextIndex==18446744073709551615;Success=AddOnlyNew(NextIndex,Value))
 		{
 			NextIndex++;
 		}
-		if (Success) { NextIndex++; continue; }
+		if (Success) { NextIndex++; return; }
 		Success = AddOnlyNew(18446744073709551615,Value);//Unlikely to require getting past this point but just in case
-		if (Success) { continue; }
+		if (Success) { return; }
 		NextIndex = LastIndexSlot;
 		for (Success = false; !Success || NextIndex == 0; Success = AddOnlyNew(NextIndex, Value))//Search in reverse for slots now
 		{
@@ -167,15 +167,15 @@ public:
 	void Add(ValueType Value)
 	{
 		bool Success = AddOnlyNew(NextIndex,Value);
-		if (Success) { NextIndex++; continue; }
+		if (Success) { NextIndex++; return; }
 		int LastIndexSlot = NextIndex;//Check higher indexes first so save information of last index to check in reverse later
 		for(Success=false;!Success||NextIndex==18446744073709551615;Success=AddOnlyNew(NextIndex,Value))
 		{
 			NextIndex++;
 		}
-		if (Success) { NextIndex++; continue; }
+		if (Success) { NextIndex++; return; }
 		Success = AddOnlyNew(18446744073709551615,Value);//Unlikely to require getting past this point but just in case
-		if (Success) { continue; }
+		if (Success) { return; }
 		NextIndex = LastIndexSlot;
 		for (Success = false; !Success || NextIndex == 0; Success = AddOnlyNew(NextIndex, Value))//Search in reverse for slots now
 		{
