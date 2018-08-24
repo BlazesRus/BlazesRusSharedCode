@@ -23,7 +23,7 @@ public:
 	//************************************
 	// Method:    AddStringInFront
 	// FullName:  StringFunctions::AddStringInFront
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: std::string ValueAdded
@@ -33,7 +33,7 @@ public:
 	//************************************
 	// Method:    AddStringInFront
 	// FullName:  StringFunctions::AddStringInFront
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: char ValueAdded
@@ -44,7 +44,7 @@ public:
 	// Check if LineString Contains SearchedString
 	// Method:    LineStringContains
 	// FullName:  StringFunctions::LineStringContains
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   bool
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -55,7 +55,7 @@ public:
 	// Use to keep tabs aligned on parameters(tab is equal to 4 spaces)
 	// Method:    OutputLineStringTabs
 	// FullName:  StringFunctions::OutputLineStringTabs
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -65,7 +65,7 @@ public:
 	//Create TabSpace string based on TabSpace amount
 	// Method:    CreateTabSpace
 	// FullName:  StringFunctions::CreateTabSpace
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: size_t temp
@@ -75,7 +75,7 @@ public:
 	// Use to keep tabs aligned on parameters
 	// Method:    OutputQuadVariableLines
 	// FullName:  StringFunctions::OutputQuadVariableLines
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -85,7 +85,7 @@ public:
 	// Returns the filename from a full file-path
 	// Method:    SeparateFilePathIntoFileName
 	// FullName:  StringFunctions::SeparateFilePathIntoFileName
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: std::string TempString
@@ -94,7 +94,7 @@ public:
 	//************************************
 	// Method:    CreateLinkedHTMLString
 	// FullName:  StringFunctions::CreateLinkedHTMLString
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -105,7 +105,7 @@ public:
 	//Remove whitespace from start of line
 	// Method:    RemoveStringTabs
 	// FullName:  StringFunctions::RemoveStringTabs
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -115,7 +115,7 @@ public:
 	// Examines the number of tabs/(equivalent of tabs in spaces) of whitespace before text (TabEquivalent=Amount of spaces is equal to tab)
 	// Method:    ExamineTabSpace
 	// FullName:  StringFunctions::ExamineTabSpace
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   size_t
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -128,7 +128,7 @@ public:
 	//	This is reduced parameter version of the function that uses Netbeans / Programmer's Notepad equivalent for tabs being 4 spaces
 	// Method:    ExamineTabSpace
 	// FullName:  StringFunctions::ExamineTabSpace
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   size_t
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -138,7 +138,7 @@ public:
 	// Removes Specific amount of whitespace from front of LineString(AmountOfWhitespaceRemoval=How many tabs worth of whitespace to remove)
 	// Method:    RemoveAmountOfTabSpace
 	// FullName:  StringFunctions::RemoveAmountOfTabSpace
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -150,7 +150,7 @@ public:
 	// Removes all XML/HTML type tags (Things like<XML Data>) from LineString
 	// Method:    RemoveXMLTags
 	// FullName:  StringFunctions::RemoveXMLTags
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -160,7 +160,7 @@ public:
 	// Similar to RemoveXMLTags but only returns data after first tag(only gives data for first tag contents)
 	// Method:    ReturnXMLTagContent
 	// FullName:  StringFunctions::ReturnXMLTagContent
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -170,7 +170,7 @@ public:
 	//************************************
 	// Method:    ReplaceFirst
 	// FullName:  StringFunctions::ReplaceFirst
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -182,7 +182,7 @@ public:
 	//************************************
 	// Method:    ReplaceAll
 	// FullName:  StringFunctions::ReplaceAll
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -194,7 +194,7 @@ public:
 	//************************************
 	// Method:    ReturnParamName
 	// FullName:  StringFunctions::ReturnParamName
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -214,7 +214,7 @@ public:
 	//************************************
 	// Method:    ConvertPointerToStringAddressV2
 	// FullName:  StringFunctions::ConvertPointerToStringAddressV2
-	// Access:    public 
+	// Access:    public
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: T * obj
@@ -251,5 +251,35 @@ public:
 	// Parameter: std::string Content
 	//************************************
 	static unsigned __int8 FindContentType(std::string Content);
+
+	/// <summary>
+	/// Converts from LPCTSTR to std::string
+	/// </summary>
+	/// <param name="value">The value.</param>
+	/// <param name="cp">The codepage.Default to (UTF-16 codepage = 1200)(https://docs.microsoft.com/en-us/windows/desktop/Intl/code-page-identifiers)</param>
+	/// <returns></returns>
+	static std::string ConvertFromPString(LPCTSTR value, UINT cp = 1200)
+	{
+#ifdef _UNICODE//https://stackoverflow.com/questions/5513718/how-do-i-convert-from-lpctstr-to-stdstring
+		if(value==nullptr)
+		{
+			return "";
+		}
+		else
+		{
+			int cch = WideCharToMultiByte(cp, WC_NO_BEST_FIT_CHARS, value, -1, 0, 0, NULL, NULL);//Default of dw field of 0 switching to WC_NO_BEST_FIT_CHARS since likely to deal with filenames
+			char* psz = new char[cch];
+
+			WideCharToMultiByte(cp, WC_NO_BEST_FIT_CHARS, value, -1, psz, cch, NULL, NULL);
+
+			std::string st(psz);
+			delete[] psz;
+
+			return st;
+		}
+#else
+		return std::string(str);
+#endif
+	}
 };
 #endif
