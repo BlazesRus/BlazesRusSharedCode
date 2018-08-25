@@ -20,15 +20,17 @@
 
 #endif
 
-template <typename VariableType>
+template <typename VariableTypeP>
 class BufferedVariable
 {public:
-	VariableType* self;
+	VariableTypeP self;
 	BufferedVariable()
 	{
 		self = nullptr;
 	}
-	CopyFrom(VariableType* Target){if(self!=nullptr){delete self;}
+	void CopyFrom(VariableTypeP Target)
+	{
+		if(self!=nullptr){delete self;}
 		self = Target;
 	}
 	void Delete(){if(self!=nullptr){delete self;self=nullptr;}}
