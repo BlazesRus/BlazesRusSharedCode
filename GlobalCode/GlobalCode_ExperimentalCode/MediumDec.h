@@ -24,62 +24,17 @@
 #include <iostream>
 #include <string>
 
-#include "SuperDecHex.h"
+//#include "SuperDecHex.h"
+#include "CustomDec.h"
 
 namespace CPlusGlobalCode_ExperimentalCode
 {
     /// <summary>
     /// Represent +- 4294967295.999999999 with 100% consistency of accuracy
     /// </summary>
-	class DLL_API MediumDec
+	class DLL_API MediumDec : CustomDec<MediumDec, unsigned int, signed int, long, -1000000000, 1000000000>
     {
-    private:
-        /// <summary>
-        /// Stores decimal section info and Negative/Positive Status(9 Decimal places stored by default)
-        /// </summary>
-        signed int decimalStatus;
-
-        /// <summary>
-        /// Stores whole half of number
-        /// </summary>
-		unsigned int intValue;
-    public:
-        static const signed int NegativeWholeNumber = -1000000000;
-
-        static const signed int DecimalOverflow = 1000000000;
-
-  //      /// <summary>
-  //      /// Stores decimal section info and Negative/Positive Status(9 Decimal places stored)
-  //      /// </summary>
-  //      signed int DecimalStatus
-  //      {
-  //          get
-  //          {
-  //              return decimalStatus;
-  //          }
-
-  //          set
-  //          {
-  //              decimalStatus = value;
-  //          }
-  //      }
-
-  //      /// <summary>
-  //      /// Stores whole half of number
-  //      /// </summary>
-		//unsigned int IntValue
-  //      {
-  //          get
-  //          {
-  //              return intValue;
-  //          }
-
-  //          set
-  //          {
-  //              intValue = value;
-  //          }
-  //      }
-
+public:
 //		/// <summary>
 //		/// Finds sum of Value Container
 //		/// </summary>
