@@ -20,12 +20,12 @@
 #include <limits>
 
 /// <summary>
-/// Non-Floating Non-WholeNumber Base Class for MediumDec, SmallDec, etc 
+/// Non-Floating Non-WholeNumber Base Class for MediumDec, SmallDec, etc
 /// <para/>DerivedSelf refers to typename derived from this base class
 /// <para/>(Requires unsigned integer for IntType; signed integer for DecimalStatusType; signed type with minimum size of  IntType+DecimalStatusType for CombinedStorageType;
 /// <para/>NegativeWholeNumberVal with value of (10^NumberOfDecimalStorage)*-1; DecimalOverflowVal with value 10^NumberOfDecimalStorage)
 /// </summary>
-template <typename DerivedSelf=CustomDec, typename IntType = unsigned int, typename DecimalStatusType = signed int, typename CombinedStorageType = long, DecimalStatusType NegativeWholeNumberVal = -1000000000, DecimalStatusType DecimalOverflowVal = 1000000000>
+template <typename DerivedSelf, typename IntType = unsigned int, typename DecimalStatusType = signed int, typename CombinedStorageType = long, DecimalStatusType NegativeWholeNumberVal = -1000000000, DecimalStatusType DecimalOverflowVal = 1000000000>
 class DLL_API CustomDec
 {
 public:
@@ -37,7 +37,7 @@ public:
     /// Stores decimal section info and Negative/Positive Status(9 Decimal places stored for MediumDec)
     /// </summary>
 	DecimalStatusType DecimalStatus;
-	DerivedSelf(IntType intVal, DecimalStatusType decVal) 
+	DerivedSelf(IntType intVal, DecimalStatusType decVal)
 	{
 		IntValue = intVal;
 		DecimalStatus = decVal;
@@ -93,12 +93,12 @@ public:
 		/// Returns value of lowest non-infinite/Special Decimal State Value that can store
 		/// </summary>
 		static readonly DerivedSelf Minimum = MinimumValue();
-		
+
 		bool IsNegative()
         {
 			return DecimalStatus<0;
 		}
-		
+
 		void SwapNegativeStatus()
 		{
 			if(DecimalStatus==NegativeWholeNumberVal)
@@ -114,7 +114,7 @@ public:
 				DecimalStatus *= -1;
 			}
 		}
-#region OperationTemplate
+#pragma region OperationTemplate
 	template <typename ValueType>
 	void ApplyUnsignedIntAddition(ValueType Value)
 	{
@@ -148,12 +148,12 @@ public:
 		}
 		else
 		{
-		
+
 		}
 	}
-#endregion OperationTemplate
-#region Operations
-	DerivedSelf operator+(IntType Value) 
+#pragma endregion OperationTemplate
+#pragma region Operations
+	DerivedSelf operator+(IntType Value)
 	{
 		if(DecimalStatus<0)
 		{
@@ -180,7 +180,12 @@ public:
 			IntValue += Value;
 		}
 	}
-	DerivedSelf operator-(IntType Value) 
+	DerivedSelf operator ++()
+	{
+		this += 1;
+		return this;
+	}
+	DerivedSelf operator-(IntType Value)
 	{
 		if(DecimalStatus<0)
 		{
@@ -188,44 +193,183 @@ public:
 		}
 		else
 		{
-		
+
 		}
 	}
-	//CustomDec operator+(double Value){}
-	//CustomDec operator+(std::string Value);
+	DerivedSelf operator --()
+	{
+		this += 1;
+		return this;
+	}
+	//DerivedSelf operator+(double Value){}
+	//DerivedSelf operator+(std::string Value);
 
-	//CustomDec operator=(double Value){}
-	//CustomDec operator=(float Value) { ApplyEqualFloatValueOperation(&Value); }
-	//CustomDec operator=(std::string Value);
-	//CustomDec operator=(unsigned int Value);
-	//CustomDec operator=(int Value);
+	//DerivedSelf operator=(double Value){}
+	//DerivedSelf operator=(float Value) { ApplyEqualFloatValueOperation(&Value); }
+	//DerivedSelf operator=(std::string Value);
+	//DerivedSelf operator=(unsigned int Value);
+	//DerivedSelf operator=(int Value);
 	//template <typename ValueType>
-	//CustomDec operator%(ValueType Value) {  }
+	//DerivedSelf operator%(ValueType Value) {  }
 
-//	template <typename ValueType>
-//	void ApplyIntValueDivideOperation(ValueType Value)
-//	{
 
-//	}
-
-	//CustomDec operator*(signed int Value) { ApplyIntValueMultOperation(&Value); }
-	//CustomDec operator*(unsigned int Value) { ApplyIntValueMultOperation(&Value); }
-	//CustomDec operator*(signed __int8 Value) { ApplyIntValueMultOperation(&Value); }
-	//CustomDec operator*(unsigned __int8 Value) { ApplyIntValueMultOperation(&Value); }
-	//CustomDec operator*(signed __int64 Value) { ApplyIntValueMultOperation(&Value); }
-	//CustomDec operator*(unsigned __int64 Value) { ApplyIntValueMultOperation(&Value); }
-	//CustomDec operator%(signed int Value) { ApplyIntValueDivideOperation(&Value); }
-	//CustomDec operator%(unsigned int Value) { ApplyIntValueDivideOperation(&Value); }
-	//CustomDec operator%(signed __int8 Value) { ApplyIntValueDivideOperation(&Value); }
-	//CustomDec operator%(unsigned __int8 Value) { ApplyIntValueDivideOperation(&Value); }
-	//CustomDec operator%(signed __int64 Value) { ApplyIntValueDivideOperation(&Value); }
-	//CustomDec operator%(unsigned __int64 Value) { ApplyIntValueDivideOperation(&Value); }
-	//CustomDec operator=(signed __int64 Value);
-	//CustomDec operator=(unsigned __int64 Value);
-#endregion Operation
-	DerivedSelf(CustomDec const& copy) = default;
-	DerivedSelf& operator=(CustomDec const& copy) = default;
-#region Math/Trigonomic Etc Functions
+	//DerivedSelf operator*(signed int Value) { ApplyIntValueMultOperation(&Value); }
+	//DerivedSelf operator*(unsigned int Value) { ApplyIntValueMultOperation(&Value); }
+	//DerivedSelf operator*(signed __int8 Value) { ApplyIntValueMultOperation(&Value); }
+	//DerivedSelf operator*(unsigned __int8 Value) { ApplyIntValueMultOperation(&Value); }
+	//DerivedSelf operator*(signed __int64 Value) { ApplyIntValueMultOperation(&Value); }
+	//DerivedSelf operator*(unsigned __int64 Value) { ApplyIntValueMultOperation(&Value); }
+	DerivedSelf operator*(DerivedSelf Value)
+	{
+		if (y.intValue == 0 && y.DecimalStatus == 0)
+		{
+			this.intValue = 0;
+			this.DecimalStatus = 0;
+			return this;
+		}
+		bool SelfIsNegative = this.DecimalStatus < 0;
+		bool SelfIsWholeN = this.DecimalStatus == NegativeWholeNumber;
+		if (SelfIsNegative)
+		{
+			if (SelfIsWholeN) { this.DecimalStatus = 0; }
+			else { this.DecimalStatus *= -1; }
+		}
+		bool ValueIsNegative = y.DecimalStatus < 0;
+		bool ValueIsWholeN = y.DecimalStatus == NegativeWholeNumber;
+		if (ValueIsNegative)
+		{
+			if (ValueIsWholeN) { y.DecimalStatus = 0; }
+			else { y.DecimalStatus *= -1; }
+		}
+		if (this.DecimalStatus == 0 && y.DecimalStatus == 0)
+		{
+			this.IntValue *= y.IntValue;
+		}
+		else if (y.DecimalStatus == 0)//Y is integer
+		{
+			this *= y.IntValue;
+		}
+		else if (this.DecimalStatus == 0)
+		{
+			y *= this.IntValue;
+			this = y;
+		}
+		else if (y.IntValue == 0 && this.IntValue == 0)
+		{
+			CombinedStorageType Temp04 = (CombinedStorageType)this.DecimalStatus * (CombinedStorageType)y.DecimalStatus;
+			Temp04 /= DecimalOverflow;
+			this.DecimalStatus = (DecimalStatusType)Temp04;
+		}
+		else
+		{
+			//X.Y * Z.V == ((X * Z) + (X * .V) + (.Y * Z) + (.Y * .V))
+			CombinedStorageType Temp02 = (CombinedStorageType)(this.IntValue * DecimalOverflow) + this.DecimalStatus;
+			Temp02 *= y.IntValue;//Temp02 holds CombinedStorageType version of X.Y * Z
+			//X.Y *.V
+			CombinedStorageType Temp03 = (CombinedStorageType)this.IntValue * y.DecimalStatus;//Temp03 holds CombinedStorageType version of X *.V
+			CombinedStorageType Temp04 = (CombinedStorageType)this.DecimalStatus * (CombinedStorageType)y.DecimalStatus;
+			Temp04 /= DecimalOverflow;
+			//Temp04 holds CombinedStorageType version of .Y * .V
+			CombinedStorageType IntegerRep = Temp02 + Temp03 + Temp04;
+			CombinedStorageType IntHalf = IntegerRep / DecimalOverflow;
+			IntegerRep -= IntHalf * (CombinedStorageType)DecimalOverflow;
+			this.IntValue = (IntType)IntHalf;
+			this.DecimalStatus = (DecimalStatusType)IntegerRep;
+		}
+		if (ValueIsNegative)
+		{
+			SelfIsNegative = !SelfIsNegative;
+		}
+		if (SelfIsNegative) { if (this.DecimalStatus == 0) { this.DecimalStatus = NegativeWholeNumber; } else { this.DecimalStatus *= -1; } }
+		return this;
+	}
+	//DerivedSelf operator/(signed int Value) { ApplyIntValueDivideOperation(&Value); }
+	//DerivedSelf operator/(unsigned int Value) { ApplyIntValueDivideOperation(&Value); }
+	//DerivedSelf operator/(signed __int8 Value) { ApplyIntValueDivideOperation(&Value); }
+	//DerivedSelf operator/(unsigned __int8 Value) { ApplyIntValueDivideOperation(&Value); }
+	//DerivedSelf operator/(signed __int64 Value) { ApplyIntValueDivideOperation(&Value); }
+	//DerivedSelf operator/(unsigned __int64 Value) { ApplyIntValueDivideOperation(&Value); }
+	DerivedSelf operator/(DerivedSelf Value)
+	{
+		if (y.intValue == 0 && y.DecimalStatus == 0)
+		{
+#if (DerivedSelf_PreventDivideByZeroException)
+			Console.WriteLine("Prevented dividing by zero");
+			return this;
+#else
+			throw new DivideByZeroException("DerivedSelf value can not be divided by zero");
+#endif
+		}
+		bool SelfIsNegative = this.DecimalStatus < 0;
+		bool SelfIsWholeN = this.DecimalStatus == NegativeWholeNumber;
+		if (SelfIsNegative)
+		{
+			if (SelfIsWholeN) { this.DecimalStatus = 0; }
+			else { this.DecimalStatus *= -1; }
+		}
+		bool ValueIsNegative = y.DecimalStatus < 0;
+		bool ValueIsWholeN = y.DecimalStatus == NegativeWholeNumber;
+		if (ValueIsNegative)
+		{
+			if (ValueIsWholeN) { y.DecimalStatus = 0; }
+			else { y.DecimalStatus *= -1; }
+		}
+		if (this.DecimalStatus == 0 && y.DecimalStatus == 0)
+		{
+			CombinedStorageType SRep = this.IntValue * DecimalOverflow;
+			CombinedStorageType YRep = y.IntValue;
+			SRep /= y.IntValue;
+			if (SRep >= DecimalOverflow)
+			{
+				CombinedStorageType OverflowVal = SRep / DecimalOverflow;
+				SRep -= OverflowVal * DecimalOverflow;
+				this.IntValue = (IntType)OverflowVal;
+				this.DecimalStatus = (DecimalStatusType)SRep;
+			}
+		}
+		else if (y.DecimalStatus == 0)//Y is integer
+		{
+			this /= y.IntValue;
+		}
+		else if (this.IntValue < 10 && y.IntValue == 0)//Using this method would cause overflow of SelfRep if more in most cases
+		{//this part seems to work unless y.int is more than 0 for some reason
+			CombinedStorageType SelfRep = (CombinedStorageType)(this.IntValue * DecimalOverflow) + this.DecimalStatus;
+			SelfRep *= DecimalOverflow;
+			CombinedStorageType ValueRep = (CombinedStorageType)(y.IntValue * DecimalOverflow) + y.DecimalStatus;
+			SelfRep /= ValueRep;
+			CombinedStorageType IntHalf = SelfRep / DecimalOverflow;
+			SelfRep -= IntHalf * (CombinedStorageType)DecimalOverflow;
+			this.IntValue = (IntType)IntHalf;
+			this.DecimalStatus = (DecimalStatusType)SelfRep;
+		}
+		else
+		{
+			CombinedStorageType SelfRep = ((CombinedStorageType)this.IntValue * DecimalOverflow) + this.DecimalStatus;
+			CombinedStorageType ValueRep = ((CombinedStorageType)y.IntValue * DecimalOverflow) + y.DecimalStatus;
+			SelfRep /= ValueRep;
+			IntType IntResult = (IntType)SelfRep;
+			SelfRep = ((CombinedStorageType)this.IntValue * DecimalOverflow) + this.DecimalStatus;
+			CombinedStorageType Temp01 = (CombinedStorageType)IntResult * ValueRep;
+			SelfRep -= Temp01;
+			SelfRep *= DecimalOverflow;
+			SelfRep /= ValueRep;
+			this.IntValue = IntResult;
+			this.DecimalStatus = (DecimalStatusType)SelfRep;
+		}
+		if (ValueIsNegative)
+		{
+			SelfIsNegative = !SelfIsNegative;
+		}
+		if (SelfIsNegative) { if (this.DecimalStatus == 0) { this.DecimalStatus = NegativeWholeNumber; } else { this.DecimalStatus *= -1; } }
+		return this;
+	}
+	//DerivedSelf operator=(signed __int64 Value);
+	//DerivedSelf operator=(unsigned __int64 Value);
+	DerivedSelf operator-(){ SwapNegativeStatus(); }
+#pragma endregion Operation
+	//DerivedSelf(DerivedSelf const& copy) = default;
+	//DerivedSelf& operator=(DerivedSelf const& copy) = default;
+#pragma region Math/Trigonomic Etc Functions
 	static DerivedSelf Abs()
 	{
 		if(DecimalStatus<0)
@@ -259,13 +403,13 @@ public:
 		}
 		return this;
 	}
-#endregion Math/Trigonomic Etc Functions
-#region SpecialStatus based functions
+#pragma endregion Math/Trigonomic Etc Functions
+#pragma region SpecialStatus based functions
 		bool IsInfinity()
 		{
 			return false;
 		}
-#endregion SpecialStatus based functions
+#pragma endregion SpecialStatus based functions
 };
 
 #endif
