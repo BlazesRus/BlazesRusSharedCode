@@ -432,30 +432,6 @@ public:
 //			DecimalStatus *= -1;
 //		}
 //
-//		/// <summary>
-//		/// Returns value of highest non-infinite/Special Decimal State Value that can store
-//		/// </summary>
-//		/// <returns></returns>
-//		private static MediumDec MaximumValue()
-//		{
-//			return new MediumDec(4294967295, 999999999);
-//		}
-//
-//		/// <summary>
-//		/// Returns value of highest non-infinite/Special Decimal State Value that can store
-//		/// </summary>
-//		static MediumDec Maximum = MaximumValue();
-//
-//		//Returns value of lowest non-infinite/Special Decimal State Value that can store
-//		private static MediumDec MinimumValue()
-//		{
-//			return new MediumDec(4294967295, -999999999);
-//		}
-//
-//		/// <summary>
-//		/// Returns value of lowest non-infinite/Special Decimal State Value that can store
-//		/// </summary>
-//		static readonly MediumDec Minimum = MinimumValue();
 //
 //		/// <summary>
 //		///

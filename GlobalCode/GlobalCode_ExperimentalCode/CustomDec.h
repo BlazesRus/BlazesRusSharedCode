@@ -56,21 +56,31 @@ private:
 		CustomDec NewSelf = CustomDec(0, 0);
 		return NewSelf;
 	}
-		//Returns value of lowest non-infinite/Special Decimal State Value that can store
-		static DerivedSelf MinimumValue()
-		{
-			//return DerivedSelf(4294967295, -999999999);
-			return DerivedSelf(std::numeric_limits<IntType>::max(), NegativeWholeNumberVal+1);
-		}
-		/// <summary>
-		/// Returns value of highest non-infinite/Special Decimal State Value that can store
-		/// </summary>
-		/// <returns></returns>
-		static DerivedSelf MaximumValue()
-		{
-			//return DerivedSelf(4294967295, 999999999);
-			return DerivedSelf(std::numeric_limits<IntType>::max(), DecimalOverflowVal-1);
-		}
+	static DerivedSelf OneValue()
+	{
+		CustomDec NewSelf = CustomDec(1, 0);
+		return NewSelf;
+	}
+	static DerivedSelf NegativeOneValue()
+	{
+		CustomDec NewSelf = CustomDec(1, DecimalOverflowVal);
+		return NewSelf;
+	}
+	//Returns value of lowest non-infinite/Special Decimal State Value that can store
+	static DerivedSelf MinimumValue()
+	{
+		//return DerivedSelf(4294967295, -999999999);
+		return DerivedSelf(std::numeric_limits<IntType>::max(), NegativeWholeNumberVal+1);
+	}
+	/// <summary>
+	/// Returns value of highest non-infinite/Special Decimal State Value that can store
+	/// </summary>
+	/// <returns></returns>
+	static DerivedSelf MaximumValue()
+	{
+		//return DerivedSelf(4294967295, 999999999);
+		return DerivedSelf(std::numeric_limits<IntType>::max(), DecimalOverflowVal-1);
+	}
 public:
 	static DerivedSelf const Zero =  ZeroValue();
 //
@@ -226,6 +236,10 @@ public:
 	}
 	static DerivedSelf Floor()
 	{
+		if(DecimalStatus==NegativeWholeNumber)
+		{
+			return this;
+		}
 		if(DecimalStatus<0)
 		{
 			DecimalStatus = 0;
@@ -239,12 +253,7 @@ public:
 	}
 	static DerivedSelf Trunc()
 	{
-		if(DecimalStatus<0)
-		{
-			DecimalStatus = 0;
-			IntValue += 1;
-		}
-		else
+		if(DecimalStatus!=NegativeWholeNumber)
 		{
 			DecimalStatus = 0;
 		}
