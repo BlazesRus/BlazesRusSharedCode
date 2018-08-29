@@ -365,7 +365,8 @@ public:
 	}
 	//DerivedSelf operator=(signed __int64 Value);
 	//DerivedSelf operator=(unsigned __int64 Value);
-	DerivedSelf operator-(){ SwapNegativeStatus(); }
+	DerivedSelf operator-() { SwapNegativeStatus(); return this; }
+	DerivedSelf operator!() { SwapNegativeStatus(); return this; }
 #pragma endregion Operation
 	//DerivedSelf(DerivedSelf const& copy) = default;
 	//DerivedSelf& operator=(DerivedSelf const& copy) = default;
