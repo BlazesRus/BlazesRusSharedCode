@@ -91,7 +91,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 long IntegerRep = Temp02 + Temp03 + Temp04;
                 long IntHalf = IntegerRep / DecimalOverflow;
                 IntegerRep -= IntHalf * (long)DecimalOverflow;
-                self.IntValue = (ushort)IntHalf;
+                self.IntValue = (uint)IntHalf;
                 self.DecimalStatus = (int)IntegerRep;
             }
             if (ValueIsNegative)
@@ -158,7 +158,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 SelfRep /= ValueRep;
                 long IntHalf = SelfRep / DecimalOverflow;
                 SelfRep -= IntHalf * (long)DecimalOverflow;
-                self.IntValue = (ushort)IntHalf;
+                self.IntValue = (uint)IntHalf;
                 self.DecimalStatus = (int)SelfRep;
             }
             else

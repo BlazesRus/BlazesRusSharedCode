@@ -134,6 +134,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GlobalCode\DLLAPI.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\BufferedVariable.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\BufferedVariableArray.h" />
+    <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\CustomDec.h" />
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\MediumDec.h" />
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\SuperDecHex.h" />
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\VariableListV2.h" />

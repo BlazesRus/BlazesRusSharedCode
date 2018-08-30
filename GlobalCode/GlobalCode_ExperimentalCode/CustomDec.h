@@ -198,7 +198,7 @@ public:
 	}
 	DerivedSelf operator --()
 	{
-		this += 1;
+		this -= 1;
 		return this;
 	}
 	//DerivedSelf operator+(double Value){}
@@ -219,7 +219,7 @@ public:
 	//DerivedSelf operator*(unsigned __int8 Value) { ApplyIntValueMultOperation(&Value); }
 	//DerivedSelf operator*(signed __int64 Value) { ApplyIntValueMultOperation(&Value); }
 	//DerivedSelf operator*(unsigned __int64 Value) { ApplyIntValueMultOperation(&Value); }
-	DerivedSelf operator*(DerivedSelf self, DerivedSelf Value)
+	DerivedSelf operator*(DerivedSelf& self, DerivedSelf Value)
 	{
 		if (y.intValue == 0 && y.DecimalStatus == 0)
 		{
@@ -289,7 +289,7 @@ public:
 	//DerivedSelf operator/(unsigned __int8 Value) { ApplyIntValueDivideOperation(&Value); }
 	//DerivedSelf operator/(signed __int64 Value) { ApplyIntValueDivideOperation(&Value); }
 	//DerivedSelf operator/(unsigned __int64 Value) { ApplyIntValueDivideOperation(&Value); }
-	DerivedSelf operator/(DerivedSelf self, DerivedSelf Value)
+	DerivedSelf operator/(DerivedSelf& self, DerivedSelf Value)
 	{
 		if (y.intValue == 0 && y.DecimalStatus == 0)
 		{
@@ -297,7 +297,7 @@ public:
 			Console.WriteLine("Prevented dividing by zero");
 			return self;
 #else
-			throw new DivideByZeroException("DerivedSelf value can not be divided by zero");
+			throw new DivideByZeroException("Value can not be divided by zero");
 #endif
 		}
 		bool SelfIsNegative = self.DecimalStatus < 0;
