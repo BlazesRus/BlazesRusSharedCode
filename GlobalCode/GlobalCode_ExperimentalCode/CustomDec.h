@@ -219,20 +219,20 @@ public:
 	//DerivedSelf operator*(unsigned __int8 Value) { ApplyIntValueMultOperation(&Value); }
 	//DerivedSelf operator*(signed __int64 Value) { ApplyIntValueMultOperation(&Value); }
 	//DerivedSelf operator*(unsigned __int64 Value) { ApplyIntValueMultOperation(&Value); }
-	DerivedSelf operator*(DerivedSelf Value)
+	DerivedSelf operator*(DerivedSelf self, DerivedSelf Value)
 	{
 		if (y.intValue == 0 && y.DecimalStatus == 0)
 		{
-			this.intValue = 0;
-			this.DecimalStatus = 0;
-			return this;
+			self.intValue = 0;
+			self.DecimalStatus = 0;
+			return self;
 		}
-		bool SelfIsNegative = this.DecimalStatus < 0;
-		bool SelfIsWholeN = this.DecimalStatus == NegativeWholeNumber;
+		bool SelfIsNegative = self.DecimalStatus < 0;
+		bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
 		if (SelfIsNegative)
 		{
-			if (SelfIsWholeN) { this.DecimalStatus = 0; }
-			else { this.DecimalStatus *= -1; }
+			if (SelfIsWholeN) { self.DecimalStatus = 0; }
+			else { self.DecimalStatus *= -1; }
 		}
 		bool ValueIsNegative = y.DecimalStatus < 0;
 		bool ValueIsWholeN = y.DecimalStatus == NegativeWholeNumber;
@@ -241,47 +241,47 @@ public:
 			if (ValueIsWholeN) { y.DecimalStatus = 0; }
 			else { y.DecimalStatus *= -1; }
 		}
-		if (this.DecimalStatus == 0 && y.DecimalStatus == 0)
+		if (self.DecimalStatus == 0 && y.DecimalStatus == 0)
 		{
-			this.IntValue *= y.IntValue;
+			self.IntValue *= y.IntValue;
 		}
 		else if (y.DecimalStatus == 0)//Y is integer
 		{
-			this *= y.IntValue;
+			self *= y.IntValue;
 		}
-		else if (this.DecimalStatus == 0)
+		else if (self.DecimalStatus == 0)
 		{
-			y *= this.IntValue;
-			this = y;
+			y *= self.IntValue;
+			self = y;
 		}
-		else if (y.IntValue == 0 && this.IntValue == 0)
+		else if (y.IntValue == 0 && self.IntValue == 0)
 		{
-			CombinedStorageType Temp04 = (CombinedStorageType)this.DecimalStatus * (CombinedStorageType)y.DecimalStatus;
+			CombinedStorageType Temp04 = (CombinedStorageType)self.DecimalStatus * (CombinedStorageType)y.DecimalStatus;
 			Temp04 /= DecimalOverflow;
-			this.DecimalStatus = (DecimalStatusType)Temp04;
+			self.DecimalStatus = (DecimalStatusType)Temp04;
 		}
 		else
 		{
 			//X.Y * Z.V == ((X * Z) + (X * .V) + (.Y * Z) + (.Y * .V))
-			CombinedStorageType Temp02 = (CombinedStorageType)(this.IntValue * DecimalOverflow) + this.DecimalStatus;
+			CombinedStorageType Temp02 = (CombinedStorageType)(self.IntValue * DecimalOverflow) + self.DecimalStatus;
 			Temp02 *= y.IntValue;//Temp02 holds CombinedStorageType version of X.Y * Z
 			//X.Y *.V
-			CombinedStorageType Temp03 = (CombinedStorageType)this.IntValue * y.DecimalStatus;//Temp03 holds CombinedStorageType version of X *.V
-			CombinedStorageType Temp04 = (CombinedStorageType)this.DecimalStatus * (CombinedStorageType)y.DecimalStatus;
+			CombinedStorageType Temp03 = (CombinedStorageType)self.IntValue * y.DecimalStatus;//Temp03 holds CombinedStorageType version of X *.V
+			CombinedStorageType Temp04 = (CombinedStorageType)self.DecimalStatus * (CombinedStorageType)y.DecimalStatus;
 			Temp04 /= DecimalOverflow;
 			//Temp04 holds CombinedStorageType version of .Y * .V
 			CombinedStorageType IntegerRep = Temp02 + Temp03 + Temp04;
 			CombinedStorageType IntHalf = IntegerRep / DecimalOverflow;
 			IntegerRep -= IntHalf * (CombinedStorageType)DecimalOverflow;
-			this.IntValue = (IntType)IntHalf;
-			this.DecimalStatus = (DecimalStatusType)IntegerRep;
+			self.IntValue = (IntType)IntHalf;
+			self.DecimalStatus = (DecimalStatusType)IntegerRep;
 		}
 		if (ValueIsNegative)
 		{
 			SelfIsNegative = !SelfIsNegative;
 		}
-		if (SelfIsNegative) { if (this.DecimalStatus == 0) { this.DecimalStatus = NegativeWholeNumber; } else { this.DecimalStatus *= -1; } }
-		return this;
+		if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
+		return self;
 	}
 	//DerivedSelf operator/(signed int Value) { ApplyIntValueDivideOperation(&Value); }
 	//DerivedSelf operator/(unsigned int Value) { ApplyIntValueDivideOperation(&Value); }
@@ -289,23 +289,23 @@ public:
 	//DerivedSelf operator/(unsigned __int8 Value) { ApplyIntValueDivideOperation(&Value); }
 	//DerivedSelf operator/(signed __int64 Value) { ApplyIntValueDivideOperation(&Value); }
 	//DerivedSelf operator/(unsigned __int64 Value) { ApplyIntValueDivideOperation(&Value); }
-	DerivedSelf operator/(DerivedSelf Value)
+	DerivedSelf operator/(DerivedSelf self, DerivedSelf Value)
 	{
 		if (y.intValue == 0 && y.DecimalStatus == 0)
 		{
 #if (DerivedSelf_PreventDivideByZeroException)
 			Console.WriteLine("Prevented dividing by zero");
-			return this;
+			return self;
 #else
 			throw new DivideByZeroException("DerivedSelf value can not be divided by zero");
 #endif
 		}
-		bool SelfIsNegative = this.DecimalStatus < 0;
-		bool SelfIsWholeN = this.DecimalStatus == NegativeWholeNumber;
+		bool SelfIsNegative = self.DecimalStatus < 0;
+		bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
 		if (SelfIsNegative)
 		{
-			if (SelfIsWholeN) { this.DecimalStatus = 0; }
-			else { this.DecimalStatus *= -1; }
+			if (SelfIsWholeN) { self.DecimalStatus = 0; }
+			else { self.DecimalStatus *= -1; }
 		}
 		bool ValueIsNegative = y.DecimalStatus < 0;
 		bool ValueIsWholeN = y.DecimalStatus == NegativeWholeNumber;
@@ -314,54 +314,54 @@ public:
 			if (ValueIsWholeN) { y.DecimalStatus = 0; }
 			else { y.DecimalStatus *= -1; }
 		}
-		if (this.DecimalStatus == 0 && y.DecimalStatus == 0)
+		if (self.DecimalStatus == 0 && y.DecimalStatus == 0)
 		{
-			CombinedStorageType SRep = this.IntValue * DecimalOverflow;
+			CombinedStorageType SRep = self.IntValue * DecimalOverflow;
 			CombinedStorageType YRep = y.IntValue;
 			SRep /= y.IntValue;
 			if (SRep >= DecimalOverflow)
 			{
 				CombinedStorageType OverflowVal = SRep / DecimalOverflow;
 				SRep -= OverflowVal * DecimalOverflow;
-				this.IntValue = (IntType)OverflowVal;
-				this.DecimalStatus = (DecimalStatusType)SRep;
+				self.IntValue = (IntType)OverflowVal;
+				self.DecimalStatus = (DecimalStatusType)SRep;
 			}
 		}
 		else if (y.DecimalStatus == 0)//Y is integer
 		{
-			this /= y.IntValue;
+			self /= y.IntValue;
 		}
-		else if (this.IntValue < 10 && y.IntValue == 0)//Using this method would cause overflow of SelfRep if more in most cases
-		{//this part seems to work unless y.int is more than 0 for some reason
-			CombinedStorageType SelfRep = (CombinedStorageType)(this.IntValue * DecimalOverflow) + this.DecimalStatus;
+		else if (self.IntValue < 10 && y.IntValue == 0)//Using self method would cause overflow of SelfRep if more in most cases
+		{//self part seems to work unless y.int is more than 0 for some reason
+			CombinedStorageType SelfRep = (CombinedStorageType)(self.IntValue * DecimalOverflow) + self.DecimalStatus;
 			SelfRep *= DecimalOverflow;
 			CombinedStorageType ValueRep = (CombinedStorageType)(y.IntValue * DecimalOverflow) + y.DecimalStatus;
 			SelfRep /= ValueRep;
 			CombinedStorageType IntHalf = SelfRep / DecimalOverflow;
 			SelfRep -= IntHalf * (CombinedStorageType)DecimalOverflow;
-			this.IntValue = (IntType)IntHalf;
-			this.DecimalStatus = (DecimalStatusType)SelfRep;
+			self.IntValue = (IntType)IntHalf;
+			self.DecimalStatus = (DecimalStatusType)SelfRep;
 		}
 		else
 		{
-			CombinedStorageType SelfRep = ((CombinedStorageType)this.IntValue * DecimalOverflow) + this.DecimalStatus;
+			CombinedStorageType SelfRep = ((CombinedStorageType)self.IntValue * DecimalOverflow) + self.DecimalStatus;
 			CombinedStorageType ValueRep = ((CombinedStorageType)y.IntValue * DecimalOverflow) + y.DecimalStatus;
 			SelfRep /= ValueRep;
 			IntType IntResult = (IntType)SelfRep;
-			SelfRep = ((CombinedStorageType)this.IntValue * DecimalOverflow) + this.DecimalStatus;
+			SelfRep = ((CombinedStorageType)self.IntValue * DecimalOverflow) + self.DecimalStatus;
 			CombinedStorageType Temp01 = (CombinedStorageType)IntResult * ValueRep;
 			SelfRep -= Temp01;
 			SelfRep *= DecimalOverflow;
 			SelfRep /= ValueRep;
-			this.IntValue = IntResult;
-			this.DecimalStatus = (DecimalStatusType)SelfRep;
+			self.IntValue = IntResult;
+			self.DecimalStatus = (DecimalStatusType)SelfRep;
 		}
 		if (ValueIsNegative)
 		{
 			SelfIsNegative = !SelfIsNegative;
 		}
-		if (SelfIsNegative) { if (this.DecimalStatus == 0) { this.DecimalStatus = NegativeWholeNumber; } else { this.DecimalStatus *= -1; } }
-		return this;
+		if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
+		return self;
 	}
 	//DerivedSelf operator=(signed __int64 Value);
 	//DerivedSelf operator=(unsigned __int64 Value);
