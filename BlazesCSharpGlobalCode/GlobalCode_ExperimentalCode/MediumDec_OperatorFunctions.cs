@@ -982,7 +982,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             int typeCodeValue = (int)typeCode;
             if (typeCodeValue >= 5 && typeCodeValue <= 12)//Integer based Value types
             {
-				bool ValueIsNegative = y < 0;
 				if (typeCodeValue % 2 == 0)//Unsigned Integers
 				{
 					if (SelfIsNegative)//(-X) - Y
@@ -1008,6 +1007,7 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 				}
 				else
 				{
+					bool ValueIsNegative = y < 0;
 					if (SelfIsNegative)
 					{
 						if (ValueIsNegative == false)//(-X) - (Y)
