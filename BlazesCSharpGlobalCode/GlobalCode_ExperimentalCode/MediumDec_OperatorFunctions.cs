@@ -919,38 +919,37 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 bool ValueIsNegative = y < 0;
                 if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
                 {
-                    self.IntValue += y;
-                    self.DecimalStatus += y.DecimalStatus;
+                    self.IntValue += (uint)y;
                 }
                 else if (SelfIsNegative)//-X + Y
                 {
-                    if (self.IntValue == y.IntValue)
+                    if (self.IntValue == y)
                     {
                         self.IntValue = 0;
                     }
-                    else if (self.IntValue > y.IntValue)
+                    else if (self.IntValue > y)
                     {
-                        self.IntValue -= y.IntValue;
+                        self.IntValue -= (uint)y;
                     }
                     else
                     {
-                        self.IntValue = (uint)(y.IntValue - self.IntValue);
+                        self.IntValue = ((uint)y - self.IntValue);
                         SelfIsNegative = false;
                     }
                 }
                 else// X - Y
                 {
-                    if (self.IntValue == y.IntValue)
+                    if (self.IntValue == y)
                     {
                         self.IntValue = 0;
                     }
-                    else if (self.IntValue > y.IntValue)
+                    else if (self.IntValue > y)
                     {
-                        self.IntValue -= y.IntValue;
+                        self.IntValue -= (uint)y;
                     }
                     else
                     {
-                        self.IntValue = (uint)(y.IntValue - self.IntValue);
+                        self.IntValue = ((uint)y - self.IntValue);
                         SelfIsNegative = true;
                     }
                 }
@@ -958,7 +957,8 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
                 {
                     self.DecimalStatus *= -1;
                 }
-            }
+				else if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+			}
             //else if (typeCodeValue >= 13 && typeCodeValue <= 15)//Floating Point based formula value types
             //{
             //    return self += (MediumDec)y;
@@ -980,15 +980,87 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             bool SelfIsNegative = self.DecimalStatus < 0;
             TypeCode typeCode = Type.GetTypeCode(y.GetType());
             int typeCodeValue = (int)typeCode;
-            if (typeCodeValue >= 4 && typeCodeValue <= 12)//Integer based Value types
+            if (typeCodeValue >= 5 && typeCodeValue <= 12)//Integer based Value types
             {
-                bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-                if (SelfIsNegative)
-                {
-                    if (SelfIsWholeN) { self.DecimalStatus = 0; }
-                    else { self.DecimalStatus *= -1; }
-                }
-            }
+				bool ValueIsNegative = y < 0;
+				if (typeCodeValue % 2 == 0)//Unsigned Integers
+				{
+					if (SelfIsNegative)//(-X) - Y
+					{
+						self.IntValue += (uint)y;
+					}
+					else//X - Y
+					{
+						if (self.IntValue == y)
+						{
+							self.IntValue = 0;
+						}
+						else if (y > self.IntValue)
+						{
+							self.IntValue = (uint)y - self.IntValue;
+							SelfIsNegative = true;
+						}
+						else
+						{
+							self.IntValue -= (uint)y;
+						}
+					}
+				}
+				else
+				{
+					if (SelfIsNegative)
+					{
+						if (ValueIsNegative == false)//(-X) - (Y)
+						{
+							self.IntValue += (uint)y;
+						}
+						else//(-X) - (-Y)
+						{
+							if (self.IntValue == y)
+							{
+								self.IntValue = 0;
+							}
+							else if (y > self.IntValue)
+							{
+								self.IntValue = (uint)y - self.IntValue;
+								SelfIsNegative = false;
+							}
+							else
+							{
+								self.IntValue -= (uint)(y * -1);
+							}
+						}
+					}
+					else
+					{
+						if (ValueIsNegative)//X - (-Y)
+						{
+							self.IntValue += (uint)(y * -1);
+						}
+						else//X - (Y)
+						{
+							if (self.IntValue == y)
+							{
+								self.IntValue = 0;
+							}
+							else if (y > self.IntValue)
+							{
+								self.IntValue = (uint)y - self.IntValue;
+								SelfIsNegative = true;
+							}
+							else
+							{
+								self.IntValue -= (uint)y;
+							}
+						}
+					}
+				}
+				if (self.DecimalStatus > 0 && SelfIsNegative)
+				{
+					self.DecimalStatus *= -1;
+				}
+				else if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+			}
             //else if (typeCodeValue >= 13 && typeCodeValue <= 15)//Floating Point based formula value types
             //{
             //    return self -= (MediumDec)y;
@@ -1083,12 +1155,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             int typeCodeValue = (int)typeCode;
             if (typeCodeValue >= 4 && typeCodeValue <= 12)//Integer based Value types
             {
-                //bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-                //if (SelfIsNegative)
-                //{
-                //    if (SelfIsWholeN) { self.DecimalStatus = 0; }
-                //    else { self.DecimalStatus *= -1; }
-                //}
                 if (y < 0)
                 {
                     if (SelfIsNegative) { SelfIsNegative = false; }
