@@ -116,35 +116,42 @@ public:
 		}
 #pragma region OperationTemplate
 	template <typename ValueType>
-	void ApplyUnsignedIntAddition(ValueType Value)
+	DerivedSelf& ApplyUnsignedIntAddition(DerivedSelf& self, ValueType Value)
 	{
-		if (DecimalStatus < 0)
+		if (self.DecimalStatus < 0)
 		{
-			if (Value > IntValue)
+			if (Value > self.IntValue)
 			{
-				DecimalStatus *= -1;
-				Value -= IntValue;
+				self.DecimalStatus *= -1;
+				Value -= (IntType)self.IntValue;
+				self.IntValue = (IntType)Value;
 			}
-			else if (Value == IntValue)
+			else if (Value == self.IntValue)
 			{
-				if (DecimalStatus == NegativeWholeNumber)
+				if (self.DecimalStatus == NegativeWholeNumber)
 				{
-					DecimalStatus = 0;
+					self.DecimalStatus = 0;
 				}
-				IntValue = 0;
+				self.IntValue = 0;
 			}
 			else
 			{
-				IntValue -= Value;
+				self.IntValue -= Value;
 			}
 		}
 		else
 		{
-			IntValue += Value;
+			self.IntValue += Value;
 		}
+		return self;
 	}
 	template <typename ValueType>
-	void ApplyIntAddition(ValueType Value)
+	DerivedSelf& ApplyUnsignedIntAddition(ValueType Value)
+	{
+		return ApplyUnsignedIntAddition(&this, Value)
+	}
+	template <typename ValueType>
+	DerivedSelf& ApplyIntAddition(DerivedSelf& self, ValueType Value)
 	{
 		bool SelfIsNegative = self.DecimalStatus < 0;
 		bool ValueIsNegative = y < 0;
@@ -191,7 +198,12 @@ public:
 		else if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
 	}
 	template <typename ValueType>
-	void ApplyUnsignedIntSubtraction(ValueType Value)
+	DerivedSelf& ApplyIntAddition(ValueType Value)
+	{
+		return ApplyIntAddition(&this, Value)
+	}
+	template <typename ValueType>
+	DerivedSelf& ApplyUnsignedIntSubtraction(DerivedSelf& self, ValueType Value)
 	{
 		bool SelfIsNegative = self.DecimalStatus < 0;
 		if (SelfIsNegative)//(-X) - Y
@@ -221,7 +233,12 @@ public:
 		else if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
 	}
 	template <typename ValueType>
-	void ApplyIntSubtraction(ValueType Value)
+	DerivedSelf& ApplyUnsignedIntSubtraction(ValueType Value)
+	{
+		return ApplyUnsignedIntSubtraction(&this, Value)
+	}
+	template <typename ValueType>
+	DerivedSelf& ApplyIntSubtraction(DerivedSelf& self, ValueType Value)
 	{
 		bool SelfIsNegative = self.DecimalStatus < 0;
 		bool ValueIsNegative = y < 0;
@@ -278,15 +295,31 @@ public:
 		else if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
 	}
 	template <typename ValueType>
-	void ApplyIntMultiplication(ValueType Value)
+	DerivedSelf& ApplyIntSubtraction(ValueType Value)
+	{
+		return ApplyIntSubtraction(&this, Value)
+	}
+	template <typename ValueType>
+	DerivedSelf& ApplyIntMultiplication(DerivedSelf& self, ValueType Value)
 	{
 	}
 	template <typename ValueType>
-	void ApplyIntDivision(ValueType Value)
+	DerivedSelf& ApplyIntMultiplication(ValueType Value)
+	{
+		return ApplyIntMultiplication(&this, Value)
+	}
+	template <typename ValueType>
+	DerivedSelf& ApplyIntDivision(DerivedSelf& self, ValueType Value)
 	{
 	}
 	template <typename ValueType>
-	void ApplyIntModulus(ValueType Value)
+	DerivedSelf& ApplyIntDivision(ValueType Value)
+	{
+		return ApplyIntDivision(&this, Value)
+	}
+	template <typename ValueType>
+
+	DerivedSelf& ApplyIntModulus(DerivedSelf& self, ValueType Value)
 	{
 		if(DecimalStatus==0)
 		{
@@ -297,8 +330,14 @@ public:
 
 		}
 	}
+	template <typename ValueType>
+	DerivedSelf& ApplyIntModulus(ValueType Value)
+	{
+		return ApplyIntModulus(&this, Value)
+	}
 #pragma endregion OperationTemplate
 #pragma region Operations
+	//Addition Operations
 	DerivedSelf operator+(DerivedSelf& self, DerivedSelf Value)
 	{
 		bool SelfIsNegative = self.DecimalStatus < 0;
@@ -421,6 +460,14 @@ public:
 		this += 1;
 		return this;
 	}
+	//DerivedSelf operator+(DerivedSelf& self, double Value)
+	//{
+	//}
+	//DerivedSelf operator+(DerivedSelf& self, std::string Value)
+	//{
+	//}
+
+	//Subtraction Operations
 	DerivedSelf operator-(DerivedSelf& self, DerivedSelf Value)
 	{
 		bool SelfIsNegative = self.DecimalStatus < 0;
@@ -544,24 +591,14 @@ public:
 		this -= 1;
 		return this;
 	}
-	//DerivedSelf operator+(double Value){}
-	//DerivedSelf operator+(std::string Value);
+	//DerivedSelf operator-(DerivedSelf& self, double Value)
+	//{
+	//}
+	//DerivedSelf operator-(DerivedSelf& self, std::string Value)
+	//{
+	//}
 
-	//DerivedSelf operator=(double Value){}
-	//DerivedSelf operator=(float Value) { ApplyEqualFloatValueOperation(&Value); }
-	//DerivedSelf operator=(std::string Value);
-	//DerivedSelf operator=(unsigned int Value);
-	//DerivedSelf operator=(int Value);
-	//template <typename ValueType>
-	//DerivedSelf operator%(ValueType Value) {  }
-
-
-	//DerivedSelf operator*(signed int Value) { ApplyIntValueMultOperation(&Value); }
-	//DerivedSelf operator*(unsigned int Value) { ApplyIntValueMultOperation(&Value); }
-	//DerivedSelf operator*(signed __int8 Value) { ApplyIntValueMultOperation(&Value); }
-	//DerivedSelf operator*(unsigned __int8 Value) { ApplyIntValueMultOperation(&Value); }
-	//DerivedSelf operator*(signed __int64 Value) { ApplyIntValueMultOperation(&Value); }
-	//DerivedSelf operator*(unsigned __int64 Value) { ApplyIntValueMultOperation(&Value); }
+	//Multiplication Operations
 	DerivedSelf operator*(DerivedSelf& self, DerivedSelf Value)
 	{
 		if (y.intValue == 0 && y.DecimalStatus == 0)
@@ -626,12 +663,15 @@ public:
 		if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
 		return self;
 	}
-	//DerivedSelf operator/(signed int Value) { ApplyIntValueDivideOperation(&Value); }
-	//DerivedSelf operator/(unsigned int Value) { ApplyIntValueDivideOperation(&Value); }
-	//DerivedSelf operator/(signed __int8 Value) { ApplyIntValueDivideOperation(&Value); }
-	//DerivedSelf operator/(unsigned __int8 Value) { ApplyIntValueDivideOperation(&Value); }
-	//DerivedSelf operator/(signed __int64 Value) { ApplyIntValueDivideOperation(&Value); }
-	//DerivedSelf operator/(unsigned __int64 Value) { ApplyIntValueDivideOperation(&Value); }
+	DerivedSelf operator*(DerivedSelf& self, unsigned int Value) { return ApplyIntMultiplication(&self, Value); }
+	DerivedSelf operator*(DerivedSelf& self, signed int Value) { return ApplyIntMultiplication(&self, Value); }
+	DerivedSelf operator*(DerivedSelf& self, unsigned __int8 Value) { return ApplyIntMultiplication(&self, Value); }
+	DerivedSelf operator*(DerivedSelf& self, signed __int8 Value) { return ApplyIntMultiplication(&self, Value); }
+	DerivedSelf operator*(DerivedSelf& self, unsigned __int16 Value) { return ApplyIntMultiplication(&self, Value); }
+	DerivedSelf operator*(DerivedSelf& self, signed __int16 Value) { return ApplyIntMultiplication(&self, Value); }
+	DerivedSelf operator*(DerivedSelf& self, unsigned __int64 Value) { return ApplyIntMultiplication(&self, Value); }
+	DerivedSelf operator*(DerivedSelf& self, signed __int64 Value) { return ApplyIntMultiplication(&self, Value); }
+	//Division Operations
 	DerivedSelf operator/(DerivedSelf& self, DerivedSelf Value)
 	{
 		if (y.intValue == 0 && y.DecimalStatus == 0)
@@ -706,7 +746,15 @@ public:
 		if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
 		return self;
 	}
-
+	DerivedSelf operator/(DerivedSelf& self, unsigned int Value) { return ApplyIntDivision(&self, Value); }
+	DerivedSelf operator/(DerivedSelf& self, signed int Value) { return ApplyIntDivision(&self, Value); }
+	DerivedSelf operator/(DerivedSelf& self, unsigned __int8 Value) { return ApplyIntDivision(&self, Value); }
+	DerivedSelf operator/(DerivedSelf& self, signed __int8 Value) { return ApplyIntDivision(&self, Value); }
+	DerivedSelf operator/(DerivedSelf& self, unsigned __int16 Value) { return ApplyIntDivision(&self, Value); }
+	DerivedSelf operator/(DerivedSelf& self, signed __int16 Value) { return ApplyIntDivision(&self, Value); }
+	DerivedSelf operator/(DerivedSelf& self, unsigned __int64 Value) { return ApplyIntDivision(&self, Value); }
+	DerivedSelf operator/(DerivedSelf& self, signed __int64 Value) { return ApplyIntDivision(&self, Value); }
+	//Modulus Operations
 	DerivedSelf operator%(DerivedSelf& self, DerivedSelf Value)
 	{
 		if (y.intValue == 0 && y.DecimalStatus == 0)
@@ -740,6 +788,20 @@ public:
 		self.DecimalStatus = (int)SelfRep;
 		return self;
 	}
+	DerivedSelf operator%(DerivedSelf& self, unsigned int Value) { return ApplyIntModulus(&self, Value); }
+	DerivedSelf operator%(DerivedSelf& self, signed int Value) { return ApplyIntModulus(&self, Value); }
+	DerivedSelf operator%(DerivedSelf& self, unsigned __int8 Value) { return ApplyIntModulus(&self, Value); }
+	DerivedSelf operator%(DerivedSelf& self, signed __int8 Value) { return ApplyIntModulus(&self, Value); }
+	DerivedSelf operator%(DerivedSelf& self, unsigned __int16 Value) { return ApplyIntModulus(&self, Value); }
+	DerivedSelf operator%(DerivedSelf& self, signed __int16 Value) { return ApplyIntModulus(&self, Value); }
+	DerivedSelf operator%(DerivedSelf& self, unsigned __int64 Value) { return ApplyIntModulus(&self, Value); }
+	DerivedSelf operator%(DerivedSelf& self, signed __int64 Value) { return ApplyIntModulus(&self, Value); }
+
+	//DerivedSelf operator=(double Value){}
+	//DerivedSelf operator=(float Value) { ApplyEqualFloatValueOperation(&Value); }
+	//DerivedSelf operator=(std::string Value);
+	//DerivedSelf operator=(unsigned int Value);
+	//DerivedSelf operator=(int Value);
 	//DerivedSelf operator=(signed __int64 Value);
 	//DerivedSelf operator=(unsigned __int64 Value);
 	DerivedSelf operator-() { SwapNegativeStatus(); return this; }
