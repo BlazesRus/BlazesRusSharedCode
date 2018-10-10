@@ -2,7 +2,7 @@
 	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
 #pragma once
-#ifndef BufferedVariableArray_IncludeGuard
+#if !defined(BufferedVariableArray_IncludeGuard) && !defined(ExcludeGlobalCode_ExperimentalCode)
 #define BufferedVariableArray_IncludeGuard
 
 #ifdef BLAZESGLOBALCODE_LIBRARY

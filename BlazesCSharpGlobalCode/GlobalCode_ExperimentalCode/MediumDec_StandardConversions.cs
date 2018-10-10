@@ -303,9 +303,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public MediumDec(uint Value)
         {
             //Cap value if too big on initialize
-            if (Value > 65535)
+            if (Value > 4294967295)
             {
-                Value = 65535;
+                Value = 4294967295;
             }
             this.intValue = (ushort)Value;
             this.decimalStatus = 0;
@@ -318,9 +318,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         public MediumDec(ulong Value)
         {
             //Cap value if too big on initialize
-            if (Value > 65535)
+            if (Value > 4294967295)
             {
-                Value = 65535;
+                Value = 4294967295;
             }
             this.intValue = (ushort)Value;
             this.decimalStatus = 0;
@@ -334,9 +334,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         {
             if (Value < 0) { this.decimalStatus = NegativeWholeNumber; Value *= -1; }
             //Cap value if too big on initialize
-            if (Value > 65535)
+            if (Value > 4294967295)
             {
-                Value = 65535;
+                Value = 4294967295;
             }
             this.intValue = (ushort)Value;
         }
@@ -351,9 +351,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             if (IsNegative) { Value *= -1.0; }
             ulong WholeValue = (ulong)Math.Floor(Value);
             //Cap value if too big on initialize (preventing overflow on conversion)
-            if (Value > 65535)
+            if (Value > 4294967295)
             {
-                Value = 65535;
+                Value = 4294967295;
             }
             Value -= WholeValue;
             IntValue = (ushort)WholeValue;
@@ -370,9 +370,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             if (IsNegative) { Value *= -1.0f; }
             ulong WholeValue = (ulong)Math.Floor(Value);
             //Cap value if too big on initialize (preventing overflow on conversion)
-            if (Value > 65535)
+            if (Value > 4294967295)
             {
-                Value = 65535;
+                Value = 4294967295;
             }
             Value -= WholeValue;
             intValue = (ushort)WholeValue;
@@ -401,9 +401,9 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
 #endif
             ulong WholeValue = (ulong)Math.Floor(Value);
             //Cap value if too big on initialize (preventing overflow on conversion)
-            if (Value > 65535)
+            if (Value > 4294967295)
             {
-                Value = 65535;
+                Value = 4294967295;
             }
             Value -= WholeValue;
             intValue = (ushort)WholeValue;

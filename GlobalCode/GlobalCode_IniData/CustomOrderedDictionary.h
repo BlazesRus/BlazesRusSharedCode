@@ -1,14 +1,6 @@
 /*	Code Created by James Michael Armstrong (NexusName:BlazesRus)(https://github.com/BlazesRus)
     Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
-#ifdef BlazesGlobalCode_UsePreprocessor
-#ifdef BlazesGlobalCode_LocalLayout
-    #include "stdafx.h"
-#else
-    #include "..\stdafx.h"
-#endif
-#endif
-
 #pragma once
 #ifndef CustomOrderedDictionary_IncludeGuard
 #define CustomOrderedDictionary_IncludeGuard
@@ -52,9 +44,9 @@ public:
 		std::pair<EntryType, ValueType> Value = { First, Second };
 		this->insert(Value);
 	}
-	//int operator[](const string key) 
+	//int operator[](const string key)
 	//{
-	//	return 
+	//	return
 	//}
 	CustomOrderedDictionary(){}
 	~CustomOrderedDictionary(){}

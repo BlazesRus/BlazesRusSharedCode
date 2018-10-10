@@ -22,6 +22,21 @@
     <Filter Include="Header Files\GlobalCode_NodeTrees">
       <UniqueIdentifier>{02ec63fa-d3ae-4170-aec9-4d2298797644}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GlobalCode_IniData">
+      <UniqueIdentifier>{3ce166ac-987c-4b98-92dd-e6a4be655b67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GlobalCode_StringFunctions">
+      <UniqueIdentifier>{fc1b9d3a-3926-45b8-aff2-53b7feb2c5dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GlobalCode_MiscFunctions">
+      <UniqueIdentifier>{31c7e4de-7248-49f1-855e-69fae5ce619e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GlobalCode_QuadVector">
+      <UniqueIdentifier>{fdbe9b7e-8e20-4fab-8e12-1263cb153a6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GlobalCode_VariableConversionFunctions">
+      <UniqueIdentifier>{21d9dfef-1edb-43e5-8e5e-8a3f42b89735}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlazesCPPCLRGlobalCode.h">
@@ -84,6 +99,39 @@
     <ClInclude Include="..\GlobalCode\GlobalCode_ExperimentalCode\CustomDec.h">
       <Filter>Header Files\GlobalCode_ExperimentalCode</Filter>
     </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_IniData\DictionaryList.h">
+      <Filter>Header Files\GlobalCode_IniData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_IniData\CustomDictionary.h">
+      <Filter>Header Files\GlobalCode_IniData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_IniData\CustomOrderedDictionary.h">
+      <Filter>Header Files\GlobalCode_IniData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_IniData\IndexedDictionary.h">
+      <Filter>Header Files\GlobalCode_IniData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_IniData\IniData.h">
+      <Filter>Header Files\GlobalCode_IniData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_IniData\IniDataV2.h">
+      <Filter>Header Files\GlobalCode_IniData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_StringFunctions\StringFunctions.h">
+      <Filter>Header Files\GlobalCode_StringFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_MiscFunctions\MiscFunctions.h">
+      <Filter>Header Files\GlobalCode_MiscFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_QuadVector\QuadVector.h">
+      <Filter>Header Files\GlobalCode_QuadVector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_QuadVector\QuadVectorFunctions.h">
+      <Filter>Header Files\GlobalCode_QuadVector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h">
+      <Filter>Header Files\GlobalCode_VariableConversionFunctions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlazesCPPCLRGlobalCode.cpp">
@@ -121,6 +169,27 @@
     </ClCompile>
     <ClCompile Include="..\GlobalCode\GlobalCode_NodeTrees\XMLOption.cpp">
       <Filter>Header Files\GlobalCode_NodeTrees</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GlobalCode\GlobalCode_IniData\IniData.cpp">
+      <Filter>Header Files\GlobalCode_IniData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GlobalCode\GlobalCode_IniData\IniDataV2.cpp">
+      <Filter>Header Files\GlobalCode_IniData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GlobalCode\GlobalCode_StringFunctions\StringFunctions.cpp">
+      <Filter>Header Files\GlobalCode_StringFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GlobalCode\GlobalCode_MiscFunctions\MiscFunctions.cpp">
+      <Filter>Header Files\GlobalCode_MiscFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GlobalCode\GlobalCode_QuadVector\QuadVector.cpp">
+      <Filter>Header Files\GlobalCode_QuadVector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GlobalCode\GlobalCode_QuadVector\QuadVectorFunctions.cpp">
+      <Filter>Header Files\GlobalCode_QuadVector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GlobalCode\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cpp">
+      <Filter>Header Files\GlobalCode_VariableConversionFunctions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

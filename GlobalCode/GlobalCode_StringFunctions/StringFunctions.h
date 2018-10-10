@@ -252,34 +252,34 @@ public:
 	//************************************
 	static unsigned __int8 FindContentType(std::string Content);
 
-	/// <summary>
-	/// Converts from LPCTSTR to std::string
-	/// </summary>
-	/// <param name="value">The value.</param>
-	/// <param name="cp">The codepage.Default to (UTF-16 codepage = 1200)(https://docs.microsoft.com/en-us/windows/desktop/Intl/code-page-identifiers)</param>
-	/// <returns></returns>
-	static std::string ConvertFromPString(LPCTSTR value, UINT cp = 1200)
-	{
-#ifdef _UNICODE//https://stackoverflow.com/questions/5513718/how-do-i-convert-from-lpctstr-to-stdstring
-		if(value==nullptr)
-		{
-			return "";
-		}
-		else
-		{
-			int cch = WideCharToMultiByte(cp, WC_NO_BEST_FIT_CHARS, value, -1, 0, 0, NULL, NULL);//Default of dw field of 0 switching to WC_NO_BEST_FIT_CHARS since likely to deal with filenames
-			char* psz = new char[cch];
-
-			WideCharToMultiByte(cp, WC_NO_BEST_FIT_CHARS, value, -1, psz, cch, NULL, NULL);
-
-			std::string st(psz);
-			delete[] psz;
-
-			return st;
-		}
-#else
-		return std::string(str);
-#endif
-	}
+//	/// <summary>
+//	/// Converts from LPCTSTR to std::string
+//	/// </summary>
+//	/// <param name="value">The value.</param>
+//	/// <param name="cp">The codepage.Default to (UTF-16 codepage = 1200)(https://docs.microsoft.com/en-us/windows/desktop/Intl/code-page-identifiers)</param>
+//	/// <returns></returns>
+//	static std::string ConvertFromPString(LPCTSTR value, UINT cp = 1200)
+//	{
+//#ifdef _UNICODE//https://stackoverflow.com/questions/5513718/how-do-i-convert-from-lpctstr-to-stdstring
+//		if(value==nullptr)
+//		{
+//			return "";
+//		}
+//		else
+//		{
+//			int cch = WideCharToMultiByte(cp, WC_NO_BEST_FIT_CHARS, value, -1, 0, 0, NULL, NULL);//Default of dw field of 0 switching to WC_NO_BEST_FIT_CHARS since likely to deal with filenames
+//			char* psz = new char[cch];
+//
+//			WideCharToMultiByte(cp, WC_NO_BEST_FIT_CHARS, value, -1, psz, cch, NULL, NULL);
+//
+//			std::string st(psz);
+//			delete[] psz;
+//
+//			return st;
+//		}
+//#else
+//		return std::string(str);
+//#endif
+//	}
 };
 #endif

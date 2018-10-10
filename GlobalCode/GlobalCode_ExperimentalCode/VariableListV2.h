@@ -2,7 +2,7 @@
 	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
 #pragma once
-#ifndef VariableListV2_IncludeGuard
+#if !defined(VariableListV2_IncludeGuard) && !defined(ExcludeGlobalCode_ExperimentalCode)
 #define VariableListV2_IncludeGuard
 
 #include "..\DLLAPI.h"
@@ -27,10 +27,10 @@
 //template <typename VariableType = unsigned __int8, typename ElementSizeType = unsigned __int8>
 //class VariableListV2 : public VariableList <VariableType>//: public std::vector < VariableType >
 //{
-//	//size 
+//	//size
 //	/*
 //		Notes on Mechanics of this class:
-//		-Initialyze Data as Size 1 array
+//		-Initialize Data as Size 1 array
 //		-Any time data is added to array check to resize array
 //		-Resize at element Index:
 //		2,4,8,16
@@ -57,7 +57,7 @@
 //	// Adds element into VariableList
 //	// Method:    Add
 //	// FullName:  VariableListV2::Add
-//	// Access:    public 
+//	// Access:    public
 //	// Returns:   ElementSizeType
 //	// Qualifier:
 //	// Parameter: VariableType ElementValue

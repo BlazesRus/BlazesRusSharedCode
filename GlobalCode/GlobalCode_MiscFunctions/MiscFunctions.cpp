@@ -6,18 +6,12 @@
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
+
+#ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
 #include "StringFunctions.h"
-//Inside this ifdef block holds GlobalCode Environment library version of header structure (preprocessor defined inside all GlobalCode library configs)
-#ifdef BLAZESGLOBALCODE_LIBRARY
-
-//Local Version of headers here(within else block)
 #else
-//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
-#ifndef DLL_API
-#define DLL_API
+#include "..\GlobalCode_StringFunctions\StringFunctions.h"
 #endif
-#endif
-
 
 using std::string;
 

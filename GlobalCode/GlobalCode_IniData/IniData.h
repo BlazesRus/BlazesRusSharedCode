@@ -15,11 +15,11 @@
 #endif
 
 #ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
-	#include "..\GlobalCode_VariableLists\VariableList.h"
-	#include "..\GlobalCode_VariableLists\StringVectorList.h"
-#else
 	#include "VariableList.h"
 	#include "StringVectorList.h"
+#else
+	#include "..\GlobalCode_VariableLists\VariableList.h"
+	#include "..\GlobalCode_VariableLists\StringVectorList.h"
 #endif
 
 
@@ -40,7 +40,7 @@ public:
 	//************************************
 	// Method:    LoadIniData
 	// FullName:  IniData::LoadIniData
-	// Access:    public 
+	// Access:    public
 	// Returns:   void
 	// Qualifier:
 	// Parameter: std::string FileName

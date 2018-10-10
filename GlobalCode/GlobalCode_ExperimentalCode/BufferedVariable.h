@@ -2,7 +2,7 @@
 	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
 #pragma once
-#ifndef BufferedVariable_IncludeGuard
+#if !defined(BufferedVariable_IncludeGuard) && !defined(ExcludeGlobalCode_ExperimentalCode)
 #define BufferedVariable_IncludeGuard
 
 #ifdef BLAZESGLOBALCODE_LIBRARY
@@ -12,12 +12,6 @@
 	#ifndef DLL_API
 		#define DLL_API
 	#endif
-#endif
-
-#ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
-
-#else
-
 #endif
 
 template <typename VariableTypeP>

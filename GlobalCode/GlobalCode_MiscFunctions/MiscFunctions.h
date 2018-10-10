@@ -5,7 +5,6 @@
 #ifndef MiscFunctions_IncludeGuard
 #define MiscFunctions_IncludeGuard
 
-#include "VariableTypeLists.h"
 #include <string>
 
 //Inside this ifdef block holds GlobalCode Environment library version of header structure (preprocessor defined inside all GlobalCode library configs)
@@ -19,6 +18,13 @@
 #endif
 #endif
 
+#ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
+#include "VariableList.h"
+#include "StringVectorList.h"
+#else
+#include "..\GlobalCode_VariableLists\VariableList.h"
+#include "..\GlobalCode_VariableLists\StringVectorList.h"
+#endif
 
 class DLL_API MiscFunctions
 {
@@ -55,7 +61,7 @@ public:
 	//************************************
 	// Method:    FindWrappedText
 	// FullName:  MiscFunctions::FindWrappedText
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   bool
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -65,7 +71,7 @@ public:
 	//************************************
 	// Method:    TextNotFound
 	// FullName:  MiscFunctions::TextNotFound
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   bool
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -75,7 +81,7 @@ public:
 	//************************************
 	// Method:    RearrangedVariableDataFromFile
 	// FullName:  MiscFunctions::RearrangedVariableDataFromFile
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   bool
 	// Qualifier:
 	// Parameter: std::string FileName
@@ -85,7 +91,7 @@ public:
 	//************************************
 	// Method:    ConvertFileToString
 	// FullName:  MiscFunctions::ConvertFileToString
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: std::string FileName
@@ -94,7 +100,7 @@ public:
 	//************************************
 	// Method:    ConvertStringToFile
 	// FullName:  MiscFunctions::ConvertStringToFile
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   void
 	// Qualifier:
 	// Parameter: std::string FileName
@@ -104,7 +110,7 @@ public:
 	//************************************
 	// Method:    IsRecordedHavokClassType
 	// FullName:  MiscFunctions::IsRecordedHavokClassType
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   bool
 	// Qualifier:
 	// Parameter: std::string HavokClass
@@ -113,7 +119,7 @@ public:
 	//************************************
 	// Method:    ExtractFirstTagContents
 	// FullName:  MiscFunctions::ExtractFirstTagContents
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -126,7 +132,7 @@ public:
 	//************************************
 	// Method:    RetrieveTopLevelObjectFromString
 	// FullName:  MiscFunctions::RetrieveTopLevelObjectFromString
-	// Access:    public 
+	// Access:    public
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: std::string LineString

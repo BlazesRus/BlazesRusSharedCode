@@ -5,24 +5,33 @@
 #include <string>
 #include <stdint.h>
 
-//Inside this ifdef block holds GlobalCode Environment library version of header structure (preprocessor defined inside all GlobalCode library configs)
-#ifdef BLAZESGLOBALCODE_LIBRARY
-#include "..\DLLAPI.h"
-//Local Version of headers here(within else block)
+#ifdef BLAZESGLOBALCODE_LIBRARY//https://stackoverflow.com/questions/3491990/c-definition-of-dllimport-static-data-member
+//#include "..\DLLAPI.h"
+#ifndef DLL_API
+#define DLL_API __declspec(dllexport)
+#endif
+#else
+#ifdef BlazesGlobalCode_Import
+#ifndef DLL_API
+#define DLL_API __declspec(dllimport)
+#endif
 #else
 //Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
 #ifndef DLL_API
 #define DLL_API
 #endif
 #endif
+#endif
 
 class DLL_API VariableConversionFunctions
 {
 public:
+	static int PowerOfTens[10];
+	static long PowerOfTens64Bit[19];
 	//************************************
 	// Method:    NumberOfPlaces
 	// FullName:  VariableConversionFunctions::NumberOfPlaces
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   int
 	// Qualifier:
 	// Parameter: int Value
@@ -31,7 +40,7 @@ public:
 	//************************************
 	// Method:    NumberOfPlaces
 	// FullName:  VariableConversionFunctions::NumberOfPlaces
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   int
 	// Qualifier:
 	// Parameter: unsigned int Value
@@ -40,7 +49,7 @@ public:
 	//************************************
 	// Method:    NumberOfPlaces
 	// FullName:  VariableConversionFunctions::NumberOfPlaces
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   int
 	// Qualifier:
 	// Parameter: double Value
@@ -49,7 +58,7 @@ public:
 	//************************************
 	// Method:    NumberOfPlaces
 	// FullName:  VariableConversionFunctions::NumberOfPlaces
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   long long int
 	// Qualifier:
 	// Parameter: long long int Value
@@ -58,7 +67,7 @@ public:
 	//************************************
 	// Method:    NumberOfPlacesX
 	// FullName:  VariableConversionFunctions::NumberOfPlacesX
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   long long int
 	// Qualifier:
 	// Parameter: size_t Value
@@ -67,7 +76,7 @@ public:
 	//************************************
 	// Method:    NumberOfDecimalPlaces
 	// FullName:  VariableConversionFunctions::NumberOfDecimalPlaces
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   int
 	// Qualifier:
 	// Parameter: int Value
@@ -76,7 +85,7 @@ public:
 	//************************************
 	// Method:    NumberOfDecimalPlaces
 	// FullName:  VariableConversionFunctions::NumberOfDecimalPlaces
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   int
 	// Qualifier:
 	// Parameter: double Value
@@ -85,7 +94,7 @@ public:
 	//************************************
 	// Method:    CharAsInt
 	// FullName:  VariableConversionFunctions::CharAsInt
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   int
 	// Qualifier:
 	// Parameter: char Temp
@@ -94,7 +103,7 @@ public:
 	//************************************
 	// Method:    DigitAsChar
 	// FullName:  VariableConversionFunctions::DigitAsChar
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   char
 	// Qualifier:
 	// Parameter: int Temp
@@ -103,7 +112,7 @@ public:
 	//************************************
 	// Method:    IsDigit
 	// FullName:  VariableConversionFunctions::IsDigit
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   bool
 	// Qualifier:
 	// Parameter: char Temp
@@ -112,7 +121,7 @@ public:
 	//************************************
 	// Method:    IsDigit
 	// FullName:  VariableConversionFunctions::IsDigit
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   bool
 	// Qualifier:
 	// Parameter: std::string Temp
@@ -122,7 +131,7 @@ public:
 	//************************************
 	// Method:    ReadDoubleFromString
 	// FullName:  VariableConversionFunctions::ReadDoubleFromString
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   double
 	// Qualifier:
 	// Parameter: std::string TempString
@@ -134,7 +143,7 @@ public:
 	//************************************
 	// Method:    ReadIntFromString
 	// FullName:  VariableConversionFunctions::ReadIntFromString
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   int
 	// Qualifier:
 	// Parameter: std::string TempString
@@ -144,7 +153,7 @@ public:
 	//************************************
 	// Method:    ReadBoolFromString
 	// FullName:  VariableConversionFunctions::ReadBoolFromString
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   bool
 	// Qualifier:
 	// Parameter: std::string LineString
@@ -154,7 +163,7 @@ public:
 	//************************************
 	// Method:    ReadXIntFromString
 	// FullName:  VariableConversionFunctions::ReadXIntFromString
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   long long int
 	// Qualifier:
 	// Parameter: std::string TempString
@@ -164,7 +173,7 @@ public:
 	// Scan int for bool value
 	// Method:    ReadBoolFromInt
 	// FullName:  VariableConversionFunctions::ReadBoolFromInt
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   bool
 	// Qualifier:
 	// Parameter: int Temp
@@ -173,7 +182,7 @@ public:
 	//************************************
 	// Method:    DoubleAsString
 	// FullName:  VariableConversionFunctions::DoubleAsString
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: double TempValue
@@ -182,7 +191,7 @@ public:
 	//************************************
 	// Method:    BoolAsString
 	// FullName:  VariableConversionFunctions::BoolAsString
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: bool TempValue
@@ -191,7 +200,7 @@ public:
 	//************************************
 	// Method:    DoubleToStringConversion
 	// FullName:  VariableConversionFunctions::DoubleToStringConversion
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: double TempValue
@@ -200,7 +209,7 @@ public:
 	//************************************
 	// Method:    IntToStringConversion
 	// FullName:  VariableConversionFunctions::IntToStringConversion
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: int TempValue
@@ -209,7 +218,7 @@ public:
 	//************************************
 	// Method:    IntToStringConversion
 	// FullName:  VariableConversionFunctions::IntToStringConversion
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: unsigned int TempValue
@@ -218,7 +227,7 @@ public:
 	//************************************
 	// Method:    XIntToStringConversion
 	// FullName:  VariableConversionFunctions::XIntToStringConversion
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: long long TempValue
@@ -227,7 +236,7 @@ public:
 	//************************************
 	// Method:    XIntToStringConversion
 	// FullName:  VariableConversionFunctions::XIntToStringConversion
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: size_t TempValue
@@ -238,7 +247,7 @@ public:
 	//FloatToDouble code from https://github.com/PIlin/nanopb/blob/master/example_avr_double/double_conversion.c
 	// Method:    float_to_double
 	// FullName:  VariableConversionFunctions::float_to_double
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   uint64_t
 	// Qualifier:
 	// Parameter: float value
@@ -248,7 +257,7 @@ public:
 	//FloatToDouble code from https://github.com/PIlin/nanopb/blob/master/example_avr_double/double_conversion.c
 	// Method:    double_to_float
 	// FullName:  VariableConversionFunctions::double_to_float
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   float
 	// Qualifier:
 	// Parameter: uint64_t value
@@ -277,7 +286,7 @@ public:
 	//************************************
 	// Method:    FloatToStringConversion
 	// FullName:  VariableConversionFunctions::FloatToStringConversion
-	// Access:    public static 
+	// Access:    public static
 	// Returns:   std::string
 	// Qualifier:
 	// Parameter: float TempValue
@@ -286,7 +295,7 @@ public:
 	//************************************
 	// Method:    Int32ToFloat
 	// FullName:  VariableConversionFunctions::Int32ToFloat
-	// Access:    public 
+	// Access:    public
 	// Returns:   float
 	// Qualifier:
 	// Parameter: int32_t Value

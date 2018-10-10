@@ -37,7 +37,7 @@
 #define DLL_API __attribute__ ((dllexport))
 #else
 
-#ifdef DLLAPI_EXPORTS
+#ifdef BLAZESGLOBALCODE_LIBRARY
 #define DLL_API __declspec(dllexport)
 #else
 #define DLL_API __declspec(dllimport)
@@ -53,7 +53,7 @@
 #endif
 #endif
 //#ifdef __cplusplus
-//extern "C" 
+//extern "C"
 //{
 //#endif
 //

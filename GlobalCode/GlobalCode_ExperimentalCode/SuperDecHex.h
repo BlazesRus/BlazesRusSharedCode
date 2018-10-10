@@ -3,7 +3,7 @@
 */
 
 #pragma once
-#ifndef FileName_IncludeGuard
+#if !defined(FileName_IncludeGuard) && !defined(ExcludeGlobalCode_ExperimentalCode)
 #define FileName_IncludeGuard
 
 //#include <io.h>
