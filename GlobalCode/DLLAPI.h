@@ -3,12 +3,6 @@
 #ifndef DLLAPI_IncludeGuard
 #define DLLAPI_IncludeGuard
 
-//#ifdef DLLAPI_EXPORTS
-//#define DLL_API __declspec(dllexport)
-//#else
-//#define DLL_API __declspec(dllimport)
-//#endif
-
 //Some parts(define is renamed and some parts are changed/missing) based on https://github.com/arx/ArxLibertatis/blob/master/src/lib/ArxIO.h
 /*
  * Copyright 2013 Arx Libertatis Team (see the AUTHORS file)
@@ -28,7 +22,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Arx Libertatis.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifdef __LIB
+#if defined(__LIB) || (!defined(UsingBlazesGlobalCodeDLL)&&!defined(BLAZESGLOBALCODE_LIBRARY))
 // Building static library
 #define DLL_API
 #else
@@ -36,8 +30,8 @@
 #ifdef __GNUC__
 #define DLL_API __attribute__ ((dllexport))
 #else
-
-#ifdef BLAZESGLOBALCODE_LIBRARY
+ //https://stackoverflow.com/questions/3491990/c-definition-of-dllimport-static-data-member
+#if defined(BLAZESGLOBALCODE_LIBRARY) || defined(DLLAPI_EXPORTS)
 #define DLL_API __declspec(dllexport)
 #else
 #define DLL_API __declspec(dllimport)

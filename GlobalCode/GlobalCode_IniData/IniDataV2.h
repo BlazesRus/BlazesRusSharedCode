@@ -5,13 +5,18 @@
 #ifndef IniDataV2_IncludeGuard
 #define IniDataV2_IncludeGuard
 
-#ifdef BLAZESGLOBALCODE_LIBRARY
-#include "..\DLLAPI.h"
-#else
-//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
+#ifdef BlazesGlobalCode_LocalLayout
 #ifndef DLL_API
+#ifdef UsingBlazesGlobalCodeDLL
+#define DLL_API __declspec(dllimport)
+#elif defined(BLAZESGLOBALCODE_LIBRARY)
+#define DLL_API __declspec(dllexport)
+#else
 #define DLL_API
 #endif
+#endif
+#else
+#include "..\DLLAPI.h"
 #endif
 
 #include <string>
@@ -361,7 +366,7 @@ public:
 	{
 		if(Value==true){ self.Add(Key, "true"); }
 		else { self.Add(Key, "false"); }
-		
+
 	}
 	/// <summary>
 	/// Gets the int element data.
@@ -433,7 +438,7 @@ public:
 		size_t TotalSize = IntSettings.size()+BoolSettings.size();
 		return TotalSize;
 	}
-    IniDataV2() 
+    IniDataV2()
 	{
 		IntSettings = CustomDictionary<std::string, int>({});
 		BoolSettings = CustomDictionary<std::string, bool>({});

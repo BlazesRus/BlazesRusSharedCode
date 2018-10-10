@@ -4,20 +4,6 @@
 
 #include "SuperDecHex.h"
 
-#ifdef BLAZESGLOBALCODE_LIBRARY
-	//Headers for Library Version here
-	#include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
-#else
-	//Headers for Library Version here
-	#ifndef BlazesGlobalCode_FileStructureVersion || BlazesGlobalCode_FileStructureVersion == 0
-		#include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
-	#elif BlazesGlobalCode_FileStructureVersion == 1
-		#include "VariableConversionFunctions.h"
-	#elif BlazesGlobalCode_FileStructureVersion == 2
-		#include "..\..\niflib\GlobalCode\VariableConversionFunctions.h"
-	#endif
-#endif
-
 SuperDecHex::Hex_8Byte SuperDecHex::Hex_8Byte::operator=(std::string HexValue)
 {
 	unsigned int HexSize = HexValue.length();

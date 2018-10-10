@@ -4,22 +4,18 @@
 #if !defined(MediumDec_IncludeGuard) && !defined(ExcludeGlobalCode_ExperimentalCode)
 #define MediumDec_IncludeGuard
 
-#ifdef BLAZESGLOBALCODE_LIBRARY//https://stackoverflow.com/questions/3491990/c-definition-of-dllimport-static-data-member
-//#include "..\DLLAPI.h"
+#ifdef BlazesGlobalCode_LocalLayout
 #ifndef DLL_API
-#define DLL_API __declspec(dllexport)
-#endif
-#else
-#ifdef BlazesGlobalCode_Import
-#ifndef DLL_API
+#ifdef UsingBlazesGlobalCodeDLL
 #define DLL_API __declspec(dllimport)
-#endif
+#elif defined(BLAZESGLOBALCODE_LIBRARY)
+#define DLL_API __declspec(dllexport)
 #else
-//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
-#ifndef DLL_API
 #define DLL_API
 #endif
 #endif
+#else
+#include "..\DLLAPI.h"
 #endif
 
 #include <string>

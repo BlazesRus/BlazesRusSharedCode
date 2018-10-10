@@ -7,21 +7,26 @@
 
 #include <string>
 
-#ifdef BLAZESGLOBALCODE_LIBRARY
-	#include "..\DLLAPI.h"
+#ifdef BlazesGlobalCode_LocalLayout
+#ifndef DLL_API
+#ifdef UsingBlazesGlobalCodeDLL
+#define DLL_API __declspec(dllimport)
+#elif defined(BLAZESGLOBALCODE_LIBRARY)
+#define DLL_API __declspec(dllexport)
 #else
-//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
-	#ifndef DLL_API
-		#define DLL_API
-	#endif
+#define DLL_API
+#endif
+#endif
+#else
+#include "..\DLLAPI.h"
 #endif
 
 #ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
-#include "..\GlobalCode_VariableLists\StringVectorList.h"
-#include "..\GlobalCode_VariableLists\VariableList.h"
-#else
 #include "StringVectorList.h"
 #include "VariableList.h"
+#else
+#include "..\GlobalCode_VariableLists\StringVectorList.h"
+#include "..\GlobalCode_VariableLists\VariableList.h"
 #endif
 
 class DLL_API QuadVector
@@ -52,7 +57,7 @@ class DLL_API QuadVectorList : public VariableList < QuadVector >
 	// Alias for Add(Fix compiler error of thinking Add(TempValue) has TempValue as double)
 	// Method:    AddElement
 	// FullName:  QuadVectorList::AddElement
-	// Access:    private 
+	// Access:    private
 	// Returns:   void
 	// Qualifier:
 	// Parameter: QuadVector TempValue

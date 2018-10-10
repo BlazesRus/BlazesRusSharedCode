@@ -5,23 +5,20 @@
 #include <string>
 #include <stdint.h>
 
-#ifdef BLAZESGLOBALCODE_LIBRARY//https://stackoverflow.com/questions/3491990/c-definition-of-dllimport-static-data-member
-//#include "..\DLLAPI.h"
-#ifndef DLL_API
-#define DLL_API __declspec(dllexport)
-#endif
+#ifdef BlazesGlobalCode_LocalLayout
+	#ifndef DLL_API
+		#ifdef UsingBlazesGlobalCodeDLL
+			#define DLL_API __declspec(dllimport)
+		#elif defined(BLAZESGLOBALCODE_LIBRARY)
+			#define DLL_API __declspec(dllexport)
+		#else
+			#define DLL_API
+		#endif
+	#endif
 #else
-#ifdef BlazesGlobalCode_Import
-#ifndef DLL_API
-#define DLL_API __declspec(dllimport)
+	#include "..\DLLAPI.h"
 #endif
-#else
-//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
-#ifndef DLL_API
-#define DLL_API
-#endif
-#endif
-#endif
+
 
 class DLL_API VariableConversionFunctions
 {

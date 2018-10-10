@@ -5,13 +5,18 @@
 #ifndef VariableList_IncludeGuard
 #define VariableList_IncludeGuard
 
-#ifdef BLAZESGLOBALCODE_LIBRARY
-	#include "..\DLLAPI.h"
+#ifdef BlazesGlobalCode_LocalLayout
+#ifndef DLL_API
+#ifdef UsingBlazesGlobalCodeDLL
+#define DLL_API __declspec(dllimport)
+#elif defined(BLAZESGLOBALCODE_LIBRARY)
+#define DLL_API __declspec(dllexport)
 #else
-//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
-	#ifndef DLL_API
-		#define DLL_API
-	#endif
+#define DLL_API
+#endif
+#endif
+#else
+#include "..\DLLAPI.h"
 #endif
 
 #include <vector>
@@ -307,9 +312,9 @@ public:
 				{
 					StreamingFileCheck = false;
 					if(LoadedFileStream.eof()) {/*Send debug message of reaching end of file?*/ }
-					else if(LoadedFileStream.bad()) 
+					else if(LoadedFileStream.bad())
 					{
-						/*Send Failed Read/Write operation Error message? */ 
+						/*Send Failed Read/Write operation Error message? */
 						std::cout << "Failed Read/Write Error on File Open with path" << Path<<"\n";
 						system("pause");
 					}

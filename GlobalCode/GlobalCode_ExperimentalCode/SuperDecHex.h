@@ -10,16 +10,24 @@
 //#include <math.h>
 //#include <iostream>
 
-#ifdef BLAZESGLOBALCODE_LIBRARY
-	#include "..\DLLAPI.h"
+#ifdef BlazesGlobalCode_LocalLayout
+#ifndef DLL_API
+#ifdef UsingBlazesGlobalCodeDLL
+#define DLL_API __declspec(dllimport)
+#elif defined(BLAZESGLOBALCODE_LIBRARY)
+#define DLL_API __declspec(dllexport)
 #else
-//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
-	#ifndef DLL_API
-		#define DLL_API
-	#endif
+#define DLL_API
+#endif
+#endif
+#else
+#include "..\DLLAPI.h"
 #endif
 
+#include <string>
+
 #ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
+
 #else
 #endif
 
@@ -44,7 +52,7 @@ struct SuperDecHex
 	// Parameter: int num
 	//************************************
 	static unsigned __int8 HexCharToInt(int num);
-	//Takes any type of unsigned Int value and converts to hex Equavalent
+	//Takes any type of unsigned Int value and converts to hex Equivalent
 	//Based on http://www.geeksforgeeks.org/implement-itoa/
 	//************************************
 	// Method:    IntToHexString

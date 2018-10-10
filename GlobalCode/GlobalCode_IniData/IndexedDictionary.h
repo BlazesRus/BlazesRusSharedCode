@@ -5,20 +5,25 @@
 #ifndef IndexedDictionary_IncludeGuard
 #define IndexedDictionary_IncludeGuard
 
-#ifdef BLAZESGLOBALCODE_LIBRARY
-    #include "..\DLLAPI.h"
+#ifdef BlazesGlobalCode_LocalLayout
+#ifndef DLL_API
+#ifdef UsingBlazesGlobalCodeDLL
+#define DLL_API __declspec(dllimport)
+#elif defined(BLAZESGLOBALCODE_LIBRARY)
+#define DLL_API __declspec(dllexport)
 #else
-//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
-    #ifndef DLL_API
-        #define DLL_API
-    #endif
+#define DLL_API
+#endif
+#endif
+#else
+#include "..\DLLAPI.h"
 #endif
 
 #include "CustomOrderedDictionary.h"
 #include "CustomDictionary.h"
 
 template <typename ValueType>
-class DLL_API IndexedDictionary : public CustomDictionary<unsigned int, ValueType>
+class DLL_API IndexedDictionary:public CustomDictionary<unsigned int, ValueType>
 {
 private:
 	unsigned int NextIndex = 0;

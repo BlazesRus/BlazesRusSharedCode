@@ -5,13 +5,18 @@
 #ifndef VariableVectorFunctions_IncludeGuard
 #define VariableVectorFunctions_IncludeGuard
 
-#ifdef BLAZESGLOBALCODE_LIBRARY
-	#include "..\DLLAPI.h"
+#ifdef BlazesGlobalCode_LocalLayout
+#ifndef DLL_API
+#ifdef UsingBlazesGlobalCodeDLL
+#define DLL_API __declspec(dllimport)
+#elif defined(BLAZESGLOBALCODE_LIBRARY)
+#define DLL_API __declspec(dllexport)
 #else
-//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
-	#ifndef DLL_API
-		#define DLL_API
-	#endif
+#define DLL_API
+#endif
+#endif
+#else
+#include "..\DLLAPI.h"
 #endif
 
 #include "VariableTypeLists.h"
