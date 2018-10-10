@@ -26,7 +26,12 @@ void QuadVector::StoreInVectorIndex(int index, double TempValue)
 	else if(index == 3) { PositionW = TempValue; }
 }
 
-double QuadVector::GetVectorValue(int index)
+#if defined(ExcludeGlobalCode_ExperimentalCode)
+double
+#else
+MediumDec
+#endif
+QuadVector::GetVectorValue(int index)
 {
 	if(index == 0) { return PositionX; }
 	else if(index == 1) { return PositionY; }
@@ -39,6 +44,7 @@ double QuadVector::GetVectorValue(int index)
 std::string QuadVector::ConvertToString()
 {
 	std::string TempString = "(";
+#if defined(ExcludeGlobalCode_ExperimentalCode)
 	TempString += std::to_string(PositionX);
 	TempString += " ";
 	TempString += std::to_string(PositionY);
@@ -46,14 +52,32 @@ std::string QuadVector::ConvertToString()
 	TempString += std::to_string(PositionZ);
 	TempString += " ";
 	TempString += std::to_string(PositionW);
+#else
+	TempString += PositionX.ToString();
+	TempString += " ";
+	TempString += PositionY.ToString();
+	TempString += " ";
+	TempString += PositionZ.ToString();
+	TempString += " ";
+	TempString += PositionW.ToString();
+#endif
 	TempString += ")";
-	TempString += VariableConversionFunctions::DoubleToStringConversion(1.1);
 	return TempString;
 }
 
-DoubleList QuadVector::ConvertToDoubleList()
+#if defined(ExcludeGlobalCode_ExperimentalCode)
+DoubleList
+#else
+VariableList<MediumDec>
+#endif
+QuadVector::ConvertToList()
 {
-	DoubleList TempValue;
+#if defined(ExcludeGlobalCode_ExperimentalCode)
+	DoubleList
+#else
+	VariableList<MediumDec>
+#endif
+	TempValue;
 	for(int i = 0; i < 4; i++)
 	{
 		TempValue.Add(GetVectorValue(i));

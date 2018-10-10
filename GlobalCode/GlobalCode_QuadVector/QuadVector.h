@@ -27,23 +27,43 @@
 #else
 #include "..\GlobalCode_VariableLists\StringVectorList.h"
 #include "..\GlobalCode_VariableLists\VariableList.h"
+#if !defined(ExcludeGlobalCode_ExperimentalCode)
+#include "..\GlobalCode_ExperimentalCode\MediumDec.h"
+#endif
 #endif
 
 class DLL_API QuadVector
 {
 public:
+#if defined(ExcludeGlobalCode_ExperimentalCode)//Default to MediumDec if not using excluder preprocessor
 	double PositionX = 0.0;
 	double PositionY = 0.0;
 	double PositionZ = 0.0;
 	double PositionW = 0.0;
+#else
+	MediumDec PositionX = MediumDec::Zero;
+	MediumDec PositionY = MediumDec::Zero;
+	MediumDec PositionZ = MediumDec::Zero;
+	MediumDec PositionW = MediumDec::Zero;
+#endif
 	//Store values in Position in vector
 	void StoreInVectorIndex(int index, double TempValue);
 	//Get value based on index value
-	double GetVectorValue(int index);
+#if defined(ExcludeGlobalCode_ExperimentalCode)
+	double
+#else
+	MediumDec
+#endif
+	GetVectorValue(int index);
 	//Reconstruct as string
 	std::string ConvertToString();
-	//Reconstruct as DoubleList vector
-	DoubleList ConvertToDoubleList();
+	//Reconstruct as Vector
+#if defined(ExcludeGlobalCode_ExperimentalCode)
+	DoubleList
+#else
+	VariableList<MediumDec>
+#endif
+	ConvertToList();
 	//Construct QuadVector from String
 	void ReadQuadVectorFromString(std::string LineString);
 	QuadVector(std::string TempString);
