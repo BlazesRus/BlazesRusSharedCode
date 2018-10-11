@@ -87,6 +87,10 @@ public:
 
 	static MediumDec Zero;
 
+	static MediumDec One;
+
+	static MediumDec NegativeOne;
+
 	/// <summary>
 	/// Returns value of highest non-infinite/Special Decimal State Value that can store
 	/// </summary>
@@ -342,28 +346,54 @@ public:
 	template <typename ValueType>
 	static MediumDec& ApplyIntPow(MediumDec& self, ValueType Value)
 	{
-		if (self.DecimalStatus == 0)
+		if (self.DecimalStatus == 0&& self.IntValue == 10)
 		{
-			if (self.IntValue == 10)
+			if (Value == 0)
 			{
-				if (Value == 0)
-				{
-					self.IntValue = 1;
-				}
-				if (Value > 0)
-				{
-					self.IntValue = VariableConversionFunctions::PowerOfTens[Value];
-				}
-				else
-				{
-				}
+				self.IntValue = 1;
+			}
+			if (Value > 0)
+			{
+				self.IntValue = VariableConversionFunctions::PowerOfTens[Value];
+			}
+			else if(Value>=-9)
+			{
+				self.IntValue = 0;
+				self.DecimalStatus = DecimalOverflow / VariableConversionFunctions::PowerOfTens[Value*-1];
 			}
 			else
 			{
+				self.IntValue = 0;
 			}
 		}
 		else
 		{
+			if(Value>0)
+			{
+				ValueType NumOfTimes = Value - 1;
+				MediumDec ValueMult = self;
+				for(ValueType Num=0;Num<NumOfTimes;Num++)
+				{
+					self *= ValueMult;
+				}
+			}
+			else
+			{
+				if(Value==0)
+				{
+					self = One;
+				}
+				else
+				{
+					ValueType NumOfTimes = Value*-1;
+					MediumDec ValueMult = self;
+					self = One;
+					for (ValueType Num = 0; Num < NumOfTimes; Num++)
+					{
+						self /= ValueMult;
+					}
+				}
+			}
 		}
 		return self;
 	}

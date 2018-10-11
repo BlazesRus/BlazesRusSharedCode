@@ -8,6 +8,8 @@
 #endif
 
 MediumDec MediumDec::Zero = ZeroValue();
+MediumDec MediumDec::One = OneValue();
+MediumDec MediumDec::NegativeOne = NegativeOneValue();
 MediumDec MediumDec::Maximum = MaximumValue();
 MediumDec MediumDec::Minimum = MinimumValue();
 
