@@ -310,6 +310,54 @@ public:
 	template <typename ValueType>
 	static MediumDec& ApplyIntMultiplication(MediumDec& self, ValueType Value)
 	{
+		bool SelfIsNegative = self.DecimalStatus < 0;
+		if (self.DecimalStatus == 0)
+		{
+			if (y < 0)
+			{
+				self.IntValue *= (y * -1);
+				self.DecimalStatus = NegativeWholeNumber;
+			}
+			else
+			{
+				self.IntValue *= y;
+			}
+		}
+		else if (self.DecimalStatus == NegativeWholeNumber)
+		{
+			if (y < 0)
+			{
+				self.IntValue *= (y * -1);
+				self.DecimalStatus = 0;
+			}
+			else
+			{
+				self.IntValue *= y;
+			}
+		}
+		else
+		{
+			if (SelfIsNegative)
+			{
+				self.DecimalStatus *= -1;
+			}
+			self.IntValue *= y;
+			long TempDec = (long)self.DecimalStatus;
+			TempDec *= y;
+			if (TempDec >= DecimalOverflow)
+			{
+				long OverflowVal = TempDec / DecimalOverflow;
+				TempDec -= OverflowVal * DecimalOverflow;
+				self.IntValue += (uint)OverflowVal;
+			}
+			if (TempDec == 0) { self.DecimalStatus = 0; }
+			else
+			{
+				if (SelfIsNegative) { TempDec *= -1; }
+				self.DecimalStatus = (int)TempDec;
+			}
+		}
+		return self;
 	}
 	template <typename ValueType>
 	MediumDec& ApplyIntMultiplication(ValueType Value)
@@ -319,6 +367,29 @@ public:
 	template <typename ValueType>
 	static MediumDec& ApplyIntDivision(MediumDec& self, ValueType Value)
 	{
+		bool SelfIsNegative = self.DecimalStatus < 0;
+		if (y < 0)
+		{
+			if (SelfIsNegative) { SelfIsNegative = false; }
+			else { SelfIsNegative = true; }
+			if (self.DecimalStatus == NegativeWholeNumber) { self.DecimalStatus = 0; }
+			else if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+			y *= -1;
+		}
+		if (self.DecimalStatus == 0 || self.DecimalStatus == NegativeWholeNumber)//Only need to deal with Integer half of value
+		{
+			long ValueRep = (__int64)self.IntValue * DecimalOverflow;
+			ValueRep /= y;
+			long WholeHalf = ValueRep / DecimalOverflow;
+			self.IntValue = (uint)WholeHalf;
+			ValueRep -= WholeHalf;
+			self.DecimalStatus = (int)WholeHalf;
+		}
+		else
+		{
+			return self /= (MediumDec)y;
+		}
+		if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
 		return self;
 	}
 	template <typename ValueType>
