@@ -344,6 +344,17 @@ public:
 		return ApplyIntModulus(&this, Value)
 	}
 	template <typename ValueType>
+	static MediumDec& ApplyNegPow(MediumDec& self, ValueType NumOfTimes)
+	{
+		MediumDec ValueMult = self;
+		self = One;
+		for (ValueType Num = 0; Num < NumOfTimes; Num++)
+		{
+			self /= ValueMult;
+		}
+		return self;
+	}
+	template <typename ValueType>
 	static MediumDec& ApplyIntPow(MediumDec& self, ValueType Value)
 	{
 		if (self.DecimalStatus == 0&& self.IntValue == 10)
@@ -386,12 +397,7 @@ public:
 				else
 				{
 					ValueType NumOfTimes = Value*-1;
-					MediumDec ValueMult = self;
-					self = One;
-					for (ValueType Num = 0; Num < NumOfTimes; Num++)
-					{
-						self /= ValueMult;
-					}
+					return ApplyNegPow(self, NumOfTimes);
 				}
 			}
 		}
@@ -855,18 +861,33 @@ public:
 	friend MediumDec operator%(const MediumDec& self, unsigned __int64 Value) { return ApplyIntModulus(&self, Value); }
 	friend MediumDec operator%(const MediumDec& self, signed __int64 Value) { return ApplyIntModulus(&self, Value); }
 	//Power of Operations
-	friend MediumDec operator^(const MediumDec& self, MediumDec Value)
-	{
-		return self;
-	}
-	friend MediumDec operator^(const MediumDec& self, unsigned int Value) { return ApplyIntPow(&self, Value); }
-	friend MediumDec operator^(const MediumDec& self, signed int Value) { return ApplyIntPow(&self, Value); }
-	friend MediumDec operator^(const MediumDec& self, unsigned __int8 Value) { return ApplyIntPow(&self, Value); }
-	friend MediumDec operator^(const MediumDec& self, signed __int8 Value) { return ApplyIntPow(&self, Value); }
-	friend MediumDec operator^(const MediumDec& self, unsigned __int16 Value) { return ApplyIntPow(&self, Value); }
-	friend MediumDec operator^(const MediumDec& self, signed __int16 Value) { return ApplyIntPow(&self, Value); }
-	friend MediumDec operator^(const MediumDec& self, unsigned __int64 Value) { return ApplyIntPow(&self, Value); }
-	friend MediumDec operator^(const MediumDec& self, signed __int64 Value) { return ApplyIntPow(&self, Value); }
+	friend MediumDec operator^(MediumDec& self, MediumDec Value);
+	//{
+	//	if(Value.DecimalStatus==0)
+	//	{
+	//		self = self^Value.IntValue;
+	//	}
+	//	else if(Value.DecimalStatus==NegativeWholeNumber)//Negative WholeNumber
+	//	{
+	//		return ApplyNegPow(self, ((int)Value.IntValue)*-1);
+	//	}
+	//	else
+	//	{
+	//		//Have Math.Pow deal with other pow operations for now (might lose some precision in many cases since both self&Value are converted to double to apply)
+	//		double SelfAsDouble = (double)self;
+	//		double ValAsDouble = (double)Value;
+	//		SelfAsDouble
+	//	}
+	//	return self;
+	//}
+	friend MediumDec operator^(MediumDec& self, unsigned int Value) { return ApplyIntPow(self, Value); }
+	friend MediumDec operator^(MediumDec& self, signed int Value) { return ApplyIntPow(self, Value); }
+	friend MediumDec operator^(MediumDec& self, unsigned __int8 Value) { return ApplyIntPow(self, Value); }
+	friend MediumDec operator^(MediumDec& self, signed __int8 Value) { return ApplyIntPow(self, Value); }
+	friend MediumDec operator^(MediumDec& self, unsigned __int16 Value) { return ApplyIntPow(self, Value); }
+	friend MediumDec operator^(MediumDec& self, signed __int16 Value) { return ApplyIntPow(self, Value); }
+	friend MediumDec operator^(MediumDec& self, unsigned __int64 Value) { return ApplyIntPow(self, Value); }
+	friend MediumDec operator^(MediumDec& self, signed __int64 Value) { return ApplyIntPow(self, Value); }
 
 	//MediumDec operator=(double Value){}
 	//MediumDec operator=(float Value) { ApplyEqualFloatValueOperation(&Value); }

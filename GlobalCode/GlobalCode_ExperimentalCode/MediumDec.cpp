@@ -17,219 +17,6 @@ MediumDec MediumDec::Minimum = MinimumValue();
 //MediumDec MediumDec::Coords::PosY = MediumDec::Zero;
 //MediumDec MediumDec::Coords::PosZ = MediumDec::Zero;
 
-/// <summary>
-///
-/// </summary>
-/// <param name="Value"></param>
-
-/// <summary>
-///
-/// </summary>
-/// <param name="Value"></param>
-
-
-/*	static MediumDec GetValueFromString(std::string Value)
-{
-MediumDec NewSelf = MediumDec::Zero;
-bool IsNegative = false;
-__int8 PlaceNumber;
-//var StringLength = (unsigned __int8)Value.Length;
-std::string WholeNumberBuffer = "";
-std::string DecimalBuffer = "";
-
-bool ReadingDecimal = false;
-int TempInt;
-int TempInt02;
-var Decimalbuilder = new System.Text.StringBuilder("");
-var WholeNumberbuilder = new System.Text.StringBuilder("");
-foreach(char StringChar in Value)
-{
-if (IsDigit(StringChar))
-{
-if (ReadingDecimal)
-{
-Decimalbuilder.Append(StringChar);
-}
-else
-{
-WholeNumberbuilder.Append(StringChar);
-}
-}
-else if (StringChar == '-')
-{
-IsNegative = true;
-}
-else if (StringChar == '.')
-{
-ReadingDecimal = true;
-}
-}
-WholeNumberBuffer = WholeNumberbuilder.ToString();
-DecimalBuffer = Decimalbuilder.ToString();
-PlaceNumber = (__int8)(WholeNumberBuffer.Length - 1);
-foreach(char StringChar in WholeNumberBuffer)
-{
-TempInt = CharAsInt(StringChar);
-TempInt02 = (TempInt * SuperDecGlobalCode.PowerOfTens[PlaceNumber]);
-if (StringChar != '0')
-{
-NewSelf.IntValue += (unsigned int)TempInt02;
-}
-PlaceNumber--;
-}
-PlaceNumber = 8;
-foreach(char StringChar in DecimalBuffer)
-{
-//Limit stored decimal numbers to the amount it can store
-if (PlaceNumber > -1)
-{
-TempInt = CharAsInt(StringChar);
-TempInt02 = (TempInt * SuperDecGlobalCode.PowerOfTens[PlaceNumber]);
-if (StringChar != '0')
-{
-NewSelf.DecimalStatus += (int)TempInt02;
-}
-PlaceNumber--;
-}
-}
-return NewSelf;
-}
-
-/// <summary>
-/// Display std::std::string with empty decimal places removed
-/// </summary>
-/// <returns></returns>
-std::string ToOptimalString()
-{
-//std::string Value = "";
-var builder = new System.Text.StringBuilder("");
-unsigned int IntegerHalf = IntValue;
-unsigned __int8 CurrentDigit;
-bool IsNegative = DecimalStatus < 0;
-if (IsNegative)
-{
-builder.Append("-");
-}
-
-for (__int8 Index = NumberOfPlaces(IntegerHalf); Index >= 0; --Index)
-{
-CurrentDigit = (unsigned __int8)(IntegerHalf / Math.Pow(10, Index));
-IntegerHalf -= (unsigned int)(CurrentDigit * Math.Pow(10, Index));
-//Value += DigitAsChar(CurrentDigit);
-builder.Append(DigitAsChar(CurrentDigit));
-}
-if (DecimalStatus != 0 && DecimalStatus != NegativeWholeNumber)
-{
-unsigned int DecimalHalf = (unsigned int)DecimalStatus;
-//Value += ".";
-builder.Append(".");
-for (__int8 Index = 8; Index >= 0; --Index)
-{
-if (DecimalStatus != 0)
-{
-CurrentDigit = (unsigned __int8)(DecimalHalf / Math.Pow(10, Index));
-DecimalHalf -= (unsigned int)(CurrentDigit * Math.Pow(10, Index));
-//Value += DigitAsChar(CurrentDigit);
-builder.Append(DigitAsChar(CurrentDigit));
-}
-}
-}
-//return Value;
-return builder.ToString();
-}
-
-/// <summary>
-/// Display std::std::string with empty decimal places show
-/// </summary>
-/// <returns></returns>
-std::string ToFullString()
-{
-std::string Value = "";
-unsigned int IntegerHalf = IntValue;
-unsigned __int8 CurrentDigit;
-bool IsNegative = DecimalStatus < 0;
-if (IsNegative)
-{
-Value += "-";
-}
-for (__int8 Index = NumberOfPlaces(IntegerHalf); Index >= 0; Index--)
-{
-CurrentDigit = (unsigned __int8)(IntegerHalf / SuperDecGlobalCode.PowerOfTens[Index]);
-IntegerHalf -= (unsigned int)(CurrentDigit * SuperDecGlobalCode.PowerOfTens[Index]);
-Value += DigitAsChar(CurrentDigit);
-}
-if (DecimalStatus != 0 && DecimalStatus != NegativeWholeNumber)
-{
-Value += ".";
-int DecimalHalf =
-DecimalStatus;
-for (__int8 Index = 8; Index >= 0; --Index)
-{
-CurrentDigit = (unsigned __int8)(DecimalHalf / SuperDecGlobalCode.PowerOfTens[Index]);
-DecimalHalf -= (CurrentDigit * SuperDecGlobalCode.PowerOfTens[Index]);
-Value += DigitAsChar(CurrentDigit);
-}
-}
-else
-{
-Value += ".000000000";
-}
-return Value;
-}
-
-/// <summary>
-///
-/// </summary>
-/// <param name="provider"></param>
-/// <returns></returns>
-std::string ToString(IFormatProvider provider)
-{
-return String.Format(provider, this->ToOptimalString());
-}
-
-/// <summary>
-/// Change variable to std::string with certain formating style
-/// </summary>
-/// <param name="FormatStyle"></param>
-/// <returns></returns>
-std::string ToString(std::string FormatStyle)
-{
-return ToOptimalString();
-}
-
-
-
-///// <summary>
-///// Change variable into std::std::string with certain formating style with culture info set
-///// </summary>
-///// <param name="FormatStyle"></param>
-///// <param name="culture"></param>
-///// <returns></returns>
-//std::string ToString(std::string FormatStyle, CultureInfo culture)
-//{
-//    return String.Format(culture, this->ToOptimalString());//Ensure to reformat std::std::string based on culture
-//}
-
-/// <summary>
-///
-/// </summary>
-/// <param name="culture"></param>
-/// <returns></returns>
-std::string ToString(CultureInfo culture)
-{
-return String.Format(culture, this->ToOptimalString());//Ensure to reformat std::std::string based on culture
-}
-
-/// <summary>
-///
-/// </summary>
-/// <param name="numberFormat"></param>
-/// <returns></returns>
-std::string ToString(NumberFormatInfo numberFormat)
-{
-return String.Format(numberFormat, this->ToOptimalString());//Ensure to reformat std::std::string based on format type
-}*/
-
 inline MediumDec::MediumDec(double Value)
 {
 	bool IsNegative = Value < 0;
@@ -529,4 +316,24 @@ inline MediumDec::MediumDec(std::string Value)
 inline MediumDec::operator std::string()
 {
 	return ToString();
+}
+
+MediumDec operator^(MediumDec& self, MediumDec Value)
+{
+	if (Value.DecimalStatus == 0)
+	{
+		self = self ^ Value.IntValue;
+	}
+	else if (Value.DecimalStatus == MediumDec::NegativeWholeNumber)//Negative WholeNumber
+	{
+		return MediumDec::ApplyNegPow(self, ((int)Value.IntValue)*-1);
+	}
+	else
+	{
+		//Have Math.Pow deal with other pow operations for now (might lose some precision in many cases since both self&Value are converted to double to apply)
+		double SelfAsDouble = (double)self;
+		SelfAsDouble = std::pow(SelfAsDouble, (double)Value);
+		self = (MediumDec)SelfAsDouble;
+	}
+	return self;
 }
