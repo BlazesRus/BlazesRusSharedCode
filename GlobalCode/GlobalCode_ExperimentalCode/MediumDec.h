@@ -1439,6 +1439,9 @@ public:
 
 #pragma endregion From this type to Standard types
 };
+
+MediumDec operator^(MediumDec& self, MediumDec Value);//Prototype for Pow operation
+
 #ifdef EnableMediumDecExtras
 public class MediumDecCode
 {
