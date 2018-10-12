@@ -399,13 +399,28 @@ public:
 	}
 	template <typename ValueType>
 	static MediumDec& ApplyIntModulus(MediumDec& self, ValueType Value)
-	{
+	{//https://www.quora.com/How-does-the-modulo-operation-work-with-negative-numbers-and-why
 		if (self.DecimalStatus == 0)
 		{
 			self.IntValue %= Value;
+			if(Value<0)
+			{
+				self.DecimalStatus = NegativeWholeNumber;
+				self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
+			}
+		}
+		else if (self.DecimalStatus == NegativeWholeNumber)
+		{
+			self.IntValue %= Value;
+			self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
+			if (Value > 0)//https://www.medcalc.org/manual/mod_function.php
+			{
+				self.DecimalStatus = 0;
+			}
 		}
 		else
 		{
+			self %= (MediumDec)y;
 		}
 		return self;
 	}
