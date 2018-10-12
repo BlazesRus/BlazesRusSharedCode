@@ -905,7 +905,7 @@ public:
 	friend MediumDec operator/(const MediumDec& self, unsigned __int64 Value) { return ApplyIntDivision(&self, Value); }
 	friend MediumDec operator/(const MediumDec& self, signed __int64 Value) { return ApplyIntDivision(&self, Value); }
 	//Modulus Operations
-	friend MediumDec operator%(const MediumDec& self, MediumDec Value)
+	friend MediumDec operator%(MediumDec& self, MediumDec Value)
 	{
 		if (y.IntValue == 0 && y.DecimalStatus == 0)
 		{
@@ -925,7 +925,6 @@ public:
 			if (ValueIsWholeN) { y.DecimalStatus = 0; }
 			else { y.DecimalStatus *= -1; }
 		}
-
 		__int64 SelfRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalStatus;
 		__int64 ValueRep = ((__int64)y.IntValue * DecimalOverflow) + y.DecimalStatus;
 		SelfRep /= ValueRep;
@@ -936,16 +935,56 @@ public:
 		SelfRep -= IntHalf * (__int64)DecimalOverflow;
 		self.IntValue = (unsigned int)IntHalf;
 		self.DecimalStatus = (int)SelfRep;
+		//if (self.DecimalStatus == 0)
+		//{
+		//	self.IntValue %= Value;
+		//	if (Value < 0)
+		//	{
+		//		self.DecimalStatus = NegativeWholeNumber;
+		//		self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
+		//	}
+		//}
+		//else if (self.DecimalStatus == NegativeWholeNumber)
+		//{
+		//	self.IntValue %= Value;
+		//	self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
+		//	if (Value > 0)//https://www.medcalc.org/manual/mod_function.php
+		//	{
+		//		self.DecimalStatus = 0;
+		//	}
+		//}
+		//else
+		//{
+		//	self %= (MediumDec)y;
+		//}
+		if(SelfIsNegative)
+		{
+			if (ValueIsNegative)
+			{
+
+			}
+			else
+			{
+
+			}
+		}
+		else
+		{
+			if(ValueIsNegative)
+			{
+
+			}
+		}
 		return self;
 	}
-	friend MediumDec operator%(const MediumDec& self, unsigned int Value) { return ApplyIntModulus(&self, Value); }
-	friend MediumDec operator%(const MediumDec& self, signed int Value) { return ApplyIntModulus(&self, Value); }
-	friend MediumDec operator%(const MediumDec& self, unsigned __int8 Value) { return ApplyIntModulus(&self, Value); }
-	friend MediumDec operator%(const MediumDec& self, signed __int8 Value) { return ApplyIntModulus(&self, Value); }
-	friend MediumDec operator%(const MediumDec& self, unsigned __int16 Value) { return ApplyIntModulus(&self, Value); }
-	friend MediumDec operator%(const MediumDec& self, signed __int16 Value) { return ApplyIntModulus(&self, Value); }
-	friend MediumDec operator%(const MediumDec& self, unsigned __int64 Value) { return ApplyIntModulus(&self, Value); }
-	friend MediumDec operator%(const MediumDec& self, signed __int64 Value) { return ApplyIntModulus(&self, Value); }
+	friend MediumDec operator%(MediumDec& self, unsigned int Value) { return ApplyIntModulus(self, Value); }
+	friend MediumDec operator%(MediumDec& self, signed int Value) { return ApplyIntModulus(self, Value); }
+	friend MediumDec operator%(MediumDec& self, unsigned __int8 Value) { return ApplyIntModulus(self, Value); }
+	friend MediumDec operator%(MediumDec& self, signed __int8 Value) { return ApplyIntModulus(self, Value); }
+	friend MediumDec operator%(MediumDec& self, unsigned __int16 Value) { return ApplyIntModulus(self, Value); }
+	friend MediumDec operator%(MediumDec& self, signed __int16 Value) { return ApplyIntModulus(self, Value); }
+	friend MediumDec operator%(MediumDec& self, unsigned __int64 Value) { return ApplyIntModulus(self, Value); }
+	friend MediumDec operator%(MediumDec& self, signed __int64 Value) { return ApplyIntModulus(self, Value); }
 	//Power of Operations
 	friend MediumDec operator^(MediumDec& self, MediumDec Value);
 	friend MediumDec operator^(MediumDec& self, unsigned int Value) { return ApplyIntPow(self, Value); }
