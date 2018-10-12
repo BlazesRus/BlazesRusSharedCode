@@ -990,6 +990,24 @@ public:
 		}
 		return *this;
 	}
+	MediumDec Ceil()
+	{
+		if (DecimalStatus == NegativeWholeNumber)
+		{
+			return *this;
+		}
+		if (DecimalStatus < 0)
+		{
+			DecimalStatus = 0;
+		}
+		else
+		{
+			DecimalStatus = 0;
+			IntValue += 1;
+		}
+		return *this;
+	}
+
 	MediumDec Trunc()
 	{
 		if (DecimalStatus != NegativeWholeNumber)
