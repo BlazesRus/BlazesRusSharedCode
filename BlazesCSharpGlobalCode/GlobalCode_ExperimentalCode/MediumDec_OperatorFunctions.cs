@@ -619,43 +619,71 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         /// Implements the operator %.
         /// </summary>
         /// <param name="self">The self.</param>
-        /// <param name="y">The y.</param>
+        /// <param name="Value">The Value.</param>
         /// <returns>
         /// The result of the operator.
         /// </returns>
-        public static MediumDec operator %(MediumDec self, MediumDec y)
+        public static MediumDec operator %(MediumDec self, MediumDec Value)
         {
-            if (y.intValue == 0 && y.DecimalStatus == 0)
-            {
-                return MediumDec.Zero;//Return zero instead of N/A
-            }
-            bool SelfIsNegative = self.DecimalStatus < 0;
-            bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-            if (SelfIsNegative)
-            {
-                if (SelfIsWholeN) { self.DecimalStatus = 0; }
-                else { self.DecimalStatus *= -1; }
-            }
-            bool ValueIsNegative = y.DecimalStatus < 0;
-            bool ValueIsWholeN = y.DecimalStatus == NegativeWholeNumber;
-            if (ValueIsNegative)
-            {
-                if (ValueIsWholeN) { y.DecimalStatus = 0; }
-                else { y.DecimalStatus *= -1; }
-            }
-
-            long SelfRep = ((long)self.IntValue * DecimalOverflow) + self.DecimalStatus;
-            long ValueRep = ((long)y.IntValue * DecimalOverflow) + y.DecimalStatus;
-            SelfRep /= ValueRep;
-            long IntResult = SelfRep;
-            SelfRep = ((long)self.IntValue * DecimalOverflow) + self.DecimalStatus;
-            SelfRep -= IntResult * ValueRep;
-            long IntHalf = SelfRep / DecimalOverflow;
-            SelfRep -= IntHalf * (long)DecimalOverflow;
-            self.IntValue = (uint)IntHalf;
-            self.DecimalStatus = (int)SelfRep;
-            return self;
-        }
+			if (Value.IntValue == 0 && Value.DecimalStatus == 0)
+			{
+				return MediumDec.Zero;//Return zero instead of N/A
+			}
+			if (self.DecimalStatus == 0 || self.DecimalStatus == NegativeWholeNumber)
+			{
+				if (Value.DecimalStatus == NegativeWholeNumber)
+				{
+					self = ApplyNegModulus(self, Value.IntValue);
+					return self;
+				}
+				else
+				{
+					self %= Value.IntValue;
+					return self;
+				}
+			}
+			bool SelfIsNegative = self.DecimalStatus < 0;
+			bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
+			if (SelfIsNegative)
+			{
+				if (SelfIsWholeN) { self.DecimalStatus = 0; }
+				else { self.DecimalStatus *= -1; }
+			}
+			bool ValueIsNegative = Value.DecimalStatus < 0;
+			bool ValueIsWholeN = Value.DecimalStatus == NegativeWholeNumber;
+			if (ValueIsNegative)
+			{
+				if (ValueIsWholeN) { Value.DecimalStatus = 0; }
+				else { Value.DecimalStatus *= -1; }
+			}
+			long SelfRep = ((long)self.IntValue * DecimalOverflow) + self.DecimalStatus;
+			long ValueRep = ((long)Value.IntValue * DecimalOverflow) + Value.DecimalStatus;
+			SelfRep /= ValueRep;
+			long IntResult = SelfRep;
+			SelfRep = ((long)self.IntValue * DecimalOverflow) + self.DecimalStatus;
+			SelfRep -= IntResult * ValueRep;
+			long IntHalf = SelfRep / DecimalOverflow;
+			SelfRep -= IntHalf * (long)DecimalOverflow;
+			self.IntValue = (uint)IntHalf;
+			self.DecimalStatus = (int)SelfRep;
+			if (SelfIsNegative)
+			{
+				self = Value - self;
+				if (ValueIsNegative == false)
+				{
+					SelfIsNegative = false;
+				}
+			}
+			else
+			{
+				if (ValueIsNegative)
+				{
+					self = Value - self;
+				}
+			}
+			if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
+			return self;
+		}
 
         /// <summary>
         /// Implements the operator +.(Self+TargetValue)
@@ -894,15 +922,64 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             return self;
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        public static MediumDec operator %(MediumDec self, dynamic y)
+		/// <summary>
+		/// Applies the Modulus with negative value
+		/// </summary>
+		/// <param name="self">The self.</param>
+		/// <param name="Value">The value.</param>
+		/// <returns></returns>
+		public static MediumDec ApplyNegModulus(MediumDec self, uint Value)
+		{
+			//bool ValueIsNegative = Value < 0;
+			if (self.DecimalStatus == 0)
+			{
+				self.IntValue %= Value;
+				self.DecimalStatus = NegativeWholeNumber;
+				self.IntValue = (uint)(Value - self.IntValue);
+			}
+			else if (self.DecimalStatus == NegativeWholeNumber)
+			{
+				self.IntValue %= Value;
+				self.IntValue = (uint)(Value - self.IntValue);
+			}
+			else
+			{
+				self %= (MediumDec)Value;
+			}
+			return self;
+		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="self"></param>
+		/// <param name="Value"></param>
+		/// <returns></returns>
+		public static MediumDec operator %(MediumDec self, dynamic Value)
         {
-            return self %= (MediumDec)y;
-        }
+			if (self.DecimalStatus == 0)
+			{
+				self.IntValue %= Value;
+				if (Value < 0)
+				{
+					self.DecimalStatus = NegativeWholeNumber;
+					self.IntValue = (uint)(Value - (ValueType)self.IntValue);
+				}
+			}
+			else if (self.DecimalStatus == NegativeWholeNumber)
+			{
+				self.IntValue %= Value;
+				self.IntValue = (uint)(Value - (ValueType)self.IntValue);
+				if (Value > 0)
+				{
+					self.DecimalStatus = 0;
+				}
+			}
+			else
+			{
+				self %= (MediumDec)Value;
+			}
+			return self;
+		}
 
         /// <summary>
         /// </summary>

@@ -420,6 +420,26 @@ public:
 		}
 		else
 		{
+			self %= (MediumDec)Value;
+		}
+		return self;
+	}
+	template <typename ValueType>
+	static MediumDec& ApplyNegModulus(MediumDec& self, ValueType Value)
+	{
+		if (self.DecimalStatus == 0)
+		{
+			self.IntValue %= Value;
+			self.DecimalStatus = NegativeWholeNumber;
+			self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
+		}
+		else if (self.DecimalStatus == NegativeWholeNumber)
+		{
+			self.IntValue %= Value;
+			self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
+		}
+		else
+		{
 			self %= (MediumDec)y;
 		}
 		return self;
@@ -907,9 +927,22 @@ public:
 	//Modulus Operations
 	friend MediumDec operator%(MediumDec& self, MediumDec Value)
 	{
-		if (y.IntValue == 0 && y.DecimalStatus == 0)
+		if (Value.IntValue == 0 && Value.DecimalStatus == 0)
 		{
 			return MediumDec.Zero;//Return zero instead of N/A
+		}
+		if(self.DecimalStatus==0||self.DecimalStatus==NegativeWholeNumber)
+		{
+			if(Value.DecimalStatus == NegativeWholeNumber)
+			{
+				self = ApplyNegModulus(self, Value.IntValue);
+				return self;
+			}
+			else
+			{
+				self %= Value.IntValue;
+				return self;
+			}
 		}
 		bool SelfIsNegative = self.DecimalStatus < 0;
 		bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
@@ -918,15 +951,15 @@ public:
 			if (SelfIsWholeN) { self.DecimalStatus = 0; }
 			else { self.DecimalStatus *= -1; }
 		}
-		bool ValueIsNegative = y.DecimalStatus < 0;
-		bool ValueIsWholeN = y.DecimalStatus == NegativeWholeNumber;
+		bool ValueIsNegative = Value.DecimalStatus < 0;
+		bool ValueIsWholeN = Value.DecimalStatus == NegativeWholeNumber;
 		if (ValueIsNegative)
 		{
-			if (ValueIsWholeN) { y.DecimalStatus = 0; }
-			else { y.DecimalStatus *= -1; }
+			if (ValueIsWholeN) { Value.DecimalStatus = 0; }
+			else { Value.DecimalStatus *= -1; }
 		}
 		__int64 SelfRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalStatus;
-		__int64 ValueRep = ((__int64)y.IntValue * DecimalOverflow) + y.DecimalStatus;
+		__int64 ValueRep = ((__int64)Value.IntValue * DecimalOverflow) + Value.DecimalStatus;
 		SelfRep /= ValueRep;
 		__int64 IntResult = SelfRep;
 		SelfRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalStatus;
@@ -935,46 +968,22 @@ public:
 		SelfRep -= IntHalf * (__int64)DecimalOverflow;
 		self.IntValue = (unsigned int)IntHalf;
 		self.DecimalStatus = (int)SelfRep;
-		//if (self.DecimalStatus == 0)
-		//{
-		//	self.IntValue %= Value;
-		//	if (Value < 0)
-		//	{
-		//		self.DecimalStatus = NegativeWholeNumber;
-		//		self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
-		//	}
-		//}
-		//else if (self.DecimalStatus == NegativeWholeNumber)
-		//{
-		//	self.IntValue %= Value;
-		//	self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
-		//	if (Value > 0)//https://www.medcalc.org/manual/mod_function.php
-		//	{
-		//		self.DecimalStatus = 0;
-		//	}
-		//}
-		//else
-		//{
-		//	self %= (MediumDec)y;
-		//}
 		if(SelfIsNegative)
 		{
-			if (ValueIsNegative)
+			self = Value - self;
+			if (ValueIsNegative==false)
 			{
-
-			}
-			else
-			{
-
+				SelfIsNegative = false;
 			}
 		}
 		else
 		{
 			if(ValueIsNegative)
 			{
-
+				self = Value - self;
 			}
 		}
+		if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
 		return self;
 	}
 	friend MediumDec operator%(MediumDec& self, unsigned int Value) { return ApplyIntModulus(self, Value); }
