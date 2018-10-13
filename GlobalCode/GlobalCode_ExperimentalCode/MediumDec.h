@@ -515,32 +515,32 @@ public:
 		return ApplyIntModulusPow(&this, Value)
 	}
 	template <typename ValueType>
-	static MediumDec& SelfIsEqual(MediumDec& self, ValueType Value)
+	static bool SelfIsEqual(MediumDec& self, ValueType Value)
 	{
 
 	}
 	template <typename ValueType>
-	static MediumDec& SelfIsNotEqual(MediumDec& self, ValueType Value)
+	static bool SelfIsNotEqual(MediumDec& self, ValueType Value)
 	{
 
 	}
 	template <typename ValueType>
-	static MediumDec& SelfIsLessor(MediumDec& self, ValueType Value)
+	static bool SelfIsLessor(MediumDec& self, ValueType Value)
 	{
 
 	}
 	template <typename ValueType>
-	static MediumDec& SelfIsGreator(MediumDec& self, ValueType Value)
+	static bool SelfIsGreator(MediumDec& self, ValueType Value)
 	{
 
 	}
 	template <typename ValueType>
-	static MediumDec& SelfIsLessorOrEqual(MediumDec& self, ValueType Value)
+	static bool SelfIsLessorOrEqual(MediumDec& self, ValueType Value)
 	{
 
 	}
 	template <typename ValueType>
-	static MediumDec& SelfIsGreatorOrEqual(MediumDec& self, ValueType Value)
+	static bool SelfIsGreatorOrEqual(MediumDec& self, ValueType Value)
 	{
 
 	}
@@ -1670,6 +1670,54 @@ public:
 			}
 		}
 	}
+	friend bool operator<(MediumDec& self, unsigned int Value) { return SelfIsLessor(self, Value); }
+	friend bool operator<(MediumDec& self, signed int Value) { return SelfIsLessor(self, Value); }
+	friend bool operator<(MediumDec& self, unsigned __int8 Value) { return SelfIsLessor(self, Value); }
+	friend bool operator<(MediumDec& self, signed __int8 Value) { return SelfIsLessor(self, Value); }
+	friend bool operator<(MediumDec& self, unsigned __int16 Value) { return SelfIsLessor(self, Value); }
+	friend bool operator<(MediumDec& self, signed __int16 Value) { return SelfIsLessor(self, Value); }
+	friend bool operator<(MediumDec& self, unsigned __int64 Value) { return SelfIsLessor(self, Value); }
+	friend bool operator<(MediumDec& self, signed __int64 Value) { return SelfIsLessor(self, Value); }
+	friend bool operator<=(MediumDec& self, unsigned int Value) { return SelfIsLessorOrEqual(self, Value); }
+	friend bool operator<=(MediumDec& self, signed int Value) { return SelfIsLessorOrEqual(self, Value); }
+	friend bool operator<=(MediumDec& self, unsigned __int8 Value) { return SelfIsLessorOrEqual(self, Value); }
+	friend bool operator<=(MediumDec& self, signed __int8 Value) { return SelfIsLessorOrEqual(self, Value); }
+	friend bool operator<=(MediumDec& self, unsigned __int16 Value) { return SelfIsLessorOrEqual(self, Value); }
+	friend bool operator<=(MediumDec& self, signed __int16 Value) { return SelfIsLessorOrEqual(self, Value); }
+	friend bool operator<=(MediumDec& self, unsigned __int64 Value) { return SelfIsLessorOrEqual(self, Value); }
+	friend bool operator<=(MediumDec& self, signed __int64 Value) { return SelfIsLessorOrEqual(self, Value); }
+	friend bool operator>=(MediumDec& self, unsigned int Value) { return SelfIsGreatorOrEqual(self, Value); }
+	friend bool operator>=(MediumDec& self, signed int Value) { return SelfIsGreatorOrEqual(self, Value); }
+	friend bool operator>=(MediumDec& self, unsigned __int8 Value) { return SelfIsGreatorOrEqual(self, Value); }
+	friend bool operator>=(MediumDec& self, signed __int8 Value) { return SelfIsGreatorOrEqual(self, Value); }
+	friend bool operator>=(MediumDec& self, unsigned __int16 Value) { return SelfIsGreatorOrEqual(self, Value); }
+	friend bool operator>=(MediumDec& self, signed __int16 Value) { return SelfIsGreatorOrEqual(self, Value); }
+	friend bool operator>=(MediumDec& self, unsigned __int64 Value) { return SelfIsGreatorOrEqual(self, Value); }
+	friend bool operator>=(MediumDec& self, signed __int64 Value) { return SelfIsGreatorOrEqual(self, Value); }
+	friend bool operator>(MediumDec& self, unsigned int Value) { return SelfIsGreator(self, Value); }
+	friend bool operator>(MediumDec& self, signed int Value) { return SelfIsGreator(self, Value); }
+	friend bool operator>(MediumDec& self, unsigned __int8 Value) { return SelfIsGreator(self, Value); }
+	friend bool operator>(MediumDec& self, signed __int8 Value) { return SelfIsGreator(self, Value); }
+	friend bool operator>(MediumDec& self, unsigned __int16 Value) { return SelfIsGreator(self, Value); }
+	friend bool operator>(MediumDec& self, signed __int16 Value) { return SelfIsGreator(self, Value); }
+	friend bool operator>(MediumDec& self, unsigned __int64 Value) { return SelfIsGreator(self, Value); }
+	friend bool operator>(MediumDec& self, signed __int64 Value) { return SelfIsGreator(self, Value); }
+	friend bool operator==(MediumDec& self, unsigned int Value) { return SelfIsEqual(self, Value); }
+	friend bool operator==(MediumDec& self, signed int Value) { return SelfIsEqual(self, Value); }
+	friend bool operator==(MediumDec& self, unsigned __int8 Value) { return SelfIsEqual(self, Value); }
+	friend bool operator==(MediumDec& self, signed __int8 Value) { return SelfIsEqual(self, Value); }
+	friend bool operator==(MediumDec& self, unsigned __int16 Value) { return SelfIsEqual(self, Value); }
+	friend bool operator==(MediumDec& self, signed __int16 Value) { return SelfIsEqual(self, Value); }
+	friend bool operator==(MediumDec& self, unsigned __int64 Value) { return SelfIsEqual(self, Value); }
+	friend bool operator==(MediumDec& self, signed __int64 Value) { return SelfIsEqual(self, Value); }
+	friend bool operator!=(MediumDec& self, unsigned int Value) { return SelfIsNotEqual(self, Value); }
+	friend bool operator!=(MediumDec& self, signed int Value) { return SelfIsNotEqual(self, Value); }
+	friend bool operator!=(MediumDec& self, unsigned __int8 Value) { return SelfIsNotEqual(self, Value); }
+	friend bool operator!=(MediumDec& self, signed __int8 Value) { return SelfIsNotEqual(self, Value); }
+	friend bool operator!=(MediumDec& self, unsigned __int16 Value) { return SelfIsNotEqual(self, Value); }
+	friend bool operator!=(MediumDec& self, signed __int16 Value) { return SelfIsNotEqual(self, Value); }
+	friend bool operator!=(MediumDec& self, unsigned __int64 Value) { return SelfIsNotEqual(self, Value); }
+	friend bool operator!=(MediumDec& self, signed __int64 Value) { return SelfIsNotEqual(self, Value); }
 #pragma endregion
 };
 
