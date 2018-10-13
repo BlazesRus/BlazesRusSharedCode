@@ -526,17 +526,17 @@ public:
 			if (self.DecimalStatus == NegativeWholeNumber) { self.DecimalStatus = 0; }
 			else { self.DecimalStatus *= -1; }
 		}
-		bool ValueIsNegative = y.DecimalStatus < 0;
+		bool ValueIsNegative = Value.DecimalStatus < 0;
 		if (ValueIsNegative)
 		{
-			if (y.DecimalStatus == NegativeWholeNumber) { y.DecimalStatus = 0; }
-			else { y.DecimalStatus *= -1; }
+			if (Value.DecimalStatus == NegativeWholeNumber) { Value.DecimalStatus = 0; }
+			else { Value.DecimalStatus *= -1; }
 		}
 		bool PerformDecimalHalf = true;
 		if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
 		{
-			self.IntValue += y.IntValue;
-			self.DecimalStatus += y.DecimalStatus;
+			self.IntValue += Value.IntValue;
+			self.DecimalStatus += Value.DecimalStatus;
 			if (self.DecimalStatus >= DecimalOverflow)
 			{
 				self.DecimalStatus -= DecimalOverflow;
@@ -546,33 +546,33 @@ public:
 		}
 		else if (SelfIsNegative)//-X + Y
 		{
-			if (self.IntValue == y.IntValue)
+			if (self.IntValue == Value.IntValue)
 			{
 				self.IntValue = 0;
 			}
-			else if (self.IntValue > y.IntValue)
+			else if (self.IntValue > Value.IntValue)
 			{
-				self.IntValue -= y.IntValue;
+				self.IntValue -= Value.IntValue;
 			}
 			else
 			{
-				self.IntValue = (unsigned int)(y.IntValue - self.IntValue);
+				self.IntValue = (unsigned int)(Value.IntValue - self.IntValue);
 				SelfIsNegative = false;
 			}
 		}
 		else// X - Y
 		{
-			if (self.IntValue == y.IntValue)
+			if (self.IntValue == Value.IntValue)
 			{
 				self.IntValue = 0;
 			}
-			else if (self.IntValue > y.IntValue)
+			else if (self.IntValue > Value.IntValue)
 			{
-				self.IntValue -= y.IntValue;
+				self.IntValue -= Value.IntValue;
 			}
 			else
 			{
-				self.IntValue = (unsigned int)(y.IntValue - self.IntValue);
+				self.IntValue = (unsigned int)(Value.IntValue - self.IntValue);
 				SelfIsNegative = true;
 			}
 		}
@@ -580,7 +580,7 @@ public:
 		{
 			if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
 			{
-				self.DecimalStatus += y.DecimalStatus;
+				self.DecimalStatus += Value.DecimalStatus;
 				if (self.DecimalStatus >= DecimalOverflow)
 				{
 					self.DecimalStatus -= DecimalOverflow;
@@ -589,33 +589,33 @@ public:
 			}
 			else if (SelfIsNegative)
 			{
-				if (self.DecimalStatus == y.DecimalStatus)
+				if (self.DecimalStatus == Value.DecimalStatus)
 				{
 					self.DecimalStatus = NegativeWholeNumber;
 				}
-				else if (self.DecimalStatus > y.DecimalStatus)
+				else if (self.DecimalStatus > Value.DecimalStatus)
 				{
-					self.DecimalStatus -= y.DecimalStatus;
+					self.DecimalStatus -= Value.DecimalStatus;
 				}
 				else
 				{
-					self.DecimalStatus = y.DecimalStatus - self.DecimalStatus;
+					self.DecimalStatus = Value.DecimalStatus - self.DecimalStatus;
 					SelfIsNegative = false;
 				}
 			}
 			else
 			{
-				if (self.DecimalStatus == y.DecimalStatus)
+				if (self.DecimalStatus == Value.DecimalStatus)
 				{
 					self.DecimalStatus = NegativeWholeNumber;
 				}
-				else if (self.DecimalStatus > y.DecimalStatus)
+				else if (self.DecimalStatus > Value.DecimalStatus)
 				{
-					self.DecimalStatus -= y.DecimalStatus;
+					self.DecimalStatus -= Value.DecimalStatus;
 				}
 				else
 				{
-					self.DecimalStatus = y.DecimalStatus - self.DecimalStatus;
+					self.DecimalStatus = Value.DecimalStatus - self.DecimalStatus;
 					SelfIsNegative = true;
 				}
 			}
@@ -651,18 +651,18 @@ public:
 			if (self.DecimalStatus == NegativeWholeNumber) { self.DecimalStatus = 0; }
 			else { self.DecimalStatus *= -1; }
 		}
-		bool ValueIsNegative = y.DecimalStatus < 0;
+		bool ValueIsNegative = Value.DecimalStatus < 0;
 		if (ValueIsNegative)
 		{
-			if (y.DecimalStatus == NegativeWholeNumber) { y.DecimalStatus = 0; }
-			else { y.DecimalStatus *= -1; }
+			if (Value.DecimalStatus == NegativeWholeNumber) { Value.DecimalStatus = 0; }
+			else { Value.DecimalStatus *= -1; }
 		}
 		if (ValueIsNegative) { ValueIsNegative = false; }
 		bool PerformDecimalHalf = true;
 		if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
 		{
-			self.IntValue += y.IntValue;
-			self.DecimalStatus += y.DecimalStatus;
+			self.IntValue += Value.IntValue;
+			self.DecimalStatus += Value.DecimalStatus;
 			if (self.DecimalStatus >= DecimalOverflow)
 			{
 				self.DecimalStatus -= DecimalOverflow;
@@ -672,33 +672,33 @@ public:
 		}
 		else if (SelfIsNegative)//-X + Y
 		{
-			if (self.IntValue == y.IntValue)
+			if (self.IntValue == Value.IntValue)
 			{
 				self.IntValue = 0;
 			}
-			else if (self.IntValue > y.IntValue)
+			else if (self.IntValue > Value.IntValue)
 			{
-				self.IntValue -= y.IntValue;
+				self.IntValue -= Value.IntValue;
 			}
 			else
 			{
-				self.IntValue = (unsigned int)(y.IntValue - self.IntValue);
+				self.IntValue = (unsigned int)(Value.IntValue - self.IntValue);
 				SelfIsNegative = false;
 			}
 		}
 		else// X - Y
 		{
-			if (self.IntValue == y.IntValue)
+			if (self.IntValue == Value.IntValue)
 			{
 				self.IntValue = 0;
 			}
-			else if (self.IntValue > y.IntValue)
+			else if (self.IntValue > Value.IntValue)
 			{
-				self.IntValue -= y.IntValue;
+				self.IntValue -= Value.IntValue;
 			}
 			else
 			{
-				self.IntValue = (unsigned int)(y.IntValue - self.IntValue);
+				self.IntValue = (unsigned int)(Value.IntValue - self.IntValue);
 				SelfIsNegative = true;
 			}
 		}
@@ -706,7 +706,7 @@ public:
 		{
 			if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
 			{
-				self.DecimalStatus += y.DecimalStatus;
+				self.DecimalStatus += Value.DecimalStatus;
 				if (self.DecimalStatus >= DecimalOverflow)
 				{
 					self.DecimalStatus -= DecimalOverflow;
@@ -715,33 +715,33 @@ public:
 			}
 			else if (SelfIsNegative)
 			{
-				if (self.DecimalStatus == y.DecimalStatus)
+				if (self.DecimalStatus == Value.DecimalStatus)
 				{
 					self.DecimalStatus = NegativeWholeNumber;
 				}
-				else if (self.DecimalStatus > y.DecimalStatus)
+				else if (self.DecimalStatus > Value.DecimalStatus)
 				{
-					self.DecimalStatus -= y.DecimalStatus;
+					self.DecimalStatus -= Value.DecimalStatus;
 				}
 				else
 				{
-					self.DecimalStatus = y.DecimalStatus - self.DecimalStatus;
+					self.DecimalStatus = Value.DecimalStatus - self.DecimalStatus;
 					SelfIsNegative = false;
 				}
 			}
 			else
 			{
-				if (self.DecimalStatus == y.DecimalStatus)
+				if (self.DecimalStatus == Value.DecimalStatus)
 				{
 					self.DecimalStatus = NegativeWholeNumber;
 				}
-				else if (self.DecimalStatus > y.DecimalStatus)
+				else if (self.DecimalStatus > Value.DecimalStatus)
 				{
-					self.DecimalStatus -= y.DecimalStatus;
+					self.DecimalStatus -= Value.DecimalStatus;
 				}
 				else
 				{
-					self.DecimalStatus = y.DecimalStatus - self.DecimalStatus;
+					self.DecimalStatus = Value.DecimalStatus - self.DecimalStatus;
 					SelfIsNegative = true;
 				}
 			}
@@ -771,7 +771,7 @@ public:
 	//Multiplication Operations
 	friend MediumDec operator*(const MediumDec& self, MediumDec Value)
 	{
-		if (y.IntValue == 0 && y.DecimalStatus == 0)
+		if (Value.IntValue == 0 && Value.DecimalStatus == 0)
 		{
 			self.IntValue = 0;
 			self.DecimalStatus = 0;
@@ -784,29 +784,29 @@ public:
 			if (SelfIsWholeN) { self.DecimalStatus = 0; }
 			else { self.DecimalStatus *= -1; }
 		}
-		bool ValueIsNegative = y.DecimalStatus < 0;
-		bool ValueIsWholeN = y.DecimalStatus == NegativeWholeNumber;
+		bool ValueIsNegative = Value.DecimalStatus < 0;
+		bool ValueIsWholeN = Value.DecimalStatus == NegativeWholeNumber;
 		if (ValueIsNegative)
 		{
-			if (ValueIsWholeN) { y.DecimalStatus = 0; }
-			else { y.DecimalStatus *= -1; }
+			if (ValueIsWholeN) { Value.DecimalStatus = 0; }
+			else { Value.DecimalStatus *= -1; }
 		}
-		if (self.DecimalStatus == 0 && y.DecimalStatus == 0)
+		if (self.DecimalStatus == 0 && Value.DecimalStatus == 0)
 		{
-			self.IntValue *= y.IntValue;
+			self.IntValue *= Value.IntValue;
 		}
-		else if (y.DecimalStatus == 0)//Y is integer
+		else if (Value.DecimalStatus == 0)//Y is integer
 		{
-			self *= y.IntValue;
+			self *= Value.IntValue;
 		}
 		else if (self.DecimalStatus == 0)
 		{
 			y *= self.IntValue;
 			self = y;
 		}
-		else if (y.IntValue == 0 && self.IntValue == 0)
+		else if (Value.IntValue == 0 && self.IntValue == 0)
 		{
-			__int64 Temp04 = (__int64)self.DecimalStatus * (__int64)y.DecimalStatus;
+			__int64 Temp04 = (__int64)self.DecimalStatus * (__int64)Value.DecimalStatus;
 			Temp04 /= DecimalOverflow;
 			self.DecimalStatus = (signed int)Temp04;
 		}
@@ -814,10 +814,10 @@ public:
 		{
 			//X.Y * Z.V == ((X * Z) + (X * .V) + (.Y * Z) + (.Y * .V))
 			__int64 Temp02 = (__int64)(self.IntValue * DecimalOverflow) + self.DecimalStatus;
-			Temp02 *= y.IntValue;//Temp02 holds __int64 version of X.Y * Z
+			Temp02 *= Value.IntValue;//Temp02 holds __int64 version of X.Y * Z
 			//X.Y *.V
-			__int64 Temp03 = (__int64)self.IntValue * y.DecimalStatus;//Temp03 holds __int64 version of X *.V
-			__int64 Temp04 = (__int64)self.DecimalStatus * (__int64)y.DecimalStatus;
+			__int64 Temp03 = (__int64)self.IntValue * Value.DecimalStatus;//Temp03 holds __int64 version of X *.V
+			__int64 Temp04 = (__int64)self.DecimalStatus * (__int64)Value.DecimalStatus;
 			Temp04 /= DecimalOverflow;
 			//Temp04 holds __int64 version of .Y * .V
 			__int64 IntegerRep = Temp02 + Temp03 + Temp04;
@@ -844,7 +844,7 @@ public:
 	//Division Operations
 	friend MediumDec operator/(const MediumDec& self, MediumDec Value)
 	{
-		if (y.IntValue == 0 && y.DecimalStatus == 0)
+		if (Value.IntValue == 0 && Value.DecimalStatus == 0)
 		{
 #if (MediumDec_PreventDivideByZeroException)
 			Console.WriteLine("Prevented dividing by zero");
@@ -860,18 +860,18 @@ public:
 			if (SelfIsWholeN) { self.DecimalStatus = 0; }
 			else { self.DecimalStatus *= -1; }
 		}
-		bool ValueIsNegative = y.DecimalStatus < 0;
-		bool ValueIsWholeN = y.DecimalStatus == NegativeWholeNumber;
+		bool ValueIsNegative = Value.DecimalStatus < 0;
+		bool ValueIsWholeN = Value.DecimalStatus == NegativeWholeNumber;
 		if (ValueIsNegative)
 		{
-			if (ValueIsWholeN) { y.DecimalStatus = 0; }
-			else { y.DecimalStatus *= -1; }
+			if (ValueIsWholeN) { Value.DecimalStatus = 0; }
+			else { Value.DecimalStatus *= -1; }
 		}
-		if (self.DecimalStatus == 0 && y.DecimalStatus == 0)
+		if (self.DecimalStatus == 0 && Value.DecimalStatus == 0)
 		{
 			__int64 SRep = self.IntValue * DecimalOverflow;
-			__int64 YRep = y.IntValue;
-			SRep /= y.IntValue;
+			__int64 YRep = Value.IntValue;
+			SRep /= Value.IntValue;
 			if (SRep >= DecimalOverflow)
 			{
 				__int64 OverflowVal = SRep / DecimalOverflow;
@@ -880,15 +880,15 @@ public:
 				self.DecimalStatus = (signed int)SRep;
 			}
 		}
-		else if (y.DecimalStatus == 0)//Y is integer
+		else if (Value.DecimalStatus == 0)//Y is integer
 		{
-			self /= y.IntValue;
+			self /= Value.IntValue;
 		}
-		else if (self.IntValue < 10 && y.IntValue == 0)//Using self method would cause overflow of SelfRep if more in most cases
-		{//self part seems to work unless y.int is more than 0 for some reason
+		else if (self.IntValue < 10 && Value.IntValue == 0)//Using self method would cause overflow of SelfRep if more in most cases
+		{//self part seems to work unless Value.int is more than 0 for some reason
 			__int64 SelfRep = (__int64)(self.IntValue * DecimalOverflow) + self.DecimalStatus;
 			SelfRep *= DecimalOverflow;
-			__int64 ValueRep = (__int64)(y.IntValue * DecimalOverflow) + y.DecimalStatus;
+			__int64 ValueRep = (__int64)(Value.IntValue * DecimalOverflow) + Value.DecimalStatus;
 			SelfRep /= ValueRep;
 			__int64 IntHalf = SelfRep / DecimalOverflow;
 			SelfRep -= IntHalf * (__int64)DecimalOverflow;
@@ -898,7 +898,7 @@ public:
 		else
 		{
 			__int64 SelfRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalStatus;
-			__int64 ValueRep = ((__int64)y.IntValue * DecimalOverflow) + y.DecimalStatus;
+			__int64 ValueRep = ((__int64)Value.IntValue * DecimalOverflow) + Value.DecimalStatus;
 			SelfRep /= ValueRep;
 			unsigned int IntResult = (unsigned int)SelfRep;
 			SelfRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalStatus;
