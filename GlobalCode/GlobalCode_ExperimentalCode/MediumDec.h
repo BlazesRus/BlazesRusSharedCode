@@ -514,6 +514,36 @@ public:
 	{
 		return ApplyIntModulusPow(&this, Value)
 	}
+	template <typename ValueType>
+	static MediumDec& SelfIsEqual(MediumDec& self, ValueType Value)
+	{
+
+	}
+	template <typename ValueType>
+	static MediumDec& SelfIsNotEqual(MediumDec& self, ValueType Value)
+	{
+
+	}
+	template <typename ValueType>
+	static MediumDec& SelfIsLessor(MediumDec& self, ValueType Value)
+	{
+
+	}
+	template <typename ValueType>
+	static MediumDec& SelfIsGreator(MediumDec& self, ValueType Value)
+	{
+
+	}
+	template <typename ValueType>
+	static MediumDec& SelfIsLessorOrEqual(MediumDec& self, ValueType Value)
+	{
+
+	}
+	template <typename ValueType>
+	static MediumDec& SelfIsGreatorOrEqual(MediumDec& self, ValueType Value)
+	{
+
+	}
 #pragma endregion OperationTemplate
 #pragma region Operations
 	//https://en.wikibooks.org/wiki/C%2B%2B_Programming/Operators/Operator_Overloading
@@ -1432,7 +1462,30 @@ public:
 
 #pragma endregion From this type to Standard types
 #pragma region Comparison Operators
+	friend bool operator==(MediumDec& self, MediumDec Value)
+	{
 
+	}
+	friend bool operator!=(MediumDec& self, MediumDec Value)
+	{
+
+	}
+	friend bool operator<=(MediumDec& self, MediumDec Value)
+	{
+
+	}
+	friend bool operator<(MediumDec& self, MediumDec Value)
+	{
+
+	}
+	friend bool operator>=(MediumDec& self, MediumDec Value)
+	{
+
+	}
+	friend bool operator>(MediumDec& self, MediumDec Value)
+	{
+
+	}
 #pragma endregion
 };
 
