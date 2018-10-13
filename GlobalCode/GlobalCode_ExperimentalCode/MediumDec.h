@@ -162,10 +162,10 @@ public:
 	static MediumDec& ApplyIntAddition(MediumDec& self, ValueType Value)
 	{
 		bool SelfIsNegative = self.DecimalStatus < 0;
-		bool ValueIsNegative = y < 0;
+		bool ValueIsNegative = Value < 0;
 		if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
 		{
-			self.IntValue += (unsigned int)y;
+			self.IntValue += (unsigned int)Value;
 		}
 		else if (SelfIsNegative)//-X + Y
 		{
@@ -175,11 +175,11 @@ public:
 			}
 			else if (self.IntValue > y)
 			{
-				self.IntValue -= (unsigned int)y;
+				self.IntValue -= (unsigned int)Value;
 			}
 			else
 			{
-				self.IntValue = (unsigned int)y - self.IntValue;
+				self.IntValue = (unsigned int)Value - self.IntValue;
 				SelfIsNegative = false;
 			}
 		}
@@ -191,11 +191,11 @@ public:
 			}
 			else if (self.IntValue > y)
 			{
-				self.IntValue -= (unsigned int)y;
+				self.IntValue -= (unsigned int)Value;
 			}
 			else
 			{
-				self.IntValue = (unsigned int)y - self.IntValue;
+				self.IntValue = (unsigned int)Value - self.IntValue;
 				SelfIsNegative = true;
 			}
 		}
@@ -216,7 +216,7 @@ public:
 		bool SelfIsNegative = self.DecimalStatus < 0;
 		if (SelfIsNegative)//(-X) - Y
 		{
-			self.IntValue += (unsigned int)y;
+			self.IntValue += (unsigned int)Value;
 		}
 		else//X - Y
 		{
@@ -224,14 +224,14 @@ public:
 			{
 				self.IntValue = 0;
 			}
-			else if (y > self.IntValue)
+			else if (Value > self.IntValue)
 			{
-				self.IntValue = (unsigned int)y - self.IntValue;
+				self.IntValue = (unsigned int)Value - self.IntValue;
 				SelfIsNegative = true;
 			}
 			else
 			{
-				self.IntValue -= (unsigned int)y;
+				self.IntValue -= (unsigned int)Value;
 			}
 		}
 		if (self.DecimalStatus > 0 && SelfIsNegative)
@@ -249,12 +249,12 @@ public:
 	static MediumDec& ApplyIntSubtraction(MediumDec& self, ValueType Value)
 	{
 		bool SelfIsNegative = self.DecimalStatus < 0;
-		bool ValueIsNegative = y < 0;
+		bool ValueIsNegative = Value < 0;
 		if (SelfIsNegative)
 		{
 			if (ValueIsNegative == false)//(-X) - (Y)
 			{
-				self.IntValue += (unsigned int)y;
+				self.IntValue += (unsigned int)Value;
 			}
 			else//(-X) - (-Y)
 			{
@@ -262,9 +262,9 @@ public:
 				{
 					self.IntValue = 0;
 				}
-				else if (y > self.IntValue)
+				else if (Value > self.IntValue)
 				{
-					self.IntValue = (unsigned int)y - self.IntValue;
+					self.IntValue = (unsigned int)Value - self.IntValue;
 					SelfIsNegative = false;
 				}
 				else
@@ -285,14 +285,14 @@ public:
 				{
 					self.IntValue = 0;
 				}
-				else if (y > self.IntValue)
+				else if (Value > self.IntValue)
 				{
-					self.IntValue = (unsigned int)y - self.IntValue;
+					self.IntValue = (unsigned int)Value - self.IntValue;
 					SelfIsNegative = true;
 				}
 				else
 				{
-					self.IntValue -= (unsigned int)y;
+					self.IntValue -= (unsigned int)Value;
 				}
 			}
 		}
@@ -313,26 +313,26 @@ public:
 		bool SelfIsNegative = self.DecimalStatus < 0;
 		if (self.DecimalStatus == 0)
 		{
-			if (y < 0)
+			if (Value < 0)
 			{
-				self.IntValue *= (y * -1);
+				self.IntValue *= (Value * -1);
 				self.DecimalStatus = NegativeWholeNumber;
 			}
 			else
 			{
-				self.IntValue *= y;
+				self.IntValue *= Value;
 			}
 		}
 		else if (self.DecimalStatus == NegativeWholeNumber)
 		{
-			if (y < 0)
+			if (Value < 0)
 			{
-				self.IntValue *= (y * -1);
+				self.IntValue *= (Value * -1);
 				self.DecimalStatus = 0;
 			}
 			else
 			{
-				self.IntValue *= y;
+				self.IntValue *= Value;
 			}
 		}
 		else
@@ -341,9 +341,9 @@ public:
 			{
 				self.DecimalStatus *= -1;
 			}
-			self.IntValue *= y;
+			self.IntValue *= Value;
 			long TempDec = (long)self.DecimalStatus;
-			TempDec *= y;
+			TempDec *= Value;
 			if (TempDec >= DecimalOverflow)
 			{
 				long OverflowVal = TempDec / DecimalOverflow;
@@ -368,18 +368,18 @@ public:
 	static MediumDec& ApplyIntDivision(MediumDec& self, ValueType Value)
 	{
 		bool SelfIsNegative = self.DecimalStatus < 0;
-		if (y < 0)
+		if (Value < 0)
 		{
 			if (SelfIsNegative) { SelfIsNegative = false; }
 			else { SelfIsNegative = true; }
 			if (self.DecimalStatus == NegativeWholeNumber) { self.DecimalStatus = 0; }
 			else if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
-			y *= -1;
+			Value *= -1;
 		}
 		if (self.DecimalStatus == 0 || self.DecimalStatus == NegativeWholeNumber)//Only need to deal with Integer half of value
 		{
 			long ValueRep = (__int64)self.IntValue * DecimalOverflow;
-			ValueRep /= y;
+			ValueRep /= Value;
 			long WholeHalf = ValueRep / DecimalOverflow;
 			self.IntValue = (uint)WholeHalf;
 			ValueRep -= WholeHalf;
@@ -387,7 +387,7 @@ public:
 		}
 		else
 		{
-			return self /= (MediumDec)y;
+			return self /= (MediumDec)Value;
 		}
 		if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
 		return self;
@@ -440,7 +440,7 @@ public:
 		}
 		else
 		{
-			self %= (MediumDec)y;
+			self %= (MediumDec)Value;
 		}
 		return self;
 	}
@@ -801,8 +801,8 @@ public:
 		}
 		else if (self.DecimalStatus == 0)
 		{
-			y *= self.IntValue;
-			self = y;
+			Value *= self.IntValue;
+			self = Value;
 		}
 		else if (Value.IntValue == 0 && self.IntValue == 0)
 		{
@@ -1431,6 +1431,9 @@ public:
 	//explicit operator dynamic() => MediumDec.Initialize(self);
 
 #pragma endregion From this type to Standard types
+#pragma region Comparison Operators
+
+#pragma endregion
 };
 
 MediumDec operator^(MediumDec& self, MediumDec Value);//Prototype for Pow operation
