@@ -1464,27 +1464,211 @@ public:
 #pragma region Comparison Operators
 	friend bool operator==(MediumDec& self, MediumDec Value)
 	{
-
+		return (self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus);
 	}
 	friend bool operator!=(MediumDec& self, MediumDec Value)
 	{
-
+		return (self.IntValue != Value.IntValue || self.DecimalStatus != Value.DecimalStatus);
 	}
 	friend bool operator<=(MediumDec& self, MediumDec Value)
 	{
-
+		if (self.intValue == Value.intValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
+		else
+		{
+			bool SelfIsNegative = self.DecimalStatus < 0;
+			bool ValueIsNegative = Value.DecimalStatus < 0;
+			bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
+			bool ValueIsWholeN = Value.DecimalStatus == NegativeWholeNumber;
+			if (SelfIsNegative)
+			{
+				if (SelfIsWholeN) { self.DecimalStatus = 0; }
+				else { self.DecimalStatus *= -1; }
+			}
+			if (ValueIsNegative)
+			{
+				if (ValueIsWholeN) { Value.DecimalStatus = 0; }
+				else { Value.DecimalStatus *= -1; }
+			}
+			if (ValueIsNegative && SelfIsNegative == false) { return false; }
+			else if (ValueIsNegative == false && SelfIsNegative) { return true; }
+			else
+			{//Both are either positive or negative
+				if (SelfIsNegative)
+				{//Larger number = farther down into negative
+					if (self.IntValue > Value.IntValue)
+					{
+						return true;
+					}
+					else if (self.IntValue == Value.IntValue)
+					{
+						return SelfIsWholeN && ValueIsWholeN ? false : self.DecimalStatus > Value.DecimalStatus;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					if (self.IntValue < Value.IntValue)
+					{
+						return true;
+					}
+					else if (self.IntValue == Value.IntValue)
+					{
+						return SelfIsWholeN && ValueIsWholeN ? false : self.DecimalStatus < Value.DecimalStatus;
+					}
+					else
+					{
+						return false;
+					}
+				}
+			}
+		}
 	}
 	friend bool operator<(MediumDec& self, MediumDec Value)
 	{
-
+		if (self.intValue == Value.intValue && self.DecimalStatus == Value.DecimalStatus) { return false; }
+		else
+		{
+			bool SelfIsNegative = self.DecimalStatus < 0;
+			bool ValueIsNegative = Value.DecimalStatus < 0;
+			bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
+			bool ValueIsWholeN = Value.DecimalStatus == NegativeWholeNumber;
+			if (SelfIsNegative)
+			{
+				if (SelfIsWholeN) { self.DecimalStatus = 0; }
+				else { self.DecimalStatus *= -1; }
+			}
+			if (ValueIsNegative)
+			{
+				if (ValueIsWholeN) { Value.DecimalStatus = 0; }
+				else { Value.DecimalStatus *= -1; }
+			}
+			if (ValueIsNegative && SelfIsNegative == false) { return false; }
+			else if (ValueIsNegative == false && SelfIsNegative) { return true; }
+			else
+			{//Both are either positive or negative
+				if (SelfIsNegative)
+				{//Larger number = farther down into negative
+					if (self.IntValue > Value.IntValue)
+					{
+						return true;
+					}
+					else
+					{
+						return self.DecimalStatus > Value.DecimalStatus;
+					}
+				}
+				else
+				{
+					if (self.IntValue < Value.IntValue)
+					{
+						return true;
+					}
+					else
+					{
+						return self.DecimalStatus < Value.DecimalStatus;
+					}
+				}
+			}
+		}
 	}
 	friend bool operator>=(MediumDec& self, MediumDec Value)
 	{
-
+		if (self.intValue == Value.intValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
+		else
+		{
+			bool SelfIsNegative = self.DecimalStatus < 0;
+			bool ValueIsNegative = Value.DecimalStatus < 0;
+			bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
+			bool ValueIsWholeN = Value.DecimalStatus == NegativeWholeNumber;
+			if (SelfIsNegative)
+			{
+				if (SelfIsWholeN) { self.DecimalStatus = 0; }
+				else { self.DecimalStatus *= -1; }
+			}
+			if (ValueIsNegative)
+			{
+				if (ValueIsWholeN) { Value.DecimalStatus = 0; }
+				else { Value.DecimalStatus *= -1; }
+			}
+			if (ValueIsNegative && SelfIsNegative == false) { return true; }
+			else if (ValueIsNegative == false && SelfIsNegative) { return false; }
+			else
+			{//Both are either positive or negative
+				if (SelfIsNegative)
+				{//Larger number = farther down into negative
+					if (self.IntValue < Value.IntValue)
+					{
+						return true;
+					}
+					else
+					{
+						return self.DecimalStatus < Value.DecimalStatus;
+					}
+				}
+				else
+				{
+					if (self.IntValue > Value.IntValue)
+					{
+						return true;
+					}
+					else
+					{
+						return self.DecimalStatus > Value.DecimalStatus;
+					}
+				}
+			}
+		}
 	}
 	friend bool operator>(MediumDec& self, MediumDec Value)
 	{
-
+		if (self.intValue == Value.intValue && self.DecimalStatus == Value.DecimalStatus) { return false; }
+		else
+		{
+			bool SelfIsNegative = self.DecimalStatus < 0;
+			bool ValueIsNegative = Value.DecimalStatus < 0;
+			bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
+			bool ValueIsWholeN = Value.DecimalStatus == NegativeWholeNumber;
+			if (SelfIsNegative)
+			{
+				if (SelfIsWholeN) { self.DecimalStatus = 0; }
+				else { self.DecimalStatus *= -1; }
+			}
+			if (ValueIsNegative)
+			{
+				if (ValueIsWholeN) { Value.DecimalStatus = 0; }
+				else { Value.DecimalStatus *= -1; }
+			}
+			if (ValueIsNegative && SelfIsNegative == false) { return true; }
+			else if (ValueIsNegative == false && SelfIsNegative) { return false; }
+			else
+			{//Both are either positive or negative
+				if (SelfIsNegative)
+				{//Larger number = farther down into negative
+					if (self.IntValue < Value.IntValue)
+					{
+						return true;
+					}
+					else
+					{
+						return self.DecimalStatus < Value.DecimalStatus;
+					}
+				}
+				else
+				{
+					if (self.IntValue > Value.IntValue)
+					{
+						return true;
+					}
+					else
+					{
+						return self.DecimalStatus > Value.DecimalStatus;
+					}
+				}
+			}
+		}
 	}
 #pragma endregion
 };
