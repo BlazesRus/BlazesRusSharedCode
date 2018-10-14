@@ -186,3 +186,13 @@ Galculator/
 RYLTableGenerator/
 *Havok*
 BlazesCSharpGlobalCode/GlobalCode_NodeTrees/NodeTreeGlobals.cs
+GlobalCode/HkBasedCode/BlazesBehaviorFileMerger.cpp
+GlobalCode/HkBasedCode/BlazesBehaviorFileMerger.h
+GlobalCode/HkBasedCode/DifferenceData.cpp
+GlobalCode/HkBasedCode/DifferenceData.h
+GlobalCode/HkBasedCode/HkBhvData.cpp
+GlobalCode/HkBasedCode/HkBhvData.h
+GlobalCode/HkBasedCode/HkBhvNodeTree.cpp
+GlobalCode/HkBasedCode/HkBhvNodeTree.h
+GlobalCode/HkBasedCode/HkClassUsageTree.cpp
+GlobalCode/HkBasedCode/HkClassUsageTree.h
