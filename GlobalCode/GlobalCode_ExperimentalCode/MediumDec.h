@@ -517,32 +517,32 @@ public:
 	template <typename ValueType>
 	static bool SelfIsEqual(MediumDec& self, ValueType Value)
 	{
-
+		return self == (MediumDec)Value;
 	}
 	template <typename ValueType>
 	static bool SelfIsNotEqual(MediumDec& self, ValueType Value)
 	{
-
+		return self != (MediumDec)Value;
 	}
 	template <typename ValueType>
 	static bool SelfIsLessor(MediumDec& self, ValueType Value)
 	{
-
+		return self < (MediumDec)Value;
 	}
 	template <typename ValueType>
 	static bool SelfIsGreator(MediumDec& self, ValueType Value)
 	{
-
+		return self > (MediumDec)Value;
 	}
 	template <typename ValueType>
 	static bool SelfIsLessorOrEqual(MediumDec& self, ValueType Value)
 	{
-
+		return self <= (MediumDec)Value;
 	}
 	template <typename ValueType>
 	static bool SelfIsGreatorOrEqual(MediumDec& self, ValueType Value)
 	{
-
+		return self >= (MediumDec)Value;
 	}
 #pragma endregion OperationTemplate
 #pragma region Operations

@@ -287,54 +287,14 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 return self < (MediumDec)Value;
             }
-            //         if (self.intValue == Value.intValue && self.DecimalStatus == Value.DecimalStatus) { return false; }
-            //         else
-            //         {
-            //             bool SelfIsNegative = self.DecimalStatus < 0;
-            //             bool ValueIsNegative = Value.DecimalStatus < 0;
-            //             bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-            //             bool ValueIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-            //             if (SelfIsNegative)
-            //             {
-            //                 if(SelfIsWholeN){self.DecimalStatus = 0;}
-            //                 else {self.DecimalStatus *= -1;}
-            //             }
-            //             if (ValueIsNegative)
-            //             {
-            //                 if (ValueIsWholeN) { Value.DecimalStatus = 0; }
-            //                 else { Value.DecimalStatus *= -1; }
-            //             }
-            //             if (ValueIsNegative && SelfIsNegative == false) { return false; }
-            //             else if (ValueIsNegative==false && SelfIsNegative) { return true; }
-            //             else
-            //             {//Both are either positive or negative
-            //                 if (SelfIsNegative)
-            //                 {//Larger number = farther down into negative
-            //                     if(self.IntValue> Value.IntValue)
-            //                     {
-            //                         return true;
-            //                     }
-            //                     else
-            //                     {
-            //                         return self.DecimalStatus > Value.DecimalStatus;
-            //                     }
-            //                 }
-            //                 else
-            //                 {
-            //                     if(self.IntValue<Value.IntValue)
-            //                     {
-            //                         return true;
-            //                     }
-            //                     else
-            //                     {
-            //                         return self.DecimalStatus < Value.DecimalStatus;
-            //                     }
-            //                 }
-            //             }
-            //         }
             else
             {
-                return self < (MediumDec)Value;
+				//TypeCode typeCode = Type.GetTypeCode(Value.GetType());
+				//int typeCodeValue = (int)typeCode;
+				//if (typeCodeValue >= 4 && typeCodeValue <= 12)//Integer based Value types
+				//{
+				//}
+				return self < (MediumDec)Value;
             }
         }
 
@@ -357,59 +317,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 return self <= (MediumDec)Value;
             }
-            //         if (self.intValue == Value.intValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
-            //         else
-            //         {
-            //             bool SelfIsNegative = self.DecimalStatus < 0;
-            //             bool ValueIsNegative = Value.DecimalStatus < 0;
-            //             bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-            //             bool ValueIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-            //             if (SelfIsNegative)
-            //             {
-            //                 if (SelfIsWholeN) { self.DecimalStatus = 0; }
-            //                 else { self.DecimalStatus *= -1; }
-            //             }
-            //             if (ValueIsNegative)
-            //             {
-            //                 if (ValueIsWholeN) { Value.DecimalStatus = 0; }
-            //                 else { Value.DecimalStatus *= -1; }
-            //             }
-            //             if (ValueIsNegative && SelfIsNegative == false) { return false; }
-            //             else if (ValueIsNegative == false && SelfIsNegative) { return true; }
-            //             else
-            //             {//Both are either positive or negative
-            //                 if (SelfIsNegative)
-            //                 {//Larger number = farther down into negative
-            //                     if (self.IntValue > Value.IntValue)
-            //                     {
-            //                         return true;
-            //                     }
-            //                     else if (self.IntValue == Value.IntValue)
-            //                     {
-            //                         return SelfIsWholeN && ValueIsWholeN ? false : self.DecimalStatus > Value.DecimalStatus;
-            //                     }
-            //                     else
-            //                     {
-            //                         return false;
-            //                     }
-            //                 }
-            //                 else
-            //                 {
-            //                     if (self.IntValue < Value.IntValue)
-            //                     {
-            //                         return true;
-            //                     }
-            //                     else if (self.IntValue == Value.IntValue)
-            //                     {
-            //                         return SelfIsWholeN && ValueIsWholeN ? false : self.DecimalStatus < Value.DecimalStatus;
-            //                     }
-            //                     else
-            //                     {
-            //                         return false;
-            //                     }
-            //                 }
-            //             }
-            //         }
             else
             {
                 return self <= (MediumDec)Value;
@@ -435,51 +342,6 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             {
                 return self > (MediumDec)Value;
             }
-            //         if (self.intValue == Value.intValue && self.DecimalStatus == Value.DecimalStatus) { return false; }
-            //         else
-            //         {
-            //             bool SelfIsNegative = self.DecimalStatus < 0;
-            //             bool ValueIsNegative = Value.DecimalStatus < 0;
-            //             bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-            //             bool ValueIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-            //             if (SelfIsNegative)
-            //             {
-            //                 if (SelfIsWholeN) { self.DecimalStatus = 0; }
-            //                 else { self.DecimalStatus *= -1; }
-            //             }
-            //             if (ValueIsNegative)
-            //             {
-            //                 if (ValueIsWholeN) { Value.DecimalStatus = 0; }
-            //                 else { Value.DecimalStatus *= -1; }
-            //             }
-            //             if (ValueIsNegative && SelfIsNegative == false) { return true; }
-            //             else if (ValueIsNegative == false && SelfIsNegative) { return false; }
-            //             else
-            //             {//Both are either positive or negative
-            //                 if (SelfIsNegative)
-            //                 {//Larger number = farther down into negative
-            //                     if (self.IntValue < Value.IntValue)
-            //                     {
-            //                         return true;
-            //                     }
-            //                     else
-            //                     {
-            //                         return self.DecimalStatus < Value.DecimalStatus;
-            //                     }
-            //                 }
-            //                 else
-            //                 {
-            //                     if (self.IntValue > Value.IntValue)
-            //                     {
-            //                         return true;
-            //                     }
-            //                     else
-            //                     {
-            //                         return self.DecimalStatus > Value.DecimalStatus;
-            //                     }
-            //                 }
-            //             }
-            //         }
             else
             {
                 return self > (MediumDec)Value;
@@ -503,57 +365,24 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
         {
             if (Value is string)
             {
-                //return (String)Value == (String)self;
                 return self >= (MediumDec)Value;
             }
-            //if (self.intValue == Value.intValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
-            //else
-            //{
-            //    bool SelfIsNegative = self.DecimalStatus < 0;
-            //    bool ValueIsNegative = Value.DecimalStatus < 0;
-            //    bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-            //    bool ValueIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-            //    if (SelfIsNegative)
-            //    {
-            //        if (SelfIsWholeN) { self.DecimalStatus = 0; }
-            //        else { self.DecimalStatus *= -1; }
-            //    }
-            //    if (ValueIsNegative)
-            //    {
-            //        if (ValueIsWholeN) { Value.DecimalStatus = 0; }
-            //        else { Value.DecimalStatus *= -1; }
-            //    }
-            //    if (ValueIsNegative && SelfIsNegative == false) { return true; }
-            //    else if (ValueIsNegative == false && SelfIsNegative) { return false; }
-            //    else
-            //    {//Both are either positive or negative
-            //        if (SelfIsNegative)
-            //        {//Larger number = farther down into negative
-            //            if (self.IntValue < Value.IntValue)
-            //            {
-            //                return true;
-            //            }
-            //            else
-            //            {
-            //                return self.DecimalStatus < Value.DecimalStatus;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            if (self.IntValue > Value.IntValue)
-            //            {
-            //                return true;
-            //            }
-            //            else
-            //            {
-            //                return self.DecimalStatus > Value.DecimalStatus;
-            //            }
-            //        }
-            //    }
-            //}
             else
             {
-                return self >= (MediumDec)Value;
+				TypeCode typeCode = Type.GetTypeCode(Value.GetType());
+				int typeCodeValue = (int)typeCode;
+				if (typeCodeValue >= 4 && typeCodeValue <= 12)//Integer based Value types
+				{
+					if (Value < 0)
+					{
+						if (self.intValue == Value && self.DecimalStatus == NegativeWholeNumber) { return true; }
+					}
+					else
+					{
+						if (self.intValue == Value && self.DecimalStatus == 0) { return true; }
+					}
+				}
+				return self >= (MediumDec)Value;
             }
         }
 
@@ -578,7 +407,13 @@ namespace CSharpGlobalCode.GlobalCode_ExperimentalCode
             }
             else
             {
-                return self == (MediumDec)Value;
+				TypeCode typeCode = Type.GetTypeCode(Value.GetType());
+				int typeCodeValue = (int)typeCode;
+				if (typeCodeValue >= 4 && typeCodeValue <= 12)//Integer based Value types
+				{
+					if (self.intValue == Value && self.DecimalStatus == 0) { return true; }
+				}
+				return self == (MediumDec)Value;
             }
         }
 
