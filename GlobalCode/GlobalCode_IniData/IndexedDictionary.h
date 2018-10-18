@@ -105,8 +105,8 @@ public:
 	{
 		NextIndex = 0;//Free up all index slots usage as well
 	}
-	IndexedDictionary(){}
-	~IndexedDictionary(){}
+	IndexedOrderedDictionary(){}
+	~IndexedOrderedDictionary(){}
 };
 
 template <typename ValueType>
