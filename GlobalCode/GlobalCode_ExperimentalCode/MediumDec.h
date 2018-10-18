@@ -869,14 +869,14 @@ public:
 		}
 		return self;
 	}
-	friend MediumDec operator+(MediumDec& self, const unsigned int Value) { return ApplyUnsignedIntAddition(self, Value); }
+	friend MediumDec operator+(MediumDec& self, unsigned int Value) { return ApplyUnsignedIntAddition(self, Value); }
 	friend MediumDec operator+(MediumDec& self, signed int Value) { return ApplyIntAddition(self, Value); }
 	friend MediumDec operator+(MediumDec& self, unsigned __int8 Value) { return ApplyUnsignedIntAddition(self, Value); }
 	friend MediumDec operator+(MediumDec& self, signed __int8 Value) { return ApplyIntAddition(self, Value); }
-	friend MediumDec operator+(MediumDec& self, unsigned __int16& Value) { return ApplyUnsignedIntAddition(self, Value); }
-	friend MediumDec operator+(MediumDec& self, signed __int16& Value) { return ApplyIntAddition(self, Value); }
-	friend MediumDec operator+(MediumDec& self, unsigned __int64& Value) { return ApplyUnsignedIntAddition(self, Value); }
-	friend MediumDec operator+(MediumDec& self, signed __int64& Value) { return ApplyIntAddition(self, Value); }
+	friend MediumDec operator+(MediumDec& self, unsigned __int16 Value) { return ApplyUnsignedIntAddition(self, Value); }
+	friend MediumDec operator+(MediumDec& self, signed __int16 Value) { return ApplyIntAddition(self, Value); }
+	friend MediumDec operator+(MediumDec& self, unsigned __int64 Value) { return ApplyUnsignedIntAddition(self, Value); }
+	friend MediumDec operator+(MediumDec& self, signed __int64 Value) { return ApplyIntAddition(self, Value); }
 	//friend MediumDec operator+(MediumDec& self, double Value)
 	//{
 	//}
@@ -1019,7 +1019,7 @@ public:
 	friend MediumDec operator*(MediumDec& self, signed __int16 Value) { return ApplyIntMultiplication(self, Value); }
 	friend MediumDec operator*(MediumDec& self, unsigned __int64 Value) { return ApplyIntMultiplication(self, Value); }
 	friend MediumDec operator*(MediumDec& self, signed __int64 Value) { return ApplyIntMultiplication(self, Value); }
-	friend MediumDec operator*(MediumDec& self, MediumDec Value)
+	static MediumDec MultiplyOperation(MediumDec& self, MediumDec Value)
 	{
 		if (Value.IntValue == 0 && Value.DecimalStatus == 0)
 		{
@@ -1083,6 +1083,10 @@ public:
 		if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
 		return self;
 	}
+	friend MediumDec operator*(MediumDec& self, MediumDec Value)
+	{
+		return MultiplyOperation(self, Value);
+	}
 
 	//Division Operations
 	friend MediumDec operator/(MediumDec& self, unsigned int Value) { return ApplyIntDivision(self, Value); }
@@ -1093,12 +1097,12 @@ public:
 	friend MediumDec operator/(MediumDec& self, signed __int16 Value) { return ApplyIntDivision(self, Value); }
 	friend MediumDec operator/(MediumDec& self, unsigned __int64 Value) { return ApplyIntDivision(self, Value); }
 	friend MediumDec operator/(MediumDec& self, signed __int64 Value) { return ApplyIntDivision(self, Value); }
-	friend MediumDec operator/(MediumDec& self, MediumDec Value)
+	static MediumDec DivisionOperation(MediumDec& self, MediumDec Value)
 	{
 		if (Value.IntValue == 0 && Value.DecimalStatus == 0)
 		{
 #if (MediumDec_PreventDivideByZeroException)
-			std::cout<<"Prevented dividing by zero exception by returning self instead";
+			std::cout << "Prevented dividing by zero exception by returning self instead";
 			return self;
 #else
 			throw "Value can not be divided by zero";
@@ -1167,6 +1171,10 @@ public:
 		if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
 		return self;
 	}
+	friend MediumDec operator/(MediumDec& self, MediumDec Value)
+	{
+		return DivisionOperation(self, Value);
+	}
 	//Modulus Operations
 	friend MediumDec operator%(MediumDec& self, unsigned int Value) { return ApplyIntModulus(self, Value); }
 	friend MediumDec operator%(MediumDec& self, signed int Value) { return ApplyIntModulus(self, Value); }
@@ -1176,15 +1184,15 @@ public:
 	friend MediumDec operator%(MediumDec& self, signed __int16 Value) { return ApplyIntModulus(self, Value); }
 	friend MediumDec operator%(MediumDec& self, unsigned __int64 Value) { return ApplyIntModulus(self, Value); }
 	friend MediumDec operator%(MediumDec& self, signed __int64 Value) { return ApplyIntModulus(self, Value); }
-	friend MediumDec operator%(MediumDec& self, MediumDec Value)
+	static MediumDec ModulusOperation(MediumDec& self, MediumDec Value)
 	{
 		if (Value.IntValue == 0 && Value.DecimalStatus == 0)
 		{
 			return MediumDec::Zero;//Return zero instead of N/A
 		}
-		if(self.DecimalStatus==0||self.DecimalStatus==NegativeWholeNumber)
+		if (self.DecimalStatus == 0 || self.DecimalStatus == NegativeWholeNumber)
 		{
-			if(Value.DecimalStatus == NegativeWholeNumber)
+			if (Value.DecimalStatus == NegativeWholeNumber)
 			{
 				self = ApplyNegModulus(self, Value.IntValue);
 				return self;
@@ -1219,23 +1227,27 @@ public:
 		SelfRep -= IntHalf * (__int64)DecimalOverflow;
 		self.IntValue = (unsigned int)IntHalf;
 		self.DecimalStatus = (int)SelfRep;
-		if(SelfIsNegative)
+		if (SelfIsNegative)
 		{
 			self = Value - self;
-			if (ValueIsNegative==false)
+			if (ValueIsNegative == false)
 			{
 				SelfIsNegative = false;
 			}
 		}
 		else
 		{
-			if(ValueIsNegative)
+			if (ValueIsNegative)
 			{
 				self = Value - self;
 			}
 		}
 		if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
 		return self;
+	}
+	friend MediumDec operator%(MediumDec& self, MediumDec Value)
+	{
+		return ModulusOperation(self, Value);
 	}
 	//Power of Operations
 	friend MediumDec operator^(MediumDec& self, MediumDec Value);
@@ -1801,7 +1813,7 @@ inline MediumDec & MediumDec::ApplyIntDivision(MediumDec & self, ValueType Value
 	}
 	else
 	{
-		return self /= (MediumDec)Value;
+		DivisionOperation(self, (MediumDec)Value);//return self /= (MediumDec)Value;
 	}
 	if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
 	return self;
@@ -1830,7 +1842,7 @@ inline MediumDec& MediumDec::ApplyIntModulus(MediumDec& self, ValueType Value)
 	}
 	else
 	{
-		self %= (MediumDec)Value;
+		ModulusOperation(self, (MediumDec)Value);//self %= (MediumDec)Value;
 	}
 	return self;
 }
@@ -1851,7 +1863,7 @@ inline MediumDec & MediumDec::ApplyNegModulus(MediumDec & self, ValueType Value)
 	}
 	else
 	{
-		self %= (MediumDec)Value;
+		ModulusOperation(self, (MediumDec)Value);//self %= (MediumDec)Value;
 	}
 	return self;
 }
@@ -1863,7 +1875,7 @@ inline MediumDec & MediumDec::ApplyNegPow(MediumDec & self, ValueType NumOfTimes
 	self = One;
 	for (ValueType Num = 0; Num < NumOfTimes; Num++)
 	{
-		self /= ValueMult;
+		DivisionOperation(self, ValueMult);//self /= ValueMult;
 	}
 	return self;
 }
@@ -1899,7 +1911,7 @@ inline MediumDec& MediumDec::ApplyIntPow(MediumDec & self, ValueType Value)
 			MediumDec ValueMult = self;
 			for (ValueType Num = 0; Num<NumOfTimes; Num++)
 			{
-				self *= ValueMult;
+				MultiplyOperation(self, ValueMult);//self *= ValueMult;
 			}
 		}
 		else
