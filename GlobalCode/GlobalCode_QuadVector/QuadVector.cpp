@@ -227,16 +227,6 @@ std::string QuadDoubleVector::ConvertToString()
 	return TempString;
 }
 
-DoubleList QuadDoubleVector::ConvertToList()
-{
-	DoubleList TempValue;
-	for (int i = 0; i < 4; i++)
-	{
-		TempValue.Add(GetVectorValue(i));
-	}
-	return TempValue;
-}
-
 void QuadDoubleVector::ReadQuadVectorFromString(std::string LineString)
 {
 	//Current character loaded in steam

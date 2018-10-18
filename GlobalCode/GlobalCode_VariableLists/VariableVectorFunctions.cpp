@@ -6,16 +6,10 @@
 #include <string>
 //#include "StringFunctions.h"
 
-//Inside this ifdef block holds GlobalCode Environment library version of header structure (preprocessor defined inside all GlobalCode library configs)
-#ifdef BLAZESGLOBALCODE_LIBRARY
-#include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
-//Local Version of headers here(within else block)
-#else
+#ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
 #include "VariableConversionFunctions.h"
-//Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
-#ifndef DLL_API
-#define DLL_API
-#endif
+#else
+#include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
 #endif
 
 using std::string;
@@ -34,7 +28,7 @@ StringVectorList VariableVectorFunctions::ReadStringParamFromStringList(StringVe
 		for(int i = 0; i < StringLength; i++)
 		{
 			StringChar = LineString.at(i);
-			if(StringChar == ' ' || StringChar == '	'&&TempString != "")
+			if(StringChar == ' ' || StringChar == '	'&&!TempString.empty())
 			{
 				ParamList.Add(TempString);
 				TempString = "";
@@ -45,7 +39,7 @@ StringVectorList VariableVectorFunctions::ReadStringParamFromStringList(StringVe
 			}
 		}
 	}
-	if(TempString != "")
+	if(!TempString.empty())
 	{
 		ParamList.Add(TempString);
 	}
@@ -66,7 +60,7 @@ IntegerList VariableVectorFunctions::ReadIntParamFromStringList(StringVectorList
 		for(int i = 0; i < StringLength; i++)
 		{
 			StringChar = LineString.at(i);
-			if(StringChar == ' ' || StringChar == '	'&&TempString != "")
+			if(StringChar == ' ' || StringChar == '	'&& !TempString.empty())
 			{
 				ParamList.Add(VariableConversionFunctions::ReadIntFromString(TempString));
 				TempString = "";
@@ -77,7 +71,7 @@ IntegerList VariableVectorFunctions::ReadIntParamFromStringList(StringVectorList
 			}
 		}
 	}
-	if(TempString != "")
+	if(!TempString.empty())
 	{
 		ParamList.Add(VariableConversionFunctions::ReadIntFromString(TempString));
 	}
@@ -109,7 +103,7 @@ DoubleList VariableVectorFunctions::ReadDoubleParamFromStringList(StringVectorLi
 			}
 		}
 	}
-	if(TempString != "")
+	if(!TempString.empty())
 	{
 		ParamList.Add(VariableConversionFunctions::ReadDoubleFromString(TempString));
 	}
@@ -140,7 +134,7 @@ StringVectorList VariableVectorFunctions::ParamInfoFromString(string LineString)
 			TempString += StringChar;
 		}
 	}
-	if(TempString != "")
+	if(!TempString.empty())
 	{
 		ParamList.Add(TempString);
 	}
@@ -219,7 +213,7 @@ StringVectorList VariableVectorFunctions::IniInfoFromString(string LineString)
 			TempString += StringChar;
 		}
 	}
-	if("" != TempString)
+	if(!TempString.empty())
 	{
 		ParamList.Add(TempString);
 	}
@@ -251,7 +245,7 @@ StringVectorList VariableVectorFunctions::ParamInfoFromStringList(StringVectorLi
 			}
 		}
 	}
-	if(TempString != "")
+	if(!TempString.empty())
 	{
 		ParamList.Add(TempString);
 	}
@@ -266,6 +260,134 @@ size_t VariableVectorFunctions::GetNumberOfParamsFromString(string LineString)
 {
 	StringVectorList ParamList = ParamInfoFromString(LineString);
 	return ParamList.length();
+}
+
+inline DoubleList VariableVectorFunctions::ConvertStringToDoubleList(std::string Content)
+{
+	DoubleList ConvertedValue;
+	const size_t StringSize = Content.length();
+	char CurrentChar;
+	std::string CurrentElement = "";
+	for (size_t Index = 0; Index < StringSize; ++Index)
+	{
+		CurrentChar = Content.at(Index);
+		if (CurrentElement.empty())
+		{
+			if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+			{
+				CurrentElement = CurrentChar;
+			}
+		}
+		else
+		{
+			if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+			{
+				CurrentElement += CurrentChar;
+			}
+			else
+			{
+				ConvertedValue.Add(VariableConversionFunctions::ReadDoubleFromString(CurrentElement));
+				CurrentElement = "";
+			}
+		}
+	}
+	return ConvertedValue;
+}
+
+inline IntegerList VariableVectorFunctions::ConvertStringToIntegerList(std::string Content)
+{
+	IntegerList ConvertedValue;
+	const size_t StringSize = Content.length();
+	char CurrentChar;
+	std::string CurrentElement = "";
+	for (size_t Index = 0; Index < StringSize; ++Index)
+	{
+		CurrentChar = Content.at(Index);
+		if (CurrentElement.empty())
+		{
+			if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+			{
+				CurrentElement = CurrentChar;
+			}
+		}
+		else
+		{
+			if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+			{
+				CurrentElement += CurrentChar;
+			}
+			else
+			{
+				ConvertedValue.Add(VariableConversionFunctions::ReadIntFromString(CurrentElement));
+				CurrentElement = "";
+			}
+		}
+	}
+	return ConvertedValue;
+}
+
+inline XIntegerList VariableVectorFunctions::ConvertStringToXIntegerList(std::string Content)
+{
+	XIntegerList ConvertedValue;
+	const size_t StringSize = Content.length();
+	char CurrentChar;
+	std::string CurrentElement = "";
+	for (size_t Index = 0; Index < StringSize; ++Index)
+	{
+		CurrentChar = Content.at(Index);
+		if (CurrentElement.empty())
+		{
+			if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+			{
+				CurrentElement = CurrentChar;
+			}
+		}
+		else
+		{
+			if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+			{
+				CurrentElement += CurrentChar;
+			}
+			else
+			{
+				ConvertedValue.Add(VariableConversionFunctions::ReadXIntFromString(CurrentElement));
+				CurrentElement = "";
+			}
+		}
+	}
+	return ConvertedValue;
+}
+
+inline BoolList VariableVectorFunctions::ConvertStringToBoolList(std::string Content)
+{
+	BoolList ConvertedValue;
+	const size_t StringSize = Content.length();
+	char CurrentChar;
+	std::string CurrentElement = "";
+	for (size_t Index = 0; Index < StringSize; ++Index)
+	{
+		CurrentChar = Content.at(Index);
+		if (CurrentElement.empty())
+		{
+			if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+			{
+				CurrentElement = CurrentChar;
+			}
+		}
+		else
+		{
+			if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+			{
+				CurrentElement += CurrentChar;
+			}
+			else
+			{
+				ConvertedValue.Add(VariableConversionFunctions::ReadBoolFromString(CurrentElement));
+				CurrentElement = "";
+			}
+		}
+	}
+	return ConvertedValue;
 }
 
 VariableVectorFunctions::VariableVectorFunctions()

@@ -26,7 +26,7 @@ class MediumDecDefines;
 /// <summary>
 /// Represent +- 4294967295.999999999 with 100% consistency of accuracy
 /// </summary>
-public class DLL_API MediumDec
+class DLL_API MediumDec
 {
 public:
 	/// <summary>
@@ -122,1006 +122,11 @@ public:
 			DecimalStatus *= -1;
 		}
 	}
-#pragma region OperationTemplate
-	template <typename ValueType>
-	static MediumDec& ApplyUnsignedIntAddition(MediumDec& self, ValueType Value)
-	{
-		if (self.DecimalStatus < 0)
-		{
-			if (Value > self.IntValue)
-			{
-				self.DecimalStatus *= -1;
-				Value -= (unsigned int)self.IntValue;
-				self.IntValue = (unsigned int)Value;
-			}
-			else if (Value == self.IntValue)
-			{
-				if (self.DecimalStatus == NegativeWholeNumber)
-				{
-					self.DecimalStatus = 0;
-				}
-				self.IntValue = 0;
-			}
-			else
-			{
-				self.IntValue -= Value;
-			}
-		}
-		else
-		{
-			self.IntValue += Value;
-		}
-		return self;
-	}
-	template <typename ValueType>
-	MediumDec& ApplyUnsignedIntAddition(ValueType Value)
-	{
-		return ApplyUnsignedIntAddition(&this, Value)
-	}
-	template <typename ValueType>
-	static MediumDec& ApplyIntAddition(MediumDec& self, ValueType Value)
-	{
-		bool SelfIsNegative = self.DecimalStatus < 0;
-		bool ValueIsNegative = Value < 0;
-		if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
-		{
-			self.IntValue += (unsigned int)Value;
-		}
-		else if (SelfIsNegative)//-X + Y
-		{
-			if (self.IntValue == y)
-			{
-				self.IntValue = 0;
-			}
-			else if (self.IntValue > y)
-			{
-				self.IntValue -= (unsigned int)Value;
-			}
-			else
-			{
-				self.IntValue = (unsigned int)Value - self.IntValue;
-				SelfIsNegative = false;
-			}
-		}
-		else// X - Y
-		{
-			if (self.IntValue == y)
-			{
-				self.IntValue = 0;
-			}
-			else if (self.IntValue > y)
-			{
-				self.IntValue -= (unsigned int)Value;
-			}
-			else
-			{
-				self.IntValue = (unsigned int)Value - self.IntValue;
-				SelfIsNegative = true;
-			}
-		}
-		if (self.DecimalStatus > 0 && SelfIsNegative)
-		{
-			self.DecimalStatus *= -1;
-		}
-		else if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
-	}
-	template <typename ValueType>
-	MediumDec& ApplyIntAddition(ValueType Value)
-	{
-		return ApplyIntAddition(&this, Value)
-	}
-	template <typename ValueType>
-	static MediumDec& ApplyUnsignedIntSubtraction(MediumDec& self, ValueType Value)
-	{
-		bool SelfIsNegative = self.DecimalStatus < 0;
-		if (SelfIsNegative)//(-X) - Y
-		{
-			self.IntValue += (unsigned int)Value;
-		}
-		else//X - Y
-		{
-			if (self.IntValue == y)
-			{
-				self.IntValue = 0;
-			}
-			else if (Value > self.IntValue)
-			{
-				self.IntValue = (unsigned int)Value - self.IntValue;
-				SelfIsNegative = true;
-			}
-			else
-			{
-				self.IntValue -= (unsigned int)Value;
-			}
-		}
-		if (self.DecimalStatus > 0 && SelfIsNegative)
-		{
-			self.DecimalStatus *= -1;
-		}
-		else if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
-	}
-	template <typename ValueType>
-	MediumDec& ApplyUnsignedIntSubtraction(ValueType Value)
-	{
-		return ApplyUnsignedIntSubtraction(&this, Value)
-	}
-	template <typename ValueType>
-	static MediumDec& ApplyIntSubtraction(MediumDec& self, ValueType Value)
-	{
-		bool SelfIsNegative = self.DecimalStatus < 0;
-		bool ValueIsNegative = Value < 0;
-		if (SelfIsNegative)
-		{
-			if (ValueIsNegative == false)//(-X) - (Y)
-			{
-				self.IntValue += (unsigned int)Value;
-			}
-			else//(-X) - (-Y)
-			{
-				if (self.IntValue == y)
-				{
-					self.IntValue = 0;
-				}
-				else if (Value > self.IntValue)
-				{
-					self.IntValue = (unsigned int)Value - self.IntValue;
-					SelfIsNegative = false;
-				}
-				else
-				{
-					self.IntValue -= (unsigned int)(y*-1);
-				}
-			}
-		}
-		else
-		{
-			if (ValueIsNegative)//X - (-Y)
-			{
-				self.IntValue += (unsigned int)(y*-1);
-			}
-			else//X - (Y)
-			{
-				if (self.IntValue == y)
-				{
-					self.IntValue = 0;
-				}
-				else if (Value > self.IntValue)
-				{
-					self.IntValue = (unsigned int)Value - self.IntValue;
-					SelfIsNegative = true;
-				}
-				else
-				{
-					self.IntValue -= (unsigned int)Value;
-				}
-			}
-		}
-		if (self.DecimalStatus > 0 && SelfIsNegative)
-		{
-			self.DecimalStatus *= -1;
-		}
-		else if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
-	}
-	template <typename ValueType>
-	MediumDec& ApplyIntSubtraction(ValueType Value)
-	{
-		return ApplyIntSubtraction(&this, Value)
-	}
-	template <typename ValueType>
-	static MediumDec& ApplyIntMultiplication(MediumDec& self, ValueType Value)
-	{
-		bool SelfIsNegative = self.DecimalStatus < 0;
-		if (self.DecimalStatus == 0)
-		{
-			if (Value < 0)
-			{
-				self.IntValue *= (Value * -1);
-				self.DecimalStatus = NegativeWholeNumber;
-			}
-			else
-			{
-				self.IntValue *= Value;
-			}
-		}
-		else if (self.DecimalStatus == NegativeWholeNumber)
-		{
-			if (Value < 0)
-			{
-				self.IntValue *= (Value * -1);
-				self.DecimalStatus = 0;
-			}
-			else
-			{
-				self.IntValue *= Value;
-			}
-		}
-		else
-		{
-			if (SelfIsNegative)
-			{
-				self.DecimalStatus *= -1;
-			}
-			self.IntValue *= Value;
-			long TempDec = (long)self.DecimalStatus;
-			TempDec *= Value;
-			if (TempDec >= DecimalOverflow)
-			{
-				long OverflowVal = TempDec / DecimalOverflow;
-				TempDec -= OverflowVal * DecimalOverflow;
-				self.IntValue += (uint)OverflowVal;
-			}
-			if (TempDec == 0) { self.DecimalStatus = 0; }
-			else
-			{
-				if (SelfIsNegative) { TempDec *= -1; }
-				self.DecimalStatus = (int)TempDec;
-			}
-		}
-		return self;
-	}
-	template <typename ValueType>
-	MediumDec& ApplyIntMultiplication(ValueType Value)
-	{
-		return ApplyIntMultiplication(&this, Value)
-	}
-	template <typename ValueType>
-	static MediumDec& ApplyIntDivision(MediumDec& self, ValueType Value)
-	{
-		bool SelfIsNegative = self.DecimalStatus < 0;
-		if (Value < 0)
-		{
-			if (SelfIsNegative) { SelfIsNegative = false; }
-			else { SelfIsNegative = true; }
-			if (self.DecimalStatus == NegativeWholeNumber) { self.DecimalStatus = 0; }
-			else if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
-			Value *= -1;
-		}
-		if (self.DecimalStatus == 0 || self.DecimalStatus == NegativeWholeNumber)//Only need to deal with Integer half of value
-		{
-			long ValueRep = (__int64)self.IntValue * DecimalOverflow;
-			ValueRep /= Value;
-			long WholeHalf = ValueRep / DecimalOverflow;
-			self.IntValue = (uint)WholeHalf;
-			ValueRep -= WholeHalf;
-			self.DecimalStatus = (int)WholeHalf;
-		}
-		else
-		{
-			return self /= (MediumDec)Value;
-		}
-		if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
-		return self;
-	}
-	template <typename ValueType>
-	MediumDec& ApplyIntDivision(ValueType Value)
-	{
-		return ApplyIntDivision(&this, Value)
-	}
-	template <typename ValueType>
-	static MediumDec& ApplyIntModulus(MediumDec& self, ValueType Value)
-	{//https://www.quora.com/How-does-the-modulo-operation-work-with-negative-numbers-and-why
-		if (self.DecimalStatus == 0)
-		{
-			self.IntValue %= Value;
-			if(Value<0)
-			{
-				self.DecimalStatus = NegativeWholeNumber;
-				self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
-			}
-		}
-		else if (self.DecimalStatus == NegativeWholeNumber)
-		{
-			self.IntValue %= Value;
-			self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
-			if (Value > 0)//https://www.medcalc.org/manual/mod_function.php
-			{
-				self.DecimalStatus = 0;
-			}
-		}
-		else
-		{
-			self %= (MediumDec)Value;
-		}
-		return self;
-	}
-	template <typename ValueType>
-	static MediumDec& ApplyNegModulus(MediumDec& self, ValueType Value)
-	{
-		if (self.DecimalStatus == 0)
-		{
-			self.IntValue %= Value;
-			self.DecimalStatus = NegativeWholeNumber;
-			self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
-		}
-		else if (self.DecimalStatus == NegativeWholeNumber)
-		{
-			self.IntValue %= Value;
-			self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
-		}
-		else
-		{
-			self %= (MediumDec)Value;
-		}
-		return self;
-	}
-	template <typename ValueType>
-	MediumDec& ApplyIntModulus(ValueType Value)
-	{
-		return ApplyIntModulus(&this, Value)
-	}
-	template <typename ValueType>
-	static MediumDec& ApplyNegPow(MediumDec& self, ValueType NumOfTimes)
-	{
-		MediumDec ValueMult = self;
-		self = One;
-		for (ValueType Num = 0; Num < NumOfTimes; Num++)
-		{
-			self /= ValueMult;
-		}
-		return self;
-	}
-	template <typename ValueType>
-	static MediumDec& ApplyIntPow(MediumDec& self, ValueType Value)
-	{
-		if (self.DecimalStatus == 0&& self.IntValue == 10)
-		{
-			if (Value == 0)
-			{
-				self.IntValue = 1;
-			}
-			if (Value > 0)
-			{
-				self.IntValue = VariableConversionFunctions::PowerOfTens[Value];
-			}
-			else if(Value>=-9)
-			{
-				self.IntValue = 0;
-				self.DecimalStatus = DecimalOverflow / VariableConversionFunctions::PowerOfTens[Value*-1];
-			}
-			else
-			{
-				self.IntValue = 0;
-			}
-		}
-		else
-		{
-			if(Value>0)
-			{
-				ValueType NumOfTimes = Value - 1;
-				MediumDec ValueMult = self;
-				for(ValueType Num=0;Num<NumOfTimes;Num++)
-				{
-					self *= ValueMult;
-				}
-			}
-			else
-			{
-				if(Value==0)
-				{
-					self = One;
-				}
-				else
-				{
-					ValueType NumOfTimes = Value*-1;
-					return ApplyNegPow(self, NumOfTimes);
-				}
-			}
-		}
-		return self;
-	}
-	template <typename ValueType>
-	MediumDec& ApplyIntPow(ValueType Value)
-	{
-		return ApplyIntModulusPow(&this, Value)
-	}
-	template <typename ValueType>
-	static bool SelfIsEqual(MediumDec& self, ValueType Value)
-	{
-		return self == (MediumDec)Value;
-	}
-	template <typename ValueType>
-	static bool SelfIsNotEqual(MediumDec& self, ValueType Value)
-	{
-		return self != (MediumDec)Value;
-	}
-	template <typename ValueType>
-	static bool SelfIsLessor(MediumDec& self, ValueType Value)
-	{
-		return self < (MediumDec)Value;
-	}
-	template <typename ValueType>
-	static bool SelfIsGreator(MediumDec& self, ValueType Value)
-	{
-		return self > (MediumDec)Value;
-	}
-	template <typename ValueType>
-	static bool SelfIsLessorOrEqual(MediumDec& self, ValueType Value)
-	{
-		return self <= (MediumDec)Value;
-	}
-	template <typename ValueType>
-	static bool SelfIsGreatorOrEqual(MediumDec& self, ValueType Value)
-	{
-		return self >= (MediumDec)Value;
-	}
-#pragma endregion OperationTemplate
-#pragma region Operations
-	//https://en.wikibooks.org/wiki/C%2B%2B_Programming/Operators/Operator_Overloading
-	//Addition Operations
-	friend MediumDec operator+(const MediumDec& self, const MediumDec& Value)
-	{
-		bool SelfIsNegative = self.DecimalStatus < 0;
-		if (SelfIsNegative)
-		{
-			if (self.DecimalStatus == NegativeWholeNumber) { self.DecimalStatus = 0; }
-			else { self.DecimalStatus *= -1; }
-		}
-		bool ValueIsNegative = Value.DecimalStatus < 0;
-		if (ValueIsNegative)
-		{
-			if (Value.DecimalStatus == NegativeWholeNumber) { Value.DecimalStatus = 0; }
-			else { Value.DecimalStatus *= -1; }
-		}
-		bool PerformDecimalHalf = true;
-		if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
-		{
-			self.IntValue += Value.IntValue;
-			self.DecimalStatus += Value.DecimalStatus;
-			if (self.DecimalStatus >= DecimalOverflow)
-			{
-				self.DecimalStatus -= DecimalOverflow;
-				++self.IntValue;
-			}
-			PerformDecimalHalf = false;
-		}
-		else if (SelfIsNegative)//-X + Y
-		{
-			if (self.IntValue == Value.IntValue)
-			{
-				self.IntValue = 0;
-			}
-			else if (self.IntValue > Value.IntValue)
-			{
-				self.IntValue -= Value.IntValue;
-			}
-			else
-			{
-				self.IntValue = (unsigned int)(Value.IntValue - self.IntValue);
-				SelfIsNegative = false;
-			}
-		}
-		else// X - Y
-		{
-			if (self.IntValue == Value.IntValue)
-			{
-				self.IntValue = 0;
-			}
-			else if (self.IntValue > Value.IntValue)
-			{
-				self.IntValue -= Value.IntValue;
-			}
-			else
-			{
-				self.IntValue = (unsigned int)(Value.IntValue - self.IntValue);
-				SelfIsNegative = true;
-			}
-		}
-		if (PerformDecimalHalf)
-		{
-			if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
-			{
-				self.DecimalStatus += Value.DecimalStatus;
-				if (self.DecimalStatus >= DecimalOverflow)
-				{
-					self.DecimalStatus -= DecimalOverflow;
-					++self.IntValue;
-				}
-			}
-			else if (SelfIsNegative)
-			{
-				if (self.DecimalStatus == Value.DecimalStatus)
-				{
-					self.DecimalStatus = NegativeWholeNumber;
-				}
-				else if (self.DecimalStatus > Value.DecimalStatus)
-				{
-					self.DecimalStatus -= Value.DecimalStatus;
-				}
-				else
-				{
-					self.DecimalStatus = Value.DecimalStatus - self.DecimalStatus;
-					SelfIsNegative = false;
-				}
-			}
-			else
-			{
-				if (self.DecimalStatus == Value.DecimalStatus)
-				{
-					self.DecimalStatus = NegativeWholeNumber;
-				}
-				else if (self.DecimalStatus > Value.DecimalStatus)
-				{
-					self.DecimalStatus -= Value.DecimalStatus;
-				}
-				else
-				{
-					self.DecimalStatus = Value.DecimalStatus - self.DecimalStatus;
-					SelfIsNegative = true;
-				}
-			}
-		}
-		if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
-		if (self.DecimalStatus > 0 && SelfIsNegative)
-		{
-			self.DecimalStatus *= -1;
-		}
-		return self;
-	}
-	friend MediumDec operator+(const MediumDec& self, const unsigned int Value) { return ApplyUnsignedIntAddition(&self, Value); }
-	friend MediumDec operator+(const MediumDec& self, signed int Value) { return ApplyIntAddition(&self, Value); }
-	friend MediumDec operator+(const MediumDec& self, unsigned __int8 Value) { return ApplyUnsignedIntAddition(&self, Value); }
-	friend MediumDec operator+(const MediumDec& self, signed __int8 Value) { return ApplyIntAddition(&self, Value); }
-	friend MediumDec operator+(const MediumDec& self, unsigned __int16& Value) { return ApplyUnsignedIntAddition(&self, Value); }
-	friend MediumDec operator+(const MediumDec& self, signed __int16& Value) { return ApplyIntAddition(&self, Value); }
-	friend MediumDec operator+(const MediumDec& self, unsigned __int64& Value) { return ApplyUnsignedIntAddition(&self, Value); }
-	friend MediumDec operator+(const MediumDec& self, signed __int64& Value) { return ApplyIntAddition(&self, Value); }
-	//friend MediumDec operator+(const MediumDec& self, double Value)
-	//{
-	//}
-	//friend MediumDec operator+(const MediumDec& self, std::std::string Value)
-	//{
-	//}
-
-	//Subtraction Operations
-	friend MediumDec operator-(const MediumDec& self, MediumDec Value)
-	{
-		bool SelfIsNegative = self.DecimalStatus < 0;
-		if (SelfIsNegative)
-		{
-			if (self.DecimalStatus == NegativeWholeNumber) { self.DecimalStatus = 0; }
-			else { self.DecimalStatus *= -1; }
-		}
-		bool ValueIsNegative = Value.DecimalStatus < 0;
-		if (ValueIsNegative)
-		{
-			if (Value.DecimalStatus == NegativeWholeNumber) { Value.DecimalStatus = 0; }
-			else { Value.DecimalStatus *= -1; }
-		}
-		if (ValueIsNegative) { ValueIsNegative = false; }
-		bool PerformDecimalHalf = true;
-		if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
-		{
-			self.IntValue += Value.IntValue;
-			self.DecimalStatus += Value.DecimalStatus;
-			if (self.DecimalStatus >= DecimalOverflow)
-			{
-				self.DecimalStatus -= DecimalOverflow;
-				++self.IntValue;
-			}
-			PerformDecimalHalf = false;
-		}
-		else if (SelfIsNegative)//-X + Y
-		{
-			if (self.IntValue == Value.IntValue)
-			{
-				self.IntValue = 0;
-			}
-			else if (self.IntValue > Value.IntValue)
-			{
-				self.IntValue -= Value.IntValue;
-			}
-			else
-			{
-				self.IntValue = (unsigned int)(Value.IntValue - self.IntValue);
-				SelfIsNegative = false;
-			}
-		}
-		else// X - Y
-		{
-			if (self.IntValue == Value.IntValue)
-			{
-				self.IntValue = 0;
-			}
-			else if (self.IntValue > Value.IntValue)
-			{
-				self.IntValue -= Value.IntValue;
-			}
-			else
-			{
-				self.IntValue = (unsigned int)(Value.IntValue - self.IntValue);
-				SelfIsNegative = true;
-			}
-		}
-		if (PerformDecimalHalf)
-		{
-			if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
-			{
-				self.DecimalStatus += Value.DecimalStatus;
-				if (self.DecimalStatus >= DecimalOverflow)
-				{
-					self.DecimalStatus -= DecimalOverflow;
-					++self.IntValue;
-				}
-			}
-			else if (SelfIsNegative)
-			{
-				if (self.DecimalStatus == Value.DecimalStatus)
-				{
-					self.DecimalStatus = NegativeWholeNumber;
-				}
-				else if (self.DecimalStatus > Value.DecimalStatus)
-				{
-					self.DecimalStatus -= Value.DecimalStatus;
-				}
-				else
-				{
-					self.DecimalStatus = Value.DecimalStatus - self.DecimalStatus;
-					SelfIsNegative = false;
-				}
-			}
-			else
-			{
-				if (self.DecimalStatus == Value.DecimalStatus)
-				{
-					self.DecimalStatus = NegativeWholeNumber;
-				}
-				else if (self.DecimalStatus > Value.DecimalStatus)
-				{
-					self.DecimalStatus -= Value.DecimalStatus;
-				}
-				else
-				{
-					self.DecimalStatus = Value.DecimalStatus - self.DecimalStatus;
-					SelfIsNegative = true;
-				}
-			}
-		}
-		if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
-		if (self.DecimalStatus > 0 && SelfIsNegative)
-		{
-			self.DecimalStatus *= -1;
-		}
-		return self;
-	}
-	friend MediumDec operator-(const MediumDec& self, unsigned int Value) { return ApplyUnsignedIntSubtraction(&self, Value); }
-	friend MediumDec operator-(const MediumDec& self, signed int Value) { return ApplyIntSubtraction(&self, Value); }
-	friend MediumDec operator-(const MediumDec& self, unsigned __int8 Value) { return ApplyUnsignedIntSubtraction(&self, Value); }
-	friend MediumDec operator-(const MediumDec& self, signed __int8 Value) { return ApplyIntSubtraction(&self, Value); }
-	friend MediumDec operator-(const MediumDec& self, unsigned __int16 Value) { return ApplyUnsignedIntSubtraction(&self, Value); }
-	friend MediumDec operator-(const MediumDec& self, signed __int16 Value) { return ApplyIntSubtraction(&self, Value); }
-	friend MediumDec operator-(const MediumDec& self, unsigned __int64 Value) { return ApplyUnsignedIntSubtraction(&self, Value); }
-	friend MediumDec operator-(const MediumDec& self, signed __int64 Value) { return ApplyIntSubtraction(&self, Value); }
-	//friend MediumDec operator-(const MediumDec& self, double Value)
-	//{
-	//}
-	//friend MediumDec operator-(const MediumDec& self, std::std::string Value)
-	//{
-	//}
-
-	//Multiplication Operations
-	friend MediumDec operator*(const MediumDec& self, MediumDec Value)
-	{
-		if (Value.IntValue == 0 && Value.DecimalStatus == 0)
-		{
-			self.IntValue = 0;
-			self.DecimalStatus = 0;
-			return self;
-		}
-		bool SelfIsNegative = self.DecimalStatus < 0;
-		bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-		if (SelfIsNegative)
-		{
-			if (SelfIsWholeN) { self.DecimalStatus = 0; }
-			else { self.DecimalStatus *= -1; }
-		}
-		bool ValueIsNegative = Value.DecimalStatus < 0;
-		bool ValueIsWholeN = Value.DecimalStatus == NegativeWholeNumber;
-		if (ValueIsNegative)
-		{
-			if (ValueIsWholeN) { Value.DecimalStatus = 0; }
-			else { Value.DecimalStatus *= -1; }
-		}
-		if (self.DecimalStatus == 0 && Value.DecimalStatus == 0)
-		{
-			self.IntValue *= Value.IntValue;
-		}
-		else if (Value.DecimalStatus == 0)//Y is integer
-		{
-			self *= Value.IntValue;
-		}
-		else if (self.DecimalStatus == 0)
-		{
-			Value *= self.IntValue;
-			self = Value;
-		}
-		else if (Value.IntValue == 0 && self.IntValue == 0)
-		{
-			__int64 Temp04 = (__int64)self.DecimalStatus * (__int64)Value.DecimalStatus;
-			Temp04 /= DecimalOverflow;
-			self.DecimalStatus = (signed int)Temp04;
-		}
-		else
-		{
-			//X.Y * Z.V == ((X * Z) + (X * .V) + (.Y * Z) + (.Y * .V))
-			__int64 Temp02 = (__int64)(self.IntValue * DecimalOverflow) + self.DecimalStatus;
-			Temp02 *= Value.IntValue;//Temp02 holds __int64 version of X.Y * Z
-			//X.Y *.V
-			__int64 Temp03 = (__int64)self.IntValue * Value.DecimalStatus;//Temp03 holds __int64 version of X *.V
-			__int64 Temp04 = (__int64)self.DecimalStatus * (__int64)Value.DecimalStatus;
-			Temp04 /= DecimalOverflow;
-			//Temp04 holds __int64 version of .Y * .V
-			__int64 IntegerRep = Temp02 + Temp03 + Temp04;
-			__int64 IntHalf = IntegerRep / DecimalOverflow;
-			IntegerRep -= IntHalf * (__int64)DecimalOverflow;
-			self.IntValue = (unsigned int)IntHalf;
-			self.DecimalStatus = (signed int)IntegerRep;
-		}
-		if (ValueIsNegative)
-		{
-			SelfIsNegative = !SelfIsNegative;
-		}
-		if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
-		return self;
-	}
-	friend MediumDec operator*(const MediumDec& self, unsigned int Value) { return ApplyIntMultiplication(&self, Value); }
-	friend MediumDec operator*(const MediumDec& self, signed int Value) { return ApplyIntMultiplication(&self, Value); }
-	friend MediumDec operator*(const MediumDec& self, unsigned __int8 Value) { return ApplyIntMultiplication(&self, Value); }
-	friend MediumDec operator*(const MediumDec& self, signed __int8 Value) { return ApplyIntMultiplication(&self, Value); }
-	friend MediumDec operator*(const MediumDec& self, unsigned __int16 Value) { return ApplyIntMultiplication(&self, Value); }
-	friend MediumDec operator*(const MediumDec& self, signed __int16 Value) { return ApplyIntMultiplication(&self, Value); }
-	friend MediumDec operator*(const MediumDec& self, unsigned __int64 Value) { return ApplyIntMultiplication(&self, Value); }
-	friend MediumDec operator*(const MediumDec& self, signed __int64 Value) { return ApplyIntMultiplication(&self, Value); }
-	//Division Operations
-	friend MediumDec operator/(const MediumDec& self, MediumDec Value)
-	{
-		if (Value.IntValue == 0 && Value.DecimalStatus == 0)
-		{
-#if (MediumDec_PreventDivideByZeroException)
-			Console.WriteLine("Prevented dividing by zero");
-			return self;
-#else
-			throw new DivideByZeroException("Value can not be divided by zero");
-#endif
-		}
-		bool SelfIsNegative = self.DecimalStatus < 0;
-		bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-		if (SelfIsNegative)
-		{
-			if (SelfIsWholeN) { self.DecimalStatus = 0; }
-			else { self.DecimalStatus *= -1; }
-		}
-		bool ValueIsNegative = Value.DecimalStatus < 0;
-		bool ValueIsWholeN = Value.DecimalStatus == NegativeWholeNumber;
-		if (ValueIsNegative)
-		{
-			if (ValueIsWholeN) { Value.DecimalStatus = 0; }
-			else { Value.DecimalStatus *= -1; }
-		}
-		if (self.DecimalStatus == 0 && Value.DecimalStatus == 0)
-		{
-			__int64 SRep = self.IntValue * DecimalOverflow;
-			__int64 YRep = Value.IntValue;
-			SRep /= Value.IntValue;
-			if (SRep >= DecimalOverflow)
-			{
-				__int64 OverflowVal = SRep / DecimalOverflow;
-				SRep -= OverflowVal * DecimalOverflow;
-				self.IntValue = (unsigned int)OverflowVal;
-				self.DecimalStatus = (signed int)SRep;
-			}
-		}
-		else if (Value.DecimalStatus == 0)//Y is integer
-		{
-			self /= Value.IntValue;
-		}
-		else if (self.IntValue < 10 && Value.IntValue == 0)//Using self method would cause overflow of SelfRep if more in most cases
-		{//self part seems to work unless Value.int is more than 0 for some reason
-			__int64 SelfRep = (__int64)(self.IntValue * DecimalOverflow) + self.DecimalStatus;
-			SelfRep *= DecimalOverflow;
-			__int64 ValueRep = (__int64)(Value.IntValue * DecimalOverflow) + Value.DecimalStatus;
-			SelfRep /= ValueRep;
-			__int64 IntHalf = SelfRep / DecimalOverflow;
-			SelfRep -= IntHalf * (__int64)DecimalOverflow;
-			self.IntValue = (unsigned int)IntHalf;
-			self.DecimalStatus = (signed int)SelfRep;
-		}
-		else
-		{
-			__int64 SelfRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalStatus;
-			__int64 ValueRep = ((__int64)Value.IntValue * DecimalOverflow) + Value.DecimalStatus;
-			SelfRep /= ValueRep;
-			unsigned int IntResult = (unsigned int)SelfRep;
-			SelfRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalStatus;
-			__int64 Temp01 = (__int64)IntResult * ValueRep;
-			SelfRep -= Temp01;
-			SelfRep *= DecimalOverflow;
-			SelfRep /= ValueRep;
-			self.IntValue = IntResult;
-			self.DecimalStatus = (signed int)SelfRep;
-		}
-		if (ValueIsNegative)
-		{
-			SelfIsNegative = !SelfIsNegative;
-		}
-		if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
-		return self;
-	}
-	friend MediumDec operator/(const MediumDec& self, unsigned int Value) { return ApplyIntDivision(&self, Value); }
-	friend MediumDec operator/(const MediumDec& self, signed int Value) { return ApplyIntDivision(&self, Value); }
-	friend MediumDec operator/(const MediumDec& self, unsigned __int8 Value) { return ApplyIntDivision(&self, Value); }
-	friend MediumDec operator/(const MediumDec& self, signed __int8 Value) { return ApplyIntDivision(&self, Value); }
-	friend MediumDec operator/(const MediumDec& self, unsigned __int16 Value) { return ApplyIntDivision(&self, Value); }
-	friend MediumDec operator/(const MediumDec& self, signed __int16 Value) { return ApplyIntDivision(&self, Value); }
-	friend MediumDec operator/(const MediumDec& self, unsigned __int64 Value) { return ApplyIntDivision(&self, Value); }
-	friend MediumDec operator/(const MediumDec& self, signed __int64 Value) { return ApplyIntDivision(&self, Value); }
-	//Modulus Operations
-	friend MediumDec operator%(MediumDec& self, MediumDec Value)
-	{
-		if (Value.IntValue == 0 && Value.DecimalStatus == 0)
-		{
-			return MediumDec.Zero;//Return zero instead of N/A
-		}
-		if(self.DecimalStatus==0||self.DecimalStatus==NegativeWholeNumber)
-		{
-			if(Value.DecimalStatus == NegativeWholeNumber)
-			{
-				self = ApplyNegModulus(self, Value.IntValue);
-				return self;
-			}
-			else
-			{
-				self %= Value.IntValue;
-				return self;
-			}
-		}
-		bool SelfIsNegative = self.DecimalStatus < 0;
-		bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
-		if (SelfIsNegative)
-		{
-			if (SelfIsWholeN) { self.DecimalStatus = 0; }
-			else { self.DecimalStatus *= -1; }
-		}
-		bool ValueIsNegative = Value.DecimalStatus < 0;
-		bool ValueIsWholeN = Value.DecimalStatus == NegativeWholeNumber;
-		if (ValueIsNegative)
-		{
-			if (ValueIsWholeN) { Value.DecimalStatus = 0; }
-			else { Value.DecimalStatus *= -1; }
-		}
-		__int64 SelfRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalStatus;
-		__int64 ValueRep = ((__int64)Value.IntValue * DecimalOverflow) + Value.DecimalStatus;
-		SelfRep /= ValueRep;
-		__int64 IntResult = SelfRep;
-		SelfRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalStatus;
-		SelfRep -= IntResult * ValueRep;
-		__int64 IntHalf = SelfRep / DecimalOverflow;
-		SelfRep -= IntHalf * (__int64)DecimalOverflow;
-		self.IntValue = (unsigned int)IntHalf;
-		self.DecimalStatus = (int)SelfRep;
-		if(SelfIsNegative)
-		{
-			self = Value - self;
-			if (ValueIsNegative==false)
-			{
-				SelfIsNegative = false;
-			}
-		}
-		else
-		{
-			if(ValueIsNegative)
-			{
-				self = Value - self;
-			}
-		}
-		if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
-		return self;
-	}
-	friend MediumDec operator%(MediumDec& self, unsigned int Value) { return ApplyIntModulus(self, Value); }
-	friend MediumDec operator%(MediumDec& self, signed int Value) { return ApplyIntModulus(self, Value); }
-	friend MediumDec operator%(MediumDec& self, unsigned __int8 Value) { return ApplyIntModulus(self, Value); }
-	friend MediumDec operator%(MediumDec& self, signed __int8 Value) { return ApplyIntModulus(self, Value); }
-	friend MediumDec operator%(MediumDec& self, unsigned __int16 Value) { return ApplyIntModulus(self, Value); }
-	friend MediumDec operator%(MediumDec& self, signed __int16 Value) { return ApplyIntModulus(self, Value); }
-	friend MediumDec operator%(MediumDec& self, unsigned __int64 Value) { return ApplyIntModulus(self, Value); }
-	friend MediumDec operator%(MediumDec& self, signed __int64 Value) { return ApplyIntModulus(self, Value); }
-	//Power of Operations
-	friend MediumDec operator^(MediumDec& self, MediumDec Value);
-	friend MediumDec operator^(MediumDec& self, unsigned int Value) { return ApplyIntPow(self, Value); }
-	friend MediumDec operator^(MediumDec& self, signed int Value) { return ApplyIntPow(self, Value); }
-	friend MediumDec operator^(MediumDec& self, unsigned __int8 Value) { return ApplyIntPow(self, Value); }
-	friend MediumDec operator^(MediumDec& self, signed __int8 Value) { return ApplyIntPow(self, Value); }
-	friend MediumDec operator^(MediumDec& self, unsigned __int16 Value) { return ApplyIntPow(self, Value); }
-	friend MediumDec operator^(MediumDec& self, signed __int16 Value) { return ApplyIntPow(self, Value); }
-	friend MediumDec operator^(MediumDec& self, unsigned __int64 Value) { return ApplyIntPow(self, Value); }
-	friend MediumDec operator^(MediumDec& self, signed __int64 Value) { return ApplyIntPow(self, Value); }
-
-	//MediumDec operator=(double Value){}
-	//MediumDec operator=(float Value) { ApplyEqualFloatValueOperation(&Value); }
-	//MediumDec operator=(std::std::string Value);
-	//MediumDec operator=(unsigned int Value);
-	//MediumDec operator=(int Value);
-	//MediumDec operator=(signed __int64 Value);
-	//MediumDec operator=(unsigned __int64 Value);
-	MediumDec operator ++()
-	{
-		return *this + 1;
-	}
-
-	MediumDec operator --()
-	{
-		return *this - 1;
-	}
-
-	MediumDec operator-() { SwapNegativeStatus(); return *this; }
-	MediumDec operator!() { SwapNegativeStatus(); return *this; }
-#pragma endregion Operation
-	//MediumDec(MediumDec const& copy) = default;
-	//MediumDec& operator=(MediumDec const& copy) = default;
-#pragma region Math/Trigonomic Etc Functions
-	MediumDec Abs()
-	{
-		if (DecimalStatus < 0)
-		{
-			DecimalStatus *= -1;
-		}
-		return *this;
-	}
-	MediumDec Floor()
-	{
-		if (DecimalStatus == NegativeWholeNumber)
-		{
-			return *this;
-		}
-		if (DecimalStatus < 0)
-		{
-			DecimalStatus = 0;
-			IntValue += 1;
-		}
-		else
-		{
-			DecimalStatus = 0;
-		}
-		return *this;
-	}
-	MediumDec Ceil()
-	{
-		if (DecimalStatus == NegativeWholeNumber)
-		{
-			return *this;
-		}
-		if (DecimalStatus < 0)
-		{
-			DecimalStatus = 0;
-		}
-		else
-		{
-			DecimalStatus = 0;
-			IntValue += 1;
-		}
-		return *this;
-	}
-
-	MediumDec Trunc()
-	{
-		if (DecimalStatus != NegativeWholeNumber)
-		{
-			DecimalStatus = 0;
-		}
-		return *this;
-	}
-#pragma endregion Math/Trigonomic Etc Functions
-#pragma region SpecialStatus based functions
-	bool IsInfinity()
-	{
-		return false;
-	}
-#pragma endregion SpecialStatus based functions
-
 #pragma region From Standard types to this type
-		/// <summary>
-		///
-		/// </summary>
-		/// <param name="Value"></param>
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="Value"></param>
 	MediumDec(__int8 Value)
 	{
 		if (Value < 0) { this->DecimalStatus = NegativeWholeNumber; Value *= -1; }
@@ -1274,13 +279,6 @@ public:
 	}
 
 #pragma endregion From Standard types to this type
-
-	std::string ToString();
-	std::string ToFullString();
-	std::string ToTrimmedString();
-
-	static MediumDec GetValueFromString(std::string Value);
-
 #pragma region From this type to Standard types
 
 	///// <summary>
@@ -1390,7 +388,7 @@ public:
 	}
 
 	/// <summary>
-	///MediumDec to uint64 explicit conversion
+	///MediumDec to unsigned int64 explicit conversion
 	/// </summary>
 	explicit operator unsigned __int64()
 	{
@@ -1418,7 +416,7 @@ public:
 	}
 
 	/// <summary>
-	///MediumDec to uint16 explicit conversion
+	///MediumDec to unsigned int16 explicit conversion
 	/// </summary>
 	/// <param name="self"></param>
 	explicit operator unsigned short()
@@ -1451,7 +449,7 @@ public:
 	/// <param name="self"></param>
 	explicit operator bool()
 	{
-		return (int)this == 1;
+		return (int)*this == 1;
 	}
 
 	///// <summary>
@@ -1461,6 +459,883 @@ public:
 	//explicit operator dynamic() => MediumDec.Initialize(self);
 
 #pragma endregion From this type to Standard types
+#pragma region OperationTemplate
+	template <typename ValueType>
+	static MediumDec& ApplyUnsignedIntAddition(MediumDec& self, ValueType Value)
+	{
+		if (self.DecimalStatus < 0)
+		{
+			if (Value > self.IntValue)
+			{
+				self.DecimalStatus *= -1;
+				Value -= (unsigned int)self.IntValue;
+				self.IntValue = (unsigned int)Value;
+			}
+			else if (Value == self.IntValue)
+			{
+				if (self.DecimalStatus == NegativeWholeNumber)
+				{
+					self.DecimalStatus = 0;
+				}
+				self.IntValue = 0;
+			}
+			else
+			{
+				self.IntValue -= Value;
+			}
+		}
+		else
+		{
+			self.IntValue += Value;
+		}
+		return self;
+	}
+	template <typename ValueType>
+	MediumDec& ApplyUnsignedIntAddition(ValueType Value)
+	{
+		return ApplyUnsignedIntAddition(&this, Value)
+	}
+	template <typename ValueType>
+	static MediumDec& ApplyIntAddition(MediumDec& self, ValueType Value)
+	{
+		bool SelfIsNegative = self.DecimalStatus < 0;
+		bool ValueIsNegative = Value < 0;
+		if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
+		{
+			self.IntValue += (unsigned int)Value;
+		}
+		else if (SelfIsNegative)//-X + Y
+		{
+			if (self.IntValue == Value)
+			{
+				self.IntValue = 0;
+			}
+			else if (self.IntValue > Value)
+			{
+				self.IntValue -= (unsigned int)Value;
+			}
+			else
+			{
+				self.IntValue = (unsigned int)Value - self.IntValue;
+				SelfIsNegative = false;
+			}
+		}
+		else// X - Y
+		{
+			if (self.IntValue == Value)
+			{
+				self.IntValue = 0;
+			}
+			else if (self.IntValue > Value)
+			{
+				self.IntValue -= (unsigned int)Value;
+			}
+			else
+			{
+				self.IntValue = (unsigned int)Value - self.IntValue;
+				SelfIsNegative = true;
+			}
+		}
+		if (self.DecimalStatus > 0 && SelfIsNegative)
+		{
+			self.DecimalStatus *= -1;
+		}
+		else if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+	}
+	template <typename ValueType>
+	MediumDec& ApplyIntAddition(ValueType Value)
+	{
+		return ApplyIntAddition(&this, Value)
+	}
+	template <typename ValueType>
+	static MediumDec& ApplyUnsignedIntSubtraction(MediumDec& self, ValueType Value)
+	{
+		bool SelfIsNegative = self.DecimalStatus < 0;
+		if (SelfIsNegative)//(-X) - Y
+		{
+			self.IntValue += (unsigned int)Value;
+		}
+		else//X - Y
+		{
+			if (self.IntValue == Value)
+			{
+				self.IntValue = 0;
+			}
+			else if (Value > self.IntValue)
+			{
+				self.IntValue = (unsigned int)Value - self.IntValue;
+				SelfIsNegative = true;
+			}
+			else
+			{
+				self.IntValue -= (unsigned int)Value;
+			}
+		}
+		if (self.DecimalStatus > 0 && SelfIsNegative)
+		{
+			self.DecimalStatus *= -1;
+		}
+		else if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+	}
+	template <typename ValueType>
+	MediumDec& ApplyUnsignedIntSubtraction(ValueType Value)
+	{
+		return ApplyUnsignedIntSubtraction(&this, Value)
+	}
+	template <typename ValueType>
+	static MediumDec& ApplyIntSubtraction(MediumDec& self, ValueType Value)
+	{
+		bool SelfIsNegative = self.DecimalStatus < 0;
+		bool ValueIsNegative = Value < 0;
+		if (SelfIsNegative)
+		{
+			if (ValueIsNegative == false)//(-X) - (Y)
+			{
+				self.IntValue += (unsigned int)Value;
+			}
+			else//(-X) - (-Y)
+			{
+				if (self.IntValue == Value)
+				{
+					self.IntValue = 0;
+				}
+				else if (Value > self.IntValue)
+				{
+					self.IntValue = (unsigned int)Value - self.IntValue;
+					SelfIsNegative = false;
+				}
+				else
+				{
+					self.IntValue -= (unsigned int)(Value*-1);
+				}
+			}
+		}
+		else
+		{
+			if (ValueIsNegative)//X - (-Y)
+			{
+				self.IntValue += (unsigned int)(Value*-1);
+			}
+			else//X - (Y)
+			{
+				if (self.IntValue == Value)
+				{
+					self.IntValue = 0;
+				}
+				else if (Value > self.IntValue)
+				{
+					self.IntValue = (unsigned int)Value - self.IntValue;
+					SelfIsNegative = true;
+				}
+				else
+				{
+					self.IntValue -= (unsigned int)Value;
+				}
+			}
+		}
+		if (self.DecimalStatus > 0 && SelfIsNegative)
+		{
+			self.DecimalStatus *= -1;
+		}
+		else if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+	}
+	template <typename ValueType>
+	MediumDec& ApplyIntSubtraction(ValueType Value)
+	{
+		return ApplyIntSubtraction(&this, Value)
+	}
+	template <typename ValueType>
+	static MediumDec& ApplyIntMultiplication(MediumDec& self, ValueType Value)
+	{
+		bool SelfIsNegative = self.DecimalStatus < 0;
+		if (self.DecimalStatus == 0)
+		{
+			if (Value < 0)
+			{
+				self.IntValue *= (Value * -1);
+				self.DecimalStatus = NegativeWholeNumber;
+			}
+			else
+			{
+				self.IntValue *= Value;
+			}
+		}
+		else if (self.DecimalStatus == NegativeWholeNumber)
+		{
+			if (Value < 0)
+			{
+				self.IntValue *= (Value * -1);
+				self.DecimalStatus = 0;
+			}
+			else
+			{
+				self.IntValue *= Value;
+			}
+		}
+		else
+		{
+			if (SelfIsNegative)
+			{
+				self.DecimalStatus *= -1;
+			}
+			self.IntValue *= Value;
+			long TempDec = (long)self.DecimalStatus;
+			TempDec *= Value;
+			if (TempDec >= DecimalOverflow)
+			{
+				long OverflowVal = TempDec / DecimalOverflow;
+				TempDec -= OverflowVal * DecimalOverflow;
+				self.IntValue += (unsigned int)OverflowVal;
+			}
+			if (TempDec == 0) { self.DecimalStatus = 0; }
+			else
+			{
+				if (SelfIsNegative) { TempDec *= -1; }
+				self.DecimalStatus = (int)TempDec;
+			}
+		}
+		return self;
+	}
+	template <typename ValueType>
+	MediumDec& ApplyIntMultiplication(ValueType Value)
+	{
+		return ApplyIntMultiplication(&this, Value)
+	}
+	template <typename ValueType>
+	static MediumDec& ApplyIntDivision(MediumDec& self, ValueType Value);
+	template <typename ValueType>
+	MediumDec& ApplyIntDivision(ValueType Value)
+	{
+		return ApplyIntDivision(&this, Value)
+	}
+	template <typename ValueType>
+	static MediumDec& ApplyIntModulus(MediumDec& self, ValueType Value);
+	template <typename ValueType>
+	static MediumDec& ApplyNegModulus(MediumDec& self, ValueType Value);
+	template <typename ValueType>
+	MediumDec& ApplyIntModulus(ValueType Value)
+	{
+		return ApplyIntModulus(&this, Value)
+	}
+	template <typename ValueType>
+	static MediumDec& ApplyNegPow(MediumDec& self, ValueType NumOfTimes);
+	template <typename ValueType>
+	static MediumDec& ApplyIntPow(MediumDec& self, ValueType Value);
+	template <typename ValueType>
+	MediumDec& ApplyIntPow(ValueType Value)
+	{
+		return ApplyIntPow(&this, Value)
+	}
+	template <typename ValueType>
+	static bool SelfIsEqual(MediumDec& self, ValueType Value)
+	{
+		return self == (MediumDec)Value;
+	}
+	template <typename ValueType>
+	static bool SelfIsNotEqual(MediumDec& self, ValueType Value)
+	{
+		return self != (MediumDec)Value;
+	}
+	template <typename ValueType>
+	static bool SelfIsLessor(MediumDec& self, ValueType Value)
+	{
+		return self < (MediumDec)Value;
+	}
+	template <typename ValueType>
+	static bool SelfIsGreator(MediumDec& self, ValueType Value)
+	{
+		return self > (MediumDec)Value;
+	}
+	template <typename ValueType>
+	static bool SelfIsLessorOrEqual(MediumDec& self, ValueType Value)
+	{
+		return self <= (MediumDec)Value;
+	}
+	template <typename ValueType>
+	static bool SelfIsGreatorOrEqual(MediumDec& self, ValueType Value)
+	{
+		return self >= (MediumDec)Value;
+	}
+#pragma endregion OperationTemplate
+#pragma region Operations
+	//https://en.wikibooks.org/wiki/C%2B%2B_Programming/Operators/Operator_Overloading
+	//Addition Operations
+	friend MediumDec operator+(MediumDec& self, MediumDec& Value)
+	{
+		bool SelfIsNegative = self.DecimalStatus < 0;
+		if (SelfIsNegative)
+		{
+			if (self.DecimalStatus == NegativeWholeNumber) { self.DecimalStatus = 0; }
+			else { self.DecimalStatus *= -1; }
+		}
+		bool ValueIsNegative = Value.DecimalStatus < 0;
+		if (ValueIsNegative)
+		{
+			if (Value.DecimalStatus == NegativeWholeNumber) { Value.DecimalStatus = 0; }
+			else { Value.DecimalStatus *= -1; }
+		}
+		bool PerformDecimalHalf = true;
+		if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
+		{
+			self.IntValue += Value.IntValue;
+			self.DecimalStatus += Value.DecimalStatus;
+			if (self.DecimalStatus >= DecimalOverflow)
+			{
+				self.DecimalStatus -= DecimalOverflow;
+				++self.IntValue;
+			}
+			PerformDecimalHalf = false;
+		}
+		else if (SelfIsNegative)//-X + Y
+		{
+			if (self.IntValue == Value.IntValue)
+			{
+				self.IntValue = 0;
+			}
+			else if (self.IntValue > Value.IntValue)
+			{
+				self.IntValue -= Value.IntValue;
+			}
+			else
+			{
+				self.IntValue = (unsigned int)(Value.IntValue - self.IntValue);
+				SelfIsNegative = false;
+			}
+		}
+		else// X - Y
+		{
+			if (self.IntValue == Value.IntValue)
+			{
+				self.IntValue = 0;
+			}
+			else if (self.IntValue > Value.IntValue)
+			{
+				self.IntValue -= Value.IntValue;
+			}
+			else
+			{
+				self.IntValue = (unsigned int)(Value.IntValue - self.IntValue);
+				SelfIsNegative = true;
+			}
+		}
+		if (PerformDecimalHalf)
+		{
+			if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
+			{
+				self.DecimalStatus += Value.DecimalStatus;
+				if (self.DecimalStatus >= DecimalOverflow)
+				{
+					self.DecimalStatus -= DecimalOverflow;
+					++self.IntValue;
+				}
+			}
+			else if (SelfIsNegative)
+			{
+				if (self.DecimalStatus == Value.DecimalStatus)
+				{
+					self.DecimalStatus = NegativeWholeNumber;
+				}
+				else if (self.DecimalStatus > Value.DecimalStatus)
+				{
+					self.DecimalStatus -= Value.DecimalStatus;
+				}
+				else
+				{
+					self.DecimalStatus = Value.DecimalStatus - self.DecimalStatus;
+					SelfIsNegative = false;
+				}
+			}
+			else
+			{
+				if (self.DecimalStatus == Value.DecimalStatus)
+				{
+					self.DecimalStatus = NegativeWholeNumber;
+				}
+				else if (self.DecimalStatus > Value.DecimalStatus)
+				{
+					self.DecimalStatus -= Value.DecimalStatus;
+				}
+				else
+				{
+					self.DecimalStatus = Value.DecimalStatus - self.DecimalStatus;
+					SelfIsNegative = true;
+				}
+			}
+		}
+		if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+		if (self.DecimalStatus > 0 && SelfIsNegative)
+		{
+			self.DecimalStatus *= -1;
+		}
+		return self;
+	}
+	friend MediumDec operator+(MediumDec& self, const unsigned int Value) { return ApplyUnsignedIntAddition(self, Value); }
+	friend MediumDec operator+(MediumDec& self, signed int Value) { return ApplyIntAddition(self, Value); }
+	friend MediumDec operator+(MediumDec& self, unsigned __int8 Value) { return ApplyUnsignedIntAddition(self, Value); }
+	friend MediumDec operator+(MediumDec& self, signed __int8 Value) { return ApplyIntAddition(self, Value); }
+	friend MediumDec operator+(MediumDec& self, unsigned __int16& Value) { return ApplyUnsignedIntAddition(self, Value); }
+	friend MediumDec operator+(MediumDec& self, signed __int16& Value) { return ApplyIntAddition(self, Value); }
+	friend MediumDec operator+(MediumDec& self, unsigned __int64& Value) { return ApplyUnsignedIntAddition(self, Value); }
+	friend MediumDec operator+(MediumDec& self, signed __int64& Value) { return ApplyIntAddition(self, Value); }
+	//friend MediumDec operator+(MediumDec& self, double Value)
+	//{
+	//}
+	//friend MediumDec operator+(MediumDec& self, std::std::string Value)
+	//{
+	//}
+
+	//Subtraction Operations
+	friend MediumDec operator-(MediumDec& self, MediumDec Value)
+	{
+		bool SelfIsNegative = self.DecimalStatus < 0;
+		if (SelfIsNegative)
+		{
+			if (self.DecimalStatus == NegativeWholeNumber) { self.DecimalStatus = 0; }
+			else { self.DecimalStatus *= -1; }
+		}
+		bool ValueIsNegative = Value.DecimalStatus < 0;
+		if (ValueIsNegative)
+		{
+			if (Value.DecimalStatus == NegativeWholeNumber) { Value.DecimalStatus = 0; }
+			else { Value.DecimalStatus *= -1; }
+		}
+		if (ValueIsNegative) { ValueIsNegative = false; }
+		bool PerformDecimalHalf = true;
+		if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
+		{
+			self.IntValue += Value.IntValue;
+			self.DecimalStatus += Value.DecimalStatus;
+			if (self.DecimalStatus >= DecimalOverflow)
+			{
+				self.DecimalStatus -= DecimalOverflow;
+				++self.IntValue;
+			}
+			PerformDecimalHalf = false;
+		}
+		else if (SelfIsNegative)//-X + Y
+		{
+			if (self.IntValue == Value.IntValue)
+			{
+				self.IntValue = 0;
+			}
+			else if (self.IntValue > Value.IntValue)
+			{
+				self.IntValue -= Value.IntValue;
+			}
+			else
+			{
+				self.IntValue = (unsigned int)(Value.IntValue - self.IntValue);
+				SelfIsNegative = false;
+			}
+		}
+		else// X - Y
+		{
+			if (self.IntValue == Value.IntValue)
+			{
+				self.IntValue = 0;
+			}
+			else if (self.IntValue > Value.IntValue)
+			{
+				self.IntValue -= Value.IntValue;
+			}
+			else
+			{
+				self.IntValue = (unsigned int)(Value.IntValue - self.IntValue);
+				SelfIsNegative = true;
+			}
+		}
+		if (PerformDecimalHalf)
+		{
+			if ((SelfIsNegative && ValueIsNegative) || (SelfIsNegative == false && ValueIsNegative == false))
+			{
+				self.DecimalStatus += Value.DecimalStatus;
+				if (self.DecimalStatus >= DecimalOverflow)
+				{
+					self.DecimalStatus -= DecimalOverflow;
+					++self.IntValue;
+				}
+			}
+			else if (SelfIsNegative)
+			{
+				if (self.DecimalStatus == Value.DecimalStatus)
+				{
+					self.DecimalStatus = NegativeWholeNumber;
+				}
+				else if (self.DecimalStatus > Value.DecimalStatus)
+				{
+					self.DecimalStatus -= Value.DecimalStatus;
+				}
+				else
+				{
+					self.DecimalStatus = Value.DecimalStatus - self.DecimalStatus;
+					SelfIsNegative = false;
+				}
+			}
+			else
+			{
+				if (self.DecimalStatus == Value.DecimalStatus)
+				{
+					self.DecimalStatus = NegativeWholeNumber;
+				}
+				else if (self.DecimalStatus > Value.DecimalStatus)
+				{
+					self.DecimalStatus -= Value.DecimalStatus;
+				}
+				else
+				{
+					self.DecimalStatus = Value.DecimalStatus - self.DecimalStatus;
+					SelfIsNegative = true;
+				}
+			}
+		}
+		if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+		if (self.DecimalStatus > 0 && SelfIsNegative)
+		{
+			self.DecimalStatus *= -1;
+		}
+		return self;
+	}
+	friend MediumDec operator-(MediumDec& self, unsigned int Value) { return ApplyUnsignedIntSubtraction(self, Value); }
+	friend MediumDec operator-(MediumDec& self, signed int Value) { return ApplyIntSubtraction(self, Value); }
+	friend MediumDec operator-(MediumDec& self, unsigned __int8 Value) { return ApplyUnsignedIntSubtraction(self, Value); }
+	friend MediumDec operator-(MediumDec& self, signed __int8 Value) { return ApplyIntSubtraction(self, Value); }
+	friend MediumDec operator-(MediumDec& self, unsigned __int16 Value) { return ApplyUnsignedIntSubtraction(self, Value); }
+	friend MediumDec operator-(MediumDec& self, signed __int16 Value) { return ApplyIntSubtraction(self, Value); }
+	friend MediumDec operator-(MediumDec& self, unsigned __int64 Value) { return ApplyUnsignedIntSubtraction(self, Value); }
+	friend MediumDec operator-(MediumDec& self, signed __int64 Value) { return ApplyIntSubtraction(self, Value); }
+	//friend MediumDec operator-(MediumDec& self, double Value)
+	//{
+	//}
+	//friend MediumDec operator-(MediumDec& self, std::std::string Value)
+	//{
+	//}
+
+	//Multiplication Operations
+	friend MediumDec operator*(MediumDec& self, unsigned int Value) { return ApplyIntMultiplication(self, Value); }
+	friend MediumDec operator*(MediumDec& self, signed int Value) { return ApplyIntMultiplication(self, Value); }
+	friend MediumDec operator*(MediumDec& self, unsigned __int8 Value) { return ApplyIntMultiplication(self, Value); }
+	friend MediumDec operator*(MediumDec& self, signed __int8 Value) { return ApplyIntMultiplication(self, Value); }
+	friend MediumDec operator*(MediumDec& self, unsigned __int16 Value) { return ApplyIntMultiplication(self, Value); }
+	friend MediumDec operator*(MediumDec& self, signed __int16 Value) { return ApplyIntMultiplication(self, Value); }
+	friend MediumDec operator*(MediumDec& self, unsigned __int64 Value) { return ApplyIntMultiplication(self, Value); }
+	friend MediumDec operator*(MediumDec& self, signed __int64 Value) { return ApplyIntMultiplication(self, Value); }
+	friend MediumDec operator*(MediumDec& self, MediumDec Value)
+	{
+		if (Value.IntValue == 0 && Value.DecimalStatus == 0)
+		{
+			self.IntValue = 0;
+			self.DecimalStatus = 0;
+			return self;
+		}
+		bool SelfIsNegative = self.DecimalStatus < 0;
+		bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
+		if (SelfIsNegative)
+		{
+			if (SelfIsWholeN) { self.DecimalStatus = 0; }
+			else { self.DecimalStatus *= -1; }
+		}
+		bool ValueIsNegative = Value.DecimalStatus < 0;
+		bool ValueIsWholeN = Value.DecimalStatus == NegativeWholeNumber;
+		if (ValueIsNegative)
+		{
+			if (ValueIsWholeN) { Value.DecimalStatus = 0; }
+			else { Value.DecimalStatus *= -1; }
+		}
+		if (self.DecimalStatus == 0 && Value.DecimalStatus == 0)
+		{
+			self.IntValue *= Value.IntValue;
+		}
+		else if (Value.DecimalStatus == 0)//Y is integer
+		{
+			ApplyIntMultiplication(self, Value.IntValue);//self *= Value.IntValue;
+		}
+		else if (self.DecimalStatus == 0)
+		{
+			ApplyIntMultiplication(Value, self.IntValue);//Value *= self.IntValue;
+			self = Value;
+		}
+		else if (Value.IntValue == 0 && self.IntValue == 0)
+		{
+			__int64 Temp04 = (__int64)self.DecimalStatus * (__int64)Value.DecimalStatus;
+			Temp04 /= DecimalOverflow;
+			self.DecimalStatus = (signed int)Temp04;
+		}
+		else
+		{
+			//X.Y * Z.V == ((X * Z) + (X * .V) + (.Y * Z) + (.Y * .V))
+			__int64 Temp02 = (__int64)(self.IntValue * DecimalOverflow) + self.DecimalStatus;
+			Temp02 *= Value.IntValue;//Temp02 holds __int64 version of X.Y * Z
+			//X.Y *.V
+			__int64 Temp03 = (__int64)self.IntValue * Value.DecimalStatus;//Temp03 holds __int64 version of X *.V
+			__int64 Temp04 = (__int64)self.DecimalStatus * (__int64)Value.DecimalStatus;
+			Temp04 /= DecimalOverflow;
+			//Temp04 holds __int64 version of .Y * .V
+			__int64 IntegerRep = Temp02 + Temp03 + Temp04;
+			__int64 IntHalf = IntegerRep / DecimalOverflow;
+			IntegerRep -= IntHalf * (__int64)DecimalOverflow;
+			self.IntValue = (unsigned int)IntHalf;
+			self.DecimalStatus = (signed int)IntegerRep;
+		}
+		if (ValueIsNegative)
+		{
+			SelfIsNegative = !SelfIsNegative;
+		}
+		if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
+		return self;
+	}
+
+	//Division Operations
+	friend MediumDec operator/(MediumDec& self, unsigned int Value) { return ApplyIntDivision(self, Value); }
+	friend MediumDec operator/(MediumDec& self, signed int Value) { return ApplyIntDivision(self, Value); }
+	friend MediumDec operator/(MediumDec& self, unsigned __int8 Value) { return ApplyIntDivision(self, Value); }
+	friend MediumDec operator/(MediumDec& self, signed __int8 Value) { return ApplyIntDivision(self, Value); }
+	friend MediumDec operator/(MediumDec& self, unsigned __int16 Value) { return ApplyIntDivision(self, Value); }
+	friend MediumDec operator/(MediumDec& self, signed __int16 Value) { return ApplyIntDivision(self, Value); }
+	friend MediumDec operator/(MediumDec& self, unsigned __int64 Value) { return ApplyIntDivision(self, Value); }
+	friend MediumDec operator/(MediumDec& self, signed __int64 Value) { return ApplyIntDivision(self, Value); }
+	friend MediumDec operator/(MediumDec& self, MediumDec Value)
+	{
+		if (Value.IntValue == 0 && Value.DecimalStatus == 0)
+		{
+#if (MediumDec_PreventDivideByZeroException)
+			std::cout<<"Prevented dividing by zero exception by returning self instead";
+			return self;
+#else
+			throw "Value can not be divided by zero";
+#endif
+		}
+		bool SelfIsNegative = self.DecimalStatus < 0;
+		bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
+		if (SelfIsNegative)
+		{
+			if (SelfIsWholeN) { self.DecimalStatus = 0; }
+			else { self.DecimalStatus *= -1; }
+		}
+		bool ValueIsNegative = Value.DecimalStatus < 0;
+		bool ValueIsWholeN = Value.DecimalStatus == NegativeWholeNumber;
+		if (ValueIsNegative)
+		{
+			if (ValueIsWholeN) { Value.DecimalStatus = 0; }
+			else { Value.DecimalStatus *= -1; }
+		}
+		if (self.DecimalStatus == 0 && Value.DecimalStatus == 0)
+		{
+			__int64 SRep = self.IntValue * DecimalOverflow;
+			__int64 YRep = Value.IntValue;
+			SRep /= Value.IntValue;
+			if (SRep >= DecimalOverflow)
+			{
+				__int64 OverflowVal = SRep / DecimalOverflow;
+				SRep -= OverflowVal * DecimalOverflow;
+				self.IntValue = (unsigned int)OverflowVal;
+				self.DecimalStatus = (signed int)SRep;
+			}
+		}
+		else if (Value.DecimalStatus == 0)//Y is integer
+		{
+			ApplyIntDivision(self, Value.IntValue);//self /= Value.IntValue;
+		}
+		else if (self.IntValue < 10 && Value.IntValue == 0)//Using self method would cause overflow of SelfRep if more in most cases
+		{//self part seems to work unless Value.int is more than 0 for some reason
+			__int64 SelfRep = (__int64)(self.IntValue * DecimalOverflow) + self.DecimalStatus;
+			SelfRep *= DecimalOverflow;
+			__int64 ValueRep = (__int64)(Value.IntValue * DecimalOverflow) + Value.DecimalStatus;
+			SelfRep /= ValueRep;
+			__int64 IntHalf = SelfRep / DecimalOverflow;
+			SelfRep -= IntHalf * (__int64)DecimalOverflow;
+			self.IntValue = (unsigned int)IntHalf;
+			self.DecimalStatus = (signed int)SelfRep;
+		}
+		else
+		{
+			__int64 SelfRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalStatus;
+			__int64 ValueRep = ((__int64)Value.IntValue * DecimalOverflow) + Value.DecimalStatus;
+			SelfRep /= ValueRep;
+			unsigned int IntResult = (unsigned int)SelfRep;
+			SelfRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalStatus;
+			__int64 Temp01 = (__int64)IntResult * ValueRep;
+			SelfRep -= Temp01;
+			SelfRep *= DecimalOverflow;
+			SelfRep /= ValueRep;
+			self.IntValue = IntResult;
+			self.DecimalStatus = (signed int)SelfRep;
+		}
+		if (ValueIsNegative)
+		{
+			SelfIsNegative = !SelfIsNegative;
+		}
+		if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
+		return self;
+	}
+	//Modulus Operations
+	friend MediumDec operator%(MediumDec& self, unsigned int Value) { return ApplyIntModulus(self, Value); }
+	friend MediumDec operator%(MediumDec& self, signed int Value) { return ApplyIntModulus(self, Value); }
+	friend MediumDec operator%(MediumDec& self, unsigned __int8 Value) { return ApplyIntModulus(self, Value); }
+	friend MediumDec operator%(MediumDec& self, signed __int8 Value) { return ApplyIntModulus(self, Value); }
+	friend MediumDec operator%(MediumDec& self, unsigned __int16 Value) { return ApplyIntModulus(self, Value); }
+	friend MediumDec operator%(MediumDec& self, signed __int16 Value) { return ApplyIntModulus(self, Value); }
+	friend MediumDec operator%(MediumDec& self, unsigned __int64 Value) { return ApplyIntModulus(self, Value); }
+	friend MediumDec operator%(MediumDec& self, signed __int64 Value) { return ApplyIntModulus(self, Value); }
+	friend MediumDec operator%(MediumDec& self, MediumDec Value)
+	{
+		if (Value.IntValue == 0 && Value.DecimalStatus == 0)
+		{
+			return MediumDec::Zero;//Return zero instead of N/A
+		}
+		if(self.DecimalStatus==0||self.DecimalStatus==NegativeWholeNumber)
+		{
+			if(Value.DecimalStatus == NegativeWholeNumber)
+			{
+				self = ApplyNegModulus(self, Value.IntValue);
+				return self;
+			}
+			else
+			{
+				self = ApplyIntModulus(self, Value.IntValue);//self %= Value.IntValue;//Fix for error C2676 occurring
+				return self;
+			}
+		}
+		bool SelfIsNegative = self.DecimalStatus < 0;
+		bool SelfIsWholeN = self.DecimalStatus == NegativeWholeNumber;
+		if (SelfIsNegative)
+		{
+			if (SelfIsWholeN) { self.DecimalStatus = 0; }
+			else { self.DecimalStatus *= -1; }
+		}
+		bool ValueIsNegative = Value.DecimalStatus < 0;
+		bool ValueIsWholeN = Value.DecimalStatus == NegativeWholeNumber;
+		if (ValueIsNegative)
+		{
+			if (ValueIsWholeN) { Value.DecimalStatus = 0; }
+			else { Value.DecimalStatus *= -1; }
+		}
+		__int64 SelfRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalStatus;
+		__int64 ValueRep = ((__int64)Value.IntValue * DecimalOverflow) + Value.DecimalStatus;
+		SelfRep /= ValueRep;
+		__int64 IntResult = SelfRep;
+		SelfRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalStatus;
+		SelfRep -= IntResult * ValueRep;
+		__int64 IntHalf = SelfRep / DecimalOverflow;
+		SelfRep -= IntHalf * (__int64)DecimalOverflow;
+		self.IntValue = (unsigned int)IntHalf;
+		self.DecimalStatus = (int)SelfRep;
+		if(SelfIsNegative)
+		{
+			self = Value - self;
+			if (ValueIsNegative==false)
+			{
+				SelfIsNegative = false;
+			}
+		}
+		else
+		{
+			if(ValueIsNegative)
+			{
+				self = Value - self;
+			}
+		}
+		if (SelfIsNegative) { if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; } else { self.DecimalStatus *= -1; } }
+		return self;
+	}
+	//Power of Operations
+	friend MediumDec operator^(MediumDec& self, MediumDec Value);
+	friend MediumDec operator^(MediumDec& self, unsigned int Value) { return ApplyIntPow(self, Value); }
+	friend MediumDec operator^(MediumDec& self, signed int Value) { return ApplyIntPow(self, Value); }
+	friend MediumDec operator^(MediumDec& self, unsigned __int8 Value) { return ApplyIntPow(self, Value); }
+	friend MediumDec operator^(MediumDec& self, signed __int8 Value) { return ApplyIntPow(self, Value); }
+	friend MediumDec operator^(MediumDec& self, unsigned __int16 Value) { return ApplyIntPow(self, Value); }
+	friend MediumDec operator^(MediumDec& self, signed __int16 Value) { return ApplyIntPow(self, Value); }
+	friend MediumDec operator^(MediumDec& self, unsigned __int64 Value) { return ApplyIntPow(self, Value); }
+	friend MediumDec operator^(MediumDec& self, signed __int64 Value) { return ApplyIntPow(self, Value); }
+
+	//MediumDec operator=(double Value){}
+	//MediumDec operator=(float Value) { ApplyEqualFloatValueOperation(&Value); }
+	//MediumDec operator=(std::std::string Value);
+	//MediumDec operator=(unsigned int Value);
+	//MediumDec operator=(int Value);
+	//MediumDec operator=(signed __int64 Value);
+	//MediumDec operator=(unsigned __int64 Value);
+	MediumDec operator ++()
+	{
+		return *this + 1;
+	}
+
+	MediumDec operator --()
+	{
+		return *this - 1;
+	}
+
+	MediumDec operator-() { SwapNegativeStatus(); return *this; }
+	MediumDec operator!() { SwapNegativeStatus(); return *this; }
+#pragma endregion Operation
+	//MediumDec(MediumDec const& copy) = default;
+	//MediumDec& operator=(MediumDec const& copy) = default;
+#pragma region Math/Trigonomic Etc Functions
+	MediumDec Abs()
+	{
+		if (DecimalStatus < 0)
+		{
+			DecimalStatus *= -1;
+		}
+		return *this;
+	}
+	MediumDec Floor()
+	{
+		if (DecimalStatus == NegativeWholeNumber)
+		{
+			return *this;
+		}
+		if (DecimalStatus < 0)
+		{
+			DecimalStatus = 0;
+			IntValue += 1;
+		}
+		else
+		{
+			DecimalStatus = 0;
+		}
+		return *this;
+	}
+	MediumDec Ceil()
+	{
+		if (DecimalStatus == NegativeWholeNumber)
+		{
+			return *this;
+		}
+		if (DecimalStatus < 0)
+		{
+			DecimalStatus = 0;
+		}
+		else
+		{
+			DecimalStatus = 0;
+			IntValue += 1;
+		}
+		return *this;
+	}
+
+	MediumDec Trunc()
+	{
+		if (DecimalStatus != NegativeWholeNumber)
+		{
+			DecimalStatus = 0;
+		}
+		return *this;
+	}
+#pragma endregion Math/Trigonomic Etc Functions
+#pragma region SpecialStatus based functions
+	bool IsInfinity()
+	{
+		return false;
+	}
+#pragma endregion SpecialStatus based functions
+
+	std::string ToString();
+	std::string ToFullString();
+	std::string ToTrimmedString();
+
+	static MediumDec GetValueFromString(std::string Value);
+
 #pragma region Comparison Operators
 	friend bool operator==(MediumDec& self, MediumDec Value)
 	{
@@ -1472,7 +1347,7 @@ public:
 	}
 	friend bool operator<=(MediumDec& self, MediumDec Value)
 	{
-		if (self.intValue == Value.intValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
+		if (self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
 		else
 		{
 			bool SelfIsNegative = self.DecimalStatus < 0;
@@ -1528,7 +1403,7 @@ public:
 	}
 	friend bool operator<(MediumDec& self, MediumDec Value)
 	{
-		if (self.intValue == Value.intValue && self.DecimalStatus == Value.DecimalStatus) { return false; }
+		if (self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return false; }
 		else
 		{
 			bool SelfIsNegative = self.DecimalStatus < 0;
@@ -1576,7 +1451,7 @@ public:
 	}
 	friend bool operator>=(MediumDec& self, MediumDec Value)
 	{
-		if (self.intValue == Value.intValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
+		if (self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return true; }
 		else
 		{
 			bool SelfIsNegative = self.DecimalStatus < 0;
@@ -1624,7 +1499,7 @@ public:
 	}
 	friend bool operator>(MediumDec& self, MediumDec Value)
 	{
-		if (self.intValue == Value.intValue && self.DecimalStatus == Value.DecimalStatus) { return false; }
+		if (self.IntValue == Value.IntValue && self.DecimalStatus == Value.DecimalStatus) { return false; }
 		else
 		{
 			bool SelfIsNegative = self.DecimalStatus < 0;
@@ -1808,7 +1683,7 @@ public:
 			else//(ZDif==0.0)
 			{
 				PosType = 3;
-				//RedirectAngle.AngleX = MediumDec.Zero;
+				//RedirectAngle.AngleX = MediumDec::Zero;
 			}
 			if (OnCenter)
 			{//Target is either above,below, or exactly at actor position(Only adjust ZAngle since does not need to turn on x-y axis since on center)
@@ -1824,19 +1699,19 @@ public:
 			else
 			{
 				//----Z AngleRedirection
-				if (DifY < MediumDec.Zero && DifX == MediumDec.Zero)//North
+				if (DifY < MediumDec::Zero && DifX == MediumDec::Zero)//North
 				{
-					temp = MediumDec.Zero;
+					temp = MediumDec::Zero;
 				}
-				else if (DifX < MediumDec.Zero && DifY == MediumDec.Zero)//East(ProjRef is West/Left of TargetRef)
+				else if (DifX < MediumDec::Zero && DifY == MediumDec::Zero)//East(ProjRef is West/Left of TargetRef)
 				{
 					temp = East;
 				}
-				else if (DifY > MediumDec.Zero && DifX == MediumDec.Zero)//South
+				else if (DifY > MediumDec::Zero && DifX == MediumDec::Zero)//South
 				{
 					temp = South;
 				}
-				else if (DifX > MediumDec.Zero && DifY == MediumDec.Zero)//West(ProjRef is East/Right of TargetRef)
+				else if (DifX > MediumDec::Zero && DifY == MediumDec::Zero)//West(ProjRef is East/Right of TargetRef)
 				{
 					temp = West;
 				}
@@ -1846,24 +1721,24 @@ public:
 					temp2 = MediumDec.Abs(DifX);
 					temp = temp / temp2;
 					temp = MediumDec.ATan(temp);
-					if (DifY < MediumDec.Zero)//North
+					if (DifY < MediumDec::Zero)//North
 					{
-						if (DifX < MediumDec.Zero)//East
+						if (DifX < MediumDec::Zero)//East
 						{
 							temp = East - temp;
 						}
-						else if (DifX > MediumDec.Zero)//West
+						else if (DifX > MediumDec::Zero)//West
 						{
 							temp = West + temp;
 						}
 					}
-					else if (DifY > MediumDec.Zero)//South
+					else if (DifY > MediumDec::Zero)//South
 					{
 						if (DifX < 0.0)//East
 						{
 							temp = East + temp;
 						}
-						else if (DifX > MediumDec.Zero)//West
+						else if (DifX > MediumDec::Zero)//West
 						{
 							temp = West - temp;
 						}
@@ -1876,7 +1751,7 @@ public:
 					//Side1=((TargetRef.GetPos x), (TargetRef.GetPos y), (ProjRef.GetPos z))
 					temp2 = ((DifX * DifX) + (DifY * DifY));
 					S1 = MediumDec.Sqrt(temp2);
-					if (S1 != MediumDec.Zero)//Avoid Divide by Zero Error
+					if (S1 != MediumDec::Zero)//Avoid Divide by Zero Error
 					{
 						temp = (DifZ * DifZ);//Side 3=DifZ, Side2=Distance
 											 //Law of Cosines=acos ((S1^2+S2^2-S3^2)/(2*S1*S2));Side3=SideOppositeAngle
@@ -1902,3 +1777,144 @@ public:
 };
 #endif
 #endif
+
+template<typename ValueType>
+inline MediumDec & MediumDec::ApplyIntDivision(MediumDec & self, ValueType Value)
+{
+	bool SelfIsNegative = self.DecimalStatus < 0;
+	if (Value < 0)
+	{
+		if (SelfIsNegative) { SelfIsNegative = false; }
+		else { SelfIsNegative = true; }
+		if (self.DecimalStatus == NegativeWholeNumber) { self.DecimalStatus = 0; }
+		else if (self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+		Value *= -1;
+	}
+	if (self.DecimalStatus == 0 || self.DecimalStatus == NegativeWholeNumber)//Only need to deal with Integer half of value
+	{
+		long ValueRep = (__int64)self.IntValue * DecimalOverflow;
+		ValueRep /= Value;
+		long WholeHalf = ValueRep / DecimalOverflow;
+		self.IntValue = (unsigned int)WholeHalf;
+		ValueRep -= WholeHalf;
+		self.DecimalStatus = (int)WholeHalf;
+	}
+	else
+	{
+		return self /= (MediumDec)Value;
+	}
+	if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+	return self;
+}
+
+template<typename ValueType>
+inline MediumDec& MediumDec::ApplyIntModulus(MediumDec& self, ValueType Value)
+{//https://www.quora.com/How-does-the-modulo-operation-work-with-negative-numbers-and-why
+	if (self.DecimalStatus == 0)
+	{
+		self.IntValue %= Value;
+		if (Value<0)
+		{
+			self.DecimalStatus = NegativeWholeNumber;
+			self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
+		}
+	}
+	else if (self.DecimalStatus == NegativeWholeNumber)
+	{
+		self.IntValue %= Value;
+		self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
+		if (Value > 0)//https://www.medcalc.org/manual/mod_function.php
+		{
+			self.DecimalStatus = 0;
+		}
+	}
+	else
+	{
+		self %= (MediumDec)Value;
+	}
+	return self;
+}
+
+template<typename ValueType>
+inline MediumDec & MediumDec::ApplyNegModulus(MediumDec & self, ValueType Value)
+{
+	if (self.DecimalStatus == 0)
+	{
+		self.IntValue %= Value;
+		self.DecimalStatus = NegativeWholeNumber;
+		self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
+	}
+	else if (self.DecimalStatus == NegativeWholeNumber)
+	{
+		self.IntValue %= Value;
+		self.IntValue = (unsigned int)(Value - (ValueType)self.IntValue);
+	}
+	else
+	{
+		self %= (MediumDec)Value;
+	}
+	return self;
+}
+
+template<typename ValueType>
+inline MediumDec & MediumDec::ApplyNegPow(MediumDec & self, ValueType NumOfTimes)
+{
+	MediumDec ValueMult = self;
+	self = One;
+	for (ValueType Num = 0; Num < NumOfTimes; Num++)
+	{
+		self /= ValueMult;
+	}
+	return self;
+}
+
+template<typename ValueType>
+inline MediumDec& MediumDec::ApplyIntPow(MediumDec & self, ValueType Value)
+{
+	if (self.DecimalStatus == 0 && self.IntValue == 10)
+	{
+		if (Value == 0)
+		{
+			self.IntValue = 1;
+		}
+		if (Value > 0)
+		{
+			self.IntValue = VariableConversionFunctions::PowerOfTens[Value];
+		}
+		else if (Value >= -9)
+		{
+			self.IntValue = 0;
+			self.DecimalStatus = DecimalOverflow / VariableConversionFunctions::PowerOfTens[Value*-1];
+		}
+		else
+		{
+			self.IntValue = 0;
+		}
+	}
+	else
+	{
+		if (Value>0)
+		{
+			ValueType NumOfTimes = Value - 1;
+			MediumDec ValueMult = self;
+			for (ValueType Num = 0; Num<NumOfTimes; Num++)
+			{
+				self *= ValueMult;
+			}
+		}
+		else
+		{
+			if (Value == 0)
+			{
+				self = One;
+			}
+			else
+			{
+				ValueType NumOfTimes = Value * -1;
+				return ApplyNegPow(self, NumOfTimes);
+			}
+		}
+	}
+	return self;
+}
+

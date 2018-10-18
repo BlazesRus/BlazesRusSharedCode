@@ -103,9 +103,22 @@ public:
 	double GetVectorValue(int index);
 	//Reconstruct as string
 	std::string ConvertToString();
-	//Reconstruct as Vector
-	DoubleList ConvertToList();
-	//Construct QuadDoubleVector from String
+
+	////Reconstruct as Vector(Causing error C2059 '(' for some reason)
+	//DoubleList ConvertToList()
+	//{
+	//	DoubleList TempValue;
+	//	for (int i = 0; i < 4; i++)
+	//	{
+	//		TempValue.Add(GetVectorValue(i));
+	//	}
+	//	return TempValue;
+	//}
+
+/// <summary>
+/// Construct QuadDoubleVector from String
+/// </summary>
+/// <param name="LineString">The string.</param>
 	void ReadQuadVectorFromString(std::string LineString);
 	QuadDoubleVector(std::string TempString);
 	QuadDoubleVector();

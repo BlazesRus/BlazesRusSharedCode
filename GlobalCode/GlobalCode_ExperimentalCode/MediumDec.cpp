@@ -19,32 +19,68 @@ MediumDec MediumDec::Minimum = MinimumValue();
 
 inline MediumDec::MediumDec(double Value)
 {
-	bool IsNegative = Value < 0;
+	bool IsNegative = Value < 0.0;
 	if (IsNegative) { Value *= -1.0; }
-	unsigned __int64 WholeValue = (unsigned __int64)std::floor(Value);
 	//Cap value if too big on initialize (preventing overflow on conversion)
-	if (Value > 4294967295)
+	if (Value > 4294967295.0)
 	{
-		Value = 4294967295;
+		IntValue = 4294967295;
+		if (IsNegative)
+		{
+			DecimalStatus = -999999999;
+		}
+		else
+		{
+			DecimalStatus = 999999999;
+		}
 	}
-	Value -= WholeValue;
-	IntValue = (unsigned int)WholeValue;
-	DecimalStatus = (int)(Value * 10000000000);
+	else
+	{
+		unsigned __int64 WholeValue = (unsigned __int64)std::floor(Value);
+		Value -= (double)WholeValue;
+		IntValue = (unsigned int)WholeValue;
+		if (IsNegative)
+		{
+			DecimalStatus = (int)Value * -10000000000;
+		}
+		else
+		{
+			DecimalStatus = (int)Value * 10000000000;
+		}
+	}
 }
 
 inline MediumDec::MediumDec(float Value)
 {
-	bool IsNegative = Value < 0;
+	bool IsNegative = Value < 0.0f;
 	if (IsNegative) { Value *= -1.0f; }
-	unsigned __int64 WholeValue = (unsigned __int64)std::floor(Value);
 	//Cap value if too big on initialize (preventing overflow on conversion)
-	if (Value > 4294967295)
+	if (Value > 4294967295.0f)
 	{
-		Value = 4294967295;
+		IntValue = 4294967295;
+		if(IsNegative)
+		{
+			DecimalStatus = -999999999;
+		}
+		else
+		{
+			DecimalStatus = 999999999;
+		}
 	}
-	Value -= WholeValue;
-	IntValue = (unsigned int)WholeValue;
-	DecimalStatus = (int)(Value * 10000000000);
+	else
+	{
+		unsigned __int64 WholeValue = (unsigned __int64)std::floor(Value);
+		Value -= (float)WholeValue;
+		IntValue = (unsigned int)WholeValue;
+		if (IsNegative)
+		{
+			DecimalStatus = (int)Value * -10000000000;
+		}
+		else
+		{
+			DecimalStatus = (int)Value * 10000000000;
+		}
+	}
 }
 
 /// <summary>
@@ -182,8 +218,7 @@ inline MediumDec MediumDec::GetValueFromString(std::string Value)
 {
 	MediumDec NewSelf = MediumDec::Zero;
 	bool IsNegative = false;
-	__int8 PlaceNumber;
-	//var StringLength = (unsigned __int8)Value.Length;
+	int PlaceNumber;
 	std::string WholeNumberBuffer = "";
 	std::string DecimalBuffer = "";
 
@@ -212,7 +247,7 @@ inline MediumDec MediumDec::GetValueFromString(std::string Value)
 			ReadingDecimal = true;
 		}
 	}
-	PlaceNumber = (__int8)(WholeNumberBuffer.length - 1);
+	PlaceNumber = WholeNumberBuffer.length() - 1;
 	for each(char StringChar in WholeNumberBuffer)
 	{
 		TempInt = VariableConversionFunctions::CharAsInt(StringChar);
@@ -246,7 +281,7 @@ inline MediumDec::MediumDec(std::string Value)
 	IntValue = 0;
 	DecimalStatus = 0;
 	bool IsNegative = false;
-	__int8 PlaceNumber;
+	int PlaceNumber;
 	//var StringLength = (unsigned __int8)Value.Length;
 	std::string WholeNumberBuffer = "";
 	std::string DecimalBuffer = "";
@@ -280,7 +315,7 @@ inline MediumDec::MediumDec(std::string Value)
 	}
 	WholeNumberBuffer = WholeNumberbuilder;
 	DecimalBuffer = Decimalbuilder;
-	PlaceNumber = (__int8)(WholeNumberBuffer.length - 1);
+	PlaceNumber = WholeNumberBuffer.length() - 1;
 	for each(char StringChar in WholeNumberBuffer)
 	{
 		TempInt = VariableConversionFunctions::CharAsInt(StringChar);
@@ -292,7 +327,7 @@ inline MediumDec::MediumDec(std::string Value)
 		PlaceNumber--;
 	}
 	PlaceNumber = 8;
-	int StartingDigit = (Decimalbuilder.length - 1);
+	int StartingDigit = Decimalbuilder.length() - 1;
 	for each(char StringChar in DecimalBuffer)
 	{
 		//Limit stored decimal numbers to the amount it can store
