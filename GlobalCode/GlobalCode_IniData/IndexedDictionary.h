@@ -54,7 +54,7 @@ public:
 			NextIndex--;
 		}
 	}
-	void Remove(EntryType Key)
+	void Remove(unsigned int Key)
 	{
 		NextIndex = Key;
 	}
@@ -97,7 +97,7 @@ public:
 			NextIndex--;
 		}
 	}
-	void Remove(EntryType Key)
+	void Remove(unsigned int Key)
 	{
 		NextIndex = Key;
 	}
@@ -138,7 +138,7 @@ public:
 			NextIndex--;
 		}
 	}
-	void Remove(EntryType Key)
+	void Remove(unsigned _int64 Key)
 	{
 		NextIndex = Key;
 	}
@@ -179,7 +179,7 @@ public:
 			NextIndex--;
 		}
 	}
-	void Remove(EntryType Key)
+	void Remove(unsigned _int64 Key)
 	{
 		NextIndex = Key;
 	}
