@@ -217,13 +217,75 @@ public:
 	///
 	/// </summary>
 	/// <param name="Value"></param>
-	MediumDec(double Value);
+	MediumDec(double Value)
+	{
+		bool IsNegative = Value < 0.0;
+		if (IsNegative) { Value *= -1.0; }
+		//Cap value if too big on initialize (preventing overflow on conversion)
+		if (Value > 4294967295.0)
+		{
+			IntValue = 4294967295;
+			if (IsNegative)
+			{
+				DecimalStatus = -999999999;
+			}
+			else
+			{
+				DecimalStatus = 999999999;
+			}
+		}
+		else
+		{
+			unsigned __int64 WholeValue = (unsigned __int64)std::floor(Value);
+			Value -= (double)WholeValue;
+			IntValue = (unsigned int)WholeValue;
+			if (IsNegative)
+			{
+				DecimalStatus = (int)Value * -10000000000;
+			}
+			else
+			{
+				DecimalStatus = (int)Value * 10000000000;
+			}
+		}
+	}
 
 	/// <summary>
 	///
 	/// </summary>
 	/// <param name="Value"></param>
-	MediumDec(float Value);
+	MediumDec(float Value)
+	{
+		bool IsNegative = Value < 0.0f;
+		if (IsNegative) { Value *= -1.0f; }
+		//Cap value if too big on initialize (preventing overflow on conversion)
+		if (Value > 4294967295.0f)
+		{
+			IntValue = 4294967295;
+			if (IsNegative)
+			{
+				DecimalStatus = -999999999;
+			}
+			else
+			{
+				DecimalStatus = 999999999;
+			}
+		}
+		else
+		{
+			unsigned __int64 WholeValue = (unsigned __int64)std::floor(Value);
+			Value -= (float)WholeValue;
+			IntValue = (unsigned int)WholeValue;
+			if (IsNegative)
+			{
+				DecimalStatus = (int)Value * -10000000000;
+			}
+			else
+			{
+				DecimalStatus = (int)Value * 10000000000;
+			}
+		}
+	}
 
 	///// <summary>
 	/////
