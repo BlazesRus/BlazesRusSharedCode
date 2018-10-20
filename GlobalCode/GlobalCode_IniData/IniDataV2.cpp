@@ -25,18 +25,4 @@ inline float IniDataV2::GetFloatElementData(std::string Value)
 //MediumDec GetMediumDecElementData(std::string Value){}
 
 #ifndef BlazesGlobalCode_DisableMediumDecIni
-//inline float IniDataV2::GetMediumDecElementData(std::string Value)
-//{
-//	return MediumDecSettings[Value];
-//}
-
-inline void IniDataV2::SetMediumDecElementData(std::string Key, int Value)
-{
-	//MediumDecSettings.Add(Key, Value);
-}
-
-//inline void IniDataV2::AddMediumDecElementData(std::string Key, MediumDec Value)
-//{
-//	MediumDecSettings[Key] += Value;
-//}
 #endif

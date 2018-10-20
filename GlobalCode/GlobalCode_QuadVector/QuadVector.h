@@ -56,6 +56,7 @@ public:
 #endif
 	GetVectorValue(int index);
 	//Reconstruct as string
+	//converts variables back into string format that havok uses in files(0.000000 0.000000 0.000000 0.000000)
 	std::string ConvertToString();
 	//Reconstruct as Vector
 #if defined(ExcludeGlobalCode_ExperimentalCode)

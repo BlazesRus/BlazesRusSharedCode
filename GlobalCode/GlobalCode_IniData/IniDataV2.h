@@ -29,6 +29,7 @@
 #include "..\GlobalCode_VariableLists\StringVectorList.h"
 #include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
 #include "CustomDictionary.h"
+#include "..\GlobalCode_ExperimentalCode\MediumDec.h"
 #endif
 
 class DLL_API IniDataV2
@@ -37,6 +38,7 @@ private:
     const std::string IntDeclaration = "#Int";
 	const std::string FloatDeclaration = "#Float";
     const std::string MediumDecDeclaration = "#MediumDec";
+	const std::string BoolDeclaration = "#Bool";
 public:
     /// <summary>
     /// The IniSettings with Int Values
@@ -54,10 +56,10 @@ public:
 
 
 #ifndef BlazesGlobalCode_DisableMediumDecIni
-	///// <summary>
-	///// The IniSettings with MediumDec Values
-	///// </summary>
-	//CustomDictionary<std::string, MediumDec> MediumDecSettings = {};
+	/// <summary>
+	/// The IniSettings with MediumDec Values
+	/// </summary>
+	CustomDictionary<std::string, MediumDec> MediumDecSettings = {};
 #endif
 
 	///// <summary>
@@ -69,15 +71,7 @@ public:
     /// IniSettings with string values and key linkage to IniSettings
     /// </summary>
     CustomDictionary<std::string, std::string> self = {};
-	/// <summary>
-	/// Loads the Ini data. (Returns false if fails to load data from file)
-	/// </summary>
-	/// <param name="FileName">Name of the file.</param>
-	/// <param name="IniFormat">The ini storage format.
-	/// (TypeDeclaration) + Other Formating
-	/// 0 = IniSetting:IniValue; with single line comments removed(default)
-	/// 1= [IniSetting=IniValue] format (based on my old C++ code)</param>
-	/// <returns></returns>
+
 	/// <summary>
 	/// Loads the Ini data.
 	/// </summary>
@@ -164,11 +158,11 @@ public:
 									BoolSettings.Add(IniSetting, VariableConversionFunctions::ReadBoolFromString(IniValue));
 								}
 #ifndef BlazesGlobalCode_DisableMediumDecIni
-								//else if(TypeName=="MediumDec")
-								//{
-								//	self.Add(IniSetting, MediumDecDeclaration);
-								//	MediumDecSettings.Add(IniSetting, (MediumDec)IniValue);
-								//}
+								else if (TypeName == "MediumDec")
+								{
+									self.Add(IniSetting, MediumDecDeclaration);
+									MediumDecSettings.Add(IniSetting, (MediumDec)IniValue);
+								}
 #endif
 								else
 								{
@@ -220,10 +214,12 @@ public:
 						builder.clear();
 						if (TypeName == "Int")
 						{
-							self.Add(IniSetting, IntDeclaration);
-							IntSettings.Add(IniSetting, VariableConversionFunctions::ReadIntFromString(IniValue));
+							if(self.AddOnlyNew(IniSetting, IntDeclaration)){ IntSettings.Add(IniSetting, VariableConversionFunctions::ReadIntFromString(IniValue)); }
 						}
-
+						if (TypeName == "Bool")
+						{
+							if (self.AddOnlyNew(IniSetting, BoolDeclaration)) { BoolSettings.Add(IniSetting, VariableConversionFunctions::ReadBoolFromString(IniValue)); }
+						}
 #ifdef BlazesGlobalCode_EnableFloatingIni
 						//else if(TypeName=="Float")
 						//{
@@ -232,11 +228,10 @@ public:
 						//}
 #endif
 #ifndef BlazesGlobalCode_DisableMediumDecIni
-						//else if(TypeName=="MediumDec")
-						//{
-						//	self.Add(IniSetting, MediumDecDeclaration);
-						//	MediumDecSettings.Add(IniSetting, (MediumDec)IniValue);
-						//}
+						else if (TypeName == "MediumDec")
+						{
+							if (self.AddOnlyNew(IniSetting, MediumDecDeclaration)) { MediumDecSettings.Add(IniSetting, (MediumDec)IniValue); }
+						}
 #endif
 						else
 						{
@@ -289,12 +284,14 @@ public:
 
 	bool Add(std::string Key, bool Value)
 	{
-		BoolSettings.Add(Key, Value);
+		if (self.AddOnlyNew(Key, BoolDeclaration)) { BoolSettings.AddOnlyNew(Key, Value); return true; }
+		else { return false; }
 	}
 
 	bool Add(std::string Key, int Value)
 	{
-		IntSettings.Add(Key, Value);
+		if (self.AddOnlyNew(Key, IntDeclaration)) { return IntSettings.AddOnlyNew(Key, Value); return true; }
+		else { return false; }
 	}
 
 
@@ -377,19 +374,20 @@ public:
 	{
 		return IntSettings[Value];
 	}
-	/// <summary>
-	/// Sets the int element data.
-	/// </summary>
-	/// <param name="Key">The key.</param>
-	/// <param name="Value">The value.</param>
-	/// <summary>
+
 	/// Sets the int element data.
 	/// </summary>
 	/// <param name="Key">The key.</param>
 	/// <param name="Value">The value.</param>
 	void SetIntElementData(std::string Key, int Value)
 	{
-		IntSettings.Add(Key, Value);
+		if (Add(Key, Value) == false) {//Only set Int Element setting if key already exists
+			std::unordered_map<std::string, int>::iterator ValueInfo = IntSettings.find(Key);
+			if (ValueInfo != IntSettings.end())
+			{
+				IntSettings.Add(Key, Value);
+			}
+		}
 	}
 
 	void AddIntElementData(std::string Key, int Value)
@@ -429,8 +427,32 @@ public:
 	}
 
 #ifndef BlazesGlobalCode_DisableMediumDecIni
-	//MediumDec GetMediumDecElementData(std::string Value){}
-	void SetMediumDecElementData(std::string Key, int Value);
+	bool Add(std::string Key, MediumDec Value)
+	{
+		if (self.AddOnlyNew(Key, MediumDecDeclaration)) { return MediumDecSettings.AddOnlyNew(Key, Value); return true; }
+		else { return false; }
+	}
+
+	void AddMediumDecElementData(std::string Key, MediumDec Value)
+	{
+		MediumDecSettings[Key] += Value;
+	}
+
+	MediumDec GetMediumDecElementData(std::string Value)
+	{
+		return MediumDecSettings[Value];
+	}
+
+	void SetMediumDecElementData(std::string Key, MediumDec Value)
+	{
+		if (Add(Key, Value) == false) {//Only set Int Element setting if key already exists
+			std::unordered_map<std::string, MediumDec>::iterator ValueInfo = MediumDecSettings.find(Key);
+			if (ValueInfo != MediumDecSettings.end())
+			{
+				MediumDecSettings.Add(Key, Value);
+			}
+		}
+	}
 #endif
 
 	size_t Size()

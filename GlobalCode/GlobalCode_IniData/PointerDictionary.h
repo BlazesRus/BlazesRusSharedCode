@@ -36,9 +36,14 @@ public:
 		if (!p.second) {
 			// overwrite previous value
 			p.first->second = Value;
-
 		}
     }
+	/// <summary>
+	/// Use insert if doesn't Already exist(Return true on success)
+	/// </summary>
+	/// <param name="First">The first.</param>
+	/// <param name="Second">The second.</param>
+	/// <returns></returns>
 	bool AddOnlyNew(EntryType First, ValueType Second)
 	{
 		std::pair<EntryType, ValueType> Value = { First, Second };

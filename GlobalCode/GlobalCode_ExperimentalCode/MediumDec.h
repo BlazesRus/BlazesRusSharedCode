@@ -603,6 +603,7 @@ public:
 			self.DecimalStatus *= -1;
 		}
 		else if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+		return self;
 	}
 	template <typename ValueType>
 	MediumDec& ApplyIntAddition(ValueType Value)
@@ -638,6 +639,7 @@ public:
 			self.DecimalStatus *= -1;
 		}
 		else if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+		return self;
 	}
 	template <typename ValueType>
 	MediumDec& ApplyUnsignedIntSubtraction(ValueType Value)
@@ -700,6 +702,7 @@ public:
 			self.DecimalStatus *= -1;
 		}
 		else if (SelfIsNegative && self.DecimalStatus == 0) { self.DecimalStatus = NegativeWholeNumber; }
+		return self;
 	}
 	template <typename ValueType>
 	MediumDec& ApplyIntSubtraction(ValueType Value)

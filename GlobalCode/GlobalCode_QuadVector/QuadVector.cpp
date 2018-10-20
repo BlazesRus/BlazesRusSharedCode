@@ -33,8 +33,10 @@ QuadVector::GetVectorValue(int index)
 	else { return 0.0;/*Error Value but return 0.0 to prevent crash*/ }
 }
 
+//Reconstruct as string
 //converts variables back into string format that havok uses in files(0.000000 0.000000 0.000000 0.000000)
-std::string QuadVector::ConvertToString()
+
+inline std::string QuadVector::ConvertToString()
 {
 	std::string TempString = "(";
 #if defined(ExcludeGlobalCode_ExperimentalCode)
