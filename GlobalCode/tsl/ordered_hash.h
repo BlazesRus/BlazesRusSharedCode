@@ -173,12 +173,13 @@ public:
         return truncated_hash_type(hash);
     }
 
+	//fix for errorC2062: https://stackoverflow.com/questions/27442885/syntax-error-with-stdnumeric-limitsmax
     static std::size_t max_size() noexcept {
-        return std::numeric_limits<index_type>::max() - NB_RESERVED_INDEXES;
+        return (std::numeric_limits<index_type>::max)() - NB_RESERVED_INDEXES;
     }
 
 private:
-    static const index_type EMPTY_MARKER_INDEX = std::numeric_limits<index_type>::max();
+    static const index_type EMPTY_MARKER_INDEX = (std::numeric_limits<index_type>::max)();
     static const std::size_t NB_RESERVED_INDEXES = 1;
 
     index_type m_index;
