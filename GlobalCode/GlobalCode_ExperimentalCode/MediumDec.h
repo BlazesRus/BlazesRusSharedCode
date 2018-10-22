@@ -73,7 +73,7 @@ public:
 	static MediumDec MinimumValue()
 	{
 		//return MediumDec(4294967295, -999999999);
-		return MediumDec(std::numeric_limits<unsigned int>::max(), -1000000000 + 1);
+		return MediumDec((std::numeric_limits<unsigned int>::max)(), -1000000000 + 1);
 	}
 	/// <summary>
 	/// Returns value of highest non-infinite/Special Decimal State Value that can store
@@ -82,7 +82,7 @@ public:
 	static MediumDec MaximumValue()
 	{
 		//return MediumDec(4294967295, 999999999);
-		return MediumDec(std::numeric_limits<unsigned int>::max(), 1000000000 - 1);
+		return MediumDec((std::numeric_limits<unsigned int>::max)(), 1000000000 - 1);
 	}
 
 	static MediumDec Zero;
@@ -942,6 +942,11 @@ public:
 	friend MediumDec operator+(MediumDec& self, signed __int16 Value) { return ApplyIntAddition(self, Value); }
 	friend MediumDec operator+(MediumDec& self, unsigned __int64 Value) { return ApplyUnsignedIntAddition(self, Value); }
 	friend MediumDec operator+(MediumDec& self, signed __int64 Value) { return ApplyIntAddition(self, Value); }
+	friend MediumDec operator+=(MediumDec& self, MediumDec& Value)
+	{
+		self = self + Value;
+		return self;
+	}
 	//friend MediumDec operator+(MediumDec& self, double Value)
 	//{
 	//}

@@ -65,20 +65,20 @@ public:
 	~PointerDictionary()//Delete all pointers inside dictionary when ends
 	{
 		//std::unordered_map<EntryType, ValueType*> it = this->begin();
-		//while(it != this->end())//Beginning to end iteration
+		////while(it != this->end())//Beginning to end iteration
+		////{
+		////	if(it->second!=nullptr)
+		////	{
+		////		delete it->second;
+		////	}
+		////}
+		//for (auto& it : this)
 		//{
-		//	if(it->second!=nullptr)
+		//	if (it.second != nullptr)
 		//	{
-		//		delete it->second;
+		//		delete it.second;
 		//	}
 		//}
-		for (auto& it : this)
-		{
-			if (it.second != nullptr)
-			{
-				delete it.second;
-			}
-		}
 	}
 };
 #endif
