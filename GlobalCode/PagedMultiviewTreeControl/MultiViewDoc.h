@@ -10,11 +10,11 @@
 #endif // _MSC_VER > 1000
 
 
-class CMultiViewDoc : public CDocument
+class MultiViewDoc : public CDocument
 {
 protected: // create from serialization only
-	CMultiViewDoc();
-	DECLARE_DYNCREATE(CMultiViewDoc)
+	MultiViewDoc();
+	DECLARE_DYNCREATE(MultiViewDoc)
 	CString m_str;
 // Attributes
 public:
@@ -32,7 +32,7 @@ public:
 
 // Implementation
 public:
-	virtual ~CMultiViewDoc();
+	virtual ~MultiViewDoc();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;

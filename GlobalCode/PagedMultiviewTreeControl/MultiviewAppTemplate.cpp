@@ -86,7 +86,7 @@ inline BOOL MultiviewAppTemplate<ViewType01, ViewType02, WindowType, FrameWindow
     CSingleDocTemplate* pDocTemplate;
     pDocTemplate = new CSingleDocTemplate(
         IDR_MAINFRAME,
-        RUNTIME_CLASS(CMultiViewDoc),
+        RUNTIME_CLASS(MultiViewDoc),
         RUNTIME_CLASS(ViewType01),       // main SDI frame window
         RUNTIME_CLASS(MultiViewView));
     AddDocTemplate(pDocTemplate);

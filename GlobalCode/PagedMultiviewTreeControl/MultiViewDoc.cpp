@@ -15,9 +15,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CMultiViewDoc
 
-IMPLEMENT_DYNCREATE(CMultiViewDoc, CDocument)
+IMPLEMENT_DYNCREATE(MultiViewDoc, CDocument)
 
-BEGIN_MESSAGE_MAP(CMultiViewDoc, CDocument)
+BEGIN_MESSAGE_MAP(MultiViewDoc, CDocument)
 	//{{AFX_MSG_MAP(CMultiViewDoc)
 		// NOTE - the ClassWizard will add and remove mapping macros here.
 		//    DO NOT EDIT what you see in these blocks of generated code!
@@ -27,17 +27,17 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CMultiViewDoc construction/destruction
 
-CMultiViewDoc::CMultiViewDoc()
+MultiViewDoc::MultiViewDoc()
 {
 	// TODO: add one-time construction code here
 	//m_str="Hello from document";
 }
 
-CMultiViewDoc::~CMultiViewDoc()
+MultiViewDoc::~MultiViewDoc()
 {
 }
 
-BOOL CMultiViewDoc::OnNewDocument()
+BOOL MultiViewDoc::OnNewDocument()
 {
 	if (!CDocument::OnNewDocument())
 		return FALSE;
@@ -53,7 +53,7 @@ BOOL CMultiViewDoc::OnNewDocument()
 /////////////////////////////////////////////////////////////////////////////
 // CMultiViewDoc serialization
 
-void CMultiViewDoc::Serialize(CArchive& ar)
+void MultiViewDoc::Serialize(CArchive& ar)
 {
 	if (ar.IsStoring())
 	{

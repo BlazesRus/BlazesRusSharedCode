@@ -36,9 +36,9 @@ END_MESSAGE_MAP()
 
 void OtherView::OnDraw(CDC* pDC)
 {
-	CMultiViewDoc* pDoc = GetDocument();
-	pDC->TextOut(400,300,"Other view");  
-	pDC->TextOut(400,320,pDoc->m_str);  
+	MultiViewDoc* pDoc = GetDocument();
+	pDC->TextOut(400,300,"Other view");
+	pDC->TextOut(400,320,pDoc->m_str);
 	// TODO: add draw code here
 }
 
@@ -60,7 +60,7 @@ void OtherView::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // OtherView message handlers
 
-CMultiViewDoc* OtherView::GetDocument()
+MultiViewDoc* OtherView::GetDocument()
 {
-	return (CMultiViewDoc*)m_pDocument;
+	return (MultiViewDoc*)m_pDocument;
 }

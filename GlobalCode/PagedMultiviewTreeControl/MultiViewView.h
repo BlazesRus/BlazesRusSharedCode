@@ -18,7 +18,7 @@ protected: // create from serialization only
 
 // Attributes
 public:
-	CMultiViewDoc* GetDocument();
+	MultiViewDoc* GetDocument();
 
 // Operations
 public:
@@ -51,8 +51,8 @@ protected:
 };
 
 #ifndef _DEBUG  // debug version in MultiViewView.cpp
-inline CMultiViewDoc* MultiViewView::GetDocument()
-   { return (CMultiViewDoc*)m_pDocument; }
+inline MultiViewDoc* MultiViewView::GetDocument()
+   { return (MultiViewDoc*)m_pDocument; }
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

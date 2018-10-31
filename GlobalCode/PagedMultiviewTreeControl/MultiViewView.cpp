@@ -48,11 +48,11 @@ MultiViewView::~MultiViewView()
 
 void MultiViewView::OnDraw(CDC* pDC)
 {
-	CMultiViewDoc* pDoc = GetDocument();
+	MultiViewDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	// TODO: add draw code for native data here
-	pDC->TextOut(400,300,"First view"); 
-	pDC->TextOut(400,320,pDoc->m_str);  
+	pDC->TextOut(400,300,"First view");
+	pDC->TextOut(400,320,pDoc->m_str);
 }
 
 /////////////////////////////////////////////////////////////////////////////

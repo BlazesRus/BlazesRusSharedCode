@@ -24,7 +24,7 @@ public:
 	virtual ~OtherView();
 
 public:
-	CMultiViewDoc* GetDocument();
+	MultiViewDoc* GetDocument();
 
 // Overrides
 	// ClassWizard generated virtual function overrides
