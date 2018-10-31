@@ -10,6 +10,7 @@
 #include "resource.h"       // main symbols
 #include <GlobalCode_IniData/IniDataV2.h>
 #include "MultiViewDoc.h"
+#include "MultiViewView.h"
 //#include <GlobalCode_IniData/IndexedPDictionary.h>
 //#include "BvhFrame.h"
 
