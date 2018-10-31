@@ -15,6 +15,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+#if !defined(BEGIN_MULTITEMPLATE_MESSAGE_MAP)
 #define BEGIN_MULTITEMPLATE_MESSAGE_MAP(theClass, type_name, typename02, typename03, typename04, baseClass)			\
 	PTM_WARNING_DISABLE														\
 	template < typename type_name, typename typename02, typename typename03, typename typename04 >											\
@@ -38,6 +39,7 @@ static char THIS_FILE[] = __FILE__;
 	return &messageMap; \
 	}								  \
 	PTM_WARNING_RESTORE
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // BasicMultiviewTemplate
