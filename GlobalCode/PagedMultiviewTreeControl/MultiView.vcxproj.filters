@@ -66,6 +66,9 @@
     <ClCompile Include="FusedFrameWindow.cpp">
       <Filter>MultiView</Filter>
     </ClCompile>
+    <ClCompile Include="BasicMultiviewTemplate.cpp">
+      <Filter>MultiView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -160,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\MultiPlatformGlobalCode\GlobalCode\DLLAPI.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicMultiviewTemplate.h">
+      <Filter>MultiView</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

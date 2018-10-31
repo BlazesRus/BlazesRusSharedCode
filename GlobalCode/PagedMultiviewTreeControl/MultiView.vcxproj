@@ -343,6 +343,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\MultiPlatformGlobalCode\GlobalCode\DLLAPI.h" />
+    <ClInclude Include="BasicMultiviewTemplate.h" />
     <ClInclude Include="FusedFrameWindow.h" />
     <ClInclude Include="MultiviewAppTemplate.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -364,6 +365,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClInclude>
+    <ClCompile Include="BasicMultiviewTemplate.cpp" />
     <ClCompile Include="FusedFrameWindow.cpp" />
     <ClCompile Include="MainFrm.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
