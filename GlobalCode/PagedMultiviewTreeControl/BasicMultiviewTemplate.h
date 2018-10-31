@@ -12,10 +12,12 @@
 //#include <GlobalCode_IniData/IndexedPDictionary.h>
 //#include "BvhFrame.h"
 
+#if !defined(DECLARE_ALTERNATIVEMESSAGE_MAP)
 #define DECLARE_ALTERNATIVEMESSAGE_MAP() \
 protected: \
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap(); \
 	virtual const AFX_MSGMAP* GetMessageMap() const;
+#endif
 
 template <typename ViewType01, typename ViewType02, typename WindowType, typename FrameWindowType>//: MainFrame, OtherView, CView, CFrameWnd
 class BasicMultiviewTemplate : public CWinAppEx
