@@ -74,36 +74,6 @@ static char THIS_FILE[] = __FILE__;
 //}
 //PTM_WARNING_RESTORE
 
-template<typename ViewType01, typename ViewType02, typename WindowType, typename FrameWindowType>
-const AFX_MSGMAP* PASCAL BasicMultiviewTemplate<ViewType01, ViewType02, WindowType, FrameWindowType>::GetThisMessageMap()
-{
-	//typedef BasicMultiviewTemplate< ViewType01, ViewType02, WindowType, FrameWindowType > ThisClass;
-	//typedef CWinAppEx TheBaseClass;
-	__pragma(warning(push))
-	__pragma(warning(disable: 4640)) /* message maps can only be called by single threaded message pump */
-	static const AFX_MSGMAP_ENTRY _messageEntries[] =
-	{
-			ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
-			ON_COMMAND(ID_VIEW_OTHERVIEW, OnViewOtherview)
-			ON_COMMAND(ID_VIEW_FIRSTVIEW, OnViewFirstview)
-			//}}AFX_MSG_MAP
-			// Standard file based document commands
-			ON_COMMAND(ID_FILE_NEW, CWinAppEx::OnFileNew)
-			ON_COMMAND(ID_FILE_OPEN, CWinAppEx::OnFileOpen)
-			// Standard print setup command
-			ON_COMMAND(ID_FILE_PRINT_SETUP, CWinAppEx::OnFilePrintSetup)
-			{0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0
-		}
-	};
-	__pragma(warning(pop))
-	static const AFX_MSGMAP messageMap =
-	{ &CWinAppEx::GetThisMessageMap, &_messageEntries[0] };
-	return &messageMap;
-}
-
-template<typename ViewType01, typename ViewType02, typename WindowType, typename FrameWindowType>
-const AFX_MSGMAP* BasicMultiviewTemplate<ViewType01, ViewType02, WindowType, FrameWindowType>::GetMessageMap() const { return GetThisMessageMap(); }
-
 /////////////////////////////////////////////////////////////////////////////
 // BasicMultiviewTemplate construction
 template<typename ViewType01, typename ViewType02, typename WindowType, typename FrameWindowType>
