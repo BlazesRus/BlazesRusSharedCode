@@ -66,8 +66,6 @@ public:
 //    //Multiview based functions
 //    afx_msg void OnViewOtherview();
 //    afx_msg void OnViewFirstview();
-
-	DECLARE_ALTERNATIVEMESSAGE_MAP()
 };
 
 //extern MultiviewApp<ViewType01, ViewType02 theApp;
