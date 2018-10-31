@@ -713,6 +713,24 @@ public:
 	static MediumDec& ApplyIntMultiplication(MediumDec& self, ValueType Value)
 	{
 		bool SelfIsNegative = self.DecimalStatus < 0;
+#if defined(EnableMediumDecSpecialStates)
+		if(self.DecimalStatus== INT64_MAX)//Positive Infinity
+		{
+
+		}
+		else if (self.DecimalStatus == INT64_MIN)//Negative Infinity
+		{
+
+		}
+		else if(self.DecimalStatus>MediumDec::DecimalOverflow)//Positive Fractional
+		{
+
+		}
+		else if(self.DecimalStatus<MediumDec::NegativeWholeNumber)//Negative Fractional
+		{
+
+		}
+#endif
 		if (self.DecimalStatus == 0)
 		{
 			if (Value < 0)
@@ -1861,8 +1879,26 @@ public:
 #endif
 
 template<typename ValueType>
-inline MediumDec & MediumDec::ApplyIntDivision(MediumDec & self, ValueType Value)
+inline MediumDec& MediumDec::ApplyIntDivision(MediumDec& self, ValueType Value)
 {
+#if defined(EnableMediumDecSpecialStates)
+	if (self.DecimalStatus == INT64_MAX)//Positive Infinity
+	{
+
+	}
+	else if (self.DecimalStatus == INT64_MIN)//Negative Infinity
+	{
+
+	}
+	else if (self.DecimalStatus > MediumDec::DecimalOverflow)//Positive Fractional
+	{
+
+	}
+	else if (self.DecimalStatus < MediumDec::NegativeWholeNumber)//Negative Fractional
+	{
+
+	}
+#endif
 	bool SelfIsNegative = self.DecimalStatus < 0;
 	if (Value < 0)
 	{
