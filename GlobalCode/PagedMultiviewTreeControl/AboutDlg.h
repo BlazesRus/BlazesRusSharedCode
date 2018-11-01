@@ -15,7 +15,11 @@
 class AboutDlg : public CDialog
 {
 public:
-	AboutDlg();
+	AboutDlg() : CDialog(AboutDlg::IDD)
+	{
+		//{{AFX_DATA_INIT(CAboutDlg)
+		//}}AFX_DATA_INIT
+	}
 
 	// Dialog Data
 		//{{AFX_DATA(CAboutDlg)
@@ -25,7 +29,12 @@ public:
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CAboutDlg)
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual void DoDataExchange(CDataExchange* pDX)
+	{
+		CDialog::DoDataExchange(pDX);
+		//{{AFX_DATA_MAP(CAboutDlg)
+		//}}AFX_DATA_MAP
+	}    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -33,20 +42,29 @@ protected:
 	//{{AFX_MSG(CAboutDlg)
 		// No message handlers
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+protected://DECLARE_MESSAGE_MAP()
+	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
+	{
+		__pragma(warning(push))
+		__pragma(warning(disable: 4640)) /* message maps can only be called by single threaded message pump */
+		static const AFX_MSGMAP_ENTRY _messageEntries[] =
+		{
+			//	//{{AFX_MSG_MAP(CAboutDlg)
+			//		// No message handlers
+			//	//}}AFX_MSG_MAP
+			{	0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }
+		};
+		__pragma(warning(pop))
+			static const AFX_MSGMAP messageMap =
+		{ &CDialog::GetThisMessageMap, &_messageEntries[0] };
+		return &messageMap;
+	}
+
+public:
+	virtual const AFX_MSGMAP* GetMessageMap() const
+	{
+		return GetThisMessageMap();
+	}
 };
-
-AboutDlg::AboutDlg() : CDialog(AboutDlg::IDD)
-{
-	//{{AFX_DATA_INIT(CAboutDlg)
-	//}}AFX_DATA_INIT
-}
-
-void AboutDlg::DoDataExchange(CDataExchange* pDX)
-{
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CAboutDlg)
-	//}}AFX_DATA_MAP
-}
 
 #endif
