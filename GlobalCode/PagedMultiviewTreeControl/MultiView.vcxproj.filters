@@ -69,6 +69,9 @@
     <ClCompile Include="BasicMultiviewTemplate.cpp">
       <Filter>MultiView</Filter>
     </ClCompile>
+    <ClCompile Include="AboutDlg.cpp">
+      <Filter>MultiView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -125,9 +128,6 @@
     <ClInclude Include="$(CPPSource)\tsl\ordered_hash.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MultiviewAppTemplate.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
     <ClInclude Include="MainFrm.h">
       <Filter>MultiView</Filter>
     </ClInclude>
@@ -146,9 +146,6 @@
     <ClInclude Include="OtherView.h">
       <Filter>MultiView</Filter>
     </ClInclude>
-    <ClInclude Include="MultiviewAppTemplate.cpp">
-      <Filter>MultiView</Filter>
-    </ClInclude>
     <ClInclude Include="FusedFrameWindow.h">
       <Filter>MultiView</Filter>
     </ClInclude>
@@ -165,6 +162,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BasicMultiviewTemplate.h">
+      <Filter>MultiView</Filter>
+    </ClInclude>
+    <ClInclude Include="AboutDlg.h">
       <Filter>MultiView</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,6 +11,7 @@
 #include <GlobalCode_IniData/IniDataV2.h>
 #include "MultiViewDoc.h"
 #include "MultiViewView.h"
+#include "AboutDlg.h"
 //#include <GlobalCode_IniData/IndexedPDictionary.h>
 //#include "BvhFrame.h"
 
@@ -21,6 +22,9 @@ protected: \
 	virtual const AFX_MSGMAP* GetMessageMap() const;
 #endif
 
+/// <summary>
+/// Multiview features based on https://www.codeproject.com/Articles/7686/Using-Multiview
+/// </summary>
 template <typename ViewType01, typename ViewType02, typename WindowType, typename FrameWindowType>//: MainFrame, OtherView, CView, CFrameWnd
 class BasicMultiviewTemplate : public CWinAppEx
 {
@@ -82,12 +86,48 @@ public:
 
 // Implementation
 	//{{AFX_MSG(CMultiViewApp)
-	afx_msg void OnAppAbout();
-	afx_msg void OnViewOtherview();
-	afx_msg void OnViewFirstview();
+/// <summary>
+/// App command to run the dialog
+/// </summary>
+	afx_msg void OnAppAbout()
+	{
+		AboutDlg aboutDlg;
+		aboutDlg.DoModal();
+	}
+	afx_msg void OnViewOtherview()
+	{
+		// TODO: Add your command handler code here
+		UINT temp = ::GetWindowLong(m_pOtherView->m_hWnd, GWL_ID);
+		::SetWindowLong(m_pOtherView->m_hWnd, GWL_ID, ::GetWindowLong(m_pFirstView->m_hWnd, GWL_ID));
+		::SetWindowLong(m_pFirstView->m_hWnd, GWL_ID, temp);
+
+		m_pFirstView->ShowWindow(SW_HIDE);
+		m_pOtherView->ShowWindow(SW_SHOW);
+
+		((CFrameWnd*)m_pMainWnd)->SetActiveView(m_pOtherView);
+		((CFrameWnd*)m_pMainWnd)->RecalcLayout();
+		m_pOtherView->Invalidate();
+
+	}
+	afx_msg void OnViewFirstview()
+	{
+		// TODO: Add your command handler code here
+
+		UINT temp = ::GetWindowWord(m_pOtherView->m_hWnd, GWL_ID);
+		::SetWindowWord(m_pOtherView->m_hWnd, GWL_ID, ::GetWindowWord(m_pFirstView->m_hWnd, GWL_ID));
+		::SetWindowWord(m_pFirstView->m_hWnd, GWL_ID, temp);
+
+		m_pOtherView->ShowWindow(SW_HIDE);
+		m_pFirstView->ShowWindow(SW_SHOW);
+
+		((CFrameWnd*)m_pMainWnd)->SetActiveView(m_pFirstView);
+		((CFrameWnd*)m_pMainWnd)->RecalcLayout();
+		m_pFirstView->Invalidate();
+	}
 	//}}AFX_MSG
 
 	//DECLARE_ALTERNATIVEMESSAGE_MAP()
+protected:
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{
 		//typedef BasicMultiviewTemplate< ViewType01, ViewType02, WindowType, FrameWindowType > ThisClass;
@@ -99,12 +139,6 @@ public:
 			ON_COMMAND(ID_APP_ABOUT, &OnAppAbout)
 			ON_COMMAND(ID_VIEW_OTHERVIEW, &OnViewOtherview)
 			ON_COMMAND(ID_VIEW_FIRSTVIEW, &OnViewFirstview)
-			//}}AFX_MSG_MAP
-			//// Standard file based document commands
-			//ON_COMMAND(ID_FILE_NEW, CWinAppEx::OnFileNew)
-			//ON_COMMAND(ID_FILE_OPEN, CWinAppEx::OnFileOpen)
-			//// Standard print setup command
-			//ON_COMMAND(ID_FILE_PRINT_SETUP, CWinAppEx::OnFilePrintSetup)
 			{ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }
 		};
 		__pragma(warning(pop))
@@ -113,38 +147,11 @@ public:
 		return &messageMap;
 	}
 
+public:
 	virtual const AFX_MSGMAP* GetMessageMap() const
 	{
 		return GetThisMessageMap();
 	}
-
-//public:
-//    bool m_IsLocked;
-//    int CurrentAltView = 0;
-//    IniDataV2 IniSettings;
-////Multiview features added based on https://www.codeproject.com/Articles/7686/Using-Multiview
-//    WindowType* MainView;
-//    IndexedPDictionary<ViewType02> AltView;
-//    BasicMultiviewTemplate();
-//    virtual ~BasicMultiviewTemplate();
-//
-//    CMultiDocTemplate * m_pDocTemplate;
-//    virtual BOOL InitInstance();
-//    virtual int ExitInstance();
-//
-//    // Implementation
-//    BOOL  m_bHiColorIcons;
-//
-//    //virtual void PreLoadState();
-//    //virtual void LoadCustomState();
-//    //virtual void SaveCustomState();
-//
-//    afx_msg void OnAppAbout();
-//    //afx_msg void OnFileNewFrame();
-//    //afx_msg void OnFileNew();
-//    //Multiview based functions
-//    afx_msg void OnViewOtherview();
-//    afx_msg void OnViewFirstview();
 };
 
 //extern MultiviewApp<ViewType01, ViewType02 theApp;

@@ -343,28 +343,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\MultiPlatformGlobalCode\GlobalCode\DLLAPI.h" />
+    <ClInclude Include="AboutDlg.h" />
     <ClInclude Include="BasicMultiviewTemplate.h" />
     <ClInclude Include="FusedFrameWindow.h" />
-    <ClInclude Include="MultiviewAppTemplate.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </DeploymentContent>
-    </ClInclude>
-    <ClInclude Include="MultiviewAppTemplate.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </DeploymentContent>
-    </ClInclude>
+    <ClCompile Include="AboutDlg.cpp" />
     <ClCompile Include="BasicMultiviewTemplate.cpp" />
     <ClCompile Include="FusedFrameWindow.cpp" />
     <ClCompile Include="MainFrm.cpp">
