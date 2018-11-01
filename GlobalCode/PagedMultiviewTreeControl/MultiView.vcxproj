@@ -411,6 +411,7 @@
     <ResourceCompile Include="MultiView.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HalfPagedMultiview.h" />
     <ClInclude Include="MainFrm.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>

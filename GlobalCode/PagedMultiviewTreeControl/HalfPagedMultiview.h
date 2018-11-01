@@ -1,5 +1,5 @@
-#if !defined(BasicMultiviewTemplate_IncludeGuard)
-#define BasicMultiviewTemplate_IncludeGuard
+#if !defined(HalfPagedMultiview_IncludeGuard)
+#define HalfPagedMultiview_IncludeGuard
 
 #include "MultiviewPrecompile.h"
 
@@ -19,14 +19,14 @@
 /// Multiview features based on https://www.codeproject.com/Articles/7686/Using-Multiview
 /// </summary>
 template <typename ViewType01, typename ViewType02, typename WindowType, typename FrameWindowType>//: MainFrame, OtherView, CView, CFrameWnd
-class BasicMultiviewTemplate : public CWinAppEx
+class HalfPagedMultiview : public CWinAppEx
 {
 	CView* m_pFirstView;
 	CView* m_pOtherView;
 public:
 	/////////////////////////////////////////////////////////////////////////////
-	// BasicMultiviewTemplate construction
-	BasicMultiviewTemplate()
+	// HalfPagedMultiview construction
+	HalfPagedMultiview()
 	{
 		// TODO: add construction code here,
 		// Place all significant initialization in InitInstance
@@ -129,7 +129,7 @@ public:
 protected:
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{
-		//typedef BasicMultiviewTemplate< ViewType01, ViewType02, WindowType, FrameWindowType > ThisClass;
+		//typedef HalfPagedMultiview< ViewType01, ViewType02, WindowType, FrameWindowType > ThisClass;
 		//typedef CWinAppEx TheBaseClass;
 		__pragma(warning(push))
 		__pragma(warning(disable: 4640)) /* message maps can only be called by single threaded message pump */
