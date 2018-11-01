@@ -15,13 +15,6 @@
 //#include <GlobalCode_IniData/IndexedPDictionary.h>
 //#include "BvhFrame.h"
 
-#if !defined(DECLARE_ALTERNATIVEMESSAGE_MAP)
-#define DECLARE_ALTERNATIVEMESSAGE_MAP() \
-protected: \
-	static const AFX_MSGMAP* PASCAL GetThisMessageMap(); \
-	virtual const AFX_MSGMAP* GetMessageMap() const;
-#endif
-
 /// <summary>
 /// Multiview features based on https://www.codeproject.com/Articles/7686/Using-Multiview
 /// </summary>
