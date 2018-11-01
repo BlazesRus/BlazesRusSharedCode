@@ -21,8 +21,9 @@
 template <typename ViewType01, typename ViewType02, typename WindowType, typename FrameWindowType>//: MainFrame, OtherView, CView, CFrameWnd
 class HalfPagedMultiview : public CWinAppEx
 {
-	CView* m_pFirstView;
-	CView* m_pOtherView;
+	CView* MainView;
+	//CView* AltView;
+  VariableList<CView*> AltView;
 public:
 	/////////////////////////////////////////////////////////////////////////////
 	// HalfPagedMultiview construction
@@ -31,6 +32,11 @@ public:
 		// TODO: add construction code here,
 		// Place all significant initialization in InitInstance
 	}
+
+  ~virtual HalfPagedMultiview()
+  {
+
+  }
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -62,8 +68,8 @@ public:
 				return FALSE;
 
 			CView* pActiveView = ((CFrameWnd*)m_pMainWnd)->GetActiveView();
-			m_pFirstView = pActiveView;
-			m_pOtherView = (CView*) new ViewType02;
+			MainView = pActiveView;
+			AltView = (CView*) new ViewType02;
 
 			CDocument* pDoc = ((CFrameWnd*)m_pMainWnd)->GetActiveDocument();
 
@@ -73,7 +79,7 @@ public:
 			UINT m_ID = AFX_IDW_PANE_FIRST + 1;
 			CRect rect;
 
-			m_pOtherView->Create(NULL, NULL, WS_CHILD, rect, m_pMainWnd, m_ID, &context);
+			AltView->Create(NULL, NULL, WS_CHILD, rect, m_pMainWnd, m_ID, &context);
 
 			// The one and only window has been initialized, so show and update it.
 			m_pMainWnd->ShowWindow(SW_SHOWMAXIMIZED);
@@ -81,7 +87,11 @@ public:
 
 			return TRUE;
 		}
-	//}}AFX_VIRTUAL
+	  virtual int ExitInstance()
+    {
+
+    }
+  //}}AFX_VIRTUAL
 
 // Implementation
 	//{{AFX_MSG(CMultiViewApp)
@@ -96,32 +106,32 @@ public:
 	afx_msg void OnViewOtherview()
 	{
 		// TODO: Add your command handler code here
-		UINT temp = ::GetWindowLong(m_pOtherView->m_hWnd, GWL_ID);
-		::SetWindowLong(m_pOtherView->m_hWnd, GWL_ID, ::GetWindowLong(m_pFirstView->m_hWnd, GWL_ID));
-		::SetWindowLong(m_pFirstView->m_hWnd, GWL_ID, temp);
+		UINT temp = ::GetWindowLong(AltView->m_hWnd, GWL_ID);
+		::SetWindowLong(AltView->m_hWnd, GWL_ID, ::GetWindowLong(MainView->m_hWnd, GWL_ID));
+		::SetWindowLong(MainView->m_hWnd, GWL_ID, temp);
 
-		m_pFirstView->ShowWindow(SW_HIDE);
-		m_pOtherView->ShowWindow(SW_SHOW);
+		MainView->ShowWindow(SW_HIDE);
+		AltView->ShowWindow(SW_SHOW);
 
-		((CFrameWnd*)m_pMainWnd)->SetActiveView(m_pOtherView);
+		((CFrameWnd*)m_pMainWnd)->SetActiveView(AltView);
 		((CFrameWnd*)m_pMainWnd)->RecalcLayout();
-		m_pOtherView->Invalidate();
+		AltView->Invalidate();
 
 	}
 	afx_msg void OnViewFirstview()
 	{
 		// TODO: Add your command handler code here
 
-		UINT temp = ::GetWindowWord(m_pOtherView->m_hWnd, GWL_ID);
-		::SetWindowWord(m_pOtherView->m_hWnd, GWL_ID, ::GetWindowWord(m_pFirstView->m_hWnd, GWL_ID));
-		::SetWindowWord(m_pFirstView->m_hWnd, GWL_ID, temp);
+		UINT temp = ::GetWindowWord(AltView->m_hWnd, GWL_ID);
+		::SetWindowWord(AltView->m_hWnd, GWL_ID, ::GetWindowWord(MainView->m_hWnd, GWL_ID));
+		::SetWindowWord(MainView->m_hWnd, GWL_ID, temp);
 
-		m_pOtherView->ShowWindow(SW_HIDE);
-		m_pFirstView->ShowWindow(SW_SHOW);
+		AltView->ShowWindow(SW_HIDE);
+		MainView->ShowWindow(SW_SHOW);
 
-		((CFrameWnd*)m_pMainWnd)->SetActiveView(m_pFirstView);
+		((CFrameWnd*)m_pMainWnd)->SetActiveView(MainView);
 		((CFrameWnd*)m_pMainWnd)->RecalcLayout();
-		m_pFirstView->Invalidate();
+		MainView->Invalidate();
 	}
 	//}}AFX_MSG
 
@@ -151,6 +161,11 @@ public:
 	{
 		return GetThisMessageMap();
 	}
+  int CurrentAltView = 0;
+  //IniDataV2 IniSettings;
+  //bool m_IsLocked;
+  //BOOL  m_bHiColorIcons;
+  //CMultiDocTemplate * m_pDocTemplate;
 };
 
 //extern MultiviewApp<ViewType01, ViewType02 theApp;

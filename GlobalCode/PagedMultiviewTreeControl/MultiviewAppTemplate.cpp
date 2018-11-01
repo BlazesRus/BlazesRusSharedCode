@@ -2,7 +2,7 @@
 //
 
 #include "MultiviewPrecompile.h"
-#include "MultiviewAppTemplate.h"
+#include "HalfPagedMultiview.h"
 
 #include "MultiViewDoc.h"
 #include "MultiViewView.h"
@@ -42,11 +42,11 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// MultiviewAppTemplate
+// HalfPagedMultiview
 
-//BEGIN_MESSAGE_MAP(MultiviewAppTemplate, CWinAppEx)
-BEGIN_MULTITEMPLATE_MESSAGE_MAP(MultiviewAppTemplate, ViewType01, ViewType02, WindowType, FrameWindowType, CWinAppEx)
-        //{{AFX_MSG_MAP(MultiviewAppTemplate)
+//BEGIN_MESSAGE_MAP(HalfPagedMultiview, CWinAppEx)
+BEGIN_MULTITEMPLATE_MESSAGE_MAP(HalfPagedMultiview, ViewType01, ViewType02, WindowType, FrameWindowType, CWinAppEx)
+        //{{AFX_MSG_MAP(HalfPagedMultiview)
         //ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
         ON_COMMAND(ID_VIEW_OTHERVIEW, OnViewOtherview)
         ON_COMMAND(ID_VIEW_FIRSTVIEW, OnViewFirstview)
@@ -59,22 +59,22 @@ BEGIN_MULTITEMPLATE_MESSAGE_MAP(MultiviewAppTemplate, ViewType01, ViewType02, Wi
 END_MULTITEMPLATE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// MultiviewAppTemplate construction
+// HalfPagedMultiview construction
 
 template<typename ViewType01, typename ViewType02, typename WindowType, typename FrameWindowType>
-MultiviewAppTemplate<ViewType01, ViewType02, WindowType, FrameWindowType>::MultiviewAppTemplate()
+HalfPagedMultiview<ViewType01, ViewType02, WindowType, FrameWindowType>::HalfPagedMultiview()
 {
     // TODO: add construction code here,
     // Place all significant initialization in InitInstance
 }
 
 template<typename ViewType01, typename ViewType02, typename WindowType, typename FrameWindowType>
-MultiviewAppTemplate<ViewType01, ViewType02, WindowType, FrameWindowType>::~MultiviewAppTemplate()
+HalfPagedMultiview<ViewType01, ViewType02, WindowType, FrameWindowType>::~HalfPagedMultiview()
 {
 }
 
 template<typename ViewType01, typename ViewType02, typename WindowType, typename FrameWindowType>
-inline BOOL MultiviewAppTemplate<ViewType01, ViewType02, WindowType, FrameWindowType>::InitInstance()
+inline BOOL HalfPagedMultiview<ViewType01, ViewType02, WindowType, FrameWindowType>::InitInstance()
 {
     AfxEnableControlContainer();
 
@@ -121,12 +121,12 @@ inline BOOL MultiviewAppTemplate<ViewType01, ViewType02, WindowType, FrameWindow
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// The one and only MultiviewAppTemplate object
+// The one and only HalfPagedMultiview object
 
-//MultiviewAppTemplate theApp;
+//HalfPagedMultiview theApp;
 
 /////////////////////////////////////////////////////////////////////////////
-// MultiviewAppTemplate initialization
+// HalfPagedMultiview initialization
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -177,16 +177,16 @@ END_MESSAGE_MAP()
 
 // App command to run the dialog
 template<typename ViewType01, typename ViewType02, typename WindowType, typename FrameWindowType>
-void MultiviewAppTemplate<ViewType01, ViewType02, WindowType, FrameWindowType>::OnAppAbout()
+void HalfPagedMultiview<ViewType01, ViewType02, WindowType, FrameWindowType>::OnAppAbout()
 {
     CAboutDlg aboutDlg;
     aboutDlg.DoModal();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// MultiviewAppTemplate message handlers
+// HalfPagedMultiview message handlers
 template<typename ViewType01, typename ViewType02, typename WindowType, typename FrameWindowType>
-void MultiviewAppTemplate<ViewType01, ViewType02, WindowType, FrameWindowType>::OnViewOtherview()
+void HalfPagedMultiview<ViewType01, ViewType02, WindowType, FrameWindowType>::OnViewOtherview()
 {
     // TODO: Add your command handler code here
     UINT temp = ::GetWindowLong(AltView->m_hWnd, GWL_ID);
@@ -203,7 +203,7 @@ void MultiviewAppTemplate<ViewType01, ViewType02, WindowType, FrameWindowType>::
 }
 
 template<typename ViewType01, typename ViewType02, typename WindowType, typename FrameWindowType>
-void MultiviewAppTemplate<ViewType01, ViewType02, WindowType, FrameWindowType>::OnViewFirstview()
+void HalfPagedMultiview<ViewType01, ViewType02, WindowType, FrameWindowType>::OnViewFirstview()
 {
  	// TODO: Add your command handler code here
 
