@@ -24,7 +24,13 @@ class BasicMultiviewTemplate : public CWinAppEx
 	CView* m_pFirstView;
 	CView* m_pOtherView;
 public:
-	BasicMultiviewTemplate();
+	/////////////////////////////////////////////////////////////////////////////
+	// BasicMultiviewTemplate construction
+	BasicMultiviewTemplate()
+	{
+		// TODO: add construction code here,
+		// Place all significant initialization in InitInstance
+	}
 
 // Overrides
 	// ClassWizard generated virtual function overrides

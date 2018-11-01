@@ -66,12 +66,6 @@
     <ClCompile Include="FusedFrameWindow.cpp">
       <Filter>MultiView</Filter>
     </ClCompile>
-    <ClCompile Include="BasicMultiviewTemplate.cpp">
-      <Filter>MultiView</Filter>
-    </ClCompile>
-    <ClCompile Include="AboutDlg.cpp">
-      <Filter>MultiView</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">

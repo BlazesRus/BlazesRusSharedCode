@@ -346,8 +346,6 @@
     <ClInclude Include="AboutDlg.h" />
     <ClInclude Include="BasicMultiviewTemplate.h" />
     <ClInclude Include="FusedFrameWindow.h" />
-    <ClCompile Include="AboutDlg.cpp" />
-    <ClCompile Include="BasicMultiviewTemplate.cpp" />
     <ClCompile Include="FusedFrameWindow.cpp" />
     <ClCompile Include="MainFrm.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
