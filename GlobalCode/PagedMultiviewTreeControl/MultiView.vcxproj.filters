@@ -164,9 +164,6 @@
     <ClInclude Include="HalfPagedMultiview.h">
       <Filter>MultiView</Filter>
     </ClInclude>
-    <ClInclude Include="CViewP.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\MultiView.ico">

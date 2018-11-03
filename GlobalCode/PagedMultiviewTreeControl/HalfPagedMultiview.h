@@ -8,36 +8,37 @@
 #endif
 
 #include "resource.h"       // main symbols
-#include <GlobalCode_IniData/IniDataV2.h>
+
 #include "MultiViewDoc.h"
 #include "MultiViewView.h"
 #include "AboutDlg.h"
-//#include <GlobalCode_IniData/IndexedPDictionary.h>
-//#include "BvhFrame.h"
 
 #include "MainFrm.h"
 #include "OtherView.h"
 
+#include <GlobalCode_VariableLists/VariableList.h>
+//#include <GlobalCode_IniData/IniDataV2.h>
+
 /// <summary>
 /// Multiview features based on https://www.codeproject.com/Articles/7686/Using-Multiview
 /// </summary>
-template <typename ViewType01 = MainFrame, typename ViewTypeP01 = MainFrameP, typename ViewType02 = OtherView, typename ViewTypeP02 = OtherViewP, typename WindowType = CView, typename FrameWindowType = CFrameWnd>
+template <typename ViewType01 = MainFrameView, typename ViewType02 = OtherView, typename Frame01 = MainFrame>
 class HalfPagedMultiview : public CWinAppEx
 {
 	/// <summary>
 	/// The main view
 	/// </summary>
-	CView* MainView;//ViewTypeP01 MainView;
+	ViewType01* MainView;
 	/// <summary>
 	/// The List holding one or more Alternative Views
 	/// </summary>
-	VariableList<CView*> AltView;//VariableList<ViewTypeP02> AltView;
+	VariableList<ViewType02*> AltView;
 public:
 	/////////////////////////////////////////////////////////////////////////////
 	// HalfPagedMultiview construction
-    /// <summary>
-    /// Initializes a new instance of the <see cref="HalfPagedMultiview"/> class.
-    /// </summary>
+	/// <summary>
+	/// Initializes a new instance of the <see cref="HalfPagedMultiview"/> class.
+	/// </summary>
 	HalfPagedMultiview()
 	{
 		// TODO: add construction code here,
@@ -84,13 +85,11 @@ public:
 		if (!ProcessShellCommand(cmdInfo))
 			return FALSE;
 
-		//ViewType01* pActiveView = ((ViewType01*)m_pMainWnd)->GetActiveView();
-    CView* pActiveView = ((ViewType01*) m_pMainWnd)->GetActiveView();//((CFrameWnd*) m_pMainWnd)->GetActiveView();
-		MainView = pActiveView;
-		//AltView.Add((WindowType*) new ViewType02);
-    AltView.Add((CView*) new ViewType02);
+		CView* pActiveView = ((Frame01*)m_pMainWnd)->GetActiveView();
+		MainView = static_cast<ViewType01*>(pActiveView);
+		AltView.Add((ViewType02*) new ViewType02);
 
-		CDocument* pDoc = ((ViewType01*)m_pMainWnd)->GetActiveDocument();
+		CDocument* pDoc = ((Frame01*)m_pMainWnd)->GetActiveDocument();
 
 		CCreateContext context;
 		context.m_pCurrentDoc = pDoc;
@@ -132,10 +131,9 @@ public:
 
 		MainView->ShowWindow(SW_HIDE);
 		AltView[CurrentAltView]->ShowWindow(SW_SHOW);
-		//AltView->ShowWindow(SW_SHOW);
 
-		((ViewType01*)m_pMainWnd)->SetActiveView(AltView[CurrentAltView]);
-		((ViewType01*)m_pMainWnd)->RecalcLayout();
+		((Frame01*)m_pMainWnd)->SetActiveView(AltView[CurrentAltView]);
+		((Frame01*)m_pMainWnd)->RecalcLayout();
 		AltView[CurrentAltView]->Invalidate();
 	}
 	afx_msg void OnViewFirstview()
@@ -151,9 +149,9 @@ public:
 
 		//((FrameWindowType*)m_pMainWnd)->SetActiveView(MainView);
 		//((FrameWindowType*)m_pMainWnd)->RecalcLayout();
-		((CFrameWnd*)m_pMainWnd)->SetActiveView(MainView);
-		((CFrameWnd*)m_pMainWnd)->RecalcLayout();
-    MainView->Invalidate();
+		((Frame01*)m_pMainWnd)->SetActiveView(MainView);
+		((Frame01*)m_pMainWnd)->RecalcLayout();
+		MainView->Invalidate();
 	}
 	//}}AFX_MSG
 

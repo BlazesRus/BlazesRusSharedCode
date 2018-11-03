@@ -19,15 +19,23 @@
 #include "MainFrm.h"
 #include "OtherView.h"
 
+#include <GlobalCode_IniData/IniDataV2.h>
+
 /////////////////////////////////////////////////////////////////////////////
 // CMultiViewApp:
 // See MultiView.cpp for the implementation of this class
 //
 
-class MultiViewApp : public HalfPagedMultiview<MainFrame, MainFrameP, OtherView, OtherViewP>
+class MultiViewApp : public HalfPagedMultiview<MainFrameView, OtherView, MainFrame>
 {
 public:
 	MultiViewApp() {};
+	IniDataV2 IniSettings;
+private:
+	void InitializationCode()
+	{
+	}
+public:
 
 // Overrides
 	// ClassWizard generated virtual function overrides
