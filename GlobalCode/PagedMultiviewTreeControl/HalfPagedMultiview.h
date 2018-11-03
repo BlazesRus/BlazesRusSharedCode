@@ -107,9 +107,10 @@ public:
 
 		return TRUE;
 	}
-	virtual int ExitInstance()
-	{
-	}
+	//virtual int ExitInstance()
+	//{
+	//	return TRUE;
+	//}
 	//}}AFX_VIRTUAL
 
   // Implementation
@@ -135,7 +136,7 @@ public:
 
 		((ViewType01*)m_pMainWnd)->SetActiveView(AltView[CurrentAltView]);
 		((ViewType01*)m_pMainWnd)->RecalcLayout();
-		AltView->Invalidate();
+		AltView[CurrentAltView]->Invalidate();
 	}
 	afx_msg void OnViewFirstview()
 	{

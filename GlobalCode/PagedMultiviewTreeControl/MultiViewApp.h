@@ -27,7 +27,7 @@
 class MultiViewApp : public HalfPagedMultiview<MainFrame, MainFrameP, OtherView, OtherViewP>
 {
 public:
-	MultiViewApp();
+	MultiViewApp() {};
 
 // Overrides
 	// ClassWizard generated virtual function overrides

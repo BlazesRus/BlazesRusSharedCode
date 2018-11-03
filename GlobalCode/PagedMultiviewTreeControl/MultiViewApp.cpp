@@ -4,9 +4,4 @@
 BEGIN_MESSAGE_MAP(MultiViewApp, HalfPagedMultiview)
 END_MESSAGE_MAP()
 
-MultiViewApp::MultiViewApp() : HalfPagedMultiview<MainFrame, OtherView, CView, CFrameWnd>()
-{
-
-}
-
 MultiViewApp theApp;

@@ -14,12 +14,20 @@ template <typename ViewType>
 class CViewP
 {
 public:
-	ViewType* self = nullptr;
 	/// <summary>
-	/// Type name contained within class
+	/// The actual pointer stored within
 	/// </summary>
-	/// <returns></returns>
-	typename ViewT() { return ViewType; }
+	ViewType* self = nullptr;
+
+	///// <summary>
+	///// Type name contained within class
+	///// </summary>
+	///// <returns></returns>
+	//typename ViewT() { return ViewType; }
+
+/// <summary>
+/// The pointer container
+/// </summary>
 	CViewP* PointerContainer = this;
 
 	/// <summary>
@@ -35,11 +43,23 @@ public:
 		self = Value;
 	}
 
+	/// <summary>
+	/// Implements the operator CView*.
+	/// </summary>
+	/// <returns>
+	/// The result of the operator.
+	/// </returns>
 	explicit operator CView*()
 	{
 		return static_cast<CView*>(self);
 	}
 
+	/// <summary>
+	/// Implements the operator ViewType*.
+	/// </summary>
+	/// <returns>
+	/// The result of the operator.
+	/// </returns>
 	explicit operator ViewType*()
 	{
 		return self;
@@ -53,12 +73,20 @@ template <typename ViewType>
 class CFrameP
 {
 public:
-	ViewType* self = nullptr;
 	/// <summary>
-	/// Type name contained within class
+	/// The actual pointer stored within
 	/// </summary>
-	/// <returns></returns>
-	typename ViewT() { return ViewType; }
+	ViewType* self = nullptr;
+
+	///// <summary>
+	///// Type name contained within class
+	///// </summary>
+	///// <returns></returns>
+	//typename ViewT() { return ViewType; }
+
+/// <summary>
+/// The pointer container
+/// </summary>
 	CFrameP* PointerContainer = this;
 
 	/// <summary>
