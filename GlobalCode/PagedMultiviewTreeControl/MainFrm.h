@@ -9,6 +9,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include "CViewP.h"
+
 class MainFrame : public CFrameWnd
 {
 protected: // create from serialization only
@@ -48,6 +50,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
+class MainFrameP : public CFrameP<MainFrame> {};
 /////////////////////////////////////////////////////////////////////////////
 
 //{{AFX_INSERT_LOCATION}}

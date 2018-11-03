@@ -1,10 +1,10 @@
 #include "MultiviewPrecompile.h"
 #include "MultiViewApp.h"
 
-BEGIN_MESSAGE_MAP(MultiViewApp, BasicMultiviewTemplate)
+BEGIN_MESSAGE_MAP(MultiViewApp, HalfPagedMultiview)
 END_MESSAGE_MAP()
 
-MultiViewApp::MultiViewApp() : BasicMultiviewTemplate<MainFrame, OtherView, CView, CFrameWnd>()
+MultiViewApp::MultiViewApp() : HalfPagedMultiview<MainFrame, OtherView, CView, CFrameWnd>()
 {
 
 }

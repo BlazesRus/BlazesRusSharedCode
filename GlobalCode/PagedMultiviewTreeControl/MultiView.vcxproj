@@ -345,6 +345,7 @@
     <ClInclude Include="..\..\..\MultiPlatformGlobalCode\GlobalCode\DLLAPI.h" />
     <ClInclude Include="AboutDlg.h" />
     <ClInclude Include="BasicMultiviewTemplate.h" />
+    <ClInclude Include="CViewP.h" />
     <ClInclude Include="FusedFrameWindow.h" />
     <ClCompile Include="FusedFrameWindow.cpp" />
     <ClCompile Include="MainFrm.cpp">

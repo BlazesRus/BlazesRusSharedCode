@@ -14,7 +14,7 @@
 #endif
 
 #include "resource.h"       // main symbols
-#include "BasicMultiviewTemplate.h"
+#include "HalfPagedMultiview.h"
 
 #include "MainFrm.h"
 #include "OtherView.h"
@@ -24,7 +24,7 @@
 // See MultiView.cpp for the implementation of this class
 //
 
-class MultiViewApp : public BasicMultiviewTemplate<MainFrame, OtherView, CView, CFrameWnd>
+class MultiViewApp : public HalfPagedMultiview<MainFrame, MainFrameP, OtherView, OtherViewP>
 {
 public:
 	MultiViewApp();

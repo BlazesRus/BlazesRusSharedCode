@@ -1,13 +1,12 @@
-#include "MultiViewDoc.h"
-
 #if !defined(AFX_OTHERVIEW_H__34535BED_8D5C_453E_9DAE_F8A9413ABF6E__INCLUDED_)
 #define AFX_OTHERVIEW_H__34535BED_8D5C_453E_9DAE_F8A9413ABF6E__INCLUDED_
 
 #if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
-// OtherView.h : header file
-//
+#endif
+
+#include "MultiViewDoc.h"
+#include "CViewP.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // OtherView view
@@ -48,6 +47,8 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+
+class OtherViewP : public CViewP<OtherView>{};
 
 /////////////////////////////////////////////////////////////////////////////
 

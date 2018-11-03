@@ -15,94 +15,106 @@
 //#include <GlobalCode_IniData/IndexedPDictionary.h>
 //#include "BvhFrame.h"
 
+#include "MainFrm.h"
+#include "OtherView.h"
+
 /// <summary>
 /// Multiview features based on https://www.codeproject.com/Articles/7686/Using-Multiview
 /// </summary>
-template <typename ViewType01=CView, typename ViewType02=CView, typename WindowType=CView, typename FrameWindowType=CFrameWnd>//: MainFrame, OtherView, CView, CFrameWnd
+template <typename ViewType01 = MainFrame, typename ViewTypeP01 = MainFrameP, typename ViewType02 = OtherView, typename ViewTypeP02 = OtherViewP, typename WindowType = CView, typename FrameWindowType = CFrameWnd>
 class HalfPagedMultiview : public CWinAppEx
 {
-	ViewType01* MainView;
-  VariableList<ViewType02*> AltView;
+	/// <summary>
+	/// The main view
+	/// </summary>
+	ViewTypeP01 MainView;
+	/// <summary>
+	/// The List holding one or more Alternative Views
+	/// </summary>
+	VariableList<ViewTypeP02> AltView;
 public:
 	/////////////////////////////////////////////////////////////////////////////
 	// HalfPagedMultiview construction
+    /// <summary>
+    /// Initializes a new instance of the <see cref="HalfPagedMultiview"/> class.
+    /// </summary>
 	HalfPagedMultiview()
 	{
 		// TODO: add construction code here,
 		// Place all significant initialization in InitInstance
 	}
 
-  ~virtual HalfPagedMultiview()
-  {
+	//~virtual HalfPagedMultiview()
+	//{
+	//}
 
-  }
+	//
+	/// <summary>
+	/// Edit this virtual function inside Derived Class with method void InitializationCode() defined to run edit code thats run just before displays main view on InitInstance()
+	/// </summary>
+	virtual void InitializationCode()
+	{
+	}
+	// Overrides
+		// ClassWizard generated virtual function overrides
+		//{{AFX_VIRTUAL(CMultiViewApp)
+public:
+	virtual BOOL InitInstance()
+	{
+		AfxEnableControlContainer();
 
-  //Edit this virtual function inside Derived Class with method void InitialyzationCode() defined
-  virtual void InitialyzationCode
-  {
+		//LoadStdProfileSettings();  // Load standard INI file options (including MRU)
 
-  }
-// Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CMultiViewApp)
-	public:
-		virtual BOOL InitInstance()
-		{
-			AfxEnableControlContainer();
+		// Register the application's document templates.  Document templates
+		//  serve as the connection between documents, frame windows and views.
 
-			//LoadStdProfileSettings();  // Load standard INI file options (including MRU)
+		CSingleDocTemplate* pDocTemplate;
+		pDocTemplate = new CSingleDocTemplate(
+			IDR_MAINFRAME,
+			RUNTIME_CLASS(MultiViewDoc),
+			RUNTIME_CLASS(ViewType01),       // main SDI frame window
+			RUNTIME_CLASS(MultiViewView));
+		AddDocTemplate(pDocTemplate);
 
-			// Register the application's document templates.  Document templates
-			//  serve as the connection between documents, frame windows and views.
+		// Parse command line for standard shell commands, DDE, file open
+		CCommandLineInfo cmdInfo;
+		ParseCommandLine(cmdInfo);
 
-			CSingleDocTemplate* pDocTemplate;
-			pDocTemplate = new CSingleDocTemplate(
-				IDR_MAINFRAME,
-				RUNTIME_CLASS(MultiViewDoc),
-				RUNTIME_CLASS(ViewType01),       // main SDI frame window
-				RUNTIME_CLASS(MultiViewView));
-			AddDocTemplate(pDocTemplate);
+		// Dispatch commands specified on the command line
+		if (!ProcessShellCommand(cmdInfo))
+			return FALSE;
 
-			// Parse command line for standard shell commands, DDE, file open
-			CCommandLineInfo cmdInfo;
-			ParseCommandLine(cmdInfo);
+		ViewType01* pActiveView = ((ViewType01*)m_pMainWnd)->GetActiveView();
+		MainView = pActiveView;
+		AltView.Add((WindowType*) new ViewType02);
 
-			// Dispatch commands specified on the command line
-			if (!ProcessShellCommand(cmdInfo))
-				return FALSE;
+		CDocument* pDoc = ((FrameWindowType*)m_pMainWnd)->GetActiveDocument();
 
-			ViewType01* pActiveView = ((FrameWindowType*)m_pMainWnd)->GetActiveView();
-			MainView = pActiveView;
-			AltView.Add((WindowType*) new ViewType02);
+		CCreateContext context;
+		context.m_pCurrentDoc = pDoc;
 
-			CDocument* pDoc = ((FrameWindowType*)m_pMainWnd)->GetActiveDocument();
+		UINT m_ID = AFX_IDW_PANE_FIRST + 1;
+		CRect rect;
 
-			CCreateContext context;
-			context.m_pCurrentDoc = pDoc;
+		AltView[CurrentAltView]->Create(NULL, NULL, WS_CHILD, rect, m_pMainWnd, m_ID, &context);
 
-			UINT m_ID = AFX_IDW_PANE_FIRST + 1;
-			CRect rect;
+		InitializationCode();
+		// The one and only window has been initialized, so show and update it.
+		m_pMainWnd->ShowWindow(SW_SHOWMAXIMIZED);
+		m_pMainWnd->UpdateWindow();
 
-      AltView[CurrentAltView]->Create(NULL, NULL, WS_CHILD, rect, m_pMainWnd, m_ID, &context);
+		return TRUE;
+	}
+	virtual int ExitInstance()
+	{
+	}
+	//}}AFX_VIRTUAL
 
-      InitialyzationCode();
-			// The one and only window has been initialized, so show and update it.
-			m_pMainWnd->ShowWindow(SW_SHOWMAXIMIZED);
-			m_pMainWnd->UpdateWindow();
-
-			return TRUE;
-		}
-	  virtual int ExitInstance()
-    {
-
-    }
-  //}}AFX_VIRTUAL
-
-// Implementation
-	//{{AFX_MSG(CMultiViewApp)
-/// <summary>
-/// App command to run the dialog
-/// </summary>
+  // Implementation
+	  //{{AFX_MSG(CMultiViewApp)
+  /// <summary>
+  /// App command to run the dialog
+  /// </summary>
 	afx_msg void OnAppAbout()
 	{
 		AboutDlg aboutDlg;
@@ -116,13 +128,12 @@ public:
 		::SetWindowLong(MainView->m_hWnd, GWL_ID, temp);
 
 		MainView->ShowWindow(SW_HIDE);
-    AltView[CurrentAltView]->ShowWindow(SW_SHOW);
+		AltView[CurrentAltView]->ShowWindow(SW_SHOW);
 		//AltView->ShowWindow(SW_SHOW);
 
 		((FrameWindowType*)m_pMainWnd)->SetActiveView(AltView[CurrentAltView]);
 		((FrameWindowType*)m_pMainWnd)->RecalcLayout();
 		AltView->Invalidate();
-
 	}
 	afx_msg void OnViewFirstview()
 	{
@@ -148,8 +159,8 @@ protected:
 		//typedef HalfPagedMultiview< ViewType01, ViewType02, WindowType, FrameWindowType > ThisClass;
 		//typedef CWinAppEx TheBaseClass;
 		__pragma(warning(push))
-		__pragma(warning(disable: 4640)) /* message maps can only be called by single threaded message pump */
-		static const AFX_MSGMAP_ENTRY _messageEntries[] =
+			__pragma(warning(disable: 4640)) /* message maps can only be called by single threaded message pump */
+			static const AFX_MSGMAP_ENTRY _messageEntries[] =
 		{
 			ON_COMMAND(ID_APP_ABOUT, &OnAppAbout)
 			ON_COMMAND(ID_VIEW_OTHERVIEW, &OnViewOtherview)
@@ -167,11 +178,11 @@ public:
 	{
 		return GetThisMessageMap();
 	}
-  unsigned int CurrentAltView = 0;
-  //IniDataV2 IniSettings;
-  //bool m_IsLocked;
-  //BOOL  m_bHiColorIcons;
-  //CMultiDocTemplate * m_pDocTemplate;
+	unsigned int CurrentAltView = 0;
+	//IniDataV2 IniSettings;
+	//bool m_IsLocked;
+	//BOOL  m_bHiColorIcons;
+	//CMultiDocTemplate * m_pDocTemplate;
 };
 
 //extern MultiviewApp<ViewType01, ViewType02 theApp;

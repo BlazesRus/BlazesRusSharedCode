@@ -18,7 +18,7 @@ public:
 		// ClassWizard generated virtual function overrides
 		//{{AFX_VIRTUAL(MainFrame)
 public:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+	BOOL PreCreateWindow(CREATESTRUCT& cs);
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -40,6 +40,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
-
-#pragma once
 #endif
