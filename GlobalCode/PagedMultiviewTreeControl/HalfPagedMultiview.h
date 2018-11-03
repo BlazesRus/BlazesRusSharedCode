@@ -27,11 +27,11 @@ class HalfPagedMultiview : public CWinAppEx
 	/// <summary>
 	/// The main view
 	/// </summary>
-	ViewTypeP01 MainView;
+	CView* MainView;//ViewTypeP01 MainView;
 	/// <summary>
 	/// The List holding one or more Alternative Views
 	/// </summary>
-	VariableList<ViewTypeP02> AltView;
+	VariableList<CView*> AltView;//VariableList<ViewTypeP02> AltView;
 public:
 	/////////////////////////////////////////////////////////////////////////////
 	// HalfPagedMultiview construction
@@ -84,11 +84,13 @@ public:
 		if (!ProcessShellCommand(cmdInfo))
 			return FALSE;
 
-		ViewType01* pActiveView = ((ViewType01*)m_pMainWnd)->GetActiveView();
+		//ViewType01* pActiveView = ((ViewType01*)m_pMainWnd)->GetActiveView();
+    CView* pActiveView = ((ViewType01*) m_pMainWnd)->GetActiveView();//((CFrameWnd*) m_pMainWnd)->GetActiveView();
 		MainView = pActiveView;
-		AltView.Add((WindowType*) new ViewType02);
+		//AltView.Add((WindowType*) new ViewType02);
+    AltView.Add((CView*) new ViewType02);
 
-		CDocument* pDoc = ((FrameWindowType*)m_pMainWnd)->GetActiveDocument();
+		CDocument* pDoc = ((ViewType01*)m_pMainWnd)->GetActiveDocument();
 
 		CCreateContext context;
 		context.m_pCurrentDoc = pDoc;
@@ -131,8 +133,8 @@ public:
 		AltView[CurrentAltView]->ShowWindow(SW_SHOW);
 		//AltView->ShowWindow(SW_SHOW);
 
-		((FrameWindowType*)m_pMainWnd)->SetActiveView(AltView[CurrentAltView]);
-		((FrameWindowType*)m_pMainWnd)->RecalcLayout();
+		((ViewType01*)m_pMainWnd)->SetActiveView(AltView[CurrentAltView]);
+		((ViewType01*)m_pMainWnd)->RecalcLayout();
 		AltView->Invalidate();
 	}
 	afx_msg void OnViewFirstview()
@@ -146,9 +148,11 @@ public:
 		AltView[CurrentAltView]->ShowWindow(SW_HIDE);
 		MainView->ShowWindow(SW_SHOW);
 
-		((FrameWindowType*)m_pMainWnd)->SetActiveView(MainView);
-		((FrameWindowType*)m_pMainWnd)->RecalcLayout();
-		MainView->Invalidate();
+		//((FrameWindowType*)m_pMainWnd)->SetActiveView(MainView);
+		//((FrameWindowType*)m_pMainWnd)->RecalcLayout();
+		((CFrameWnd*)m_pMainWnd)->SetActiveView(MainView);
+		((CFrameWnd*)m_pMainWnd)->RecalcLayout();
+    MainView->Invalidate();
 	}
 	//}}AFX_MSG
 
