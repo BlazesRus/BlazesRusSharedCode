@@ -75,6 +75,11 @@
 #define IDS_FILE_VIEW				205
 #define IDS_EXPLORER				206
 
+#define IDD_CUSTOMTREECONTROL_DIALOG    210
+#define IDD_NODETEXT                    211
+#define IDC_ST_TREE                     212
+#define IDC_EF_TEXT                     213
+
 #define IDS_SHORTCUTS				252
 #define IDS_FOLDERS					253
 #define IDS_OUTLOOKBAR				258

@@ -18,6 +18,7 @@
 
 #include "MainFrm.h"
 #include "OtherView.h"
+#include "TreePage.h"
 
 #include <GlobalCode_IniData/IniDataV2.h>
 
@@ -26,7 +27,7 @@
 // See MultiView.cpp for the implementation of this class
 //
 
-class MultiViewApp : public HalfPagedMultiview<MainFrameView, OtherView, MainFrame>
+class MultiViewApp : public HalfPagedMultiview<MainFrameView, TreePage, MainFrame>
 {
 public:
 	MultiViewApp() {};

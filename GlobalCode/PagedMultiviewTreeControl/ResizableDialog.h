@@ -14,9 +14,9 @@
 //
 // Free for non-commercial use.
 // You may change the code to your needs,
-// provided that credits to the original 
+// provided that credits to the original
 // author is given in the modified files.
-//  
+//
 /////////////////////////////////////////////////////////////////////////////
 
 #include <afxtempl.h>
@@ -63,7 +63,7 @@ private:
 
 	SIZE m_szGripSize;			// set at construction time
 
-	CRect m_rcGripRect;			// current pos of grip
+	CRect m_rcGripRect;			// current position of grip
 
 	POINT m_ptMinTrackSize;		// min tracking size
 	POINT m_ptMaxTrackSize;		// max tracking size
@@ -81,11 +81,11 @@ private:
 		// upper-left corner
 		CSize tl_type;
 		CSize tl_margin;
-		
+
 		// bottom-right corner
 		CSize br_type;
 		CSize br_margin;
-	
+
 	public:
 		Layout()
 			: hwnd(NULL), adj_hscroll(FALSE), need_refresh(FALSE),
@@ -94,7 +94,7 @@ private:
 		{
 		};
 
-		Layout(HWND hw, SIZE tl_t, SIZE tl_m, 
+		Layout(HWND hw, SIZE tl_t, SIZE tl_m,
 			SIZE br_t, SIZE br_m, BOOL hscroll, BOOL refresh)
 		{
 			hwnd = hw;
@@ -104,7 +104,7 @@ private:
 
 			tl_type = tl_t;
 			tl_margin = tl_m;
-			
+
 			br_type = br_t;
 			br_margin = br_m;
 		};

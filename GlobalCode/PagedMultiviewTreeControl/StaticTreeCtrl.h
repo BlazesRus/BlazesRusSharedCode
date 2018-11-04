@@ -24,8 +24,8 @@
 #define STRCPY(x,y)				strcpy_s(x,y)
 #endif
 
-//#include "MultiviewPrecompile.h"
-#include "CustomTreeControl.h"
+#include "MultiviewPrecompile.h"
+//#include "CustomTreeControl.h"
 #include "ContextMenu.h"
 #include "DLG_TreeNodeText.h"
 #include "CustomTreeNode.h"

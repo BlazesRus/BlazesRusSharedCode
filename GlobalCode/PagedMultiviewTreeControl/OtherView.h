@@ -6,6 +6,9 @@
 #endif
 
 #include "MultiViewDoc.h"
+//#include "StaticTreeCtrl.h"
+//#include "TreePage.h"
+#include "TreeCtrlPage.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // OtherView view
@@ -20,6 +23,9 @@ protected:
 public:
 	OtherView();           // protected constructor used by dynamic creation
 	virtual ~OtherView();
+	//CStaticTreeCtrl	m_ST_Tree;
+	TreeCtrlPage MainTree;
+	//TreePage MainTree;
 
 public:
 	MultiViewDoc* GetDocument();

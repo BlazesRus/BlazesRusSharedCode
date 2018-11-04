@@ -8,6 +8,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include "Resource.h"
 #include "ResizableDialog.h"
 #include "StaticTreeCtrl.h"
 

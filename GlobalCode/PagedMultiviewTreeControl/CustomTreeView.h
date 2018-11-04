@@ -1,6 +1,14 @@
+#if !defined(CustomTreeView_IncludeGuard)
+#define CustomTreeView_IncludeGuard
+
+#if _MSC_VER > 1000
 #pragma once
-#ifndef CustomTreeCtrl_Header
-#define CustomTreeCtrl_Header
+#endif
+
+#include "MultiViewDoc.h"
+//#include "StaticTreeCtrl.h"
+//#include "TreePage.h"
+#include "TreeCtrlPage.h"
 
 #define		CM_INSERTCHILD				WM_APP + 10000
 #define		CM_INSERTSIBLING			WM_APP + 10001
@@ -33,21 +41,25 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+/////////////////////////////////////////////////////////////////////////////
+// CustomTreeView view
+
 /// <summary>
-/// Edited derivable version of CustomTreeControl's CStaticTreeCtrl class <para/>(base code from https://www.codeproject.com/Articles/9887/CStaticTreeCtrl-A-CStatic-derived-custom-Tree-cont)
+/// Edited derivable version of CustomTreeControl's CViewTreeCtrl class converted into a view
+/// <para/>(base code from https://www.codeproject.com/Articles/9887/CViewTreeCtrl-A-CView-derived-custom-Tree-cont)
 /// <para/>NodeCtrl refers to NodeTree holding this class
 /// <para/>TreeNode refers to derived class's name (for keeping inherited functionality)
 /// </summary>
 template <typename TreeNode>
-class CustomTreeCtrl : public CStatic
+class CustomTreeView : public CView
 {
-//#define CtrlType CustomTreeCtrl<TreeNode>
-//#define TreeNode TreeNode
-//#define TreeNodeP TreeNode*
-//#define m_pTopNode (TreeNodeP -0x10000)
-	// Construction
+protected:
+	DECLARE_DYNCREATE(CustomTreeView)
+
+// Attributes
+// Operations
 public:
-	CustomTreeCtrl()
+	CustomTreeView()
 	{
 		m_pTopNode = new TreeNode();	// The tree top
 
@@ -61,15 +73,30 @@ public:
 
 		m_crDefaultTextColor = RGB(58, 58, 58);	// Some default
 		m_crConnectingLines = RGB(128, 128, 128);	// Some default
-
-		m_bAudioOn = FALSE;			// The context menu audio
-
+		
 									// Safeguards
 		SetTextFont(8, FALSE, FALSE, "Arial Unicode MS");
 		m_pSelected = NULL;
 	}
+	
+public:
+	MultiViewDoc* GetDocument();
 
-	// Attributes
+// Overrides
+	// ClassWizard generated virtual function overrides
+	//{{AFX_VIRTUAL(CustomTreeView)
+	protected:
+	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
+	//}}AFX_VIRTUAL
+
+// Implementation
+protected:
+#ifdef _DEBUG
+
+	virtual void AssertValid() const;
+	virtual void Dump(CDumpContext& dc) const;
+#endif
+// Attributes
 protected:
 	LOGFONT			m_lgFont;
 	CFont			m_Font;
@@ -616,27 +643,23 @@ protected:
 	{
 		SetBackgroundBitmap(TRUE);
 	}
-	void OnCM_ToggleMenuSound()
-	{
-		m_bAudioOn = !m_bAudioOn;
-	}
 
 	// Overrides
 	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CustomTreeCtrl)
+	//{{AFX_VIRTUAL(CustomTreeView)
 protected:
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		if (message == WM_NCHITTEST || message == WM_NCLBUTTONDOWN || message == WM_NCLBUTTONDBLCLK)
 			return ::DefWindowProc(m_hWnd, message, wParam, lParam);
 
-		return CStatic::WindowProc(message, wParam, lParam);
+		return CView::WindowProc(message, wParam, lParam);
 	}
 	//}}AFX_VIRTUAL
 
 	// Implementation
 public:
-	virtual ~CustomTreeCtrl()
+	virtual ~CustomTreeView()
 	{
 		DeleteNode(m_pTopNode);	// Delete all children if there are any
 		delete m_pTopNode;			// Delete top node
@@ -650,7 +673,7 @@ public:
 
 	// Generated message map functions
 protected:
-	//{{AFX_MSG(CustomTreeCtrl)
+	//{{AFX_MSG(CustomTreeView)
 	afx_msg void OnPaint()
 	{
 		CPaintDC dc(this); // Device context for painting
@@ -745,7 +768,7 @@ protected:
 		if (!m_bScrollBarMessage)
 			ResetScrollBar();
 
-		CStatic::OnSize(nType, cx, cy);
+		CView::OnSize(nType, cx, cy);
 	}
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	{
@@ -807,14 +830,14 @@ protected:
 		if (pClickedOn != NULL)			// If a node was clicked on
 			ToggleNode(pClickedOn, TRUE);
 		else
-			CStatic::OnLButtonUp(nFlags, point);
+			CView::OnLButtonUp(nFlags, point);
 	}
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	{
 		// zDelta greater than 0, means rotating away from the user, that is, scrolling up
 		OnVScroll((zDelta > 0) ? SB_LINEUP : SB_LINEDOWN, 0, NULL);
 
-		return CStatic::OnMouseWheel(nFlags, zDelta, pt);
+		return CView::OnMouseWheel(nFlags, zDelta, pt);
 	}
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point)
 	{
@@ -899,8 +922,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-
-BEGIN_TEMPLATE_MESSAGE_MAP(CustomTreeCtrl, TreeNode, CStatic)
+BEGIN_TEMPLATE_MESSAGE_MAP(CustomTreeView, TreeNode, CView)
 	ON_WM_PAINT()
 	ON_WM_SIZE()
 	ON_WM_VSCROLL()
@@ -919,4 +941,8 @@ BEGIN_TEMPLATE_MESSAGE_MAP(CustomTreeCtrl, TreeNode, CStatic)
 	ON_COMMAND(CM_SETBACKGROUNDBITMAP, OnCM_SetBackgroundBitmap)
 	ON_COMMAND(CM_TOGGLEMENUSOUND, OnCM_ToggleMenuSound)
 END_MESSAGE_MAP()
-#endif
+
+//{{AFX_INSERT_LOCATION}}
+// Microsoft Visual C++ will insert additional declarations immediately before the previous line.
+
+#endif 

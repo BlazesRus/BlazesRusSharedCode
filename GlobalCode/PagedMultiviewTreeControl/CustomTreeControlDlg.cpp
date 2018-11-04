@@ -2,7 +2,7 @@
 //
 
 #include "MultiviewPrecompile.h"
-#include "CustomTreeControl.h"
+//#include "CustomTreeControl.h"
 #include "CustomTreeControlDlg.h"
 #include "StaticTreeCtrl.h"
 

@@ -21,8 +21,8 @@
 #endif
 
 #include "MultiviewPrecompile.h"
-#include "CustomTreeControl.h"
-#include "StaticTreeCtrl.h"
+//#include "CustomTreeControl.h"
+//#include "StaticTreeCtrl.h"
 #include "ContextMenu.h"
 #include "DLG_TreeNodeText.h"
 
