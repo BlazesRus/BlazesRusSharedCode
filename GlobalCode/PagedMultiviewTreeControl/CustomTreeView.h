@@ -73,21 +73,13 @@ public:
 
 		m_crDefaultTextColor = RGB(58, 58, 58);	// Some default
 		m_crConnectingLines = RGB(128, 128, 128);	// Some default
-		
 									// Safeguards
 		SetTextFont(8, FALSE, FALSE, "Arial Unicode MS");
 		m_pSelected = NULL;
 	}
-	
+
 public:
 	MultiViewDoc* GetDocument();
-
-// Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CustomTreeView)
-	protected:
-	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
-	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
@@ -648,6 +640,8 @@ protected:
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CustomTreeView)
 protected:
+	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
+
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		if (message == WM_NCHITTEST || message == WM_NCLBUTTONDOWN || message == WM_NCLBUTTONDBLCLK)
@@ -945,4 +939,4 @@ END_MESSAGE_MAP()
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
-#endif 
+#endif
