@@ -79,14 +79,23 @@ public:
 	}
 
 public:
-	MultiViewDoc* GetDocument();
+	MultiViewDoc* GetDocument()
+	{
+		return (MultiViewDoc*)m_pDocument;
+	}
 
 // Implementation
 protected:
 #ifdef _DEBUG
 
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+	virtual void AssertValid() const
+	{
+		CView::AssertValid();
+}
+	virtual void Dump(CDumpContext& dc) const
+	{
+		CView::Dump(dc);
+	}
 #endif
 // Attributes
 protected:
@@ -640,7 +649,13 @@ protected:
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CustomTreeView)
 protected:
-	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
+	virtual void OnDraw(CDC* pDC)
+	{
+		MultiViewDoc* pDoc = GetDocument();
+		pDC->TextOut(400, 300, "Other view");
+		pDC->TextOut(400, 320, pDoc->m_str);
+		// TODO: add draw code here
+	}      // overridden to draw this view
 
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	{
@@ -915,6 +930,28 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+//{{AFX_INSERT_LOCATION}}
+// Microsoft Visual C++ will insert additional declarations immediately before the previous line.
+
+#if !defined(IMPLEMENT_DYNCREATER_01)//https://stackoverflow.com/questions/1491971/mfc-implement-dyncreate-with-template
+#define _RUNTIME_CLASS(class_name, template_name) ((CRuntimeClass*)(&class_name<template_name>::class##class_name##template_name))
+#define RUNTIME_CLASS(class_name, template_name) _RUNTIME_CLASS(class_name, template_name)
+
+#define _IMPLEMENT_RUNTIMECLASS( class_name, template_name, base_class_name, wSchema, pfnNew, class_init ) \
+                                 AFX_COMDAT CRuntimeClass class_name<template_name>::class##class_name##template_name = { \
+                                 #class_name, sizeof(class class_name<template_name>), wSchema, pfnNew, \
+                                 RUNTIME_CLASS(base_class_name), NULL, class_init }; \
+                                 CRuntimeClass* class_name<template_class::GetRuntimeClass() const \
+                                 { return RUNTIME_CLASS(class_name, template_name); }
+
+#define IMPLEMENT_DYNCREATER_01( class_name, template_name, base_class_name ) \
+                             CObject* PASCAL class_name<template_name>::CreateObject() \
+                             { return new class_name<template_name>; } \
+                             IMPLEMENT_RUNTIMECLASS(class_name, template_name, base_class_name, 0xFFFF, \
+                             class_name<template_name>::CreateObject, NULL)
+#endif
+
+IMPLEMENT_DYNCREATER_01(CustomTreeView, TreeNode, CView)
 
 BEGIN_TEMPLATE_MESSAGE_MAP(CustomTreeView, TreeNode, CView)
 	ON_WM_PAINT()
@@ -933,9 +970,6 @@ BEGIN_TEMPLATE_MESSAGE_MAP(CustomTreeView, TreeNode, CView)
 	ON_COMMAND(CM_SETFONT, OnCM_SetFont)
 	ON_COMMAND(CM_SETDEFAULTCOLOR, OnCM_SetDefaultColor)
 	ON_COMMAND(CM_SETBACKGROUNDBITMAP, OnCM_SetBackgroundBitmap)
-END_MESSAGE_MAP()
-
-//{{AFX_INSERT_LOCATION}}
-// Microsoft Visual C++ will insert additional declarations immediately before the previous line.
+	END_MESSAGE_MAP()
 
 #endif
