@@ -21,8 +21,9 @@ CContextMenu::CContextMenu()
 {
 	m_iWidth	= 0;
 	m_iHeight	= 0;
-
+#ifdef EnableCustomTreeSounds
 	m_bSoundOn	= TRUE;
+#endif
 }
 
 CContextMenu::~CContextMenu()
@@ -43,16 +44,41 @@ CContextMenu& CContextMenu::SetTextFont( CFont* font )
 	return *this;
 }
 
+#ifdef EnableCustomTreeSounds
 CContextMenu& CContextMenu::ToggleSound( BOOL bSoundOn )
 {
 	m_bSoundOn = bSoundOn;
+	return *this;
+}
+#endif
+
+#ifdef EnableCustomTreeSounds
+CContextMenu& CContextMenu::AppendMenuItem(UINT nFlags, UINT nID, CString csText, CString csWavFile, CDC* pDC)
+{
+	CContextMenuItem* cccItem = new CContextMenuItem(csText, csWavFile);
+
+	// Store the pointer
+	m_cptrMenuItems.Add(cccItem);
+
+	// Append menu
+	//CMenu::AppendMenu( nFlags | MF_OWNERDRAW, nID, (ODDCHAR*)cccItem );
+	CMenu::AppendMenu(nFlags | MF_OWNERDRAW, nID, (LPCTSTR)cccItem);
+
+	// Calculate the size of the menu's text
+	if (!csText.IsEmpty())
+	{
+		CSize cSize = pDC->GetTextExtent(csText);
+
+		m_iWidth = max(m_iWidth, cSize.cx);
+		m_iHeight = max(m_iHeight, 8 + cSize.cy);
+	}
 
 	return *this;
 }
-
-CContextMenu& CContextMenu::AppendMenuItem( UINT nFlags, UINT nID, CString csText, CString csWavFile, CDC* pDC )
+#else
+CContextMenu& CContextMenu::AppendMenuItem( UINT nFlags, UINT nID, CString csText, CDC* pDC )
 {
-	CContextMenuItem* cccItem = new CContextMenuItem( csText, csWavFile );
+	CContextMenuItem* cccItem = new CContextMenuItem( csText );
 
 	// Store the pointer
 	m_cptrMenuItems.Add( cccItem );
@@ -72,6 +98,7 @@ CContextMenu& CContextMenu::AppendMenuItem( UINT nFlags, UINT nID, CString csTex
 
 	return *this;
 }
+#endif
 
 CContextMenu& CContextMenu::SetColors(	COLORREF crText, COLORREF crBackground, COLORREF crDisabled,
 										COLORREF crSelected, COLORREF crBorder )
@@ -145,7 +172,7 @@ void CContextMenu::DrawItem( LPDRAWITEMSTRUCT lpDIS )
 			else
 			{
 				// If the item is selected, paint a rectangle, change the background color
-				// and play the wav file if relevant
+				// and play the .wav file if relevant
 				if( bSelected )
 				{
 					rItem.DeflateRect( 2, 2, 2, 2 );
@@ -153,7 +180,7 @@ void CContextMenu::DrawItem( LPDRAWITEMSTRUCT lpDIS )
 					rItem.DeflateRect( 1, 1, 1, 1 );
 					pDC->FillSolidRect( rItem, m_crSelected );
 					rItem.DeflateRect( 5, -3, 0, -3 );
-
+#ifdef EnableCustomTreeSounds
 					if( m_bSoundOn )
 					{
 						// Stop any currently playing wav
@@ -161,6 +188,7 @@ void CContextMenu::DrawItem( LPDRAWITEMSTRUCT lpDIS )
 						// Play this item's wav
 						PlaySound( cccItem->m_csWavFile, NULL, SND_NOWAIT | SND_FILENAME | SND_ASYNC );
 					}
+#endif
 				}
 				else
 					rItem.DeflateRect( 8, 0, 0, 0 );

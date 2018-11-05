@@ -41,6 +41,24 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+#if !defined(IMPLEMENT_DYNCREATER_01)//https://stackoverflow.com/questions/1491971/mfc-implement-dyncreate-with-template
+#define _RUNTIME_CLASS(class_name, template_name) ((CRuntimeClass*)(&class_name<template_name>::class##class_name##template_name))
+#define RUNTIME_CLASS(class_name, template_name) _RUNTIME_CLASS(class_name, template_name)
+
+#define _IMPLEMENT_RUNTIMECLASS( class_name, template_name, base_class_name, wSchema, pfnNew, class_init ) \
+                                 AFX_COMDAT CRuntimeClass class_name<template_name>::class##class_name##template_name = { \
+                                 #class_name, sizeof(class class_name<template_name>), wSchema, pfnNew, \
+                                 RUNTIME_CLASS(base_class_name), NULL, class_init }; \
+                                 CRuntimeClass* class_name<template_class::GetRuntimeClass() const \
+                                 { return RUNTIME_CLASS(class_name, template_name); }
+
+#define IMPLEMENT_DYNCREATER_01( class_name, template_name, base_class_name ) \
+                             CObject* PASCAL class_name<template_name>::CreateObject() \
+                             { return new class_name<template_name>; } \
+                             IMPLEMENT_RUNTIMECLASS(class_name, template_name, base_class_name, 0xFFFF, \
+                             class_name<template_name>::CreateObject, NULL)
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 // CustomTreeView view
 
@@ -54,7 +72,25 @@ template <typename TreeNode>
 class CustomTreeView : public CView
 {
 protected:
-	DECLARE_DYNCREATE(CustomTreeView)
+	//DECLARE_DYNAMIC(CustomTreeView)
+	static CRuntimeClass* PASCAL _GetBaseClass()
+	{
+
+	}
+public:
+	template <typename TreeNode>
+	static const CRuntimeClass CustomTreeView<TreeNode>;
+	static CRuntimeClass* PASCAL GetThisClass()
+	{
+
+	}
+	virtual CRuntimeClass* GetRuntimeClass() const
+	{
+	}
+	static CObject* PASCAL CreateObject()
+	{
+
+	}
 
 // Attributes
 // Operations
@@ -867,7 +903,9 @@ protected:
 
 		// Customize the menu appearance and behavior
 		ccmPopUp
+#ifdef EnableCustomTreeSounds
 			.ToggleSound(m_bAudioOn)
+#endif
 			.SetTextFont(&m_Font)
 			.SetColors(RGB(70, 36, 36), RGB(253, 249, 249), RGB(172, 96, 96), RGB(244, 234, 234), RGB(182, 109, 109));
 
@@ -892,6 +930,7 @@ protected:
 
 		UINT nFlag = (m_pSelected != NULL) ? MF_ENABLED : MF_GRAYED;
 
+#ifdef EnableCustomTreeSounds
 		// Node related items
 		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_INSERTCHILD, _T("Insert Child"), _T("insertChild.wav"), pDC);
 		ccmPopUp.AppendMenuItem(nFlag, CM_INSERTSIBLING, _T("Insert Sibling"), _T("insertSibling.wav"), pDC);
@@ -916,6 +955,32 @@ protected:
 
 		// Context menu sound toggle item
 		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_TOGGLEMENUSOUND, _T("Toggle Menu Sound"), _T("toggleMenuSound.wav"), pDC);
+#else
+		// Node related items
+		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_INSERTCHILD, _T("Insert Child"), pDC);
+		ccmPopUp.AppendMenuItem(nFlag, CM_INSERTSIBLING, _T("Insert Sibling"), pDC);
+		ccmPopUp.AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), pDC);
+		ccmPopUp.AppendMenuItem(nFlag, CM_MODIFYNODETEXT, _T("Modify Node Text"), pDC);
+		ccmPopUp.AppendMenuItem(nFlag, CM_CHANGENODECOLOR, _T("Change Node Color"), pDC);
+
+		ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
+
+		// Connecting lines related items
+		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_TOGGLECONNECTINGLINES, _T("Toggle Connecting Lines"), pDC);
+		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETCONNECTINGLINESCOLOR, _T("Set Connecting Lines Color"), pDC);
+
+		ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
+
+		// Tree appearance items
+		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETFONT, _T("Set Font"), _T("setFont.wav"), pDC);
+		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETDEFAULTCOLOR, _T("Set Default Text Color"), pDC);
+		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETBACKGROUNDBITMAP, _T("Set Background Bitmap"), pDC);
+
+		ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
+
+		// Context menu sound toggle item
+		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_TOGGLEMENUSOUND, _T("Toggle Menu Sound"), pDC);
+#endif
 
 		// ADDING MENU ITEMS - End
 
@@ -933,23 +998,6 @@ protected:
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
-//#if !defined(IMPLEMENT_DYNCREATER_01)//https://stackoverflow.com/questions/1491971/mfc-implement-dyncreate-with-template
-//#define _RUNTIME_CLASS(class_name, template_name) ((CRuntimeClass*)(&class_name<template_name>::class##class_name##template_name))
-//#define RUNTIME_CLASS(class_name, template_name) _RUNTIME_CLASS(class_name, template_name)
-//
-//#define _IMPLEMENT_RUNTIMECLASS( class_name, template_name, base_class_name, wSchema, pfnNew, class_init ) \
-//                                 AFX_COMDAT CRuntimeClass class_name<template_name>::class##class_name##template_name = { \
-//                                 #class_name, sizeof(class class_name<template_name>), wSchema, pfnNew, \
-//                                 RUNTIME_CLASS(base_class_name), NULL, class_init }; \
-//                                 CRuntimeClass* class_name<template_class::GetRuntimeClass() const \
-//                                 { return RUNTIME_CLASS(class_name, template_name); }
-//
-//#define IMPLEMENT_DYNCREATER_01( class_name, template_name, base_class_name ) \
-//                             CObject* PASCAL class_name<template_name>::CreateObject() \
-//                             { return new class_name<template_name>; } \
-//                             IMPLEMENT_RUNTIMECLASS(class_name, template_name, base_class_name, 0xFFFF, \
-//                             class_name<template_name>::CreateObject, NULL)
-//#endif
 //
 //IMPLEMENT_DYNCREATER_01(CustomTreeView, TreeNode, CView)
 
@@ -973,3 +1021,4 @@ BEGIN_TEMPLATE_MESSAGE_MAP(CustomTreeView, TreeNode, CView)
 	END_MESSAGE_MAP()
 
 #endif
+

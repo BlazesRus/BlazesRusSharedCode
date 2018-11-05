@@ -69,7 +69,7 @@
     <ClCompile Include="TreeCtrlPage.cpp">
       <Filter>MultiView</Filter>
     </ClCompile>
-    <ClCompile Include="CustomTreeView.cpp">
+    <ClCompile Include="ContextMenu.cpp">
       <Filter>MultiView</Filter>
     </ClCompile>
   </ItemGroup>
@@ -180,6 +180,12 @@
       <Filter>MultiView</Filter>
     </ClInclude>
     <ClInclude Include="CustomTreeView.h">
+      <Filter>MultiView</Filter>
+    </ClInclude>
+    <ClInclude Include="ContextMenu.h">
+      <Filter>MultiView</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateMacros.h">
       <Filter>MultiView</Filter>
     </ClInclude>
   </ItemGroup>

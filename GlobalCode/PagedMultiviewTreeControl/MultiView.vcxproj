@@ -317,7 +317,7 @@
     <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="CustomTreeView.cpp" />
+    <ClCompile Include="ContextMenu.cpp" />
     <ClCompile Include="TreeCtrlPage.cpp" />
     <ClInclude Include="$(CPPSource)\tsl\ordered_hash.h" />
     <ClInclude Include="$(CPPSource)\tsl\ordered_map.h" />
@@ -342,8 +342,10 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h" />
+    <ClInclude Include="ContextMenu.h" />
     <ClInclude Include="CustomTreeCtrl.h" />
     <ClInclude Include="CustomTreeView.h" />
+    <ClInclude Include="TemplateMacros.h" />
     <ClInclude Include="TreeCtrlPage.h" />
   </ItemGroup>
   <ItemGroup>

@@ -2,8 +2,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_CONTEXTMENU_H__910CF638_44A0_4741_8E1A_A0F9C964D199__INCLUDED_)
-#define AFX_CONTEXTMENU_H__910CF638_44A0_4741_8E1A_A0F9C964D199__INCLUDED_
+#if !defined(CustomTreeContextMenu_Included)
+#define CustomTreeContextMenu_Included
 
 #if _MSC_VER > 1000
 #pragma once
@@ -43,28 +43,28 @@ protected:
 		CContextMenuItem(CString csText)
 		{
 			m_csText = csText;
-#ifndef DisableTreeCtrlContextMenuSounds
+#ifdef EnableCustomTreeSounds
 			m_csWavFile = R"()";
 #endif
 		}
+#ifdef EnableCustomTreeSounds
 		CContextMenuItem( CString csText, CString csWavFile )
 		{
 			m_csText	= csText;
-#ifndef DisableTreeCtrlContextMenuSounds
 			m_csWavFile	= csWavFile;
-#endif
 		}
+#endif
 
 		~CContextMenuItem()
 		{
 			m_csText.Empty();
-#ifndef DisableTreeCtrlContextMenuSounds
+#ifdef EnableCustomTreeSounds
 			m_csWavFile.Empty();
 #endif
 		}
 
 		CString m_csText;
-#ifndef DisableTreeCtrlContextMenuSounds
+#ifdef EnableCustomTreeSounds
 		CString m_csWavFile;
 #endif
 	};
@@ -76,11 +76,11 @@ protected:
 	int				m_iWidth;
 	int				m_iHeight;
 
-#ifndef DisableTreeCtrlContextMenuSounds
+#ifdef EnableCustomTreeSounds
 	BOOL			m_bSoundOn;
 #endif
 
 	COLORREF		m_crText, m_crBackground, m_crDisabled, m_crSelected, m_crBorder;
 };
 
-#endif // !defined(AFX_CONTEXTMENU_H__910CF638_44A0_4741_8E1A_A0F9C964D199__INCLUDED_)
+#endif
