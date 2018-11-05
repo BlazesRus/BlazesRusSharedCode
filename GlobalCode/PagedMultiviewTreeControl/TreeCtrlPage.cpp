@@ -1,6 +1,6 @@
 #include "MultiviewPrecompile.h"
 
-#include "TreePage.h"
+#include "TreeCtrlPage.h"
 
-BEGIN_MESSAGE_MAP(TreePage, CustomTreeCtrl)
+BEGIN_MESSAGE_MAP(TreeCtrlPage, CustomTreeCtrl)
 END_MESSAGE_MAP()
