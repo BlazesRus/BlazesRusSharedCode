@@ -27,11 +27,8 @@ public:
 	virtual ~CContextMenu();
 
 public:
-	virtual CContextMenu&	AppendMenuItem	( UINT nFlags, UINT nID, CString csText, CString csWavFile, CDC* pDC );
+	virtual CContextMenu&	AppendMenuItem	( UINT nFlags, UINT nID, CString csText, CDC* pDC );
 	virtual CContextMenu&	SetTextFont		( CFont* font );
-#ifndef DisableTreeCtrlContextMenuSounds
-	virtual CContextMenu&	ToggleSound		( BOOL bSoundOn );
-#endif
 	virtual CContextMenu&	SetColors		(	COLORREF crText, COLORREF crBackground, COLORREF crDisabled,
 												COLORREF crSelected, COLORREF crBorder );
 
