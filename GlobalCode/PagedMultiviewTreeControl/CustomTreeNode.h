@@ -14,10 +14,12 @@
 #define		CM_SETBACKGROUNDBITMAP		WM_APP + 10022
 #define		CM_TOGGLEMENUSOUND			WM_APP + 10030
 
+#if !defined(STRCPY)
 #if defined( _UNICODE )
 #define STRCPY(x,y)				wcscpy(x,y)
 #else
 #define STRCPY(x,y)				strcpy(x,y)
+#endif
 #endif
 
 #include "MultiviewPrecompile.h"
