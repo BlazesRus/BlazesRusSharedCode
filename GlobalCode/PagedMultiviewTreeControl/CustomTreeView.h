@@ -58,8 +58,14 @@ static char THIS_FILE[] = __FILE__;
 template <typename TreeNode>
 class CustomTreeView : public CView
 {
-protected:
-	DECLARE_DYNAMIC01(CustomTreeView, TreeNode)
+//protected:
+//	static CRuntimeClass* PASCAL _GetBaseClass() { return RUNTIME_CLASS(CView); }
+public:
+	//DECLAREPARTIAL_DYNAMIC01(CustomTreeView, TreeNode)
+	////static CRuntimeClass* PASCAL GetThisClass()	{ return _RUNTIME_CLASS01(CustomTreeView, TreeNode); }
+	////virtual CRuntimeClass* GetRuntimeClass() const { return RUNTIME_CLASS01(CustomTreeView, TreeNode); }
+	CObject* PASCAL CreateObject() { return new CustomTreeView<TreeNode>; }
+	//DECLARE_DYNAMIC01(CustomTreeView, TreeNode)
 	//DECLAREFULL_DYNAMIC01(CustomTreeView, TreeNode, CView)
 
 // Attributes
@@ -966,7 +972,7 @@ protected:
 };
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
-IMPLEMENT_DYNCREATE01(CustomTreeView, TreeNode, CView)
+//IMPLEMENT_DYNCREATE01(CustomTreeView, TreeNode, CView)
 //DECLARE_DYNAMIC_COMDAT(CustomTreeView, TreeNode, CView)
 
 //AFX_COMDAT const CRuntimeClass classCustomTreeViewTreeNode = {
