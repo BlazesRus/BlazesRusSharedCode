@@ -27,6 +27,7 @@ public: \
 	virtual CRuntimeClass* GetRuntimeClass() const; \
 
 //DECLARE_DYNAMIC01+IMPLEMENT_DYNCREATE01+IMPLEMENT_RUNTIMECLASS01 (For placing inside template header file)
+/* (Errors here)
 #define DECLAREFULL_DYNAMIC01(class_name, template_name, base_class_name) \
 protected: \
 	static CRuntimeClass* PASCAL _GetBaseClass() { return RUNTIME_CLASS(base_class_name); } \
@@ -38,6 +39,15 @@ public: \
 	AFX_COMDAT const CRuntimeClass class##class_name##template_name = { \
 	#class_name, sizeof(class class_name<template_class>), 0xFFFF, class_name<template_name>::CreateObject, \
 	&class_name<template_class>::_GetBaseClass, NULL, NULL };
+*/
+#define DECLAREFULL_DYNAMIC01(class_name, template_name, base_class_name) \
+protected: \
+	static CRuntimeClass* PASCAL _GetBaseClass() { return RUNTIME_CLASS(base_class_name); } \
+public: \
+	static const CRuntimeClass class##class_name##template_name; \
+	static CRuntimeClass* PASCAL GetThisClass()	{ return _RUNTIME_CLASS01(class_name, template_class); } \
+	virtual CRuntimeClass* GetRuntimeClass() const { return RUNTIME_CLASS01(class_name, template_name); }\
+	CObject* PASCAL CreateObject() { return new class_name<template_name>; }
     ////IMPLEMENT_RUNTIMECLASS01(class_name, template_name, base_class_name, 0xFFFF, \
     ////class_name<template_name>::CreateObject, NULL)
 /* IMPLEMENT_RUNTIMECLASS01(class_name, template_class, base_class_name, wSchema, pfnNew, class_init)

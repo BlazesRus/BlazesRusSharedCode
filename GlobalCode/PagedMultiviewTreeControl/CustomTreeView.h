@@ -892,9 +892,13 @@ protected:
 		{
 			CString	csDots = (m_pSelected->csLabel.GetLength() > 45) ? _T("...") : _T("");
 			CString cs = m_pSelected->csLabel.Left(45) + csDots;
-
+#ifdef EnableCustomTreeSounds
 			ccmPopUp.AppendMenuItem(MF_DISABLED, WM_APP, cs, _T(""), pDC);
 			ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
+#else
+			ccmPopUp.AppendMenuItem(MF_DISABLED, WM_APP, cs, pDC);
+			ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), pDC);
+#endif
 		}
 
 		UINT nFlag = (m_pSelected != NULL) ? MF_ENABLED : MF_GRAYED;
@@ -932,23 +936,18 @@ protected:
 		ccmPopUp.AppendMenuItem(nFlag, CM_MODIFYNODETEXT, _T("Modify Node Text"), pDC);
 		ccmPopUp.AppendMenuItem(nFlag, CM_CHANGENODECOLOR, _T("Change Node Color"), pDC);
 
-		ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
+		ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), pDC);
 
 		// Connecting lines related items
 		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_TOGGLECONNECTINGLINES, _T("Toggle Connecting Lines"), pDC);
 		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETCONNECTINGLINESCOLOR, _T("Set Connecting Lines Color"), pDC);
 
-		ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
+		ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), pDC);
 
 		// Tree appearance items
-		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETFONT, _T("Set Font"), _T("setFont.wav"), pDC);
+		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETFONT, _T("Set Font"), pDC);
 		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETDEFAULTCOLOR, _T("Set Default Text Color"), pDC);
 		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETBACKGROUNDBITMAP, _T("Set Background Bitmap"), pDC);
-
-		ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
-
-		// Context menu sound toggle item
-		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_TOGGLEMENUSOUND, _T("Toggle Menu Sound"), pDC);
 #endif
 
 		// ADDING MENU ITEMS - End
