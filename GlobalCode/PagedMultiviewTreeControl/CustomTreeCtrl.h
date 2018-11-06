@@ -836,7 +836,9 @@ protected:
 
 		// Customize the menu appearance and behavior
 		ccmPopUp
+#ifdef EnableCustomTreeSounds
 			.ToggleSound(m_bAudioOn)
+#endif
 			.SetTextFont(&m_Font)
 			.SetColors(RGB(70, 36, 36), RGB(253, 249, 249), RGB(172, 96, 96), RGB(244, 234, 234), RGB(182, 109, 109));
 
@@ -854,13 +856,18 @@ protected:
 		{
 			CString	csDots = (m_pSelected->csLabel.GetLength() > 45) ? _T("...") : _T("");
 			CString cs = m_pSelected->csLabel.Left(45) + csDots;
-
+#ifdef EnableCustomTreeSounds
 			ccmPopUp.AppendMenuItem(MF_DISABLED, WM_APP, cs, _T(""), pDC);
 			ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
+#else
+			ccmPopUp.AppendMenuItem(MF_DISABLED, WM_APP, cs, pDC);
+			ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), pDC);
+#endif
 		}
 
 		UINT nFlag = (m_pSelected != NULL) ? MF_ENABLED : MF_GRAYED;
 
+#ifdef EnableCustomTreeSounds
 		// Node related items
 		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_INSERTCHILD, _T("Insert Child"), _T("insertChild.wav"), pDC);
 		ccmPopUp.AppendMenuItem(nFlag, CM_INSERTSIBLING, _T("Insert Sibling"), _T("insertSibling.wav"), pDC);
@@ -885,6 +892,27 @@ protected:
 
 		// Context menu sound toggle item
 		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_TOGGLEMENUSOUND, _T("Toggle Menu Sound"), _T("toggleMenuSound.wav"), pDC);
+#else
+		// Node related items
+		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_INSERTCHILD, _T("Insert Child"), pDC);
+		ccmPopUp.AppendMenuItem(nFlag, CM_INSERTSIBLING, _T("Insert Sibling"), pDC);
+		ccmPopUp.AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), pDC);
+		ccmPopUp.AppendMenuItem(nFlag, CM_MODIFYNODETEXT, _T("Modify Node Text"), pDC);
+		ccmPopUp.AppendMenuItem(nFlag, CM_CHANGENODECOLOR, _T("Change Node Color"), pDC);
+
+		ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
+
+		// Connecting lines related items
+		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_TOGGLECONNECTINGLINES, _T("Toggle Connecting Lines"), pDC);
+		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETCONNECTINGLINESCOLOR, _T("Set Connecting Lines Color"), pDC);
+
+		ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
+
+		// Tree appearance items
+		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETFONT, _T("Set Font"), _T("setFont.wav"), pDC);
+		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETDEFAULTCOLOR, _T("Set Default Text Color"), pDC);
+		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETBACKGROUNDBITMAP, _T("Set Background Bitmap"), pDC);
+#endif
 
 		// ADDING MENU ITEMS - End
 
