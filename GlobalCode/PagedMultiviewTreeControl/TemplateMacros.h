@@ -34,8 +34,10 @@ public: \
 	static const CRuntimeClass class##class_name##template_name; \
 	static CRuntimeClass* PASCAL GetThisClass()	{ return _RUNTIME_CLASS01(class_name, template_class); } \
 	virtual CRuntimeClass* GetRuntimeClass() const { return RUNTIME_CLASS01(class_name, template_name); }\
-	CObject* PASCAL CreateObject() \
-	{ return new class_name<template_name>; } \
+	CObject* PASCAL CreateObject() { return new class_name<template_name>; } \
+	AFX_COMDAT const CRuntimeClass class##class_name##template_name = { \
+	#class_name, sizeof(class class_name<template_class>), 0xFFFF, class_name<template_name>::CreateObject, \
+	&class_name<template_class>::_GetBaseClass, NULL, NULL };
     ////IMPLEMENT_RUNTIMECLASS01(class_name, template_name, base_class_name, 0xFFFF, \
     ////class_name<template_name>::CreateObject, NULL)
 /* IMPLEMENT_RUNTIMECLASS01(class_name, template_class, base_class_name, wSchema, pfnNew, class_init)
@@ -126,35 +128,6 @@ public: \
 	CRuntimeClass* class_name<template_class>::GetRuntimeClass() const \
 		{ return _RUNTIME_CLASS01(class_name,template_class); }
 
-#define _IMPLEMENT_RUNTIMECLASS01(class_name, template_class, base_class_name, wSchema, pfnNew, class_init) \
-	template < typename template_class > \
-	CRuntimeClass* PASCAL class_name<template_class>::_GetBaseClass() \
-		{ return RUNTIME_CLASS(base_class_name); } \
-	template < typename template_class > \
-	AFX_COMDAT CRuntimeClass class_name::class##class_name##template_name = { \
-		#class_name, sizeof(class class_name<template_class>), wSchema, pfnNew, \
-			&class_name<template_class>::_GetBaseClass, NULL, class_init }; \
-	template < typename template_class > \
-	CRuntimeClass* PASCAL class_name<template_class>::GetThisClass() \
-		{ return _RUNTIME_CLASS01(class_name, template_class); } \
-	template < typename template_class > \
-	CRuntimeClass* class_name<template_class>::GetRuntimeClass() const \
-		{ return _RUNTIME_CLASS01(class_name, template_class); }
-#define _IMPLEMENT_RUNTIMECLASS01_Base01(class_name, template_class, base_class_name, base_templateclass, wSchema, pfnNew, class_init) \
-	template < typename template_class > \
-	CRuntimeClass* PASCAL class_name<template_class>::_GetBaseClass() \
-		{ return RUNTIME_CLASS01(base_class_name, base_templateclass); } \
-	template < typename template_class > \
-	AFX_COMDAT CRuntimeClass class_name::class##class_name##template_name = { \
-		#class_name, sizeof(class class_name<template_class>), wSchema, pfnNew, \
-			&class_name<template_class>::_GetBaseClass, NULL, class_init }; \
-	template < typename template_class > \
-	CRuntimeClass* PASCAL class_name<template_class>::GetThisClass() \
-		{ return _RUNTIME_CLASS01(class_name, template_class); } \
-	template < typename template_class > \
-	CRuntimeClass* class_name<template_class>::GetRuntimeClass() const \
-		{ return _RUNTIME_CLASS01(class_name, template_class); }
-
 #else
 #define DECLARE_DYNAMIC01(class_name, template_name) \
 public: \
@@ -213,19 +186,5 @@ public: \
 	CArchive& AFXAPI operator>>(CArchive& ar, class_name<template_class>* &pOb) \
 		{ pOb = (class_name<template_class>*) ar.ReadObject(RUNTIME_CLASS01(class_name, template_class)); \
 			return ar; }
-
-
-//#define IMPLEMENT_DYNCREATE01(class_name, template_class, base_class_name) \
-//	template < typename template_class > \
-//	CObject* PASCAL class_name<template_class>::CreateObject() \
-//		{ return new class_name<template_class>; } \
-//	IMPLEMENT_RUNTIMECLASS01(class_name, template_class, base_class_name, 0xFFFF, \
-//		class_name<template_class>::CreateObject, NULL)
-//#define IMPLEMENT_DYNCREATE01_Base01(class_name, template_class, base_class_name, base_templateclass) \
-//	template < typename template_class > \
-//	CObject* PASCAL class_name<template_class>::CreateObject() \
-//		{ return new class_name<template_class>; } \
-//	IMPLEMENT_RUNTIMECLASS01(class_name, template_class, base_class_name, base_templateclass, 0xFFFF, \
-//		class_name<template_class>::CreateObject, NULL)
 
 #endif // TemplateMacros_IncludeGuard
