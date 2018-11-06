@@ -6,6 +6,7 @@
 #ifndef __AFXWIN_H__
 #error "include 'MultiviewPrecompile.h' before including this file for PCH"
 #endif
+#include "TemplateMacros.h"
 
 #include "resource.h"       // main symbols
 
@@ -155,32 +156,11 @@ public:
 	}
 	//}}AFX_MSG
 
-	//DECLARE_ALTERNATIVEMESSAGE_MAP()
-protected:
-	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
-	{
-		//typedef HalfPagedMultiview< ViewType01, ViewType02, WindowType, FrameWindowType > ThisClass;
-		//typedef CWinAppEx TheBaseClass;
-		__pragma(warning(push))
-			__pragma(warning(disable: 4640)) /* message maps can only be called by single threaded message pump */
-			static const AFX_MSGMAP_ENTRY _messageEntries[] =
-		{
+	BEGIN_AltMESSAGE_MAP()
 			ON_COMMAND(ID_APP_ABOUT, &OnAppAbout)
 			ON_COMMAND(ID_VIEW_OTHERVIEW, &OnViewOtherview)
 			ON_COMMAND(ID_VIEW_FIRSTVIEW, &OnViewFirstview)
-			{ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }
-		};
-		__pragma(warning(pop))
-			static const AFX_MSGMAP messageMap =
-		{ &CWinAppEx::GetThisMessageMap, &_messageEntries[0] };
-		return &messageMap;
-	}
-
-public:
-	virtual const AFX_MSGMAP* GetMessageMap() const
-	{
-		return GetThisMessageMap();
-	}
+	END_AltMESSAGE_MAP(CWinAppEx)
 	unsigned int CurrentAltView = 0;
 	//IniDataV2 IniSettings;
 	//bool m_IsLocked;

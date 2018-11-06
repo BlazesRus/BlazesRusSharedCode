@@ -41,25 +41,6 @@ public: \
 	#class_name, sizeof(class class_name<template_name>), 0xFFFF, class_name<template_name>::CreateObject, \
 	&class_name<template_name>::_GetBaseClass, NULL, NULL };
 
-
-    ////IMPLEMENT_RUNTIMECLASS01(class_name, template_name, base_class_name, 0xFFFF, \
-    ////class_name<template_name>::CreateObject, NULL)
-/* IMPLEMENT_RUNTIMECLASS01(class_name, template_class, base_class_name, wSchema, pfnNew, class_init)
-	template < typename template_class > \
-	CRuntimeClass* PASCAL class_name<template_class>::_GetBaseClass() \
-		{ return RUNTIME_CLASS(base_class_name); } \
-	template < typename template_class > \
-	AFX_COMDAT const CRuntimeClass class_name::class##class_name##template_name = { \
-		#class_name, sizeof(class class_name<template_class>), 0xFFFF, class_name<template_name>::CreateObject, \
-			&class_name<template_class>::_GetBaseClass, NULL, NULL }; \
-	template < typename template_class > \
-	CRuntimeClass* PASCAL class_name<template_class>::GetThisClass() \
-		{ return _RUNTIME_CLASS01(class_name, template_class); } \
-	template < typename template_class > \
-	CRuntimeClass* class_name<template_class>::GetRuntimeClass() const \
-		{ return _RUNTIME_CLASS01(class_name,template_class); }
-*/
-
 #define _IMPLEMENT_RUNTIMECLASS01( class_name, template_name, base_class_name, wSchema, pfnNew, class_init ) \
 	template < typename template_class > \
     AFX_COMDAT CRuntimeClass class_name<template_name>::class##class_name##template_name = { \
@@ -190,5 +171,41 @@ public: \
 	CArchive& AFXAPI operator>>(CArchive& ar, class_name<template_class>* &pOb) \
 		{ pOb = (class_name<template_class>*) ar.ReadObject(RUNTIME_CLASS01(class_name, template_class)); \
 			return ar; }
+
+//Altered version of Message map for those that use base class templates
+#define BEGIN_AltMESSAGE_MAP() \
+protected:\
+static const AFX_MSGMAP* PASCAL GetThisMessageMap()\
+{\
+		__pragma(warning(push))							   \
+		__pragma(warning(disable: 4640)) /* message maps can only be called by single threaded message pump */ \
+		static const AFX_MSGMAP_ENTRY _messageEntries[] =  \
+		{
+#define END_AltMESSAGE_MAP(baseClass) \
+		{ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 } \
+	}; \
+	__pragma(warning(pop)) \
+	static const AFX_MSGMAP messageMap = \
+	{ &baseClass::GetThisMessageMap, &_messageEntries[0] };\
+	return &messageMap;\
+}\
+public:\
+	virtual const AFX_MSGMAP* GetMessageMap() const\
+	{\
+		return GetThisMessageMap();\
+	}
+#define END_AltMESSAGE_MAP_Base01(baseClass, baseargOne) \
+		{ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 } \
+	}; \
+	__pragma(warning(pop)) \
+	static const AFX_MSGMAP messageMap = \
+	{ &baseClass<baseargOne>::GetThisMessageMap, &_messageEntries[0] };\
+	return &messageMap;\
+}\
+public:\
+	virtual const AFX_MSGMAP* GetMessageMap() const\
+	{\
+		return GetThisMessageMap();\
+	}
 
 #endif // TemplateMacros_IncludeGuard

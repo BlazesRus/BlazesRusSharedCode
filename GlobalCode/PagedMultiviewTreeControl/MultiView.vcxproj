@@ -318,7 +318,9 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ContextMenu.cpp" />
+    <ClCompile Include="DLG_TreeNodeText.cpp" />
     <ClCompile Include="TreeCtrlPage.cpp" />
+    <ClCompile Include="TreePage.cpp" />
     <ClInclude Include="$(CPPSource)\tsl\ordered_hash.h" />
     <ClInclude Include="$(CPPSource)\tsl\ordered_map.h" />
     <ClInclude Include="$(CPPSource)\tsl\ordered_set.h" />
@@ -345,8 +347,10 @@
     <ClInclude Include="ContextMenu.h" />
     <ClInclude Include="CustomTreeCtrl.h" />
     <ClInclude Include="CustomTreeView.h" />
+    <ClInclude Include="DLG_TreeNodeText.h" />
     <ClInclude Include="TemplateMacros.h" />
     <ClInclude Include="TreeCtrlPage.h" />
+    <ClInclude Include="TreePage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\MultiPlatformGlobalCode\GlobalCode\DLLAPI.h" />

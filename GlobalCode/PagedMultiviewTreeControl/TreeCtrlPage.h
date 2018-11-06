@@ -2,6 +2,7 @@
 #define TreeCtrlPage_IncludeGuard
 
 #include "MultiviewPrecompile.h"
+#include "TemplateMacros.h"
 #include "CustomTreeCtrl.h"
 #include "CustomTreeNode.h"
 
@@ -31,7 +32,8 @@ public:
 	//	if (m_bmpBackground.GetSafeHandle() != NULL)
 	//		m_bmpBackground.DeleteObject();
 	//}
-	DECLARE_MESSAGE_MAP()
+	BEGIN_AltMESSAGE_MAP()
+	END_AltMESSAGE_MAP_Base01(CustomTreeCtrl, TreeCtrlPageNode)
 };
 
 #endif

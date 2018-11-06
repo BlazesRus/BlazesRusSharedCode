@@ -72,6 +72,12 @@
     <ClCompile Include="ContextMenu.cpp">
       <Filter>MultiView</Filter>
     </ClCompile>
+    <ClCompile Include="DLG_TreeNodeText.cpp">
+      <Filter>MultiView</Filter>
+    </ClCompile>
+    <ClCompile Include="TreePage.cpp">
+      <Filter>MultiView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -186,6 +192,12 @@
       <Filter>MultiView</Filter>
     </ClInclude>
     <ClInclude Include="TemplateMacros.h">
+      <Filter>MultiView</Filter>
+    </ClInclude>
+    <ClInclude Include="DLG_TreeNodeText.h">
+      <Filter>MultiView</Filter>
+    </ClInclude>
+    <ClInclude Include="TreePage.h">
       <Filter>MultiView</Filter>
     </ClInclude>
   </ItemGroup>

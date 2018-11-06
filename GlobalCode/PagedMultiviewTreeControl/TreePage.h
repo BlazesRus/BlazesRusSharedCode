@@ -4,6 +4,7 @@
 #include "MultiviewPrecompile.h"
 #include "CustomTreeView.h"
 #include "CustomTreeNode.h"
+#include "TemplateMacros.h"
 
 class TreePage;
 class TreePageNode;
@@ -31,7 +32,8 @@ public:
 	//	if (m_bmpBackground.GetSafeHandle() != NULL)
 	//		m_bmpBackground.DeleteObject();
 	//}
-	DECLARE_MESSAGE_MAP()
+	BEGIN_AltMESSAGE_MAP()
+	END_AltMESSAGE_MAP_Base01(CustomTreeView, TreePageNode)
 };
 
 #endif
