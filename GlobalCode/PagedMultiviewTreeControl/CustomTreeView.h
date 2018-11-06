@@ -59,7 +59,8 @@ template <typename TreeNode>
 class CustomTreeView : public CView
 {
 protected:
-	DECLAREFULL_DYNAMIC01(CustomTreeView, TreeNode, CView)
+	DECLARE_DYNAMIC01(CustomTreeView, TreeNode)
+	//DECLAREFULL_DYNAMIC01(CustomTreeView, TreeNode, CView)
 
 // Attributes
 // Operations
@@ -965,11 +966,13 @@ protected:
 };
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
-template <typename TreeNode>
-DECLARE_DYNAMIC_COMDAT(CustomTreeView, TreeNode, CView)
+IMPLEMENT_DYNCREATE01(CustomTreeView, TreeNode, CView)
+//DECLARE_DYNAMIC_COMDAT(CustomTreeView, TreeNode, CView)
+
 //AFX_COMDAT const CRuntimeClass classCustomTreeViewTreeNode = {
 //	CustomTreeView, sizeof(class CustomTreeView<TreeNode>), 0xFFFF, CustomTreeView<TreeNode>::CreateObject, \
 //	&CustomTreeView<TreeNode>::_GetBaseClass, NULL, NULL };
+
 
 BEGIN_TEMPLATE_MESSAGE_MAP(CustomTreeView, TreeNode, CView)
 	ON_WM_PAINT()
