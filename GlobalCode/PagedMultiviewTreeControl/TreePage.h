@@ -7,7 +7,6 @@
 #include "TemplateMacros.h"
 
 class TreePage;
-class TreePageNode;
 class TreePageNode : public CustomTreeNode<TreePage, TreePageNode >
 {
 public:
@@ -17,7 +16,6 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 // TreePage window
 
-class TreePage;
 class TreePage : public CustomTreeView<TreePageNode>
 {
 public:
