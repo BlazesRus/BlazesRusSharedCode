@@ -27,6 +27,9 @@
 //#include "StaticTreeCtrl.h"
 #include "ContextMenu.h"
 #include "DLG_TreeNodeText.h"
+#ifdef BlazesGUICode_UseDictionaryBasedNodes
+#include "GlobalCode_IniData/IndexedDictionary.h"
+#endif
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
