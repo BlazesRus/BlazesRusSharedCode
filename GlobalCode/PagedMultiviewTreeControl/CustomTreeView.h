@@ -58,25 +58,19 @@ static char THIS_FILE[] = __FILE__;
 template <typename TreeNode>
 class CustomTreeView : public CView
 {
+public:
+	/// <summary>
+	///Formatting based on AFX IMPLEMENT_RUNTIMECLASS macro plus https://www.codeproject.com/Articles/1176939/All-About-MFC-Serialization
+	/// </summary>
+	/// <returns></returns>
+	static const CRuntimeClass DEFINERTCNAME01Define(CustomTreeView, TreeNode);
 protected:
 	static CRuntimeClass* PASCAL _GetBaseClass() { return RUNTIME_CLASS(CView); }
-	AFX_CLASSINIT DEFINERTCINIT01(CustomTreeView, TreeNode) = (RUNTIME_CLASS(CRoot));
+	AFX_CLASSINIT DEFINERTCINIT01(CustomTreeView, TreeNode) = (RUNTIME_CLASS01(CustomTreeView, TreeNode));
 public://AFX_COMDAT
 	CObject* PASCAL CreateObject() { return new CustomTreeView<TreeNode>; }
-	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS01(class_name, template_class); }
-	virtual CRuntimeClass* GetRuntimeClass() const { return RUNTIME_CLASS01(class_name, template_class); }
-	//static inline const CRuntimeClass DEFINERTCNAME01(CustomTreeView, TreeNode) =
-	//static constexpr CRuntimeClass DEFINERTCNAME01(CustomTreeView, TreeNode) =
-	constexpr CRuntimeClass DEFINERTCNAME01(CustomTreeView, TreeNode) =
-	{//Formating based on AFX IMPLEMENT_RUNTIMECLASS macro plus https://www.codeproject.com/Articles/1176939/All-About-MFC-Serialization
-		"CustomTreeView", // Name of the class
-		sizeof(::CustomTreeView<TreeNode>), // size
-		0xFFFF, // schema
-		CustomTreeView<TreeNode>::CreateObject, // pointer to CreateObject function used to instantiate object
-		&CustomTreeView<TreeNode>::_GetBaseClass, // Base class runtime information
-		NULL, // linked list of the next class always NULL
-		&DEFINERTCINIT01(CustomTreeView, TreeNode) // pointer to AFX_CLASSINIT structure
-	}
+	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS01(CustomTreeView, TreeNode); }
+	virtual CRuntimeClass* GetRuntimeClass() const { return RUNTIME_CLASS01(CustomTreeView, TreeNode); }
 // Attributes
 // Operations
 	CustomTreeView()
@@ -981,13 +975,18 @@ protected:
 };
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
-//IMPLEMENT_DYNCREATE01(CustomTreeView, TreeNode, CView)
-//DECLARE_DYNAMIC_COMDAT(CustomTreeView, TreeNode, CView)
 
-//AFX_COMDAT const CRuntimeClass classCustomTreeViewTreeNode = {
-//	CustomTreeView, sizeof(class CustomTreeView<TreeNode>), 0xFFFF, CustomTreeView<TreeNode>::CreateObject, \
-//	&CustomTreeView<TreeNode>::_GetBaseClass, NULL, NULL };
-//static inline const CRuntimeClass DEFINERTCNAME01(CustomTreeView, TreeNode) =
+template<typename TreeNode>
+inline const CRuntimeClass CustomTreeView<TreeNode>::DEFINERTCNAME01Define(CustomTreeView, TreeNode)
+{
+	"CustomTreeView", // Name of the class
+	sizeof(::CustomTreeView<TreeNode>), // size
+	0xFFFF, // schema
+	CustomTreeView<TreeNode>::CreateObject, // pointer to CreateObject function used to instantiate object
+	&CustomTreeView<TreeNode>::_GetBaseClass, // Base class runtime information
+	NULL, // linked list of the next class always NULL
+	&DEFINERTCINIT01(CustomTreeView, TreeNode) // pointer to AFX_CLASSINIT structure
+}
 
 BEGIN_TEMPLATE_MESSAGE_MAP(CustomTreeView, TreeNode, CView)
 	ON_WM_PAINT()

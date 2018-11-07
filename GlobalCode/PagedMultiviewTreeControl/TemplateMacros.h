@@ -10,6 +10,7 @@
 #define RUNTIME_CLASS01(class_name, template_class) _RUNTIME_CLASS01(class_name, template_class)
 
 #define DEFINERTCNAME01(class_name, template_class) class##class_name##_##template_class
+#define DEFINERTCNAME01Define(class_name, template_class) class##class_name##_##template_class
 #define DEFINERTCINIT01(class_name, template_class) _init_##class_name##_##template_class
 
 //Altered version of Message map for those that use base class templates
