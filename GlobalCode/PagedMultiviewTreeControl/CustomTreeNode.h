@@ -37,25 +37,33 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-//#ifdef BlazesGlobalCode_GUIDisableNodesWithinNode//If enabled places nodes inside Dictionary inside of vectors of nodes within each node
-//
-//#else
-//#include <vector>
-//#endif
-
 /// <summary>
 /// Edited derivable version of CustomTreeControl's Node class <para/>(base code from https://www.codeproject.com/Articles/9887/CStaticTreeCtrl-A-CStatic-derived-custom-Tree-cont)
 /// <para/>NodeCtrl refers to NodeTree holding this class
 /// <para/>TreeNode refers to derived class's name (for keeping inherited functionality)
 /// </summary>
-template <typename NodeCtrl
-#ifdef BlazesGUICode_UseDictionaryBasedNodes
->
-#else
-, typename TreeNode>
-#endif
 class CustomTreeNode
 {
+protected:
+#if defined(CustomTree_EnableLocalTypedefs)
+	virtual typedef TreeType = void;
+	virtual typedef NodeType = TreePageNode;
+#else
+	virtual static typedef TreeType = void;
+	virtual static typedef NodeType = TreePageNode;
+#endif
+public:
+#if !defined(CustomTree_EnableLocalTypedefs)
+	/// <summary>
+	/// Sends the information about TreeType and current derived NodeType(Called on TreePage initialyzation)
+	/// </summary>
+	/// <param name="">The .</param>
+	static void SendTypeDefInfo(typedef TreeTypeDef)
+	{
+		TreeType = TreeTypeDef;
+		NodeType = TreePageNode;
+	}
+#endif
 public:
 	CustomTreeNode()
 	{
@@ -71,6 +79,10 @@ public:
 		pParent = NULL;
 		pSibling = NULL;
 		pChild = NULL;
+#endif
+#if defined(CustomTree_EnableLocalTypedefs)
+		TreeType = TreeTypeDef;
+		NodeType = TreePageNode;
 #endif
 	}
 
@@ -88,11 +100,11 @@ public:
 	BOOL    bOpen;
 #ifdef BlazesGUICode_UseDictionaryBasedNodes
 	List<std::string> ChildNodes;
-	NodeCtrl* TreeTarget;
+	TreeType* TreeTarget;
 #else
-	TreeNode*	pParent;
-	TreeNode*	pSibling;
-	TreeNode*	pChild;
+	NodeType*	pParent;
+	NodeType*	pSibling;
+	NodeType*	pChild;
 #endif
 };
 #endif

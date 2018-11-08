@@ -21,12 +21,6 @@
 
 #include "..\tsl\ordered_map.h"//Ordered map from https://github.com/Tessil/ordered-map
 
-#ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
-
-#else
-
-#endif
-
 template <typename EntryType, typename ValueType>
 class DLL_API OrderedPointerDictionary : public tsl ::ordered_map<EntryType, ValueType*>
 {

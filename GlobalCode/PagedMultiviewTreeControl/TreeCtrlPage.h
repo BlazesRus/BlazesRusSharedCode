@@ -6,21 +6,46 @@
 #include "CustomTreeCtrl.h"
 #include "CustomTreeNode.h"
 
-class TreeCtrlPage;
 class TreeCtrlPageNode;
-class TreeCtrlPageNode : public CustomTreeNode<TreeCtrlPage, TreeCtrlPageNode >
+class TreeCtrlPageNode : public CustomTreeNode
 {
 public:
-	TreeCtrlPageNode() : CustomTreeNode<TreeCtrlPage, TreeCtrlPageNode>() {}
+#if defined(CustomTree_EnableLocalTypedefs)
+	virtual typedef TreeType = void;
+	virtual typedef NodeType = TreePageNode;
+#else
+	virtual static typedef TreeType = void;
+	virtual static typedef NodeType = TreePageNode;
+#endif
+	TreeCtrlPageNode() : CustomTreeNode() {
+#if defined(CustomTree_EnableLocalTypedefs)
+		TreeType = TreeTypeDef;
+		NodeType = TreePageNode;
+#endif
+	}
+#if !defined(CustomTree_EnableLocalTypedefs)
+	/// <summary>
+	/// Sends the information about TreeType and current derived NodeType(Called on TreePage initialyzation)
+	/// </summary>
+	/// <param name="">The .</param>
+	static void SendTypeDefInfo(typedef TreeTypeDef)
+	{
+		TreeType = TreeTypeDef;
+		NodeType = TreePageNode;
+	}
+#endif
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // TreeCtrlPage window
 
-class TreeCtrlPage;
 class TreeCtrlPage : public CustomTreeCtrl<TreeCtrlPageNode>
 {
 public:
+	TreeCtrlPage : CustomTreeCtrl<TreeCtrlPageNode>()
+	{
+		TreeCtrlPageNode::SendTypeDefInfo(TreeType);
+	}
 	//virtual ~TreeCtrlPage()
 	//{
 	//	DeleteNode(m_pTopNode);	// Delete all children if there are any

@@ -59,6 +59,7 @@ template <typename TreeNode>
 class CustomTreeView : public CView
 {
 public:
+	virtual static typedef TreeType = CustomTreeView;
 	/// <summary>
 	///Formatting based on AFX IMPLEMENT_RUNTIMECLASS macro plus https://www.codeproject.com/Articles/1176939/All-About-MFC-Serialization
 	/// </summary>
@@ -75,6 +76,7 @@ public://AFX_COMDAT
 // Operations
 	CustomTreeView()
 	{
+		TreeNode::SendTypeDefInfo(TreeType);
 		m_pTopNode = new TreeNode();	// The tree top
 
 		m_iIndent = 16;				// Indentation for tree branches

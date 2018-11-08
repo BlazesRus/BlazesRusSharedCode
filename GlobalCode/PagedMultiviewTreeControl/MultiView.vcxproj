@@ -355,7 +355,7 @@
     <ClInclude Include="TreePage.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\MultiPlatformGlobalCode\GlobalCode\DLLAPI.h" />
+    <ClInclude Include="$(CPPSource)\DLLAPI.h" />
     <ClInclude Include="AboutDlg.h" />
     <ClInclude Include="BasicMultiviewTemplate.h" />
     <ClInclude Include="CustomTreeNode.h" />

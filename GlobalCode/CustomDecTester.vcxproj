@@ -24,6 +24,8 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>CustomDecTester</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <CPPSource>C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\GlobalCode</CPPSource>
+    <ReferencePath>$(CPPSource);$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -93,6 +95,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,6 +145,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,22 +155,62 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="GlobalCode_ExperimentalCode\CustomDec.h" />
-    <ClInclude Include="GlobalCode_ExperimentalCode\MediumDec.h" />
+    <ClInclude Include="$(CPPSource)\DLLAPI.h" />
+    <ClCompile Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_QuadVector\QuadVector.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_QuadVector\QuadVectorFunctions.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_StringFunctions\StringFunctions.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\StringVectorList.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\VariableTypeLists.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClInclude Include="$(CPPSource)\tsl\ordered_hash.h" />
+    <ClInclude Include="$(CPPSource)\tsl\ordered_map.h" />
+    <ClInclude Include="$(CPPSource)\tsl\ordered_set.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomDictionary.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomOrderedDictionary.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\PointerDictionary.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\OrderedPointerDictionary.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedDictionary.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedPDictionary.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_QuadVector\QuadVector.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_QuadVector\QuadVectorFunctions.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_StringFunctions\StringFunctions.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\StringVectorList.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableList.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableTypeLists.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.h" />
+    <ClCompile Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TemplateMacros.h" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CustomDecTester.cpp" />
-    <ClCompile Include="GlobalCode_ExperimentalCode\MediumDec.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

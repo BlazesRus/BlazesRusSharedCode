@@ -16,27 +16,114 @@
     <Filter Include="GlobalCode_ExperimentalCode">
       <UniqueIdentifier>{35796dea-6cba-4616-8b0a-be2150fcce53}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GlobalCode_VariableConversionFunctions">
+      <UniqueIdentifier>{dce33406-3f88-4655-9617-a4fb96a9cb10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GlobalCode_IniData">
+      <UniqueIdentifier>{ca70d12d-cafa-49e3-bc6c-bc4732023273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tsl">
+      <UniqueIdentifier>{92e1762e-a2d0-4d1a-921e-505f0de9d980}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GlobalCode_ExperimentalCode\CustomDec.h">
-      <Filter>GlobalCode_ExperimentalCode</Filter>
+    <ClInclude Include="$(CPPSource)\DLLAPI.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GlobalCode_ExperimentalCode\MediumDec.h">
-      <Filter>GlobalCode_ExperimentalCode</Filter>
+    <ClInclude Include="$(CPPSource)\GlobalCode_QuadVector\QuadVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_QuadVector\QuadVectorFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_StringFunctions\StringFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\StringVectorList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableTypeLists.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TemplateMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\tsl\ordered_set.h">
+      <Filter>tsl</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\tsl\ordered_map.h">
+      <Filter>tsl</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\tsl\ordered_hash.h">
+      <Filter>tsl</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedDictionary.h">
+      <Filter>GlobalCode_IniData</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedPDictionary.h">
+      <Filter>GlobalCode_IniData</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.h">
+      <Filter>GlobalCode_IniData</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomOrderedDictionary.h">
+      <Filter>GlobalCode_IniData</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomDictionary.h">
+      <Filter>GlobalCode_IniData</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\OrderedPointerDictionary.h">
+      <Filter>GlobalCode_IniData</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\PointerDictionary.h">
+      <Filter>GlobalCode_IniData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CustomDecTester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GlobalCode_ExperimentalCode\MediumDec.cpp">
-      <Filter>GlobalCode_ExperimentalCode</Filter>
+    <ClCompile Include="$(CPPSource)\GlobalCode_QuadVector\QuadVector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_QuadVector\QuadVectorFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_StringFunctions\StringFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\StringVectorList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\VariableTypeLists.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.cpp">
+      <Filter>GlobalCode_IniData</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
