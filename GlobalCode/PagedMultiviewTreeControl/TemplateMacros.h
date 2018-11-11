@@ -13,6 +13,9 @@
 #define DEFINERTCNAME01Define(class_name, template_class) class##class_name##_##template_class
 #define DEFINERTCINIT01(class_name, template_class) _init_##class_name##_##template_class
 
+//Use #define StaticTypeDefName(PrefixName, VariableName) type
+#define StaticTypeDefName(PrefixName, VariableName) Prefixname##_##VariableName
+
 //Altered version of Message map for those that use base class templates
 #define BEGIN_AltMESSAGE_MAP() \
 protected:\

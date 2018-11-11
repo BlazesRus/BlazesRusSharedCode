@@ -5,6 +5,7 @@
 #include "TemplateMacros.h"
 #include "CustomTreeCtrl.h"
 #include "CustomTreeNode.h"
+#include "VirtualType.h"
 
 class TreeCtrlPageNode;
 class TreeCtrlPageNode : public CustomTreeNode
@@ -14,8 +15,8 @@ public:
 	virtual typedef TreeType = void;
 	virtual typedef NodeType = TreePageNode;
 #else
-	virtual static typedef TreeType = void;
-	virtual static typedef NodeType = TreePageNode;
+	virtual typedef TreeType = void;
+	virtual typedef NodeType = TreePageNode;
 #endif
 	TreeCtrlPageNode() : CustomTreeNode() {
 #if defined(CustomTree_EnableLocalTypedefs)

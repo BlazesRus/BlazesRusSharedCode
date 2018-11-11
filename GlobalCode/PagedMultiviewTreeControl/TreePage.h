@@ -5,17 +5,18 @@
 #include "CustomTreeView.h"
 #include "CustomTreeNode.h"
 #include "TemplateMacros.h"
+#include <typeinfo>
 
 class TreePageNode : public CustomTreeNode
 {
 public:
-#if defined(CustomTree_EnableLocalTypedefs)
-	virtual typedef TreeType = void;
-	virtual typedef NodeType = TreePageNode;
-#else
-	virtual static typedef TreeType = void;
-	virtual static typedef NodeType = TreePageNode;
-#endif
+//#if defined(CustomTree_EnableLocalTypedefs)
+//	virtual typedef TreeType = void;
+//	virtual typedef NodeType = TreePageNode;
+//#else
+//	virtual static typedef TreeType = void;
+//	std::type_info NodeType = typeid(TreePageNode);
+//#endif
 	//TreePageNode(bool DummySwitch) : CustomTreeNode<TreePageNode>(bool DummySwitch){}
 	TreePageNode() : CustomTreeNode()
 	{
@@ -25,15 +26,15 @@ public:
 #endif
 	}
 #if !defined(CustomTree_EnableLocalTypedefs)
-	/// <summary>
-	/// Sends the information about TreeType and current derived NodeType(Called on TreePage initialyzation)
-	/// </summary>
-	/// <param name="">The .</param>
-	static void SendTypeDefInfo(typedef TreeTypeDef)
-	{
-		TreeType = TreeTypeDef;
-		NodeType = TreePageNode;
-	}
+	///// <summary>
+	///// Sends the information about TreeType and current derived NodeType(Called on TreePage initialyzation)
+	///// </summary>
+	///// <param name="">The .</param>
+	//static void SendTypeDefInfo(typedef TreeTypeDef)
+	//{
+	//	TreeType = TreeTypeDef;
+	//	NodeType = TreePageNode;
+	//}
 #endif
 	//TreePageNode(typedef TreeTypeDef) : CustomTreeNode<TreePageNode>()
 	//{
@@ -47,7 +48,7 @@ public:
 class TreePage : public CustomTreeView<TreePageNode>
 {
 public:
-	static typedef TreeType = TreePage;
+	//static typedef TreeType = TreePage;
 	//virtual ~TreePage()
 	//{
 	//	DeleteNode(m_pTopNode);	// Delete all children if there are any

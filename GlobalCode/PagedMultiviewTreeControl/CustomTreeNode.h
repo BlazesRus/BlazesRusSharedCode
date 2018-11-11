@@ -45,23 +45,28 @@ static char THIS_FILE[] = __FILE__;
 class CustomTreeNode
 {
 protected:
+	//typedef NodeType = CustomTreeNode;
 #if defined(CustomTree_EnableLocalTypedefs)
-	virtual typedef TreeType = void;
-	virtual typedef NodeType = TreePageNode;
+	typedef TreeType = void;
+	typedef NodeType = CustomTreeNode;
 #else
-	virtual static typedef TreeType = void;
-	virtual static typedef NodeType = TreePageNode;
+	//virtual static typedef TreeType = void;
+	//virtual static typedef NodeType = TreePageNode;
+	//static std::string TreeTypeDefine = "StaticTypeDefName(CustomTreeNode, TreeType)";
+	#define StaticTypeDefName(CustomTreeNode, TreeType) void
+	#define StaticTypeDefName(CustomTreeNode, NodeType) CustomTreeNode
 #endif
 public:
 #if !defined(CustomTree_EnableLocalTypedefs)
 	/// <summary>
-	/// Sends the information about TreeType and current derived NodeType(Called on TreePage initialyzation)
+	/// Sends the information about TreeType and current derived NodeType(Called on TreePage initialization)
 	/// </summary>
 	/// <param name="">The .</param>
-	static void SendTypeDefInfo(typedef TreeTypeDef)
+	static void SendTypeDefInfo(typename TreeTypeDef)
 	{
-		TreeType = TreeTypeDef;
-		NodeType = TreePageNode;
+		//TreeType = TreeTypeDef;
+		//NodeType = TreePageNode;
+		#define StaticTypeDefName(CustomTreeNode, NodeType) TreeTypeDef
 	}
 #endif
 public:
