@@ -25,6 +25,9 @@
     <Filter Include="tsl">
       <UniqueIdentifier>{92e1762e-a2d0-4d1a-921e-505f0de9d980}</UniqueIdentifier>
     </Filter>
+    <Filter Include="LayoutReference">
+      <UniqueIdentifier>{330f6044-7ff4-43aa-9958-43f6e793e392}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -92,6 +95,15 @@
     </ClInclude>
     <ClInclude Include="$(CPPSource)\GlobalCode_IniData\PointerDictionary.h">
       <Filter>GlobalCode_IniData</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_ExperimentalCode\VirtualType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PagedMultiviewTreeControl\CustomTreeNode.h">
+      <Filter>LayoutReference</Filter>
+    </ClInclude>
+    <ClInclude Include="PagedMultiviewTreeControl\CustomTreeView.h">
+      <Filter>LayoutReference</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

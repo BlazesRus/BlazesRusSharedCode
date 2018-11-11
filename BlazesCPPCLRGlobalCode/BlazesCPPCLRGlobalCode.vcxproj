@@ -161,6 +161,7 @@
     <ClInclude Include="..\GlobalCode\GlobalCode_VariableLists\VariableList.h" />
     <ClInclude Include="..\GlobalCode\GlobalCode_VariableLists\VariableTypeLists.h" />
     <ClInclude Include="..\GlobalCode\GlobalCode_VariableLists\VariableVectorFunctions.h" />
+    <ClInclude Include="..\GlobalCode\VirtualType.h" />
     <ClInclude Include="BlazesCPPCLRGlobalCode.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />

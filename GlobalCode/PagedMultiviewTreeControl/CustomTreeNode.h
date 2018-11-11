@@ -30,12 +30,14 @@
 #ifdef BlazesGUICode_UseDictionaryBasedNodes
 #include "GlobalCode_IniData/IndexedDictionary.h"
 #endif
+#include "GlobalCode_ExperimentalCode/ConvertableP.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
 
 /// <summary>
 /// Edited derivable version of CustomTreeControl's Node class <para/>(base code from https://www.codeproject.com/Articles/9887/CStaticTreeCtrl-A-CStatic-derived-custom-Tree-cont)
@@ -46,28 +48,28 @@ class CustomTreeNode
 {
 protected:
 	//typedef NodeType = CustomTreeNode;
-#if defined(CustomTree_EnableLocalTypedefs)
-	typedef TreeType = void;
-	typedef NodeType = CustomTreeNode;
-#else
-	//virtual static typedef TreeType = void;
-	//virtual static typedef NodeType = TreePageNode;
-	//static std::string TreeTypeDefine = "StaticTypeDefName(CustomTreeNode, TreeType)";
-	#define StaticTypeDefName(CustomTreeNode, TreeType) void
-	#define StaticTypeDefName(CustomTreeNode, NodeType) CustomTreeNode
-#endif
+//#if defined(CustomTree_EnableLocalTypedefs)
+//	typedef TreeType = void;
+//	typedef NodeType = CustomTreeNode;
+//#else
+//	//virtual static typedef TreeType = void;
+//	//virtual static typedef NodeType = TreePageNode;
+//	//static std::string TreeTypeDefine = "StaticTypeDefName(CustomTreeNode, TreeType)";
+//	#define StaticTypeDefName(CustomTreeNode, TreeType) void
+//	#define StaticTypeDefName(CustomTreeNode, NodeType) CustomTreeNode
+//#endif
 public:
 #if !defined(CustomTree_EnableLocalTypedefs)
 	/// <summary>
 	/// Sends the information about TreeType and current derived NodeType(Called on TreePage initialization)
 	/// </summary>
 	/// <param name="">The .</param>
-	static void SendTypeDefInfo(typename TreeTypeDef)
-	{
-		//TreeType = TreeTypeDef;
-		//NodeType = TreePageNode;
-		#define StaticTypeDefName(CustomTreeNode, NodeType) TreeTypeDef
-	}
+	//static void SendTypeDefInfo(typename TreeTypeDef)
+	//{
+	//	//TreeType = TreeTypeDef;
+	//	//NodeType = TreePageNode;
+	//	#define StaticTypeDefName(CustomTreeNode, NodeType) TreeTypeDef
+	//}
 #endif
 public:
 	CustomTreeNode()
@@ -105,11 +107,11 @@ public:
 	BOOL    bOpen;
 #ifdef BlazesGUICode_UseDictionaryBasedNodes
 	List<std::string> ChildNodes;
-	TreeType* TreeTarget;
+	//TreeType* TreeTarget;
 #else
-	NodeType*	pParent;
-	NodeType*	pSibling;
-	NodeType*	pChild;
+	ConvertableP<CustomTreeNode> pParent;
+	ConvertableP<CustomTreeNode> pSibling;
+	ConvertableP<CustomTreeNode> pChild;
 #endif
 };
 #endif

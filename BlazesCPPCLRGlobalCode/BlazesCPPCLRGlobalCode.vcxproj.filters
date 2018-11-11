@@ -132,6 +132,9 @@
     <ClInclude Include="..\GlobalCode\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h">
       <Filter>Header Files\GlobalCode_VariableConversionFunctions</Filter>
     </ClInclude>
+    <ClInclude Include="..\GlobalCode\VirtualType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlazesCPPCLRGlobalCode.cpp">
