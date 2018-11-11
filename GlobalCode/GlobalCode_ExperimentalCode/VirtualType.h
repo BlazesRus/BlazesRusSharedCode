@@ -1,7 +1,10 @@
+/*	Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+*/
 #if !defined(VirtualType_IncludeGuard)
 #define VirtualType_IncludeGuard
 
-//#include <typeinfo>
+#include <typeinfo>
 
 //class VirtualType
 //{
@@ -23,7 +26,7 @@ public:
 };
 
 /// <summary>
-/// https://stackoverflow.com/questions/2562176/storing-a-type-in-c
+/// (Based on https://stackoverflow.com/questions/2562176/storing-a-type-in-c)
 /// </summary>
 class VirtualTypeRef
 {
