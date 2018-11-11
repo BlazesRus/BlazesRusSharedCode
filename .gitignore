@@ -196,3 +196,6 @@ GlobalCode/HkBasedCode/HkBhvNodeTree.cpp
 GlobalCode/HkBasedCode/HkBhvNodeTree.h
 GlobalCode/HkBasedCode/HkClassUsageTree.cpp
 GlobalCode/HkBasedCode/HkClassUsageTree.h
+GlobalCode/luple/
+!GlobalCode/luple/README.md
+!GlobalCode/luple/type-loophole.h
