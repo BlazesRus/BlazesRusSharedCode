@@ -207,6 +207,7 @@
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TemplateMacros.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GlobalCode_ExperimentalCode\ConvertableP.h" />
     <ClInclude Include="GlobalCode_ExperimentalCode\VirtualType.h" />
     <ClInclude Include="PagedMultiviewTreeControl\CustomTreeNode.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>

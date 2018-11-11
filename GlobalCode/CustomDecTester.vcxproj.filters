@@ -28,6 +28,9 @@
     <Filter Include="LayoutReference">
       <UniqueIdentifier>{330f6044-7ff4-43aa-9958-43f6e793e392}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GlobalCode_VariableLists">
+      <UniqueIdentifier>{bc952275-4215-4886-8ecd-812dcaf78403}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -49,15 +52,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\StringVectorList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableTypeLists.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h">
@@ -96,14 +90,26 @@
     <ClInclude Include="$(CPPSource)\GlobalCode_IniData\PointerDictionary.h">
       <Filter>GlobalCode_IniData</Filter>
     </ClInclude>
-    <ClInclude Include="GlobalCode_ExperimentalCode\VirtualType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PagedMultiviewTreeControl\CustomTreeNode.h">
       <Filter>LayoutReference</Filter>
     </ClInclude>
     <ClInclude Include="PagedMultiviewTreeControl\CustomTreeView.h">
       <Filter>LayoutReference</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_ExperimentalCode\ConvertableP.h">
+      <Filter>GlobalCode_ExperimentalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableList.h">
+      <Filter>GlobalCode_VariableLists</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableTypeLists.h">
+      <Filter>GlobalCode_VariableLists</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.h">
+      <Filter>GlobalCode_VariableLists</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCode_ExperimentalCode\VirtualType.h">
+      <Filter>GlobalCode_ExperimentalCode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
