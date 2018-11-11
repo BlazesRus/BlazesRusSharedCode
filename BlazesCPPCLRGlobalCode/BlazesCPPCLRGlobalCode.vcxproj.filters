@@ -37,6 +37,9 @@
     <Filter Include="Header Files\GlobalCode_VariableConversionFunctions">
       <UniqueIdentifier>{21d9dfef-1edb-43e5-8e5e-8a3f42b89735}</UniqueIdentifier>
     </Filter>
+    <Filter Include="luple">
+      <UniqueIdentifier>{0706e7ca-c3fc-4ad3-8a63-1c16834ec2ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlazesCPPCLRGlobalCode.h">
