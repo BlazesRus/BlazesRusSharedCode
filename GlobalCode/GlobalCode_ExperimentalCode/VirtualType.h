@@ -4,12 +4,8 @@
 #if !defined(VirtualType_IncludeGuard)
 #define VirtualType_IncludeGuard
 
-#include <typeinfo>
+//#include <typeinfo>
 
-//class VirtualType
-//{
-//	static std::type_info TypeInfo;
-//};
 class VirtualType
 {
 public:
@@ -39,8 +35,19 @@ class VirtualTypeRef
 	{
 		if (StoredType != nullptr) { delete StoredType; }
 	}
-	//VirtualType* StoredType = new VirtualTypeImpl<int>;
-	//void* myint = type->allocate();
+	template <typename ConvertedType>
+	void* ConvertRef()
+	{
+		if (StoredType == nullptr)
+		{
+			return nullptr;
+		}
+		else
+		{
+			StoredType = new VirtualTypeImpl<ConvertedType>;
+			return StoredType->allocate();
+		}
+	}
 };
 
 #endif
