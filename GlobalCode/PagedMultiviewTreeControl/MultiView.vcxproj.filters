@@ -84,9 +84,6 @@
     <ClCompile Include="..\GlobalCode_NodeTrees\VariableData.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\GlobalCode_NodeTrees\XMLOption.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
@@ -213,9 +210,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\GlobalCode_NodeTrees\VariableData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GlobalCode_NodeTrees\XMLOption.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\GlobalCode_NodeTrees\XMLTagTree.h">
