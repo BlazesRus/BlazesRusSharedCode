@@ -319,10 +319,22 @@
     <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp" />
-    <ClCompile Include="..\GlobalCode_NodeTrees\TagPosition.cpp" />
-    <ClCompile Include="..\GlobalCode_NodeTrees\VariableData.cpp" />
-    <ClCompile Include="..\GlobalCode_NodeTrees\XMLOption.cpp" />
+    <ClCompile Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\GlobalCode_NodeTrees\TagPosition.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\GlobalCode_NodeTrees\VariableData.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\GlobalCode_NodeTrees\XMLOption.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="ContextMenu.cpp" />
     <ClCompile Include="DLG_TreeNodeText.cpp" />
     <ClCompile Include="TreeCtrlPage.cpp" />

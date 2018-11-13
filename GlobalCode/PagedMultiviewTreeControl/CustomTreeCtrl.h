@@ -42,15 +42,14 @@ static char THIS_FILE[] = __FILE__;
 template <typename TreeNode>
 class CustomTreeCtrl : public CStatic
 {
-//#define CtrlType CustomTreeCtrl<TreeNode>
-//#define TreeNode TreeNode
-//#define TreeNodeP TreeNode*
-//#define m_pTopNode (TreeNodeP -0x10000)
 	// Construction
 public:
 	CustomTreeCtrl()
 	{
+#ifdef BlazesGUICode_UseDictionaryBasedNodes
+#else
 		m_pTopNode = new TreeNode();	// The tree top
+#endif
 
 		m_iIndent = 16;				// Indentation for tree branches
 		m_iPadding = 4;				// Padding between tree and the control border
@@ -70,6 +69,17 @@ public:
 		m_pSelected = NULL;
 	}
 
+	virtual ~CustomTreeCtrl()
+	{
+		DeleteNode(m_pTopNode);	// Delete all children if there are any
+		delete m_pTopNode;			// Delete top node
+		m_pTopNode = NULL;
+
+		m_Font.DeleteObject();
+
+		if (m_bmpBackground.GetSafeHandle() != NULL)
+			m_bmpBackground.DeleteObject();
+	}
 	// Attributes
 protected:
 	LOGFONT			m_lgFont;
@@ -635,19 +645,6 @@ protected:
 	}
 	//}}AFX_VIRTUAL
 
-	// Implementation
-public:
-	virtual ~CustomTreeCtrl()
-	{
-		DeleteNode(m_pTopNode);	// Delete all children if there are any
-		delete m_pTopNode;			// Delete top node
-		m_pTopNode = NULL;
-
-		m_Font.DeleteObject();
-
-		if (m_bmpBackground.GetSafeHandle() != NULL)
-			m_bmpBackground.DeleteObject();
-	}
 
 	// Generated message map functions
 protected:

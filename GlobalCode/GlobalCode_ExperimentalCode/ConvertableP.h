@@ -25,6 +25,21 @@ public:
 			return dynamic_cast<ConvertedType*>(self);
 		}
 	}
+	ConvertableP()
+	{
+		self = nullptr;
+	}
+	ConvertableP(NodeType* target)
+	{
+		self = target;
+	}
+	~ConvertableP()
+	{
+		if(self!=nullptr)
+		{
+			delete self;
+		}
+	}
 };
 
 #endif
