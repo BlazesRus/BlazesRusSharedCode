@@ -98,8 +98,9 @@ protected:
 	int				m_iIndent;
 	int				m_iPadding;
 
-	TreeNode*		m_pTopNode;
-	TreeNode*		m_pSelected;
+	//Saving TreeNode* inside base class of CustomTreeNode* as fix for C2664 error
+	CustomTreeNode*		m_pTopNode;
+	CustomTreeNode*		m_pSelected;
 
 	BOOL			m_bAudioOn;
 
@@ -184,13 +185,13 @@ public:
 		m_crDefaultTextColor = crText;
 	}
 
-	TreeNode* InsertSibling(TreeNode* pInsertAfter, const CString& csLabel,
+	CustomTreeNode* InsertSibling(CustomTreeNode* pInsertAfter, const CString& csLabel,
 		COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE,
 		BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pInsertAfter != NULL);	// Make sure the node exists
 
-		TreeNode* pNewNode = new TreeNode();
+		CustomTreeNode* pNewNode = new TreeNode();
 
 		pNewNode->csLabel = csLabel;					// New node's label
 
@@ -211,7 +212,7 @@ public:
 
 		return pNewNode;
 	}
-	TreeNode* InsertChild(TreeNode* pParent, const CString& csLabel,
+	CustomTreeNode* InsertChild(CustomTreeNode* pParent, const CString& csLabel,
 		COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE,
 		BOOL bInvalidate = FALSE)
 	{
@@ -220,7 +221,7 @@ public:
 		if (pParent == m_pTopNode)	// Check for top node
 			pParent = m_pTopNode;
 
-		TreeNode* pNewNode = new TreeNode();
+		CustomTreeNode* pNewNode = new TreeNode();
 
 		// Basic node information
 		pNewNode->csLabel = csLabel;	// New node's label
@@ -242,12 +243,12 @@ public:
 
 		return pNewNode;
 	}
-	TreeNode* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	CustomTreeNode* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		return InsertChild(m_pTopNode, csLabel, crText, bUseDefaultTextColor, bInvalidate);
 	}
 
-	void DeleteNode(TreeNode* pNode, BOOL bInvalidate = FALSE)
+	void DeleteNode(CustomTreeNode* pNode, BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pNode != NULL);	// Make sure the node exists
 
@@ -262,7 +263,7 @@ public:
 		// If this node is not the top node, fix pointers in sibling list
 		if (pNode != m_pTopNode)
 		{
-			TreeNode* pRunner = pNode->pParent;
+			CustomTreeNode* pRunner = pNode->pParent;
 
 			// If first child, set the parent pointer to the next sibling
 			// Otherwise, find sibling before and set its sibling pointer to the node's sibling
@@ -289,7 +290,7 @@ public:
 			Invalidate();
 	}
 
-	void ToggleNode(TreeNode* pNode, BOOL bInvalidate = FALSE)
+	void ToggleNode(CustomTreeNode* pNode, BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pNode != NULL);
 
@@ -298,7 +299,7 @@ public:
 		if (bInvalidate)
 			Invalidate();
 	}
-	void SetNodeColor(TreeNode* pNode, COLORREF crText, BOOL bInvalidate = FALSE)
+	void SetNodeColor(CustomTreeNode* pNode, COLORREF crText, BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pNode != NULL);
 
@@ -334,7 +335,7 @@ public:
 	}
 
 protected:
-	void DeleteNodeRecursive(TreeNode* pNode)
+	void DeleteNodeRecursive(CustomTreeNode* pNode)
 	{
 		if (pNode->pSibling != NULL)
 			DeleteNodeRecursive(pNode->pSibling);
@@ -347,7 +348,7 @@ protected:
 		pNode = NULL;
 	}		// Recursive delete
 
-	int DrawNodesRecursive(CDC* pDC, TreeNode* pNode, int x, int y, CRect rFrame)
+	int DrawNodesRecursive(CDC* pDC, CustomTreeNode* pNode, int x, int y, CRect rFrame)
 	{
 		int		iDocHeight = 0;		// Total document height
 		CRect	rNode;
@@ -435,7 +436,7 @@ protected:
 		return iValidSoFar;
 	}
 
-	void DrawLinesRecursive(CDC* pDC, TreeNode* pNode)
+	void DrawLinesRecursive(CDC* pDC, CustomTreeNode* pNode)
 	{
 		// Draw lines from children if the node is open before drawing lines from this node
 		if (pNode->bOpen && pNode->pChild != NULL)
@@ -499,9 +500,9 @@ protected:
 		m_bScrollBarMessage = FALSE;
 	}
 
-	TreeNode* FindNodeByPoint(const CPoint& point, TreeNode* pNode)
+	CustomTreeNode* FindNodeByPoint(const CPoint& point, CustomTreeNode* pNode)
 	{
-		TreeNode* pFound = NULL;
+		CustomTreeNode* pFound = NULL;
 
 		// Found it?
 		if (pNode->rNode.PtInRect(point))
@@ -797,7 +798,7 @@ protected:
 	}
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point)
 	{
-		TreeNode* pClickedOn = NULL;		// Assume no node was clicked on
+		CustomTreeNode* pClickedOn = NULL;		// Assume no node was clicked on
 
 		if (m_pTopNode->pChild != NULL)		// If the tree is populated, search it
 			pClickedOn = FindNodeByPoint(point, m_pTopNode->pChild);

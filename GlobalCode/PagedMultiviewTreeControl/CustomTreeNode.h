@@ -48,16 +48,6 @@ class CustomTreeNode
 {
 protected:
 	//typedef NodeType = CustomTreeNode;
-//#if defined(CustomTree_EnableLocalTypedefs)
-//	typedef TreeType = void;
-//	typedef NodeType = CustomTreeNode;
-//#else
-//	//virtual static typedef TreeType = void;
-//	//virtual static typedef NodeType = TreePageNode;
-//	//static std::string TreeTypeDefine = "StaticTypeDefName(CustomTreeNode, TreeType)";
-//	#define StaticTypeDefName(CustomTreeNode, TreeType) void
-//	#define StaticTypeDefName(CustomTreeNode, NodeType) CustomTreeNode
-//#endif
 public:
 #if !defined(CustomTree_EnableLocalTypedefs)
 	/// <summary>
@@ -109,9 +99,21 @@ public:
 	List<std::string> ChildNodes;
 	//TreeType* TreeTarget;
 #else
-	ConvertableP<CustomTreeNode> pParent;
-	ConvertableP<CustomTreeNode> pSibling;
-	ConvertableP<CustomTreeNode> pChild;
+	CustomTreeNode* pParent;
+	CustomTreeNode* pSibling;
+	CustomTreeNode* pChild;
 #endif
+	template <typename ConvertedType>
+	explicit operator ConvertedType*()
+	{
+		if (self == nullptr)
+		{
+			return nullptr;
+		}
+		else
+		{
+			return dynamic_cast<ConvertedType*>(self);
+		}
+	}
 };
 #endif
