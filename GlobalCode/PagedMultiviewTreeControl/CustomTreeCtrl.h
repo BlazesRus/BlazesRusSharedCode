@@ -39,7 +39,7 @@ static char THIS_FILE[] = __FILE__;
 /// <para/>NodeCtrl refers to NodeTree holding this class
 /// <para/>TreeNode refers to derived class's name (for keeping inherited functionality)
 /// </summary>
-template <class TreeNode>
+template <typename TreeNode>
 class CustomTreeCtrl : public CStatic
 {
 	// Construction

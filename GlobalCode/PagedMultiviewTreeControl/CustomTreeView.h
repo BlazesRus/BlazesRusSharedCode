@@ -55,7 +55,7 @@
 /// <para/>NodeCtrl refers to NodeTree holding this class
 /// <para/>TreeNode refers to derived class's name (for keeping inherited functionality)
 /// </summary>
-template <class TreeNode>
+template <typename TreeNode>
 class CustomTreeView : public CView
 {
 public:
@@ -976,6 +976,7 @@ protected:
 protected:
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{
+		typedef CustomTreeView<TreeNode> ThisClass;
 		__pragma(warning(push))
 		__pragma(warning(disable: 4640))
 		static const AFX_MSGMAP_ENTRY _messageEntries[] =
@@ -986,20 +987,20 @@ protected:
 			ON_WM_LBUTTONUP()
 			ON_WM_MOUSEWHEEL()
 			ON_WM_CONTEXTMENU()
-			ON_COMMAND(CM_INSERTCHILD, OnCM_InsertChild)
-			ON_COMMAND(CM_INSERTSIBLING, OnCM_InsertSibling)
-			ON_COMMAND(CM_DELETENODE, OnCM_DeleteNode)
-			ON_COMMAND(CM_MODIFYNODETEXT, OnCM_ModifyNodeText)
-			ON_COMMAND(CM_CHANGENODECOLOR, OnCM_ChangeNodeColor)
-			ON_COMMAND(CM_TOGGLECONNECTINGLINES, OnCM_ToggleConnectingLines)
-			ON_COMMAND(CM_SETCONNECTINGLINESCOLOR, OnCM_SetConnectingLinesColor)
-			ON_COMMAND(CM_SETFONT, OnCM_SetFont)
-			ON_COMMAND(CM_SETDEFAULTCOLOR, OnCM_SetDefaultColor)
-			ON_COMMAND(CM_SETBACKGROUNDBITMAP, OnCM_SetBackgroundBitmap)
+			ON_COMMAND(CM_INSERTCHILD, &OnCM_InsertChild)
+			ON_COMMAND(CM_INSERTSIBLING, &OnCM_InsertSibling)
+			ON_COMMAND(CM_DELETENODE, &OnCM_DeleteNode)
+			ON_COMMAND(CM_MODIFYNODETEXT, &OnCM_ModifyNodeText)
+			ON_COMMAND(CM_CHANGENODECOLOR, &OnCM_ChangeNodeColor)
+			ON_COMMAND(CM_TOGGLECONNECTINGLINES, &OnCM_ToggleConnectingLines)
+			ON_COMMAND(CM_SETCONNECTINGLINESCOLOR, &OnCM_SetConnectingLinesColor)
+			ON_COMMAND(CM_SETFONT, &OnCM_SetFont)
+			ON_COMMAND(CM_SETDEFAULTCOLOR, &OnCM_SetDefaultColor)
+			ON_COMMAND(CM_SETBACKGROUNDBITMAP, &OnCM_SetBackgroundBitmap)
 			{ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }
 		};
 		__pragma(warning(pop))
-			static const AFX_MSGMAP messageMap =
+		static const AFX_MSGMAP messageMap =
 		{ &CView::GetThisMessageMap, &_messageEntries[0] };
 		return &messageMap;
 	}
@@ -1018,10 +1019,10 @@ inline const CRuntimeClass CustomTreeView<TreeNode>::DEFINERTCNAME01Define(Custo
 	"CustomTreeView", // Name of the class
 	sizeof(::CustomTreeView<TreeNode>), // size
 	0xFFFF, // schema
-	CustomTreeView<TreeNode>::CreateObject, // pointer to CreateObject function used to instantiate object
+	&CustomTreeView<TreeNode>::CreateObject, // pointer to CreateObject function used to instantiate object
 	&CustomTreeView<TreeNode>::_GetBaseClass, // Base class runtime information
 	NULL, // linked list of the next class always NULL
-	&DEFINERTCINIT01(CustomTreeView, TreeNode) // pointer to AFX_CLASSINIT structure
+	NULL//&DEFINERTCINIT01(CustomTreeView, TreeNode) // pointer to AFX_CLASSINIT structure
 }
 
 #endif
