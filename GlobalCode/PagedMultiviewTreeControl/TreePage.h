@@ -7,11 +7,23 @@
 #include "TemplateMacros.h"
 #include <typeinfo>
 
+class TreePageNode;
 class TreePageNode : public CustomTreeNode
 {
 public:
 	TreePageNode() : CustomTreeNode()
 	{
+	}
+	explicit operator CustomTreeNode*()
+	{
+		if (this == nullptr)
+		{
+			return nullptr;
+		}
+		else
+		{
+			return dynamic_cast<CustomTreeNode*>(this);
+		}
 	}
 };
 

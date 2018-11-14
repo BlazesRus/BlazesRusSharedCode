@@ -55,7 +55,7 @@
 /// <para/>NodeCtrl refers to NodeTree holding this class
 /// <para/>TreeNode refers to derived class's name (for keeping inherited functionality)
 /// </summary>
-template <typename TreeNode>
+template <class TreeNode>
 class CustomTreeView : public CView
 {
 public:
@@ -972,13 +972,47 @@ protected:
 		ReleaseDC(pDC);
 	}
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-
+	//DECLARE_MESSAGE_MAP()
+protected:
+	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
+	{
+		__pragma(warning(push))
+		__pragma(warning(disable: 4640))
+		static const AFX_MSGMAP_ENTRY _messageEntries[] =
+		{
+			ON_WM_PAINT()
+			ON_WM_SIZE()
+			ON_WM_VSCROLL()
+			ON_WM_LBUTTONUP()
+			ON_WM_MOUSEWHEEL()
+			ON_WM_CONTEXTMENU()
+			ON_COMMAND(CM_INSERTCHILD, OnCM_InsertChild)
+			ON_COMMAND(CM_INSERTSIBLING, OnCM_InsertSibling)
+			ON_COMMAND(CM_DELETENODE, OnCM_DeleteNode)
+			ON_COMMAND(CM_MODIFYNODETEXT, OnCM_ModifyNodeText)
+			ON_COMMAND(CM_CHANGENODECOLOR, OnCM_ChangeNodeColor)
+			ON_COMMAND(CM_TOGGLECONNECTINGLINES, OnCM_ToggleConnectingLines)
+			ON_COMMAND(CM_SETCONNECTINGLINESCOLOR, OnCM_SetConnectingLinesColor)
+			ON_COMMAND(CM_SETFONT, OnCM_SetFont)
+			ON_COMMAND(CM_SETDEFAULTCOLOR, OnCM_SetDefaultColor)
+			ON_COMMAND(CM_SETBACKGROUNDBITMAP, OnCM_SetBackgroundBitmap)
+			{ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }
+		};
+		__pragma(warning(pop))
+			static const AFX_MSGMAP messageMap =
+		{ &CView::GetThisMessageMap, &_messageEntries[0] };
+		return &messageMap;
+	}
+public:
+	virtual const AFX_MSGMAP* GetMessageMap() const
+	{
+		return GetThisMessageMap();
+	}
 };
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
-template<typename TreeNode>
+template<class TreeNode>
 inline const CRuntimeClass CustomTreeView<TreeNode>::DEFINERTCNAME01Define(CustomTreeView, TreeNode)
 {
 	"CustomTreeView", // Name of the class
@@ -989,24 +1023,5 @@ inline const CRuntimeClass CustomTreeView<TreeNode>::DEFINERTCNAME01Define(Custo
 	NULL, // linked list of the next class always NULL
 	&DEFINERTCINIT01(CustomTreeView, TreeNode) // pointer to AFX_CLASSINIT structure
 }
-
-BEGIN_TEMPLATE_MESSAGE_MAP(CustomTreeView, TreeNode, CView)
-	ON_WM_PAINT()
-	ON_WM_SIZE()
-	ON_WM_VSCROLL()
-	ON_WM_LBUTTONUP()
-	ON_WM_MOUSEWHEEL()
-	ON_WM_CONTEXTMENU()
-	ON_COMMAND(CM_INSERTCHILD, OnCM_InsertChild)
-	ON_COMMAND(CM_INSERTSIBLING, OnCM_InsertSibling)
-	ON_COMMAND(CM_DELETENODE, OnCM_DeleteNode)
-	ON_COMMAND(CM_MODIFYNODETEXT, OnCM_ModifyNodeText)
-	ON_COMMAND(CM_CHANGENODECOLOR, OnCM_ChangeNodeColor)
-	ON_COMMAND(CM_TOGGLECONNECTINGLINES, OnCM_ToggleConnectingLines)
-	ON_COMMAND(CM_SETCONNECTINGLINESCOLOR, OnCM_SetConnectingLinesColor)
-	ON_COMMAND(CM_SETFONT, OnCM_SetFont)
-	ON_COMMAND(CM_SETDEFAULTCOLOR, OnCM_SetDefaultColor)
-	ON_COMMAND(CM_SETBACKGROUNDBITMAP, OnCM_SetBackgroundBitmap)
-END_MESSAGE_MAP()
 
 #endif

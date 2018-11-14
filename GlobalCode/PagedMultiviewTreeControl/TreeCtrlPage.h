@@ -7,6 +7,7 @@
 #include "CustomTreeCtrl.h"
 //#include "GlobalCode_ExperimentalCode/VirtualType.h"
 
+class TreeCtrlPageNode;
 class TreeCtrlPageNode : public CustomTreeNode
 {
 public:
