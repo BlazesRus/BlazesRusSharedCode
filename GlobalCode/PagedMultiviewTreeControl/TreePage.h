@@ -4,28 +4,8 @@
 #include "MultiviewPrecompile.h"
 #include "CustomTreeView.h"
 #include "TemplateMacros.h"
-#include "CustomTreeNode.h"
+#include "TreePageNode.h"
 #include <typeinfo>
-
-//class TreePageNode;
-class TreePageNode : public CustomTreeNode
-{
-public:
-	TreePageNode() : CustomTreeNode()
-	{
-	}
-	explicit operator CustomTreeNode*()
-	{
-		if (this == nullptr)
-		{
-			return nullptr;
-		}
-		else
-		{
-			return dynamic_cast<CustomTreeNode*>(this);
-		}
-	}
-};
 
 /////////////////////////////////////////////////////////////////////////////
 // TreePage window
