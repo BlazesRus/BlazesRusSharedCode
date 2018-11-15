@@ -3,11 +3,11 @@
 
 #include "MultiviewPrecompile.h"
 #include "CustomTreeView.h"
-#include "CustomTreeNode.h"
 #include "TemplateMacros.h"
+#include "CustomTreeNode.h"
 #include <typeinfo>
 
-class TreePageNode;
+//class TreePageNode;
 class TreePageNode : public CustomTreeNode
 {
 public:
@@ -32,12 +32,13 @@ public:
 
 class TreePage : public CustomTreeView<TreePageNode>
 {
-public:
 	//BEGIN_AltMESSAGE_MAP()
 	//END_AltMESSAGE_MAP_Base01(CustomTreeView, TreePageNode)
 protected:
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{
+		typedef CustomTreeView<TreePageNode> ThisClass;
+		typedef CustomTreeView<TreePageNode> TheBaseClass;
 		__pragma(warning(push))
 		__pragma(warning(disable: 4640))
 		static const AFX_MSGMAP_ENTRY _messageEntries[] =
@@ -46,7 +47,7 @@ protected:
 		};
 		__pragma(warning(pop))
 		static const AFX_MSGMAP messageMap =
-		{ &CustomTreeView<TreePageNode>::GetThisMessageMap, &_messageEntries[0] };
+		{ &TheBaseClass::GetThisMessageMap, &_messageEntries[0] };
 		return &messageMap;
 	}
 public:

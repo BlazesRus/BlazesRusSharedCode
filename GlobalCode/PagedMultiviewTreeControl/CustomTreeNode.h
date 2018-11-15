@@ -47,20 +47,7 @@ static char THIS_FILE[] = __FILE__;
 class CustomTreeNode
 {
 protected:
-	//typedef NodeType = CustomTreeNode;
-public:
-#if !defined(CustomTree_EnableLocalTypedefs)
-	/// <summary>
-	/// Sends the information about TreeType and current derived NodeType(Called on TreePage initialization)
-	/// </summary>
-	/// <param name="">The .</param>
-	//static void SendTypeDefInfo(typename TreeTypeDef)
-	//{
-	//	//TreeType = TreeTypeDef;
-	//	//NodeType = TreePageNode;
-	//	#define StaticTypeDefName(CustomTreeNode, NodeType) TreeTypeDef
-	//}
-#endif
+	typedef CustomTreeNode NodeType;
 public:
 	CustomTreeNode()
 	{
@@ -97,11 +84,10 @@ public:
 	BOOL    bOpen;
 #ifdef BlazesGUICode_UseDictionaryBasedNodes
 	List<std::string> ChildNodes;
-	//TreeType* TreeTarget;
 #else
-	CustomTreeNode* pParent;
-	CustomTreeNode* pSibling;
-	CustomTreeNode* pChild;
+	NodeType* pParent;
+	NodeType* pSibling;
+	NodeType* pChild;
 #endif
 	template <typename ConvertedType>
 	explicit operator ConvertedType*()

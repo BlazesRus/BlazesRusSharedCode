@@ -39,6 +39,8 @@
 #include "DLG_TreeNodeText.h"
 //#include "CustomTreeNode.h"
 #include "TemplateMacros.h"
+#include <string>
+#include <typeinfo>
 
 //#ifdef _DEBUG
 //#define new DEBUG_NEW
@@ -58,6 +60,8 @@
 template <typename TreeNode>
 class CustomTreeView : public CView
 {
+private:
+	static LPCSTR ClassName() { return TEXT("CustomTreeView" + "<" + typeid(TreeNode).name() + ">"); }
 public:
 	//virtual static typedef TreeType = CustomTreeView;
 
@@ -1013,10 +1017,10 @@ public:
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
-template<class TreeNode>
+template<typename TreeNode>
 inline const CRuntimeClass CustomTreeView<TreeNode>::DEFINERTCNAME01Define(CustomTreeView, TreeNode)
 {
-	"CustomTreeView", // Name of the class
+	CustomTreeView<TreeNode>::ClassName(), // Name of the class
 	sizeof(::CustomTreeView<TreeNode>), // size
 	0xFFFF, // schema
 	&CustomTreeView<TreeNode>::CreateObject, // pointer to CreateObject function used to instantiate object
