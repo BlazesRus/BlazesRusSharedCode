@@ -319,14 +319,6 @@
     <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\GlobalCode_NodeTrees\TagPosition.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="..\GlobalCode_NodeTrees\VariableData.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -359,10 +351,7 @@
     </ClCompile>
     <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h" />
     <ClInclude Include="..\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h" />
-    <ClInclude Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.h" />
-    <ClInclude Include="..\GlobalCode_NodeTrees\TagPosition.h" />
     <ClInclude Include="..\GlobalCode_NodeTrees\VariableData.h" />
-    <ClInclude Include="..\GlobalCode_NodeTrees\XMLTagTree.h" />
     <ClInclude Include="..\VirtualType.h" />
     <ClInclude Include="ContextMenu.h" />
     <ClInclude Include="CustomTreeCtrl.h" />
@@ -371,6 +360,7 @@
     <ClInclude Include="TemplateMacros.h" />
     <ClInclude Include="TreeCtrlPage.h" />
     <ClInclude Include="TreePage.h" />
+    <ClInclude Include="TreePageNode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(CPPSource)\DLLAPI.h" />

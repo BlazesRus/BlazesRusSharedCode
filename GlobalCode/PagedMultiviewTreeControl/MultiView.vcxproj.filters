@@ -78,13 +78,7 @@
     <ClCompile Include="TreePage.cpp">
       <Filter>MultiView</Filter>
     </ClCompile>
-    <ClCompile Include="..\GlobalCode_NodeTrees\TagPosition.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\GlobalCode_NodeTrees\VariableData.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -212,20 +206,14 @@
     <ClInclude Include="..\GlobalCode_NodeTrees\VariableData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode_NodeTrees\XMLTagTree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GlobalCode_NodeTrees\TagPosition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\VirtualType.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TreePageNode.h">
+      <Filter>MultiView</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
