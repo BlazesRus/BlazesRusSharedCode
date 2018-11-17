@@ -52,4 +52,25 @@ public:\
 		return GetThisMessageMap();\
 	}
 
+#define CRuntimeMPT01_Arg01(class_name, template_class, baseClass)\
+private:\
+	static LPCSTR ClassName() { return TEXT("class_name" + "<" + typeid(template_class).name() + ">"); }\
+	typedef baseClass TheBaseClass;\
+	typedef class_name<template_class> ThisClass;\
+protected:\
+	static CRuntimeClass* PASCAL _GetBaseClass() { return RUNTIME_CLASS(baseClass); }\
+public:\
+	CObject* PASCAL CreateObject() { return new class_name<template_class>; }
+
+#define CRuntimeMPT01_Base01(class_name, baseClass, baseargOne)\
+private:\
+	static LPCSTR ClassName() { return TEXT("class_name"); }\
+	typedef baseClass<baseargOne> TheBaseClass;\
+	typedef class_name ThisClass;\
+public:\
+	CObject* PASCAL CreateObject() { return new class_name; }
+//I"ll need to fix CRuntimeClass part before adding this part
+//protected:
+//	static CRuntimeClass* PASCAL _GetBaseClass() { return RUNTIME_CLASS01(baseClass,baseargOne); }
+
 #endif // TemplateMacros_IncludeGuard
