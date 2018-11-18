@@ -16,8 +16,10 @@
 #if !defined(STRCPY)
 #if defined( _UNICODE )
 #define STRCPY(x,y)				wcscpy(x,y)
+#define	ODDCHAR					USHORT
 #else
 #define STRCPY(x,y)				strcpy(x,y)
+#define	ODDCHAR					TCHAR
 #endif
 #endif
 
