@@ -55,6 +55,11 @@ public:\
 //based off of https://stackoverflow.com/questions/3004870/can-a-custom-mfc-window-dialog-be-a-class-template-instantiation + afx.h
 #define CRuntime_Arg01(class_name, template_class, baseClass)\
 private:\
+	static std::string ClassString();\
+public:\
+	static const std::string classNameStr;\
+	static LPCSTR ClassName() { return classNameStr.c_str(); }\
+private:\
 	typedef baseClass TheBaseClass;\
 	typedef class_name<template_class> ThisClass;\
 protected:\
@@ -77,16 +82,21 @@ public:\
 	CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(class_name); }\
 	CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(class_name); }\
 
-//I"ll need to fix CRuntimeClass part before adding this part
-//protected:
-//	static CRuntimeClass* PASCAL _GetBaseClass() { return RUNTIME_CLASS01(baseClass,baseargOne); }
-
 #define CRuntimeImplimentation_Arg01(class_name, template_class, baseClass)\
+template <class TreeNode>\
+std::string class_name<template_class>::ClassString()\
+{\
+	std::string Combined = "class_name<";\
+	Combined += typeid(template_class).name();\
+	Combined += ">";\
+	return Combined;\
+}\
 template <class template_class>\
-inline const CRuntimeClass class_name<template_class>::DEFINERTCNAME01(class_name, template_class) = { "class_name<template_class>", sizeof(class_name<template_class>), 0xFFFF, NULL,&class_name<template_class>::_GetBaseClass, NULL, NULL };
+inline const std::string class_name<template_class>::classNameStr = ClassString();\
+template <class template_class>\
+inline const CRuntimeClass class_name<template_class>::DEFINERTCNAME01(class_name, template_class) = { ClassName(), sizeof(class_name<template_class>), 0xFFFF, NULL,&class_name<template_class>::_GetBaseClass, NULL, NULL };
 
 #define CRuntimeImplimentation_Base01(class_name, template_class, baseClass)\
 inline const CRuntimeClass class_name::DEFINERTCNAME(class_name) = { "class_name", sizeof(class_name), 0xFFFF, NULL,&class_name::_GetBaseClass, NULL, NULL };
-
 
 #endif // TemplateMacros_IncludeGuard

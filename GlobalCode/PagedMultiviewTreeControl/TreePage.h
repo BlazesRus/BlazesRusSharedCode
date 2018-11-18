@@ -12,7 +12,7 @@
 
 class TreePage : public CustomTreeView<TreePageNode>
 {
-	CRuntime_Base01(TreePage, CustomTreeView, TreePageNode)
+	//CRuntime_Base01(TreePage, CustomTreeView, TreePageNode)
 	//BEGIN_AltMESSAGE_MAP()
 	//END_AltMESSAGE_MAP_Base01(CustomTreeView, TreePageNode)
 protected:
@@ -38,6 +38,6 @@ public:
 	}
 };
 
-CRuntimeImplimentation_Base01(TreePage, CustomTreeView, TreePageNode)
+//CRuntimeImplimentation_Base01(TreePage, CustomTreeView, TreePageNode)
 
 #endif
