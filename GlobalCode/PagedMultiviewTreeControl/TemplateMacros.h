@@ -10,8 +10,8 @@
 #define RUNTIME_CLASS01(class_name, template_class) _RUNTIME_CLASS01(class_name, template_class)
 
 #define DEFINERTCNAME01(class_name, template_class) class##class_name##_##template_class
-#define DEFINERTCNAME01Define(class_name, template_class) class##class_name##_##template_class
 #define DEFINERTCINIT01(class_name, template_class) _init_##class_name##_##template_class
+#define DEFINERTCNAME(class_name) class##class_name
 
 //Use #define StaticTypeDefName(PrefixName, VariableName) type
 #define StaticTypeDefName(PrefixName, VariableName) Prefixname##_##VariableName
@@ -52,25 +52,41 @@ public:\
 		return GetThisMessageMap();\
 	}
 
-#define CRuntimeMPT01_Arg01(class_name, template_class, baseClass)\
+//based off of https://stackoverflow.com/questions/3004870/can-a-custom-mfc-window-dialog-be-a-class-template-instantiation + afx.h
+#define CRuntime_Arg01(class_name, template_class, baseClass)\
 private:\
-	static LPCSTR ClassName() { return TEXT("class_name" + "<" + typeid(template_class).name() + ">"); }\
 	typedef baseClass TheBaseClass;\
 	typedef class_name<template_class> ThisClass;\
 protected:\
-	static CRuntimeClass* PASCAL _GetBaseClass() { return RUNTIME_CLASS(baseClass); }\
+	static CRuntimeClass* PASCAL _GetBaseClass() { return RUNTIME_CLASS(baseClass); } \
 public:\
-	CObject* PASCAL CreateObject() { return new class_name<template_class>; }
+	CObject* PASCAL CreateObject() { return new class_name<template_class>; }\
+	static const CRuntimeClass class##class_name##_##template_class;\
+	CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS01(class_name, template_class); }\
+	CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS01(class_name, template_class); }\
 
-#define CRuntimeMPT01_Base01(class_name, baseClass, baseargOne)\
+#define CRuntime_Base01(class_name, baseClass, baseargOne)\
 private:\
-	static LPCSTR ClassName() { return TEXT("class_name"); }\
 	typedef baseClass<baseargOne> TheBaseClass;\
 	typedef class_name ThisClass;\
+protected:\
+	static CRuntimeClass* PASCAL _GetBaseClass() { return _RUNTIME_CLASS01(baseClass, baseargOne); } \
 public:\
-	CObject* PASCAL CreateObject() { return new class_name; }
+	CObject* PASCAL CreateObject() { return new class_name; }\
+	static const CRuntimeClass class##class_name;\
+	CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(class_name); }\
+	CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(class_name); }\
+
 //I"ll need to fix CRuntimeClass part before adding this part
 //protected:
 //	static CRuntimeClass* PASCAL _GetBaseClass() { return RUNTIME_CLASS01(baseClass,baseargOne); }
+
+#define CRuntimeImplimentation_Arg01(class_name, template_class, baseClass)\
+template <class template_class>\
+inline const CRuntimeClass class_name<template_class>::DEFINERTCNAME01(class_name, template_class) = { "class_name<template_class>", sizeof(class_name<template_class>), 0xFFFF, NULL,&class_name<template_class>::_GetBaseClass, NULL, NULL };
+
+#define CRuntimeImplimentation_Base01(class_name, template_class, baseClass)\
+inline const CRuntimeClass class_name::DEFINERTCNAME(class_name) = { "class_name", sizeof(class_name), 0xFFFF, NULL,&class_name::_GetBaseClass, NULL, NULL };
+
 
 #endif // TemplateMacros_IncludeGuard

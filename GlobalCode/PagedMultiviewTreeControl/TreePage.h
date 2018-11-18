@@ -12,13 +12,13 @@
 
 class TreePage : public CustomTreeView<TreePageNode>
 {
-	CRuntimeMPT01_Base01(TreePage, CustomTreeView, TreePageNode)
+	CRuntime_Base01(TreePage, CustomTreeView, TreePageNode)
 	//BEGIN_AltMESSAGE_MAP()
 	//END_AltMESSAGE_MAP_Base01(CustomTreeView, TreePageNode)
 protected:
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{
-		typedef CustomTreeView<TreePageNode> ThisClass;
+		typedef TreePage ThisClass;
 		typedef CustomTreeView<TreePageNode> TheBaseClass;
 		__pragma(warning(push))
 		__pragma(warning(disable: 4640))
@@ -37,5 +37,7 @@ public:
 		return GetThisMessageMap();
 	}
 };
+
+CRuntimeImplimentation_Base01(TreePage, CustomTreeView, TreePageNode)
 
 #endif
