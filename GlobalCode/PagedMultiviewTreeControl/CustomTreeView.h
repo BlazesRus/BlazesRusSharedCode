@@ -882,6 +882,12 @@ protected:
 		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETBACKGROUNDBITMAP, _T("Set Background Bitmap"), pDC);
 #endif
 	}
+
+	virtual void ApplyMenuGen(CDC* pDC)
+	{
+		DefaultContextMenu(pDC);
+	}
+
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point)
 	{
 		CPoint cp(point);
@@ -932,7 +938,7 @@ protected:
 
 		UINT nFlag = (m_pSelected != NULL) ? MF_ENABLED : MF_GRAYED;
 
-		DefaultContextMenu(pDC);
+		ApplyMenuGen(pDC);
 		// ADDING MENU ITEMS - End
 
 		// Display the context menu
