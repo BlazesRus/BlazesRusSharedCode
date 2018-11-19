@@ -12,10 +12,20 @@
 
 class TreePage : public CustomTreeView<TreePageNode>
 {
-	//CRuntime_Base01(TreePage, CustomTreeView, TreePageNode)
-	//BEGIN_AltMESSAGE_MAP()
-	//END_AltMESSAGE_MAP_Base01(CustomTreeView, TreePageNode)
+	//CRuntime_Base01V2(TreePage, CustomTreeView, TreePageNode)
+private:
+	typedef CustomTreeView<TreePageNode> TheBaseClass;
+	typedef TreePage ThisClass;
 protected:
+	static CRuntimeClass* PASCAL _GetBaseClass()
+	{
+		return TheBaseClass::GetThisClass();
+	}
+public:
+	static const const CRuntimeClass classTreePage;
+	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(TreePage); }
+	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(TreePage); }
+protected://BEGIN_AltMESSAGE_MAP()
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{
 		typedef TreePage ThisClass;
@@ -24,6 +34,7 @@ protected:
 		__pragma(warning(disable: 4640))
 		static const AFX_MSGMAP_ENTRY _messageEntries[] =
 		{
+			//END_AltMESSAGE_MAP_Base01(CustomTreeView, TreePageNode)
 			{ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }
 		};
 		__pragma(warning(pop))
@@ -38,6 +49,6 @@ public:
 	}
 };
 
-//CRuntimeImplimentation_Base01(TreePage, CustomTreeView, TreePageNode)
+inline AFX_COMDAT const CRuntimeClass TreePage::classTreePage = { "TreePage", sizeof(TreePage), 0xFFFF, NULL,&TreePage::_GetBaseClass, NULL, NULL };
 
 #endif

@@ -361,6 +361,7 @@
     <ClInclude Include="TreeCtrlPage.h" />
     <ClInclude Include="TreePage.h" />
     <ClInclude Include="TreePageNode.h" />
+    <ClInclude Include="WP_APPDefines.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(CPPSource)\DLLAPI.h" />

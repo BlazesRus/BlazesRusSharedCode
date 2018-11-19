@@ -40,28 +40,29 @@
 template <typename TreeNode>
 class CustomTreeView : public CView
 {
-private:
-	static std::string ClassString();
-public:
-	static const std::string classNameStr;
-	/// <summary>
-	/// Returns LPCSTR of ClassName
-	/// </summary>
-	/// <returns></returns>
-	static LPCSTR ClassName() { return classNameStr.c_str(); }
-private:
-	typedef CView TheBaseClass;
-	typedef CustomTreeView<TreeNode> ThisClass;
-protected:
-	static CRuntimeClass* PASCAL _GetBaseClass() { return RUNTIME_CLASS(CView); }
-public:
-	CObject* PASCAL CreateObject() { return new CustomTreeView<TreeNode>; }
-	/// <summary>
-	/// CRuntimeImplimentation for CustomTreeView
-	/// </summary>
-	static const CRuntimeClass DEFINERTCNAME01(CustomTreeView, TreeNode);
-	CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS01(CustomTreeView, TreeNode); }
-	CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS01(CustomTreeView, TreeNode); }
+//private:
+//	static std::string ClassString();
+//public:
+//	static const std::string classNameStr;
+//	/// <summary>
+//	/// Returns LPCSTR of ClassName
+//	/// </summary>
+//	/// <returns></returns>
+//	static LPCSTR ClassName() { return classNameStr.c_str(); }
+//private:
+//	typedef CView TheBaseClass;
+//	typedef CustomTreeView<TreeNode> ThisClass;
+//protected:
+//	static CRuntimeClass* PASCAL _GetBaseClass() { return RUNTIME_CLASS(CView); }
+//public:
+//	CObject* PASCAL CreateObject() { return new CustomTreeView<TreeNode>; }
+//	/// <summary>
+//	/// CRuntimeImplimentation for CustomTreeView
+//	/// </summary>
+//	static const CRuntimeClass DEFINERTCNAME01(CustomTreeView, TreeNode);
+//	CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS01(CustomTreeView, TreeNode); }
+//	CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS01(CustomTreeView, TreeNode); }
+	CRuntime_Arg01V2(CustomTreeView, TreeNode, CView)
 
 // Attributes
 // Operations
@@ -1013,7 +1014,7 @@ template <class TreeNode>
 inline const std::string CustomTreeView<TreeNode>::classNameStr = ClassString();
 
 template <class TreeNode>
-inline const CRuntimeClass CustomTreeView<TreeNode>::DEFINERTCNAME01(CustomTreeView, TreeNode) = { ClassName(), sizeof(CustomTreeView<TreeNode>), 0xFFFF, NULL,&CustomTreeView<TreeNode>::_GetBaseClass, NULL, NULL };
+inline AFX_COMDAT const CRuntimeClass CustomTreeView<TreeNode>::DEFINERTCNAME01(CustomTreeView, TreeNode) = { ClassName(), sizeof(CustomTreeView<TreeNode>), 0xFFFF, NULL,&CustomTreeView<TreeNode>::_GetBaseClass, NULL, NULL };
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.

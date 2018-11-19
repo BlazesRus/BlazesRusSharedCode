@@ -215,6 +215,9 @@
     <ClInclude Include="TreePageNode.h">
       <Filter>MultiView</Filter>
     </ClInclude>
+    <ClInclude Include="WP_APPDefines.h">
+      <Filter>MultiView</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\MultiView.ico">
