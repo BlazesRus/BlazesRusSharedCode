@@ -319,7 +319,7 @@
     <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\GlobalCode_NodeTrees\VariableData.cpp">
+    <ClCompile Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -350,27 +350,25 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h" />
-    <ClInclude Include="..\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h" />
-    <ClInclude Include="..\GlobalCode_NodeTrees\VariableData.h" />
-    <ClInclude Include="..\VirtualType.h" />
-    <ClInclude Include="ContextMenu.h" />
-    <ClInclude Include="CustomTreeCtrl.h" />
-    <ClInclude Include="CustomTreeView.h" />
-    <ClInclude Include="DLG_TreeNodeText.h" />
-    <ClInclude Include="TemplateMacros.h" />
-    <ClInclude Include="TreeCtrlPage.h" />
-    <ClInclude Include="TreePage.h" />
-    <ClInclude Include="TreePageNode.h" />
-    <ClInclude Include="WP_APPDefines.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.h" />
+    <ClInclude Include="$(CPPSource)\VirtualType.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\ContextMenu.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeCtrl.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeView.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\DLG_TreeNodeText.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TemplateMacros.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreeCtrlPage.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePage.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePageNode.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\WP_APPDefines.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(CPPSource)\DLLAPI.h" />
-    <ClInclude Include="AboutDlg.h" />
-    <ClInclude Include="BasicMultiviewTemplate.h" />
-    <ClInclude Include="CustomTreeNode.h" />
-    <ClInclude Include="FusedFrameWindow.h" />
-    <ClCompile Include="FusedFrameWindow.cpp" />
-    <ClCompile Include="MainFrm.cpp">
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\AboutDlg.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\BasicMultiviewTemplate.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeNode.h" />
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MainFrm.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -380,8 +378,8 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClCompile>
-    <ClCompile Include="MultiViewApp.cpp" />
-    <ClCompile Include="MultiViewDoc.cpp">
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewApp.cpp" />
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewDoc.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -391,7 +389,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClCompile>
-    <ClCompile Include="MultiViewView.cpp">
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewView.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -401,7 +399,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClCompile>
-    <ClCompile Include="OtherView.cpp">
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\OtherView.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -411,7 +409,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClCompile>
-    <ClCompile Include="MultiviewPrecompile.cpp">
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiviewPrecompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiviewPrecompile.h</PrecompiledHeaderFile>
@@ -431,11 +429,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="MultiView.rc" />
+    <ResourceCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiView.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HalfPagedMultiview.h" />
-    <ClInclude Include="MainFrm.h">
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\HalfPagedMultiview.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MainFrm.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -445,7 +443,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClInclude>
-    <ClInclude Include="MultiViewApp.h">
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewApp.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -455,7 +453,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClInclude>
-    <ClInclude Include="MultiViewDoc.h">
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewDoc.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -465,7 +463,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClInclude>
-    <ClInclude Include="MultiViewView.h">
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewView.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -475,7 +473,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClInclude>
-    <ClInclude Include="OtherView.h">
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\OtherView.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -485,8 +483,8 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClInclude>
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="MultiviewPrecompile.h">
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\Resource.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MultiviewPrecompile.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
