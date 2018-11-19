@@ -22,11 +22,9 @@
 #include <string>
 #include <typeinfo>
 
-//#ifdef _DEBUG
-//#define new DEBUG_NEW
-//#undef THIS_FILE
-//static char THIS_FILE[] = __FILE__;
-//#endif
+#if !defined(Enable_CustomTreeSingleRoot)
+#include "GlobalCode_VariableLists/VariableList.h"
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CustomTreeView view

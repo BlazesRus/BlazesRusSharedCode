@@ -22,7 +22,7 @@ protected:
 		return TheBaseClass::GetThisClass();
 	}
 public:
-	static const const CRuntimeClass classTreePage;
+	static const CRuntimeClass classTreePage;
 	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(TreePage); }
 	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(TreePage); }
 protected://BEGIN_AltMESSAGE_MAP()
