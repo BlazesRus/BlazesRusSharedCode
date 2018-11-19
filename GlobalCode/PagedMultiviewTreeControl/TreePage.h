@@ -12,19 +12,7 @@
 
 class TreePage : public CustomTreeView<TreePageNode>
 {
-	//CRuntime_Base01V2(TreePage, CustomTreeView, TreePageNode)
-private:
-	typedef CustomTreeView<TreePageNode> TheBaseClass;
-	typedef TreePage ThisClass;
-protected:
-	static CRuntimeClass* PASCAL _GetBaseClass()
-	{
-		return TheBaseClass::GetThisClass();
-	}
-public:
-	static const CRuntimeClass classTreePage;
-	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(TreePage); }
-	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(TreePage); }
+	CRuntime_Base01V2(TreePage, CustomTreeView, TreePageNode)
 protected://BEGIN_AltMESSAGE_MAP()
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{
