@@ -205,13 +205,12 @@ public:
 	//}}AFX_MSG
 
 	BEGIN_AltMESSAGE_MAP()
-			ON_COMMAND(ID_APP_ABOUT, &OnAppAbout)
-			ON_COMMAND(ID_VIEW_OTHERVIEW, &OnViewOtherview)
-			ON_COMMAND(ID_VIEW_FIRSTVIEW, &OnViewFirstview)
-
-      //ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
+		ON_COMMAND(ID_APP_ABOUT, &OnAppAbout)
+		ON_COMMAND(ID_VIEW_OTHERVIEW, &OnViewOtherview)
+	    ON_COMMAND(ID_VIEW_FIRSTVIEW, &OnViewFirstview)
+        //ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
 	    //ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
-      //ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
+        //ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
 	END_AltMESSAGE_MAP(CWinAppEx)
 	unsigned int CurrentAltView = 0;
 	//IniDataV2 IniSettings;
