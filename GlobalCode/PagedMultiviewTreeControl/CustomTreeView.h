@@ -103,8 +103,10 @@ protected:
 
 	BOOL			m_bAudioOn;
 
-	// Operations
 public:
+	//CustomOrderedDictionary
+
+	// Operations
 	virtual void SetTextFont(LONG nHeight, BOOL bBold, BOOL bItalic, const CString& csFaceName)
 	{
 		m_lgFont.lfHeight = -MulDiv(nHeight, GetDeviceCaps(GetDC()->m_hDC, LOGPIXELSY), 72);
@@ -242,10 +244,31 @@ public:
 
 		return pNewNode;
 	}
+	/// <summary>
+	/// Adds to root.
+	/// </summary>
+	/// <param name="csLabel">The node label.</param>
+	/// <param name="crText">The cr text.</param>
+	/// <param name="bUseDefaultTextColor">Whether to use default text color.</param>
+	/// <param name="bInvalidate">Whether to invalidate</param>
+	/// <returns></returns>
 	CustomTreeNode* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
+//#if defined(Enable_CustomTreeSingleRoot)
 		return InsertChild(m_pTopNode, csLabel, crText, bUseDefaultTextColor, bInvalidate);
+/*#else
+
+#endif*/
 	}
+
+/*
+#if !defined(Enable_CustomTreeSingleRoot)
+	CustomTreeNode* AddToRoot(const CString& csLabel, std::string RootName, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	{
+
+	}
+#endif
+*/
 
 	void DeleteNode(CustomTreeNode* pNode, BOOL bInvalidate = FALSE)
 	{
@@ -831,59 +854,59 @@ protected:
 
 		return CView::OnMouseWheel(nFlags, zDelta, pt);
 	}
-	virtual void DefaultContextMenu(CDC* pDC)
+	virtual void DefaultContextMenu(CContextMenu* ccmPopUp, UINT nFlag, CDC* pDC)
 	{
 #ifdef EnableCustomTreeSounds
 		// Node related items
-		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_INSERTCHILD, _T("Insert Child"), _T("insertChild.wav"), pDC);
-		ccmPopUp.AppendMenuItem(nFlag, CM_INSERTSIBLING, _T("Insert Sibling"), _T("insertSibling.wav"), pDC);
-		ccmPopUp.AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), _T("deleteNode.wav"), pDC);
-		ccmPopUp.AppendMenuItem(nFlag, CM_MODIFYNODETEXT, _T("Modify Node Text"), _T("modifyNodeText.wav"), pDC);
-		ccmPopUp.AppendMenuItem(nFlag, CM_CHANGENODECOLOR, _T("Change Node Color"), _T("changeNodeColor.wav"), pDC);
+		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_INSERTCHILD, _T("Insert Child"), _T("insertChild.wav"), pDC);
+		ccmPopUp->AppendMenuItem(nFlag, CM_INSERTSIBLING, _T("Insert Sibling"), _T("insertSibling.wav"), pDC);
+		ccmPopUp->AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), _T("deleteNode.wav"), pDC);
+		ccmPopUp->AppendMenuItem(nFlag, CM_MODIFYNODETEXT, _T("Modify Node Text"), _T("modifyNodeText.wav"), pDC);
+		ccmPopUp->AppendMenuItem(nFlag, CM_CHANGENODECOLOR, _T("Change Node Color"), _T("changeNodeColor.wav"), pDC);
 
-		ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
+		ccmPopUp->AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
 
 		// Connecting lines related items
-		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_TOGGLECONNECTINGLINES, _T("Toggle Connecting Lines"), _T("toggleConnectingLines.wav"), pDC);
-		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETCONNECTINGLINESCOLOR, _T("Set Connecting Lines Color"), _T("setConnectingLinesColor.wav"), pDC);
+		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_TOGGLECONNECTINGLINES, _T("Toggle Connecting Lines"), _T("toggleConnectingLines.wav"), pDC);
+		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETCONNECTINGLINESCOLOR, _T("Set Connecting Lines Color"), _T("setConnectingLinesColor.wav"), pDC);
 
-		ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
+		ccmPopUp->AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
 
 		// Tree appearance items
-		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETFONT, _T("Set Font"), _T("setFont.wav"), pDC);
-		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETDEFAULTCOLOR, _T("Set Default Text Color"), _T("setDefaultColor.wav"), pDC);
-		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETBACKGROUNDBITMAP, _T("Set Background Bitmap"), _T("setBackgroundBitmap.wav"), pDC);
+		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETFONT, _T("Set Font"), _T("setFont.wav"), pDC);
+		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETDEFAULTCOLOR, _T("Set Default Text Color"), _T("setDefaultColor.wav"), pDC);
+		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETBACKGROUNDBITMAP, _T("Set Background Bitmap"), _T("setBackgroundBitmap.wav"), pDC);
 
-		ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
+		ccmPopUp->AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
 
 		// Context menu sound toggle item
-		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_TOGGLEMENUSOUND, _T("Toggle Menu Sound"), _T("toggleMenuSound.wav"), pDC);
+		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_TOGGLEMENUSOUND, _T("Toggle Menu Sound"), _T("toggleMenuSound.wav"), pDC);
 #else
 		// Node related items
-		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_INSERTCHILD, _T("Insert Child"), pDC);
-		ccmPopUp.AppendMenuItem(nFlag, CM_INSERTSIBLING, _T("Insert Sibling"), pDC);
-		ccmPopUp.AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), pDC);
-		ccmPopUp.AppendMenuItem(nFlag, CM_MODIFYNODETEXT, _T("Modify Node Text"), pDC);
-		ccmPopUp.AppendMenuItem(nFlag, CM_CHANGENODECOLOR, _T("Change Node Color"), pDC);
+		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_INSERTCHILD, _T("Insert Child"), pDC);
+		ccmPopUp->AppendMenuItem(nFlag, CM_INSERTSIBLING, _T("Insert Sibling"), pDC);
+		ccmPopUp->AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), pDC);
+		ccmPopUp->AppendMenuItem(nFlag, CM_MODIFYNODETEXT, _T("Modify Node Text"), pDC);
+		ccmPopUp->AppendMenuItem(nFlag, CM_CHANGENODECOLOR, _T("Change Node Color"), pDC);
 
-		ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), pDC);
+		ccmPopUp->AppendMenuItem(MF_SEPARATOR, 0, _T(""), pDC);
 
 		// Connecting lines related items
-		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_TOGGLECONNECTINGLINES, _T("Toggle Connecting Lines"), pDC);
-		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETCONNECTINGLINESCOLOR, _T("Set Connecting Lines Color"), pDC);
+		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_TOGGLECONNECTINGLINES, _T("Toggle Connecting Lines"), pDC);
+		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETCONNECTINGLINESCOLOR, _T("Set Connecting Lines Color"), pDC);
 
-		ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), pDC);
+		ccmPopUp->AppendMenuItem(MF_SEPARATOR, 0, _T(""), pDC);
 
 		// Tree appearance items
-		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETFONT, _T("Set Font"), pDC);
-		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETDEFAULTCOLOR, _T("Set Default Text Color"), pDC);
-		ccmPopUp.AppendMenuItem(MF_ENABLED, CM_SETBACKGROUNDBITMAP, _T("Set Background Bitmap"), pDC);
+		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETFONT, _T("Set Font"), pDC);
+		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETDEFAULTCOLOR, _T("Set Default Text Color"), pDC);
+		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETBACKGROUNDBITMAP, _T("Set Background Bitmap"), pDC);
 #endif
 	}
 
-	virtual void ApplyMenuGen(CDC* pDC)
+	virtual void ApplyMenuGen(CContextMenu* ccmPopUp, UINT nFlag,CDC* pDC)
 	{
-		DefaultContextMenu(pDC);
+		return DefaultContextMenu(ccmPopUp, nFlag, pDC);
 	}
 
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point)
@@ -936,7 +959,7 @@ protected:
 
 		UINT nFlag = (m_pSelected != NULL) ? MF_ENABLED : MF_GRAYED;
 
-		ApplyMenuGen(pDC);
+		ApplyMenuGen(&ccmPopUp, nFlag, pDC);
 		// ADDING MENU ITEMS - End
 
 		// Display the context menu

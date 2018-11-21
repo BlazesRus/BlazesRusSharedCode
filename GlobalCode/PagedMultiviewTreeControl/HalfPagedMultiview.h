@@ -29,12 +29,40 @@ class HalfPagedMultiview : public CWinAppEx
 	/// <summary>
 	/// The main view
 	/// </summary>
-	ViewType01* MainView;
+  CView* MainView;
+	//ViewType01* MainView;
+
 	/// <summary>
 	/// The List holding one or more Alternative Views
 	/// </summary>
 	VariableList<ViewType02*> AltView;
 public:
+	/// <summary>
+	/// Return Main view as non-CView pointer
+	/// </summary>
+	/// <returns></returns>
+	MainFrameView* GetMainView()
+	{
+		if (MainView == nullptr)
+		{
+			return nullptr;
+		}
+		else
+		{
+			return dynamic_cast<MainFrameView*>(MainView);
+		}
+	}
+	void SwitchToAltView(int Num= 1000000000)
+	{
+		if(Num== 1000000000)//Use Current loaded AltView
+		{
+
+		}
+		else
+		{
+
+		}
+	}
 	/////////////////////////////////////////////////////////////////////////////
 	// HalfPagedMultiview construction
 	/// <summary>
@@ -86,8 +114,10 @@ public:
 		if (!ProcessShellCommand(cmdInfo))
 			return FALSE;
 
-		CView* pActiveView = ((Frame01*)m_pMainWnd)->GetActiveView();
-		MainView = static_cast<ViewType01*>(pActiveView);
+		//CView* pActiveView = ((Frame01*)m_pMainWnd)->GetActiveView();
+		//MainView = static_cast<ViewType01*>(pActiveView);
+        CView* pActiveView = ((CFrameWnd*)m_pMainWnd)->GetActiveView();
+		MainView = pActiveView;
 		AltView.Add((ViewType02*) new ViewType02);
 
 		CDocument* pDoc = ((Frame01*)m_pMainWnd)->GetActiveDocument();
@@ -160,6 +190,10 @@ public:
 			ON_COMMAND(ID_APP_ABOUT, &OnAppAbout)
 			ON_COMMAND(ID_VIEW_OTHERVIEW, &OnViewOtherview)
 			ON_COMMAND(ID_VIEW_FIRSTVIEW, &OnViewFirstview)
+
+      //ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
+	    //ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
+      //ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
 	END_AltMESSAGE_MAP(CWinAppEx)
 	unsigned int CurrentAltView = 0;
 	//IniDataV2 IniSettings;

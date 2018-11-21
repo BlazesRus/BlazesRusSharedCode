@@ -350,7 +350,6 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h" />
     <ClInclude Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.h" />
     <ClInclude Include="$(CPPSource)\VirtualType.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\ContextMenu.h" />

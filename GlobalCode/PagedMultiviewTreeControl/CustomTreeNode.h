@@ -12,14 +12,7 @@
 #ifdef BlazesGUICode_UseDictionaryBasedNodes
 #include "GlobalCode_IniData/IndexedDictionary.h"
 #endif
-#include "GlobalCode_ExperimentalCode/ConvertableP.h"
-
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
+#include "GlobalCode_IniData/CustomOrderedDictionary.h"
 
 /// <summary>
 /// Edited derivable version of CustomTreeControl's Node class <para/>(base code from https://www.codeproject.com/Articles/9887/CStaticTreeCtrl-A-CStatic-derived-custom-Tree-cont)
@@ -50,6 +43,7 @@ public:
 		TreeType = TreeTypeDef;
 		NodeType = TreePageNode;
 #endif
+		//NodeCat = 0;//Default NodeType
 	}
 
 	virtual ~CustomTreeNode()
@@ -71,6 +65,8 @@ public:
 	NodeType* pSibling;
 	NodeType* pChild;
 #endif
+	//int NodeCat;//Keeping NodeAction Dictionary inside TreeView(to reuse the NodeActions without making new dictionaries for each node)
+
 	template <typename ConvertedType>
 	explicit operator ConvertedType*()
 	{

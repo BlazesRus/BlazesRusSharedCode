@@ -16,6 +16,9 @@
     <Filter Include="MultiView">
       <UniqueIdentifier>{e3ccac91-12d8-4199-afd7-0792b2cde47b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GlobalCode">
+      <UniqueIdentifier>{13e2e699-a199-48af-87e2-5ad7f29bd50c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.cpp">
@@ -45,27 +48,6 @@
     <ClCompile Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MainFrm.cpp">
-      <Filter>MultiView</Filter>
-    </ClCompile>
-    <ClCompile Include="MultiViewDoc.cpp">
-      <Filter>MultiView</Filter>
-    </ClCompile>
-    <ClCompile Include="MultiviewPrecompile.cpp">
-      <Filter>MultiView</Filter>
-    </ClCompile>
-    <ClCompile Include="MultiViewView.cpp">
-      <Filter>MultiView</Filter>
-    </ClCompile>
-    <ClCompile Include="OtherView.cpp">
-      <Filter>MultiView</Filter>
-    </ClCompile>
-    <ClCompile Include="MultiViewApp.cpp">
-      <Filter>MultiView</Filter>
-    </ClCompile>
-    <ClCompile Include="FusedFrameWindow.cpp">
-      <Filter>MultiView</Filter>
-    </ClCompile>
     <ClCompile Include="TreeCtrlPage.cpp">
       <Filter>MultiView</Filter>
     </ClCompile>
@@ -78,14 +60,29 @@
     <ClCompile Include="TreePage.cpp">
       <Filter>MultiView</Filter>
     </ClCompile>
-    <ClCompile Include="..\GlobalCode_NodeTrees\VariableData.cpp">
-      <Filter>Header Files</Filter>
+    <ClCompile Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MainFrm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\OtherView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiviewPrecompile.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(CPPSource)\tsl\ordered_map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -96,12 +93,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomOrderedDictionary.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedDictionary.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\GlobalCode_IniData\OrderedIniData.h">
@@ -137,86 +128,89 @@
     <ClInclude Include="$(CPPSource)\tsl\ordered_hash.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MainFrm.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="MultiViewView.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="MultiviewPrecompile.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="MultiViewDoc.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="MultiViewApp.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="OtherView.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="FusedFrameWindow.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
     <ClInclude Include="$(CPPSource)\GlobalCode_IniData\PointerDictionary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\GlobalCode_IniData\OrderedPointerDictionary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedPDictionary.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicMultiviewTemplate.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="AboutDlg.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="HalfPagedMultiview.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomTreeNode.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomTreeCtrl.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="TreeCtrlPage.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomTreeView.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="ContextMenu.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="TemplateMacros.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="DLG_TreeNodeText.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="TreePage.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
     <ClInclude Include="$(CPPSource)\DLLAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode_NodeTrees\VariableData.h">
+    <ClInclude Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h">
+    <ClInclude Include="$(CPPSource)\VirtualType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\VirtualType.h">
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\ContextMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TreePageNode.h">
-      <Filter>MultiView</Filter>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeCtrl.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WP_APPDefines.h">
-      <Filter>MultiView</Filter>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\DLG_TreeNodeText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TemplateMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreeCtrlPage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePageNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\WP_APPDefines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\AboutDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\BasicMultiviewTemplate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\HalfPagedMultiview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MainFrm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\OtherView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MultiviewPrecompile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedDictionary.h">
+      <Filter>Header Files\GlobalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedPDictionary.h">
+      <Filter>Header Files\GlobalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.h">
+      <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -236,7 +230,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="MultiView.rc">
+    <ResourceCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiView.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
