@@ -171,18 +171,7 @@ public:
 	}
 	afx_msg void OnViewOtherview()
 	{
-		// TODO: Add your command handler code here
-		UINT temp = ::GetWindowLong(AltView[CurrentAltView]->m_hWnd, GWL_ID);
-		::SetWindowLong(AltView[CurrentAltView]->m_hWnd, GWL_ID, ::GetWindowLong(MainView->m_hWnd, GWL_ID));
-		::SetWindowLong(MainView->m_hWnd, GWL_ID, temp);
-
-		MainView->ShowWindow(SW_HIDE);
-		AltView[CurrentAltView]->ShowWindow(SW_SHOW);
-
-		((Frame01*)m_pMainWnd)->SetActiveView(AltView[CurrentAltView]);
-		((Frame01*)m_pMainWnd)->RecalcLayout();
-		AltView[CurrentAltView]->Invalidate();
-		UsingAltView = true;
+		SwitchToAltView();
 	}
 	afx_msg void OnViewFirstview()
 	{
