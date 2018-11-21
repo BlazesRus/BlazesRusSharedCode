@@ -37,6 +37,7 @@ class HalfPagedMultiview : public CWinAppEx
 	/// </summary>
 	VariableList<ViewType02*> AltView;
 public:
+	bool UsingAltView;
 	/// <summary>
 	/// Return Main view as non-CView pointer
 	/// </summary>
@@ -52,16 +53,30 @@ public:
 			return dynamic_cast<MainFrameView*>(MainView);
 		}
 	}
-	void SwitchToAltView(int Num= 1000000000)
+	void SwitchToAltView(unsigned int Num= 1000000000)
 	{
+		if (UsingAltView == false)
+		{
+			UINT temp = ::GetWindowLong(AltView[CurrentAltView]->m_hWnd, GWL_ID);
+			::SetWindowLong(AltView[CurrentAltView]->m_hWnd, GWL_ID, ::GetWindowLong(MainView->m_hWnd, GWL_ID));
+			::SetWindowLong(MainView->m_hWnd, GWL_ID, temp);
+
+			MainView->ShowWindow(SW_HIDE);
+		}
 		if(Num== 1000000000)//Use Current loaded AltView
 		{
-
+			AltView[CurrentAltView]->ShowWindow(SW_SHOW);
 		}
 		else
 		{
-
+			AltView[CurrentAltView]->ShowWindow(SW_HIDE);
+			CurrentAltView = Num;
+			AltView[CurrentAltView]->ShowWindow(SW_SHOW);
 		}
+		((Frame01*)m_pMainWnd)->SetActiveView(AltView[CurrentAltView]);
+		((Frame01*)m_pMainWnd)->RecalcLayout();
+		AltView[CurrentAltView]->Invalidate();
+		UsingAltView = true;
 	}
 	/////////////////////////////////////////////////////////////////////////////
 	// HalfPagedMultiview construction
@@ -70,6 +85,7 @@ public:
 	/// </summary>
 	HalfPagedMultiview()
 	{
+		UsingAltView = false;
 		// TODO: add construction code here,
 		// Place all significant initialization in InitInstance
 	}
@@ -166,6 +182,7 @@ public:
 		((Frame01*)m_pMainWnd)->SetActiveView(AltView[CurrentAltView]);
 		((Frame01*)m_pMainWnd)->RecalcLayout();
 		AltView[CurrentAltView]->Invalidate();
+		UsingAltView = true;
 	}
 	afx_msg void OnViewFirstview()
 	{
@@ -183,6 +200,7 @@ public:
 		((Frame01*)m_pMainWnd)->SetActiveView(MainView);
 		((Frame01*)m_pMainWnd)->RecalcLayout();
 		MainView->Invalidate();
+		UsingAltView = false;
 	}
 	//}}AFX_MSG
 
