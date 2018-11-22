@@ -14,16 +14,13 @@
 #include "MFView.h"
 #include "AboutDlg.h"
 
-#include "MainFrm.h"
-#include "OtherView.h"
-
 #include <GlobalCode_VariableLists/VariableList.h>
 //#include <GlobalCode_IniData/IniDataV2.h>
 
 /// <summary>
 /// Multiview features based on https://www.codeproject.com/Articles/7686/Using-Multiview
 /// </summary>
-template <typename ViewType01 = MFView, typename ViewType02 = OtherView, typename Frame01 = MainFrame>
+template <typename ViewType01, typename ViewType02, typename Frame01>
 class HalfPagedMultiview : public CWinAppEx
 {
 	/// <summary>
