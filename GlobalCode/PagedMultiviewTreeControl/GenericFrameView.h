@@ -2,6 +2,7 @@
 #define GenericFrameView_IncludeGuard
 
 #include "MultiviewPrecompile.h"
+#include <string>
 
 template <typename DocViewType>
 class GenericFrameView : public CView
@@ -73,23 +74,13 @@ public:
 		//    DO NOT EDIT what you see in these blocks of generated code !
 	//}}AFX_MSG
 	BEGIN_AltMESSAGE_MAP()
-
+		// Standard printing commands
+		//ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
+		//ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
+		//ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
 	END_AltMESSAGE_MAP(CView)
 };
 
-/*
-IMPLEMENT_DYNCREATE(GenericFrameView, CView)
-
-BEGIN_MESSAGE_MAP(GenericFrameView, CView)
-	//{{AFX_MSG_MAP(GenericFrameView)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
-	//}}AFX_MSG_MAP
-	// Standard printing commands
-	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
-END_MESSAGE_MAP()
-*/
+CRuntimeImplimentation_Arg01(GenericFrameView, DocViewType, CView)
 
 #endif

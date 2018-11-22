@@ -89,12 +89,6 @@
     <ClInclude Include="$(CPPSource)\tsl\ordered_set.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomDictionary.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomOrderedDictionary.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(CPPSource)\GlobalCode_IniData\OrderedIniData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -122,9 +116,6 @@
     <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(CPPSource)\tsl\ordered_hash.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -138,9 +129,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\VirtualType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\ContextMenu.h">
@@ -212,7 +200,16 @@
     <ClInclude Include="GenericFrameView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MainFrameView.h">
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomOrderedDictionary.h">
+      <Filter>Header Files\GlobalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomDictionary.h">
+      <Filter>Header Files\GlobalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h">
+      <Filter>Header Files\GlobalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="MFView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

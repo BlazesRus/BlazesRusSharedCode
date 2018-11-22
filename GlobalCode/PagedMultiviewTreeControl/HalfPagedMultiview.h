@@ -11,7 +11,7 @@
 #include "resource.h"       // main symbols
 
 #include "MultiViewDoc.h"
-#include "MainFrameView.h"
+#include "MFView.h"
 #include "AboutDlg.h"
 
 #include "MainFrm.h"
@@ -23,7 +23,7 @@
 /// <summary>
 /// Multiview features based on https://www.codeproject.com/Articles/7686/Using-Multiview
 /// </summary>
-template <typename ViewType01 = MainFrameView, typename ViewType02 = OtherView, typename Frame01 = MainFrame>
+template <typename ViewType01 = MFView, typename ViewType02 = OtherView, typename Frame01 = MainFrame>
 class HalfPagedMultiview : public CWinAppEx
 {
 	/// <summary>
@@ -118,8 +118,8 @@ public:
 		pDocTemplate = new CSingleDocTemplate(
 			IDR_MAINFRAME,
 			RUNTIME_CLASS(MultiViewDoc),
-			RUNTIME_CLASS(ViewType01),       // main SDI frame window
-			RUNTIME_CLASS(MultiViewView));
+			RUNTIME_CLASS(Frame01),       // main SDI frame window
+			RUNTIME_CLASS(ViewType01));
 		AddDocTemplate(pDocTemplate);
 
 		// Parse command line for standard shell commands, DDE, file open

@@ -63,7 +63,13 @@ public:\
 //based off of https://stackoverflow.com/questions/3004870/can-a-custom-mfc-window-dialog-be-a-class-template-instantiation + afx.h
 #define CRuntime_Arg01(class_name, template_class, baseClass)\
 private:\
-	static std::string ClassString();\
+	static std::string ClassString()\
+	{\
+		std::string Combined = "class_name<"; \
+		Combined += typeid(template_class).name(); \
+		Combined += ">"; \
+		return Combined; \
+	}\
 public:\
 	static const std::string classNameStr;\
 	static LPCSTR ClassName() { return classNameStr.c_str(); }\
@@ -179,17 +185,9 @@ public:\
 
 #ifdef _AFXDLL
 #define CRuntimeImplimentation_Arg01(class_name, template_class, baseClass)\
-template <class TreeNode>\
-std::string class_name<template_class>::ClassString()\
-{\
-	std::string Combined = "class_name<";\
-	Combined += typeid(template_class).name();\
-	Combined += ">";\
-	return Combined;\
-}\
-template <class template_class>\
+template <typename template_class>\
 inline const std::string class_name<template_class>::classNameStr = ClassString();\
-template <class template_class>\
+template <typename template_class>\
 inline AFX_COMDAT const CRuntimeClass class_name<template_class>::DEFINERTCNAME01(class_name, template_class) = { ClassName(), sizeof(class_name<template_class>), 0xFFFF, NULL,&class_name<template_class>::_GetBaseClass, NULL, NULL };
 
 #define CRuntimeImplimentation_Base01(class_name, template_class, baseClass)\

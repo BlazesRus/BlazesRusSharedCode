@@ -351,7 +351,6 @@
     </ClCompile>
     <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h" />
     <ClInclude Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.h" />
-    <ClInclude Include="$(CPPSource)\VirtualType.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\ContextMenu.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeCtrl.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeView.h" />
@@ -362,7 +361,7 @@
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePageNode.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\WP_APPDefines.h" />
     <ClInclude Include="GenericFrameView.h" />
-    <ClInclude Include="MainFrameView.h" />
+    <ClInclude Include="MFView.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(CPPSource)\DLLAPI.h" />
