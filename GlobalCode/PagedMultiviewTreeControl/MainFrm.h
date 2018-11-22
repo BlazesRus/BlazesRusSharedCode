@@ -5,12 +5,13 @@
 #if !defined(MainFrame__INCLUDED)
 #define MainFrame__INCLUDED
 
-#if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
+#include "MultiviewPrecompile.h"
+//#include <string>
 
 class MainFrame : public CFrameWnd
 {
+//private:
+//	static std::string ClassString() { return "MainFrame"; }
 protected: // create from serialization only
 	MainFrame();
 	DECLARE_DYNCREATE(MainFrame)

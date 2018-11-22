@@ -29,6 +29,8 @@
 
 class MultiViewApp : public HalfPagedMultiview<MainFrameView, TreePage, MainFrame>
 {
+//private:
+//	static std::string ClassString() { return "MultiViewApp"; }
 public:
 	MultiViewApp() {};
 	IniDataV2 IniSettings;

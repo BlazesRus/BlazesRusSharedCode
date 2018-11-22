@@ -9,9 +9,12 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+//#include <string>
 
 class MultiViewDoc : public CDocument
 {
+//private:
+//	static std::string ClassString() { return "MultiViewDoc"; }
 protected: // create from serialization only
 	MultiViewDoc();
 	DECLARE_DYNCREATE(MultiViewDoc)

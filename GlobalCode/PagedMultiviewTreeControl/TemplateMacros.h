@@ -86,7 +86,13 @@ public:\
 
 #define CRuntime_Arg01V2(class_name, template_class, baseClass)\
 private:\
-	static std::string ClassString();\
+	static std::string ClassString()\
+	{\
+		std::string Combined = "class_name<"; \
+		Combined += typeid(template_class).name(); \
+		Combined += ">"; \
+		return Combined; \
+	}\
 public:\
 	static const std::string classNameStr;\
 	static LPCSTR ClassName() { return classNameStr.c_str(); }\

@@ -5,16 +5,17 @@
 #pragma once
 #endif
 
+#include "MultiviewPrecompile.h"
 #include "MultiViewDoc.h"
-//#include "StaticTreeCtrl.h"
-//#include "TreePage.h"
-//#include "TreeCtrlPage.h"
+//#include <string>
 
 /////////////////////////////////////////////////////////////////////////////
 // OtherView view
 
 class OtherView : public CView
 {
+//private:
+//	static std::string ClassString() { return "OtherView"; }
 protected:
 	DECLARE_DYNCREATE(OtherView)
 

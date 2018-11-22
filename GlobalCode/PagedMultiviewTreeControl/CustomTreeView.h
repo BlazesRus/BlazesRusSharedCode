@@ -1010,15 +1010,6 @@ public:
 };
 
 template <class TreeNode>
-std::string CustomTreeView<TreeNode>::ClassString()
-{
-	std::string Combined = "CustomTreeView<";
-	Combined += typeid(TreeNode).name();
-	Combined += ">";
-	return Combined;
-}
-
-template <class TreeNode>
 inline const std::string CustomTreeView<TreeNode>::classNameStr = ClassString();
 
 template <class TreeNode>

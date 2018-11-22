@@ -7,7 +7,6 @@
 
 class MFView : public GenericFrameView<MultiViewDoc>
 {
-public:
 	//CRuntime_Base01V2(MainFrameView, GenericFrameView, MultiViewDoc)
 private:
 	typedef GenericFrameView<MultiViewDoc> TheBaseClass;
