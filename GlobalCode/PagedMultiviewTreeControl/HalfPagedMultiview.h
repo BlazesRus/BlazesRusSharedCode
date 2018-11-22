@@ -39,7 +39,7 @@ public:
 	/// Return Main view as non-CView pointer
 	/// </summary>
 	/// <returns></returns>
-	MainFrameView* GetMainView()
+	ViewType01* GetMainView()
 	{
 		if (MainView == nullptr)
 		{
@@ -47,7 +47,7 @@ public:
 		}
 		else
 		{
-			return dynamic_cast<MainFrameView*>(MainView);
+			return dynamic_cast<ViewType01*>(MainView);
 		}
 	}
 	void SwitchToAltView(unsigned int Num= 1000000000)
