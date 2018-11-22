@@ -29,7 +29,7 @@ class HalfPagedMultiview : public CWinAppEx
 	/// <summary>
 	/// The main view
 	/// </summary>
-  CView* MainView;
+    CView* MainView;
 	//ViewType01* MainView;
 
 	/// <summary>
@@ -128,7 +128,9 @@ public:
 
 		// Dispatch commands specified on the command line
 		if (!ProcessShellCommand(cmdInfo))
-			return FALSE;
+		{
+			return FALSE;//Fails to create empty document here
+		}
 
 		//CView* pActiveView = ((Frame01*)m_pMainWnd)->GetActiveView();
 		//MainView = static_cast<ViewType01*>(pActiveView);
