@@ -11,7 +11,7 @@
 #include "resource.h"       // main symbols
 
 #include "MultiViewDoc.h"
-#include "MultiViewView.h"
+#include "MainFrameView.h"
 #include "AboutDlg.h"
 
 #include "MainFrm.h"

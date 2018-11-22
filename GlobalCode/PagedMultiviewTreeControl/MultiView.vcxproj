@@ -361,6 +361,8 @@
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePage.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePageNode.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\WP_APPDefines.h" />
+    <ClInclude Include="GenericFrameView.h" />
+    <ClInclude Include="MainFrameView.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(CPPSource)\DLLAPI.h" />
@@ -453,16 +455,6 @@
       </DeploymentContent>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewDoc.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </DeploymentContent>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewView.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
