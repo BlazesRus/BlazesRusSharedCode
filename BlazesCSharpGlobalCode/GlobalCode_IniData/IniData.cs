@@ -1,34 +1,68 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : BlazesCSharpGlobalCode
+// Author           : BlazesRus
+// Created          : 02-09-2018
+//
+// Last Modified By : BlazesRus
+// Last Modified On : 07-27-2018
+// ***********************************************************************
+// <copyright file="IniData.cs" company="">
+//     Copyright ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace CSharpGlobalCode.GlobalCode_IniData
 {
-    public class IniDataElement
+	/// <summary>
+	/// Class IniDataElement.
+	/// </summary>
+	public class IniDataElement
     {
-        public string IniSetting;
-        public string IniValue;
-        public IniDataElement(){}
-        public IniDataElement(string Arg01, string Arg02)
+		/// <summary>
+		/// The ini setting
+		/// </summary>
+		public string IniSetting;
+		/// <summary>
+		/// The ini value
+		/// </summary>
+		public string IniValue;
+		/// <summary>
+		/// Initializes a new instance of the <see cref="IniDataElement"/> class.
+		/// </summary>
+		public IniDataElement(){}
+		/// <summary>
+		/// Initializes a new instance of the <see cref="IniDataElement"/> class.
+		/// </summary>
+		/// <param name="Arg01">The arg01.</param>
+		/// <param name="Arg02">The arg02.</param>
+		public IniDataElement(string Arg01, string Arg02)
         {
             IniSetting = Arg01;
             IniValue = Arg02;
         }
     }
 
-    public class IniData : List<IniDataElement>
+	/// <summary>
+	/// Class IniData.
+	/// Implements the <see cref="System.Collections.Generic.List{CSharpGlobalCode.GlobalCode_IniData.IniDataElement}" />
+	/// </summary>
+	/// <seealso cref="System.Collections.Generic.List{CSharpGlobalCode.GlobalCode_IniData.IniDataElement}" />
+	public class IniData : List<IniDataElement>
     {
-        //byte IniType = 0;
+		//byte IniType = 0;
 
-        /// <summary>
-        /// Loads the Ini data.
-        /// </summary>
-        /// <param name="FileName">Name of the file.</param>
-        /// <param name="IniFormat">The ini storage format.
-        /// 0 = IniSetting:IniValue; format(Default)
-        /// 1= [IniSetting=IniValue] format (based on my old C++ code)
-        /// </param>
-        public void LoadIniData(string FileName, byte IniFormat = 0)
+		/// <summary>
+		/// Loads the Ini data.
+		/// </summary>
+		/// <param name="FileName">Name of the file.</param>
+		/// <param name="IniFormat">The ini storage format.
+		/// 0 = IniSetting:IniValue; format(Default)
+		/// 1= [IniSetting=IniValue] format (based on my old C++ code)</param>
+		public void LoadIniData(string FileName, byte IniFormat = 0)
         {
             List<string> FileData = CSharpGlobalCode.GlobalMiscCode.FileAccessCommands.ReturnFileContentsAsList(FileName);
             string LineData;
@@ -132,7 +166,12 @@ namespace CSharpGlobalCode.GlobalCode_IniData
             }
         }
 
-        public bool CheckIfElementExists(string Value)
+		/// <summary>
+		/// Checks if element exists.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+		public bool CheckIfElementExists(string Value)
         {
             int ListSize = this.Count;
             IniDataElement ElementData;
@@ -147,7 +186,12 @@ namespace CSharpGlobalCode.GlobalCode_IniData
             }
             return ElementExists;
         }
-        public string GetElementData(string Value)
+		/// <summary>
+		/// Gets the element data.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns>System.String.</returns>
+		public string GetElementData(string Value)
         {
             int ListSize = this.Count;
             string ElementValue = "";
@@ -168,6 +212,9 @@ namespace CSharpGlobalCode.GlobalCode_IniData
             }
             return ElementValue;
         }
-        public IniData() {}
+		/// <summary>
+		/// Initializes a new instance of the <see cref="IniData"/> class.
+		/// </summary>
+		public IniData() {}
     }
 }

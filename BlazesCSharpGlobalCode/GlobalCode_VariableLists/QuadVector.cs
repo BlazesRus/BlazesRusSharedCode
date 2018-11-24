@@ -1,4 +1,17 @@
-﻿using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+﻿// ***********************************************************************
+// Assembly         : BlazesCSharpGlobalCode
+// Author           : BlazesRus
+// Created          : 07-17-2018
+//
+// Last Modified By : BlazesRus
+// Last Modified On : 07-19-2018
+// ***********************************************************************
+// <copyright file="QuadVector.cs" company="">
+//     Copyright ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,36 +20,58 @@ using System.Threading.Tasks;
 
 namespace CSharpGlobalCode.GlobalCode_VariableLists
 {
-    /// <summary>
-    /// 4 Coordinate Vector (X,Y,Z,W) (C# version of my QuadVector with MediumDec used instead of double)
-    /// </summary>
-    public class QuadVector
+	/// <summary>
+	/// 4 Coordinate Vector (X,Y,Z,W) (C# version of my QuadVector with MediumDec used instead of double)
+	/// </summary>
+	public class QuadVector
     {
-        public MediumDec PositionX = MediumDec.Zero;
-        public MediumDec PositionY = MediumDec.Zero;
-        public MediumDec PositionZ = MediumDec.Zero;
-        public MediumDec PositionW = MediumDec.Zero;
-        //Store values in Position in vector
-        public void StoreInVectorIndex(int index, MediumDec TempValue)
+		/// <summary>
+		/// The position x
+		/// </summary>
+		public MediumDec PositionX = MediumDec.Zero;
+		/// <summary>
+		/// The position y
+		/// </summary>
+		public MediumDec PositionY = MediumDec.Zero;
+		/// <summary>
+		/// The position z
+		/// </summary>
+		public MediumDec PositionZ = MediumDec.Zero;
+		/// <summary>
+		/// The position w
+		/// </summary>
+		public MediumDec PositionW = MediumDec.Zero;
+		//Store values in Position in vector
+		/// <summary>
+		/// Stores the TempValue inside position index.
+		/// </summary>
+		/// <param name="index">The index.</param>
+		/// <param name="TempValue">The temporary value.</param>
+		public void StoreInVectorIndex(int index, MediumDec TempValue)
         {
             if (index == 0) { PositionX = TempValue; }
             else if (index == 1) { PositionY = TempValue; }
             else if (index == 2) { PositionZ = TempValue; }
             else if (index == 3) { PositionW = TempValue; }
         }
-        //Get value based on index value
-        public MediumDec GetVectorValue(int index)
+		//Get value based on index value
+		/// <summary>
+		/// Gets the vector value.
+		/// </summary>
+		/// <param name="index">The index.</param>
+		/// <returns>MediumDec.</returns>
+		public MediumDec GetVectorValue(int index)
         {
             if (index == 0) { return PositionX; }
             else if (index == 1) { return PositionY; }
             else if (index == 2) { return PositionZ; }
             else { return PositionW; }
         }
-        /// <summary>
-        /// Reconstruct variables back into string format that Havok uses in files(0.000000 0.000000 0.000000 0.000000)
-        /// </summary>
-        /// <returns></returns>
-        public string ConvertToString()
+		/// <summary>
+		/// Reconstruct variables back into string format that Havok uses in files(0.000000 0.000000 0.000000 0.000000)
+		/// </summary>
+		/// <returns>System.String.</returns>
+		public string ConvertToString()
         {
             string TempString = "(";
             TempString += PositionX.ToFullString();
@@ -49,11 +84,11 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             TempString += ")";
             return TempString;
         }
-        /// <summary>
-        /// Converts to list.
-        /// </summary>
-        /// <returns></returns>
-        public List<MediumDec> ConvertToList()
+		/// <summary>
+		/// Converts to list.
+		/// </summary>
+		/// <returns>List&lt;MediumDec&gt;.</returns>
+		public List<MediumDec> ConvertToList()
         {
             List<MediumDec> TempValue = new List<MediumDec>();
             for (int i = 0; i < 4; i++)
@@ -62,11 +97,11 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             }
             return TempValue;
         }
-        /// <summary>
-        /// Construct QuadVector from String
-        /// </summary>
-        /// <param name="LineString">The line string.</param>
-        public void ReadQuadVectorFromString(string LineString)
+		/// <summary>
+		/// Reads the quad vector from string.
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		public void ReadQuadVectorFromString(string LineString)
         {
             //Current character loaded in steam
             char StringChar;
@@ -101,12 +136,21 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             }
         }
 
-        public static explicit operator QuadVector(string LineString)
+		/// <summary>
+		/// Performs an explicit conversion from <see cref="System.String"/> to <see cref="QuadVector"/>.
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <returns>The result of the conversion.</returns>
+		public static explicit operator QuadVector(string LineString)
         {
             return new QuadVector(LineString);
         }
 
-        public QuadVector(string LineString)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="QuadVector"/> class.
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		public QuadVector(string LineString)
         {
             //Current character loaded in steam
             char StringChar;
@@ -140,7 +184,14 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
                 }
             }
         }
-        public QuadVector(MediumDec x, MediumDec y, MediumDec z, MediumDec w)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="QuadVector"/> class.
+		/// </summary>
+		/// <param name="x">The x.</param>
+		/// <param name="y">The y.</param>
+		/// <param name="z">The z.</param>
+		/// <param name="w">The w.</param>
+		public QuadVector(MediumDec x, MediumDec y, MediumDec z, MediumDec w)
         {
             PositionX = x;
             PositionY = y;
@@ -148,7 +199,10 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             PositionW = w;
         }
 
-        public QuadVector()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="QuadVector"/> class.
+		/// </summary>
+		public QuadVector()
         {
             PositionX = MediumDec.Zero;
             PositionY = MediumDec.Zero;
@@ -156,24 +210,29 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             PositionW = MediumDec.Zero;
         }
     }
-    /// <summary>
-    /// List of (X,Y,Z,W) vector(C# version of my QuadVectorList with MediumDec used instead of double)
-    /// </summary>
-    /// <seealso cref="System.Collections.Generic.List{CSharpGlobalCode.GlobalCode_VariableLists.QuadVector}" />
-    public class QuadVectorList : List<QuadVector>
+	/// <summary>
+	/// List of (X,Y,Z,W) vector(C# version of my QuadVectorList with MediumDec used instead of double)
+	/// Implements the <see cref="System.Collections.Generic.List{CSharpGlobalCode.GlobalCode_VariableLists.QuadVector}" />
+	/// </summary>
+	/// <seealso cref="System.Collections.Generic.List{CSharpGlobalCode.GlobalCode_VariableLists.QuadVector}" />
+	public class QuadVectorList : List<QuadVector>
     {
-        public int AddData()
+		/// <summary>
+		/// Adds the data.
+		/// </summary>
+		/// <returns>System.Int32.</returns>
+		public int AddData()
         {
             int Index = Count;
             Add(new QuadVector());
             return Index;
         }
 
-        /// <summary>
-        /// Converts one or more lines of QuadVectors into QuadVectorList for LineString
-        /// </summary>
-        /// <param name="LineString">The line string.</param>
-        public void ConvertStringToList(string LineString)
+		/// <summary>
+		/// Converts one or more lines of QuadVectors into QuadVectorList for LineString
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		public void ConvertStringToList(string LineString)
         {
             if (Count != 0)
             {
@@ -202,7 +261,7 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
                 }
                 else if (StringChar == ' ' || StringChar == '	' && PartialSearchBuffer != "")
                 {
-                    if (VectorIndex == 4)//Code caveat in case of slight format change of having no ) in formating
+                    if (VectorIndex == 4)//Code caveat in case of slight format change of having no ')' in formating
                     {
                         Add(CurrentQuadVector);
                         VectorIndex = 0;
@@ -227,16 +286,28 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             }
         }
 
-        public QuadVectorList(string Value)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="QuadVectorList"/> class.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		public QuadVectorList(string Value)
         {
             ConvertStringToList(Value);
         }
 
-        public static explicit operator QuadVectorList(string Value)
+		/// <summary>
+		/// Performs an explicit conversion from <see cref="System.String"/> to <see cref="QuadVectorList"/>.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns>The result of the conversion.</returns>
+		public static explicit operator QuadVectorList(string Value)
         {
             return new QuadVectorList(Value);
         }
 
-        public QuadVectorList() { }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="QuadVectorList"/> class.
+		/// </summary>
+		public QuadVectorList() { }
     }
 }

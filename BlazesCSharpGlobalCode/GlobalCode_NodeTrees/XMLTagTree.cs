@@ -1,4 +1,17 @@
-﻿using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+﻿// ***********************************************************************
+// Assembly         : BlazesCSharpGlobalCode
+// Author           : BlazesRus
+// Created          : 07-14-2018
+//
+// Last Modified By : BlazesRus
+// Last Modified On : 07-23-2018
+// ***********************************************************************
+// <copyright file="XMLTagTree.cs" company="">
+//     Copyright ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 using CSharpGlobalCode.GlobalCode_StringFunctions;
 using CSharpGlobalCode.GlobalCode_VariableConversionFunctions;
 using CSharpGlobalCode.GlobalCode_VariableLists;
@@ -7,59 +20,88 @@ using System.Linq;
 
 namespace CSharpGlobalCode.GlobalCode_NodeTrees
 {
-    public class XMLNode : NodeV2<XMLTagTree, XMLNode>
+	/// <summary>
+	/// Class XMLNode.
+	/// Implements the <see cref="CSharpGlobalCode.GlobalCode_NodeTrees.NodeV2{CSharpGlobalCode.GlobalCode_NodeTrees.XMLTagTree, CSharpGlobalCode.GlobalCode_NodeTrees.XMLNode}" />
+	/// </summary>
+	/// <seealso cref="CSharpGlobalCode.GlobalCode_NodeTrees.NodeV2{CSharpGlobalCode.GlobalCode_NodeTrees.XMLTagTree, CSharpGlobalCode.GlobalCode_NodeTrees.XMLNode}" />
+	public class XMLNode : NodeV2<XMLTagTree, XMLNode>
     {
-        public string NodeName = "";
+		/// <summary>
+		/// The node name
+		/// </summary>
+		public string NodeName = "";
 
-        //Detects if either Closing Tag, Closed Tag, or Neither
-        //0 = Tag is not a Closing Tag
-        //1 = Is Closing Tag
-        //2 = Tag is Closed by Tag with InternalName of InternalNameOfTagClosed
-        public byte ClosingStatus = 0;
 
-        public string TagContent = "";
+		/// <summary>
+		/// Detects if either Closing Tag, Closed Tag, or Neither<para/>
+		/// 0 = Tag is not a Closing Tag<para/>
+		/// 1 = Is Closing Tag<para/>
+		/// 2 = Tag is Closed by Tag with InternalName of InternalNameOfTagClosed<para/>
+		/// </summary>
+		public byte ClosingStatus = 0;
 
-        public dynamic ConvertedTagContent = null;
+		/// <summary>
+		/// The tag content
+		/// </summary>
+		public string TagContent = "";
 
-        //Type of data stores inside Tag (Strings stored in TagContent)
-        //0:Default Extracted content
-        //1:Int
-        //2:Bool
-        //3:Double
-        //4:String
-        //5:Event Index(Int)
-        //6:Variable Index(Int)
-        //7:Havok Class index(Int)
-        //8:Short
-        //9:QuadVector
-        //10:Event String
-        //11:Variable String
-        //12:Animation Path String
-        //13:Condition (String)
-        //14:Havok Class Target Name (String)
-        //20:List<int>
-        //21:DoubleList
-        //22:StringList
-        //23:BooleanList
-        //24:QuadVectorList
-        //50:flags (String)
-        //51:Clip Mode (String)
-        //240:Holds Havok Class info
-        //241:hkobject Container
-        //250:Unknown (String)
-        public byte TagContentType = 0;
+		/// <summary>
+		/// The converted tag content
+		/// </summary>
+		public dynamic ConvertedTagContent = null;
 
-        //Additional Tag Args
-        public XMLOptionList AdditionTagOptions;
+		//Type of data stores inside Tag (Strings stored in TagContent)
+		//0:Default Extracted content
+		//1:Int
+		//2:Bool
+		//3:Double
+		//4:String
+		//5:Event Index(Int)
+		//6:Variable Index(Int)
+		//7:Havok Class index(Int)
+		//8:Short
+		//9:QuadVector
+		//10:Event String
+		//11:Variable String
+		//12:Animation Path String
+		//13:Condition (String)
+		//14:Havok Class Target Name (String)
+		//20:List<int>
+		//21:DoubleList
+		//22:StringList
+		//23:BooleanList
+		//24:QuadVectorList
+		//50:flags (String)
+		//51:Clip Mode (String)
+		//240:Holds Havok Class info
+		//241:hkobject Container
+		//250:Unknown (String)
+		/// <summary>
+		/// The tag content type
+		/// </summary>
+		public byte TagContentType = 0;
 
-        public bool SelfContainedTag = false;
+		//Additional Tag Args
+		/// <summary>
+		/// The addition tag options
+		/// </summary>
+		public XMLOptionList AdditionTagOptions;
 
-        public bool XMLVersionTag = false;
+		/// <summary>
+		/// The self contained tag
+		/// </summary>
+		public bool SelfContainedTag = false;
 
-        /// <summary>
-        /// Detects the type of the content contained within tag
-        /// </summary>
-        public void DetectTagContentType()
+		/// <summary>
+		/// The XML version tag
+		/// </summary>
+		public bool XMLVersionTag = false;
+
+		/// <summary>
+		/// Detects the type of the content contained within tag
+		/// </summary>
+		public void DetectTagContentType()
         {
             if (TagContentType == 0 && TagContent != "")
             {
@@ -104,10 +146,10 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
             }
         }
 
-        /// <summary>
-        /// Detect Tag Content of Node and child nodes
-        /// </summary>
-        public void DetectTagContentTypesWithin()
+		/// <summary>
+		/// Detect Tag Content of Node and child nodes
+		/// </summary>
+		public void DetectTagContentTypesWithin()
         {
             DetectTagContentType();
             int ChildListSize = this.NodeLists.Count;
@@ -117,13 +159,13 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
             }
         }
 
-        /// <summary>
-        /// Generates the HTML document.
-        /// </summary>
-        /// <param name="HTMLForm">The HTML form.</param>
-        /// <param name="OutputLvl">The output level.</param>
-        /// <returns></returns>
-        private StringList GenerateHTMLDoc(StringList HTMLForm, int OutputLvl)
+		/// <summary>
+		/// Generates the HTML document.
+		/// </summary>
+		/// <param name="HTMLForm">The HTML form.</param>
+		/// <param name="OutputLvl">The output level.</param>
+		/// <returns>StringList</returns>
+		private StringList GenerateHTMLDoc(StringList HTMLForm, int OutputLvl)
         {
             string TempTag;
             int SizeTemp;
@@ -281,18 +323,13 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
             return HTMLForm;
         }
 
-        //************************************
-        // Method:    GenerateHTMLDocWithin
-        // FullName:  TagNodeTreeTemplateData::Node::GenerateHTMLDocWithin
-        // Access:    public
-        // Returns:   void
-        // Qualifier:
-        // Parameter: NodeTreeType * NodeTreeTarget
-        // Parameter: StringVectorList & OutputBuffer
-        // Parameter: int & OutputLvl
-        // Parameter: const byte & GenerationOptions
-        //************************************
-        public StringList GenerateHTMLDocWithin(StringList HTMLForm, int OutputLvl)
+		/// <summary>
+		/// Generates the HTML document within.
+		/// </summary>
+		/// <param name="HTMLForm">The HTML form.</param>
+		/// <param name="OutputLvl">The output level.</param>
+		/// <returns>StringList.</returns>
+		public StringList GenerateHTMLDocWithin(StringList HTMLForm, int OutputLvl)
         {
             HTMLForm = GenerateHTMLDoc(HTMLForm, OutputLvl);
             int ChildListSize = this.NodeLists.Count;
@@ -303,11 +340,11 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
             return HTMLForm;
         }
 
-        /// <summary>
-        /// Copies the other data from node of type CurrentType
-        /// </summary>
-        /// <param name="TargetNode">The target node.</param>
-        public void CopyOtherDataFromNode(dynamic TargetNode)
+		/// <summary>
+		/// Copies the other data from node of type CurrentType
+		/// </summary>
+		/// <param name="TargetNode">The target node.</param>
+		public void CopyOtherDataFromNode(dynamic TargetNode)
         {//(Using Dynamic to prevent compiler errors)
             TagContent = TargetNode.TagContent;
             SelfContainedTag = TargetNode.SelfContainedTag;
@@ -317,20 +354,28 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
             TagContentType = TargetNode.TagContentType;
         }
 
-        public XMLNode()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="XMLNode"/> class.
+		/// </summary>
+		public XMLNode()
         {
             NodeLists = new List<XMLNode>();
         }
     }
 
-    public class XMLTagTree : NodeTreeV2<XMLNode>
+	/// <summary>
+	/// Class XMLTagTree.
+	/// Implements the <see cref="CSharpGlobalCode.GlobalCode_NodeTrees.NodeTreeV2{CSharpGlobalCode.GlobalCode_NodeTrees.XMLNode}" />
+	/// </summary>
+	/// <seealso cref="CSharpGlobalCode.GlobalCode_NodeTrees.NodeTreeV2{CSharpGlobalCode.GlobalCode_NodeTrees.XMLNode}" />
+	public class XMLTagTree : NodeTreeV2<XMLNode>
     {
-        /// <summary>
-        /// Generates the HTML document.
-        /// </summary>
-        /// <param name="FileName">Name of the file.</param>
-        /// <param name="AddHeaderInfo">if set to <c>true</c> [add header information].</param>
-        public void GenerateHTMLDoc(string FileName, bool AddHeaderInfo = false)
+		/// <summary>
+		/// Generates the HTML document.
+		/// </summary>
+		/// <param name="FileName">Name of the file.</param>
+		/// <param name="AddHeaderInfo">if set to <c>true</c> [add header information].</param>
+		public void GenerateHTMLDoc(string FileName, bool AddHeaderInfo = false)
         {
             StringList HTMLForm = new StringList();
             if (AddHeaderInfo)
@@ -355,12 +400,13 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
             HTMLForm.SaveFileData(FileName);
         }
 
-        /// <summary>
-        /// Generates the HTML document.
-        /// </summary>
-        /// <param name="FileName">Name of the file.</param>
-        /// <param name="AddHeaderInfo">if set to <c>true</c> [add header information].</param>
-        public StringList GenerateHTMLStringList(string FileName, bool AddHeaderInfo = false)
+		/// <summary>
+		/// Generates the HTML document.
+		/// </summary>
+		/// <param name="FileName">Name of the file.</param>
+		/// <param name="AddHeaderInfo">if set to <c>true</c> [add header information].</param>
+		/// <returns>StringList.</returns>
+		public StringList GenerateHTMLStringList(string FileName, bool AddHeaderInfo = false)
         {
             StringList HTMLForm = new StringList();
             if (AddHeaderInfo)

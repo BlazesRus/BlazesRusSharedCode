@@ -1,43 +1,67 @@
+// ***********************************************************************
+// Assembly         : BlazesCSharpGlobalCode
+// Author           : BlazesRus
+// Created          : 02-09-2018
+//
+// Last Modified By : BlazesRus
+// Last Modified On : 05-21-2018
+// ***********************************************************************
+// <copyright file="VariableData.cs" company="">
+//     Copyright ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 /*	Code Created by James Michael Armstrong (https://github.com/BlazesRus)
     Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
 
 using System.ComponentModel;
 
+/// <summary>
+/// Class VariableData.
+/// Implements the <see cref="System.ComponentModel.INotifyPropertyChanged" />
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
 public class VariableData<T> : INotifyPropertyChanged
     {
-        /// <summary>
-        /// Gets or sets the current value.
-        /// </summary>
-        /// <value>
-        /// The current value selected in the ComboBox
-        /// </value>
-        public T CurrentValue { get; set; }
+	/// <summary>
+	/// Gets or sets the current value.
+	/// </summary>
+	/// <value>The current value selected in the ComboBox</value>
+	public T CurrentValue { get; set; }
 
-        ///// <summary>
-        ///// Prevents a default instance of the <see cref="TrackedListBox"/> class from being created.
-        ///// </summary>
-        //public StringData() { }
+	///// <summary>
+	///// Prevents a default instance of the <see cref="TrackedListBox"/> class from being created.
+	///// </summary>
+	//public StringData() { }
 
-        ///// <summary>
-        ///// Initializes a new instance of the <see cref="VariableData{T}"/> class.
-        ///// </summary>
-        ///// <param name="value">The value.</param>
-        //public VariableData(string value) { CurrentValue = value; }
+	///// <summary>
+	///// Initializes a new instance of the <see cref="VariableData{T}"/> class.
+	///// </summary>
+	///// <param name="value">The value.</param>
+	//public VariableData(string value) { CurrentValue = value; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VariableData{T}"/> class.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        public VariableData(T value) { CurrentValue = value; }
+	/// <summary>
+	/// Initializes a new instance of the <see cref="VariableData{T}" /> class.
+	/// </summary>
+	/// <param name="value">The value.</param>
+	public VariableData(T value) { CurrentValue = value; }
 
-        #region INotifyPropertyChanged Members
+	#region INotifyPropertyChanged Members
 
-        public event PropertyChangedEventHandler PropertyChanged;
+	/// <summary>
+	/// Occurs when a property value changes.
+	/// </summary>
+	public event PropertyChangedEventHandler PropertyChanged;
 
-        /// Need to implement this interface in order to get data binding
-        /// to work properly.
-        private void NotifyPropertyChanged(string propertyName)
+	/// <summary>
+	/// Notifies the property changed.
+	/// </summary>
+	/// <param name="propertyName">Name of the property.</param>
+	/// Need to implement this interface in order to get data binding
+	/// to work properly.
+	private void NotifyPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -45,44 +69,40 @@ public class VariableData<T> : INotifyPropertyChanged
             }
         }
 
-        #endregion INotifyPropertyChanged Members
+	#endregion INotifyPropertyChanged Members
 
-        #region Convert to/from other types
+	#region Convert to/from other types
 
 
-        /// <summary>
-        /// Performs an explicit conversion from <see cref="VariableData{T}"/> to <see cref="T"/>.
-        /// </summary>
-        /// <param name="self">The self.</param>
-        /// <returns>
-        /// The result of the conversion.
-        /// </returns>
-        public static explicit operator T(VariableData<T> self)
+	/// <summary>
+	/// Performs an explicit conversion from <see cref="VariableData{T}" /> to <see cref="T" />.
+	/// </summary>
+	/// <param name="self">The self.</param>
+	/// <returns>The result of the conversion.</returns>
+	public static explicit operator T(VariableData<T> self)
         {
             return self.CurrentValue;
         }
 
 
-        ///// <summary>
-        ///// Performs an explicit conversion from <see cref="System.String"/> to <see cref="VariableData{T}"/>.
-        ///// </summary>
-        ///// <param name="self">The self.</param>
-        ///// <returns>
-        ///// The result of the conversion.
-        ///// </returns>
-        //public static explicit operator VariableData<T>(string self)
-        //{
-        //    return new VariableData<T>(self);
-        //}
+	///// <summary>
+	///// Performs an explicit conversion from <see cref="System.String"/> to <see cref="VariableData{T}"/>.
+	///// </summary>
+	///// <param name="self">The self.</param>
+	///// <returns>
+	///// The result of the conversion.
+	///// </returns>
+	//public static explicit operator VariableData<T>(string self)
+	//{
+	//    return new VariableData<T>(self);
+	//}
 
-        /// <summary>
-        /// Performs an explicit conversion from <see cref="T"/> to <see cref="VariableData{T}"/>.
-        /// </summary>
-        /// <param name="self">The self.</param>
-        /// <returns>
-        /// The result of the conversion.
-        /// </returns>
-        public static explicit operator VariableData<T>(T self)
+	/// <summary>
+	/// Performs an explicit conversion from <see cref="T" /> to <see cref="VariableData{T}" />.
+	/// </summary>
+	/// <param name="self">The self.</param>
+	/// <returns>The result of the conversion.</returns>
+	public static explicit operator VariableData<T>(T self)
         {
             return new VariableData<T>(self);
         }

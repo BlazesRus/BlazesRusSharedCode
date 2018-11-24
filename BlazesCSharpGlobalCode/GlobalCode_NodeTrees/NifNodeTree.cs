@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : BlazesCSharpGlobalCode
+// Author           : BlazesRus
+// Created          : 07-17-2018
+//
+// Last Modified By : BlazesRus
+// Last Modified On : 07-19-2018
+// ***********************************************************************
+// <copyright file="NifNodeTree.cs" company="">
+//     Copyright ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +19,24 @@ using System.Threading.Tasks;
 
 namespace CSharpGlobalCode.GlobalCode_NodeTrees
 {
-    public class NifNode
+	/// <summary>
+	/// Class NifNode.
+	/// </summary>
+	public class NifNode
     {
-        public List<NifNode> NodeLists;
+		/// <summary>
+		/// The node lists
+		/// </summary>
+		public List<NifNode> NodeLists;
     }
-    public class NifNodeTree
+	/// <summary>
+	/// Class NifNodeTree.
+	/// </summary>
+	public class NifNodeTree
     {
-        public List<NifNode> RootNodes;
+		/// <summary>
+		/// The root nodes
+		/// </summary>
+		public List<NifNode> RootNodes;
     }
 }

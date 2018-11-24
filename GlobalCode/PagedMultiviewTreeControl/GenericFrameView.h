@@ -20,6 +20,17 @@ protected: // create from serialization only
 		// TODO: add construction code here
 		ViewName = "";
 	}
+	GenericFrameView(
+#ifdef UNICODE
+		LPCWSTR viewName
+#else
+		LPCSTR viewName
+#endif
+	)
+	{
+		// TODO: add construction code here
+		ViewName = viewName;
+	}
 	//DECLARE_DYNCREATE(GenericFrameView)
 
 // Attributes

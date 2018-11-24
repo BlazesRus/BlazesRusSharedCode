@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : BlazesCSharpGlobalCode
+// Author           : BlazesRus
+// Created          : 07-14-2018
+//
+// Last Modified By : BlazesRus
+// Last Modified On : 07-19-2018
+// ***********************************************************************
+// <copyright file="XMLOption.cs" company="">
+//     Copyright ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +21,32 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
 {
     public class XMLOption
     {
-        public string OptionName = "";
-        //Value Stored inside Option
-        //[[NULL--VALUE]] or "None" = No Value Stored
-        //"Undetermined" or "" = Undefined (Default)
-        public string ValueType = "";
-        public string ValueString = "";
-        //Value not Stored in Arg within String inside Parenthesis
-        public bool ValueNotInParenthesis = false;
-        public XMLOption(string Name, string Value)
+		/// <summary>
+		/// The option name
+		/// </summary>
+		public string OptionName = "";
+		//Value Stored inside Option
+		//[[NULL--VALUE]] or "None" = No Value Stored
+		//"Undetermined" or "" = Undefined (Default)
+		/// <summary>
+		/// The value type
+		/// </summary>
+		public string ValueType = "";
+		/// <summary>
+		/// The value string
+		/// </summary>
+		public string ValueString = "";
+		//Value not Stored in Arg within String inside Parenthesis
+		/// <summary>
+		/// The value not in parenthesis
+		/// </summary>
+		public bool ValueNotInParenthesis = false;
+		/// <summary>
+		/// Initializes a new instance of the <see cref="XMLOption"/> class.
+		/// </summary>
+		/// <param name="Name">The name.</param>
+		/// <param name="Value">The value.</param>
+		public XMLOption(string Name, string Value)
         {
             OptionName = Name;
             ValueString = Value;
@@ -30,13 +60,29 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
                 ValueType = "Undetermined";
             }
         }
-        public XMLOption() { }
-        ~XMLOption() { }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="XMLOption"/> class.
+		/// </summary>
+		public XMLOption() { }
+		/// <summary>
+		/// Finalizes an instance of the <see cref="XMLOption"/> class.
+		/// </summary>
+		~XMLOption() { }
     }
 
-    public class XMLOptionList : List<XMLOption>
+	/// <summary>
+	/// Class XMLOptionList.
+	/// Implements the <see cref="System.Collections.Generic.List{CSharpGlobalCode.GlobalCode_NodeTrees.XMLOption}" />
+	/// </summary>
+	/// <seealso cref="System.Collections.Generic.List{CSharpGlobalCode.GlobalCode_NodeTrees.XMLOption}" />
+	public class XMLOptionList : List<XMLOption>
     {
-        public bool HasOption(string OptionNameTemp)
+		/// <summary>
+		/// Determines whether the specified option name temporary has option.
+		/// </summary>
+		/// <param name="OptionNameTemp">The option name temporary.</param>
+		/// <returns><c>true</c> if the specified option name temporary has option; otherwise, <c>false</c>.</returns>
+		public bool HasOption(string OptionNameTemp)
         {
             bool OptionFound = false;
             int ListSize = this.Count;
@@ -52,7 +98,12 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
             return OptionFound;
         }
 
-        public string GetOptionValue(string OptionNameTemp)
+		/// <summary>
+		/// Gets the option value.
+		/// </summary>
+		/// <param name="OptionNameTemp">The option name temporary.</param>
+		/// <returns>System.String.</returns>
+		public string GetOptionValue(string OptionNameTemp)
         {
             bool OptionFound = false;
             string OptionValue = "";
@@ -68,7 +119,12 @@ namespace CSharpGlobalCode.GlobalCode_NodeTrees
             }
             return OptionValue;
         }
-        public void AddOption(string NameTemp, string ValueTemp)
+		/// <summary>
+		/// Adds the option.
+		/// </summary>
+		/// <param name="NameTemp">The name temporary.</param>
+		/// <param name="ValueTemp">The value temporary.</param>
+		public void AddOption(string NameTemp, string ValueTemp)
         {
             Add(new XMLOption(NameTemp, ValueTemp));
         }

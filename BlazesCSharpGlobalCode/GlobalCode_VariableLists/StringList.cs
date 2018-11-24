@@ -1,62 +1,95 @@
-﻿using System.Collections.Generic;
+﻿// ***********************************************************************
+// Assembly         : BlazesCSharpGlobalCode
+// Author           : BlazesRus
+// Created          : 07-14-2018
+//
+// Last Modified By : BlazesRus
+// Last Modified On : 07-25-2018
+// ***********************************************************************
+// <copyright file="StringList.cs" company="">
+//     Copyright ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
 namespace CSharpGlobalCode.GlobalCode_VariableLists
 {
-    public class StringList : List<string>
+	/// <summary>
+	/// Class StringList.
+	/// Implements the <see cref="System.Collections.Generic.List{System.String}" />
+	/// </summary>
+	/// <seealso cref="System.Collections.Generic.List{System.String}" />
+	public class StringList : List<string>
     {
-        //************************************
-        // Method:    AddData
-        // FullName:  StringList::AddData
-        // Access:    public
-        // Returns:   int
-        // Qualifier:
-        //************************************
-        public int AddData()
+		//************************************
+		// Method:    AddData
+		// FullName:  StringList::AddData
+		// Access:    public
+		// Returns:   int
+		// Qualifier:
+		//************************************
+		/// <summary>
+		/// Adds the data.
+		/// </summary>
+		/// <returns>System.Int32.</returns>
+		public int AddData()
         {
             int Index = Count;
             Add("");
             return Index;
         }
 
-        //************************************
-        // Method:    AddEntry
-        // FullName:  StringList::AddEntry
-        // Access:    public
-        // Returns:   void
-        // Qualifier:
-        //Adds new entry into list at index 0(Used mainly for InfiniteScopePosInt)
-        //************************************
-        public void AddEntry()
+		//************************************
+		// Method:    AddEntry
+		// FullName:  StringList::AddEntry
+		// Access:    public
+		// Returns:   void
+		// Qualifier:
+		//Adds new entry into list at index 0(Used mainly for InfiniteScopePosInt)
+		//************************************
+		/// <summary>
+		/// Adds the entry.
+		/// </summary>
+		public void AddEntry()
         {
             this.Add("");
         }
 
-        //************************************
-        // Method:    EditLastEntry
-        // FullName:  StringList::EditLastEntry
-        // Access:    public
-        // Returns:   void
-        // Qualifier:
-        // Parameter: int TempValue
-        // Edits last value in List(Used mainly for InfiniteScopePosInt)
-        //************************************
-        public void EditLastEntry(string TempValue)
+		//************************************
+		// Method:    EditLastEntry
+		// FullName:  StringList::EditLastEntry
+		// Access:    public
+		// Returns:   void
+		// Qualifier:
+		// Parameter: int TempValue
+		// Edits last value in List(Used mainly for InfiniteScopePosInt)
+		//************************************
+		/// <summary>
+		/// Edits the last entry.
+		/// </summary>
+		/// <param name="TempValue">The temporary value.</param>
+		public void EditLastEntry(string TempValue)
         {
             int LastIndex = Count - 1;
             this[LastIndex] = TempValue;
         }
 
-        //************************************
-        // Generates String with format Index:0_Index:1...Index:5
-        // Method:    GenerateAsString
-        // FullName:  StringList::GenerateAsString
-        // Access:    public
-        // Returns:   string
-        // Qualifier:
-        //************************************
-        public string GenerateAsString()
+		//************************************
+		// Generates String with format Index:0_Index:1...Index:5
+		// Method:    GenerateAsString
+		// FullName:  StringList::GenerateAsString
+		// Access:    public
+		// Returns:   string
+		// Qualifier:
+		//************************************
+		/// <summary>
+		/// Generates as string.
+		/// </summary>
+		/// <returns>System.String.</returns>
+		public string GenerateAsString()
         {
             string ConvertedString = "";
             int NumberLines = Count;
@@ -71,7 +104,11 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             return ConvertedString;
         }
 
-        public void ConvertStringToList(string Content)
+		/// <summary>
+		/// Converts the string to list.
+		/// </summary>
+		/// <param name="Content">The content.</param>
+		public void ConvertStringToList(string Content)
         {
             if (Count != 0)
             {
@@ -107,21 +144,37 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             }
         }
 
-        public StringList(string Value)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StringList"/> class.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		public StringList(string Value)
         {
             ConvertStringToList(Value);
         }
 
-        public static explicit operator StringList(string Value)
+		/// <summary>
+		/// Performs an explicit conversion from <see cref="System.String"/> to <see cref="StringList"/>.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns>The result of the conversion.</returns>
+		public static explicit operator StringList(string Value)
         {
             return new StringList(Value);
         }
 
-        public StringList()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StringList"/> class.
+		/// </summary>
+		public StringList()
         {
         }
 
-        public void SaveFileData(string FileName)
+		/// <summary>
+		/// Saves the file data.
+		/// </summary>
+		/// <param name="FileName">Name of the file.</param>
+		public void SaveFileData(string FileName)
         {
             byte[] encodedText;
             int NumberLines = Count;
@@ -148,7 +201,12 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             };
         }
 
-        public async System.Threading.Tasks.Task SaveFileDataAsync(string FileName)
+		/// <summary>
+		/// save file data as an asynchronous operation.
+		/// </summary>
+		/// <param name="FileName">Name of the file.</param>
+		/// <returns>System.Threading.Tasks.Task.</returns>
+		public async System.Threading.Tasks.Task SaveFileDataAsync(string FileName)
         {
             byte[] encodedText;
             int NumberLines = Count;
@@ -176,11 +234,11 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             };
         }
 
-        /// <summary>
-        /// Loads the all file data into StringList 
-        /// </summary>
-        /// <param name="FileName">Name of the file.</param>
-        public void LoadFileData(string FileName)
+		/// <summary>
+		/// Loads the all file data into StringList
+		/// </summary>
+		/// <param name="FileName">Name of the file.</param>
+		public void LoadFileData(string FileName)
         {
             this.Clear();
             /// <summary>
@@ -201,12 +259,12 @@ namespace CSharpGlobalCode.GlobalCode_VariableLists
             }
         }
 
-        /// <summary>
-        /// Loads the file data with optional Comment Exclusion later
-        /// </summary>
-        /// <param name="FileName">Name of the file.</param>
-        /// <param name="ConfigSetting">The configuration setting.</param>
-        public void LoadFileDataV2(string FileName, byte ConfigSetting/*=0*/)
+		/// <summary>
+		/// Loads the file data with optional Comment Exclusion later
+		/// </summary>
+		/// <param name="FileName">Name of the file.</param>
+		/// <param name="ConfigSetting">The configuration setting.</param>
+		public void LoadFileDataV2(string FileName, byte ConfigSetting/*=0*/)
         {
             this.Clear();
             //char LineChar;

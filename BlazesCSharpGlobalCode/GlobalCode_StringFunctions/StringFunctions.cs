@@ -1,34 +1,68 @@
-﻿namespace CSharpGlobalCode.GlobalCode_StringFunctions
+﻿// ***********************************************************************
+// Assembly         : BlazesCSharpGlobalCode
+// Author           : BlazesRus
+// Created          : 02-09-2018
+//
+// Last Modified By : BlazesRus
+// Last Modified On : 07-19-2018
+// ***********************************************************************
+// <copyright file="StringFunctions.cs" company="">
+//     Copyright ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+namespace CSharpGlobalCode.GlobalCode_StringFunctions
 {
-    internal class StringFunctions
+	/// <summary>
+	/// Class StringFunctions.
+	/// </summary>
+	internal class StringFunctions
     {
-        /// <summary>
-        /// Adds the string in front.
-        /// </summary>
-        /// <param name="ValueAdded">The value added.</param>
-        /// <param name="TargetString">The target string.</param>
-        /// <returns></returns>
-        public static string AddStringInFront(string ValueAdded, string TargetString)
+		/// <summary>
+		/// Adds the string in front.
+		/// </summary>
+		/// <param name="ValueAdded">The value added.</param>
+		/// <param name="TargetString">The target string.</param>
+		/// <returns></returns>
+		/// <summary>
+		/// Adds the string in front.
+		/// </summary>
+		/// <param name="ValueAdded">The value added.</param>
+		/// <param name="TargetString">The target string.</param>
+		/// <returns>System.String.</returns>
+		public static string AddStringInFront(string ValueAdded, string TargetString)
         {
             string TempString;
             TempString = ValueAdded + TargetString;
             return TempString;
         }
 
-        public static string AddStringInFront(char ValueAdded, string TargetString)
+		/// <summary>
+		/// Adds the string in front.
+		/// </summary>
+		/// <param name="ValueAdded">The value added.</param>
+		/// <param name="TargetString">The target string.</param>
+		/// <returns>System.String.</returns>
+		public static string AddStringInFront(char ValueAdded, string TargetString)
         {
             string TempString;
             TempString = ValueAdded + TargetString;
             return TempString;
         }
 
-        /// <summary>
-        /// Check if LineString Contains SearchedString
-        /// </summary>
-        /// <param name="LineString">The line string.</param>
-        /// <param name="SearchedString">The searched string.</param>
-        /// <returns></returns>
-        public static bool LineStringContains(string LineString, string SearchedString)
+		/// <summary>
+		/// Check if LineString Contains SearchedString
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <param name="SearchedString">The searched string.</param>
+		/// <returns></returns>
+		/// <summary>
+		/// Lines the string contains.
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <param name="SearchedString">The searched string.</param>
+		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+		public static bool LineStringContains(string LineString, string SearchedString)
         {
             bool Confirmed = false;
             if ((LineString.CompareTo(SearchedString) == 0 || LineString.CompareTo(SearchedString) >= 1))
@@ -38,12 +72,17 @@
             return Confirmed;
         }
 
-        /// <summary>
-        /// Use to keep tabs aligned on parameters(tab is equal to 4 spaces)
-        /// </summary>
-        /// <param name="LineString">The line string.</param>
-        /// <returns></returns>
-        public static string OutputLineStringTabs(string LineString)
+		/// <summary>
+		/// Use to keep tabs aligned on parameters(tab is equal to 4 spaces)
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <returns></returns>
+		/// <summary>
+		/// Outputs the line string tabs.
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <returns>System.String.</returns>
+		public static string OutputLineStringTabs(string LineString)
         {
             string TempString = "";
             int StringLength = LineString.Length;
@@ -64,16 +103,21 @@
             return TempString;
         }
 
-        //************************************
-        //Create TabSpace string based on TabSpace amount
-        // Method:    CreateTabSpace
-        // FullName:  StringFunctions::CreateTabSpace
-        // Access:    public static
-        // Returns:   string
-        // Qualifier:
-        // Parameter: dynamic temp
-        //************************************
-        public static string CreateTabSpace(int temp)
+		//************************************
+		//Create TabSpace string based on TabSpace amount
+		// Method:    CreateTabSpace
+		// FullName:  StringFunctions::CreateTabSpace
+		// Access:    public static
+		// Returns:   string
+		// Qualifier:
+		// Parameter: dynamic temp
+		//************************************
+		/// <summary>
+		/// Creates the tab space.
+		/// </summary>
+		/// <param name="temp">The temporary.</param>
+		/// <returns>System.String.</returns>
+		public static string CreateTabSpace(int temp)
         {
             string TempString = "";
             while (temp > 0)
@@ -84,16 +128,21 @@
             return TempString;
         }
 
-        //************************************
-        // Use to keep tabs aligned on parameters
-        // Method:    OutputQuadVariableLines
-        // FullName:  StringFunctions::OutputQuadVariableLines
-        // Access:    public static
-        // Returns:   string
-        // Qualifier:
-        // Parameter: string LineString
-        //************************************
-        public static string OutputQuadVariableLines(string LineString)
+		//************************************
+		// Use to keep tabs aligned on parameters
+		// Method:    OutputQuadVariableLines
+		// FullName:  StringFunctions::OutputQuadVariableLines
+		// Access:    public static
+		// Returns:   string
+		// Qualifier:
+		// Parameter: string LineString
+		//************************************
+		/// <summary>
+		/// Outputs the quad variable lines.
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <returns>System.String.</returns>
+		public static string OutputQuadVariableLines(string LineString)
         {
             string TempString = "";
             int StringLength = LineString.Length;
@@ -118,16 +167,21 @@
             return TempString;
         }
 
-        //************************************
-        // Returns the filename from a full file-path
-        // Method:    SeparateFilePathIntoFileName
-        // FullName:  StringFunctions::SeparateFilePathIntoFileName
-        // Access:    public static
-        // Returns:   string
-        // Qualifier:
-        // Parameter: string TempString
-        //************************************
-        public static string SeparateFilePathIntoFileName(string TempString)
+		//************************************
+		// Returns the filename from a full file-path
+		// Method:    SeparateFilePathIntoFileName
+		// FullName:  StringFunctions::SeparateFilePathIntoFileName
+		// Access:    public static
+		// Returns:   string
+		// Qualifier:
+		// Parameter: string TempString
+		//************************************
+		/// <summary>
+		/// Separates the name of the file path into file.
+		/// </summary>
+		/// <param name="TempString">The temporary string.</param>
+		/// <returns>System.String.</returns>
+		public static string SeparateFilePathIntoFileName(string TempString)
         {
             string FileName = "";
             int StringLength = TempString.Length;
@@ -147,27 +201,38 @@
             return FileName;
         }
 
-        //************************************
-        // Method:    CreateLinkedHTMLString
-        // FullName:  StringFunctions::CreateLinkedHTMLString
-        // Access:    public static
-        // Returns:   string
-        // Qualifier:
-        // Parameter: string LineString
-        // Parameter: string TargetObject
-        //************************************
-        public static string CreateLinkedHTMLString(string LineString, string TargetObject) => "<a href=" + TargetObject + "><code>" + LineString + "</code></a>";
+		//************************************
+		// Method:    CreateLinkedHTMLString
+		// FullName:  StringFunctions::CreateLinkedHTMLString
+		// Access:    public static
+		// Returns:   string
+		// Qualifier:
+		// Parameter: string LineString
+		// Parameter: string TargetObject
+		//************************************
+		/// <summary>
+		/// Creates the linked HTML string.
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <param name="TargetObject">The target object.</param>
+		/// <returns>System.String.</returns>
+		public static string CreateLinkedHTMLString(string LineString, string TargetObject) => "<a href=" + TargetObject + "><code>" + LineString + "</code></a>";
 
-        //************************************
-        //Remove whitespace from start of line
-        // Method:    RemoveStringTabs
-        // FullName:  StringFunctions::RemoveStringTabs
-        // Access:    public static
-        // Returns:   string
-        // Qualifier:
-        // Parameter: string LineString
-        //************************************
-        public static string RemoveStringTabs(string LineString)
+		//************************************
+		//Remove whitespace from start of line
+		// Method:    RemoveStringTabs
+		// FullName:  StringFunctions::RemoveStringTabs
+		// Access:    public static
+		// Returns:   string
+		// Qualifier:
+		// Parameter: string LineString
+		//************************************
+		/// <summary>
+		/// Removes the string tabs.
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <returns>System.String.</returns>
+		public static string RemoveStringTabs(string LineString)
         {
             string TempString = "";
             int StringLength = LineString.Length;
@@ -188,17 +253,23 @@
             return TempString;
         }
 
-        //************************************
-        // Examines the number of tabs/(equivalent of tabs in spaces) of whitespace before text (TabEquivalent=Amount of spaces is equal to tab)
-        // Method:    ExamineTabSpace
-        // FullName:  StringFunctions::ExamineTabSpace
-        // Access:    public static
-        // Returns:   dynamic
-        // Qualifier:
-        // Parameter: string LineString
-        // Parameter: dynamic TabEquivalent
-        //************************************
-        public static int ExamineTabSpace(string LineString, dynamic TabEquivalent)
+		//************************************
+		// Examines the number of tabs/(equivalent of tabs in spaces) of whitespace before text (TabEquivalent=Amount of spaces is equal to tab)
+		// Method:    ExamineTabSpace
+		// FullName:  StringFunctions::ExamineTabSpace
+		// Access:    public static
+		// Returns:   dynamic
+		// Qualifier:
+		// Parameter: string LineString
+		// Parameter: dynamic TabEquivalent
+		//************************************
+		/// <summary>
+		/// Examines the tab space.
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <param name="TabEquivalent">The tab equivalent.</param>
+		/// <returns>System.Int32.</returns>
+		public static int ExamineTabSpace(string LineString, dynamic TabEquivalent)
         {
             int AmountOfTabs = 0;
             int TotalSpaces = 0;
@@ -233,24 +304,36 @@
             return AmountOfTabs;
         }
 
-        /// <summary>
-        /// Examines the number of tabs / (equivalent of tabs being 4 spaces) of whitespace before text (Rounds up partial amount of spaces leftover as being equivalent as another tab)
-        /// </summary>
-        /// <param name="LineString">The line string.</param>
-        /// <returns></returns>
-        public static int ExamineTabSpace(string LineString)
+		/// <summary>
+		/// Examines the number of tabs / (equivalent of tabs being 4 spaces) of whitespace before text (Rounds up partial amount of spaces leftover as being equivalent as another tab)
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <returns></returns>
+		/// <summary>
+		/// Examines the tab space.
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <returns>System.Int32.</returns>
+		public static int ExamineTabSpace(string LineString)
         {
             return ExamineTabSpace(LineString, 4);
         }
 
-        /// <summary>
-        /// Removes Specific amount of whitespace from front of LineString(AmountOfWhitespaceRemoval=How many tabs worth of whitespace to remove)
-        /// </summary>
-        /// <param name="LineString">The line string.</param>
-        /// <param name="TabEquivalent">The tab equivalent.</param>
-        /// <param name="AmountOfWhitespaceRemoval">The amount of whitespace removal.</param>
-        /// <returns></returns>
-        public static string RemoveAmountOfTabSpace(string LineString, int TabEquivalent, int AmountOfWhitespaceRemoval)
+		/// <summary>
+		/// Removes Specific amount of whitespace from front of LineString(AmountOfWhitespaceRemoval=How many tabs worth of whitespace to remove)
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <param name="TabEquivalent">The tab equivalent.</param>
+		/// <param name="AmountOfWhitespaceRemoval">The amount of whitespace removal.</param>
+		/// <returns></returns>
+		/// <summary>
+		/// Removes the amount of tab space.
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <param name="TabEquivalent">The tab equivalent.</param>
+		/// <param name="AmountOfWhitespaceRemoval">The amount of whitespace removal.</param>
+		/// <returns>System.String.</returns>
+		public static string RemoveAmountOfTabSpace(string LineString, int TabEquivalent, int AmountOfWhitespaceRemoval)
         {
             string TempString = "";
             int AmountOfTabs = 0;
@@ -297,21 +380,21 @@
             return TempString;
         }
 
-        //************************************
-        // Removes all XML/HTML type tags (Things like<XML Data>) from LineString
-        // Method:    RemoveXMLTags
-        // FullName:  StringFunctions::RemoveXMLTags
-        // Access:    public static
-        // Returns:   string
-        // Qualifier:
-        // Parameter: string LineString
-        //************************************
-        /// <summary>
-        /// Removes all XML/HTML type tags (Things like<XML Data>) from LineString
-        /// </summary>
-        /// <param name="LineString">The line string.</param>
-        /// <returns></returns>
-        public static string RemoveXMLTags(string LineString)
+		//************************************
+		// Removes all XML/HTML type tags (Things like<XML Data>) from LineString
+		// Method:    RemoveXMLTags
+		// FullName:  StringFunctions::RemoveXMLTags
+		// Access:    public static
+		// Returns:   string
+		// Qualifier:
+		// Parameter: string LineString
+		//************************************
+		/// <summary>
+		/// Removes the XML tags.
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <returns>System.String.</returns>
+		public static string RemoveXMLTags(string LineString)
         {
             int StringLength = LineString.Length;
             string TempString = "";
@@ -339,21 +422,21 @@
             return TempString;
         }
 
-        //************************************
-        // Similar to RemoveXMLTags but only returns data after first tag(only gives data for first tag contents)
-        // Method:    ReturnXMLTagContent
-        // FullName:  StringFunctions::ReturnXMLTagContent
-        // Access:    public static
-        // Returns:   string
-        // Qualifier:
-        // Parameter: string LineString
-        //************************************
-        /// <summary>
-        /// Returns the content of the XML tag.
-        /// </summary>
-        /// <param name="LineString">The line string.</param>
-        /// <returns></returns>
-        public static string ReturnXMLTagContent(string LineString)
+		//************************************
+		// Similar to RemoveXMLTags but only returns data after first tag(only gives data for first tag contents)
+		// Method:    ReturnXMLTagContent
+		// FullName:  StringFunctions::ReturnXMLTagContent
+		// Access:    public static
+		// Returns:   string
+		// Qualifier:
+		// Parameter: string LineString
+		//************************************
+		/// <summary>
+		/// Returns the content of the XML tag.
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <returns>System.String.</returns>
+		public static string ReturnXMLTagContent(string LineString)
         {
             int StringLength = LineString.Length;
             string TempString = "";
@@ -390,14 +473,14 @@
             return TempString;
         }
 
-        /// <summary>
-        /// Replace first matching of SearchString inside LineString with ReplacementString (Functions similar to Java version of same function)
-        /// </summary>
-        /// <param name="LineString">The line string.</param>
-        /// <param name="SearchString">The search string.</param>
-        /// <param name="ReplacementString">The replacement string.</param>
-        /// <returns></returns>
-        public static string ReplaceFirst(string LineString, string SearchString, string ReplacementString)
+		/// <summary>
+		/// Replace first matching of SearchString inside LineString with ReplacementString (Functions similar to Java version of same function)
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <param name="SearchString">The search string.</param>
+		/// <param name="ReplacementString">The replacement string.</param>
+		/// <returns>System.String.</returns>
+		public static string ReplaceFirst(string LineString, string SearchString, string ReplacementString)
         {
             if (SearchString != "")
             {
@@ -457,14 +540,14 @@
             }
         }
 
-        /// <summary>
-        /// Replace all matching of SearchString inside LineString with ReplacementString (Functions similar to Java version of same function)
-        /// </summary>
-        /// <param name="LineString">The line string.</param>
-        /// <param name="SearchString">The search string.</param>
-        /// <param name="ReplacementString">The replacement string.</param>
-        /// <returns></returns>
-        public static string ReplaceAll(string LineString, string SearchString, string ReplacementString)
+		/// <summary>
+		/// Replace all matching of SearchString inside LineString with ReplacementString (Functions similar to Java version of same function)
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <param name="SearchString">The search string.</param>
+		/// <param name="ReplacementString">The replacement string.</param>
+		/// <returns>System.String.</returns>
+		public static string ReplaceAll(string LineString, string SearchString, string ReplacementString)
         {
             if (SearchString != "")
             {
@@ -514,12 +597,12 @@
             }
         }
 
-        /// <summary>
-        /// Return ParamName of first <hkparam name="ParamName"> tag; if no name found returns ""
-        /// </summary>
-        /// <param name="LineString">The line string.</param>
-        /// <returns></returns>
-        public static string ReturnParamName(string LineString)
+		/// <summary>
+		/// Returns the name of the parameter.
+		/// </summary>
+		/// <param name="LineString">The line string.</param>
+		/// <returns>System.String.</returns>
+		public static string ReturnParamName(string LineString)
         {
             string SearchString = "<hkparam name=\"";
             //Temporary convert of char to string
@@ -584,107 +667,107 @@
             return ParamName;
         }
 
-        ////************************************
-        //// Converts Pointer into String Address(Code from http://www.cplusplus.com/forum/general/8597/)
-        //// Method:    ConvertPointerToStringAddress
-        //// FullName:  StringFunctions::ConvertPointerToStringAddress
-        //// Access:    public
-        //// Returns:   string
-        //// Qualifier:
-        //// Parameter: const T * obj
-        ////************************************
-        //template <typename T>
-        //static string ConvertPointerToStringAddress(const T* obj);
-        ////************************************
-        //// Method:    ConvertPointerToStringAddressV2
-        //// FullName:  StringFunctions::ConvertPointerToStringAddressV2
-        //// Access:    public
-        //// Returns:   string
-        //// Qualifier:
-        //// Parameter: T * obj
-        ////************************************
-        //template <typename T>
-        //static string ConvertPointerToStringAddressV2(T* obj);
+		////************************************
+		//// Converts Pointer into String Address(Code from http://www.cplusplus.com/forum/general/8597/)
+		//// Method:    ConvertPointerToStringAddress
+		//// FullName:  StringFunctions::ConvertPointerToStringAddress
+		//// Access:    public
+		//// Returns:   string
+		//// Qualifier:
+		//// Parameter: const T * obj
+		////************************************
+		//template <typename T>
+		//static string ConvertPointerToStringAddress(const T* obj);
+		////************************************
+		//// Method:    ConvertPointerToStringAddressV2
+		//// FullName:  StringFunctions::ConvertPointerToStringAddressV2
+		//// Access:    public
+		//// Returns:   string
+		//// Qualifier:
+		//// Parameter: T * obj
+		////************************************
+		//template <typename T>
+		//static string ConvertPointerToStringAddressV2(T* obj);
 
-    //	/// <summary>
-    //	/// String to char array code from http://stackoverflow.com/questions/13294067/how-to-convert-string-to-char-array-in-c
-    //	/// Directory checking code from http://stackoverflow.com/questions/18100097/portable-way-to-check-if-directory-exists-windows-linux-c
-    //	/// </summary>
-    //	/// <param name="Directory">The directory.</param>
-    //	/// <param name="Verbose">if set to <c>true</c> [verbose].</param>
-    //	/// <returns></returns>
-    //	public static string CheckAndCorrectDirectoryLocation(string Directory, bool Verbose = false)
-    //	{
-    //		bool DirectoryExists;
-    //		struct stat info;
-    //		char CharStringBuffer[1024];
-    //		strncpy_s(CharStringBuffer, Directory.c_str(), sizeof(CharStringBuffer));
-    //		CharStringBuffer[sizeof(CharStringBuffer) - 1] = 0;
-    //		if(stat(CharStringBuffer, &info) != 0)
-    //		{
-    //			if(Verbose) { printf("cannot access %s\n", CharStringBuffer);
-    //		}
-    //		DirectoryExists = false;
-    //		}
-    //		else if(info.st_mode & S_IFDIR)
-    //		{
-    //			if(Verbose) { printf("%s is a directory\n", CharStringBuffer); }
-    //			DirectoryExists = true;
-    //		}
-    //		else
-    //		{
-    //			if(Verbose) { printf("%s is no directory\n", CharStringBuffer); }
-    //			DirectoryExists = false;
-    //		}
-    //		if(DirectoryExists==false)
-    //		{
-    //		//Create code to Attempt Auto-fix format of directory later
-    //		}
-    //	return Directory;
-    //}
+		//	/// <summary>
+		//	/// String to char array code from http://stackoverflow.com/questions/13294067/how-to-convert-string-to-char-array-in-c
+		//	/// Directory checking code from http://stackoverflow.com/questions/18100097/portable-way-to-check-if-directory-exists-windows-linux-c
+		//	/// </summary>
+		//	/// <param name="Directory">The directory.</param>
+		//	/// <param name="Verbose">if set to <c>true</c> [verbose].</param>
+		//	/// <returns></returns>
+		//	public static string CheckAndCorrectDirectoryLocation(string Directory, bool Verbose = false)
+		//	{
+		//		bool DirectoryExists;
+		//		struct stat info;
+		//		char CharStringBuffer[1024];
+		//		strncpy_s(CharStringBuffer, Directory.c_str(), sizeof(CharStringBuffer));
+		//		CharStringBuffer[sizeof(CharStringBuffer) - 1] = 0;
+		//		if(stat(CharStringBuffer, &info) != 0)
+		//		{
+		//			if(Verbose) { printf("cannot access %s\n", CharStringBuffer);
+		//		}
+		//		DirectoryExists = false;
+		//		}
+		//		else if(info.st_mode & S_IFDIR)
+		//		{
+		//			if(Verbose) { printf("%s is a directory\n", CharStringBuffer); }
+		//			DirectoryExists = true;
+		//		}
+		//		else
+		//		{
+		//			if(Verbose) { printf("%s is no directory\n", CharStringBuffer); }
+		//			DirectoryExists = false;
+		//		}
+		//		if(DirectoryExists==false)
+		//		{
+		//		//Create code to Attempt Auto-fix format of directory later
+		//		}
+		//	return Directory;
+		//}
 
 
-    //public static string CheckAndCorrectFilepath(string FileName, bool Verbose = false)
-    //{
-    //	bool DirectoryExists=false;
-    //	bool IsFilePath=false;
-    //	struct stat info;
-    //	char CharStringBuffer[1024];
-    //	strncpy_s(CharStringBuffer, FileName.c_str(), sizeof(CharStringBuffer));
-    //	CharStringBuffer[sizeof(CharStringBuffer) - 1] = 0;
-    //	if(stat(CharStringBuffer, &info) != 0)
-    //	{
-    //		if(Verbose) { printf("cannot access %s\n", CharStringBuffer); }
-    //		DirectoryExists = false;
-    //	}
-    //	else if(stat(CharStringBuffer, &info) == 0)
-    //	{
-    //		if(Verbose) { printf("%s is a filepath\n", CharStringBuffer); }
-    //		IsFilePath = true;
-    //	}
-    //	else if(info.st_mode & S_IFDIR)
-    //	{
-    //		if(Verbose) { printf("%s is a directory\n", CharStringBuffer); }
-    //		DirectoryExists = true;
-    //	}
-    //	else
-    //	{
-    //		if(Verbose) { printf("%s is no directory\n", CharStringBuffer); }
-    //		DirectoryExists = false;
-    //	}
-    //	if(IsFilePath==false&&DirectoryExists==false)
-    //	{
-    //		//Create code to attempt Auto-Fix filepath format later
-    //	}
-    //	return FileName;
-    //}
+		//public static string CheckAndCorrectFilepath(string FileName, bool Verbose = false)
+		//{
+		//	bool DirectoryExists=false;
+		//	bool IsFilePath=false;
+		//	struct stat info;
+		//	char CharStringBuffer[1024];
+		//	strncpy_s(CharStringBuffer, FileName.c_str(), sizeof(CharStringBuffer));
+		//	CharStringBuffer[sizeof(CharStringBuffer) - 1] = 0;
+		//	if(stat(CharStringBuffer, &info) != 0)
+		//	{
+		//		if(Verbose) { printf("cannot access %s\n", CharStringBuffer); }
+		//		DirectoryExists = false;
+		//	}
+		//	else if(stat(CharStringBuffer, &info) == 0)
+		//	{
+		//		if(Verbose) { printf("%s is a filepath\n", CharStringBuffer); }
+		//		IsFilePath = true;
+		//	}
+		//	else if(info.st_mode & S_IFDIR)
+		//	{
+		//		if(Verbose) { printf("%s is a directory\n", CharStringBuffer); }
+		//		DirectoryExists = true;
+		//	}
+		//	else
+		//	{
+		//		if(Verbose) { printf("%s is no directory\n", CharStringBuffer); }
+		//		DirectoryExists = false;
+		//	}
+		//	if(IsFilePath==false&&DirectoryExists==false)
+		//	{
+		//		//Create code to attempt Auto-Fix filepath format later
+		//	}
+		//	return FileName;
+		//}
 
-        /// <summary>
-        /// Reads String to predict ContentType (Refer to TagNodeTreeTemplate for ContentType values)
-        /// </summary>
-        /// <param name="Content">The content.</param>
-        /// <returns></returns>
-        public static byte FindContentType(string Content)
+		/// <summary>
+		/// Reads String to predict ContentType (Refer to TagNodeTreeTemplate for ContentType values)
+		/// </summary>
+		/// <param name="Content">The content.</param>
+		/// <returns>System.Byte.</returns>
+		public static byte FindContentType(string Content)
         {
             byte DetectedContentType = 0;
             //0 = No List Detected

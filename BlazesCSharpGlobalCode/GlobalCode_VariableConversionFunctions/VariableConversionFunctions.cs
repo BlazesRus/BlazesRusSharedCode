@@ -1,65 +1,101 @@
-﻿using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+﻿// ***********************************************************************
+// Assembly         : BlazesCSharpGlobalCode
+// Author           : BlazesRus
+// Created          : 02-09-2018
+//
+// Last Modified By : BlazesRus
+// Last Modified On : 07-19-2018
+// ***********************************************************************
+// <copyright file="VariableConversionFunctions.cs" company="">
+//     Copyright ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
 {
-    public struct VariableConversionFunctions
+	/// <summary>
+	/// Struct VariableConversionFunctions
+	/// </summary>
+	public struct VariableConversionFunctions
     {
-        //************************************
-        // Method:    NumberOfPlaces
-        // FullName:  VariableConversionFunctions::NumberOfPlaces
-        // Access:    public static 
-        // Returns:   sbyte
-        // Qualifier:
-        // Parameter: int Value
-        //************************************
-        public static sbyte NumberOfPlaces(dynamic Value)
+		//************************************
+		// Method:    NumberOfPlaces
+		// FullName:  VariableConversionFunctions::NumberOfPlaces
+		// Access:    public static
+		// Returns:   sbyte
+		// Qualifier:
+		// Parameter: int Value
+		//************************************
+		/// <summary>
+		/// Numbers the of places.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns>System.SByte.</returns>
+		public static sbyte NumberOfPlaces(dynamic Value)
         {
             sbyte NumberOfPlaces = (sbyte) Math.Floor(Math.Log10(Value));
             return NumberOfPlaces;
         }
-        //************************************
-        // Method:    NumberOfDecimalPlaces
-        // FullName:  VariableConversionFunctions::NumberOfDecimalPlaces
-        // Access:    public static 
-        // Returns:   signed byte
-        // Qualifier:
-        // Parameter: int Value
-        //************************************
-        public static sbyte NumberOfDecimalPlaces(dynamic Value)
+		//************************************
+		// Method:    NumberOfDecimalPlaces
+		// FullName:  VariableConversionFunctions::NumberOfDecimalPlaces
+		// Access:    public static
+		// Returns:   signed byte
+		// Qualifier:
+		// Parameter: int Value
+		//************************************
+		/// <summary>
+		/// Numbers the of decimal places.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns>System.SByte.</returns>
+		public static sbyte NumberOfDecimalPlaces(dynamic Value)
         {
             sbyte NumberOfPlaces = (sbyte) Math.Floor(Math.Log(Value));
             NumberOfPlaces *= -1;
             NumberOfPlaces += 1;
             return NumberOfPlaces;
         }
-        //************************************
-        // Method:    NumberOfDecimalPlaces
-        // FullName:  VariableConversionFunctions::NumberOfDecimalPlaces
-        // Access:    public static 
-        // Returns:   int
-        // Qualifier:
-        // Parameter: double Value
-        //************************************
-        public static sbyte NumberOfDecimalPlaces(double Value)
+		//************************************
+		// Method:    NumberOfDecimalPlaces
+		// FullName:  VariableConversionFunctions::NumberOfDecimalPlaces
+		// Access:    public static
+		// Returns:   int
+		// Qualifier:
+		// Parameter: double Value
+		//************************************
+		/// <summary>
+		/// Numbers the of decimal places.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns>System.SByte.</returns>
+		public static sbyte NumberOfDecimalPlaces(double Value)
         {
             sbyte NumberOfPlaces = (sbyte) Math.Floor(Math.Log(Value));
             NumberOfPlaces *= -1;
             NumberOfPlaces += 1;
             return NumberOfPlaces;
         }
-        
-        //************************************
-        // Method:    CharAsInt
-        // FullName:  VariableConversionFunctions::CharAsInt
-        // Access:    public static 
-        // Returns:   int
-        // Qualifier:
-        // Parameter: char Temp
-        //************************************
-        public static dynamic CharAsInt(char Temp)
+
+		//************************************
+		// Method:    CharAsInt
+		// FullName:  VariableConversionFunctions::CharAsInt
+		// Access:    public static
+		// Returns:   int
+		// Qualifier:
+		// Parameter: char Temp
+		//************************************
+		/// <summary>
+		/// Characters as int.
+		/// </summary>
+		/// <param name="Temp">The temporary.</param>
+		/// <returns>dynamic.</returns>
+		public static dynamic CharAsInt(char Temp)
         {
             int Value = 0;
             switch (Temp)
@@ -99,15 +135,20 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             return Value;
         }
 
-        //************************************
-        // Method:    DigitAsChar
-        // FullName:  VariableConversionFunctions::DigitAsChar
-        // Access:    public static 
-        // Returns:   char
-        // Qualifier:
-        // Parameter: int Temp
-        //************************************
-        public static char DigitAsChar(dynamic Temp)
+		//************************************
+		// Method:    DigitAsChar
+		// FullName:  VariableConversionFunctions::DigitAsChar
+		// Access:    public static
+		// Returns:   char
+		// Qualifier:
+		// Parameter: int Temp
+		//************************************
+		/// <summary>
+		/// Digits as character.
+		/// </summary>
+		/// <param name="Temp">The temporary.</param>
+		/// <returns>System.Char.</returns>
+		public static char DigitAsChar(dynamic Temp)
         {
             char Value = '0';
             switch ((int)Temp)
@@ -147,15 +188,20 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             return Value;
         }
 
-        //************************************
-        // Method:    IsDigit
-        // FullName:  VariableConversionFunctions::IsDigit
-        // Access:    public static 
-        // Returns:   bool
-        // Qualifier:
-        // Parameter: char Temp
-        //************************************
-        public static bool IsDigit(char Temp)
+		//************************************
+		// Method:    IsDigit
+		// FullName:  VariableConversionFunctions::IsDigit
+		// Access:    public static
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: char Temp
+		//************************************
+		/// <summary>
+		/// Determines whether the specified temporary is digit.
+		/// </summary>
+		/// <param name="Temp">The temporary.</param>
+		/// <returns><c>true</c> if the specified temporary is digit; otherwise, <c>false</c>.</returns>
+		public static bool IsDigit(char Temp)
         {
             bool DigitType = false;
             if(Temp == '0') { DigitType = true; }
@@ -170,34 +216,44 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             else if(Temp == '9') { DigitType = true; }
             return DigitType;
         }
-        //************************************
-        // Method:    IsDigit
-        // FullName:  VariableConversionFunctions::IsDigit
-        // Access:    public static 
-        // Returns:   bool
-        // Qualifier:
-        // Parameter: string Temp
-        //************************************
-        public static bool IsDigit(string Temp)
+		//************************************
+		// Method:    IsDigit
+		// FullName:  VariableConversionFunctions::IsDigit
+		// Access:    public static
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: string Temp
+		//************************************
+		/// <summary>
+		/// Determines whether the specified temporary is digit.
+		/// </summary>
+		/// <param name="Temp">The temporary.</param>
+		/// <returns><c>true</c> if the specified temporary is digit; otherwise, <c>false</c>.</returns>
+		public static bool IsDigit(string Temp)
         {
             return IsDigit(Temp[0]);
         }
-        ////Returns Double Value version of String
-        ////************************************
-        //// Method:    ReadDoubleFromString
-        //// FullName:  VariableConversionFunctions::ReadDoubleFromString
-        //// Access:    public static 
-        //// Returns:   double
-        //// Qualifier:
-        //// Parameter: string TempString
-        ////************************************
-        //static double ReadDoubleFromString(string TempString);
-        /// <summary>
-        /// Reads the int from string.
-        /// </summary>
-        /// <param name="Value">The value to convert into Interger.</param>
-        /// <returns></returns>
-        public static int ReadIntFromString(string Value)
+		////Returns Double Value version of String
+		////************************************
+		//// Method:    ReadDoubleFromString
+		//// FullName:  VariableConversionFunctions::ReadDoubleFromString
+		//// Access:    public static
+		//// Returns:   double
+		//// Qualifier:
+		//// Parameter: string TempString
+		////************************************
+		//static double ReadDoubleFromString(string TempString);
+		/// <summary>
+		/// Reads the int from string.
+		/// </summary>
+		/// <param name="Value">The value to convert into Interger.</param>
+		/// <returns></returns>
+		/// <summary>
+		/// Reads the int from string.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns>System.Int32.</returns>
+		public static int ReadIntFromString(string Value)
         {
             int ReturnValue = 0;
             bool IsNegative = false;
@@ -236,25 +292,35 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             }
             return ReturnValue;
         }
-        /// <summary>
-        /// Reads the short integer from string.
-        /// </summary>
-        /// <param name="Value">The value to convert into Interger.</param>
-        /// <returns></returns>
-        public static short ReadShortFromString(string Value)
+		/// <summary>
+		/// Reads the short integer from string.
+		/// </summary>
+		/// <param name="Value">The value to convert into Interger.</param>
+		/// <returns></returns>
+		/// <summary>
+		/// Reads the short from string.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns>System.Int16.</returns>
+		public static short ReadShortFromString(string Value)
         {
             return (short)ReadIntFromString(Value);
         }
-        ////Returns first string of either true,false,1, or 0 in string; if no value found returns false
-        //************************************
-        // Method:    ReadBoolFromString
-        // FullName:  VariableConversionFunctions::ReadBoolFromString
-        // Access:    public static 
-        // Returns:   bool
-        // Qualifier:
-        // Parameter: string LineString
-        //************************************
-        public static bool ReadBoolFromString(string Value)
+		////Returns first string of either true,false,1, or 0 in string; if no value found returns false
+		//************************************
+		// Method:    ReadBoolFromString
+		// FullName:  VariableConversionFunctions::ReadBoolFromString
+		// Access:    public static
+		// Returns:   bool
+		// Qualifier:
+		// Parameter: string LineString
+		//************************************
+		/// <summary>
+		/// Reads the bool from string.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+		public static bool ReadBoolFromString(string Value)
         {
             Value = Value.ToLowerInvariant();
             //Value found in string
@@ -312,12 +378,12 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             return FoundValue;
         }
 
-        /// <summary>
-        /// Returns long value from string(int 64 bit)
-        /// </summary>
-        /// <param name="Value">The value to convert into 64 bit Interger.</param>
-        /// <returns></returns>
-        public static long ReadLongFromString(string Value)
+		/// <summary>
+		/// Returns long value from string(int 64 bit)
+		/// </summary>
+		/// <param name="Value">The value to convert into 64 bit Interger.</param>
+		/// <returns>System.Int64.</returns>
+		public static long ReadLongFromString(string Value)
         {
             long ReturnValue = 0;
             bool IsNegative = false;
@@ -356,39 +422,44 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             }
             return ReturnValue;
         }
-        /// <summary>
-        /// Reads the bool from int.
-        /// </summary>
-        /// <param name="Temp">The temporary value</param>
-        /// <returns></returns>
-        public static bool ReadBoolFromInt(int Temp) => Temp == 1 ? true : false;
-        ////************************************
-        //// Method:    DoubleAsString
-        //// FullName:  VariableConversionFunctions::DoubleAsString
-        //// Access:    public static 
-        //// Returns:   string
-        //// Qualifier:
-        //// Parameter: double TempValue
-        ////************************************
-        //public static string DoubleAsString(double TempValue);
-        ////************************************
-        //// Method:    BoolAsString
-        //// FullName:  VariableConversionFunctions::BoolAsString
-        //// Access:    public static 
-        //// Returns:   string
-        //// Qualifier:
-        //// Parameter: bool TempValue
-        ////************************************
-        //public static string BoolAsString(bool TempValue);
-        //************************************
-        // Method:    DoubleToStringConversion
-        // FullName:  VariableConversionFunctions::DoubleToStringConversion
-        // Access:    public static 
-        // Returns:   string
-        // Qualifier:
-        // Parameter: double TempValue
-        //************************************
-        public static string DoubleToStringConversion(double TempValue)
+		/// <summary>
+		/// Reads the bool from int.
+		/// </summary>
+		/// <param name="Temp">The temporary value</param>
+		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+		public static bool ReadBoolFromInt(int Temp) => Temp == 1 ? true : false;
+		////************************************
+		//// Method:    DoubleAsString
+		//// FullName:  VariableConversionFunctions::DoubleAsString
+		//// Access:    public static
+		//// Returns:   string
+		//// Qualifier:
+		//// Parameter: double TempValue
+		////************************************
+		//public static string DoubleAsString(double TempValue);
+		////************************************
+		//// Method:    BoolAsString
+		//// FullName:  VariableConversionFunctions::BoolAsString
+		//// Access:    public static
+		//// Returns:   string
+		//// Qualifier:
+		//// Parameter: bool TempValue
+		////************************************
+		//public static string BoolAsString(bool TempValue);
+		//************************************
+		// Method:    DoubleToStringConversion
+		// FullName:  VariableConversionFunctions::DoubleToStringConversion
+		// Access:    public static
+		// Returns:   string
+		// Qualifier:
+		// Parameter: double TempValue
+		//************************************
+		/// <summary>
+		/// Doubles to string conversion.
+		/// </summary>
+		/// <param name="TempValue">The temporary value.</param>
+		/// <returns>System.String.</returns>
+		public static string DoubleToStringConversion(double TempValue)
         {
             System.String Value = "";
             if (TempValue<0) { Value += "-"; TempValue *=-1;}
@@ -410,12 +481,12 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             }
             return Value;
         }
-        /// <summary>
-        /// Attempts to extract value of decimal half as ulong (19 decimals worth extracted)
-        /// </summary>
-        /// <param name="TempValue"></param>
-        /// <returns></returns>
-        public static ulong ExtractDecimalHalf(double TempValue)
+		/// <summary>
+		/// Attempts to extract value of decimal half as ulong (19 decimals worth extracted)
+		/// </summary>
+		/// <param name="TempValue">The temporary value.</param>
+		/// <returns>System.UInt64.</returns>
+		public static ulong ExtractDecimalHalf(double TempValue)
         {
             ulong DecimalHalf = 0;
             ulong TempStorage;
@@ -434,9 +505,14 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             }
             return DecimalHalf;
         }
-        
-        //9 Decimal Storage version of ExtractDecimalHalf
-        public static uint ExtractDecimalHalfV2(double TempValue)
+
+		//9 Decimal Storage version of ExtractDecimalHalf
+		/// <summary>
+		/// Extracts the decimal half v2.
+		/// </summary>
+		/// <param name="TempValue">The temporary value.</param>
+		/// <returns>System.UInt32.</returns>
+		public static uint ExtractDecimalHalfV2(double TempValue)
         {
             uint DecimalHalf = 0;
             uint TempStorage;
@@ -456,8 +532,13 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             return DecimalHalf;
         }
 
-        //9 Decimal Storage version of ExtractDecimalHalf
-        public static ushort ExtractDecimalHalfV3(double TempValue)
+		//9 Decimal Storage version of ExtractDecimalHalf
+		/// <summary>
+		/// Extracts the decimal half v3.
+		/// </summary>
+		/// <param name="TempValue">The temporary value.</param>
+		/// <returns>System.UInt16.</returns>
+		public static ushort ExtractDecimalHalfV3(double TempValue)
         {
             ushort DecimalHalf = 0;
             ushort TempStorage;
@@ -477,15 +558,20 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             return DecimalHalf;
         }
 
-        //************************************
-        // Method:    IntToStringConversion
-        // FullName:  VariableConversionFunctions::IntToStringConversion
-        // Access:    public static 
-        // Returns:   string
-        // Qualifier:
-        // Parameter: int TempValue
-        //************************************
-        public static string IntToStringConversion(dynamic TempValue)
+		//************************************
+		// Method:    IntToStringConversion
+		// FullName:  VariableConversionFunctions::IntToStringConversion
+		// Access:    public static
+		// Returns:   string
+		// Qualifier:
+		// Parameter: int TempValue
+		//************************************
+		/// <summary>
+		/// Ints to string conversion.
+		/// </summary>
+		/// <param name="TempValue">The temporary value.</param>
+		/// <returns>System.String.</returns>
+		public static string IntToStringConversion(dynamic TempValue)
         {
             var Value = "";
             if (TempValue < 0) { Value += "-"; TempValue *= -1; }
@@ -503,7 +589,12 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             return Value;
         }
 
-        public static string LongToStringConversion(long IntegerHalf)
+		/// <summary>
+		/// Longs to string conversion.
+		/// </summary>
+		/// <param name="IntegerHalf">The integer half.</param>
+		/// <returns>System.String.</returns>
+		public static string LongToStringConversion(long IntegerHalf)
         {
             var Value = "";
             if (IntegerHalf < 0) { Value += "-"; IntegerHalf *= -1; }
@@ -520,7 +611,12 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             return Value;
         }
 
-        public static string UlongToStringConversion(ulong IntegerHalf)
+		/// <summary>
+		/// Ulongs to string conversion.
+		/// </summary>
+		/// <param name="IntegerHalf">The integer half.</param>
+		/// <returns>System.String.</returns>
+		public static string UlongToStringConversion(ulong IntegerHalf)
         {
             var Value = "";
             byte CurrentDigit;
@@ -535,14 +631,19 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             Value = builder.ToString();
             return Value;
         }
-        //string DisplayFullValues_Vector(float x, float y, float z, float w);
-        //string DisplayFullValues_Vector(float x, float y, float z);
-        //string DisplayFullValues_Vector(float x, float y);
-        //string DisplayFullValues(float x, float y, float z, float w);
-        //string DisplayFullValues(float x, float y, float z);
-        //string DisplayFullValues(float x, float y);
+		//string DisplayFullValues_Vector(float x, float y, float z, float w);
+		//string DisplayFullValues_Vector(float x, float y, float z);
+		//string DisplayFullValues_Vector(float x, float y);
+		//string DisplayFullValues(float x, float y, float z, float w);
+		//string DisplayFullValues(float x, float y, float z);
+		//string DisplayFullValues(float x, float y);
 
-        public static string DoubleToStringV2(double Value)
+		/// <summary>
+		/// Doubles to string v2.
+		/// </summary>
+		/// <param name="Value">The value.</param>
+		/// <returns>System.String.</returns>
+		public static string DoubleToStringV2(double Value)
         {
             uint IntegerHalf = (uint) Value;
             byte CurrentDigit;

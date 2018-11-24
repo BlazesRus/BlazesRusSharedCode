@@ -1,17 +1,23 @@
-// MainFrm.h : interface of the MainFrame class
+// ***********************************************************************
+// Author           : BlazesRus(James Michael Armstrong)
+// Created          : 10-15-2018
 //
-/////////////////////////////////////////////////////////////////////////////
+// Last Modified By : BlazesRus
+// Last Modified On : 11-22-2018
+// ***********************************************************************
+// <copyright file="MainFrm.h" company="">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 
 #if !defined(MainFrame__INCLUDED)
 #define MainFrame__INCLUDED
 
 #include "MultiviewPrecompile.h"
-//#include <string>
 
 class MainFrame : public CFrameWnd
 {
-//private:
-//	static std::string ClassString() { return "MainFrame"; }
 protected: // create from serialization only
 	MainFrame();
 	DECLARE_DYNCREATE(MainFrame)

@@ -1,18 +1,40 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : BlazesCSharpGlobalCode
+// Author           : BlazesRus
+// Created          : 02-09-2018
+//
+// Last Modified By : BlazesRus
+// Last Modified On : 02-09-2018
+// ***********************************************************************
+// <copyright file="TypeDataInfo.cs" company="">
+//     Copyright ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 
 namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
 {
-    class TypeDataInfo
+	/// <summary>
+	/// Class TypeDataInfo.
+	/// </summary>
+	class TypeDataInfo
     {
-        public string ContainerTypeName = "";
-        public List<string> ContainerDataTypes = new List<string>();
+		/// <summary>
+		/// The container type name
+		/// </summary>
+		public string ContainerTypeName = "";
+		/// <summary>
+		/// The container data types
+		/// </summary>
+		public List<string> ContainerDataTypes = new List<string>();
 
-        /// <summary>
-        /// Separate the TypeName of the Container from the Variable types contained
-        /// </summary>
-        /// <param name="TargetType"></param>
-        public TypeDataInfo(Type TargetType)
+		/// <summary>
+		/// Separate the TypeName of the Container from the Variable types contained
+		/// </summary>
+		/// <param name="TargetType">Type of the target.</param>
+		public TypeDataInfo(Type TargetType)
         {
             byte ExtractionStage = 0;
             string TargetName = TargetType.ToString();
@@ -57,12 +79,12 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             }
         }
 
-        /// <summary>
-        /// Return of type based on information from string
-        /// </summary>
-        /// <param name="TypeName"></param>
-        /// <returns></returns>
-        public static Type ReturnTypeByString(string TypeName)
+		/// <summary>
+		/// Return of type based on information from string
+		/// </summary>
+		/// <param name="TypeName">Name of the type.</param>
+		/// <returns>Type.</returns>
+		public static Type ReturnTypeByString(string TypeName)
         {
             switch (TypeName)
             {
@@ -79,12 +101,12 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             }
         }
 
-        /// <summary>
-        /// Create Type array from List of Strings
-        /// </summary>
-        /// <param name="DataTypes"></param>
-        /// <returns></returns>
-        public static Type[] GetTypeListFromStringList(List<string> DataTypes)
+		/// <summary>
+		/// Create Type array from List of Strings
+		/// </summary>
+		/// <param name="DataTypes">The data types.</param>
+		/// <returns>Type[].</returns>
+		public static Type[] GetTypeListFromStringList(List<string> DataTypes)
         {
             List<Type> TypeList = new List<Type>();
             foreach (var value in DataTypes)
@@ -95,10 +117,11 @@ namespace CSharpGlobalCode.GlobalCode_VariableConversionFunctions
             return ArrayOfTypes;
         }
 
-        /// <summary>
-        /// </summary>
-        /// <returns></returns>
-        public dynamic InitialyzeTypeData()
+		/// <summary>
+		/// Initialyzes the type data.
+		/// </summary>
+		/// <returns>dynamic.</returns>
+		public dynamic InitialyzeTypeData()
         {
             //Based on https://docs.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/how-to-examine-and-instantiate-generic-types-with-reflection
             if (ContainerTypeName.Contains("Generic.Dictionary"))//Dictionary detected
