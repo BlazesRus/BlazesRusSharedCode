@@ -24,6 +24,8 @@ class CustomTreeNode
 protected:
 	typedef CustomTreeNode NodeType;
 public:
+	//This refers to index inside list of button contexts dictionary unless -1 in which case it uses default menu context list
+	int NBMenuType;
 	CustomTreeNode()
 	{
 		csLabel.Empty();
@@ -43,7 +45,28 @@ public:
 		TreeType = TreeTypeDef;
 		NodeType = TreePageNode;
 #endif
-		//NodeCat = 0;//Default NodeType
+		NBMenuType = -1;//Use default node context menu options
+	}
+	CustomTreeNode(int MenuType)
+	{
+		csLabel.Empty();
+		rNode.SetRectEmpty();
+
+		bUseDefaultTextColor = TRUE;
+
+		bOpen = TRUE;
+#ifdef BlazesGUICode_UseDictionaryBasedNodes
+
+#else
+		pParent = NULL;
+		pSibling = NULL;
+		pChild = NULL;
+#endif
+#if defined(CustomTree_EnableLocalTypedefs)
+		TreeType = TreeTypeDef;
+		NodeType = TreePageNode;
+#endif
+		NBMenuType = MenuType;//Use non-default node context menu defined inside a (List<CustomOrderedDictionary<string, ButtonContextData>>)? or defined in override function in CustomTreeView
 	}
 
 	virtual ~CustomTreeNode()

@@ -4,6 +4,7 @@
 
 #include "SuperDecHex.h"
 
+
 SuperDecHex::Hex_8Byte SuperDecHex::Hex_8Byte::operator=(std::string HexValue)
 {
 	unsigned int HexSize = HexValue.length();
@@ -87,6 +88,7 @@ SuperDecHex::Hex_8Byte SuperDecHex::Hex_8Byte::operator=(std::string HexValue)
 		}
 	}
 }
+
 
 unsigned __int64 SuperDecHex::Hex_8Byte::GetAsInt64()
 {
@@ -599,45 +601,54 @@ char DLL_API SuperDecHex::IntToHexChar(ValueType num)
 	}
 }
 
+
 SuperDecHex::Hex_8Byte SuperDecHex::Hex_8Byte::operator=(unsigned __int64 Value)
 {
 	IntTo8ByteHex(Value);
 }
+
 
 SuperDecHex::Hex_8Byte SuperDecHex::Hex_8Byte::operator=(unsigned __int32 Value)
 {
 	IntTo8ByteHex(Value);
 }
 
+
 SuperDecHex::Hex_8Byte SuperDecHex::Hex_8Byte::operator=(unsigned __int16 Value)
 {
 	IntTo8ByteHex(Value);
 }
+
 
 SuperDecHex::Hex_8Byte SuperDecHex::Hex_8Byte::operator=(unsigned __int8 Value)
 {
 	IntTo8ByteHex(Value);
 }
 
+
 SuperDecHex::Hex_8Byte SuperDecHex::Hex_8Byte::operator=(signed __int64 Value)
 {
 	IntTo8ByteHex(Value);
 }
+
 
 SuperDecHex::Hex_8Byte SuperDecHex::Hex_8Byte::operator=(signed __int32 Value)
 {
 	IntTo8ByteHex(Value);
 }
 
+
 SuperDecHex::Hex_8Byte SuperDecHex::Hex_8Byte::operator=(signed __int16 Value)
 {
 	IntTo8ByteHex(Value);
 }
 
+
 SuperDecHex::Hex_8Byte SuperDecHex::Hex_8Byte::operator=(signed __int8 Value)
 {
 	IntTo8ByteHex(Value);
 }
+
 
 template <typename ValueType>
 void SuperDecHex::Hex_8Byte::IntTo8ByteHex(ValueType Value)

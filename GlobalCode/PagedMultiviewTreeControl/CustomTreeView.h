@@ -854,6 +854,13 @@ protected:
 
 		return CView::OnMouseWheel(nFlags, zDelta, pt);
 	}
+
+	/// <summary>
+	/// Defaults the context menu.
+	/// </summary>
+	/// <param name="ccmPopUp">The CCM pop up.</param>
+	/// <param name="nFlag">The n flag.</param>
+	/// <param name="pDC">The p dc.</param>
 	virtual void DefaultContextMenu(CContextMenu* ccmPopUp, UINT nFlag, CDC* pDC)
 	{
 #ifdef EnableCustomTreeSounds
@@ -904,11 +911,26 @@ protected:
 #endif
 	}
 
-	virtual void ApplyMenuGen(CContextMenu* ccmPopUp, UINT nFlag,CDC* pDC)
+
+
+	/// <summary>
+	/// Applies the menu gen.
+	/// </summary>
+	/// <param name="ccmPopUp">The CCM pop up.</param>
+	/// <param name="nFlag">The n flag.</param>
+	/// <param name="pDC">The p dc.</param>
+	virtual void ApplyMenuGen(CContextMenu* ccmPopUp, UINT nFlag, CDC* pDC)
 	{
 		return DefaultContextMenu(ccmPopUp, nFlag, pDC);
 	}
 
+
+
+	/// <summary>
+	/// Called when [context menu].
+	/// </summary>
+	/// <param name="pWnd">The p WND.</param>
+	/// <param name="point">The point.</param>
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point)
 	{
 		CPoint cp(point);
@@ -973,6 +995,12 @@ protected:
 	//}}AFX_MSG
 	//DECLARE_MESSAGE_MAP()
 protected:
+
+
+	/// <summary>
+	/// Gets the this message map.
+	/// </summary>
+	/// <returns>const AFX_MSGMAP *.</returns>
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{
 		__pragma(warning(push))
@@ -998,7 +1026,10 @@ protected:
 			{ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }
 		};
 		__pragma(warning(pop))
-		static const AFX_MSGMAP messageMap =
+			/// <summary>
+			/// The message map
+			/// </summary>
+			static const AFX_MSGMAP messageMap =
 		{ &TheBaseClass::GetThisMessageMap, &_messageEntries[0] };
 		return &messageMap;
 	}

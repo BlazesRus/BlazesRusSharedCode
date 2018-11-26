@@ -12,6 +12,9 @@ public:
 	TreePageNode() : CustomTreeNode()
 	{
 	}
+	TreePageNode(int MenuType) : CustomTreeNode(MenuType)
+	{
+	}
 	explicit operator CustomTreeNode*()
 	{
 		if (this == nullptr)
