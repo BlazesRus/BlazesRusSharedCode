@@ -323,10 +323,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ContextMenu.cpp" />
-    <ClCompile Include="DLG_TreeNodeText.cpp" />
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\ContextMenu.cpp" />
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\DLG_TreeNodeText.cpp" />
     <ClCompile Include="TreeCtrlPage.cpp" />
-    <ClCompile Include="TreePage.cpp" />
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\TreePage.cpp" />
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagView.cpp" />
     <ClInclude Include="$(CPPSource)\tsl\ordered_hash.h" />
     <ClInclude Include="$(CPPSource)\tsl\ordered_map.h" />
     <ClInclude Include="$(CPPSource)\tsl\ordered_set.h" />
@@ -360,9 +361,11 @@
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePage.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePageNode.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\WP_APPDefines.h" />
-    <ClInclude Include="GenericFrameView.h" />
-    <ClInclude Include="LinkedTreeView.h" />
-    <ClInclude Include="MFView.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\GenericFrameView.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\LinkedTreeView.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MFView.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagView.h" />
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagViewNode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(CPPSource)\DLLAPI.h" />
@@ -477,12 +480,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\MultiView.ico" />
-    <Image Include="res\MultiViewDoc.ico" />
-    <Image Include="res\Toolbar.bmp" />
+    <Image Include="$(CPPSource)\PagedMultiviewTreeControl\res\MultiView.ico" />
+    <Image Include="$(CPPSource)\PagedMultiviewTreeControl\res\MultiViewDoc.ico" />
+    <Image Include="$(CPPSource)\PagedMultiviewTreeControl\res\Toolbar.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="res\MultiView.rc2" />
+    <CustomBuild Include="$(CPPSource)\PagedMultiviewTreeControl\res\MultiView.rc2" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

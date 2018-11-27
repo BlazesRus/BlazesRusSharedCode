@@ -19,6 +19,9 @@
     <Filter Include="Header Files\GlobalCode">
       <UniqueIdentifier>{13e2e699-a199-48af-87e2-5ad7f29bd50c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NodeTreeStuff">
+      <UniqueIdentifier>{1664e39f-4e74-469c-a72d-2b011c9daa74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.cpp">
@@ -51,15 +54,6 @@
     <ClCompile Include="TreeCtrlPage.cpp">
       <Filter>MultiView</Filter>
     </ClCompile>
-    <ClCompile Include="ContextMenu.cpp">
-      <Filter>MultiView</Filter>
-    </ClCompile>
-    <ClCompile Include="DLG_TreeNodeText.cpp">
-      <Filter>MultiView</Filter>
-    </ClCompile>
-    <ClCompile Include="TreePage.cpp">
-      <Filter>MultiView</Filter>
-    </ClCompile>
     <ClCompile Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -77,6 +71,18 @@
     </ClCompile>
     <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiviewPrecompile.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\XMLTagView.cpp">
+      <Filter>NodeTreeStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\TreePage.cpp">
+      <Filter>NodeTreeStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\DLG_TreeNodeText.cpp">
+      <Filter>NodeTreeStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\ContextMenu.cpp">
+      <Filter>NodeTreeStuff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,16 +134,7 @@
     <ClInclude Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\ContextMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeCtrl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\DLG_TreeNodeText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TemplateMacros.h">
@@ -152,9 +149,6 @@
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePageNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\WP_APPDefines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\AboutDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -162,9 +156,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\HalfPagedMultiview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MainFrm.h">
@@ -194,9 +185,6 @@
     <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="GenericFrameView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomOrderedDictionary.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
@@ -206,11 +194,35 @@
     <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="MFView.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="$(CPPSource)\XMLTagViewNode.h">
+      <Filter>NodeTreeStuff</Filter>
     </ClInclude>
-    <ClInclude Include="LinkedTreeView.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="$(CPPSource)\XMLTagView.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\MFView.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\LinkedTreeView.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GenericFrameView.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\WP_APPDefines.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\HalfPagedMultiview.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\DLG_TreeNodeText.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeView.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\ContextMenu.h">
+      <Filter>NodeTreeStuff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
