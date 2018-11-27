@@ -4,7 +4,6 @@
 #include "MultiviewPrecompile.h"
 #include "TemplateMacros.h"
 #include "CustomTreeNode.h"
-//#include <typeinfo>
 
 class TreePageNode : public CustomTreeNode
 {

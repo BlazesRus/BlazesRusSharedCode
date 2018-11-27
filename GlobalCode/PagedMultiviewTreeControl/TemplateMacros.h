@@ -8,15 +8,20 @@
 //(based off https://stackoverflow.com/questions/1491971/mfc-implement-dyncreate-with-template)
 #define _RUNTIME_CLASS01(class_name, template_class) ((CRuntimeClass*)(&class_name<template_class>::class##class_name##_##template_class))
 #ifdef _AFXDLL
-#define RUNTIME_CLASS01(class_name) (class_name<template_class>::GetThisClass())
+#define RUNTIME_CLASS01(class_name, template_class) (class_name<template_class>::GetThisClass())
 #else
 #define RUNTIME_CLASS01(class_name, template_class) _RUNTIME_CLASS01(class_name, template_class)
 #endif
 
-#define _RUNTIME_CLASS(class_name) ((CRuntimeClass*)(&class_name::class##class_name))
-
+#define _RUNTIME_CLASS02(class_name, template_class, template_class02) ((CRuntimeClass*)(&class_name<template_class,template_class02>::class##class_name##_##template_class##_##template_class02))
+#ifdef _AFXDLL
+#define RUNTIME_CLASS02(class_name, template_class, template_class02) (class_name<template_class, template_class02>::GetThisClass())
+#else
+#define RUNTIME_CLASS02(class_name, template_class, template_class02) _RUNTIME_CLASS02(class_name, template_class, template_class02)
+#endif
 
 #define DEFINERTCNAME01(class_name, template_class) class##class_name##_##template_class
+#define DEFINERTCNAME02(class_name, template_class, template_class02) class##class_name##_##template_class##_##template_class02
 #define DEFINERTCINIT01(class_name, template_class) _init_##class_name##_##template_class
 #define DEFINERTCNAME(class_name) class##class_name
 
@@ -129,6 +134,30 @@ public:\
 	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(class_name); }\
 	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(class_name); }
 
+#define CRuntime_Arg02Base01(class_name, template_class, template_class02, baseClass, baseargOne)\
+private:\
+	static std::string ClassString()\
+	{\
+		std::string Combined = "class_name<";\
+		Combined += typeid(template_class).name();\
+		Combined += ", ";\
+		Combined += typeid(template_class02).name();\
+		Combined += ">";\
+		return Combined;\
+	}\
+public:\
+	static const std::string classNameStr;\
+	static LPCSTR ClassName() { return classNameStr.c_str(); }\
+private:\
+	typedef baseClass<baseargOne> TheBaseClass;\
+	typedef class_name<template_class, template_class02> ThisClass;\
+protected:\
+	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
+public:\
+	static const CRuntimeClass class##class_name##_##template_class##_##template_class02;\
+	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }\
+	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }
+
 #else
 //based off of https://stackoverflow.com/questions/3004870/can-a-custom-mfc-window-dialog-be-a-class-template-instantiation + afx.h
 #define CRuntime_Arg01(class_name, template_class, baseClass)\
@@ -190,14 +219,22 @@ public:\
 #endif
 
 #ifdef _AFXDLL
-#define CRuntimeImplimentation_Arg01(class_name, template_class, baseClass)\
+#define CRuntimeImplimentation_Arg01(class_name, template_class)\
 template <typename template_class>\
 inline const std::string class_name<template_class>::classNameStr = ClassString();\
 template <typename template_class>\
 inline AFX_COMDAT const CRuntimeClass class_name<template_class>::DEFINERTCNAME01(class_name, template_class) = { ClassName(), sizeof(class_name<template_class>), 0xFFFF, NULL,&class_name<template_class>::_GetBaseClass, NULL, NULL };
 
-#define CRuntimeImplimentation_Base01(class_name, template_class, baseClass)\
+#define CRuntimeImplimentation_Base01(class_name)\
 inline AFX_COMDAT const CRuntimeClass class_name::DEFINERTCNAME(class_name) = { "class_name", sizeof(class_name), 0xFFFF, NULL,&class_name::_GetBaseClass, NULL, NULL };
+
+#define CRuntimeImplimentation_Arg02Base01(class_name, template_class, template_class02)\
+template <typename template_class, typename template_class02>\
+inline const std::string class_name<template_class, template_class02>::classNameStr = ClassString();\
+template <typename template_class, typename template_class02>\
+inline AFX_COMDAT const CRuntimeClass class_name<template_class, template_class02>::DEFINERTCNAME02(class_name, template_class, template_class02) = { ClassName(), sizeof(class_name<template_class, template_class02>), 0xFFFF, NULL,&class_name<template_class, template_class02>::_GetBaseClass, NULL, NULL };
+
+
 #else
 #define CRuntimeImplimentation_Arg01(class_name, template_class, baseClass)\
 template <class TreeNode>\

@@ -6,9 +6,12 @@
 template <typename TreeNode, typename NodeDictionaryType>
 class LinkedTreeView : public CustomTreeView<TreeNode>
 {
+	CRuntime_Arg02Base01(LinkedTreeView, TreeNode, NodeDictionaryType, CustomTreeView, TreeNode)
 	LinkedTreeView(string FilePath) : CustomTreeView()
 	{
 
 	}
 };
+
+CRuntimeImplimentation_Arg02Base01(LinkedTreeView, TreeNode, NodeDictionaryType)
 #endif
