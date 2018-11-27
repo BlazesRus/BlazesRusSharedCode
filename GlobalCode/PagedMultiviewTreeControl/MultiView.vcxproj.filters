@@ -209,6 +209,9 @@
     <ClInclude Include="MFView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LinkedTreeView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\MultiView.ico">

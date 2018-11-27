@@ -361,6 +361,7 @@
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePageNode.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\WP_APPDefines.h" />
     <ClInclude Include="GenericFrameView.h" />
+    <ClInclude Include="LinkedTreeView.h" />
     <ClInclude Include="MFView.h" />
   </ItemGroup>
   <ItemGroup>

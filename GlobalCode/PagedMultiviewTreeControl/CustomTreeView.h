@@ -252,7 +252,7 @@ public:
 	/// <param name="bUseDefaultTextColor">Whether to use default text color.</param>
 	/// <param name="bInvalidate">Whether to invalidate</param>
 	/// <returns></returns>
-	CustomTreeNode* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	virtual CustomTreeNode* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 //#if defined(Enable_CustomTreeSingleRoot)
 		return InsertChild(m_pTopNode, csLabel, crText, bUseDefaultTextColor, bInvalidate);
@@ -270,7 +270,7 @@ public:
 #endif
 */
 
-	void DeleteNode(CustomTreeNode* pNode, BOOL bInvalidate = FALSE)
+	virtual void DeleteNode(CustomTreeNode* pNode, BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pNode != NULL);	// Make sure the node exists
 
@@ -855,6 +855,7 @@ protected:
 		return CView::OnMouseWheel(nFlags, zDelta, pt);
 	}
 
+public:
 	/// <summary>
 	/// Defaults the context menu.
 	/// </summary>
@@ -910,9 +911,7 @@ protected:
 		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETBACKGROUNDBITMAP, _T("Set Background Bitmap"), pDC);
 #endif
 	}
-
-
-
+protected:
 	/// <summary>
 	/// Applies the menu gen.
 	/// </summary>
