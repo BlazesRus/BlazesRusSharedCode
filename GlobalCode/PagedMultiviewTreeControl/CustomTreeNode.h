@@ -21,8 +21,8 @@
 /// </summary>
 class CustomTreeNode
 {
-protected:
-	typedef CustomTreeNode NodeType;
+//protected:
+//	typedef CustomTreeNode NodeType;
 public:
 	//This refers to index inside list of button contexts dictionary unless -1 in which case it uses default menu context list
 	int NBMenuType;
@@ -76,9 +76,9 @@ public:
 #ifdef BlazesGUICode_UseDictionaryBasedNodes
 	List<std::string> ChildNodes;
 #else
-	NodeType* pParent;
-	NodeType* pSibling;
-	NodeType* pChild;
+	CustomTreeNode* pParent;
+	CustomTreeNode* pSibling;
+	CustomTreeNode* pChild;
 #endif
 
 	template <typename ConvertedType>

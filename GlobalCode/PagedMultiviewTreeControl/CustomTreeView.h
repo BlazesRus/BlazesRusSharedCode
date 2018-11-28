@@ -26,18 +26,19 @@
 /// Edited derivable version of CustomTreeControl's CViewTreeCtrl class converted into a view
 /// <para/>(base code from https://www.codeproject.com/Articles/9887/CViewTreeCtrl-A-CView-derived-custom-Tree-cont)
 /// <para/>NodeCtrl refers to NodeTree holding this class
-/// <para/>TreeNode refers to derived class's name (for keeping inherited functionality)
+/// <para/>NodeType refers to derived class's name (for keeping inherited functionality)
 /// </summary>
 template <typename TreeNode>
 class CustomTreeView : public CView
 {
 	CRuntime_Arg01V2(CustomTreeView, TreeNode, CView)
-
+public:
+	typedef TreeNode NodeType;
 // Attributes
 // Operations
 	CustomTreeView()
 	{
-		m_pTopNode = new TreeNode();	// The tree top
+		m_pTopNode = new NodeType();	// The tree top
 
 		m_iIndent = 16;				// Indentation for tree branches
 		m_iPadding = 4;				// Padding between tree and the control border
@@ -94,8 +95,8 @@ protected:
 	int				m_iIndent;
 	int				m_iPadding;
 
-	TreeNode*		m_pTopNode;
-	TreeNode*		m_pSelected;
+	NodeType*		m_pTopNode;
+	NodeType*		m_pSelected;
 
 #ifdef EnableCustomTreeSounds
 	BOOL			m_bAudioOn;
@@ -184,13 +185,13 @@ public:
 		m_crDefaultTextColor = crText;
 	}
 
-	TreeNode* InsertSibling(TreeNode* pInsertAfter, const CString& csLabel,
+	NodeType* InsertSibling(NodeType* pInsertAfter, const CString& csLabel,
 		COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE,
 		BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pInsertAfter != NULL);	// Make sure the node exists
 
-		TreeNode* pNewNode = new TreeNode();
+		NodeType* pNewNode = new NodeType();
 
 		pNewNode->csLabel = csLabel;					// New node's label
 
@@ -211,7 +212,7 @@ public:
 
 		return pNewNode;
 	}
-	TreeNode* InsertChild(TreeNode* pParent, const CString& csLabel,
+	NodeType* InsertChild(NodeType* pParent, const CString& csLabel,
 		COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE,
 		BOOL bInvalidate = FALSE)
 	{
@@ -220,7 +221,7 @@ public:
 		if (pParent == m_pTopNode)	// Check for top node
 			pParent = m_pTopNode;
 
-		TreeNode* pNewNode = new TreeNode();
+		NodeType* pNewNode = new NodeType();
 
 		// Basic node information
 		pNewNode->csLabel = csLabel;	// New node's label
@@ -250,12 +251,12 @@ public:
 	/// <param name="bUseDefaultTextColor">Whether to use default text color.</param>
 	/// <param name="bInvalidate">Whether to invalidate</param>
 	/// <returns></returns>
-	virtual TreeNode* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	virtual NodeType* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		return InsertChild(m_pTopNode, csLabel, crText, bUseDefaultTextColor, bInvalidate);
 	}
 
-	virtual void DeleteNode(TreeNode::NodeType* pNode, BOOL bInvalidate = FALSE)
+	virtual void DeleteNode(NodeType* pNode, BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pNode != NULL);	// Make sure the node exists
 
@@ -265,12 +266,12 @@ public:
 
 		// Delete children
 		if (pNode->pChild != NULL)
-			DeleteNodeRecursive(pNode->pChild);
+			DeleteNodeRecursive((NodeType*)pNode->pChild);
 
 		// If this node is not the top node, fix pointers in sibling list
 		if (pNode != m_pTopNode)
 		{
-			TreeNode::NodeType* pRunner = pNode->pParent;
+			NodeType* pRunner = (NodeType*)pNode->pParent;
 
 			// If first child, set the parent pointer to the next sibling
 			// Otherwise, find sibling before and set its sibling pointer to the node's sibling
@@ -278,11 +279,11 @@ public:
 				pRunner->pChild = pNode->pSibling;
 			else
 			{
-				pRunner = pRunner->pChild;
+				pRunner = (NodeType*)pRunner->pChild;
 
 				// Loop until the next node is the one being deleted
 				while (pRunner->pSibling != pNode)
-					pRunner = pRunner->pSibling;
+					pRunner = (NodeType*)pRunner->pSibling;
 
 				pRunner->pSibling = pNode->pSibling;
 			}
@@ -297,7 +298,7 @@ public:
 			Invalidate();
 	}
 
-	void ToggleNode(TreeNode* pNode, BOOL bInvalidate = FALSE)
+	void ToggleNode(NodeType* pNode, BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pNode != NULL);
 
@@ -306,7 +307,7 @@ public:
 		if (bInvalidate)
 			Invalidate();
 	}
-	void SetNodeColor(TreeNode* pNode, COLORREF crText, BOOL bInvalidate = FALSE)
+	void SetNodeColor(NodeType* pNode, COLORREF crText, BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pNode != NULL);
 
@@ -342,20 +343,21 @@ public:
 	}
 
 protected:
-	void DeleteNodeRecursive(TreeNode* pNode)
+	// Recursive delete
+	void DeleteNodeRecursive(NodeType* pNode)
 	{
 		if (pNode->pSibling != NULL)
-			DeleteNodeRecursive(pNode->pSibling);
+			DeleteNodeRecursive((NodeType*)pNode->pSibling);
 
 		if (pNode->pChild != NULL)
-			DeleteNodeRecursive(pNode->pChild);
+			DeleteNodeRecursive((NodeType*)pNode->pChild);
 
 		delete pNode;
 
 		pNode = NULL;
-	}		// Recursive delete
+	}
 
-	int DrawNodesRecursive(CDC* pDC, TreeNode* pNode, int x, int y, CRect rFrame)
+	int DrawNodesRecursive(CDC* pDC, NodeType* pNode, int x, int y, CRect rFrame)
 	{
 		int		iDocHeight = 0;		// Total document height
 		CRect	rNode;
@@ -407,11 +409,11 @@ protected:
 
 		// If the node is open AND it has children, then draw those
 		if (pNode->bOpen && pNode->pChild != NULL)
-			iDocHeight = DrawNodesRecursive(pDC, pNode->pChild, x + m_iIndent, y + pNode->rNode.Height(), rFrame);
+			iDocHeight = DrawNodesRecursive(pDC, (NodeType*)pNode->pChild, x + m_iIndent, y + pNode->rNode.Height(), rFrame);
 
 		// If the node has siblings, then draw those
 		if (pNode->pSibling != NULL)
-			iDocHeight += DrawNodesRecursive(pDC, pNode->pSibling, x, y + pNode->rNode.Height() + iDocHeight, rFrame);
+			iDocHeight += DrawNodesRecursive(pDC, (NodeType*)pNode->pSibling, x, y + pNode->rNode.Height() + iDocHeight, rFrame);
 
 		return iDocHeight + pNode->rNode.Height();
 	}
@@ -443,11 +445,11 @@ protected:
 		return iValidSoFar;
 	}
 
-	void DrawLinesRecursive(CDC* pDC, TreeNode* pNode)
+	void DrawLinesRecursive(CDC* pDC, NodeType* pNode)
 	{
 		// Draw lines from children if the node is open before drawing lines from this node
 		if (pNode->bOpen && pNode->pChild != NULL)
-			DrawLinesRecursive(pDC, pNode->pChild);
+			DrawLinesRecursive(pDC, (NodeType*)pNode->pChild);
 
 		// Where is the elbow joint of this connecting line?
 		int iJointX = pNode->rNode.left - m_iIndent - 6;
@@ -473,7 +475,7 @@ protected:
 
 		// Draw the next sibling if there are any
 		if (pNode->pSibling != NULL)
-			DrawLinesRecursive(pDC, pNode->pSibling);
+			DrawLinesRecursive(pDC, (NodeType*)pNode->pSibling);
 	}
 
 	void ResetScrollBar()
@@ -507,9 +509,9 @@ protected:
 		m_bScrollBarMessage = FALSE;
 	}
 
-	TreeNode* FindNodeByPoint(const CPoint& point, TreeNode* pNode)
+	NodeType* FindNodeByPoint(const CPoint& point, NodeType* pNode)
 	{
-		TreeNode* pFound = NULL;
+		NodeType* pFound = NULL;
 
 		// Found it?
 		if (pNode->rNode.PtInRect(point))
@@ -517,11 +519,11 @@ protected:
 
 		// If this node isn't it then check the node's children if it is open and there are any
 		if (pFound == NULL && pNode->bOpen && pNode->pChild != NULL)
-			pFound = FindNodeByPoint(point, pNode->pChild);
+			pFound = FindNodeByPoint(point, (NodeType*)pNode->pChild);
 
 		// If didn't find it among the node's children, then check the next sibling
 		if (pFound == NULL && pNode->pSibling != NULL)
-			pFound = FindNodeByPoint(point, pNode->pSibling);
+			pFound = FindNodeByPoint(point, (NodeType*)pNode->pSibling);
 
 		return pFound;
 	}
@@ -725,13 +727,13 @@ protected:
 
 		if (m_pTopNode->pChild != NULL)
 		{
-			iLastNodePos = DrawNodesRecursive(pDCMem, m_pTopNode->pChild,
+			iLastNodePos = DrawNodesRecursive(pDCMem, (NodeType*)m_pTopNode->pChild,
 				rFrame.left + m_iIndent,
 				m_iPadding - GetScrollPos(SB_VERT),
 				rFrame);
 
 			if (m_bShowLines)
-				DrawLinesRecursive(pDCMem, m_pTopNode->pChild);
+				DrawLinesRecursive(pDCMem, (NodeType*)m_pTopNode->pChild);
 		}
 
 		pDCMem->SelectObject(pOldFont);
@@ -822,10 +824,10 @@ protected:
 	}
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point)
 	{
-		TreeNode* pClickedOn = NULL;		// Assume no node was clicked on
+		NodeType* pClickedOn = NULL;		// Assume no node was clicked on
 
 		if (m_pTopNode->pChild != NULL)		// If the tree is populated, search it
-			pClickedOn = FindNodeByPoint(point, m_pTopNode->pChild);
+			pClickedOn = FindNodeByPoint(point, (NodeType*)m_pTopNode->pChild);
 
 		if (pClickedOn != NULL)			// If a node was clicked on
 			ToggleNode(pClickedOn, TRUE);
@@ -926,7 +928,7 @@ protected:
 		if (m_pTopNode->pChild == NULL)
 			m_pSelected = NULL;		// Empty tree
 		else
-			m_pSelected = FindNodeByPoint(cp, m_pTopNode->pChild);
+			m_pSelected = FindNodeByPoint(cp, (NodeType*)m_pTopNode->pChild);
 
 		CContextMenu ccmPopUp;
 
