@@ -12,7 +12,7 @@
 
 class TreePage : public CustomTreeView<TreePageNode>
 {
-	CRuntime_Base01V2(TreePage, CustomTreeView, TreePage)
+	CRuntime_Base01V2(TreePage, CustomTreeView, TreePageNode)
 protected://BEGIN_AltMESSAGE_MAP()
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{

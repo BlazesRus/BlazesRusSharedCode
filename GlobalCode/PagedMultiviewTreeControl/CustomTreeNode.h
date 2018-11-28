@@ -41,10 +41,6 @@ public:
 		pSibling = NULL;
 		pChild = NULL;
 #endif
-#if defined(CustomTree_EnableLocalTypedefs)
-		TreeType = TreeTypeDef;
-		NodeType = TreePageNode;
-#endif
 		NBMenuType = -1;//Use default node context menu options
 	}
 	CustomTreeNode(int MenuType)
@@ -61,10 +57,6 @@ public:
 		pParent = NULL;
 		pSibling = NULL;
 		pChild = NULL;
-#endif
-#if defined(CustomTree_EnableLocalTypedefs)
-		TreeType = TreeTypeDef;
-		NodeType = TreePageNode;
 #endif
 		NBMenuType = MenuType;//Use non-default node context menu defined inside a (List<CustomOrderedDictionary<string, ButtonContextData>>)? or defined in override function in CustomTreeView
 	}
@@ -88,7 +80,6 @@ public:
 	NodeType* pSibling;
 	NodeType* pChild;
 #endif
-	//int NodeCat;//Keeping NodeAction Dictionary inside TreeView(to reuse the NodeActions without making new dictionaries for each node)
 
 	template <typename ConvertedType>
 	explicit operator ConvertedType*()

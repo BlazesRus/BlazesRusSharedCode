@@ -9,11 +9,8 @@
 #include "WP_APPDefines.h"
 
 #include "MultiviewPrecompile.h"
-//#include "CustomTreeControl.h"
-//#include "StaticTreeCtrl.h"
 #include "ContextMenu.h"
 #include "DLG_TreeNodeText.h"
-//#include "CustomTreeNode.h"
 #include "TemplateMacros.h"
 #include <string>
 #include <typeinfo>
@@ -97,8 +94,8 @@ protected:
 	int				m_iIndent;
 	int				m_iPadding;
 
-	CustomTreeNode*		m_pTopNode;
-	CustomTreeNode*		m_pSelected;
+	TreeNode*		m_pTopNode;
+	TreeNode*		m_pSelected;
 
 #ifdef EnableCustomTreeSounds
 	BOOL			m_bAudioOn;
@@ -187,13 +184,13 @@ public:
 		m_crDefaultTextColor = crText;
 	}
 
-	CustomTreeNode* InsertSibling(CustomTreeNode* pInsertAfter, const CString& csLabel,
+	TreeNode* InsertSibling(TreeNode* pInsertAfter, const CString& csLabel,
 		COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE,
 		BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pInsertAfter != NULL);	// Make sure the node exists
 
-		CustomTreeNode* pNewNode = new TreeNode();
+		TreeNode* pNewNode = new TreeNode();
 
 		pNewNode->csLabel = csLabel;					// New node's label
 
@@ -214,7 +211,7 @@ public:
 
 		return pNewNode;
 	}
-	CustomTreeNode* InsertChild(CustomTreeNode* pParent, const CString& csLabel,
+	TreeNode* InsertChild(TreeNode* pParent, const CString& csLabel,
 		COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE,
 		BOOL bInvalidate = FALSE)
 	{
@@ -223,7 +220,7 @@ public:
 		if (pParent == m_pTopNode)	// Check for top node
 			pParent = m_pTopNode;
 
-		CustomTreeNode* pNewNode = new TreeNode();
+		TreeNode* pNewNode = new TreeNode();
 
 		// Basic node information
 		pNewNode->csLabel = csLabel;	// New node's label
@@ -253,12 +250,12 @@ public:
 	/// <param name="bUseDefaultTextColor">Whether to use default text color.</param>
 	/// <param name="bInvalidate">Whether to invalidate</param>
 	/// <returns></returns>
-	virtual CustomTreeNode* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	virtual TreeNode* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		return InsertChild(m_pTopNode, csLabel, crText, bUseDefaultTextColor, bInvalidate);
 	}
 
-	virtual void DeleteNode(CustomTreeNode* pNode, BOOL bInvalidate = FALSE)
+	virtual void DeleteNode(TreeNode::NodeType* pNode, BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pNode != NULL);	// Make sure the node exists
 
@@ -273,7 +270,7 @@ public:
 		// If this node is not the top node, fix pointers in sibling list
 		if (pNode != m_pTopNode)
 		{
-			CustomTreeNode* pRunner = pNode->pParent;
+			TreeNode::NodeType* pRunner = pNode->pParent;
 
 			// If first child, set the parent pointer to the next sibling
 			// Otherwise, find sibling before and set its sibling pointer to the node's sibling
@@ -300,7 +297,7 @@ public:
 			Invalidate();
 	}
 
-	void ToggleNode(CustomTreeNode* pNode, BOOL bInvalidate = FALSE)
+	void ToggleNode(TreeNode* pNode, BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pNode != NULL);
 
@@ -309,7 +306,7 @@ public:
 		if (bInvalidate)
 			Invalidate();
 	}
-	void SetNodeColor(CustomTreeNode* pNode, COLORREF crText, BOOL bInvalidate = FALSE)
+	void SetNodeColor(TreeNode* pNode, COLORREF crText, BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pNode != NULL);
 
@@ -345,7 +342,7 @@ public:
 	}
 
 protected:
-	void DeleteNodeRecursive(CustomTreeNode* pNode)
+	void DeleteNodeRecursive(TreeNode* pNode)
 	{
 		if (pNode->pSibling != NULL)
 			DeleteNodeRecursive(pNode->pSibling);
@@ -358,7 +355,7 @@ protected:
 		pNode = NULL;
 	}		// Recursive delete
 
-	int DrawNodesRecursive(CDC* pDC, CustomTreeNode* pNode, int x, int y, CRect rFrame)
+	int DrawNodesRecursive(CDC* pDC, TreeNode* pNode, int x, int y, CRect rFrame)
 	{
 		int		iDocHeight = 0;		// Total document height
 		CRect	rNode;
@@ -446,7 +443,7 @@ protected:
 		return iValidSoFar;
 	}
 
-	void DrawLinesRecursive(CDC* pDC, CustomTreeNode* pNode)
+	void DrawLinesRecursive(CDC* pDC, TreeNode* pNode)
 	{
 		// Draw lines from children if the node is open before drawing lines from this node
 		if (pNode->bOpen && pNode->pChild != NULL)
@@ -510,9 +507,9 @@ protected:
 		m_bScrollBarMessage = FALSE;
 	}
 
-	CustomTreeNode* FindNodeByPoint(const CPoint& point, CustomTreeNode* pNode)
+	TreeNode* FindNodeByPoint(const CPoint& point, TreeNode* pNode)
 	{
-		CustomTreeNode* pFound = NULL;
+		TreeNode* pFound = NULL;
 
 		// Found it?
 		if (pNode->rNode.PtInRect(point))
@@ -825,7 +822,7 @@ protected:
 	}
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point)
 	{
-		CustomTreeNode* pClickedOn = NULL;		// Assume no node was clicked on
+		TreeNode* pClickedOn = NULL;		// Assume no node was clicked on
 
 		if (m_pTopNode->pChild != NULL)		// If the tree is populated, search it
 			pClickedOn = FindNodeByPoint(point, m_pTopNode->pChild);

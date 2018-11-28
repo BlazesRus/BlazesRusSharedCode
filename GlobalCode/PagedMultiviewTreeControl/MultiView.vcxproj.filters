@@ -143,19 +143,10 @@
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreeCtrlPage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePageNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\AboutDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\BasicMultiviewTemplate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MainFrm.h">
@@ -222,6 +213,15 @@
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagView.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeNode.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePage.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePageNode.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
   </ItemGroup>
