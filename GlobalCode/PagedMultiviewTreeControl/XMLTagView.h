@@ -6,17 +6,15 @@
 #include "TemplateMacros.h"
 #include "XMLTagViewNode.h"
 #include <typeinfo>
+#include <string>
 
 /////////////////////////////////////////////////////////////////////////////
 // XMLTagView window
 
 class XMLTagView : public CustomTreeView<XMLTagViewNode>
 {
-	CRuntime_Base01V2(XMLTagView, CustomTreeView, XMLTagView)
-	XMLTagView(string FilePath) : CustomTreeView()
-	{
-
-	}
+	CRuntime_Base01V2(XMLTagView, CustomTreeView, XMLTagViewNode)
+	XMLTagView(std::string FilePath);
 protected://BEGIN_AltMESSAGE_MAP()
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{

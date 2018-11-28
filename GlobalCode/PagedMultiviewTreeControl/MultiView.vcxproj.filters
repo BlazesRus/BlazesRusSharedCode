@@ -72,16 +72,16 @@
     <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiviewPrecompile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\XMLTagView.cpp">
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\ContextMenu.cpp">
       <Filter>NodeTreeStuff</Filter>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\TreePage.cpp">
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\DLG_TreeNodeText.cpp">
       <Filter>NodeTreeStuff</Filter>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\DLG_TreeNodeText.cpp">
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\TreePage.cpp">
       <Filter>NodeTreeStuff</Filter>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\ContextMenu.cpp">
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagView.cpp">
       <Filter>NodeTreeStuff</Filter>
     </ClCompile>
   </ItemGroup>
@@ -194,21 +194,6 @@
     <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\XMLTagViewNode.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\XMLTagView.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\MFView.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\LinkedTreeView.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\GenericFrameView.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\WP_APPDefines.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
@@ -224,20 +209,35 @@
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\ContextMenu.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagViewNode.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\GenericFrameView.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\LinkedTreeView.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MFView.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagView.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\MultiView.ico">
+    <Image Include="$(CPPSource)\PagedMultiviewTreeControl\res\MultiView.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="res\MultiViewDoc.ico">
+    <Image Include="$(CPPSource)\PagedMultiviewTreeControl\res\MultiViewDoc.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="res\Toolbar.bmp">
+    <Image Include="$(CPPSource)\PagedMultiviewTreeControl\res\Toolbar.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="res\MultiView.rc2">
+    <CustomBuild Include="$(CPPSource)\PagedMultiviewTreeControl\res\MultiView.rc2">
       <Filter>Resource Files</Filter>
     </CustomBuild>
   </ItemGroup>

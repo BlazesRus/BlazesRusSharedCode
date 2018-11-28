@@ -1,10 +1,6 @@
 #if !defined(CustomTreeView_IncludeGuard)
 #define CustomTreeView_IncludeGuard
 
-#if _MSC_VER > 1000
-#pragma once
-#endif
-
 #include "MultiViewDoc.h"
 //#include "StaticTreeCtrl.h"
 //#include "TreePage.h"
@@ -56,7 +52,10 @@ class CustomTreeView : public CView
 
 		m_crDefaultTextColor = RGB(58, 58, 58);	// Some default
 		m_crConnectingLines = RGB(128, 128, 128);	// Some default
-									// Safeguards
+#ifdef EnableCustomTreeSounds
+		m_bAudioOn = FALSE;			// The context menu audio
+#endif
+		// Safeguards
 		SetTextFont(8, FALSE, FALSE, "Arial Unicode MS");
 		m_pSelected = NULL;
 	}
@@ -101,7 +100,9 @@ protected:
 	CustomTreeNode*		m_pTopNode;
 	CustomTreeNode*		m_pSelected;
 
+#ifdef EnableCustomTreeSounds
 	BOOL			m_bAudioOn;
+#endif
 
 public:
 	//CustomOrderedDictionary
@@ -254,21 +255,8 @@ public:
 	/// <returns></returns>
 	virtual CustomTreeNode* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
-//#if defined(Enable_CustomTreeSingleRoot)
 		return InsertChild(m_pTopNode, csLabel, crText, bUseDefaultTextColor, bInvalidate);
-/*#else
-
-#endif*/
 	}
-
-/*
-#if !defined(Enable_CustomTreeSingleRoot)
-	CustomTreeNode* AddToRoot(const CString& csLabel, std::string RootName, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
-	{
-
-	}
-#endif
-*/
 
 	virtual void DeleteNode(CustomTreeNode* pNode, BOOL bInvalidate = FALSE)
 	{
