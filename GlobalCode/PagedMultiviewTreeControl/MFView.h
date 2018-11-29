@@ -1,3 +1,16 @@
+// ***********************************************************************
+// Assembly         :
+// Author           : BlazesRus
+// Created          : 11-21-2018
+//
+// Last Modified By : BlazesRus
+// Last Modified On : 11-22-2018
+// ***********************************************************************
+// <copyright file="MFView.h" company="">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 #ifndef MainFrameView_IncludeGuard
 #define MainFrameView_IncludeGuard
 
@@ -5,6 +18,11 @@
 #include "GenericFrameView.h"
 #include "MultiViewDoc.h"
 
+/// <summary>
+/// Class MFView.
+/// Implements the <see cref="GenericFrameView{MultiViewDoc}" />
+/// </summary>
+/// <seealso cref="GenericFrameView{MultiViewDoc}" />
 class MFView : public GenericFrameView<MultiViewDoc>
 {
 	//CRuntime_Base01V2(MainFrameView, GenericFrameView, MultiViewDoc)
@@ -12,11 +30,29 @@ private:
 	typedef GenericFrameView<MultiViewDoc> TheBaseClass;
 	typedef MFView ThisClass;
 protected:
+	/// <summary>
+	/// Gets the base class.
+	/// </summary>
+	/// <returns> *.</returns>
 	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); }
 public:\
+	/// <summary>
+	/// The class mf view
+	/// </summary>
 	static const CRuntimeClass classMFView;
-	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(MFView); }\
-	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(MFView); }
+	   /// <summary>
+	   /// Gets the this class.
+	   /// </summary>
+	   /// <returns> *.</returns>
+	   static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(MFView); }\
+		/// <summary>
+		/// Gets the runtime class.
+		/// </summary>
+		/// <returns> *.</returns>
+		virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(MFView); }
+	/// <summary>
+	/// Initializes a new instance of the <see cref="MFView"/> class.
+	/// </summary>
 	MFView()
 	{
 		ViewName = "Main View";
