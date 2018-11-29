@@ -130,6 +130,7 @@ public:
 	MediumDec(__int8 Value)
 	{
 		if (Value < 0) { this->DecimalStatus = NegativeWholeNumber; Value *= -1; }
+		else { DecimalStatus = 0; }
 		this->IntValue = (unsigned int)Value;
 	}
 
@@ -140,6 +141,7 @@ public:
 	MediumDec(short Value)
 	{
 		if (Value < 0) { this->DecimalStatus = NegativeWholeNumber; Value *= -1; }
+		else { DecimalStatus = 0; }
 		this->IntValue = (unsigned int)Value;
 	}
 
@@ -150,6 +152,7 @@ public:
 	MediumDec(int Value)
 	{
 		if (Value < 0) { this->DecimalStatus = NegativeWholeNumber; Value *= -1; }
+		else { DecimalStatus = 0; }
 		this->IntValue = (unsigned int)Value;
 	}
 
@@ -205,6 +208,7 @@ public:
 	MediumDec(__int64 Value)
 	{
 		if (Value < 0) { DecimalStatus = NegativeWholeNumber; Value *= -1; }
+		else { DecimalStatus = 0; }
 		//Cap value if too big on initialize
 		if (Value > 4294967295)
 		{

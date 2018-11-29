@@ -35,7 +35,7 @@ public:
 
 		bOpen = TRUE;
 #ifdef BlazesGUICode_UseDictionaryBasedNodes
-
+		pParent =
 #else
 		pParent = NULL;
 		pSibling = NULL;

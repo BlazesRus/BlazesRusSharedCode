@@ -54,9 +54,6 @@
     <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\DLG_TreeNodeText.cpp">
       <Filter>NodeTreeStuff</Filter>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\TreePage.cpp">
-      <Filter>NodeTreeStuff</Filter>
-    </ClCompile>
     <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagView.cpp">
       <Filter>NodeTreeStuff</Filter>
     </ClCompile>
@@ -86,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="$(CPPSource)\GlobalCode_QuadVector\QuadVector.cpp">
       <Filter>Source Files\GlobalCode</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\TreePage.cpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -203,9 +203,6 @@
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeNode.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePageNode.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewApp.h">
       <Filter>MultiView</Filter>
     </ClInclude>
@@ -226,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="$(CPPSource)\GlobalCode_IniData\OrderedIniData.h">
       <Filter>Header Files\GlobalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePageNode.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -15,7 +15,7 @@
 #include <string>
 #include <typeinfo>
 
-#if !defined(Enable_CustomTreeSingleRoot)
+#if defined(Enable_CustomTreeMultiRoot)
 #include "GlobalCode_VariableLists/VariableList.h"
 #endif
 
@@ -95,11 +95,24 @@ protected:
 	int				m_iIndent;
 	int				m_iPadding;
 
-	NodeType*		m_pTopNode;
-	NodeType*		m_pSelected;
-
 #ifdef EnableCustomTreeSounds
 	BOOL			m_bAudioOn;
+#endif
+public:
+#if !defined(BlazesGUICode_UseDictionaryBasedNodes)
+	NodeType*		m_pTopNode;
+	NodeType*		m_pSelected;
+#else
+	NodeType* m_pTopNode()
+	{
+
+	}
+	NodeType* m_pSelected()
+	{
+
+	}
+	unsigned __int64 pTopNode_Key;
+	unsigned __int64 pTopNode_Key;
 #endif
 
 public:
