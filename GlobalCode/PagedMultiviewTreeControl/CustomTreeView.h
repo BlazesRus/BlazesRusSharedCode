@@ -113,11 +113,10 @@ public:
 	}
 	unsigned __int64 pTopNode_Key;
 	unsigned __int64 pTopNode_Key;
+	IndexedLongDictionary<NodeType> NodeStorage;
+	unsigned __int64 RootKey = 0;
 #endif
-
 public:
-	//CustomOrderedDictionary
-
 	// Operations
 	virtual void SetTextFont(LONG nHeight, BOOL bBold, BOOL bItalic, const CString& csFaceName)
 	{

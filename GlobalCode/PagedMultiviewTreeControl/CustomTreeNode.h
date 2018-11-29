@@ -35,13 +35,16 @@ public:
 
 		bOpen = TRUE;
 #ifdef BlazesGUICode_UseDictionaryBasedNodes
-		pParent =
+		pParent_Key = 18446744073709551615;//Maxed value = NULL
+		pSibling_Key = 18446744073709551615;
+		pChild_Key = 18446744073709551615;
 #else
 		pParent = NULL;
 		pSibling = NULL;
 		pChild = NULL;
 #endif
 		NBMenuType = -1;//Use default node context menu options
+		crText = RGB(240,240,240);//Default to a off-white grey
 	}
 	CustomTreeNode(int MenuType)
 	{
@@ -52,13 +55,16 @@ public:
 
 		bOpen = TRUE;
 #ifdef BlazesGUICode_UseDictionaryBasedNodes
-
+		pParent_Key = 18446744073709551615;
+		pSibling_Key = 18446744073709551615;
+		pChild_Key = 18446744073709551615;
 #else
 		pParent = NULL;
 		pSibling = NULL;
 		pChild = NULL;
 #endif
 		NBMenuType = MenuType;//Use non-default node context menu defined inside a (List<CustomOrderedDictionary<string, ButtonContextData>>)? or defined in override function in CustomTreeView
+		crText = RGB(240, 240, 240);
 	}
 
 	virtual ~CustomTreeNode()
