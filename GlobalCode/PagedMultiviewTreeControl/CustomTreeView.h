@@ -1,3 +1,9 @@
+// ***********************************************************************
+// Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+// Code based on https://www.codeproject.com/Articles/9887/CStaticTreeCtrl-A-CStatic-derived-custom-Tree-cont
+// Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+// ***********************************************************************
+
 #if !defined(CustomTreeView_IncludeGuard)
 #define CustomTreeView_IncludeGuard
 
@@ -856,12 +862,12 @@ protected:
 
 public:
 	/// <summary>
-	/// Defaults the context menu.
+	/// Display default context menu
 	/// </summary>
 	/// <param name="ccmPopUp">The CCM pop up.</param>
 	/// <param name="nFlag">The n flag.</param>
 	/// <param name="pDC">The p dc.</param>
-	virtual void DefaultContextMenu(CContextMenu* ccmPopUp, UINT nFlag, CDC* pDC)
+	void DefaultContextMenu(CContextMenu* ccmPopUp, UINT nFlag, CDC* pDC)
 	{
 #ifdef EnableCustomTreeSounds
 		// Node related items
@@ -912,7 +918,7 @@ public:
 	}
 protected:
 	/// <summary>
-	/// Applies the menu gen.
+	/// Applies the menu generation.
 	/// </summary>
 	/// <param name="ccmPopUp">The CCM pop up.</param>
 	/// <param name="nFlag">The n flag.</param>
@@ -996,7 +1002,7 @@ protected:
 
 
 	/// <summary>
-	/// Gets the this message map.
+	/// Gets this message map.
 	/// </summary>
 	/// <returns>const AFX_MSGMAP *.</returns>
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()

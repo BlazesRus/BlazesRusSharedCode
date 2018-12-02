@@ -17,15 +17,6 @@ static char THIS_FILE[]=__FILE__;
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CContextMenu::CContextMenu()
-{
-	m_iWidth	= 0;
-	m_iHeight	= 0;
-#ifdef EnableCustomTreeSounds
-	m_bSoundOn	= TRUE;
-#endif
-}
-
 CContextMenu::~CContextMenu()
 {
 	for( int i = 0; i < m_cptrMenuItems.GetSize(); i++ )
@@ -53,32 +44,17 @@ CContextMenu& CContextMenu::ToggleSound( BOOL bSoundOn )
 #endif
 
 #ifdef EnableCustomTreeSounds
-CContextMenu& CContextMenu::AppendMenuItem(UINT nFlags, UINT nID, CString csText, CString csWavFile, CDC* pDC)
-{
-	CContextMenuItem* cccItem = new CContextMenuItem(csText, csWavFile);
-
-	// Store the pointer
-	m_cptrMenuItems.Add(cccItem);
-
-	// Append menu
-	//CMenu::AppendMenu( nFlags | MF_OWNERDRAW, nID, (ODDCHAR*)cccItem );
-	CMenu::AppendMenu(nFlags | MF_OWNERDRAW, nID, (LPCTSTR)cccItem);
-
-	// Calculate the size of the menu's text
-	if (!csText.IsEmpty())
-	{
-		CSize cSize = pDC->GetTextExtent(csText);
-
-		m_iWidth = max(m_iWidth, cSize.cx);
-		m_iHeight = max(m_iHeight, 8 + cSize.cy);
-	}
-
-	return *this;
-}
+CContextMenu& CContextMenu::AppendMenuItem(UINT nFlags, UINT nID, CString csText, CDC* pDC, CString csWavFile)
 #else
-CContextMenu& CContextMenu::AppendMenuItem( UINT nFlags, UINT nID, CString csText, CDC* pDC )
+CContextMenu& CContextMenu::AppendMenuItem(UINT nFlags, UINT nID, CString csText, CDC* pDC)
+#endif
 {
-	CContextMenuItem* cccItem = new CContextMenuItem( csText );
+	CContextMenuItem* cccItem = new CContextMenuItem(csText
+#ifdef EnableCustomTreeSounds
+	, csWavFile);
+#else
+	);
+#endif
 
 	// Store the pointer
 	m_cptrMenuItems.Add( cccItem );
@@ -98,7 +74,6 @@ CContextMenu& CContextMenu::AppendMenuItem( UINT nFlags, UINT nID, CString csTex
 
 	return *this;
 }
-#endif
 
 CContextMenu& CContextMenu::SetColors(	COLORREF crText, COLORREF crBackground, COLORREF crDisabled,
 										COLORREF crSelected, COLORREF crBorder )
@@ -183,9 +158,9 @@ void CContextMenu::DrawItem( LPDRAWITEMSTRUCT lpDIS )
 #ifdef EnableCustomTreeSounds
 					if( m_bSoundOn )
 					{
-						// Stop any currently playing wav
+						// Stop any currently playing wave file
 						PlaySound( NULL, NULL, SND_NOWAIT | SND_PURGE );
-						// Play this item's wav
+						// Play this item's wave file
 						PlaySound( cccItem->m_csWavFile, NULL, SND_NOWAIT | SND_FILENAME | SND_ASYNC );
 					}
 #endif

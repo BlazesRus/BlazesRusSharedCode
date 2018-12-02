@@ -1,15 +1,6 @@
 // ***********************************************************************
-// Assembly         :
-// Author           : BlazesRus
-// Created          : 11-21-2018
-//
-// Last Modified By : BlazesRus
-// Last Modified On : 11-22-2018
-// ***********************************************************************
-// <copyright file="MFView.h" company="">
-//     Copyright (c) . All rights reserved.
-// </copyright>
-// <summary></summary>
+// Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+// Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 // ***********************************************************************
 #ifndef MainFrameView_IncludeGuard
 #define MainFrameView_IncludeGuard
@@ -30,28 +21,32 @@ private:
 	typedef GenericFrameView<MultiViewDoc> TheBaseClass;
 	typedef MFView ThisClass;
 protected:
+
 	/// <summary>
 	/// Gets the base class.
 	/// </summary>
-	/// <returns> *.</returns>
+	/// <returns>*.</returns>
 	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); }
 public:\
 	/// <summary>
-	/// The class mf view
+	/// The runtime object version of class named MFView
 	/// </summary>
 	static const CRuntimeClass classMFView;
-	   /// <summary>
-	   /// Gets the this class.
-	   /// </summary>
-	   /// <returns> *.</returns>
-	   static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(MFView); }\
-		/// <summary>
-		/// Gets the runtime class.
-		/// </summary>
-		/// <returns> *.</returns>
-		virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(MFView); }
+
 	/// <summary>
-	/// Initializes a new instance of the <see cref="MFView"/> class.
+	/// Returns the runtime call of this class
+	/// </summary>
+	/// <returns>*.</returns>
+	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(MFView); }\
+
+	/// <summary>
+	/// Gets the runtime class.
+	/// </summary>
+	/// <returns>*.</returns>
+	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(MFView); }
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="MFView" /> class.
 	/// </summary>
 	MFView()
 	{

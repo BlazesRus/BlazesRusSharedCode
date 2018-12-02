@@ -1,9 +1,18 @@
+// ***********************************************************************
+// Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+// Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+// ***********************************************************************
 #ifndef GenericFrameView_IncludeGuard
 #define GenericFrameView_IncludeGuard
 
 #include "MultiviewPrecompile.h"
 #include <string>
 
+/// <summary>
+/// Class named GenericFrameView.
+/// Implements the <see cref="CView" />
+/// </summary>
+/// <seealso cref="CView" />
 template <typename DocViewType>
 class GenericFrameView : public CView
 {
@@ -15,11 +24,18 @@ public:
 	LPCSTR ViewName;
 #endif
 protected: // create from serialization only
+/// <summary>
+/// Initializes a new instance of the <see cref="GenericFrameView"/> class.
+/// </summary>
 	GenericFrameView()
 	{
 		// TODO: add construction code here
 		ViewName = "";
 	}
+	/// <summary>
+	/// Initializes a new instance of the <see cref="GenericFrameView"/> class.
+	/// </summary>
+	/// <param name="viewName">Name of the view.</param>
 	GenericFrameView(
 #ifdef UNICODE
 		LPCWSTR viewName
@@ -35,6 +51,10 @@ protected: // create from serialization only
 
 // Attributes
 public:
+	/// <summary>
+	/// Gets the document.
+	/// </summary>
+	/// <returns>DocViewType*</returns>
 	DocViewType* GetDocument()
 	{
 #ifndef _DEBUG
@@ -52,6 +72,10 @@ public:
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(GenericFrameView)
 	public:
+		/// <summary>
+		/// Called when [draw].
+		/// </summary>
+		/// <param name="pDC">The p dc.</param>
 		virtual void OnDraw(CDC* pDC)
 		{
 			DocViewType* pDoc = GetDocument();
@@ -65,14 +89,24 @@ public:
 
 // Implementation
 public:
+	/// <summary>
+	/// Finalizes an instance of the <see cref="GenericFrameView"/> class.
+	/// </summary>
 	virtual ~GenericFrameView()
 	{
 	}
 #ifdef _DEBUG
+	/// <summary>
+	/// Asserts the valid.
+	/// </summary>
 	virtual void AssertValid() const
 	{
 		CView::AssertValid();
 }
+	/// <summary>
+	/// Dumps the specified dc.
+	/// </summary>
+	/// <param name="dc">The dc.</param>
 	virtual void Dump(CDumpContext& dc) const
 	{
 		CView::Dump(dc);

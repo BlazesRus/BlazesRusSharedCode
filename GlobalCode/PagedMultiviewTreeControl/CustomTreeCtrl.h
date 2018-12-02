@@ -1,3 +1,8 @@
+// ***********************************************************************
+// Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+// Code based on https://www.codeproject.com/Articles/9887/CStaticTreeCtrl-A-CStatic-derived-custom-Tree-cont
+// Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+// ***********************************************************************
 #pragma once
 #ifndef CustomTreeCtrl_Header
 #define CustomTreeCtrl_Header
@@ -19,15 +24,20 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /// <summary>
-/// Edited derivable version of CustomTreeControl's CStaticTreeCtrl class <para/>(base code from https://www.codeproject.com/Articles/9887/CStaticTreeCtrl-A-CStatic-derived-custom-Tree-cont)
-/// <para/>NodeCtrl refers to NodeTree holding this class
-/// <para/>TreeNode refers to derived class's name (for keeping inherited functionality)
+/// Edited derivable version of CustomTreeControl's CStaticTreeCtrl class <para />(base code from https://www.codeproject.com/Articles/9887/CStaticTreeCtrl-A-CStatic-derived-custom-Tree-cont)
+/// <para />NodeCtrl refers to NodeTree holding this class
+/// <para />TreeNode refers to derived class's name (for keeping inherited functionality)
+/// Implements the <see cref="CStatic" />
 /// </summary>
+/// <seealso cref="CStatic" />
 template <typename TreeNode>
 class CustomTreeCtrl : public CStatic
 {
 	// Construction
 public:
+	/// <summary>
+	/// Initializes a new instance of the <see cref="CustomTreeCtrl"/> class.
+	/// </summary>
 	CustomTreeCtrl()
 	{
 #ifdef BlazesGUICode_UseDictionaryBasedNodes
@@ -792,6 +802,13 @@ protected:
 		else
 			CStatic::OnLButtonUp(nFlags, point);
 	}
+	/// <summary>
+	/// Called when [mouse wheel].
+	/// </summary>
+	/// <param name="nFlags">The n flags.</param>
+	/// <param name="zDelta">The z delta.</param>
+	/// <param name="pt">The pt.</param>
+	/// <returns>BOOL.</returns>
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	{
 		// zDelta greater than 0, means rotating away from the user, that is, scrolling up
@@ -799,6 +816,14 @@ protected:
 
 		return CStatic::OnMouseWheel(nFlags, zDelta, pt);
 	}
+
+
+
+	/// <summary>
+	/// Called when [context menu].
+	/// </summary>
+	/// <param name="pWnd">The p WND.</param>
+	/// <param name="point">The point.</param>
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point)
 	{
 		CPoint cp(point);
