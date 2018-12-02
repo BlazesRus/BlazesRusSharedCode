@@ -7,25 +7,31 @@
 #include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
 #endif
 
+/// <summary>
+/// 0
+/// </summary>
 MediumDec MediumDec::Zero = ZeroValue();
+/// <summary>
+/// 1
+/// </summary>
 MediumDec MediumDec::One = OneValue();
+/// <summary>
+/// -1
+/// </summary>
 MediumDec MediumDec::NegativeOne = NegativeOneValue();
+/// <summary>
+/// Returns value of highest non-infinite/Special Decimal State Value that can store
+/// </summary>
 MediumDec MediumDec::Maximum = MaximumValue();
+/// <summary>
+/// Returns value of lowest non-infinite/Special Decimal State Value that can store
+/// </summary>
 MediumDec MediumDec::Minimum = MinimumValue();
 
 //MediumDec MediumDec::Coords::PosX = MediumDec::Zero;
 //MediumDec MediumDec::Coords::PosY = MediumDec::Zero;
 //MediumDec MediumDec::Coords::PosZ = MediumDec::Zero;
 
-/// <summary>
-/// Initialize constructor
-/// </summary>
-/// <param name="Value"></param>
-
-/// <summary>
-///	Convert to String with Trimmed Digits or ending of .0 if no decimal places stored
-/// </summary>
-/// <returns></returns>
 inline std::string MediumDec::ToString()
 {
 	std::string Value = "";
@@ -106,10 +112,6 @@ inline std::string MediumDec::ToFullString()
 	return Value;
 }
 
-/// <summary>
-///	Convert to String with only Decimal places with stored numbers displayed
-/// </summary>
-/// <returns></returns>
 inline std::string MediumDec::ToTrimmedString()
 {
 	std::string Value = "";
@@ -148,6 +150,11 @@ inline std::string MediumDec::ToTrimmedString()
 	return Value;
 }
 
+/// <summary>
+/// Gets the value from string.
+/// </summary>
+/// <param name="Value">The value.</param>
+/// <returns>MediumDec.</returns>
 inline MediumDec MediumDec::GetValueFromString(std::string Value)
 {
 	MediumDec NewSelf = MediumDec::Zero;
@@ -281,6 +288,7 @@ inline MediumDec::MediumDec(std::string Value)
 		DecimalStatus *= -1;
 	}
 }
+
 
 inline MediumDec::operator std::string()
 {

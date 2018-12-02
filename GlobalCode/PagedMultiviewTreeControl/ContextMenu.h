@@ -22,6 +22,11 @@
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
+/// <summary>
+/// Class named CContextMenu.
+/// Implements the <see cref="CMenu" />
+/// </summary>
+/// <seealso cref="CMenu" />
 class CContextMenu : public CMenu
 {
 public:
@@ -29,7 +34,11 @@ public:
 	virtual ~CContextMenu();
 
 public:
-	virtual CContextMenu&	AppendMenuItem	( UINT nFlags, UINT nID, CString csText, CDC* pDC );
+#ifdef EnableCustomTreeSounds
+	virtual CContextMenu&	AppendMenuItem	( UINT nFlags, UINT nID, CString csText, CDC* pDC, CString csWavFile);
+#else
+	virtual CContextMenu&	AppendMenuItem(UINT nFlags, UINT nID, CString csText, CDC* pDC);
+#endif
 	virtual CContextMenu&	SetTextFont		( CFont* font );
 	virtual CContextMenu&	SetColors		(	COLORREF crText, COLORREF crBackground, COLORREF crDisabled,
 												COLORREF crSelected, COLORREF crBorder );

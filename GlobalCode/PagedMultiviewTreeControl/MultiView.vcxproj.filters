@@ -27,9 +27,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TreeCtrlPage.cpp">
       <Filter>MultiView</Filter>
     </ClCompile>
@@ -86,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\TreePage.cpp">
       <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.cpp">
+      <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
