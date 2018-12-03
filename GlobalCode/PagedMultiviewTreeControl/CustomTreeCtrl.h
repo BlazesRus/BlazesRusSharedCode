@@ -63,6 +63,9 @@ public:
 		m_pSelected = NULL;
 	}
 
+	/// <summary>
+	/// Finalizes an instance of the <see cref="CustomTreeCtrl"/> class.
+	/// </summary>
 	virtual ~CustomTreeCtrl()
 	{
 		DeleteNode(m_pTopNode);	// Delete all children if there are any
@@ -100,6 +103,13 @@ protected:
 
 	// Operations
 public:
+	/// <summary>
+	/// Sets the text font.
+	/// </summary>
+	/// <param name="nHeight">Height of the n.</param>
+	/// <param name="bBold">The b bold.</param>
+	/// <param name="bItalic">The b italic.</param>
+	/// <param name="csFaceName">Name of the cs face.</param>
 	virtual void SetTextFont(LONG nHeight, BOOL bBold, BOOL bItalic, const CString& csFaceName)
 	{
 		m_lgFont.lfHeight = -MulDiv(nHeight, GetDeviceCaps(GetDC()->m_hDC, LOGPIXELSY), 72);
@@ -136,11 +146,23 @@ public:
 		pDC->RestoreDC(iSaved);
 		ReleaseDC(pDC);
 	}
+	/// <summary>
+	/// Sets the default color of the text.
+	/// </summary>
+	/// <param name="crText">The cr text.</param>
 	virtual void SetDefaultTextColor(COLORREF crText)
 	{
 		m_crDefaultTextColor = crText;
 	}
 
+	/// <summary>
+	/// Sets the text settings.
+	/// </summary>
+	/// <param name="nHeight">Height of the n.</param>
+	/// <param name="bBold">The b bold.</param>
+	/// <param name="bItalic">The b italic.</param>
+	/// <param name="csFaceName">Name of the cs face.</param>
+	/// <param name="crText">The cr text.</param>
 	virtual void SetTextSettings(LONG nHeight, BOOL bBold, BOOL bItalic, const CString& csFaceName, COLORREF crText)
 	{
 		m_lgFont.lfHeight = -MulDiv(nHeight, GetDeviceCaps(GetDC()->m_hDC, LOGPIXELSY), 72);
@@ -179,6 +201,15 @@ public:
 		m_crDefaultTextColor = crText;
 	}
 
+	/// <summary>
+	/// Inserts the sibling.
+	/// </summary>
+	/// <param name="pInsertAfter">The p insert after.</param>
+	/// <param name="csLabel">The cs label.</param>
+	/// <param name="crText">The cr text.</param>
+	/// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
+	/// <param name="bInvalidate">The b invalidate.</param>
+	/// <returns>CustomTreeNode *.</returns>
 	CustomTreeNode* InsertSibling(CustomTreeNode* pInsertAfter, const CString& csLabel,
 		COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE,
 		BOOL bInvalidate = FALSE)
@@ -206,6 +237,15 @@ public:
 
 		return pNewNode;
 	}
+	/// <summary>
+	/// Inserts the child.
+	/// </summary>
+	/// <param name="pParent">The p parent.</param>
+	/// <param name="csLabel">The cs label.</param>
+	/// <param name="crText">The cr text.</param>
+	/// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
+	/// <param name="bInvalidate">The b invalidate.</param>
+	/// <returns>CustomTreeNode *.</returns>
 	CustomTreeNode* InsertChild(CustomTreeNode* pParent, const CString& csLabel,
 		COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE,
 		BOOL bInvalidate = FALSE)
@@ -237,11 +277,24 @@ public:
 
 		return pNewNode;
 	}
+	/// <summary>
+	/// Adds to root.
+	/// </summary>
+	/// <param name="csLabel">The cs label.</param>
+	/// <param name="crText">The cr text.</param>
+	/// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
+	/// <param name="bInvalidate">The b invalidate.</param>
+	/// <returns>CustomTreeNode *.</returns>
 	CustomTreeNode* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		return InsertChild(m_pTopNode, csLabel, crText, bUseDefaultTextColor, bInvalidate);
 	}
 
+	/// <summary>
+	/// Deletes the node.
+	/// </summary>
+	/// <param name="pNode">The p node.</param>
+	/// <param name="bInvalidate">The b invalidate.</param>
 	void DeleteNode(CustomTreeNode* pNode, BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pNode != NULL);	// Make sure the node exists
@@ -284,6 +337,11 @@ public:
 			Invalidate();
 	}
 
+	/// <summary>
+	/// Toggle node open and closed
+	/// </summary>
+	/// <param name="pNode">The p node.</param>
+	/// <param name="bInvalidate">The b invalidate.</param>
 	void ToggleNode(CustomTreeNode* pNode, BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pNode != NULL);
