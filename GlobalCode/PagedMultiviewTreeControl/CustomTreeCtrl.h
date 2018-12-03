@@ -338,7 +338,7 @@ public:
 	}
 
 	/// <summary>
-	/// Toggle node open and closed
+	/// Toggle node between open and closed
 	/// </summary>
 	/// <param name="pNode">The p node.</param>
 	/// <param name="bInvalidate">The b invalidate.</param>
