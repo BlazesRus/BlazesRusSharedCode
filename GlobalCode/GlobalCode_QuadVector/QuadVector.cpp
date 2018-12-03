@@ -229,6 +229,7 @@ std::string QuadDoubleVector::ConvertToString()
 	return TempString;
 }
 
+
 void QuadDoubleVector::ReadQuadVectorFromString(std::string LineString)
 {
 	//Current character loaded in steam

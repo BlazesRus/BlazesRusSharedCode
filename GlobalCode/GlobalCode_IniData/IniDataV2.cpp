@@ -16,6 +16,8 @@
 /// </summary>
 /// <param name="Value">The value.</param>
 /// <returns></returns>
+
+
 inline float IniDataV2::GetFloatElementData(std::string Value)
 {
 	return FloatSettings[Value];

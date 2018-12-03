@@ -1,12 +1,10 @@
-// MultiViewApp.h : main header file for the MULTIVIEW application
-//
-
+// ***********************************************************************
+// Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+// Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+// ***********************************************************************
 #if !defined(AFX_MultiViewApp_INCLUDED)
 #define AFX_MultiViewApp_INCLUDED
 
-#if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
 #include "MultiviewPrecompile.h"
 
 #ifndef __AFXWIN_H__
@@ -27,14 +25,28 @@
 // See MultiView.cpp for the implementation of this class
 //
 
+/// <summary>
+/// Class named MultiViewApp.
+/// Implements the <see cref="HalfPagedMultiview{MainFrameView, TreePage, MainFrame}" />
+/// </summary>
+/// <seealso cref="HalfPagedMultiview{MainFrameView, TreePage, MainFrame}" />
 class MultiViewApp : public HalfPagedMultiview<MainFrameView, TreePage, MainFrame>
 {
 //private:
 //	static std::string ClassString() { return "MultiViewApp"; }
 public:
+	/// <summary>
+	/// Initializes a new instance of the <see cref="MultiViewApp"/> class.
+	/// </summary>
 	MultiViewApp() {};
+	/// <summary>
+	/// The INI settings
+	/// </summary>
 	IniDataV2 IniSettings;
 private:
+	/// <summary>
+	/// Edit this virtual function inside Derived Class with method void InitializationCode() defined to run edit code thats run just before displays main view on InitInstance()
+	/// </summary>
 	void InitializationCode()
 	{
 	}

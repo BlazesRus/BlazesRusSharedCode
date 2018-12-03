@@ -1,3 +1,7 @@
+// ***********************************************************************
+// Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+// Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+// ***********************************************************************
 #if !defined(XMLTagView_IncludeGuard)
 #define XMLTagView_IncludeGuard
 
@@ -8,14 +12,34 @@
 #include <typeinfo>
 #include <string>
 
-/////////////////////////////////////////////////////////////////////////////
-// XMLTagView window
-
+/// <summary>
+/// Class named XMLTagView.
+/// Implements the <see cref="CustomTreeView{XMLTagViewNode}" />
+/// </summary>
+/// <seealso cref="CustomTreeView{XMLTagViewNode}" />
 class XMLTagView : public CustomTreeView<XMLTagViewNode>
 {
 	CRuntime_Base01V2(XMLTagView, CustomTreeView, XMLTagViewNode)
+public:
+	/// <summary>
+	/// Initializes a new instance of the <see cref="XMLTagView"/> class.
+	/// </summary>
+	/// <param name="FilePath">The file path.</param>
 	XMLTagView(std::string FilePath);
+	/// <summary>
+	/// Prevents a default instance of the <see cref="XMLTagView"/> class from being created.
+	/// </summary>
+	XMLTagView();
+	/// <summary>
+	/// Loads the data from file.
+	/// </summary>
+	/// <param name="FilePath">The file path.</param>
+	void LoadDataFromFile(std::string FilePath);
 protected://BEGIN_AltMESSAGE_MAP()
+	/// <summary>
+	/// Gets the this message map.
+	/// </summary>
+	/// <returns>const AFX_MSGMAP*</returns>
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{
 		typedef XMLTagView ThisClass;
@@ -33,6 +57,10 @@ protected://BEGIN_AltMESSAGE_MAP()
 		return &messageMap;
 	}
 public:
+	/// <summary>
+	/// Gets the message map.
+	/// </summary>
+	/// <returns>const AFX_MSGMAP *</returns>
 	virtual const AFX_MSGMAP* GetMessageMap() const
 	{
 		return GetThisMessageMap();

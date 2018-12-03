@@ -338,7 +338,6 @@
     <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedDictionary.h" />
     <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedPDictionary.h" />
     <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\OrderedIniData.h" />
     <ClInclude Include="$(CPPSource)\GlobalCode_QuadVector\QuadVector.h" />
     <ClInclude Include="$(CPPSource)\GlobalCode_QuadVector\QuadVectorFunctions.h" />
     <ClInclude Include="$(CPPSource)\GlobalCode_StringFunctions\StringFunctions.h" />
