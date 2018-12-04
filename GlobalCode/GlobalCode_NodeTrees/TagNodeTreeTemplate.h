@@ -1,3 +1,7 @@
+// ***********************************************************************
+// Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+// Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+// ***********************************************************************
 /*	Code Created by James Michael Armstrong (NexusName:BlazesRus)(https://github.com/BlazesRus)
 	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
@@ -18,29 +22,61 @@
 
 //Derivative of LooseNodeTree for XML style data (with TagContent etc)
 //Main additions from derived code -> to TagContent related code/variables
+/// <summary>
+/// Struct named TagNodeTreeTemplateData
+/// </summary>
 struct DLL_API TagNodeTreeTemplateData
 {
 	//Send and share Data through Node optimization (less complicated detection of TagContent variable types)
+/// <summary>
+/// Struct named OptimizationData
+/// </summary>
 	struct OptimizationData
 	{
+		/// <summary>
+		/// The current havok class
+		/// </summary>
 		std::string CurrentHavokClass = "";
+		/// <summary>
+		/// The current action data section 01
+		/// </summary>
 		std::string CurrentActionDataSection_01 = "";
 	};
+	/// <summary>
+	/// Struct named TagNodeTreeSharedData
+	/// </summary>
 	struct TagNodeTreeSharedData
 	{
+		/// <summary>
+		/// The tab level
+		/// </summary>
 		size_t TabLevel = 0;
 	};
 	//Node Template for TagNodeTreeTemplateData
+/// <summary>
+/// Class named Node.
+/// Implements the <see cref="LooseNodeTreeTemplate::Node" />
+/// </summary>
+/// <seealso cref="LooseNodeTreeTemplate::Node" />
 	class Node : public LooseNodeTreeTemplate::Node
 	{
 	public:
-		//Internal Name of Tag Closing Tag Connected To(Used for Destroying Closing Tag when destroying NodesWithin) 
+		//Internal Name of Tag Closing Tag Connected To(Used for Destroying Closing Tag when destroying NodesWithin)
+/// <summary>
+/// The internal name of tag closed
+/// </summary>
 		std::string InternalNameOfTagClosed = "";
 		//Detects if either Closing Tag, Closed Tag, or Neither
 		//0 = Tag is not a Closing Tag
 		//1 = Is Closing Tag
 		//2 = Tag is Closed by Tag with InternalName of InternalNameOfTagClosed
+/// <summary>
+/// The closing status
+/// </summary>
 		unsigned __int8 ClosingStatus = 0;
+		/// <summary>
+		/// The tag content
+		/// </summary>
 		std::string TagContent = "";
 		//Type of data stores inside Tag (Strings stored in TagContent)
 		//0:Default Extracted content
@@ -72,11 +108,26 @@ struct DLL_API TagNodeTreeTemplateData
 		//250:Unknown (String)
 		//251:Unknown(String) with only whitespace and
 		//252:Node Link(Internal Name of Node Linking to);For use with HTML/XML generation of Tree
+/// <summary>
+/// The tag content type
+/// </summary>
 		unsigned __int8 TagContentType = 0;
 		//Additional Tag Args
+/// <summary>
+/// The addition tag options
+/// </summary>
 		XMLOptionList AdditionTagOptions;
+		/// <summary>
+		/// The self contained tag
+		/// </summary>
 		bool SelfContainedTag = false;
+		/// <summary>
+		/// The XML version tag
+		/// </summary>
 		bool XMLVersionTag = false;
+		/// <summary>
+		/// The using alternative tag content storage
+		/// </summary>
 		bool UsingAlternativeTagContentStorage = false;
 		//************************************
 		// Method:    CopyOtherDataFromNode
@@ -86,6 +137,10 @@ struct DLL_API TagNodeTreeTemplateData
 		// Qualifier:
 		// Parameter: Node * TargetNode
 		//************************************
+/// <summary>
+/// Copies the other data from node.
+/// </summary>
+/// <param name="TargetNode">The target node.</param>
 		inline void CopyOtherDataFromNode(Node* TargetNode)
 		{
 			TagContent = TargetNode->TagContent;
@@ -100,6 +155,9 @@ struct DLL_API TagNodeTreeTemplateData
 		// Returns:   void
 		// Qualifier:
 		//************************************
+/// <summary>
+/// Detects the type of the tag content.
+/// </summary>
 		inline void DetectTagContentType()
 		{
 			if(TagContentType == 0 && TagContent != "")
@@ -115,6 +173,10 @@ struct DLL_API TagNodeTreeTemplateData
 		// Qualifier:
 		// Parameter: NodeTreeType & NodeTreeTarget
 		//************************************
+/// <summary>
+/// Detects the tag content types within.
+/// </summary>
+/// <param name="NodeTreeTarget">The node tree target.</param>
 		template <typename NodeTreeType>
 		void DetectTagContentTypesWithin(NodeTreeType* NodeTreeTarget)
 		{
@@ -140,6 +202,10 @@ struct DLL_API TagNodeTreeTemplateData
 		// Returns:   void
 		// Qualifier:
 		//************************************
+/// <summary>
+/// Detects the tag content type v2.
+/// </summary>
+/// <param name="SharedData">The shared data.</param>
 		void DetectTagContentTypeV2(OptimizationData& SharedData);
 		//************************************
 		// Alternative version of DetectTagContentTypesWithin designed to use extra contents from hkparam tags as part of detection of ContentType
@@ -151,6 +217,11 @@ struct DLL_API TagNodeTreeTemplateData
 		// Parameter: NodeTreeType & NodeTreeTarget
 		// Parameter: OptimizationData & SharedData
 		//************************************
+/// <summary>
+/// Detects the tag content types within v2.
+/// </summary>
+/// <param name="NodeTreeTarget">The node tree target.</param>
+/// <param name="SharedData">The shared data.</param>
 		template <typename NodeTreeType>
 		void DetectTagContentTypesWithinV2(NodeTreeType* NodeTreeTarget, OptimizationData& SharedData)
 		{
@@ -171,18 +242,24 @@ struct DLL_API TagNodeTreeTemplateData
 		//************************************
 		// Method:    GenerateHTMLDoc
 		// FullName:  TagNodeTreeTemplateData::Node::GenerateHTMLDoc
-		// Access:    public 
+		// Access:    public
 		// Returns:   void
 		// Qualifier:
 		// Parameter: StringVectorList & OutputBuffer
 		// Parameter: size_t & OutputLvl
 		// Parameter: const unsigned __int8 & GenerationOptions
 		//************************************
-		void GenerateHTMLDoc(StringVectorList& OutputBuffer, size_t& OutputLvl, const unsigned __int8& GenerationOptions=0);
+/// <summary>
+/// Generates the HTML document.
+/// </summary>
+/// <param name="OutputBuffer">The output buffer.</param>
+/// <param name="OutputLvl">The output level.</param>
+/// <param name="GenerationOptions">The generation options.</param>
+		void GenerateHTMLDoc(StringVectorList& OutputBuffer, size_t& OutputLvl, const unsigned __int8& GenerationOptions = 0);
 		//************************************
 		// Method:    GenerateHTMLDocWithin
 		// FullName:  TagNodeTreeTemplateData::Node::GenerateHTMLDocWithin
-		// Access:    public 
+		// Access:    public
 		// Returns:   void
 		// Qualifier:
 		// Parameter: NodeTreeType * NodeTreeTarget
@@ -190,6 +267,13 @@ struct DLL_API TagNodeTreeTemplateData
 		// Parameter: size_t & OutputLvl
 		// Parameter: const unsigned __int8 & GenerationOptions
 		//************************************
+/// <summary>
+/// Generates the HTML document within.
+/// </summary>
+/// <param name="NodeTreeTarget">The node tree target.</param>
+/// <param name="OutputBuffer">The output buffer.</param>
+/// <param name="OutputLvl">The output level.</param>
+/// <param name="GenerationOptions">The generation options.</param>
 		template <typename NodeTreeType>
 		void GenerateHTMLDocWithin(NodeTreeType* NodeTreeTarget, StringVectorList& OutputBuffer, size_t& OutputLvl, const unsigned __int8& GenerationOptions=0)
 		{
@@ -209,6 +293,11 @@ struct DLL_API TagNodeTreeTemplateData
 		}
 	};
 	//Node Template for TagNodeTreeTemplateData(NodeType = (Templated Node here))
+/// <summary>
+/// Class named NodeTree.
+/// Implements the <see cref="LooseNodeTreeTemplate::NodeTree{NodeType}" />
+/// </summary>
+/// <seealso cref="LooseNodeTreeTemplate::NodeTree{NodeType}" />
 	template <typename NodeType>
 	class NodeTree : public LooseNodeTreeTemplate::NodeTree <NodeType>
 	{
@@ -221,6 +310,9 @@ struct DLL_API TagNodeTreeTemplateData
 		// Returns:   void
 		// Qualifier:
 		//************************************
+/// <summary>
+/// Detects the tag content types within.
+/// </summary>
 		void DetectTagContentTypesWithin()
 		{
 			size_t SizeTemp = RootInternalNodes.Size();
@@ -261,6 +353,9 @@ struct DLL_API TagNodeTreeTemplateData
 		// Returns:   void
 		// Qualifier:
 		//************************************
+/// <summary>
+/// Detects the tag content types within v2.
+/// </summary>
 		void DetectTagContentTypesWithinV2()
 		{
 			size_t SizeTemp = RootInternalNodes.Size();
@@ -296,11 +391,15 @@ struct DLL_API TagNodeTreeTemplateData
 		//************************************
 		// Method:    LoadDataFromXML
 		// FullName:  TagNodeTreeTemplateData::NodeTree<NodeType>::LoadDataFromXML
-		// Access:    public 
+		// Access:    public
 		// Returns:   void
 		// Qualifier:
 		// Parameter: std::string Filename
 		//************************************
+/// <summary>
+/// Loads the data from XML.
+/// </summary>
+/// <param name="Filename">The filename.</param>
 		void LoadDataFromXML(std::string Filename)
 		{
 			unsigned __int8 CommandStage = 0;
@@ -489,14 +588,20 @@ struct DLL_API TagNodeTreeTemplateData
 		//************************************
 		// Method:    GenerateHTMLDoc
 		// FullName:  TagNodeTreeTemplateData::NodeTree<NodeType>::GenerateHTMLDoc
-		// Access:    public 
+		// Access:    public
 		// Returns:   void
 		// Qualifier:
 		// Parameter: StringVectorList & FileStreamString
 		// Parameter: size_t & TabLevel
 		// Parameter: const unsigned __int8 GenerationOptions
 		//************************************
-		void GenerateHTMLDoc(StringVectorList& FileStreamString, size_t& TabLevel, const unsigned __int8 GenerationOptions=0)
+/// <summary>
+/// Generates the HTML document.
+/// </summary>
+/// <param name="FileStreamString">The file stream string.</param>
+/// <param name="TabLevel">The tab level.</param>
+/// <param name="GenerationOptions">The generation options.</param>
+		void GenerateHTMLDoc(StringVectorList& FileStreamString, size_t& TabLevel, const unsigned __int8 GenerationOptions = 0)
 		{
 			std::string TempString;
 			NodeType* NodePointer;
@@ -513,14 +618,20 @@ struct DLL_API TagNodeTreeTemplateData
 		// 0 = Default
 		// Method:    GenerateHTMLDoc
 		// FullName:  TagNodeTreeTemplateData::NodeTree<NodeType>::GenerateHTMLDoc
-		// Access:    public 
+		// Access:    public
 		// Returns:   void
 		// Qualifier:
 		// Parameter: std::string FileName
 		// Parameter: bool AddHeaderInfo
 		// Parameter: unsigned __int8 GenerationOptions
 		//************************************
-		void GenerateHTMLDoc(const std::string FileName, bool AddHeaderInfo=false, const unsigned __int8 GenerationOptions=0)
+/// <summary>
+/// Generates the HTML document.
+/// </summary>
+/// <param name="FileName">Name of the file.</param>
+/// <param name="AddHeaderInfo">The add header information.</param>
+/// <param name="GenerationOptions">The generation options.</param>
+		void GenerateHTMLDoc(const std::string FileName, bool AddHeaderInfo = false, const unsigned __int8 GenerationOptions = 0)
 		{
 			StringVectorList HTMLForm;
 			if(AddHeaderInfo)

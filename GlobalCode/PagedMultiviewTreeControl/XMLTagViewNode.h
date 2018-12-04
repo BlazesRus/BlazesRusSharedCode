@@ -8,6 +8,7 @@
 #include "MultiviewPrecompile.h"
 #include "TemplateMacros.h"
 #include "CustomTreeNode.h"
+#include "GlobalCode_IniData/IniDataV2.h"
 
 /// <summary>
 /// Class named XMLTagViewNode.
@@ -17,6 +18,9 @@
 class XMLTagViewNode : public CustomTreeNode
 {
 public:
+	IniDataV2 AdditionTagOptions;
+	//0=NormalTag; 1:SelfContainedTag; 2:TagIsClosing; 3:XMLVersionTag
+	int TagType = 0;
 	///<summary>
 	/// Initializes a new instance of the <see cref="XMLTagViewNode"/> class.
 	///</summary>

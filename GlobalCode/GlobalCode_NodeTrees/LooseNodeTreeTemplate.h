@@ -1,6 +1,7 @@
-/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)(https://github.com/BlazesRus)
-	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
-*/
+// ***********************************************************************
+// Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+// Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+// ***********************************************************************
 #pragma once
 #ifndef LooseNodeTreeTemplate_IncludeGuard
 #define LooseNodeTreeTemplate_IncludeGuard
@@ -30,22 +31,41 @@
 #endif
 
 //Contains LooseNodeTree BaseData for templating
+/// <summary>
+/// Struct named LooseNodeTreeTemplate
+/// </summary>
 struct DLL_API LooseNodeTreeTemplate
 {
 	//Equals <typename NodeType>
+/// <summary>
+/// Class named Node.
+/// </summary>
 	class DLL_API Node
 	{
 	public:
 #ifndef NodeTree_AlternativeInternalName
 		//InternalName of child elements to this node
+/// <summary>
+/// The child internal names
+/// </summary>
 		StringVectorList ChildInternalNames;
 		//AutoGenerate InternalName based on XMLPosition unless specified(InternalName must be unique;Required for pointer fixes)
 		//Example: ParentIndexPositionString-ListPosition ("-0" for first Tag in menu)
 		//Use GenerateUnusedInternalName(BaseInternalName) to ensure unique InternalName or Use AutoGenInternalNameFromNode() to generate based on TagPosition(might have conflicts if nodes removed but will auto-rename as needed) as long as doesn't reach over 18,446,744,073,709,551,615 attempts
+/// <summary>
+/// The internal name
+/// </summary>
 		std::string InternalName = "";
 		//InternalName of parent(fix for pointer invalidation);"(Core)"=Connected at base of NodeTree;"(LooseNodes)"=Connected to LooseNodes (not part of main 3d NodeTree)
 		//Reserve "(InvalidPointer)" for non-existing Internal names of Pointers
+/// <summary>
+/// The parent internal name
+/// </summary>
 		std::string ParentInternalName = "";
+		/// <summary>
+		/// Determines whether [is loose node].
+		/// </summary>
+		/// <returns>bool</returns>
 		bool IsLooseNode()
 		{
 			if(ParentInternalName == "LooseNodes" || ParentInternalName == "")
@@ -57,10 +77,21 @@ struct DLL_API LooseNodeTreeTemplate
 				return false;
 			}
 		}
+		/// <summary>
+		/// Searches the name of the and build output node internal.
+		/// </summary>
+		/// <param name="OutputBuffer">The output buffer.</param>
+		/// <param name="OutputLvl">The output level.</param>
 		void SearchAndBuildOutputNodeInternalName(StringVectorList& OutputBuffer, int& OutputLvl)
 		{
 			std::cout << StringFunctions::CreateTabSpace(OutputLvl) << "[" << InternalName << "]\n";
 		}
+		/// <summary>
+		/// Searches the and build output node internal name within.
+		/// </summary>
+		/// <param name="NodeTreeTarget">The node tree target.</param>
+		/// <param name="OutputBuffer">The output buffer.</param>
+		/// <param name="OutputLvl">The output level.</param>
 		template <typename NodeTreeType>
 		void SearchAndBuildOutputNodeInternalNameWithin(NodeTreeType* NodeTreeTarget, StringVectorList& OutputBuffer, int& OutputLvl)
 		{
@@ -81,34 +112,63 @@ struct DLL_API LooseNodeTreeTemplate
 //Finish Alternative InternalID code later
 #elif NodeTree_AlternativeInternalName == 1
 		//InternalID of child elements to this node
+/// <summary>
+/// The child internal names
+/// </summary>
 		VariableList <unsigned __int32> ChildInternalNames;
 		//InternalID of Node(Must be unique inside NodeTree)
+/// <summary>
+/// The internal identifier
+/// </summary>
 		unsigned __int32 InternalID = 4294967294;
 		//InternalID of ParentNode
+/// <summary>
+/// The parent internal identifier
+/// </summary>
 		unsigned __int32 ParentInternalID = 4294967294;
 #elif NodeTree_AlternativeInternalName == 2
 		//InternalID of child elements to this node
+/// <summary>
+/// The child internal names
+/// </summary>
 		VariableList <unsigned __int64> ChildInternalNames;
 		//InternalID of Node(Must be unique inside NodeTree)
+/// <summary>
+/// The internal identifier
+/// </summary>
 		unsigned __int64 InternalID = 18446744073709551615;
 		//InternalID of ParentNode
+/// <summary>
+/// The parent internal identifier
+/// </summary>
 		unsigned __int64 ParentInternalID = 18446744073709551615;
 #endif
-		//Note:Position data will be messed up if some nodes are destroyed in some situations(would need to recalculate position in such cases) 
+		//Note:Position data will be messed up if some nodes are destroyed in some situations(would need to recalculate position in such cases)
+/// <summary>
+/// The position in tree
+/// </summary>
 		TagPosition PositionInTree;
 		//Name of Node
+/// <summary>
+/// The node name
+/// </summary>
 		std::string NodeName = "";
 		//************************************
 		// Templated Function (NodeTreeType = NodeTree)
 		// Used by NodeTree::DestroyNodeAndAllItsChildren to obtain child nodes within
 		// Method:    ObtainAllChildNodeNames
 		// FullName:  LooseNodeTreeTemplate::Node::ObtainAllChildNodeNames
-		// Access:    public 
+		// Access:    public
 		// Returns:   void
 		// Qualifier:
 		// Parameter: NodeTreeType & NodeTreeTarget
 		// Parameter: StringVectorList & ListOfNodes
 		//************************************
+/// <summary>
+/// Obtains all child node names.
+/// </summary>
+/// <param name="NodeTreeTarget">The node tree target.</param>
+/// <param name="ListOfNodes">The list of nodes.</param>
 		template <typename NodeTreeType>
 		void ObtainAllChildNodeNames(NodeTreeType* NodeTreeTarget, StringVectorList& ListOfNodes)
 		{
@@ -126,44 +186,82 @@ struct DLL_API LooseNodeTreeTemplate
 				}
 			}
 		}
+		/// <summary>
+		/// Resets this instance.
+		/// </summary>
 		void Reset()
 		{
 			ChildInternalNames.Reset();
 			PositionInTree.ListPosition = -1;
 			PositionInTree.ParentIndexPosition.Reset();
 		}
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Node"/> class.
+		/// </summary>
 		Node() {}
+		/// <summary>
+		/// Finalizes an instance of the <see cref="Node"/> class.
+		/// </summary>
 		~Node() {}
 	};
 
 	//NodeType = Node (Templated Node here)
+/// <summary>
+/// Class named NodeTree.
+/// Implements the <see cref="VariableList{NodeType}" />
+/// </summary>
+/// <seealso cref="VariableList{NodeType}" />
 	template <typename NodeType>
 	class DLL_API NodeTree : public VariableList<NodeType>
 	{
 	public:
 		//NodeIndex shortcut(Turn off Node index shortcut if nodes added or removed)
 		//This is flipped on when FixCurrentNodeData fixes the current node point if not already on1
+/// <summary>
+/// The current node index used
+/// </summary>
 		bool CurrentNodeIndexUsed = false;
 		//NodeIndex of last node used (shortcut to last node in case of pointer messup if CurrentNodeIndexUsed==true)
 		//This value is set automatically when FixCurrentNodeData is used to fix the pointer to the current node
 		//Value also set when AddNodeToRoot or AddSubItem used
-		size_t CurrentNodeIndex=0;
+/// <summary>
+/// The current node index
+/// </summary>
+		size_t CurrentNodeIndex = 0;
 		//Current Saved XML Tag Edited/Added
+/// <summary>
+/// The current node
+/// </summary>
 		NodeType* CurrentNode = nullptr;
 //use NodeTree_AlternativeInternalName if need to save extra memory by storing InternalName as integer values instead of names
 #ifndef NodeTree_AlternativeInternalName
 		//InternalName of CurrentNode(for fixing Pointer)
+/// <summary>
+/// The current node internal name
+/// </summary>
 		std::string CurrentNodeInternalName = "";
 #elif NodeTree_AlternativeInternalName == 1
 		//InternalID of CurrentNode(32 Bit Int) max value=ValueNotSet (limits Number of usable nodes to between 0 - 4,294,967,293
+/// <summary>
+/// The current node internal identifier
+/// </summary>
 		unsigned __int32 CurrentNodeInternalID = 4294967294;//(unsigned __int32) std::numeric_limits<unsigned __int32>::max();
 #elif NodeTree_AlternativeInternalName == 2
 		//InternalID of CurrentNode(64 Bit Int) max value=ValueNotSet (limits Number of usable nodes to between 0 - 18,446,744,073,709,551,614
+/// <summary>
+/// The current node internal identifier
+/// </summary>
 		unsigned __int64 CurrentNodeInternalID = 18446744073709551615;//(unsigned __int64) std::numeric_limits<unsigned __int64>::max();
 #endif
 		//Used for Nodes not part of 3d Node Tree (for things such as extra data nodes in Niflib)
+/// <summary>
+/// The base loose node
+/// </summary>
 		StringVectorList BaseLooseNode;
 		//Root internal Nodes
+/// <summary>
+/// The root internal nodes
+/// </summary>
 		StringVectorList RootInternalNodes;
 		//************************************
 		// Returns True if Internal Name is already used
@@ -174,6 +272,11 @@ struct DLL_API LooseNodeTreeTemplate
 		// Qualifier:
 		// Parameter: std::string InternalName
 		//************************************
+/// <summary>
+/// Checks if internal name used.
+/// </summary>
+/// <param name="InternalName">Name of the internal.</param>
+/// <returns>bool</returns>
 		bool CheckIfInternalNameUsed(std::string InternalName)
 		{
 			bool NameUsed = false;
@@ -190,7 +293,7 @@ struct DLL_API LooseNodeTreeTemplate
 			return NameUsed;
 		}
 		//************************************
-		// Uses BaseInternalName to generate unused Internal Name with format BaseInternalNameX(AttempNumber) or BaseInternalNameXX(AttemptNumber) if over 9223372036854775807 
+		// Uses BaseInternalName to generate unused Internal Name with format BaseInternalNameX(AttempNumber) or BaseInternalNameXX(AttemptNumber) if over 9223372036854775807
 		//(Function supports 18,446,744,073,709,551,615 Attempts before it errors;But should be way more than enough in most cases in 64 Bit)
 		//Use GenerateUnusedInternalName_32Bit instead for 32Bit Programs or if know will only need 4,294,967,295 attempts
 		// Method:    GenerateUnusedInternalName
@@ -200,6 +303,11 @@ struct DLL_API LooseNodeTreeTemplate
 		// Qualifier:
 		// Parameter: std::string BaseInternalName
 		//************************************
+/// <summary>
+/// Generates the name of the unused internal.
+/// </summary>
+/// <param name="BaseInternalName">Name of the base internal.</param>
+/// <returns>std.string</returns>
 		std::string GenerateUnusedInternalName(std::string BaseInternalName)
 		{
 			const std::string BaseName = BaseInternalName;
@@ -222,6 +330,11 @@ struct DLL_API LooseNodeTreeTemplate
 			}
 			return NameTemp;
 		}
+		/// <summary>
+		/// Generates the unused internal name 32 bit.
+		/// </summary>
+		/// <param name="BaseInternalName">Name of the base internal.</param>
+		/// <returns>std.string</returns>
 		std::string GenerateUnusedInternalName_32Bit(std::string BaseInternalName)
 		{
 			const std::string BaseName = BaseInternalName;
@@ -252,6 +365,11 @@ struct DLL_API LooseNodeTreeTemplate
 		// Qualifier:
 		// Parameter: NodeType * TargetNode
 		//************************************
+/// <summary>
+/// Automatics the gen internal name from node.
+/// </summary>
+/// <param name="TargetNode">The target node.</param>
+/// <returns>std.string</returns>
 		std::string AutoGenInternalNameFromNode(NodeType* TargetNode)
 		{
 			std::string NameTemp;
@@ -272,6 +390,11 @@ struct DLL_API LooseNodeTreeTemplate
 		// Parameter: std::string NodeName
 		// Parameter: std::string InternalName
 		//************************************
+/// <summary>
+/// Adds the node to root.
+/// </summary>
+/// <param name="NodeName">Name of the node.</param>
+/// <param name="InternalName">Name of the internal.</param>
 		void AddNodeToRoot(std::string NodeName = "", std::string InternalName = "")
 		{
 			size_t Index = Size();
@@ -315,6 +438,11 @@ struct DLL_API LooseNodeTreeTemplate
 			RootInternalNodes.Add(ElementPointer->InternalName);
 			CurrentNodeInternalName = ElementPointer->InternalName;
 		}
+		/// <summary>
+		/// Adds the loose node.
+		/// </summary>
+		/// <param name="NodeName">Name of the node.</param>
+		/// <param name="InternalName">Name of the internal.</param>
 		void AddLooseNode(std::string NodeName = "", std::string InternalName = "")
 		{
 			//Write code for this later
@@ -327,6 +455,9 @@ struct DLL_API LooseNodeTreeTemplate
 		// Returns:   void
 		// Qualifier:
 		//************************************
+/// <summary>
+/// Resets the data.
+/// </summary>
 		void ResetData()
 		{
 			Reset();
@@ -339,6 +470,10 @@ struct DLL_API LooseNodeTreeTemplate
 		// Qualifier:
 		// Parameter: Node * PointerTemp
 		//************************************
+/// <summary>
+/// Sets the current node.
+/// </summary>
+/// <param name="PointerTemp">The pointer temporary.</param>
 		void SetCurrentNode(NodeType* PointerTemp)
 		{
 			CurrentNode = PointerTemp;
@@ -353,6 +488,11 @@ struct DLL_API LooseNodeTreeTemplate
 		// Qualifier:
 		// Parameter: string InternalName
 		//************************************
+/// <summary>
+/// Gets the name of the node pointer from internal.
+/// </summary>
+/// <param name="InternalName">Name of the internal.</param>
+/// <returns>NodeType *</returns>
 		NodeType* GetNodePointerFromInternalName(std::string InternalName)
 		{
 			const size_t SizeTemp = Size();
@@ -376,6 +516,10 @@ struct DLL_API LooseNodeTreeTemplate
 		// Qualifier:
 		// Parameter: string Name
 		//************************************
+/// <summary>
+/// Sets the name of the current node by.
+/// </summary>
+/// <param name="Name">The name.</param>
 		void SetCurrentNodeByName(std::string Name)
 		{
 			CurrentNode = GetNodePointerFromInternalName(Name);
@@ -396,6 +540,9 @@ struct DLL_API LooseNodeTreeTemplate
 		// Returns:   void
 		// Qualifier:
 		//************************************
+/// <summary>
+/// Fixes the current node data.
+/// </summary>
 		void FixCurrentNodeData()
 		{
 			if(CurrentNodeIndexUsed&&(CurrentNode == nullptr||CurrentNode->InternalName != CurrentNodeInternalName))
@@ -436,6 +583,9 @@ struct DLL_API LooseNodeTreeTemplate
 		// Returns:   void
 		// Qualifier:
 		//************************************
+/// <summary>
+/// Fixes the tree pointers.
+/// </summary>
 		void FixTreePointers()
 		{
 			const unsigned int SizeTemp = Size();
@@ -454,6 +604,11 @@ struct DLL_API LooseNodeTreeTemplate
 				//Fix/finish rest of this later
 			}
 		}
+		/// <summary>
+		/// Finds the first name of the node with matching node.
+		/// </summary>
+		/// <param name="TargetName">Name of the target.</param>
+		/// <returns>NodeType *</returns>
 		NodeType* FindFirstNodeWithMatchingNodeName(std::string TargetName)
 		{
 			const size_t SizeTemp = Size();
@@ -470,6 +625,13 @@ struct DLL_API LooseNodeTreeTemplate
 			}
 			return TargetNodePointer;
 		}
+		/// <summary>
+		/// Adds the sub item.
+		/// </summary>
+		/// <param name="TargetNode">The target node.</param>
+		/// <param name="SpecialModifier">The special modifier.</param>
+		/// <param name="ItemName">Name of the item.</param>
+		/// <param name="InternalName">Name of the internal.</param>
 		void AddSubItem(NodeType* TargetNode, std::string SpecialModifier = "", std::string ItemName = "", std::string InternalName = "")
 		{
 			//Adding SubItem to parent node of current node
@@ -514,6 +676,12 @@ struct DLL_API LooseNodeTreeTemplate
 			NextNode->ParentInternalName = TargetNode->InternalName;
 			TargetNode->ChildInternalNames.Add(NextNode->InternalName);
 		}
+		/// <summary>
+		/// Adds the last item.
+		/// </summary>
+		/// <param name="SpecialModifier">The special modifier.</param>
+		/// <param name="ItemName">Name of the item.</param>
+		/// <param name="InternalName">Name of the internal.</param>
 		void AddLastItem(std::string SpecialModifier = "", std::string ItemName = "", std::string InternalName = "")
 		{
 			if(CurrentNodeInternalName == "")
@@ -607,6 +775,13 @@ struct DLL_API LooseNodeTreeTemplate
 		// Parameter: std::string ItemName
 		// Parameter: std::string InternalName
 		//************************************
+/// <summary>
+/// Adds the menu item data.
+/// </summary>
+/// <param name="TargetMenuMaster">The target menu master.</param>
+/// <param name="SpecialModifier">The special modifier.</param>
+/// <param name="ItemName">Name of the item.</param>
+/// <param name="InternalName">Name of the internal.</param>
 		void AddMenuItemData(std::string TargetMenuMaster, std::string SpecialModifier = "", std::string ItemName = "", std::string InternalName = "")
 		{
 			size_t SizeTemp = Size();
@@ -696,11 +871,16 @@ struct DLL_API LooseNodeTreeTemplate
 		//************************************
 		// Method:    GetIndexOfInternalName
 		// FullName:  LooseNodeTreeTemplate::NodeTree<NodeType>::GetIndexOfInternalName
-		// Access:    public 
+		// Access:    public
 		// Returns:   size_t
 		// Qualifier:
 		// Parameter: std::string TargetNodeInternalName
 		//************************************
+/// <summary>
+/// Gets the name of the index of internal.
+/// </summary>
+/// <param name="TargetNodeInternalName">Name of the target node internal.</param>
+/// <returns>size_t</returns>
 		size_t GetIndexOfInternalName(std::string TargetNodeInternalName)
 		{
 			bool IndexFound = false;
@@ -721,11 +901,15 @@ struct DLL_API LooseNodeTreeTemplate
 		//************************************
 		// Method:    DestroyTargetNodeAndAllItsChildren
 		// FullName:  LooseNodeTreeTemplate::NodeTree<NodeType>::DestroyTargetNodeAndAllItsChildren
-		// Access:    public 
+		// Access:    public
 		// Returns:   void
 		// Qualifier:
 		// Parameter: NodeType * TargetNode
 		//************************************
+/// <summary>
+/// Destroys the target node and all its children.
+/// </summary>
+/// <param name="TargetNode">The target node.</param>
 		void DestroyTargetNodeAndAllItsChildren(NodeType* TargetNode)
 		{
 			std::string const TargetNodeInternalName = TargetNode->InternalName;
@@ -780,11 +964,15 @@ struct DLL_API LooseNodeTreeTemplate
 		//************************************
 		// Method:    DestroyNodeAndAllItsChildren
 		// FullName:  LooseNodeTreeTemplate::NodeTree<NodeType>::DestroyNodeAndAllItsChildren
-		// Access:    public 
+		// Access:    public
 		// Returns:   void
 		// Qualifier:
 		// Parameter: std::string TargetNodeInternalName
 		//************************************
+/// <summary>
+/// Destroys the node and all its children.
+/// </summary>
+/// <param name="TargetNodeInternalName">Name of the target node internal.</param>
 		void DestroyNodeAndAllItsChildren(std::string TargetNodeInternalName)
 		{
 			CurrentNodeIndexUsed = false;
@@ -801,12 +989,17 @@ struct DLL_API LooseNodeTreeTemplate
 		//************************************
 		// Method:    MoveNode
 		// FullName:  LooseNodeTreeTemplate::NodeTree<NodeType>::MoveNode
-		// Access:    public 
+		// Access:    public
 		// Returns:   void
 		// Qualifier:
 		// Parameter: std::string TargetNodeInternalName
 		// Parameter: std::string TargetNodeMoveLocationInternalName
 		//************************************
+/// <summary>
+/// Moves the node.
+/// </summary>
+/// <param name="TargetNodeInternalName">Name of the target node internal.</param>
+/// <param name="TargetNodeMoveLocationInternalName">Name of the target node move location internal.</param>
 		void MoveNode(std::string TargetNodeInternalName, std::string TargetNodeMoveLocationInternalName)
 		{
 			CurrentNodeIndexUsed = false;
@@ -869,11 +1062,15 @@ struct DLL_API LooseNodeTreeTemplate
 		//************************************
 		// Method:    OutputInternalNamesTreeToFile
 		// FullName:  LooseNodeTreeTemplate::NodeTree<NodeType>::OutputInternalNamesTreeToFile
-		// Access:    public 
+		// Access:    public
 		// Returns:   void
 		// Qualifier:
 		// Parameter: string Filename
 		//************************************
+/// <summary>
+/// Outputs the internal names tree to file.
+/// </summary>
+/// <param name="Filename">The filename.</param>
 		void OutputInternalNamesTreeToFile(std::string Filename)
 		{
 			StringVectorList OutputBuffer;
@@ -909,6 +1106,9 @@ struct DLL_API LooseNodeTreeTemplate
 		// Returns:
 		// Qualifier:
 		//************************************
+/// <summary>
+/// Initializes a new instance of the <see cref="NodeTree"/> class.
+/// </summary>
 		NodeTree() {}
 		//************************************
 		// Method:    ~NodeTree
@@ -917,6 +1117,9 @@ struct DLL_API LooseNodeTreeTemplate
 		// Returns:
 		// Qualifier:
 		//************************************
+/// <summary>
+/// Finalizes an instance of the <see cref="NodeTree"/> class.
+/// </summary>
 		~NodeTree() {}
 	};
 };

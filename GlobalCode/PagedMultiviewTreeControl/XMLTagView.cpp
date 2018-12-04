@@ -5,6 +5,7 @@
 #include <fstream>
 using namespace std;
 #include "GlobalCode_VariableLists/StringVectorList.h"
+#include "GlobalCode_IniData/IniDataV2.h"
 
 /// <summary>
 /// Loads the data from file.
@@ -21,10 +22,11 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 	StringVectorList TagDepth;
 	std::string CurrentTag = "";
 	std::string NextTag = "";
+	IniDataV2 AdditionTagOptions;
    //         signed int CommandStage = 0;
    //         //------------------------------------------------------------------------------------
 
-	//0=NormalTag; 1:SelfContainedTag; 2:TagIsClosing
+	//0=NormalTag; 1:SelfContainedTag; 2:TagIsClosing; 3:XMLVersionTag
 	int TagType = 0;
    //         bool SpecialXMLVersionTag = false;
    //         bool ArgHasNoValue = false;
@@ -88,7 +90,7 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 				{
 					TagType = 2;
 				}
-				else if(LineChar==' '||LineChar=='	')
+				else if(LineChar == ' ' || LineChar == '\t' || LineChar == '\n')
 				{
 					if (!ScanBuffer.empty())//End Tag on whitespace if buffer not empty
 					{
