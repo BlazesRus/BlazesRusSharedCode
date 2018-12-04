@@ -34,7 +34,8 @@ public:
 	/// Loads the data from file.
 	/// </summary>
 	/// <param name="FilePath">The file path.</param>
-	void LoadDataFromFile(std::string FilePath);
+	/// <returns>bool</returns>
+	bool LoadDataFromFile(std::string FilePath);
 protected://BEGIN_AltMESSAGE_MAP()
 	/// <summary>
 	/// Gets the this message map.

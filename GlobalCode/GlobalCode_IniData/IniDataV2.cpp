@@ -16,15 +16,12 @@
 /// </summary>
 /// <param name="Value">The value.</param>
 /// <returns></returns>
-
-
 inline float IniDataV2::GetFloatElementData(std::string Value)
 {
-	return FloatSettings[Value];
+    return FloatSettings[Value];
 }
 #endif
 
-//MediumDec GetMediumDecElementData(std::string Value){}
-
 #ifndef BlazesGlobalCode_DisableMediumDecIni
+//MediumDec GetMediumDecElementData(std::string Value){}
 #endif

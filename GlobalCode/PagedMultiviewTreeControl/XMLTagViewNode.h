@@ -17,9 +17,9 @@
 class XMLTagViewNode : public CustomTreeNode
 {
 public:
-	/// <summary>
+	///<summary>
 	/// Initializes a new instance of the <see cref="XMLTagViewNode"/> class.
-	/// </summary>
+	///</summary>
 	XMLTagViewNode() : CustomTreeNode()
 	{
 	}
