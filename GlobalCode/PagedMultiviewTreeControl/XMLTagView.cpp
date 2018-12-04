@@ -56,6 +56,15 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 				}
 				else if (TagType == 2)
 				{
+					if(NextTag==CurrentTag)//Normal Exiting of Previous Tag
+					{
+						TagDepth.Remove(TagDepth.size()-1);//Remove last tag from depth
+					}
+					else//Rare exiting of non-previous tag
+					{
+
+					}
+
 				}
 				else
 				{
