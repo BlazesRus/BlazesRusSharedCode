@@ -1,6 +1,7 @@
-/*	Code Created by James Michael Armstrong (NexusName:BlazesRus)
-	Latest Code Release at https://github.com/BlazesRus/NifLibEnvironment
-*/
+// ***********************************************************************
+// Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+// Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+// ***********************************************************************
 #pragma once
 #ifndef VariableList_IncludeGuard
 #define VariableList_IncludeGuard
@@ -20,6 +21,7 @@
 #endif
 
 #include <vector>
+#include <list>
 #include <string>
 #include <iostream>
 #include <sstream>//std::ostringstream definition
@@ -28,8 +30,13 @@
 #include <memory>
 #include <io.h>
 
+/// <summary>
+/// Class named VariableList.
+/// Implements the <see cref="std::vector{VariableType}" />
+/// </summary>
+/// <seealso cref="std::vector{VariableType}" />
 template <typename VariableType>
-class DLL_API VariableList : public std::vector < VariableType >
+class DLL_API VariableList : public std::vector< VariableType >
 {
 private:
 	VariableType LineData;
@@ -61,30 +68,53 @@ public:
 	{
 		return this->at(index);
 	}
-	//	Adds Value at end of vector
-	//************************************
-	// Method:    Add
-	// FullName:  VariableList<VariableType>::Add
-	// Access:    public
-	// Returns:   void
-	// Qualifier:
-	// Parameter: VariableType TempValue
-	//************************************
+
+
+	/// <summary>
+	/// Operator[]s the specified index.
+	/// </summary>
+	/// <param name="index">The index.</param>
+	/// <returns>VariableType&</returns>
+	VariableType& operator[](size_t index)
+	{
+		return this->at(index);//Doesn't seem to work for some reason
+	}
+
+	explicit operator vector<VariableType>()
+	{
+		vector<VariableType> NewSelf;
+		for(int Index=0;Index<size();++Index)
+		{
+			NewSelf.push_back(this->at(Index));
+		}
+		return NewSelf;
+	}
+
+	explicit operator list<VariableType>()
+	{
+		List<VariableType> NewSelf;
+		for (int Index = 0; Index < size(); ++Index)
+		{
+			NewSelf.push_back(this->at(Index));
+		}
+		return NewSelf;
+	}
+
+	/// <summary>
+	/// Adds the specified temporary value to the last index.
+	/// </summary>
+	/// <param name="TempValue">The temporary value.</param>
 	void Add(VariableType TempValue)
 	{
 		this->push_back(TempValue);
 	}
-	// Assign Value at index in vector (Alias for setElementAt)
-	//************************************
-	// Method:    Set
-	// FullName:  VariableList<VariableType>::Set
-	// Access:    public
-	// Returns:   void
-	// Qualifier:
-	// Parameter: int index
-	// Parameter: VariableType ElementValue
-	//************************************
-	void Set(int index, VariableType ElementValue)
+
+	/// <summary>
+	/// Assign Value at index in vector (Alias for setElementAt)
+	/// </summary>
+	/// <param name="index">The index.</param>
+	/// <param name="ElementValue">The element value.</param>
+	void Set(size_t index, VariableType ElementValue)
 	{
 		return this->SetElementAt(index, ElementValue);
 	}
@@ -474,21 +504,19 @@ public:
 		VariableType* ArrayPointer = myvector.data();
 		return *ArrayPointer[index];
 	}
-	//Return Pointer to Element Index in array. Returns nullptr if use invalid Index.(Tested to not work with VariableList<Variable> Lists)
-	//************************************
-	// Method:    GetElementPointer
-	// FullName:  VariableList<VariableType>::GetElementPointer
-	// Access:    public
-	// Returns:   VariableType*
-	// Qualifier:
-	// Parameter: int index
-	//************************************
+
+	/// <summary>
+	/// Return Pointer to Element Index in array. Returns nullptr if using invalid Index.
+	/// </summary>
+	/// <param name="index">The index.</param>
+	/// <returns>VariableType *</returns>
 	VariableType* GetElementPointer(size_t index)
 	{
 		if(index < Size())
 		{
-			VariableType* ArrayPointer = myvector.data();
-			return *ArrayPointer[index];
+			//VariableType* ArrayPointer = myvector.data();
+			//return *ArrayPointer[index];
+			return this->at(index);
 		}
 		else
 		{

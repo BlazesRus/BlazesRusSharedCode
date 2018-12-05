@@ -90,27 +90,18 @@
     <ClCompile Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
+    <ClCompile Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp">
+      <Filter>NodeTreeStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GlobalCode_NodeTrees\XMLOption.cpp">
+      <Filter>NodeTreeStuff</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(CPPSource)\GlobalCode_StringFunctions\StringFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\StringVectorList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableTypeLists.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeCtrl.h">
@@ -226,6 +217,36 @@
     </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\DLG_TreeNodeText.h">
       <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode_NodeTrees\XMLOption.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode_NodeTrees\XMLTagTree.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicXMLNode.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableList.h">
+      <Filter>Header Files\GlobalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h">
+      <Filter>Header Files\GlobalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableTypeLists.h">
+      <Filter>Header Files\GlobalCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.h">
+      <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

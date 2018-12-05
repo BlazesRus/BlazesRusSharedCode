@@ -90,6 +90,10 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 				{
 					TagType = 2;
 				}
+				else if(LineChar=='?'&&TagType==0)
+				{
+					TagType = 3;
+				}
 				else if(LineChar == ' ' || LineChar == '\t' || LineChar == '\n')
 				{
 					if (!ScanBuffer.empty())//End Tag on whitespace if buffer not empty
@@ -124,7 +128,17 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 		}
 		else
 		{
-
+			if (LineChar == '<')
+			{
+				InsideTag = true;
+			}
+			else
+			{
+				if (!CurrentTag.empty())
+				{
+			//		CurrentNode->TagContent += LineChar;
+				}
+			}
 		}
 	}
 #if !defined(BlazesGUICode_UseDictionaryBasedNodes)

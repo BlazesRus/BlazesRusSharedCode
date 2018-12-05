@@ -325,6 +325,14 @@
     </ClCompile>
     <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\ContextMenu.cpp" />
     <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\DLG_TreeNodeText.cpp" />
+    <ClCompile Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClCompile>
+    <ClCompile Include="..\GlobalCode_NodeTrees\XMLOption.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClCompile>
     <ClCompile Include="TreeCtrlPage.cpp" />
     <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\TreePage.cpp" />
     <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagView.cpp" />
@@ -350,7 +358,10 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.h" />
+    <ClInclude Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\ContextMenu.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeCtrl.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeView.h" />
@@ -365,6 +376,23 @@
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MFView.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagView.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagViewNode.h" />
+    <ClInclude Include="..\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode_NodeTrees\XMLOption.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode_NodeTrees\XMLTagTree.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClInclude>
+    <ClInclude Include="BasicXMLNode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(CPPSource)\DLLAPI.h" />

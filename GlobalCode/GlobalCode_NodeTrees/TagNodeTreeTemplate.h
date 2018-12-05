@@ -12,12 +12,12 @@
 #include "LooseNodeTreeTemplate.h"
 
 #ifdef BLAZESGLOBALCODE_LIBRARY
-	#include "..\DLLAPI.h"
+#include "..\DLLAPI.h"
 #else
 //Dummy define of DLL_API to prevent requiring 2 separate Defines of initial class headers(without needing the DLL_API define)
-	#ifndef DLL_API
-		#define DLL_API
-	#endif
+#ifndef DLL_API
+#define DLL_API
+#endif
 #endif
 
 //Derivative of LooseNodeTree for XML style data (with TagContent etc)
@@ -160,7 +160,7 @@ struct DLL_API TagNodeTreeTemplateData
 /// </summary>
 		inline void DetectTagContentType()
 		{
-			if(TagContentType == 0 && TagContent != "")
+			if (TagContentType == 0 && TagContent != "")
 			{
 				TagContentType = StringFunctions::FindContentType(TagContent);
 			}
@@ -184,11 +184,11 @@ struct DLL_API TagNodeTreeTemplateData
 			Node* TargetNode;
 			DetectTagContentType();
 			const size_t ChildListSize = ChildInternalNames.Size();
-			for(size_t Index = 0; Index < ChildListSize; ++Index)
+			for (size_t Index = 0; Index < ChildListSize; ++Index)
 			{
 				TargetNameTemp = ChildInternalNames.ElementAt(Index);
 				TargetNode = NodeTreeTarget->GetNodePointerFromInternalName(NodeName);
-				if(TargetNode != nullptr)
+				if (TargetNode != nullptr)
 				{
 					TargetNode->DetectTagContentTypesWithin(NodeTreeTarget);
 				}
@@ -229,11 +229,11 @@ struct DLL_API TagNodeTreeTemplateData
 			Node* TargetNode;
 			DetectTagContentTypeV2(&SharedData);
 			const size_t ChildListSize = ChildInternalNames.Size();
-			for(size_t Index = 0; Index < ChildListSize; ++Index)
+			for (size_t Index = 0; Index < ChildListSize; ++Index)
 			{
 				TargetNameTemp = ChildInternalNames.ElementAt(Index);
 				TargetNode = NodeTreeTarget->GetNodePointerFromInternalName(NodeName);
-				if(TargetNode != nullptr)
+				if (TargetNode != nullptr)
 				{
 					TargetNode->DetectTagContentTypesWithinV2(NodeTreeTarget, SharedData);
 				}
@@ -275,17 +275,17 @@ struct DLL_API TagNodeTreeTemplateData
 /// <param name="OutputLvl">The output level.</param>
 /// <param name="GenerationOptions">The generation options.</param>
 		template <typename NodeTreeType>
-		void GenerateHTMLDocWithin(NodeTreeType* NodeTreeTarget, StringVectorList& OutputBuffer, size_t& OutputLvl, const unsigned __int8& GenerationOptions=0)
+		void GenerateHTMLDocWithin(NodeTreeType* NodeTreeTarget, StringVectorList& OutputBuffer, size_t& OutputLvl, const unsigned __int8& GenerationOptions = 0)
 		{
 			std::string TargetNameTemp;
 			Node* TargetNode;
 			GenerateHTMLDoc(OutputBuffer, OutputLvl, GenerationOptions);
 			const size_t ChildListSize = ChildInternalNames.Size();
-			for(size_t Index = 0; Index < ChildListSize; ++Index)
+			for (size_t Index = 0; Index < ChildListSize; ++Index)
 			{
 				TargetNameTemp = ChildInternalNames.ElementAt(Index);
 				TargetNode = NodeTreeTarget->GetNodePointerFromInternalName(NodeName);
-				if(TargetNode != nullptr)
+				if (TargetNode != nullptr)
 				{
 					TargetNode->GenerateHTMLDocWithin(NodeTreeTarget, OutputBuffer, OutputLvl, GenerationOptions);
 				}
@@ -319,26 +319,26 @@ struct DLL_API TagNodeTreeTemplateData
 			std::string TargetNameTemp;
 			NodeType* TargetNode;
 			OptimizationData SharedData;
-			for(size_t Index = 0; Index < SizeTemp; ++Index)
+			for (size_t Index = 0; Index < SizeTemp; ++Index)
 			{
 				TargetNameTemp = RootInternalNodes.ElementAt(Index);
 				TargetNode = GetNodePointerFromInternalName(TargetNameTemp);
-				if(TargetNode != nullptr)
+				if (TargetNode != nullptr)
 				{
-					if(TargetNode->TagContentType == 0 && TargetNode->TagContent != "")
+					if (TargetNode->TagContentType == 0 && TargetNode->TagContent != "")
 					{
 						TargetNode->DetectTagContentTypesWithin(this, SharedData) < NodeTree > ;
 					}
 				}
 			}
 			SizeTemp = this->BaseLooseNode.Size();
-			for(size_t Index = 0; Index < SizeTemp; ++Index)
+			for (size_t Index = 0; Index < SizeTemp; ++Index)
 			{
 				TargetNameTemp = BaseLooseNode.ElementAt(Index);
 				TargetNode = GetNodePointerFromInternalName(TargetNameTemp);
-				if(TargetNode != nullptr)
+				if (TargetNode != nullptr)
 				{
-					if(TargetNode->TagContentType == 0 && TargetNode->TagContent != "")
+					if (TargetNode->TagContentType == 0 && TargetNode->TagContent != "")
 					{
 						TargetNode->DetectTagContentTypesWithin(this, SharedData) < NodeTree > ;
 					}
@@ -362,26 +362,26 @@ struct DLL_API TagNodeTreeTemplateData
 			std::string TargetNameTemp;
 			NodeType* TargetNode;
 			OptimizationData SharedData;
-			for(size_t Index = 0; Index < SizeTemp; ++Index)
+			for (size_t Index = 0; Index < SizeTemp; ++Index)
 			{
 				TargetNameTemp = RootInternalNodes.ElementAt(Index);
 				TargetNode = GetNodePointerFromInternalName(TargetNameTemp);
-				if(TargetNode != nullptr)
+				if (TargetNode != nullptr)
 				{
-					if(TargetNode->TagContentType == 0 && TargetNode->TagContent != "")
+					if (TargetNode->TagContentType == 0 && TargetNode->TagContent != "")
 					{
 						TargetNode->DetectTagContentTypesWithinV2(this, &SharedData) < NodeTree > ;
 					}
 				}
 			}
 			SizeTemp = this->BaseLooseNode.Size();
-			for(size_t Index = 0; Index < SizeTemp; ++Index)
+			for (size_t Index = 0; Index < SizeTemp; ++Index)
 			{
 				TargetNameTemp = BaseLooseNode.ElementAt(Index);
 				TargetNode = GetNodePointerFromInternalName(TargetNameTemp);
-				if(TargetNode != nullptr)
+				if (TargetNode != nullptr)
 				{
-					if(TargetNode->TagContentType == 0 && TargetNode->TagContent != "")
+					if (TargetNode->TagContentType == 0 && TargetNode->TagContent != "")
 					{
 						TargetNode->DetectTagContentTypesWithinV2(this) < NodeTree > ;
 					}
@@ -425,26 +425,26 @@ struct DLL_API TagNodeTreeTemplateData
 			//-----------------------------------------------------------------------------------
 			StringVectorList FileData;
 			FileData.LoadXMLFileWithoutComments(FileName);
-			for(size_t LineNumber = 0; FileData.StreamLineData(); ++LineNumber)
+			for (size_t LineNumber = 0; FileData.StreamLineData(); ++LineNumber)
 			{
 				LineString = FileData.CurrentStreamedLineString();
 				LineSize = LineString.length();
-				for(size_t i = 0; i < LineSize; ++i)
+				for (size_t i = 0; i < LineSize; ++i)
 				{
 					LineChar = LineString.at(i);
-					if(CommandStage == 1)
+					if (CommandStage == 1)
 					{
-						if(LineChar == '/')
+						if (LineChar == '/')
 						{
 							TagIsClosing = true;
 							CommandStage = 2;
 						}
-						else if(LineChar == '?')
+						else if (LineChar == '?')
 						{
 							CommandStage = 2;
 							SpecialXMLVersionTag = true;
 						}
-						else if(LineChar == ' ' || LineChar == '\t' || LineChar == '\n')
+						else if (LineChar == ' ' || LineChar == '\t' || LineChar == '\n')
 						{
 							//Whitespace
 						}
@@ -454,9 +454,9 @@ struct DLL_API TagNodeTreeTemplateData
 							CommandStage = 2;
 						}
 					}
-					else if(CommandStage == 0)
+					else if (CommandStage == 0)
 					{
-						if(LineChar == '<')
+						if (LineChar == '<')
 						{
 							ScriptArg01 = "";
 							CommandStage = 1;
@@ -464,35 +464,35 @@ struct DLL_API TagNodeTreeTemplateData
 						else
 						{
 							FixCurrentNodeData();
-							if(CurrentNode != nullptr)
+							if (CurrentNode != nullptr)
 							{
 								CurrentNode->TagContent += LineChar;
 							}
 						}
 					}
-					else if(CommandStage > 1)
+					else if (CommandStage > 1)
 					{
-						if(LineChar == '"')//Scan for " to allow for Whitespace in values
+						if (LineChar == '"')//Scan for " to allow for Whitespace in values
 						{
 							InsideParenthesis = !InsideParenthesis;//Flips value of boolean
 						}
-						else if(LineChar == '/' || LineChar == '?')
+						else if (LineChar == '/' || LineChar == '?')
 						{
 							SelfContainedTag = true;
 						}
-						else if(LineChar == '>')
+						else if (LineChar == '>')
 						{
 							CommandStage = 0;
 						}
-						else if(LineChar == '=')
+						else if (LineChar == '=')
 						{
 							CommandStage = 3;
 						}
-						else if(CommandStage == 3)
+						else if (CommandStage == 3)
 						{
-							if(InsideParenthesis == false && (LineChar == ' ' || LineChar == '\t' || LineChar == '\n'))
+							if (InsideParenthesis == false && (LineChar == ' ' || LineChar == '\t' || LineChar == '\n'))
 							{
-								if(ScriptArg02 != "")
+								if (ScriptArg02 != "")
 								{
 									CommandStage = 7;
 								}
@@ -504,9 +504,9 @@ struct DLL_API TagNodeTreeTemplateData
 						}
 						else
 						{
-							if(InsideParenthesis == false && (LineChar == ' ' || LineChar == '\t' || LineChar == '\n'))
+							if (InsideParenthesis == false && (LineChar == ' ' || LineChar == '\t' || LineChar == '\n'))
 							{
-								if(ScriptArg01 != "")
+								if (ScriptArg01 != "")
 								{
 									ArgHasNoValue = true;
 									CommandStage = 7;
@@ -517,19 +517,19 @@ struct DLL_API TagNodeTreeTemplateData
 								ScriptArg01 += LineChar;
 							}
 						}
-						if(CommandStage == 0)
+						if (CommandStage == 0)
 						{
 							//Execute Commands
-							if(Size() == 0)
+							if (Size() == 0)
 							{
 								AddMenuItemData("(Core)", "", TagNameTemp);
 							}
-							else if(SelfContainedTag)
+							else if (SelfContainedTag)
 							{
 								AddMenuItemData("(LastItem)", "", TagNameTemp);
 								CurrentNode->SelfContainedTag = true;
 							}
-							else if(TagIsClosing)
+							else if (TagIsClosing)
 							{
 								AddMenuItemData("(LastItem)", "AddToParentNode", TagNameTemp);
 								CurrentNode->ClosingStatus = true;
@@ -539,7 +539,7 @@ struct DLL_API TagNodeTreeTemplateData
 								AddMenuItemData("(LastItem)", "AddSubItem", TagNameTemp);
 							}
 							CurrentNode->AdditionTagOptions = TagArgments;
-							if(SpecialXMLVersionTag)
+							if (SpecialXMLVersionTag)
 							{
 								CurrentNode->XMLVersionTag = true;
 							}
@@ -549,11 +549,11 @@ struct DLL_API TagNodeTreeTemplateData
 							TagIsClosing = false;
 							SpecialXMLVersionTag = false;
 						}
-						else if(CommandStage == 7)
+						else if (CommandStage == 7)
 						{
-							if(TagNameTemp == "")
+							if (TagNameTemp == "")
 							{
-								if(ArgHasNoValue == false)
+								if (ArgHasNoValue == false)
 								{
 									TagNameHasArg02 = true;
 								}
@@ -566,7 +566,7 @@ struct DLL_API TagNodeTreeTemplateData
 							else
 							{
 								TagArg.OptionName = ScriptArg01;
-								if(ArgHasNoValue)
+								if (ArgHasNoValue)
 								{
 									TagArg.ValueType = "None";
 								}
@@ -606,7 +606,7 @@ struct DLL_API TagNodeTreeTemplateData
 			std::string TempString;
 			NodeType* NodePointer;
 			const size_t SizeTemp = RootInternalNodes.Size();
-			for(size_t Index = 0; Index < SizeTemp; ++Index)
+			for (size_t Index = 0; Index < SizeTemp; ++Index)
 			{
 				TempString = RootInternalNodes.ElementAt(Index);
 				NodePointer = GetNodePointerFromInternalName(TempString);
@@ -634,7 +634,7 @@ struct DLL_API TagNodeTreeTemplateData
 		void GenerateHTMLDoc(const std::string FileName, bool AddHeaderInfo = false, const unsigned __int8 GenerationOptions = 0)
 		{
 			StringVectorList HTMLForm;
-			if(AddHeaderInfo)
+			if (AddHeaderInfo)
 			{
 				HTMLForm.Add("<HTML>");
 				HTMLForm.Add("/t<HEAD>");
@@ -643,18 +643,18 @@ struct DLL_API TagNodeTreeTemplateData
 				HTMLForm.Add("/t<BODY>");
 			}
 			size_t OutputLvl;
-			if(AddHeaderInfo){OutputLvl = 2;}
+			if (AddHeaderInfo) { OutputLvl = 2; }
 			else { OutputLvl = 0; }
 			std::string TempString;
 			NodeType* NodePointer;
 			const size_t SizeTemp = RootInternalNodes.Size();
-			for(size_t Index = 0; Index < SizeTemp; ++Index)
+			for (size_t Index = 0; Index < SizeTemp; ++Index)
 			{
 				TempString = RootInternalNodes.ElementAt(Index);
 				NodePointer = GetNodePointerFromInternalName(TempString);
 				NodePointer->GenerateHTMLDocWithin(this, HTMLForm, OutputLvl, GenerationOptions);
 			}
-			if(AddHeaderInfo)
+			if (AddHeaderInfo)
 			{
 				HTMLForm.Add("/t</BODY>");
 				HTMLForm.Add("</HTML>");
