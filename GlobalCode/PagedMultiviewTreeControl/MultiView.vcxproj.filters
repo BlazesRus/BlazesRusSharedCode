@@ -248,6 +248,9 @@
     <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
+    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\PagedMultiviewTreeControl\CustomTreeView.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="$(CPPSource)\PagedMultiviewTreeControl\res\MultiView.ico">

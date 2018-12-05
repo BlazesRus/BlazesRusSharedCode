@@ -168,6 +168,11 @@ public:
 #endif
 };
 
+class DLL_API UXIntList : public VariableList <unsigned __int64>
+{
+
+};
+
 class DLL_API DoubleList : public VariableList < double >
 {
 public:

@@ -42,15 +42,15 @@ public:
 		bUseDefaultTextColor = TRUE;
 
 		bOpen = TRUE;
-#ifdef BlazesGUICode_UseDictionaryBasedNodes
-		pParent_Key = 18446744073709551615;//Maxed value = NULL
-		pSibling_Key = 18446744073709551615;
-		pChild_Key = 18446744073709551615;
-#else
-		pParent = NULL;
-		pSibling = NULL;
-		pChild = NULL;
-#endif
+//#ifdef BlazesGUICode_UseDictionaryBasedNodes
+//		pParent_Key = 18446744073709551615;//Maxed value = NULL
+//		pSibling_Key = 18446744073709551615;
+//		pChild_Key = 18446744073709551615;
+//#else
+//		pParent = NULL;
+//		pSibling = NULL;
+//		pChild = NULL;
+//#endif
 		NBMenuType = -1;//Use default node context menu options
 		crText = RGB(240,240,240);//Default to a off-white grey
 	}
@@ -66,15 +66,15 @@ public:
 		bUseDefaultTextColor = TRUE;
 
 		bOpen = TRUE;
-#ifdef BlazesGUICode_UseDictionaryBasedNodes
-		pParent_Key = 18446744073709551615;
-		pSibling_Key = 18446744073709551615;
-		pChild_Key = 18446744073709551615;
-#else
-		pParent = NULL;
-		pSibling = NULL;
-		pChild = NULL;
-#endif
+//#ifdef BlazesGUICode_UseDictionaryBasedNodes
+//		pParent_Key = 18446744073709551615;
+//		pSibling_Key = 18446744073709551615;
+//		pChild_Key = 18446744073709551615;
+//#else
+//		pParent = NULL;
+//		pSibling = NULL;
+//		pChild = NULL;
+//#endif
 		NBMenuType = MenuType;//Use non-default node context menu defined inside a (List<CustomOrderedDictionary<string, ButtonContextData>>)? or defined in override function in CustomTreeView
 		crText = RGB(240, 240, 240);
 	}
@@ -109,33 +109,33 @@ public:
 	/// The b open
 	/// </summary>
 	BOOL    bOpen;
-#ifdef BlazesGUICode_UseDictionaryBasedNodes
-	/// <summary>
-	/// The p parent
-	/// </summary>
-	unsigned __int64 pParent_Key;
-	/// <summary>
-	/// The p sibling
-	/// </summary>
-	unsigned __int64 pSibling_Key;
-	/// <summary>
-	/// The p child
-	/// </summary>
-	unsigned __int64 pChild_Key;
-#else
-	/// <summary>
-	/// The p parent
-	/// </summary>
-	CustomTreeNode* pParent;
-	/// <summary>
-	/// The p sibling
-	/// </summary>
-	CustomTreeNode* pSibling;
-	/// <summary>
-	/// The p child
-	/// </summary>
-	CustomTreeNode* pChild;
-#endif
+//#ifdef BlazesGUICode_UseDictionaryBasedNodes
+//	/// <summary>
+//	/// The p parent
+//	/// </summary>
+//	unsigned __int64 pParent_Key;
+//	/// <summary>
+//	/// The p sibling
+//	/// </summary>
+//	unsigned __int64 pSibling_Key;
+//	/// <summary>
+//	/// The p child
+//	/// </summary>
+//	unsigned __int64 pChild_Key;
+//#else
+//	/// <summary>
+//	/// The p parent
+//	/// </summary>
+//	CustomTreeNode* pParent;
+//	/// <summary>
+//	/// The p sibling
+//	/// </summary>
+//	CustomTreeNode* pSibling;
+//	/// <summary>
+//	/// The p child
+//	/// </summary>
+//	CustomTreeNode* pChild;
+//#endif
 
 	/// <summary>
 	/// Implements the operator ConvertedType* operator.

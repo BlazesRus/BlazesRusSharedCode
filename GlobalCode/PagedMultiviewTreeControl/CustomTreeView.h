@@ -3,13 +3,10 @@
 // Code based on https://www.codeproject.com/Articles/9887/CStaticTreeCtrl-A-CStatic-derived-custom-Tree-cont
 // Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 // ***********************************************************************
-
 #if !defined(CustomTreeView_IncludeGuard)
 #define CustomTreeView_IncludeGuard
 
 #include "MultiViewDoc.h"
-//#include "StaticTreeCtrl.h"
-//#include "TreePage.h"
 #include "TreeCtrlPage.h"
 
 #include "WP_APPDefines.h"
@@ -20,13 +17,8 @@
 #include "TemplateMacros.h"
 #include <string>
 #include <typeinfo>
-
-#if defined(Enable_CustomTreeMultiRoot)
-#include "GlobalCode_VariableLists/VariableList.h"
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// CustomTreeView view
+#include "GlobalCode_IniData/IndexedDictionary.h"
+#include "GlobalCode_VariableLists/VariableTypeLists.h"
 
 /// <summary>
 /// Edited derivable version of CustomTreeControl's CViewTreeCtrl class converted into a view
@@ -34,55 +26,26 @@
 /// <para/>NodeCtrl refers to NodeTree holding this class
 /// <para/>NodeType refers to derived class's name (for keeping inherited functionality)
 /// </summary>
-template <typename TreeNode>
+template <typename TreeNode, typename DocViewType=MultiViewDoc>
 class CustomTreeView : public CView
 {
 	CRuntime_Arg01V2(CustomTreeView, TreeNode, CView)
 public:
 	typedef TreeNode NodeType;
-// Attributes
-// Operations
-	CustomTreeView()
-	{
-		m_pTopNode = new NodeType();	// The tree top
-
-		m_iIndent = 16;				// Indentation for tree branches
-		m_iPadding = 4;				// Padding between tree and the control border
-
-		m_bShowLines = TRUE;				// Show lines by default
-		m_bScrollBarMessage = FALSE;			// Only relevant when calculating the scrollbar
-
-		m_iDocHeight = 0;				// A polite yet meaningless default
-
-		m_crDefaultTextColor = RGB(58, 58, 58);	// Some default
-		m_crConnectingLines = RGB(128, 128, 128);	// Some default
-#ifdef EnableCustomTreeSounds
-		m_bAudioOn = FALSE;			// The context menu audio
+#ifdef UNICODE
+	LPCWSTR ViewName;
+#else
+	LPCSTR ViewName;
 #endif
-		// Safeguards
-		SetTextFont(8, FALSE, FALSE, "Arial Unicode MS");
-		m_pSelected = NULL;
-	}
-
-public:
-	MultiViewDoc* GetDocument()
-	{
-		return (MultiViewDoc*)m_pDocument;
-	}
-
-// Implementation
-protected:
-#ifdef _DEBUG
-
-	virtual void AssertValid() const
-	{
-		CView::AssertValid();
-}
-	virtual void Dump(CDumpContext& dc) const
-	{
-		CView::Dump(dc);
-	}
-#endif
+	static unsigned _int64 EmptyNode = 18446744073709551615;
+	/// <summary>
+	/// The node bank holding all nodes accessed (Dictionary instead of List so that preserves position when nodes removed or added within)
+	/// </summary>
+	IndexedLongDictionary<TreeNode> NodeBank;
+	/// <summary>
+	/// List of indexes for Root level nodes inside NodeBank
+	/// </summary>
+	UXIntList RootLvlNodes;
 // Attributes
 protected:
 	LOGFONT			m_lgFont;
@@ -105,25 +68,25 @@ protected:
 	BOOL			m_bAudioOn;
 #endif
 public:
-#if !defined(BlazesGUICode_UseDictionaryBasedNodes)
-	NodeType*		m_pTopNode;
-	NodeType*		m_pSelected;
-#else
-	NodeType* m_pTopNode()
-	{
-
-	}
-	NodeType* m_pSelected()
-	{
-
-	}
-	unsigned __int64 pTopNode_Key;
-	unsigned __int64 pTopNode_Key;
-	IndexedLongDictionary<NodeType> NodeStorage;
-	unsigned __int64 RootKey = 0;
-#endif
+//#if !defined(BlazesGUICode_UseDictionaryBasedNodes)
+//	NodeType*		m_pTopNode;
+//	NodeType*		m_pSelected;
+//#else
+//	NodeType* m_pTopNode()
+//	{
+//
+//	}
+//	NodeType* m_pSelected()
+//	{
+//
+//	}
+//	unsigned __int64 pTopNode_Key;
+//	unsigned __int64 pTopNode_Key;
+//	IndexedLongDictionary<NodeType> NodeStorage;
+//	unsigned __int64 RootKey = 0;
+//#endif
 public:
-	// Operations
+// Operations
 	virtual void SetTextFont(LONG nHeight, BOOL bBold, BOOL bItalic, const CString& csFaceName)
 	{
 		m_lgFont.lfHeight = -MulDiv(nHeight, GetDeviceCaps(GetDC()->m_hDC, LOGPIXELSY), 72);
@@ -203,64 +166,64 @@ public:
 		m_crDefaultTextColor = crText;
 	}
 
-	NodeType* InsertSibling(NodeType* pInsertAfter, const CString& csLabel,
-		COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE,
-		BOOL bInvalidate = FALSE)
+	//NodeType* InsertSibling(NodeType* pInsertAfter, const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	unsigned __int64 InsertSibling(unsigned __int64 pInsertAfter, const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
-		ASSERT(pInsertAfter != NULL);	// Make sure the node exists
+		//ASSERT(pInsertAfter != NULL);	// Make sure the node exists
 
-		NodeType* pNewNode = new NodeType();
+		//NodeType* pNewNode = new NodeType();
 
-		pNewNode->csLabel = csLabel;					// New node's label
+		//pNewNode->csLabel = csLabel;					// New node's label
 
-		if (bUseDefaultTextColor)
-			pNewNode->bUseDefaultTextColor = TRUE;		// Use the default text color
-		else
-			pNewNode->crText = crText;					// New node's text color
+		//if (bUseDefaultTextColor)
+		//	pNewNode->bUseDefaultTextColor = TRUE;		// Use the default text color
+		//else
+		//	pNewNode->crText = crText;					// New node's text color
 
-		pNewNode->pParent = pInsertAfter->pParent;	// Has the same parent
+		//pNewNode->pParent = pInsertAfter->pParent;	// Has the same parent
 
-													// Insert the new node between pInsertAfter and its next sibling
-		pNewNode->pSibling = pInsertAfter->pSibling;
-		pInsertAfter->pSibling = pNewNode;
+		//											// Insert the new node between pInsertAfter and its next sibling
+		//pNewNode->pSibling = pInsertAfter->pSibling;
+		//pInsertAfter->pSibling = pNewNode;
 
-		// Repaint the control if so desired
-		if (bInvalidate)
-			Invalidate();
+		//// Repaint the control if so desired
+		//if (bInvalidate)
+		//	Invalidate();
 
-		return pNewNode;
+		//return pNewNode;
 	}
-	NodeType* InsertChild(NodeType* pParent, const CString& csLabel,
-		COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE,
-		BOOL bInvalidate = FALSE)
+	//NodeType* InsertChild(NodeType* pParent, const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	unsigned __int64 InsertChild(unsigned __int64 pParent, const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
-		ASSERT(pParent != NULL);	// Make sure the node exists
+		//ASSERT(pParent != NULL);	// Make sure the node exists
 
-		if (pParent == m_pTopNode)	// Check for top node
-			pParent = m_pTopNode;
+		//if (pParent == m_pTopNode)	// Check for top node
+		//	pParent = m_pTopNode;
 
-		NodeType* pNewNode = new NodeType();
+		//NodeType* pNewNode = new NodeType();
 
-		// Basic node information
-		pNewNode->csLabel = csLabel;	// New node's label
+		//// Basic node information
+		//pNewNode->csLabel = csLabel;	// New node's label
 
-		if (bUseDefaultTextColor)
-			pNewNode->bUseDefaultTextColor = TRUE;		// Use the default text color
-		else
-			pNewNode->crText = crText;					// New node's text color
+		//if (bUseDefaultTextColor)
+		//	pNewNode->bUseDefaultTextColor = TRUE;		// Use the default text color
+		//else
+		//	pNewNode->crText = crText;					// New node's text color
 
-		pNewNode->pParent = pParent;	// New node's parent
+		//pNewNode->pParent = pParent;	// New node's parent
 
-										// Insert the new node as pParent's first child
-		pNewNode->pSibling = pParent->pChild;
-		pParent->pChild = pNewNode;
+		//								// Insert the new node as pParent's first child
+		//pNewNode->pSibling = pParent->pChild;
+		//pParent->pChild = pNewNode;
 
-		// Repaint the control if so desired
-		if (bInvalidate)
-			Invalidate();
+		//// Repaint the control if so desired
+		//if (bInvalidate)
+		//	Invalidate();
 
-		return pNewNode;
+		//return pNewNode;
 	}
+
+	/*virtual NodeType* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)*/
 	/// <summary>
 	/// Adds to root.
 	/// </summary>
@@ -271,45 +234,48 @@ public:
 	/// <returns></returns>
 	virtual NodeType* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
-		return InsertChild(m_pTopNode, csLabel, crText, bUseDefaultTextColor, bInvalidate);
+		//return InsertChild(m_pTopNode, csLabel, crText, bUseDefaultTextColor, bInvalidate);
 	}
 
-	virtual void DeleteNode(NodeType* pNode, BOOL bInvalidate = FALSE)
+	/*virtual void DeleteNode(NodeType* pNode, BOOL bInvalidate = FALSE)*/
+	virtual void DeleteNode(unsigned __int64 pNode, BOOL bInvalidate = FALSE)
 	{
-		ASSERT(pNode != NULL);	// Make sure the node exists
+		//ASSERT(pNode != NULL);	// Make sure the node exists
+		//						// Don't delete the top node
+		//if (pNode == m_pTopNode)
+		//	DeleteNode(m_pTopNode, bInvalidate);
 
-								// Don't delete the top node
-		if (pNode == m_pTopNode)
-			DeleteNode(m_pTopNode, bInvalidate);
+		//// Delete children
+		//if (pNode->pChild != NULL)
+		//	DeleteNodeRecursive((NodeType*)pNode->pChild);
 
-		// Delete children
-		if (pNode->pChild != NULL)
-			DeleteNodeRecursive((NodeType*)pNode->pChild);
+		//// If this node is not the top node, fix pointers in sibling list
+		//if (pNode != m_pTopNode)
+		//{
+		//	NodeType* pRunner = (NodeType*)pNode->pParent;
 
-		// If this node is not the top node, fix pointers in sibling list
-		if (pNode != m_pTopNode)
-		{
-			NodeType* pRunner = (NodeType*)pNode->pParent;
+		//	// If first child, set the parent pointer to the next sibling
+		//	// Otherwise, find sibling before and set its sibling pointer to the node's sibling
+		//	if (pRunner->pChild == pNode)
+		//		pRunner->pChild = pNode->pSibling;
+		//	else
+		//	{
+		//		pRunner = (NodeType*)pRunner->pChild;
 
-			// If first child, set the parent pointer to the next sibling
-			// Otherwise, find sibling before and set its sibling pointer to the node's sibling
-			if (pRunner->pChild == pNode)
-				pRunner->pChild = pNode->pSibling;
-			else
-			{
-				pRunner = (NodeType*)pRunner->pChild;
+		//		// Loop until the next node is the one being deleted
+		//		while (pRunner->pSibling != pNode)
+		//			pRunner = (NodeType*)pRunner->pSibling;
 
-				// Loop until the next node is the one being deleted
-				while (pRunner->pSibling != pNode)
-					pRunner = (NodeType*)pRunner->pSibling;
+		//		pRunner->pSibling = pNode->pSibling;
+		//	}
 
-				pRunner->pSibling = pNode->pSibling;
-			}
+		//	delete pNode;
 
-			delete pNode;
-
-			pNode = NULL;
-		}
+		//	pNode = NULL;
+		//}
+		size_t RootIndex = RootLvlNodes.GetElementIndex(pNode);
+		if (RootIndex != -1) { RootLvlNodes.Remove(RootIndex); }
+		DeleteNodeRecursive(pNode);
 
 		// Repaint the control if so desired
 		if (bInvalidate)
@@ -362,17 +328,18 @@ public:
 
 protected:
 	// Recursive delete
-	void DeleteNodeRecursive(NodeType* pNode)
+	/*void DeleteNodeRecursive(NodeType* pNode)*/
+	void DeleteNodeRecursive(unsigned _int64 pNode)
 	{
-		if (pNode->pSibling != NULL)
-			DeleteNodeRecursive((NodeType*)pNode->pSibling);
+		//if (pNode->pSibling != NULL)
+		//	DeleteNodeRecursive((NodeType*)pNode->pSibling);
 
-		if (pNode->pChild != NULL)
-			DeleteNodeRecursive((NodeType*)pNode->pChild);
+		//if (pNode->pChild != NULL)
+		//	DeleteNodeRecursive((NodeType*)pNode->pChild);
 
-		delete pNode;
+		//delete pNode;
 
-		pNode = NULL;
+		//pNode = NULL;
 	}
 
 	int DrawNodesRecursive(CDC* pDC, NodeType* pNode, int x, int y, CRect rFrame)
@@ -529,21 +496,21 @@ protected:
 
 	NodeType* FindNodeByPoint(const CPoint& point, NodeType* pNode)
 	{
-		NodeType* pFound = NULL;
+		//NodeType* pFound = NULL;
 
-		// Found it?
-		if (pNode->rNode.PtInRect(point))
-			pFound = pNode;
+		//// Found it?
+		//if (pNode->rNode.PtInRect(point))
+		//	pFound = pNode;
 
-		// If this node isn't it then check the node's children if it is open and there are any
-		if (pFound == NULL && pNode->bOpen && pNode->pChild != NULL)
-			pFound = FindNodeByPoint(point, (NodeType*)pNode->pChild);
+		//// If this node isn't it then check the node's children if it is open and there are any
+		//if (pFound == NULL && pNode->bOpen && pNode->pChild != NULL)
+		//	pFound = FindNodeByPoint(point, (NodeType*)pNode->pChild);
 
-		// If didn't find it among the node's children, then check the next sibling
-		if (pFound == NULL && pNode->pSibling != NULL)
-			pFound = FindNodeByPoint(point, (NodeType*)pNode->pSibling);
+		//// If didn't find it among the node's children, then check the next sibling
+		//if (pFound == NULL && pNode->pSibling != NULL)
+		//	pFound = FindNodeByPoint(point, (NodeType*)pNode->pSibling);
 
-		return pFound;
+		//return pFound;
 	}
 	BOOL NodeTextDlg(CString& csText)
 	{
@@ -655,35 +622,34 @@ protected:
 	{
 		SetBackgroundBitmap(TRUE);
 	}
-
-	// Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CustomTreeView)
-protected:
-	virtual void OnDraw(CDC* pDC)
-	{
-		MultiViewDoc* pDoc = GetDocument();
-		pDC->TextOut(400, 300, "Other view");
-		pDC->TextOut(400, 320, pDoc->m_str);
-		// TODO: add draw code here
-	}      // overridden to draw this view
-
-	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
-	{
-		if (message == WM_NCHITTEST || message == WM_NCLBUTTONDOWN || message == WM_NCLBUTTONDBLCLK)
-			return ::DefWindowProc(m_hWnd, message, wParam, lParam);
-
-		return CView::WindowProc(message, wParam, lParam);
-	}
-	//}}AFX_VIRTUAL
-
-	// Implementation
 public:
+	CustomTreeView()
+	{
+		//m_pTopNode = new NodeType();	// The tree top
+
+		m_iIndent = 16;				// Indentation for tree branches
+		m_iPadding = 4;				// Padding between tree and the control border
+
+		m_bShowLines = TRUE;				// Show lines by default
+		m_bScrollBarMessage = FALSE;			// Only relevant when calculating the scrollbar
+
+		m_iDocHeight = 0;				// A polite yet meaningless default
+
+		m_crDefaultTextColor = RGB(58, 58, 58);	// Some default
+		m_crConnectingLines = RGB(128, 128, 128);	// Some default
+
+		// Safeguards
+		SetTextFont(8, FALSE, FALSE, "Arial Unicode MS");
+		//m_pSelected = NULL;
+		ViewName = "TreeView";
+	}
 	virtual ~CustomTreeView()
 	{
-		DeleteNode(m_pTopNode);	// Delete all children if there are any
-		delete m_pTopNode;			// Delete top node
-		m_pTopNode = NULL;
+		//DeleteNode(m_pTopNode);	// Delete all children if there are any
+		//delete m_pTopNode;			// Delete top node
+		//m_pTopNode = NULL;
+		NodeBank.clear();
+		RootLvlNodes.clear();
 
 		m_Font.DeleteObject();
 
@@ -691,14 +657,24 @@ public:
 			m_bmpBackground.DeleteObject();
 	}
 
-	// Generated message map functions
-protected:
-	//{{AFX_MSG(CustomTreeView)
-	afx_msg void OnPaint()
+public:
+	DocViewType* GetDocument()
 	{
-		CPaintDC dc(this); // Device context for painting
+		return (DocViewType*)m_pDocument;
+	}
 
-						   // Double-buffering
+// Overrides
+	// ClassWizard generated virtual function overrides
+	//{{AFX_VIRTUAL(CustomTreeView)
+	protected:
+		virtual void OnDraw(CDC* pDC)
+		{
+			DocViewType* pDoc = GetDocument();
+			pDC->TextOut(400, 300, "Other view");
+			pDC->TextOut(400, 320, pDoc->m_str);
+
+		CPaintDC dc(this); // Device context for painting
+	// Double-buffering
 		CDC*		pDCMem = new CDC;
 		CBitmap*	pOldBitmap = NULL;
 		CBitmap		bmpCanvas;
@@ -860,62 +836,6 @@ protected:
 		return CView::OnMouseWheel(nFlags, zDelta, pt);
 	}
 
-public:
-	/// <summary>
-	/// Display default context menu
-	/// </summary>
-	/// <param name="ccmPopUp">The CCM pop up.</param>
-	/// <param name="nFlag">The n flag.</param>
-	/// <param name="pDC">The p dc.</param>
-	void DefaultContextMenu(CContextMenu* ccmPopUp, UINT nFlag, CDC* pDC)
-	{
-#ifdef EnableCustomTreeSounds
-		// Node related items
-		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_INSERTCHILD, _T("Insert Child"), _T("insertChild.wav"), pDC);
-		ccmPopUp->AppendMenuItem(nFlag, CM_INSERTSIBLING, _T("Insert Sibling"), _T("insertSibling.wav"), pDC);
-		ccmPopUp->AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), _T("deleteNode.wav"), pDC);
-		ccmPopUp->AppendMenuItem(nFlag, CM_MODIFYNODETEXT, _T("Modify Node Text"), _T("modifyNodeText.wav"), pDC);
-		ccmPopUp->AppendMenuItem(nFlag, CM_CHANGENODECOLOR, _T("Change Node Color"), _T("changeNodeColor.wav"), pDC);
-
-		ccmPopUp->AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
-
-		// Connecting lines related items
-		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_TOGGLECONNECTINGLINES, _T("Toggle Connecting Lines"), _T("toggleConnectingLines.wav"), pDC);
-		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETCONNECTINGLINESCOLOR, _T("Set Connecting Lines Color"), _T("setConnectingLinesColor.wav"), pDC);
-
-		ccmPopUp->AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
-
-		// Tree appearance items
-		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETFONT, _T("Set Font"), _T("setFont.wav"), pDC);
-		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETDEFAULTCOLOR, _T("Set Default Text Color"), _T("setDefaultColor.wav"), pDC);
-		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETBACKGROUNDBITMAP, _T("Set Background Bitmap"), _T("setBackgroundBitmap.wav"), pDC);
-
-		ccmPopUp->AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
-
-		// Context menu sound toggle item
-		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_TOGGLEMENUSOUND, _T("Toggle Menu Sound"), _T("toggleMenuSound.wav"), pDC);
-#else
-		// Node related items
-		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_INSERTCHILD, _T("Insert Child"), pDC);
-		ccmPopUp->AppendMenuItem(nFlag, CM_INSERTSIBLING, _T("Insert Sibling"), pDC);
-		ccmPopUp->AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), pDC);
-		ccmPopUp->AppendMenuItem(nFlag, CM_MODIFYNODETEXT, _T("Modify Node Text"), pDC);
-		ccmPopUp->AppendMenuItem(nFlag, CM_CHANGENODECOLOR, _T("Change Node Color"), pDC);
-
-		ccmPopUp->AppendMenuItem(MF_SEPARATOR, 0, _T(""), pDC);
-
-		// Connecting lines related items
-		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_TOGGLECONNECTINGLINES, _T("Toggle Connecting Lines"), pDC);
-		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETCONNECTINGLINESCOLOR, _T("Set Connecting Lines Color"), pDC);
-
-		ccmPopUp->AppendMenuItem(MF_SEPARATOR, 0, _T(""), pDC);
-
-		// Tree appearance items
-		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETFONT, _T("Set Font"), pDC);
-		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETDEFAULTCOLOR, _T("Set Default Text Color"), pDC);
-		ccmPopUp->AppendMenuItem(MF_ENABLED, CM_SETBACKGROUNDBITMAP, _T("Set Background Bitmap"), pDC);
-#endif
-	}
 protected:
 	/// <summary>
 	/// Applies the menu generation.
@@ -925,9 +845,8 @@ protected:
 	/// <param name="pDC">The p dc.</param>
 	virtual void ApplyMenuGen(CContextMenu* ccmPopUp, UINT nFlag, CDC* pDC)
 	{
-		return DefaultContextMenu(ccmPopUp, nFlag, pDC);
+		ccmPopUp->AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), pDC);
 	}
-
 
 
 	/// <summary>
@@ -996,11 +915,22 @@ protected:
 		pDC->RestoreDC(iSaved);
 		ReleaseDC(pDC);
 	}
-	//}}AFX_MSG
-	//DECLARE_MESSAGE_MAP()
+	//}}AFX_VIRTUAL
+
+// Implementation
 protected:
+#ifdef _DEBUG
 
-
+	virtual void AssertValid() const
+	{
+		CView::AssertValid();
+}
+	virtual void Dump(CDumpContext& dc) const
+	{
+		CView::Dump(dc);
+	}
+#endif
+protected:
 	/// <summary>
 	/// Gets this message map.
 	/// </summary>
@@ -1053,4 +983,4 @@ inline AFX_COMDAT const CRuntimeClass CustomTreeView<TreeNode>::DEFINERTCNAME01(
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
-#endif
+#endif // !defined(AFX_CustomTreeView_H__34535BED_8D5C_453E_9DAE_F8A9413ABF6E__INCLUDED_)
