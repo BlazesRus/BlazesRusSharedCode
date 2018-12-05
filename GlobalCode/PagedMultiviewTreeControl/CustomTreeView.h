@@ -273,8 +273,6 @@ public:
 
 		//	pNode = NULL;
 		//}
-		size_t RootIndex = RootLvlNodes.GetElementIndex(pNode);
-		if (RootIndex != -1) { RootLvlNodes.Remove(RootIndex); }
 		DeleteNodeRecursive(pNode);
 
 		// Repaint the control if so desired
@@ -328,8 +326,7 @@ public:
 
 protected:
 	// Recursive delete
-	/*void DeleteNodeRecursive(NodeType* pNode)*/
-	void DeleteNodeRecursive(unsigned _int64 pNode)
+	void DeleteNodeRecursive(unsigned __int64 pNode)
 	{
 		//if (pNode->pSibling != NULL)
 		//	DeleteNodeRecursive((NodeType*)pNode->pSibling);
@@ -340,8 +337,17 @@ protected:
 		//delete pNode;
 
 		//pNode = NULL;
-	}
+		size_t RootIndex = RootLvlNodes.GetElementIndex(pNode);
+		if (RootIndex != -1) { RootLvlNodes.Remove(RootIndex); }
+		XUList NodesToDelete;
+		NodesToDelete.Add(pNode);
+		//Delete all child nodes connected(can't delete from within node deconstruction since node has no knowledge of TreeView)
 
+		for(size_t Index=0;Index<NodesToDelete;++Index)
+		{
+			NodeBank.Remove(NodesToDelete(Index));
+		}
+	}
 	int DrawNodesRecursive(CDC* pDC, NodeType* pNode, int x, int y, CRect rFrame)
 	{
 		int		iDocHeight = 0;		// Total document height

@@ -43,9 +43,9 @@ public:
 
 		bOpen = TRUE;
 //#ifdef BlazesGUICode_UseDictionaryBasedNodes
-//		pParent_Key = 18446744073709551615;//Maxed value = NULL
-//		pSibling_Key = 18446744073709551615;
-//		pChild_Key = 18446744073709551615;
+		pParent_Key = 18446744073709551615;//Maxed value = NULL
+		pSibling_Key = 18446744073709551615;
+		pChild_Key = 18446744073709551615;
 //#else
 //		pParent = NULL;
 //		pSibling = NULL;
@@ -67,9 +67,9 @@ public:
 
 		bOpen = TRUE;
 //#ifdef BlazesGUICode_UseDictionaryBasedNodes
-//		pParent_Key = 18446744073709551615;
-//		pSibling_Key = 18446744073709551615;
-//		pChild_Key = 18446744073709551615;
+		pParent_Key = 18446744073709551615;
+		pSibling_Key = 18446744073709551615;
+		pChild_Key = 18446744073709551615;
 //#else
 //		pParent = NULL;
 //		pSibling = NULL;
@@ -110,18 +110,18 @@ public:
 	/// </summary>
 	BOOL    bOpen;
 //#ifdef BlazesGUICode_UseDictionaryBasedNodes
-//	/// <summary>
-//	/// The p parent
-//	/// </summary>
-//	unsigned __int64 pParent_Key;
-//	/// <summary>
-//	/// The p sibling
-//	/// </summary>
-//	unsigned __int64 pSibling_Key;
-//	/// <summary>
-//	/// The p child
-//	/// </summary>
-//	unsigned __int64 pChild_Key;
+	/// <summary>
+	/// The p parent
+	/// </summary>
+	unsigned __int64 pParent_Key;
+	/// <summary>
+	/// The p sibling
+	/// </summary>
+	unsigned __int64 pSibling_Key;
+	/// <summary>
+	/// The p child
+	/// </summary>
+	unsigned __int64 pChild_Key;
 //#else
 //	/// <summary>
 //	/// The p parent
