@@ -18,6 +18,9 @@
 class XMLTagViewNode : public CustomTreeNode
 {
 public:
+	/// <summary>
+	/// The addition tag options
+	/// </summary>
 	IniDataV2 AdditionTagOptions;
 	//0=NormalTag; 1:SelfContainedTag; 2:TagIsClosing; 3:XMLVersionTag
 	int TagType = 0;
