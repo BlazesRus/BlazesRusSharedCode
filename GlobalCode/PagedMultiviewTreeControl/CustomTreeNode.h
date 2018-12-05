@@ -12,10 +12,11 @@
 #include "MultiviewPrecompile.h"
 #include "ContextMenu.h"
 #include "DLG_TreeNodeText.h"
-#ifdef BlazesGUICode_UseDictionaryBasedNodes
-#include "GlobalCode_IniData/IndexedDictionary.h"
-#endif
-#include "GlobalCode_IniData/CustomOrderedDictionary.h"
+//#ifdef BlazesGUICode_UseDictionaryBasedNodes
+//#include "GlobalCode_IniData/IndexedDictionary.h"
+//#endif
+//#include "GlobalCode_IniData/CustomOrderedDictionary.h"
+#include "GlobalCode_VariableLists/VariableTypeLists.h"
 
 /// <summary>
 /// Edited derivable version of CustomTreeControl's Node class <para />(base code from https://www.codeproject.com/Articles/9887/CStaticTreeCtrl-A-CStatic-derived-custom-Tree-cont)
@@ -31,6 +32,7 @@ public:
 	/// This refers to index inside list of button contexts dictionary unless -1 in which case it uses default menu context list
 	/// </summary>
 	int NBMenuType;
+	UXIntList ChildNodes;
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CustomTreeNode"/> class.
 	/// </summary>
@@ -42,15 +44,9 @@ public:
 		bUseDefaultTextColor = TRUE;
 
 		bOpen = TRUE;
-//#ifdef BlazesGUICode_UseDictionaryBasedNodes
+
 		pParent_Key = 18446744073709551615;//Maxed value = NULL
-		pSibling_Key = 18446744073709551615;
-		pChild_Key = 18446744073709551615;
-//#else
-//		pParent = NULL;
-//		pSibling = NULL;
-//		pChild = NULL;
-//#endif
+
 		NBMenuType = -1;//Use default node context menu options
 		crText = RGB(240,240,240);//Default to a off-white grey
 	}
@@ -66,15 +62,24 @@ public:
 		bUseDefaultTextColor = TRUE;
 
 		bOpen = TRUE;
-//#ifdef BlazesGUICode_UseDictionaryBasedNodes
+
 		pParent_Key = 18446744073709551615;
-		pSibling_Key = 18446744073709551615;
-		pChild_Key = 18446744073709551615;
-//#else
-//		pParent = NULL;
-//		pSibling = NULL;
-//		pChild = NULL;
-//#endif
+
+		NBMenuType = MenuType;//Use non-default node context menu defined inside a (List<CustomOrderedDictionary<string, ButtonContextData>>)? or defined in override function in CustomTreeView
+		crText = RGB(240, 240, 240);
+	}
+
+	CustomTreeNode(int MenuType, unsigned _int64 ParentIndex)
+	{
+		csLabel.Empty();
+		rNode.SetRectEmpty();
+
+		bUseDefaultTextColor = TRUE;
+
+		bOpen = TRUE;
+
+		pParent_Key = ParentIndex;
+
 		NBMenuType = MenuType;//Use non-default node context menu defined inside a (List<CustomOrderedDictionary<string, ButtonContextData>>)? or defined in override function in CustomTreeView
 		crText = RGB(240, 240, 240);
 	}
@@ -114,28 +119,6 @@ public:
 	/// The p parent
 	/// </summary>
 	unsigned __int64 pParent_Key;
-	/// <summary>
-	/// The p sibling
-	/// </summary>
-	unsigned __int64 pSibling_Key;
-	/// <summary>
-	/// The p child
-	/// </summary>
-	unsigned __int64 pChild_Key;
-//#else
-//	/// <summary>
-//	/// The p parent
-//	/// </summary>
-//	CustomTreeNode* pParent;
-//	/// <summary>
-//	/// The p sibling
-//	/// </summary>
-//	CustomTreeNode* pSibling;
-//	/// <summary>
-//	/// The p child
-//	/// </summary>
-//	CustomTreeNode* pChild;
-//#endif
 
 	/// <summary>
 	/// Implements the operator ConvertedType* operator.
