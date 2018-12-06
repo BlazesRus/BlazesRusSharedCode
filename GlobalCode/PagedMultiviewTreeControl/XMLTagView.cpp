@@ -55,6 +55,7 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 				//Add NextTag into tree
 				if (TagType==1)
 				{
+					this->
 				}
 				else if (TagType == 2)
 				{
@@ -141,9 +142,6 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 			}
 		}
 	}
-#if !defined(BlazesGUICode_UseDictionaryBasedNodes)
-#else
-#endif
 	return true;
 }
 

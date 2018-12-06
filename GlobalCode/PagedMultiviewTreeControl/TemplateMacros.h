@@ -111,6 +111,30 @@ public:\
 	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS01(class_name, template_class); }\
 	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS01(class_name, template_class); }
 
+#define CRuntime_Arg02V2(class_name, template_class, template_class02, baseClass)\
+private:\
+	static std::string ClassString()\
+	{\
+		std::string Combined = "class_name<"; \
+		Combined += typeid(template_class).name(); \
+		Combined += ", ";\
+		Combined += typeid(template_class02).name();\
+		Combined += ">"; \
+		return Combined; \
+	}\
+public:\
+	static const std::string classNameStr;\
+	static LPCSTR ClassName() { return classNameStr.c_str(); }\
+private:\
+	typedef baseClass TheBaseClass;\
+	typedef class_name<template_class, template_class02> ThisClass;\
+protected:\
+	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
+public:\
+	static const CRuntimeClass class##class_name##_##template_class##_##template_class02;\
+	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }\
+	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }
+
 #define CRuntime_Base01(class_name, baseClass, baseargOne)\
 private:\
 	typedef baseClass<baseargOne> TheBaseClass;\
@@ -228,7 +252,7 @@ inline AFX_COMDAT const CRuntimeClass class_name<template_class>::DEFINERTCNAME0
 #define CRuntimeImplimentation_Base01(class_name)\
 inline AFX_COMDAT const CRuntimeClass class_name::DEFINERTCNAME(class_name) = { "class_name", sizeof(class_name), 0xFFFF, NULL,&class_name::_GetBaseClass, NULL, NULL };
 
-#define CRuntimeImplimentation_Arg02Base01(class_name, template_class, template_class02)\
+#define CRuntimeImplimentation_Arg02(class_name, template_class, template_class02)\
 template <typename template_class, typename template_class02>\
 inline const std::string class_name<template_class, template_class02>::classNameStr = ClassString();\
 template <typename template_class, typename template_class02>\

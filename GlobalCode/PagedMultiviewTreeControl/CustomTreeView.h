@@ -26,10 +26,10 @@
 /// <para/>NodeCtrl refers to NodeTree holding this class
 /// <para/>NodeType refers to derived class's name (for keeping inherited functionality)
 /// </summary>
-template <typename TreeNode, typename DocViewType=MultiViewDoc>
+template <typename TreeNode, typename DocViewType = MultiViewDoc>
 class CustomTreeView : public CView
 {
-	CRuntime_Arg01V2(CustomTreeView, TreeNode, CView)
+	CRuntime_Arg02V2(CustomTreeView, TreeNode, DocViewType, CView)
 public:
 	typedef TreeNode NodeType;
 #ifdef UNICODE
@@ -46,7 +46,7 @@ public:
 	/// List of indexes for Root level nodes inside NodeBank
 	/// </summary>
 	UXIntList RootLvlNodes;
-// Attributes
+	// Attributes
 protected:
 	LOGFONT			m_lgFont;
 	CFont			m_Font;
@@ -64,29 +64,29 @@ protected:
 	int				m_iIndent;
 	int				m_iPadding;
 
-#ifdef EnableCustomTreeSounds
-	BOOL			m_bAudioOn;
-#endif
+	//#ifdef EnableCustomTreeSounds
+	//	BOOL			m_bAudioOn;
+	//#endif
 public:
-//#if !defined(BlazesGUICode_UseDictionaryBasedNodes)
-//	NodeType*		m_pTopNode;
-//	NodeType*		m_pSelected;
-//#else
-//	NodeType* m_pTopNode()
-//	{
-//
-//	}
-//	NodeType* m_pSelected()
-//	{
-//
-//	}
-//	unsigned __int64 pTopNode_Key;
-//	unsigned __int64 pTopNode_Key;
-//	IndexedLongDictionary<NodeType> NodeStorage;
-//	unsigned __int64 RootKey = 0;
-//#endif
+	//#if !defined(BlazesGUICode_UseDictionaryBasedNodes)
+	//	NodeType*		m_pTopNode;
+	//	NodeType*		m_pSelected;
+	//#else
+	//	NodeType* m_pTopNode()
+	//	{
+	//
+	//	}
+	//	NodeType* m_pSelected()
+	//	{
+	//
+	//	}
+	//	unsigned __int64 pTopNode_Key;
+	//	unsigned __int64 pTopNode_Key;
+	//	IndexedLongDictionary<NodeType> NodeStorage;
+	//	unsigned __int64 RootKey = 0;
+	//#endif
 public:
-// Operations
+	// Operations
 	virtual void SetTextFont(LONG nHeight, BOOL bBold, BOOL bItalic, const CString& csFaceName)
 	{
 		m_lgFont.lfHeight = -MulDiv(nHeight, GetDeviceCaps(GetDC()->m_hDC, LOGPIXELSY), 72);
@@ -191,6 +191,7 @@ public:
 		//	Invalidate();
 
 		//return pNewNode;
+		return EmptyNode;//Temporary Return value
 	}
 	//NodeType* InsertChild(NodeType* pParent, const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	unsigned __int64 InsertChild(unsigned __int64 pParent, const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
@@ -221,6 +222,18 @@ public:
 		//	Invalidate();
 
 		//return pNewNode;
+		return EmptyNode;//Temporary Return value
+	}
+	virtual unsigned __int64 AddNode(std::string nodeName, )
+	{
+		if (RootLvlNodes.size() == 0)//Automatically add to root if no RootLvlNodes yet
+		{
+			NodeBank.
+		}
+		else
+		{
+		}
+		return EmptyNode;//Temporary Return value
 	}
 
 	/*virtual NodeType* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)*/
@@ -235,6 +248,7 @@ public:
 	virtual NodeType* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		//return InsertChild(m_pTopNode, csLabel, crText, bUseDefaultTextColor, bInvalidate);
+		return nullptr;
 	}
 
 	/*virtual void DeleteNode(NodeType* pNode, BOOL bInvalidate = FALSE)*/
@@ -343,7 +357,7 @@ protected:
 		NodesToDelete.Add(pNode);
 		//Delete all child nodes connected(can't delete from within node deconstruction since node has no knowledge of TreeView)
 
-		for(size_t Index=0;Index<NodesToDelete;++Index)
+		for (size_t Index = 0; Index < NodesToDelete; ++Index)
 		{
 			NodeBank.Remove(NodesToDelete(Index));
 		}
@@ -517,6 +531,7 @@ protected:
 		//	pFound = FindNodeByPoint(point, (NodeType*)pNode->pSibling);
 
 		//return pFound;
+		return nullptr;
 	}
 	BOOL NodeTextDlg(CString& csText)
 	{
@@ -662,22 +677,138 @@ public:
 		if (m_bmpBackground.GetSafeHandle() != NULL)
 			m_bmpBackground.DeleteObject();
 	}
+	/// <summary>
+	/// Loads the data from file.
+	/// </summary>
+	/// <param name="FilePath">The file path.</param>
+	/// <returns>bool</returns>
+	virtual bool LoadDataFromFile(std::string FilePath)
+	{//Only load tags without argument fields etc for basic non-derived version
+		char LineChar;
+		bool InsideXMLComment = false;
+		bool InsideTag = false;
+		std::string ScanBuffer = "";
+		//std::string ContentBuffer = "";
+		StringVectorList TagDepth;
+		std::string CurrentTag = "";
+		std::string NextTag = "";
 
+		//0=NormalTag; 1:SelfContainedTag; 2:TagIsClosing; 3:XMLVersionTag
+		int TagType = 0;
+
+		ifstream inFile;
+		inFile.open(FilePath);
+		if (!inFile)
+		{
+			return false;
+		}
+		while (inFile >> LineChar)
+		{
+			if (InsideTag)
+			{
+				if (LineChar == '>')
+				{
+					InsideTag = false;
+					//Add NextTag into tree
+					if (TagType == 1)
+					{
+					}
+					else if (TagType == 2)
+					{
+						if (NextTag == CurrentTag)//Normal Exiting of Previous Tag
+						{
+							TagDepth.Remove(TagDepth.size() - 1);//Remove last tag from depth
+						}
+						else//Rare exiting of non-previous tag
+						{
+						}
+					}
+					else
+					{
+						if (CurrentTag.empty())//If no tag above, then add to root
+						{
+						}
+						else
+						{
+						}
+						CurrentTag = NextTag;
+						TagDepth.Add(CurrentTag);
+					}
+					//Clear Buffers after adding Tag to tree
+					NextTag = ""; ScanBuffer = ""; TagType = 0;
+				}
+				else if (NextTag.empty())
+				{
+					if (LineChar == '/')//Detected Closing Tag
+					{
+						TagType = 2;
+					}
+					else if (LineChar == '?'&&TagType == 0)
+					{
+						TagType = 3;
+					}
+					else if (LineChar == ' ' || LineChar == '\t' || LineChar == '\n')
+					{
+						if (!ScanBuffer.empty())//End Tag on whitespace if buffer not empty
+						{
+							NextTag = ScanBuffer;
+							ScanBuffer = "";
+						}
+					}
+					else
+					{
+						ScanBuffer += LineChar;
+					}
+				}
+				else
+				{
+					if (LineChar == '/')//Detected Self-Contained Tag
+					{
+						TagType = 1;
+					}
+				}
+			}
+			else if (InsideXMLComment)
+			{
+				if (ScanBuffer.empty())
+				{
+				}
+				else
+				{
+				}
+			}
+			else
+			{
+				if (LineChar == '<')
+				{
+					InsideTag = true;
+				}
+				else
+				{
+					if (!CurrentTag.empty())
+					{
+						//		CurrentNode->TagContent += LineChar;
+					}
+				}
+			}
+		}
+		return true;
+	}
 public:
 	DocViewType* GetDocument()
 	{
 		return (DocViewType*)m_pDocument;
 	}
 
-// Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CustomTreeView)
-	protected:
-		virtual void OnDraw(CDC* pDC)
-		{
-			DocViewType* pDoc = GetDocument();
-			pDC->TextOut(400, 300, "Other view");
-			pDC->TextOut(400, 320, pDoc->m_str);
+	// Overrides
+		// ClassWizard generated virtual function overrides
+		//{{AFX_VIRTUAL(CustomTreeView)
+protected:
+	virtual void OnDraw(CDC* pDC)
+	{
+		DocViewType* pDoc = GetDocument();
+		pDC->TextOut(400, 300, ViewName);
+		pDC->TextOut(400, 320, pDoc->m_str);
 
 		CPaintDC dc(this); // Device context for painting
 	// Double-buffering
@@ -854,7 +985,6 @@ protected:
 		ccmPopUp->AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), pDC);
 	}
 
-
 	/// <summary>
 	/// Called when [context menu].
 	/// </summary>
@@ -930,7 +1060,7 @@ protected:
 	virtual void AssertValid() const
 	{
 		CView::AssertValid();
-}
+	}
 	virtual void Dump(CDumpContext& dc) const
 	{
 		CView::Dump(dc);
@@ -944,8 +1074,8 @@ protected:
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{
 		__pragma(warning(push))
-		__pragma(warning(disable: 4640))
-		static const AFX_MSGMAP_ENTRY _messageEntries[] =
+			__pragma(warning(disable: 4640))
+			static const AFX_MSGMAP_ENTRY _messageEntries[] =
 		{
 			ON_WM_PAINT()
 			ON_WM_SIZE()
@@ -963,7 +1093,9 @@ protected:
 			ON_COMMAND(CM_SETFONT, &OnCM_SetFont)
 			ON_COMMAND(CM_SETDEFAULTCOLOR, &OnCM_SetDefaultColor)
 			ON_COMMAND(CM_SETBACKGROUNDBITMAP, &OnCM_SetBackgroundBitmap)
-			{ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }
+			{
+ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0
+}
 		};
 		__pragma(warning(pop))
 			/// <summary>
@@ -978,13 +1110,15 @@ public:
 	{
 		return GetThisMessageMap();
 	}
-};
+	};
 
-template <class TreeNode>
-inline const std::string CustomTreeView<TreeNode>::classNameStr = ClassString();
+//template <class TreeNode>
+//inline const std::string CustomTreeView<TreeNode>::classNameStr = ClassString();
+//
+//template <class TreeNode>
+//inline AFX_COMDAT const CRuntimeClass CustomTreeView<TreeNode>::DEFINERTCNAME01(CustomTreeView, TreeNode) = { ClassName(), sizeof(CustomTreeView<TreeNode>), 0xFFFF, NULL,&CustomTreeView<TreeNode>::_GetBaseClass, NULL, NULL };
 
-template <class TreeNode>
-inline AFX_COMDAT const CRuntimeClass CustomTreeView<TreeNode>::DEFINERTCNAME01(CustomTreeView, TreeNode) = { ClassName(), sizeof(CustomTreeView<TreeNode>), 0xFFFF, NULL,&CustomTreeView<TreeNode>::_GetBaseClass, NULL, NULL };
+CRuntimeImplimentation_Arg02(CustomTreeView, TreeNode, DocViewType)
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
