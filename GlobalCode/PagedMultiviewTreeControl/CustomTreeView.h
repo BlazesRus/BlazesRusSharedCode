@@ -224,7 +224,7 @@ public:
 		//return pNewNode;
 		return EmptyNode;//Temporary Return value
 	}
-	virtual unsigned __int64 AddNode(std::string nodeName,int tagType=0, unsigned _int64 parentIndex = EmptyNode)
+	virtual unsigned __int64 AddNode(std::string nodeName, int tagType = 0, unsigned _int64 parentIndex = EmptyNode)
 	{
 		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode());
 		if (RootLvlNodes.size() == 0)//Automatically add to root if no RootLvlNodes yet
@@ -233,7 +233,7 @@ public:
 		}
 		else
 		{
-			if(ParentIndex==EmptyNode)
+			if (ParentIndex == EmptyNode)
 			{
 				RootLvlNodes.Add(IndexPos);
 			}
@@ -709,16 +709,12 @@ public:
 
 		 //0=NormalTag; 1:SelfContainedTag; 2:TagIsClosing; 3:XMLVersionTag
 		int TagType = 0;
-		bool ArgHasNoValue = false;
+		//bool ArgHasNoValue = false;
 		bool PotentialComment = false;
-		//         XMLOption TagArg = new XMLOption();
-		//         XMLOptionList TagArgments = new XMLOptionList();
-		//         //------------------------------------------------------------------------------------
-		//         int LineSize;
 		bool InsideParenthesis = false;
-		//         std::string TagNameTemp = "";
-		bool TagNameHasArg02 = false;
-		std::string TagNameArg02 = "";
+		//bool TagNameHasArg02 = false;
+		//std::string TagNameArg02 = "";
+		size_t SizeBuffer;
 
 		ifstream inFile;
 		inFile.open(FilePath);
@@ -728,7 +724,52 @@ public:
 		}
 		while (inFile >> LineChar)
 		{
-			if (InsideTag)
+			if (PotentialComment)
+			{
+				ScanBuffer += LineChar;
+				if (ScanBuffer == "--")
+				{
+					InsideXMLComment = true;
+					PotentialComment = false;
+					ScanBuffer = "";
+				}
+				else if (ScanBuffer.size() >= 2)//Detecting non-normal format TagName?
+				{
+					PotentialComment = false;
+					ScanBuffer = "!" + ScanBuffer;
+				}
+			}
+			else if (InsideXMLComment)//Ignoring all xml inside xml formatted comment
+			{
+				SizeBuffer = ScanBuffer.size();
+				if (SizeBuffer == 0)
+				{
+					if (LineChar == '-')
+					{
+						ScanBuffer = "-";
+					}
+				}
+				else if (SizeBuffer == 1)
+				{
+					if (LineChar == '-')
+					{
+						ScanBuffer = "--";
+					}
+					else
+					{
+						ScanBuffer = "";
+					}
+				}
+				else
+				{
+					if (LineChar == '>')
+					{
+						InsideXMLComment = false;
+					}
+					ScanBuffer = "";
+				}
+			}
+			else if (InsideTag)
 			{
 				if (LineChar == '>')
 				{
@@ -760,30 +801,6 @@ public:
 					}
 					//Clear Buffers after adding Tag to tree
 					NextTag = ""; ScanBuffer = ""; TagType = 0;
-				}
-				else if (PotentialComment)
-				{
-					ScanBuffer += LineChar;
-					if(ScanBuffer=="--")
-					{
-						InsideXMLComment = true;
-						PotentialComment = false;
-						ScanBuffer = "";
-					}
-					else if(ScanBuffer.size()>=2)//Detecting non-normal format TagName?
-					{
-						PotentialComment = false;
-						ScanBuffer = "!" + ScanBuffer;
-					}
-				}
-				else if (InsideXMLComment)//Ignoring all xml inside xml formatted comment
-				{
-					if (ScanBuffer.empty())
-					{
-					}
-					else
-					{
-					}
 				}
 				else if (NextTag.empty())
 				{
@@ -842,7 +859,6 @@ public:
 					}
 					else//Get Tag arguments etc here
 					{
-
 					}
 				}
 			}
@@ -1179,7 +1195,7 @@ public:
 	{
 		return GetThisMessageMap();
 	}
-	};
+};
 
 //template <class TreeNode>
 //inline const std::string CustomTreeView<TreeNode>::classNameStr = ClassString();

@@ -39,6 +39,7 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 	//         std::string TagNameTemp = "";
 	bool TagNameHasArg02 = false;
 	std::string TagNameArg02 = "";
+	size_t SizeBuffer;
 
 	ifstream inFile;
 	inFile.open(FilePath);
@@ -48,7 +49,52 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 	}
 	while (inFile >> LineChar)
 	{
-		if (InsideTag)
+		if (PotentialComment)
+		{
+			ScanBuffer += LineChar;
+			if (ScanBuffer == "--")
+			{
+				InsideXMLComment = true;
+				PotentialComment = false;
+				ScanBuffer = "";
+			}
+			else if (ScanBuffer.size() >= 2)//Detecting non-normal format TagName?
+			{
+				PotentialComment = false;
+				ScanBuffer = "!" + ScanBuffer;
+			}
+		}
+		else if (InsideXMLComment)//Ignoring all xml inside xml formatted comment
+		{
+			SizeBuffer = ScanBuffer.size();
+			if (SizeBuffer == 0)
+			{
+				if (LineChar == '-')
+				{
+					ScanBuffer = "-";
+				}
+			}
+			else if (SizeBuffer == 1)
+			{
+				if (LineChar == '-')
+				{
+					ScanBuffer = "--";
+				}
+				else
+				{
+					ScanBuffer = "";
+				}
+			}
+			else
+			{
+				if (LineChar == '>')
+				{
+					InsideXMLComment = false;
+				}
+				ScanBuffer = "";
+			}
+		}
+		else if (InsideTag)
 		{
 			if (LineChar == '>')
 			{
@@ -81,30 +127,6 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 				}
 				//Clear Buffers after adding Tag to tree
 				NextTag = ""; ScanBuffer = ""; TagType = 0;
-			}
-			else if (PotentialComment)
-			{
-				ScanBuffer += LineChar;
-				if (ScanBuffer == "--")
-				{
-					InsideXMLComment = true;
-					PotentialComment = false;
-					ScanBuffer = "";
-				}
-				else if (ScanBuffer.size() >= 2)//Detecting non-normal format TagName?
-				{
-					PotentialComment = false;
-					ScanBuffer = "!" + ScanBuffer;
-				}
-			}
-			else if (InsideXMLComment)//Ignoring all xml inside xml formatted comment
-			{
-				if (ScanBuffer.empty())
-				{
-				}
-				else
-				{
-				}
 			}
 			else if (NextTag.empty())
 			{
