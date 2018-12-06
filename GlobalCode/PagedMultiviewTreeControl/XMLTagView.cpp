@@ -21,23 +21,24 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 	//std::string ContentBuffer = "";
 	StringVectorList TagDepth;
 	std::string CurrentTag = "";
+	unsigned _int64 CurrentTagIndex = EmptyNode;
 	std::string NextTag = "";
 	IniDataV2 AdditionTagOptions;
-   //         signed int CommandStage = 0;
-   //         //------------------------------------------------------------------------------------
+	//         signed int CommandStage = 0;
+	//         //------------------------------------------------------------------------------------
 
-	//0=NormalTag; 1:SelfContainedTag; 2:TagIsClosing; 3:XMLVersionTag
+	 //0=NormalTag; 1:SelfContainedTag; 2:TagIsClosing; 3:XMLVersionTag
 	int TagType = 0;
-   //         bool SpecialXMLVersionTag = false;
-   //         bool ArgHasNoValue = false;
-   //         XMLOption TagArg = new XMLOption();
-   //         XMLOptionList TagArgments = new XMLOptionList();
-   //         //------------------------------------------------------------------------------------
-   //         int LineSize;
-   //         bool InsideParenthesis = false;
-   //         std::string TagNameTemp = "";
-   //         bool TagNameHasArg02 = false;
-   //         std::string TagNameArg02 = "";
+	bool ArgHasNoValue = false;
+	bool PotentialComment = false;
+	//         XMLOption TagArg = new XMLOption();
+	//         XMLOptionList TagArgments = new XMLOptionList();
+	//         //------------------------------------------------------------------------------------
+	//         int LineSize;
+	bool InsideParenthesis = false;
+	//         std::string TagNameTemp = "";
+	bool TagNameHasArg02 = false;
+	std::string TagNameArg02 = "";
 
 	ifstream inFile;
 	inFile.open(FilePath);
@@ -47,65 +48,100 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 	}
 	while (inFile >> LineChar)
 	{
-		if(InsideTag)
+		if (InsideTag)
 		{
 			if (LineChar == '>')
 			{
+				unsigned _int64 IndexPos;
 				InsideTag = false;
 				//Add NextTag into tree
-				if (TagType==1)
+				if (TagType == 1)
 				{
-					this->
+					IndexPos = AddNode(NextTag, 1, CurrentTagIndex);
+					//NodeBank[IndexPos].AdditionTagOptions
 				}
 				else if (TagType == 2)
 				{
-					if(NextTag==CurrentTag)//Normal Exiting of Previous Tag
+					if (NextTag == CurrentTag)//Normal Exiting of Previous Tag
 					{
-						TagDepth.Remove(TagDepth.size()-1);//Remove last tag from depth
+						TagDepth.Remove(TagDepth.size() - 1);//Remove last tag from depth
 					}
 					else//Rare exiting of non-previous tag
 					{
-
+						//Write code for this later(not as important)
 					}
-
+					//Add TagContent Buffer into Node
 				}
 				else
 				{
-					if (CurrentTag.empty())//If no tag above, then add to root
-					{
-
-					}
-					else
-					{
-
-					}
+					IndexPos = AddNode(NextTag, 0, CurrentTagIndex);
 					CurrentTag = NextTag;
+					CurrentTagIndex = IndexPos;
 					TagDepth.Add(CurrentTag);
 				}
 				//Clear Buffers after adding Tag to tree
-				NextTag = "";ScanBuffer = ""; TagType=0;
+				NextTag = ""; ScanBuffer = ""; TagType = 0;
+			}
+			else if(PotentialComment)
+			{
+
+			}
+			else if (InsideXMLComment)//Ignoring all xml inside xml formatted comment
+			{
+				if (ScanBuffer.empty())
+				{
+				}
+				else
+				{
+				}
 			}
 			else if (NextTag.empty())
 			{
-				if (LineChar == '/')//Detected Closing Tag
+				if(ScanBuffer.empty())
 				{
-					TagType = 2;
-				}
-				else if(LineChar=='?'&&TagType==0)
-				{
-					TagType = 3;
-				}
-				else if(LineChar == ' ' || LineChar == '\t' || LineChar == '\n')
-				{
-					if (!ScanBuffer.empty())//End Tag on whitespace if buffer not empty
+					if (LineChar == '/')//Detected Closing Tag
 					{
-						NextTag = ScanBuffer;
-						ScanBuffer = "";
+						TagType = 2;
+					}
+					else if (LineChar == '?'&&TagType == 0)
+					{
+						TagType = 3;
+					}
+					else if (LineChar == ' ' || LineChar == '\t' || LineChar == '\n')
+					{
+						if (!ScanBuffer.empty())//End Tag on whitespace if buffer not empty
+						{
+							NextTag = ScanBuffer;
+							ScanBuffer = "";
+						}
+					}
+					else if(LineChar=='!')
+					{
+						PotentialComment = true;
+					}
+					else
+					{
+						ScanBuffer += LineChar;
 					}
 				}
 				else
 				{
-					ScanBuffer += LineChar;
+					if (LineChar == '?'&&TagType == 0)
+					{
+						TagType = 3;
+					}
+					else if (LineChar == ' ' || LineChar == '\t' || LineChar == '\n')
+					{
+						if (!ScanBuffer.empty())//End Tag on whitespace if buffer not empty
+						{
+							NextTag = ScanBuffer;
+							ScanBuffer = "";
+						}
+					}
+					else
+					{
+						ScanBuffer += LineChar;
+					}
 				}
 			}
 			else
@@ -114,17 +150,10 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 				{
 					TagType = 1;
 				}
-			}
-		}
-		else if(InsideXMLComment)
-		{
-			if(ScanBuffer.empty())
-			{
+				else//Get Tag arguments etc here
+				{
 
-			}
-			else
-			{
-
+				}
 			}
 		}
 		else
@@ -135,9 +164,9 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 			}
 			else
 			{
-				if (!CurrentTag.empty())
+				if (!CurrentTag.empty())//Get TagContent here
 				{
-			//		CurrentNode->TagContent += LineChar;
+					//		CurrentNode->TagContent += LineChar;
 				}
 			}
 		}
@@ -149,7 +178,6 @@ XMLTagView::XMLTagView(std::string FilePath) : CustomTreeView<XMLTagViewNode>()
 {
 	LoadDataFromFile(FilePath);
 }
-
 
 XMLTagView::XMLTagView() : CustomTreeView<XMLTagViewNode>()
 {

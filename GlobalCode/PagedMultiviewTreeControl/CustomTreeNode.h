@@ -45,7 +45,7 @@ public:
 
 		bOpen = TRUE;
 
-		pParent_Key = 18446744073709551615;//Maxed value = NULL
+		ParentIndex = 18446744073709551615;//Maxed value = NULL
 
 		NBMenuType = -1;//Use default node context menu options
 		crText = RGB(240,240,240);//Default to a off-white grey
@@ -63,13 +63,13 @@ public:
 
 		bOpen = TRUE;
 
-		pParent_Key = 18446744073709551615;
+		ParentIndex = 18446744073709551615;
 
 		NBMenuType = MenuType;//Use non-default node context menu defined inside a (List<CustomOrderedDictionary<string, ButtonContextData>>)? or defined in override function in CustomTreeView
 		crText = RGB(240, 240, 240);
 	}
 
-	CustomTreeNode(int MenuType, unsigned _int64 ParentIndex)
+	CustomTreeNode(int MenuType, unsigned _int64 parentIndex)
 	{
 		csLabel.Empty();
 		rNode.SetRectEmpty();
@@ -78,7 +78,7 @@ public:
 
 		bOpen = TRUE;
 
-		pParent_Key = ParentIndex;
+		ParentIndex = parentIndex;
 
 		NBMenuType = MenuType;//Use non-default node context menu defined inside a (List<CustomOrderedDictionary<string, ButtonContextData>>)? or defined in override function in CustomTreeView
 		crText = RGB(240, 240, 240);
@@ -114,11 +114,10 @@ public:
 	/// The b open
 	/// </summary>
 	BOOL    bOpen;
-//#ifdef BlazesGUICode_UseDictionaryBasedNodes
 	/// <summary>
-	/// The p parent
+	/// Index position of ParentNode (EmptyNode=RootPosition)
 	/// </summary>
-	unsigned __int64 pParent_Key;
+	unsigned __int64 ParentIndex;
 
 	/// <summary>
 	/// Implements the operator ConvertedType* operator.

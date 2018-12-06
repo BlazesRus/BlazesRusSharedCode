@@ -38,14 +38,14 @@ private:
     unsigned int NextIndex = 0;
     //bool ReverseIndexSearch = true;//Later might add code to force to search indexes in reverse by default if this is set
 public:
-
     /// <summary>
-    /// Use insert if doesn't Already exist, otherwise set the value
+    /// Adds the specified value into next free Index position(Returns index of new value)
     /// </summary>
     /// <param name="Value">The value.</param>
-    void Add(ValueType Value)
+    /// <returns>unsigned int</returns>
+    unsigned int Add(ValueType Value)
     {
-        //if(ReverseIndexSearch){}else{}
+        unsigned int IndexPos;
         bool Success = AddOnlyNew(NextIndex,Value);
         if(Success){NextIndex++;return;}
         int LastIndexSlot = NextIndex;//Check higher indexes first so save information of last index to check in reverse later
@@ -53,7 +53,7 @@ public:
         {
             NextIndex++;
         }
-        if(Success){NextIndex++;return;}
+        if (Success) { IndexPos = NextIndex; NextIndex++; return IndexPos; }
         Success = AddOnlyNew(4294967295,Value);
         //ReverseIndexSearch = true;
         if(Success){return;}
@@ -62,6 +62,7 @@ public:
         {
             NextIndex--;
         }
+        return IndexPos;
     }
     /// <summary>
     /// Removes the specified key.
@@ -102,13 +103,14 @@ private:
     /// </summary>
     unsigned int NextIndex = 0;
 public:
-
     /// <summary>
-    /// Use insert if doesn't Already exist, otherwise set the value
+    /// Adds the specified value into next free Index position(Returns index of new value)
     /// </summary>
     /// <param name="Value">The value.</param>
-    void Add(ValueType Value)
+    /// <returns>unsigned int</returns>
+    unsigned int Add(ValueType Value)
     {
+        unsigned int IndexPos;
         //if(ReverseIndexSearch){}else{}
         bool Success = AddOnlyNew(NextIndex,Value);
         if(Success){NextIndex++;return;}
@@ -117,7 +119,7 @@ public:
         {
             NextIndex++;
         }
-        if(Success){NextIndex++;return;}
+        if (Success) { IndexPos = NextIndex; NextIndex++; return IndexPos; }
         Success = AddOnlyNew(4294967295,Value);
         //ReverseIndexSearch = true;
         if(Success){return;}
@@ -126,6 +128,7 @@ public:
         {
             NextIndex--;
         }
+        return IndexPos;
     }
     /// <summary>
     /// Removes the specified key.
@@ -172,13 +175,14 @@ private:
     /// </summary>
     unsigned _int64 NextIndex = 0;
 public:
-
     /// <summary>
-    /// Use insert if doesn't Already exist, otherwise set the value
+    /// Adds the specified value into next free Index position. (Returns index of new value)
     /// </summary>
     /// <param name="Value">The value.</param>
-    void Add(ValueType Value)
+    /// <returns>unsigned _int64</returns>
+    unsigned _int64 Add(ValueType Value)
     {
+        unsigned _int64 IndexPos;
         bool Success = AddOnlyNew(NextIndex,Value);
         if(Success){NextIndex++;return;}
         int LastIndexSlot = NextIndex;//Check higher indexes first so save information of last index to check in reverse later
@@ -186,7 +190,7 @@ public:
         {
             NextIndex++;
         }
-        if (Success) { NextIndex++; return; }
+        if (Success) { IndexPos = NextIndex; NextIndex++; return IndexPos; }
         Success = AddOnlyNew(18446744073709551615,Value);//Unlikely to require getting past this point but just in case
         if (Success) { return; }
         NextIndex = LastIndexSlot;
@@ -194,7 +198,9 @@ public:
         {
             NextIndex--;
         }
+        return IndexPos;
     }
+
     /// <summary>
     /// Removes the specified key.
     /// </summary>
@@ -234,13 +240,14 @@ private:
     /// </summary>
     unsigned _int64 NextIndex = 0;
 public:
-
     /// <summary>
-    /// Use insert if doesn't Already exist, otherwise set the value
+    /// Adds the specified value into next free Index position. (Returns index of new value)
     /// </summary>
     /// <param name="Value">The value.</param>
-    void Add(ValueType Value)
+    /// <returns>unsigned _int64</returns>
+    unsigned _int64 Add(ValueType Value)
     {
+        unsigned _int64 IndexPos;
         bool Success = AddOnlyNew(NextIndex,Value);
         if (Success) { NextIndex++; return; }
         int LastIndexSlot = NextIndex;//Check higher indexes first so save information of last index to check in reverse later
@@ -248,7 +255,7 @@ public:
         {
             NextIndex++;
         }
-        if (Success) { NextIndex++; return; }
+        if (Success) { IndexPos = NextIndex; NextIndex++; return IndexPos; }
         Success = AddOnlyNew(18446744073709551615,Value);//Unlikely to require getting past this point but just in case
         if (Success) { return; }
         NextIndex = LastIndexSlot;
@@ -256,6 +263,7 @@ public:
         {
             NextIndex--;
         }
+        return IndexPos;
     }
     /// <summary>
     /// Removes the specified key.

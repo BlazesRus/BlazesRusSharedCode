@@ -224,14 +224,24 @@ public:
 		//return pNewNode;
 		return EmptyNode;//Temporary Return value
 	}
-	virtual unsigned __int64 AddNode(std::string nodeName, )
+	virtual unsigned __int64 AddNode(std::string nodeName,int tagType=0, unsigned _int64 parentIndex = EmptyNode)
 	{
+		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode());
 		if (RootLvlNodes.size() == 0)//Automatically add to root if no RootLvlNodes yet
 		{
-			NodeBank.
+			RootLvlNodes.Add(IndexPos);
 		}
 		else
 		{
+			if(ParentIndex==EmptyNode)
+			{
+				RootLvlNodes.Add(IndexPos);
+			}
+			else
+			{
+				NodeBank[IndexPos].
+			}
+			NodeBank[IndexPos].TagType = tagType;
 		}
 		return EmptyNode;//Temporary Return value
 	}
@@ -691,10 +701,24 @@ public:
 		//std::string ContentBuffer = "";
 		StringVectorList TagDepth;
 		std::string CurrentTag = "";
+		unsigned _int64 CurrentTagIndex = EmptyNode;
 		std::string NextTag = "";
+		IniDataV2 AdditionTagOptions;
+		//         signed int CommandStage = 0;
+		//         //------------------------------------------------------------------------------------
 
-		//0=NormalTag; 1:SelfContainedTag; 2:TagIsClosing; 3:XMLVersionTag
+		 //0=NormalTag; 1:SelfContainedTag; 2:TagIsClosing; 3:XMLVersionTag
 		int TagType = 0;
+		bool ArgHasNoValue = false;
+		bool PotentialComment = false;
+		//         XMLOption TagArg = new XMLOption();
+		//         XMLOptionList TagArgments = new XMLOptionList();
+		//         //------------------------------------------------------------------------------------
+		//         int LineSize;
+		bool InsideParenthesis = false;
+		//         std::string TagNameTemp = "";
+		bool TagNameHasArg02 = false;
+		std::string TagNameArg02 = "";
 
 		ifstream inFile;
 		inFile.open(FilePath);
@@ -708,10 +732,12 @@ public:
 			{
 				if (LineChar == '>')
 				{
+					unsigned _int64 IndexPos;
 					InsideTag = false;
 					//Add NextTag into tree
 					if (TagType == 1)
 					{
+						IndexPos = AddNode(NextTag, 1, CurrentTagIndex);
 					}
 					else if (TagType == 2)
 					{
@@ -721,43 +747,80 @@ public:
 						}
 						else//Rare exiting of non-previous tag
 						{
+							//Write code for this later(not as important)
 						}
+						//Add TagContent Buffer into Node
 					}
 					else
 					{
-						if (CurrentTag.empty())//If no tag above, then add to root
-						{
-						}
-						else
-						{
-						}
+						IndexPos = AddNode(NextTag, 0, CurrentTagIndex);
 						CurrentTag = NextTag;
+						CurrentTagIndex = IndexPos;
 						TagDepth.Add(CurrentTag);
 					}
 					//Clear Buffers after adding Tag to tree
 					NextTag = ""; ScanBuffer = ""; TagType = 0;
 				}
+				else if (PotentialComment)
+				{
+
+				}
+				else if (InsideXMLComment)//Ignoring all xml inside xml formatted comment
+				{
+					if (ScanBuffer.empty())
+					{
+					}
+					else
+					{
+					}
+				}
 				else if (NextTag.empty())
 				{
-					if (LineChar == '/')//Detected Closing Tag
+					if (ScanBuffer.empty())
 					{
-						TagType = 2;
-					}
-					else if (LineChar == '?'&&TagType == 0)
-					{
-						TagType = 3;
-					}
-					else if (LineChar == ' ' || LineChar == '\t' || LineChar == '\n')
-					{
-						if (!ScanBuffer.empty())//End Tag on whitespace if buffer not empty
+						if (LineChar == '/')//Detected Closing Tag
 						{
-							NextTag = ScanBuffer;
-							ScanBuffer = "";
+							TagType = 2;
+						}
+						else if (LineChar == '?'&&TagType == 0)
+						{
+							TagType = 3;
+						}
+						else if (LineChar == ' ' || LineChar == '\t' || LineChar == '\n')
+						{
+							if (!ScanBuffer.empty())//End Tag on whitespace if buffer not empty
+							{
+								NextTag = ScanBuffer;
+								ScanBuffer = "";
+							}
+						}
+						else if (LineChar == '!')
+						{
+							PotentialComment = true;
+						}
+						else
+						{
+							ScanBuffer += LineChar;
 						}
 					}
 					else
 					{
-						ScanBuffer += LineChar;
+						if (LineChar == '?'&&TagType == 0)
+						{
+							TagType = 3;
+						}
+						else if (LineChar == ' ' || LineChar == '\t' || LineChar == '\n')
+						{
+							if (!ScanBuffer.empty())//End Tag on whitespace if buffer not empty
+							{
+								NextTag = ScanBuffer;
+								ScanBuffer = "";
+							}
+						}
+						else
+						{
+							ScanBuffer += LineChar;
+						}
 					}
 				}
 				else
@@ -766,15 +829,10 @@ public:
 					{
 						TagType = 1;
 					}
-				}
-			}
-			else if (InsideXMLComment)
-			{
-				if (ScanBuffer.empty())
-				{
-				}
-				else
-				{
+					else//Get Tag arguments etc here
+					{
+
+					}
 				}
 			}
 			else
@@ -785,7 +843,7 @@ public:
 				}
 				else
 				{
-					if (!CurrentTag.empty())
+					if (!CurrentTag.empty())//Get TagContent here
 					{
 						//		CurrentNode->TagContent += LineChar;
 					}
