@@ -763,7 +763,18 @@ public:
 				}
 				else if (PotentialComment)
 				{
-
+					ScanBuffer += LineChar;
+					if(ScanBuffer=="--")
+					{
+						InsideXMLComment = true;
+						PotentialComment = false;
+						ScanBuffer = "";
+					}
+					else if(ScanBuffer.size()>=2)//Detecting non-normal format TagName?
+					{
+						PotentialComment = false;
+						ScanBuffer = "!" + ScanBuffer;
+					}
 				}
 				else if (InsideXMLComment)//Ignoring all xml inside xml formatted comment
 				{

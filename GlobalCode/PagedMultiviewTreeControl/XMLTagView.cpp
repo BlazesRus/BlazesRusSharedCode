@@ -82,9 +82,20 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 				//Clear Buffers after adding Tag to tree
 				NextTag = ""; ScanBuffer = ""; TagType = 0;
 			}
-			else if(PotentialComment)
+			else if (PotentialComment)
 			{
-
+				ScanBuffer += LineChar;
+				if (ScanBuffer == "--")
+				{
+					InsideXMLComment = true;
+					PotentialComment = false;
+					ScanBuffer = "";
+				}
+				else if (ScanBuffer.size() >= 2)//Detecting non-normal format TagName?
+				{
+					PotentialComment = false;
+					ScanBuffer = "!" + ScanBuffer;
+				}
 			}
 			else if (InsideXMLComment)//Ignoring all xml inside xml formatted comment
 			{
@@ -97,7 +108,7 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 			}
 			else if (NextTag.empty())
 			{
-				if(ScanBuffer.empty())
+				if (ScanBuffer.empty())
 				{
 					if (LineChar == '/')//Detected Closing Tag
 					{
@@ -115,7 +126,7 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 							ScanBuffer = "";
 						}
 					}
-					else if(LineChar=='!')
+					else if (LineChar == '!')
 					{
 						PotentialComment = true;
 					}
