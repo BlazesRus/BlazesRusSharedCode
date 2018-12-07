@@ -25,21 +25,16 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 	std::string NextTag = "";
 	IniDataV2 AdditionTagOptions;
 	//         signed int CommandStage = 0;
-	//         //------------------------------------------------------------------------------------
 
 	 //0=NormalTag; 1:SelfContainedTag; 2:TagIsClosing; 3:XMLVersionTag
 	int TagType = 0;
 	bool ArgHasNoValue = false;
 	bool PotentialComment = false;
-	//         XMLOption TagArg = new XMLOption();
-	//         XMLOptionList TagArgments = new XMLOptionList();
-	//         //------------------------------------------------------------------------------------
-	//         int LineSize;
 	bool InsideParenthesis = false;
-	//         std::string TagNameTemp = "";
+	bool ScanningArgData = false;
 	bool TagNameHasArg02 = false;
 	std::string TagNameArg02 = "";
-	size_t SizeBuffer;
+	size_t StageOrSize = 0;
 
 	ifstream inFile;
 	inFile.open(FilePath);
@@ -66,15 +61,15 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 		}
 		else if (InsideXMLComment)//Ignoring all xml inside xml formatted comment
 		{
-			SizeBuffer = ScanBuffer.size();
-			if (SizeBuffer == 0)
+			StageOrSize = ScanBuffer.size();
+			if (StageOrSize == 0)
 			{
 				if (LineChar == '-')
 				{
 					ScanBuffer = "-";
 				}
 			}
-			else if (SizeBuffer == 1)
+			else if (StageOrSize == 1)
 			{
 				if (LineChar == '-')
 				{
@@ -93,6 +88,10 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 				}
 				ScanBuffer = "";
 			}
+		}
+		else if(ScanningArgData)
+		{
+
 		}
 		else if (InsideTag)
 		{
@@ -183,9 +182,9 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 				{
 					TagType = 1;
 				}
-				else//Get Tag arguments etc here
+				else if (LineChar != '?' && LineChar != ' ' && LineChar != '\t' && LineChar != '\n')//Get Tag arguments etc here
 				{
-
+					ScanningArgData = true; StageOrSize = 0;
 				}
 			}
 		}
