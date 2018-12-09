@@ -241,7 +241,7 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 			{
 				if (!CurrentTag.empty())//Get TagContent here
 				{
-					//		CurrentNode->TagContent += LineChar;
+					TagDepth.LastNode().TagContent += LineChar;
 				}
 			}
 		}

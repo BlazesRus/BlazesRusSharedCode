@@ -77,7 +77,7 @@ public:
 	/// <returns>VariableType&</returns>
 	VariableType& operator[](size_t index)
 	{
-		return this->at(index);//Doesn't seem to work for some reason
+		return this->at(index);//Doesn't seem to work(via this operator) for some reason
 	}
 
 	explicit operator vector<VariableType>()

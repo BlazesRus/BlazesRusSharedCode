@@ -20,33 +20,37 @@ class BasicXMLNode
 	/// The node name
 	/// </summary>
 	std::string NodeName;
-	/// <summary>
-	/// The addition tag options
-	/// </summary>
-	IniDataV2 AdditionTagOptions;
-	//0=NormalTag; 1:SelfContainedTag; 2:TagIsClosing; 3:XMLVersionTag
-	int TagType = 0;
-	/// <summary>
+	std::string TagContent;
+		/// <summary>
 	/// Initializes a new instance of the <see cref="BasicXMLNode"/> struct.
 	/// </summary>
 	/// <param name="name">The NodeName.</param>
 	BasicXMLNode(std::string name)
 	{
 		NodeName = name;
+		TagContent = "";
 	}
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BasicXMLNode"/> class.
 	/// </summary>
 	BasicXMLNode()
 	{
 		NodeName = "";
+		TagContent = "";
 	}
 	/// <summary>
 	/// Converts to tag string.
 	/// </summary>
 	/// <returns>std.string</returns>
-	std::string ConvertToTagString()
+	std::string ConvertToTagString(IniDataV2 AdditionTagOptions, int TagType = 0)
 	{
+		////0=NormalTag; 1:SelfContainedTag; 2:TagIsClosing; 3:XMLVersionTag
+		//int TagType = 0;
+	///// <summary>
+	///// The addition tag options
+	///// </summary>
+	//IniDataV2 AdditionTagOptions;
 		std::string TagStr = "<";
 		if (TagType == 3) { TagStr += "?"; }
 		TagStr += NodeName;
@@ -85,6 +89,10 @@ public:
 	{
 		int Index = this->AddData();
 		this->at(Index).NodeName = name;
+	}
+	BasicXMLNode& LastNode()
+	{
+		return this->at(size()-1);
 	}
 };
 
