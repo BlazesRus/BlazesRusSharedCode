@@ -333,6 +333,26 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
     </ClCompile>
+    <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\BlazesBehaviorFileMerger.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClCompile>
+    <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\DifferenceData.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClCompile>
+    <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkBhvData.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClCompile>
+    <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkBhvNodeTree.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClCompile>
+    <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkClassUsageTree.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClCompile>
     <ClCompile Include="TreeCtrlPage.cpp" />
     <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\TreePage.cpp" />
     <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagView.cpp" />
@@ -393,6 +413,34 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
     </ClInclude>
     <ClInclude Include="BasicXMLNode.h" />
+    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\BlazesBehaviorFileMerger.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClInclude>
+    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\DifferenceData.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClInclude>
+    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HavokActionTree.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClInclude>
+    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HavokActionTreeOlder.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClInclude>
+    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkBhvData.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClInclude>
+    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkBhvNodeTree.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClInclude>
+    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkClassUsageTree.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </ClInclude>
     <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\PagedMultiviewTreeControl\CustomTreeView.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>

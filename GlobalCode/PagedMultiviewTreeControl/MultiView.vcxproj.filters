@@ -28,6 +28,12 @@
     <Filter Include="TSL">
       <UniqueIdentifier>{aeadce5e-4f69-4c63-98f4-c0e7db367732}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NodeTreeStuff\OldNodeTreeCode">
+      <UniqueIdentifier>{ca885644-c240-41d8-90b3-7a7579e96b50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NodeTreeStuff\OldHkNodeTreeStuff">
+      <UniqueIdentifier>{8644373c-f86c-4dd3-a3f4-54571953ad19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TreeCtrlPage.cpp">
@@ -91,10 +97,25 @@
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
     <ClCompile Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp">
-      <Filter>NodeTreeStuff</Filter>
+      <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
     </ClCompile>
     <ClCompile Include="..\GlobalCode_NodeTrees\XMLOption.cpp">
-      <Filter>NodeTreeStuff</Filter>
+      <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\BlazesBehaviorFileMerger.cpp">
+      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\DifferenceData.cpp">
+      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkBhvData.cpp">
+      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkBhvNodeTree.cpp">
+      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkClassUsageTree.cpp">
+      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -218,22 +239,7 @@
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\DLG_TreeNodeText.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GlobalCode_NodeTrees\XMLOption.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GlobalCode_NodeTrees\XMLTagTree.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
     <ClInclude Include="BasicXMLNode.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableList.h">
@@ -250,6 +256,42 @@
     </ClInclude>
     <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\PagedMultiviewTreeControl\CustomTreeView.h">
       <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h">
+      <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.h">
+      <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.h">
+      <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode_NodeTrees\XMLOption.h">
+      <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode_NodeTrees\XMLTagTree.h">
+      <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
+    </ClInclude>
+    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\BlazesBehaviorFileMerger.h">
+      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\DifferenceData.h">
+      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HavokActionTree.h">
+      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HavokActionTreeOlder.h">
+      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkBhvData.h">
+      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkBhvNodeTree.h">
+      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkClassUsageTree.h">
+      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

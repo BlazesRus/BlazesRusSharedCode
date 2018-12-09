@@ -91,7 +91,49 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 		}
 		else if(ScanningArgData)
 		{
+			if(StageOrSize==0)
+			{
+				if(LineChar!='=')
+				{
+					StageOrSize = 1; TagNameArg02 = "";
+				}
+				else if(LineChar != ' ' && LineChar != '\t' && LineChar != '\n')//Skip Whitespace
+				{
+					ScanBuffer += LineChar;
+				}
+			}
+			else
+			{
+				if(LineChar=='\"')
+				{
+					if (InsideParenthesis&&!TagNameArg02.empty())//End argument inside parenthesis with second parenthesis instead of space
+					{
+						//Detect Argument type(0=Default/String; 1:Int; 2:Non-WholeNumber)
+						int DetectedArgType = 0;
+						for(int Index=0;Index<TagNameArg02.length();++Index)
+						{
 
+						}
+						switch(DetectedArgType)
+						{
+							case 2:
+								AdditionTagOptions.Add(ScanBuffer, TagNameArg02);
+							break;
+							default:
+								AdditionTagOptions.Add(ScanBuffer, TagNameArg02);
+							break;
+						}
+					}
+					InsideParenthesis = !InsideParenthesis;
+				}
+				else
+				{
+					if(InsideParenthesis)
+					{
+						TagNameArg02 += LineChar;
+					}
+				}
+			}
 		}
 		else if (InsideTag)
 		{
@@ -184,7 +226,7 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 				}
 				else if (LineChar != '?' && LineChar != ' ' && LineChar != '\t' && LineChar != '\n')//Get Tag arguments etc here
 				{
-					ScanningArgData = true; StageOrSize = 0;
+					ScanningArgData = true; StageOrSize = 0; ScanBuffer = LineChar;
 				}
 			}
 		}

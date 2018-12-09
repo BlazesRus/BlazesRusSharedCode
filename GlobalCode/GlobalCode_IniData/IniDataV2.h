@@ -337,7 +337,16 @@ public:
         else { return false; }
     }
 
-
+    /// <summary>
+    /// Adds the specified key.
+    /// </summary>
+    /// <param name="Key">The key.</param>
+    /// <param name="Value">The value.</param>
+    /// <returns>bool</returns>
+    bool Add(std::string Key, std::string Value)
+    {
+        return self.AddOnlyNew(Key, Value);
+    }
 
 
     /// <summary>
