@@ -6,6 +6,7 @@
 using namespace std;
 #include "GlobalCode_VariableLists/StringVectorList.h"
 #include "GlobalCode_IniData/IniDataV2.h"
+#include "BasicXMLNode.h"
 
 /// <summary>
 /// Loads the data from file.
@@ -19,7 +20,7 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 	bool InsideTag = false;
 	std::string ScanBuffer = "";
 	//std::string ContentBuffer = "";
-	StringVectorList TagDepth;
+	BasicNodeList TagDepth;
 	std::string CurrentTag = "";
 	unsigned _int64 CurrentTagIndex = EmptyNode;
 	std::string NextTag = "";
