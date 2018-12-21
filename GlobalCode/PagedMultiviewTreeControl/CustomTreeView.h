@@ -87,6 +87,16 @@ public:
 	//#endif
 public:
 	// Operations
+	virtual void DuplicateNode(unsigned __int64 NodeID, unsigned __int64 ParentIndex)
+	{
+
+	}
+	template <typename TreeType=CustomTreeView>
+	virtual void CopyNodeFromOtherTree(TreeType TargetTree, unsigned __int64 NodeID, unsigned __int64 ParentIndex)
+	{
+
+	}
+#pragma region TextBasedOptions
 	virtual void SetTextFont(LONG nHeight, BOOL bBold, BOOL bItalic, const CString& csFaceName)
 	{
 		m_lgFont.lfHeight = -MulDiv(nHeight, GetDeviceCaps(GetDC()->m_hDC, LOGPIXELSY), 72);
@@ -166,6 +176,43 @@ public:
 		m_crDefaultTextColor = crText;
 	}
 
+	void SetNodeColor(NodeType* pNode, COLORREF crText, BOOL bInvalidate = FALSE)
+	{
+		ASSERT(pNode != NULL);
+
+		pNode->bUseDefaultTextColor = FALSE;
+		pNode->crText = crText;
+
+		if (bInvalidate)
+			Invalidate();
+	}
+
+	void SetBackgroundBitmap(BOOL bInvalidate = FALSE)
+	{
+		CFileDialog fd(TRUE, NULL, NULL, OFN_EXPLORER | OFN_FILEMUSTEXIST, _T("Bitmap Files (*.bmp)|*.bmp||"), this);
+
+		// If the user clicked 'OK'
+		if (fd.DoModal() == IDOK)
+		{
+			// If there is a bitmap already loaded, delete it
+			if (m_bmpBackground.GetSafeHandle() != NULL)
+				m_bmpBackground.DeleteObject();
+
+			// Load the bitmap from the file selected
+			HBITMAP hBitmap = (HBITMAP)LoadImage(NULL, fd.GetPathName(), IMAGE_BITMAP,
+				0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION | LR_DEFAULTSIZE);
+
+			// Attach it to the CBitmap object
+			m_bmpBackground.Attach(hBitmap);
+
+			// Repaint if so desired
+			if (bInvalidate)
+				Invalidate();
+		}
+	}
+#pragma endregion TextBasedOptions
+
+#pragma region InsertOperations
 	//NodeType* InsertSibling(NodeType* pInsertAfter, const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	unsigned __int64 InsertSibling(unsigned __int64 pInsertAfter, const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
@@ -224,6 +271,9 @@ public:
 		//return pNewNode;
 		return EmptyNode;//Temporary Return value
 	}
+
+#pragma endregion InsertOperations
+
 	virtual unsigned __int64 AddNode(std::string nodeName, int tagType = 0, unsigned _int64 parentIndex = EmptyNode)
 	{
 		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode());
@@ -254,11 +304,24 @@ public:
 	/// <param name="crText">The cr text.</param>
 	/// <param name="bUseDefaultTextColor">Whether to use default text color.</param>
 	/// <param name="bInvalidate">Whether to invalidate</param>
-	/// <returns></returns>
-	virtual NodeType* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	/// <returns>unsigned _int64</returns>
+	virtual unsigned _int64 AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
-		//return InsertChild(m_pTopNode, csLabel, crText, bUseDefaultTextColor, bInvalidate);
-		return nullptr;
+		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode());
+		//NodeBank[IndexPos].
+		RootLvlNodes.Add(IndexPos);
+		return IndexPos;
+	}
+
+	/// <summary>
+	/// Adds new node to root.
+	/// </summary>
+	/// <returns>unsigned _int64</returns>
+	virtual unsigned _int64 AddNodeToRoot()
+	{
+		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode());
+		RootLvlNodes.Add(IndexPos);
+		return IndexPos;
 	}
 
 	/*virtual void DeleteNode(NodeType* pNode, BOOL bInvalidate = FALSE)*/
@@ -313,41 +376,6 @@ public:
 		if (bInvalidate)
 			Invalidate();
 	}
-	void SetNodeColor(NodeType* pNode, COLORREF crText, BOOL bInvalidate = FALSE)
-	{
-		ASSERT(pNode != NULL);
-
-		pNode->bUseDefaultTextColor = FALSE;
-		pNode->crText = crText;
-
-		if (bInvalidate)
-			Invalidate();
-	}
-
-	void SetBackgroundBitmap(BOOL bInvalidate = FALSE)
-	{
-		CFileDialog fd(TRUE, NULL, NULL, OFN_EXPLORER | OFN_FILEMUSTEXIST, _T("Bitmap Files (*.bmp)|*.bmp||"), this);
-
-		// If the user clicked 'OK'
-		if (fd.DoModal() == IDOK)
-		{
-			// If there is a bitmap already loaded, delete it
-			if (m_bmpBackground.GetSafeHandle() != NULL)
-				m_bmpBackground.DeleteObject();
-
-			// Load the bitmap from the file selected
-			HBITMAP hBitmap = (HBITMAP)LoadImage(NULL, fd.GetPathName(), IMAGE_BITMAP,
-				0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION | LR_DEFAULTSIZE);
-
-			// Attach it to the CBitmap object
-			m_bmpBackground.Attach(hBitmap);
-
-			// Repaint if so desired
-			if (bInvalidate)
-				Invalidate();
-		}
-	}
-
 protected:
 	// Recursive delete
 	void DeleteNodeRecursive(unsigned __int64 pNode)
