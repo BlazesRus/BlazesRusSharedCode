@@ -302,9 +302,9 @@ public:
 	/// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
 	/// <param name="bInvalidate">The b invalidate.</param>
 	/// <returns>unsigned __int64</returns>
-	virtual unsigned __int64 AddNode(std::string nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = 0, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	virtual unsigned __int64 AddNode(std::string nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
-		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode());
+		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode(tagType, parentIndex));
 		NodeType& pNewNode = NodeBank[IndexPos];
 		if (RootLvlNodes.size() == 0)//Automatically add to root if no RootLvlNodes yet
 		{
@@ -329,7 +329,44 @@ public:
 		return IndexPos;
 	}
 
-	virtual unsigned __int64 AddNode(const CString& nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = 0, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	/// <summary>
+	/// Adds the node and return the node reference.
+	/// </summary>
+	/// <param name="nodeName">The node label.</param>
+	/// <param name="parentIndex">Index of the parent.</param>
+	/// <param name="tagType">Type of the tag.</param>
+	/// <param name="crText">The cr text.</param>
+	/// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
+	/// <param name="bInvalidate">The b invalidate.</param>
+	/// <returns>NodeType&</returns>
+	virtual NodeType& AddNodeV2(std::string nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	{
+		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode(tagType, parentIndex));
+		NodeType& pNewNode = NodeBank[IndexPos];
+		if (RootLvlNodes.size() == 0)//Automatically add to root if no RootLvlNodes yet
+		{
+			RootLvlNodes.Add(IndexPos);
+		}
+		else
+		{
+			if (ParentIndex == EmptyNode)
+			{
+				RootLvlNodes.Add(IndexPos);
+			}
+		}
+		pNewNode.TagType = tagType;
+		pNewNode.csLabel = nodeName;					// New node's label
+
+		if (bUseDefaultTextColor)
+			pNewNode.bUseDefaultTextColor = TRUE;		// Use the default text color
+		else
+			pNewNode.crText = crText;					// New node's text color
+		if (bInvalidate)
+			Invalidate();
+		return pNewNode;
+	}
+
+	virtual unsigned __int64 AddNode(const CString& nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		return AddNode(nodeName, parentIndex, tagType, crText, bUseDefaultTextColor, bInvalidate);
 	}
@@ -370,6 +407,7 @@ public:
 		RootLvlNodes.Add(IndexPos);
 		NodeType& pNewNode = NodeBank[IndexPos];
 		pNewNode.bUseDefaultTextColor = TRUE;
+		pNewNode.csLabel = "_";
 		return IndexPos;
 	}
 

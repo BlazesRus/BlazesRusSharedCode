@@ -115,7 +115,7 @@ public:
 	/// </summary>
 	BOOL    bOpen;
 	/// <summary>
-	/// Index position of ParentNode (EmptyNode=RootPosition)
+	/// Index position of ParentNode (EmptyNode=inside Root Level by default)
 	/// </summary>
 	unsigned __int64 ParentIndex;
 
