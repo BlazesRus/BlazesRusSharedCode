@@ -23,8 +23,7 @@
 /// <summary>
 /// Edited derivable version of CustomTreeControl's CViewTreeCtrl class converted into a view
 /// <para/>(base code from https://www.codeproject.com/Articles/9887/CViewTreeCtrl-A-CView-derived-custom-Tree-cont)
-/// <para/>NodeCtrl refers to NodeTree holding this class
-/// <para/>NodeType refers to derived class's name (for keeping inherited functionality)
+/// <para/>NodeType/TreeNode refers to derived node's class name (for keeping inherited functionality)
 /// </summary>
 template <typename TreeNode, typename DocViewType = MultiViewDoc>
 class CustomTreeView : public CView
@@ -214,13 +213,22 @@ public:
 
 #pragma region InsertOperations
 	//NodeType* InsertSibling(NodeType* pInsertAfter, const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
-	unsigned __int64 InsertSibling(unsigned __int64 pInsertAfter, const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+/// <summary>
+/// Inserts the sibling.
+/// </summary>
+/// <param name="pInsertAfter">The p insert after.</param>
+/// <param name="nodeName">The node label.</param>
+/// <param name="crText">The cr text.</param>
+/// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
+/// <param name="bInvalidate">The b invalidate.</param>
+/// <returns>unsigned __int64</returns>
+	unsigned __int64 InsertSibling(unsigned __int64 pInsertAfter, const CString& nodeName, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		//ASSERT(pInsertAfter != NULL);	// Make sure the node exists
 
 		//NodeType* pNewNode = new NodeType();
 
-		//pNewNode->csLabel = csLabel;					// New node's label
+		//pNewNode->csLabel = nodeName;					// New node's label
 
 		//if (bUseDefaultTextColor)
 		//	pNewNode->bUseDefaultTextColor = TRUE;		// Use the default text color
@@ -237,11 +245,21 @@ public:
 		//if (bInvalidate)
 		//	Invalidate();
 
-		//return pNewNode;
-		return EmptyNode;//Temporary Return value
+		NodeType& pNodeBefore = NodeBank[pInsertAfter];
+		//return AddNode(nodeName, parentIndex, tagType, crText, bUseDefaultTextColor, bInvalidate);
+		return EmptyNode;//Temporary return
 	}
 	//NodeType* InsertChild(NodeType* pParent, const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
-	unsigned __int64 InsertChild(unsigned __int64 pParent, const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+/// <summary>
+/// Inserts the child.
+/// </summary>
+/// <param name="pParent">The p parent.</param>
+/// <param name="nodeName">The node label.</param>
+/// <param name="crText">The cr text.</param>
+/// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
+/// <param name="bInvalidate">The b invalidate.</param>
+/// <returns>unsigned __int64</returns>
+	unsigned __int64 InsertChild(unsigned __int64 pParent, const CString& nodeName, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		//ASSERT(pParent != NULL);	// Make sure the node exists
 
@@ -251,7 +269,7 @@ public:
 		//NodeType* pNewNode = new NodeType();
 
 		//// Basic node information
-		//pNewNode->csLabel = csLabel;	// New node's label
+		//pNewNode->csLabel = nodeName;	// New node's label
 
 		//if (bUseDefaultTextColor)
 		//	pNewNode->bUseDefaultTextColor = TRUE;		// Use the default text color
@@ -269,14 +287,25 @@ public:
 		//	Invalidate();
 
 		//return pNewNode;
-		return EmptyNode;//Temporary Return value
+		return AddNode(nodeName, pParent, tagType, crText, bUseDefaultTextColor, bInvalidate);
 	}
 
 #pragma endregion InsertOperations
 
-	virtual unsigned __int64 AddNode(std::string nodeName, int tagType = 0, unsigned _int64 parentIndex = EmptyNode)
+	/// <summary>
+	/// Adds the node.
+	/// </summary>
+	/// <param name="nodeName">The node label.</param>
+	/// <param name="parentIndex">Index of the parent.</param>
+	/// <param name="tagType">Type of the tag.</param>
+	/// <param name="crText">The cr text.</param>
+	/// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
+	/// <param name="bInvalidate">The b invalidate.</param>
+	/// <returns>unsigned __int64</returns>
+	virtual unsigned __int64 AddNode(std::string nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = 0, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode());
+		NodeType& pNewNode = NodeBank[IndexPos];
 		if (RootLvlNodes.size() == 0)//Automatically add to root if no RootLvlNodes yet
 		{
 			RootLvlNodes.Add(IndexPos);
@@ -287,40 +316,60 @@ public:
 			{
 				RootLvlNodes.Add(IndexPos);
 			}
-			else
-			{
-				NodeBank[IndexPos].
-			}
-			NodeBank[IndexPos].TagType = tagType;
 		}
-		return EmptyNode;//Temporary Return value
+		pNewNode.TagType = tagType;
+		pNewNode.csLabel = nodeName;					// New node's label
+
+		if (bUseDefaultTextColor)
+			pNewNode.bUseDefaultTextColor = TRUE;		// Use the default text color
+		else
+			pNewNode.crText = crText;					// New node's text color
+		if (bInvalidate)
+		  Invalidate();
+		return IndexPos;
+	}
+
+	virtual unsigned __int64 AddNode(const CString& nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = 0, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	{
+		return AddNode(nodeName, parentIndex, tagType, crText, bUseDefaultTextColor, bInvalidate);
 	}
 
 	/*virtual NodeType* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)*/
 	/// <summary>
 	/// Adds to root.
 	/// </summary>
-	/// <param name="csLabel">The node label.</param>
+	/// <param name="nodeName">The node label.</param>
 	/// <param name="crText">The cr text.</param>
 	/// <param name="bUseDefaultTextColor">Whether to use default text color.</param>
 	/// <param name="bInvalidate">Whether to invalidate</param>
 	/// <returns>unsigned _int64</returns>
-	virtual unsigned _int64 AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	virtual unsigned _int64 AddToRoot(const CString& nodeName, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode());
-		//NodeBank[IndexPos].
+		NodeType& pNewNode = NodeBank[IndexPos];
 		RootLvlNodes.Add(IndexPos);
+		pNewNode.TagType = tagType;
+		pNewNode.csLabel = nodeName;					// New node's label
+
+		if (bUseDefaultTextColor)
+			pNewNode.bUseDefaultTextColor = TRUE;		// Use the default text color
+		else
+			pNewNode.crText = crText;					// New node's text color
+		if (bInvalidate)
+			Invalidate();
 		return IndexPos;
 	}
 
 	/// <summary>
-	/// Adds new node to root.
+	/// Adds new blank node to root.
 	/// </summary>
 	/// <returns>unsigned _int64</returns>
 	virtual unsigned _int64 AddNodeToRoot()
 	{
 		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode());
 		RootLvlNodes.Add(IndexPos);
+		NodeType& pNewNode = NodeBank[IndexPos];
+		pNewNode.bUseDefaultTextColor = TRUE;
 		return IndexPos;
 	}
 
@@ -1236,4 +1285,4 @@ CRuntimeImplimentation_Arg02(CustomTreeView, TreeNode, DocViewType)
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
-#endif // !defined(AFX_CustomTreeView_H__34535BED_8D5C_453E_9DAE_F8A9413ABF6E__INCLUDED_)
+#endif
