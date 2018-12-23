@@ -7,8 +7,9 @@
 
 #include "MultiviewPrecompile.h"
 #include "GlobalCode_VariableLists/VariableList.h"
+#include "GlobalCode_IniData/IniDataV2.h"
 #include <string>
-#include "XMLTagViewNode.h"
+//#include "XMLTagViewNode.h"
 
 
 /// <summary>

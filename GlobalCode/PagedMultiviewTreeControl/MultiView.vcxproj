@@ -325,6 +325,7 @@
     </ClCompile>
     <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\ContextMenu.cpp" />
     <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\DLG_TreeNodeText.cpp" />
+    <ClCompile Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\HkTreeView.cpp" />
     <ClCompile Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
@@ -396,6 +397,8 @@
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MFView.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagView.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagViewNode.h" />
+    <ClInclude Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\BasicHkNode.h" />
+    <ClInclude Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\HkTreeView.h" />
     <ClInclude Include="..\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>

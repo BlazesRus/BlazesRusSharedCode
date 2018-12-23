@@ -117,6 +117,9 @@
     <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkClassUsageTree.cpp">
       <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\HkTreeView.cpp">
+      <Filter>NodeTreeStuff</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(CPPSource)\GlobalCode_StringFunctions\StringFunctions.h">
@@ -289,6 +292,12 @@
     </ClInclude>
     <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkClassUsageTree.h">
       <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\HkTreeView.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\BasicHkNode.h">
+      <Filter>NodeTreeStuff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
