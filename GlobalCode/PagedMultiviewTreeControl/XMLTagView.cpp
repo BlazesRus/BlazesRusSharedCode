@@ -109,21 +109,21 @@ bool XMLTagView::LoadDataFromFile(std::string FilePath)
 				{
 					if (InsideParenthesis&&!TagNameArg02.empty())//End argument inside parenthesis with second parenthesis instead of space
 					{
-						//Detect Argument type(0=Default/String; 1:Int; 2:Non-WholeNumber)
-						int DetectedArgType = 0;
-						for(int Index=0;Index<TagNameArg02.length();++Index)
-						{
+						////Detect Argument type(0=Default/String; 1:Int; 2:Non-WholeNumber)
+						//int DetectedArgType = 0;
+						//for(int Index=0;Index<TagNameArg02.length();++Index)
+						//{
 
-						}
-						switch(DetectedArgType)
-						{
-							case 2:
+						//}
+						//switch(DetectedArgType)
+						//{
+						//	case 2:
+						//		AdditionTagOptions.Add(ScanBuffer, TagNameArg02);
+						//	break;
+						//	default:
 								AdditionTagOptions.Add(ScanBuffer, TagNameArg02);
-							break;
-							default:
-								AdditionTagOptions.Add(ScanBuffer, TagNameArg02);
-							break;
-						}
+						//	break;
+						//}
 					}
 					InsideParenthesis = !InsideParenthesis;
 				}

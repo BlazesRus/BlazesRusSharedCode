@@ -43,28 +43,28 @@ class BasicXMLNode
 	/// <summary>
 	/// Converts to tag string.
 	/// </summary>
-	/// <returns>std.string</returns>
+	/// <returns>std::string</returns>
 	std::string ConvertToTagString(IniDataV2 AdditionTagOptions, int TagType = 0)
 	{
-		////0=NormalTag; 1:SelfContainedTag; 2:TagIsClosing; 3:XMLVersionTag
-		//int TagType = 0;
-	///// <summary>
-	///// The addition tag options
-	///// </summary>
-	//IniDataV2 AdditionTagOptions;
 		std::string TagStr = "<";
 		if (TagType == 3) { TagStr += "?"; }
 		TagStr += NodeName;
-		if(AdditionTagOptions.Size()>0)
+		size_t TagSize = AdditionTagOptions.Size();
+		if (TagSize > 0)
 		{
-			//Retrieve argument information to convert into string
-			TagStr += " ";
+			for (auto it = AdditionTagOptions.self.begin(); it != AdditionTagOptions.self.end(); ++it) {
+				TagStr += " ";
+				TagStr += it.key();
+				TagStr += "=\"";
+				TagStr += it.value();
+				TagStr += "\"";
+			}
 		}
-		if(TagType==1)
+		if (TagType == 1)
 		{
 			TagStr += "/>";
 		}
-		else if(TagType==3)
+		else if (TagType == 3)
 		{
 			TagStr += "?>";
 		}

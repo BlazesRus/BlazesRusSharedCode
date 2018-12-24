@@ -64,10 +64,6 @@ public:
             return false;
         }
     }
-    //int operator[](const string key)
-    //{
-    //	return
-    //}
     /// <summary>
     /// Initializes a new instance of the <see cref="CustomDictionary"/> class.
     /// </summary>

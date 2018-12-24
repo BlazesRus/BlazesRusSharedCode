@@ -37,7 +37,7 @@
 /// Class named IniDataV2.
 /// </summary>
 class DLL_API IniDataV2
-{//Non-Ordered Version for now since don't really need Ini Saved in Order for now since not using categories
+{
 private:
     /// <summary>
     /// The int declaration
@@ -85,8 +85,6 @@ public:
     /// IniSettings with string values and key linkage to IniSettings
     /// </summary>
     CustomOrderedDictionary<std::string, std::string> self = {};
-
-
 
     /// <summary>
     /// Loads the Ini data.
@@ -317,7 +315,7 @@ public:
     /// </summary>
     /// <param name="Key">The key.</param>
     /// <param name="Value">The value.</param>
-    /// <returns>bool.</returns>
+    /// <returns>bool</returns>
     bool Add(std::string Key, bool Value)
     {
         if (self.AddOnlyNew(Key, BoolDeclaration)) { BoolSettings.AddOnlyNew(Key, Value); return true; }
@@ -330,7 +328,7 @@ public:
     /// </summary>
     /// <param name="Key">The key.</param>
     /// <param name="Value">The value.</param>
-    /// <returns>bool.</returns>
+    /// <returns>bool</returns>
     bool Add(std::string Key, int Value)
     {
         if (self.AddOnlyNew(Key, IntDeclaration)) { return IntSettings.AddOnlyNew(Key, Value); return true; }
@@ -370,9 +368,15 @@ public:
     /// return ElementValue;
     /// }
     /// }
+
+/// <summary>
+/// Gets the element data.
+/// </summary>
+/// <param name="Value">The value.</param>
+/// <returns>std::string</returns>
     std::string GetElementData(std::string Value)
     {
-        std::unordered_map<std::string, std::string>::iterator ValueInfo = self.find(Value);
+        tsl::ordered_map<std::string, std::string>::iterator ValueInfo = self.find(Value);
         if (ValueInfo == self.end())
         {
             return "";
@@ -578,6 +582,11 @@ public:
         size_t TotalSize = IntSettings.size()+BoolSettings.size();
         return TotalSize;
     }
+
+    //std::string operator[](int Index)
+    //{
+    //    return self.KeyAt(Index);
+    //}
 
     /// <summary>
     /// Initializes a new instance of the <see cref="IniDataV2" /> class.
