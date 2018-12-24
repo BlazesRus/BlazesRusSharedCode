@@ -49,10 +49,18 @@ public:
     /// </summary>
     /// <param name="First">The first.</param>
     /// <param name="Second">The second.</param>
-    void AddOnlyNew(EntryType First, ValueType Second)
+    bool AddOnlyNew(EntryType First, ValueType Second)
     {
         std::pair<EntryType, ValueType> Value = { First, Second };
-        this->insert(Value);
+        auto p = this->insert(Value);
+        if (p.second)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     //int operator[](const string key)
     //{

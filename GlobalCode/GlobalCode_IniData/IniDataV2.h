@@ -22,14 +22,14 @@
 
 #include <string>
 
+#include "CustomDictionary.h"
+#include "CustomOrderedDictionary.h"
 #ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
 #include "StringVectorList.h"
 #include "VariableConversionFunctions.h"
-#include "CustomDictionary.h"
 #else
 #include "..\GlobalCode_VariableLists\StringVectorList.h"
 #include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
-#include "CustomDictionary.h"
 #include "..\GlobalCode_ExperimentalCode\MediumDec.h"
 #endif
 
@@ -84,7 +84,7 @@ public:
     /// <summary>
     /// IniSettings with string values and key linkage to IniSettings
     /// </summary>
-    CustomDictionary<std::string, std::string> self = {};
+    CustomOrderedDictionary<std::string, std::string> self = {};
 
 
 
