@@ -92,34 +92,35 @@
     <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <CPPSource>C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\GlobalCode</CPPSource>
+    <BlazesGlobalCode>C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\GlobalCode</BlazesGlobalCode>
+    <HkBasedCode>C:\Users\BlazesRus\Documents\GitHub\BHVEditor\bvhTweak\HkBasedCode</HkBasedCode>
   </PropertyGroup>
   <PropertyGroup>
-    <ReferencePath>$(CPPSource);$(ReferencePath)</ReferencePath>
+    <ReferencePath>$(BlazesGlobalCode);$(HkBasedCode);$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>.\Debug\</OutDir>
     <IntDir>.\Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(CPPSource);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <SourcePath>$(CPPSource);$(VC_SourcePath);</SourcePath>
+    <IncludePath>$(BlazesGlobalCode);$(HkBasedCode);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <SourcePath>$(BlazesGlobalCode);$(HkBasedCode);$(VC_SourcePath);</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(CPPSource);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <SourcePath>$(CPPSource);$(VC_SourcePath);</SourcePath>
+    <IncludePath>$(BlazesGlobalCode);$(HkBasedCode);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <SourcePath>$(BlazesGlobalCode);$(HkBasedCode);$(VC_SourcePath);</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\Release\</OutDir>
     <IntDir>.\Release\</IntDir>
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(CPPSource);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <SourcePath>$(CPPSource);$(VC_SourcePath);</SourcePath>
+    <IncludePath>$(BlazesGlobalCode);$(HkBasedCode);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <SourcePath>$(BlazesGlobalCode);$(HkBasedCode);$(VC_SourcePath);</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(CPPSource);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <SourcePath>$(CPPSource);$(VC_SourcePath);</SourcePath>
+    <IncludePath>$(BlazesGlobalCode);$(HkBasedCode);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <SourcePath>$(BlazesGlobalCode);$(HkBasedCode);$(VC_SourcePath);</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -127,7 +128,7 @@
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(CPPSource);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BlazesGlobalCode);$(HkBasedCode);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level3</WarningLevel>
       <MinimalRebuild>true</MinimalRebuild>
@@ -169,7 +170,7 @@
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(CPPSource);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BlazesGlobalCode);$(HkBasedCode);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -210,7 +211,7 @@
       <StringPooling>true</StringPooling>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>$(CPPSource);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BlazesGlobalCode);$(HkBasedCode);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>BLAZESGLOBALCODE_LIBRARY;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -250,7 +251,7 @@
       <StringPooling>true</StringPooling>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>$(CPPSource);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BlazesGlobalCode);$(HkBasedCode);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>BLAZESGLOBALCODE_LIBRARY;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -293,38 +294,38 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_IniData\IniDataV2.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
       <CompileAs>Default</CompileAs>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_QuadVector\QuadVector.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_QuadVector\QuadVector.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_QuadVector\QuadVectorFunctions.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_QuadVector\QuadVectorFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_StringFunctions\StringFunctions.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_StringFunctions\StringFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\StringVectorList.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_VariableLists\StringVectorList.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\VariableTypeLists.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_VariableLists\VariableTypeLists.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_VariableLists\VariableVectorFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_NodeTrees\VariableData.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\ContextMenu.cpp" />
-    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\DLG_TreeNodeText.cpp" />
+    <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\ContextMenu.cpp" />
+    <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\DLG_TreeNodeText.cpp" />
     <ClCompile Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\HkTreeView.cpp" />
     <ClCompile Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -355,50 +356,51 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
     </ClCompile>
     <ClCompile Include="TreeCtrlPage.cpp" />
-    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\TreePage.cpp" />
-    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagView.cpp" />
-    <ClInclude Include="$(CPPSource)\tsl\ordered_hash.h" />
-    <ClInclude Include="$(CPPSource)\tsl\ordered_map.h" />
-    <ClInclude Include="$(CPPSource)\tsl\ordered_set.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomDictionary.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomOrderedDictionary.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\PointerDictionary.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\OrderedPointerDictionary.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedDictionary.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedPDictionary.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_QuadVector\QuadVector.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_QuadVector\QuadVectorFunctions.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_StringFunctions\StringFunctions.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\StringVectorList.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableList.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableTypeLists.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.h" />
-    <ClCompile Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\TreePage.cpp" />
+    <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\XMLTagView.cpp" />
+    <ClInclude Include="$(BlazesGlobalCode)\tsl\ordered_hash.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\tsl\ordered_map.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\tsl\ordered_set.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_IniData\CustomDictionary.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_IniData\CustomOrderedDictionary.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_IniData\PointerDictionary.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_IniData\OrderedPointerDictionary.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_IniData\IndexedDictionary.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_IniData\IndexedPDictionary.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_IniData\IniDataV2.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_QuadVector\QuadVector.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_QuadVector\QuadVectorFunctions.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_StringFunctions\StringFunctions.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_VariableLists\StringVectorList.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_VariableLists\VariableList.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_VariableLists\VariableTypeLists.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_VariableLists\VariableVectorFunctions.h" />
+    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_ExperimentalCode\MediumDec.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_NodeTrees\VariableData.h">
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_ExperimentalCode\MediumDec.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_NodeTrees\VariableData.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\ContextMenu.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeCtrl.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeView.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\DLG_TreeNodeText.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TemplateMacros.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreeCtrlPage.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePage.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TreePageNode.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\WP_APPDefines.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\GenericFrameView.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\LinkedTreeView.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MFView.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagView.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\XMLTagViewNode.h" />
-    <ClInclude Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\BasicHkNode.h" />
-    <ClInclude Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\HkTreeView.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\ContextMenu.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\CustomTreeCtrl.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\CustomTreeView.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\DLG_TreeNodeText.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\TemplateMacros.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\TreeCtrlPage.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\TreePage.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\TreePageNode.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\WP_APPDefines.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\GenericFrameView.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\LinkedTreeView.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\MFView.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\XMLTagView.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\XMLTagViewNode.h" />
+    <ClInclude Include="$(HkBasedCode)\BasicHkNode.h" />
+    <ClInclude Include="$(HkBasedCode)\HkTreeView.h" />
+    <ClInclude Include="$(HkBasedCode)\HkTreeViewNode.h" />
     <ClInclude Include="..\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
@@ -446,11 +448,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(CPPSource)\DLLAPI.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\AboutDlg.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\BasicMultiviewTemplate.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\CustomTreeNode.h" />
-    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MainFrm.cpp">
+    <ClInclude Include="$(BlazesGlobalCode)\DLLAPI.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\AboutDlg.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\BasicMultiviewTemplate.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\CustomTreeNode.h" />
+    <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\MainFrm.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -460,8 +462,8 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewApp.cpp" />
-    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewDoc.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\MultiViewApp.cpp" />
+    <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\MultiViewDoc.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -471,7 +473,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\OtherView.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\OtherView.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -481,7 +483,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiviewPrecompile.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\MultiviewPrecompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiviewPrecompile.h</PrecompiledHeaderFile>
@@ -501,11 +503,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="$(CPPSource)\PagedMultiviewTreeControl\MultiView.rc" />
+    <ResourceCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\MultiView.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\HalfPagedMultiview.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MainFrm.h">
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\HalfPagedMultiview.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\MainFrm.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -515,7 +517,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewApp.h">
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\MultiViewApp.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -525,7 +527,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MultiViewDoc.h">
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\MultiViewDoc.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -535,7 +537,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\OtherView.h">
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\OtherView.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -545,8 +547,8 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DeploymentContent>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\Resource.h" />
-    <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\MultiviewPrecompile.h">
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\Resource.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\MultiviewPrecompile.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -558,12 +560,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="$(CPPSource)\PagedMultiviewTreeControl\res\MultiView.ico" />
-    <Image Include="$(CPPSource)\PagedMultiviewTreeControl\res\MultiViewDoc.ico" />
-    <Image Include="$(CPPSource)\PagedMultiviewTreeControl\res\Toolbar.bmp" />
+    <Image Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\res\MultiView.ico" />
+    <Image Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\res\MultiViewDoc.ico" />
+    <Image Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\res\Toolbar.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="$(CPPSource)\PagedMultiviewTreeControl\res\MultiView.rc2" />
+    <CustomBuild Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\res\MultiView.rc2" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

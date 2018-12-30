@@ -1,3 +1,7 @@
+// ***********************************************************************
+// Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+// Latest BlazesGlobalCode Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+// ***********************************************************************
 #include "MultiviewPrecompile.h"
 #include "XMLTagView.h"
 

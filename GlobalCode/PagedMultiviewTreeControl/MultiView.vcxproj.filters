@@ -299,6 +299,9 @@
     <ClInclude Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\BasicHkNode.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\HkTreeViewNode.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="$(CPPSource)\PagedMultiviewTreeControl\res\MultiView.ico">
