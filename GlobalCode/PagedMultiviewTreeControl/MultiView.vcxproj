@@ -323,6 +323,7 @@
     <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_NodeTrees\VariableData.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\ContextMenu.cpp" />
     <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\DLG_TreeNodeText.cpp" />
