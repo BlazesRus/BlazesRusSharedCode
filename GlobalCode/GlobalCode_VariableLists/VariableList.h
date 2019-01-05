@@ -80,7 +80,7 @@ public:
 		return this->at(index);//Doesn't seem to work(via this operator) for some reason
 	}
 
-	explicit operator vector<VariableType>()
+	explicit operator std::vector<VariableType>()
 	{
 		vector<VariableType> NewSelf;
 		for(int Index=0;Index<size();++Index)

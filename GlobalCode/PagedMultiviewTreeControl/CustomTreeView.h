@@ -3,6 +3,7 @@
 // Code based on https://www.codeproject.com/Articles/9887/CStaticTreeCtrl-A-CStatic-derived-custom-Tree-cont
 // Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 // ***********************************************************************
+#pragma once
 #if !defined(CustomTreeView_IncludeGuard)
 #define CustomTreeView_IncludeGuard
 
