@@ -64,26 +64,9 @@ protected:
 	int				m_iIndent;
 	int				m_iPadding;
 
+	NodeType*		m_pSelected;
 	//#ifdef EnableCustomTreeSounds
 	//	BOOL			m_bAudioOn;
-	//#endif
-public:
-	//#if !defined(BlazesGUICode_UseDictionaryBasedNodes)
-	//	NodeType*		m_pTopNode;
-	//	NodeType*		m_pSelected;
-	//#else
-	//	NodeType* m_pTopNode()
-	//	{
-	//
-	//	}
-	//	NodeType* m_pSelected()
-	//	{
-	//
-	//	}
-	//	unsigned __int64 pTopNode_Key;
-	//	unsigned __int64 pTopNode_Key;
-	//	IndexedLongDictionary<NodeType> NodeStorage;
-	//	unsigned __int64 RootKey = 0;
 	//#endif
 public:
 	// Operations
@@ -133,12 +116,12 @@ public:
 		pDC->RestoreDC(iSaved);
 		ReleaseDC(pDC);
 	}
-	virtual void SetDefaultTextColor(COLORREF crText)
+	virtual void SetDefaultTextColor(COLORREF textColor)
 	{
-		m_crDefaultTextColor = crText;
+		m_crDefaultTextColor = textColor;
 	}
 
-	virtual void SetTextSettings(LONG nHeight, BOOL bBold, BOOL bItalic, const CString& csFaceName, COLORREF crText)
+	virtual void SetTextSettings(LONG nHeight, BOOL bBold, BOOL bItalic, const CString& csFaceName, COLORREF textColor)
 	{
 		m_lgFont.lfHeight = -MulDiv(nHeight, GetDeviceCaps(GetDC()->m_hDC, LOGPIXELSY), 72);
 		m_lgFont.lfWidth = 0;
@@ -173,15 +156,15 @@ public:
 		pDC->SelectObject(pOldFont);
 		pDC->RestoreDC(iSaved);
 		ReleaseDC(pDC);
-		m_crDefaultTextColor = crText;
+		m_crDefaultTextColor = textColor;
 	}
 
-	void SetNodeColor(NodeType* pNode, COLORREF crText, BOOL bInvalidate = FALSE)
+	void SetNodeColor(NodeType* pNode, COLORREF textColor, BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pNode != NULL);
 
 		pNode->bUseDefaultTextColor = FALSE;
-		pNode->crText = crText;
+		pNode->textColor = textColor;
 
 		if (bInvalidate)
 			Invalidate();
@@ -213,17 +196,18 @@ public:
 #pragma endregion TextBasedOptions
 
 #pragma region InsertOperations
-	//NodeType* InsertSibling(NodeType* pInsertAfter, const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+/* Disabling InsertSibling function for now
+	//NodeType* InsertSibling(NodeType* pInsertAfter, const CString& csLabel, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 /// <summary>
 /// Inserts the sibling.
 /// </summary>
 /// <param name="pInsertAfter">The p insert after.</param>
 /// <param name="nodeName">The node label.</param>
-/// <param name="crText">The cr text.</param>
+/// <param name="textColor">The cr text.</param>
 /// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
 /// <param name="bInvalidate">The b invalidate.</param>
 /// <returns>unsigned __int64</returns>
-	unsigned __int64 InsertSibling(unsigned __int64 pInsertAfter, const CString& nodeName, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	unsigned __int64 InsertSibling(unsigned __int64 pInsertAfter, const CString& nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		//ASSERT(pInsertAfter != NULL);	// Make sure the node exists
 
@@ -234,7 +218,7 @@ public:
 		//if (bUseDefaultTextColor)
 		//	pNewNode->bUseDefaultTextColor = TRUE;		// Use the default text color
 		//else
-		//	pNewNode->crText = crText;					// New node's text color
+		//	pNewNode->textColor = textColor;					// New node's text color
 
 		//pNewNode->pParent = pInsertAfter->pParent;	// Has the same parent
 
@@ -247,20 +231,21 @@ public:
 		//	Invalidate();
 
 		NodeType& pNodeBefore = NodeBank[pInsertAfter];
-		//return AddNode(nodeName, parentIndex, tagType, crText, bUseDefaultTextColor, bInvalidate);
+		//return AddNode(nodeName, parentIndex, tagType, textColor, bUseDefaultTextColor, bInvalidate);
 		return EmptyNode;//Temporary return
 	}
-	//NodeType* InsertChild(NodeType* pParent, const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+*/
+	//NodeType* InsertChild(NodeType* pParent, const CString& csLabel, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 /// <summary>
 /// Inserts the child.
 /// </summary>
 /// <param name="pParent">The p parent.</param>
 /// <param name="nodeName">The node label.</param>
-/// <param name="crText">The cr text.</param>
-/// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
-/// <param name="bInvalidate">The b invalidate.</param>
+/// <param name="textColor">The cr textcolor.</param>
+/// <param name="bUseDefaultTextColor">Use default textcolor instead of textColor if true</param>
+/// <param name="bInvalidate">Repaint the control if this is true</param>
 /// <returns>unsigned __int64</returns>
-	unsigned __int64 InsertChild(unsigned __int64 pParent, const CString& nodeName, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	unsigned __int64 InsertChild(unsigned __int64 pParent, const CString& nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		//ASSERT(pParent != NULL);	// Make sure the node exists
 
@@ -275,7 +260,7 @@ public:
 		//if (bUseDefaultTextColor)
 		//	pNewNode->bUseDefaultTextColor = TRUE;		// Use the default text color
 		//else
-		//	pNewNode->crText = crText;					// New node's text color
+		//	pNewNode->textColor = textColor;					// New node's text color
 
 		//pNewNode->pParent = pParent;	// New node's parent
 
@@ -288,7 +273,7 @@ public:
 		//	Invalidate();
 
 		//return pNewNode;
-		return AddNode(nodeName, pParent, tagType, crText, bUseDefaultTextColor, bInvalidate);
+		return AddNode(nodeName, pParent, tagType, textColor, bUseDefaultTextColor, bInvalidate);
 	}
 
 #pragma endregion InsertOperations
@@ -299,11 +284,11 @@ public:
 	/// <param name="nodeName">The node label.</param>
 	/// <param name="parentIndex">Index of the parent.</param>
 	/// <param name="tagType">Type of the tag.</param>
-	/// <param name="crText">The cr text.</param>
+	/// <param name="textColor">The cr text.</param>
 	/// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
 	/// <param name="bInvalidate">The b invalidate.</param>
 	/// <returns>unsigned __int64</returns>
-	virtual unsigned __int64 AddNode(std::string nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	virtual unsigned __int64 AddNode(std::string nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode(tagType, parentIndex));
 		NodeType& pNewNode = NodeBank[IndexPos];
@@ -324,7 +309,7 @@ public:
 		if (bUseDefaultTextColor)
 			pNewNode.bUseDefaultTextColor = TRUE;		// Use the default text color
 		else
-			pNewNode.crText = crText;					// New node's text color
+			pNewNode.textColor = textColor;					// New node's text color
 		if (bInvalidate)
 		  Invalidate();
 		return IndexPos;
@@ -336,11 +321,11 @@ public:
 	/// <param name="nodeName">The node label.</param>
 	/// <param name="parentIndex">Index of the parent.</param>
 	/// <param name="tagType">Type of the tag.</param>
-	/// <param name="crText">The cr text.</param>
+	/// <param name="textColor">The cr text.</param>
 	/// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
 	/// <param name="bInvalidate">The b invalidate.</param>
 	/// <returns>NodeType&</returns>
-	virtual NodeType& AddNodeV2(std::string nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	virtual NodeType& AddNodeV2(std::string nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode(tagType, parentIndex));
 		NodeType& pNewNode = NodeBank[IndexPos];
@@ -361,28 +346,27 @@ public:
 		if (bUseDefaultTextColor)
 			pNewNode.bUseDefaultTextColor = TRUE;		// Use the default text color
 		else
-			pNewNode.crText = crText;					// New node's text color
+			pNewNode.textColor = textColor;					// New node's text color
 		if (bInvalidate)
 			Invalidate();
 		return pNewNode;
 	}
 
-	virtual unsigned __int64 AddNode(const CString& nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	virtual unsigned __int64 AddNode(const CString& nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
-		return AddNode(nodeName, parentIndex, tagType, crText, bUseDefaultTextColor, bInvalidate);
+		return AddNode(nodeName, parentIndex, tagType, textColor, bUseDefaultTextColor, bInvalidate);
 	}
 
-	/*virtual NodeType* AddToRoot(const CString& csLabel, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)*/
 	/// <summary>
 	/// Adds to root.
 	/// </summary>
 	/// <param name="nodeName">The node label.</param>
-	/// <param name="crText">The cr text.</param>
+	/// <param name="textColor">The cr text.</param>
 	/// <param name="bUseDefaultTextColor">Whether to use default text color.</param>
 	/// <param name="bInvalidate">Whether to invalidate</param>
 	/// <returns>unsigned _int64</returns>
-	virtual unsigned _int64 AddToRoot(const CString& nodeName, COLORREF crText = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
-	{
+	virtual unsigned _int64 AddToRoot(const CString& nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	{/*virtual NodeType* AddToRoot(const CString& csLabel, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)*/
 		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode());
 		NodeType& pNewNode = NodeBank[IndexPos];
 		RootLvlNodes.Add(IndexPos);
@@ -392,7 +376,7 @@ public:
 		if (bUseDefaultTextColor)
 			pNewNode.bUseDefaultTextColor = TRUE;		// Use the default text color
 		else
-			pNewNode.crText = crText;					// New node's text color
+			pNewNode.textColor = textColor;					// New node's text color
 		if (bInvalidate)
 			Invalidate();
 		return IndexPos;
@@ -412,9 +396,8 @@ public:
 		return IndexPos;
 	}
 
-	/*virtual void DeleteNode(NodeType* pNode, BOOL bInvalidate = FALSE)*/
 	virtual void DeleteNode(unsigned __int64 pNode, BOOL bInvalidate = FALSE)
-	{
+	{/*virtual void DeleteNode(NodeType* pNode, BOOL bInvalidate = FALSE)*/
 		//ASSERT(pNode != NULL);	// Make sure the node exists
 		//						// Don't delete the top node
 		//if (pNode == m_pTopNode)
@@ -501,7 +484,8 @@ protected:
 
 		pNode->rNode.CopyRect(rNode);		// Record the rectangle
 
-		COLORREF cr = (pNode->bUseDefaultTextColor) ? m_crDefaultTextColor : pNode->crText;
+		//Text Color
+		COLORREF cr = (pNode->bUseDefaultTextColor) ? m_crDefaultTextColor : pNode->textColor;
 		COLORREF crOldText = pDC->SetTextColor(cr);
 
 		// MULTILINE TEXT - begins
@@ -561,7 +545,7 @@ protected:
 									// Loop until we can fit no more of the text
 			while (iPixelWidth < iAvailableWidth)
 			{
-				iValidSoFar = iNextBlank;							// Record the char pos so far
+				iValidSoFar = iNextBlank;							// Record the char position so far
 				iNextBlank = csText.Find(' ', iNextBlank + 1);	// Advance one word at a time
 
 																// Have reached the end of the string?
@@ -640,25 +624,33 @@ protected:
 		m_bScrollBarMessage = FALSE;
 	}
 
+/*  //Fix this code later
 	NodeType* FindNodeByPoint(const CPoint& point, NodeType* pNode)
 	{
-		//NodeType* pFound = NULL;
+		NodeType* pFound = nullptr;
 
-		//// Found it?
-		//if (pNode->rNode.PtInRect(point))
-		//	pFound = pNode;
+		// Found it?
+		if (pNode->rNode.PtInRect(point))
+			pFound = pNode;
 
-		//// If this node isn't it then check the node's children if it is open and there are any
-		//if (pFound == NULL && pNode->bOpen && pNode->pChild != NULL)
-		//	pFound = FindNodeByPoint(point, (NodeType*)pNode->pChild);
+		// If this node isn't it then check the node's children if it is open and there are any
+		if (pFound == NULL && pNode->bOpen && pNode->pChild != NULL)
+			pFound = FindNodeByPoint(point, (NodeType*)pNode->pChild);
 
-		//// If didn't find it among the node's children, then check the next sibling
-		//if (pFound == NULL && pNode->pSibling != NULL)
-		//	pFound = FindNodeByPoint(point, (NodeType*)pNode->pSibling);
+		// If didn't find it among the node's children, then check the next sibling
+		if (pFound == NULL && pNode->pSibling != NULL)
+			pFound = FindNodeByPoint(point, (NodeType*)pNode->pSibling);
 
-		//return pFound;
-		return nullptr;
+		return pFound;
 	}
+
+	NodeType* FindNodeByID(const CPoint& point, unsigned __int64 NodeId)
+	{
+		NodeType* pFound = nullptr;
+
+	}
+*/
+
 	BOOL NodeTextDlg(CString& csText)
 	{
 		BOOL				bRet = FALSE;
@@ -720,7 +712,7 @@ protected:
 	}
 	void OnCM_ChangeNodeColor()
 	{
-		COLORREF cr = (m_pSelected->bUseDefaultTextColor) ? m_crDefaultTextColor : m_pSelected->crText;
+		COLORREF cr = (m_pSelected->bUseDefaultTextColor) ? m_crDefaultTextColor : m_pSelected->textColor;
 
 		CColorDialog ccd(cr, CC_FULLOPEN | CC_ANYCOLOR);
 
@@ -787,7 +779,7 @@ public:
 
 		// Safeguards
 		SetTextFont(8, FALSE, FALSE, "Arial Unicode MS");
-		//m_pSelected = NULL;
+		m_pSelected = nullptr;
 		ViewName = "TreeView";
 	}
 	virtual ~CustomTreeView()

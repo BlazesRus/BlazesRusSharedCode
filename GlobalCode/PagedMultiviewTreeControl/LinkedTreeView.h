@@ -2,6 +2,7 @@
 // Code Created by James Michael Armstrong (https://github.com/BlazesRus)
 // Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 // ***********************************************************************
+#pragma once
 #if !defined(LinkedTreeView_IncludeGuard)
 #define LinkedTreeView_IncludeGuard
 
@@ -26,5 +27,5 @@ class LinkedTreeView : public CustomTreeView<TreeNode>
 	}
 };
 
-CRuntimeImplimentation_Arg02Base01(LinkedTreeView, TreeNode, NodeDictionaryType)
+CRuntimeImplimentation_Arg02(LinkedTreeView, TreeNode, NodeDictionaryType)
 #endif
