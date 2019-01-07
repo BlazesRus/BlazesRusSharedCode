@@ -398,45 +398,21 @@ public:
 
 	virtual void DeleteNode(unsigned __int64 pNode, BOOL bInvalidate = FALSE)
 	{/*virtual void DeleteNode(NodeType* pNode, BOOL bInvalidate = FALSE)*/
-		//ASSERT(pNode != NULL);	// Make sure the node exists
-		//						// Don't delete the top node
-		//if (pNode == m_pTopNode)
-		//	DeleteNode(m_pTopNode, bInvalidate);
-
-		//// Delete children
-		//if (pNode->pChild != NULL)
-		//	DeleteNodeRecursive((NodeType*)pNode->pChild);
-
-		//// If this node is not the top node, fix pointers in sibling list
-		//if (pNode != m_pTopNode)
-		//{
-		//	NodeType* pRunner = (NodeType*)pNode->pParent;
-
-		//	// If first child, set the parent pointer to the next sibling
-		//	// Otherwise, find sibling before and set its sibling pointer to the node's sibling
-		//	if (pRunner->pChild == pNode)
-		//		pRunner->pChild = pNode->pSibling;
-		//	else
-		//	{
-		//		pRunner = (NodeType*)pRunner->pChild;
-
-		//		// Loop until the next node is the one being deleted
-		//		while (pRunner->pSibling != pNode)
-		//			pRunner = (NodeType*)pRunner->pSibling;
-
-		//		pRunner->pSibling = pNode->pSibling;
-		//	}
-
-		//	delete pNode;
-
-		//	pNode = NULL;
-		//}
 		DeleteNodeRecursive(pNode);
 
 		// Repaint the control if so desired
 		if (bInvalidate)
 			Invalidate();
 	}
+
+	/*virtual void DeleteNode(NodeType* targetNode, BOOL bInvalidate = FALSE)
+	{
+		DeleteNodeRecursive(pNode);
+
+		// Repaint the control if so desired
+		if (bInvalidate)
+			Invalidate();
+	}*/
 
 	void ToggleNode(NodeType* pNode, BOOL bInvalidate = FALSE)
 	{
@@ -447,30 +423,51 @@ public:
 		if (bInvalidate)
 			Invalidate();
 	}
-protected:
-	// Recursive delete
-	void DeleteNodeRecursive(unsigned __int64 pNode)
+
+	/// <summary>
+	/// Recursively delete node and all child nodes from nodeID
+	/// </summary>
+	/// <param name="pNode">The p node.</param>
+	void DeleteNodeRecursive(unsigned __int64 nodeID)
 	{
-		//if (pNode->pSibling != NULL)
-		//	DeleteNodeRecursive((NodeType*)pNode->pSibling);
-
-		//if (pNode->pChild != NULL)
-		//	DeleteNodeRecursive((NodeType*)pNode->pChild);
-
-		//delete pNode;
-
-		//pNode = NULL;
-		size_t RootIndex = RootLvlNodes.GetElementIndex(pNode);
+		size_t RootIndex = RootLvlNodes.GetElementIndex(nodeID);
 		if (RootIndex != -1) { RootLvlNodes.Remove(RootIndex); }
-		XUList NodesToDelete;
-		NodesToDelete.Add(pNode);
+		UXIntList NodesToDelete;
+		unsigned __int64 childID;
+		NodesToDelete.Add(nodeID);
 		//Delete all child nodes connected(can't delete from within node deconstruction since node has no knowledge of TreeView)
+		NodeType* targetNode = this->NodeBank[nodeID];
+		size_t childSize = targetNode->ChildNodes.size();
+		for(size_t Index= 0; Index< childSize;++Index)
+		{
+			childID = targetNode->ChildNodes.at(Index);
+			NodesToDelete.Add(childID);
+			AddAllChildrenToList(NodesToDelete, childID);
+		}
+
 
 		for (size_t Index = 0; Index < NodesToDelete; ++Index)
 		{
 			NodeBank.Remove(NodesToDelete(Index));
 		}
 	}
+
+	/// <summary>
+	/// Adds all children to list.
+	/// </summary>
+	/// <param name="nodeList">The node list.</param>
+	/// <param name="nodeID">The node identifier.</param>
+	void AddAllChildrenToList(UXIntList& nodeList, unsigned __int64 nodeID)
+	{
+		NodeType* targetNode = this->NodeBank[nodeID];
+		size_t childSize = targetNode->ChildNodes.size();
+		for (size_t Index = 0; Index < childSize; ++Index)
+		{
+			AddAllChildrenToList(NodesToDelete, targetNode->ChildNodes.at(Index));
+		}
+	}
+
+protected:
 	int DrawNodesRecursive(CDC* pDC, NodeType* pNode, int x, int y, CRect rFrame)
 	{
 		int		iDocHeight = 0;		// Total document height
@@ -764,8 +761,6 @@ protected:
 public:
 	CustomTreeView()
 	{
-		//m_pTopNode = new NodeType();	// The tree top
-
 		m_iIndent = 16;				// Indentation for tree branches
 		m_iPadding = 4;				// Padding between tree and the control border
 

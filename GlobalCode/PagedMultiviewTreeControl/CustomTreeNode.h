@@ -12,10 +12,6 @@
 #include "MultiviewPrecompile.h"
 #include "ContextMenu.h"
 #include "DLG_TreeNodeText.h"
-//#ifdef BlazesGUICode_UseDictionaryBasedNodes
-//#include "GlobalCode_IniData/IndexedDictionary.h"
-//#endif
-//#include "GlobalCode_IniData/CustomOrderedDictionary.h"
 #include "GlobalCode_VariableLists/VariableTypeLists.h"
 
 /// <summary>
@@ -32,6 +28,9 @@ public:
 	/// This refers to index inside list of button contexts dictionary unless -1 in which case it uses default menu context list
 	/// </summary>
 	int NBMenuType;
+	/// <summary>
+	/// The indexes of all child nodes
+	/// </summary>
 	UXIntList ChildNodes;
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CustomTreeNode"/> class.
