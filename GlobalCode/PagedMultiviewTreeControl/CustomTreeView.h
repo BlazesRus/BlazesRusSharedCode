@@ -546,18 +546,32 @@ protected:
 	void DrawLinesRecursive(CDC* pDC, NodeType* pNode)
 	{
 		// Draw lines from children if the node is open before drawing lines from this node
-		if (pNode->bOpen && pNode->pChild != NULL)
-			DrawLinesRecursive(pDC, (NodeType*)pNode->pChild);
+		//if (pNode->bOpen && pNode->pChild != NULL)
+		//	DrawLinesRecursive(pDC, (NodeType*)pNode->pChild);
+		size_t childNum = pNode->ChildNodes.size();
+		unsigned __int64 ID;
+		NodeType* targetNode = nullptr;
+		if (childNum > 0)
+		{
+			for (size_t Index = 0; Index < childNum; ++Index)
+			{
+				ID = pNode->ChildNodes.at(Index);
+				targetNode = this->NodeBank[childID];
+				DrawLinesRecursive(pDC, targetNode);
+			}
+		}
 
 		// Where is the elbow joint of this connecting line?
 		int iJointX = pNode->rNode.left - m_iIndent - 6;
 		int iJointY = pNode->rNode.top + (m_iLineHeight / 2);
 
 		// If the parent is not the top node, throw a connecting line to it
-		if (pNode->pParent != m_pTopNode)
+		ID = pNode->ParentIndex;
+		if (ID!= 18446744073709551615)//pNode->pParent != m_pTopNode)
 		{
+			targetNode = this->NodeBank[ID];
 			// How far up from the joint is the parent?
-			int iDispY = iJointY - pNode->pParent->rNode.top - (m_iLineHeight / 2);
+			int iDispY = iJointY - targetNode->rNode.top - (m_iLineHeight / 2);
 
 			// Use 1 pixel wide rectangles to draw lines
 			pDC->FillSolidRect(iJointX, iJointY, m_iIndent, 1, m_crConnectingLines);	// Horizontal line
@@ -568,12 +582,12 @@ protected:
 		pDC->FillSolidRect(iJointX + m_iIndent - 2, iJointY - 2, 5, 5, m_crConnectingLines);
 
 		// Hollow out the dot if the node has no children
-		if (pNode->pChild == NULL)
+		if (childNum==0)//pNode->pChild == NULL)
 			pDC->FillSolidRect(iJointX + m_iIndent - 1, iJointY - 1, 3, 3, RGB(255, 255, 255));
 
-		// Draw the next sibling if there are any
-		if (pNode->pSibling != NULL)
-			DrawLinesRecursive(pDC, (NodeType*)pNode->pSibling);
+		//// Draw the next sibling if there are any
+		//if (pNode->pSibling != NULL)
+		//	DrawLinesRecursive(pDC, (NodeType*)pNode->pSibling);
 	}
 
 	void ResetScrollBar()
