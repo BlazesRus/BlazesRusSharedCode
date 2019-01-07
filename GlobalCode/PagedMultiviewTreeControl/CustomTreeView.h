@@ -247,32 +247,6 @@ public:
 /// <returns>unsigned __int64</returns>
 	unsigned __int64 InsertChild(unsigned __int64 pParent, const CString& nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
-		//ASSERT(pParent != NULL);	// Make sure the node exists
-
-		//if (pParent == m_pTopNode)	// Check for top node
-		//	pParent = m_pTopNode;
-
-		//NodeType* pNewNode = new NodeType();
-
-		//// Basic node information
-		//pNewNode->csLabel = nodeName;	// New node's label
-
-		//if (bUseDefaultTextColor)
-		//	pNewNode->bUseDefaultTextColor = TRUE;		// Use the default text color
-		//else
-		//	pNewNode->textColor = textColor;					// New node's text color
-
-		//pNewNode->pParent = pParent;	// New node's parent
-
-		//								// Insert the new node as pParent's first child
-		//pNewNode->pSibling = pParent->pChild;
-		//pParent->pChild = pNewNode;
-
-		//// Repaint the control if so desired
-		//if (bInvalidate)
-		//	Invalidate();
-
-		//return pNewNode;
 		return AddNode(nodeName, pParent, tagType, textColor, bUseDefaultTextColor, bInvalidate);
 	}
 
@@ -445,7 +419,6 @@ public:
 			AddAllChildrenToList(NodesToDelete, childID);
 		}
 
-
 		for (size_t Index = 0; Index < NodesToDelete; ++Index)
 		{
 			NodeBank.Remove(NodesToDelete(Index));
@@ -515,7 +488,7 @@ protected:
 
 		pDC->SetTextColor(crOldText);
 
-		// If there are no child or siblings, then this branch is done
+/*		// If there are no child or siblings, then this branch is done
 		if (pNode->pChild == NULL && pNode->pSibling == NULL)
 			return pNode->rNode.Height();
 
@@ -526,6 +499,19 @@ protected:
 		// If the node has siblings, then draw those
 		if (pNode->pSibling != NULL)
 			iDocHeight += DrawNodesRecursive(pDC, (NodeType*)pNode->pSibling, x, y + pNode->rNode.Height() + iDocHeight, rFrame);
+*/
+		size_t childNum = pNode->ChildNodes.size();
+		unsigned __int64 childID;
+		NodeType* targetNode = nullptr;
+		if(pNode->bOpen&&childNum>0)
+		{
+			for(size_t Index=0;Index<childNum;++Index)
+			{
+				childID = pNode->ChildNodes.at(Index);
+				targetNode = this->NodeBank[childID];
+				iDocHeight = DrawNodesRecursive(pDC, targetNode, x + m_iIndent, y + pNode->rNode.Height(), rFrame);
+			}
+		}
 
 		return iDocHeight + pNode->rNode.Height();
 	}
