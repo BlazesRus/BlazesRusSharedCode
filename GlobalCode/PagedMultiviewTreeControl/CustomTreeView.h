@@ -621,7 +621,6 @@ protected:
 		m_bScrollBarMessage = FALSE;
 	}
 
-/*  //Fix this code later
 	NodeType* FindNodeByPoint(const CPoint& point, NodeType* pNode)
 	{
 		NodeType* pFound = nullptr;
@@ -630,23 +629,39 @@ protected:
 		if (pNode->rNode.PtInRect(point))
 			pFound = pNode;
 
-		// If this node isn't it then check the node's children if it is open and there are any
-		if (pFound == NULL && pNode->bOpen && pNode->pChild != NULL)
-			pFound = FindNodeByPoint(point, (NodeType*)pNode->pChild);
-
-		// If didn't find it among the node's children, then check the next sibling
-		if (pFound == NULL && pNode->pSibling != NULL)
-			pFound = FindNodeByPoint(point, (NodeType*)pNode->pSibling);
+		//// If this node isn't it then check the node's children if it is open and there are any
+		//if (pFound == NULL && pNode->bOpen && pNode->pChild != NULL)
+		//	pFound = FindNodeByPoint(point, (NodeType*)pNode->pChild);
+		//// If didn't find it among the node's children, then check the next sibling
+		//if (pFound == NULL && pNode->pSibling != NULL)
+		//	pFound = FindNodeByPoint(point, (NodeType*)pNode->pSibling);
 
 		return pFound;
 	}
 
-	NodeType* FindNodeByID(const CPoint& point, unsigned __int64 NodeId)
+	NodeType* FindNodeByRootPoint(const CPoint& point, NodeType* pNode)
 	{
 		NodeType* pFound = nullptr;
 
+		// Found it?
+		if (pNode->rNode.PtInRect(point))
+			pFound = pNode;
+
+		//// If this node isn't it then check the node's children if it is open and there are any
+		//if (pFound == NULL && pNode->bOpen && pNode->pChild != NULL)
+		//	pFound = FindNodeByPoint(point, (NodeType*)pNode->pChild);
+		//// If didn't find it among the node's children, then check the next sibling
+		//if (pFound == NULL && pNode->pSibling != NULL)
+		//	pFound = FindNodeByPoint(point, (NodeType*)pNode->pSibling);
+
+		return pFound;
 	}
-*/
+
+	/*NodeType* FindNodeByID(const CPoint& point, unsigned __int64 NodeId)
+	{
+		NodeType* pFound = nullptr;
+
+	}*/
 
 	BOOL NodeTextDlg(CString& csText)
 	{
@@ -1153,16 +1168,16 @@ protected:
 	}
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point)
 	{
-		NodeType* pClickedOn = NULL;		// Assume no node was clicked on
+		NodeType* pClickedOn = nullptr;		// Assume no node was clicked on
 
 		//if (m_pTopNode->pChild != NULL)		// If the tree is populated, search it
 		//	pClickedOn = FindNodeByPoint(point, (NodeType*)m_pTopNode->pChild);
 		size_t tempSize = RootLvlNodes.size();
 		unsigned __int64 ID;
-		for (size_t Index = 0; Index < tempSize; ++Index)//if(m_pTopNode->pChild != NULL)
+		for (size_t Index = 0; Index < tempSize && pClickedOn==nullptr; ++Index)//if(m_pTopNode->pChild != NULL)
 		{
 			ID = RootLvlNodes[Index];
-			pClickedOn = FindNodeByPoint(point, NodeBank[ID]);
+			pClickedOn = FindNodeByRootPoint(point, NodeBank[ID]);
 		}
 
 		if (pClickedOn != NULL)			// If a node was clicked on
@@ -1219,7 +1234,7 @@ protected:
 			for (size_t Index = 0; Index < tempSize && TempNode==nullptr; ++Index)//if(m_pTopNode->pChild != NULL)
 			{
 				ID = RootLvlNodes[Index];//
-				TempNode = FindNodeByPoint(cp, NodeBank[ID]);
+				TempNode = FindNodeByRootPoint(cp, NodeBank[ID]);
 			}
 			m_pSelected = TempNode;
 		}
