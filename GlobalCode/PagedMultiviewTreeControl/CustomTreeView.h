@@ -635,24 +635,39 @@ protected:
 		//// If didn't find it among the node's children, then check the next sibling
 		//if (pFound == NULL && pNode->pSibling != NULL)
 		//	pFound = FindNodeByPoint(point, (NodeType*)pNode->pSibling);
+		size_t tempSize = pNode->ChildNodes.size();
+		if (pFound == nullptr && pNode->bOpen && tempSize>0)
+		{
+			for (size_t Index = 0; Index < tempSize && pFound == nullptr; ++Index)
+			{
+
+			}
+		}
 
 		return pFound;
 	}
 
-	NodeType* FindNodeByRootPoint(const CPoint& point, NodeType* pNode)
+	NodeType* FindNodeByRootPoint(const CPoint& point)
 	{
-		NodeType* pFound = nullptr;
+		size_t tempSize = RootLvlNodes.size();
+		unsigned __int64 ID;
+		if(tempSize==0)
+		{
+			return nullptr;
+		}
+		else
+		{
+			NodeType* pFound = nullptr;
 
-		// Found it?
-		if (pNode->rNode.PtInRect(point))
-			pFound = pNode;
-
-		//// If this node isn't it then check the node's children if it is open and there are any
-		//if (pFound == NULL && pNode->bOpen && pNode->pChild != NULL)
-		//	pFound = FindNodeByPoint(point, (NodeType*)pNode->pChild);
-		//// If didn't find it among the node's children, then check the next sibling
-		//if (pFound == NULL && pNode->pSibling != NULL)
-		//	pFound = FindNodeByPoint(point, (NodeType*)pNode->pSibling);
+			// Found it?
+			if (pNode->rNode.PtInRect(point))
+				pFound = pNode;
+			for (size_t Index = 0; Index < tempSize && pFound == nullptr; ++Index)//if(m_pTopNode->pChild != NULL)
+			{
+				ID = RootLvlNodes[Index];
+				pFound = FindNodeByPoint(point, NodeBank[ID]);
+			}
+		}
 
 		return pFound;
 	}
@@ -1172,13 +1187,7 @@ protected:
 
 		//if (m_pTopNode->pChild != NULL)		// If the tree is populated, search it
 		//	pClickedOn = FindNodeByPoint(point, (NodeType*)m_pTopNode->pChild);
-		size_t tempSize = RootLvlNodes.size();
-		unsigned __int64 ID;
-		for (size_t Index = 0; Index < tempSize && pClickedOn==nullptr; ++Index)//if(m_pTopNode->pChild != NULL)
-		{
-			ID = RootLvlNodes[Index];
-			pClickedOn = FindNodeByRootPoint(point, NodeBank[ID]);
-		}
+		pClickedOn = FindNodeByRootPoint(point);
 
 		if (pClickedOn != NULL)			// If a node was clicked on
 			ToggleNode(pClickedOn, TRUE);
@@ -1222,22 +1231,7 @@ protected:
 		//	m_pSelected = NULL;		// Empty tree
 		//else
 		//	m_pSelected = FindNodeByPoint(cp, (NodeType*)m_pTopNode->pChild);
-		size_t tempSize = RootLvlNodes.size();
-		unsigned __int64 ID;
-		NodeType* TempNode = nullptr;
-		if(tempSize==0)
-		{
-			m_pSelected = NULL;		// Empty tree
-		}
-		else
-		{
-			for (size_t Index = 0; Index < tempSize && TempNode==nullptr; ++Index)//if(m_pTopNode->pChild != NULL)
-			{
-				ID = RootLvlNodes[Index];//
-				TempNode = FindNodeByRootPoint(cp, NodeBank[ID]);
-			}
-			m_pSelected = TempNode;
-		}
+		m_pSelected = FindNodeByRootPoint(cp);
 
 		CContextMenu ccmPopUp;
 
