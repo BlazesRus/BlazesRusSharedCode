@@ -1044,8 +1044,10 @@ protected:
 
 		int iLastNodePos = 0;
 
-		if (m_pTopNode->pChild != NULL)
-		{
+		size_t tempSize = RootLvlNodes.size();
+		unsigned __int64 ID;
+
+/*
 			iLastNodePos = DrawNodesRecursive(pDCMem, (NodeType*)m_pTopNode->pChild,
 				rFrame.left + m_iIndent,
 				m_iPadding - GetScrollPos(SB_VERT),
@@ -1053,6 +1055,14 @@ protected:
 
 			if (m_bShowLines)
 				DrawLinesRecursive(pDCMem, (NodeType*)m_pTopNode->pChild);
+*/
+		for (size_t Index = 0; Index < tempSize; ++Index)//if(m_pTopNode->pChild != NULL)
+		{
+			ID = RootLvlNodes[Index];
+			iLastNodePos = DrawNodesRecursive(pDCMem, NodeBank[ID], rFrame.left + m_iIndent, m_iPadding - GetScrollPos(SB_VERT), rFrame);
+
+			if (m_bShowLines)
+				DrawLinesRecursive(pDCMem, NodeBank[ID]);
 		}
 
 		pDCMem->SelectObject(pOldFont);
@@ -1145,8 +1155,15 @@ protected:
 	{
 		NodeType* pClickedOn = NULL;		// Assume no node was clicked on
 
-		if (m_pTopNode->pChild != NULL)		// If the tree is populated, search it
-			pClickedOn = FindNodeByPoint(point, (NodeType*)m_pTopNode->pChild);
+		//if (m_pTopNode->pChild != NULL)		// If the tree is populated, search it
+		//	pClickedOn = FindNodeByPoint(point, (NodeType*)m_pTopNode->pChild);
+		size_t tempSize = RootLvlNodes.size();
+		unsigned __int64 ID;
+		for (size_t Index = 0; Index < tempSize; ++Index)//if(m_pTopNode->pChild != NULL)
+		{
+			ID = RootLvlNodes[Index];
+			pClickedOn = FindNodeByPoint(point, NodeBank[ID]);
+		}
 
 		if (pClickedOn != NULL)			// If a node was clicked on
 			ToggleNode(pClickedOn, TRUE);
@@ -1186,10 +1203,26 @@ protected:
 		ScreenToClient(&cp);
 
 		// Find the node that has been clicked on
-		if (m_pTopNode->pChild == NULL)
+		//if (m_pTopNode->pChild == NULL)
+		//	m_pSelected = NULL;		// Empty tree
+		//else
+		//	m_pSelected = FindNodeByPoint(cp, (NodeType*)m_pTopNode->pChild);
+		size_t tempSize = RootLvlNodes.size();
+		unsigned __int64 ID;
+		NodeType* TempNode = nullptr;
+		if(tempSize==0)
+		{
 			m_pSelected = NULL;		// Empty tree
+		}
 		else
-			m_pSelected = FindNodeByPoint(cp, (NodeType*)m_pTopNode->pChild);
+		{
+			for (size_t Index = 0; Index < tempSize && TempNode==nullptr; ++Index)//if(m_pTopNode->pChild != NULL)
+			{
+				ID = RootLvlNodes[Index];//
+				TempNode = FindNodeByPoint(cp, NodeBank[ID]);
+			}
+			m_pSelected = TempNode;
+		}
 
 		CContextMenu ccmPopUp;
 
