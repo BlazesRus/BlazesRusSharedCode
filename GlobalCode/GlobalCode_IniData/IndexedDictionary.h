@@ -168,7 +168,7 @@ public:
 /// <summary>
 /// The null
 /// </summary>
-    static unsigned __int64 NULL = 18446744073709551615;
+    static unsigned __int64 NullRep = 18446744073709551615;
 private:
     /// <summary>
     /// The next index
