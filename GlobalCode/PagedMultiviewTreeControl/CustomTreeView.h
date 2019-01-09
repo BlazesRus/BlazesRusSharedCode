@@ -26,10 +26,10 @@
 /// <para/>(base code from https://www.codeproject.com/Articles/9887/CViewTreeCtrl-A-CView-derived-custom-Tree-cont)
 /// <para/>NodeType/TreeNode refers to derived node's class name (for keeping inherited functionality)
 /// </summary>
-template <typename TreeNode, typename ContextMenuType = CContextMenu, typename DocViewType = MultiViewDoc>
+template <typename TreeNode, typename DocViewType = MultiViewDoc, typename ContextMenuType = CContextMenu>
 class CustomTreeView : public CView
 {
-	CRuntime_Arg03V2(CustomTreeView, TreeNode, ContextMenuType, DocViewType, CView)
+	CRuntime_Arg03V2(CustomTreeView, TreeNode, DocViewType, ContextMenuType, CView)
 public:
 	typedef TreeNode NodeType;
 #ifdef UNICODE
@@ -1392,7 +1392,7 @@ public:
 	}
 };
 
-CRuntimeImplimentation_Arg03(CustomTreeView, TreeNode, ContextMenuType, DocViewType)
+CRuntimeImplimentation_Arg03(CustomTreeView, TreeNode, DocViewType, ContextMenuType)
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.

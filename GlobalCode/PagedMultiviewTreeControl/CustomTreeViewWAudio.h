@@ -16,7 +16,7 @@
 /// <para/>NodeType/TreeNode refers to derived node's class name (for keeping inherited functionality)
 /// </summary>
 template <typename TreeNode, typename DocViewType = MultiViewDoc>
-class CustomTreeViewWAudio : public CustomTreeView<TreeNode, AudioSupportedContextMenu, DocViewType>
+class CustomTreeViewWAudio : public CustomTreeView<TreeNode, DocViewType, AudioSupportedContextMenu>
 {
 	CRuntime_Arg02Base03_Reused01(CustomTreeViewWAudio, TreeNode, DocViewType, CustomTreeView, AudioSupportedContextMenu)
 public:

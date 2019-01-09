@@ -169,8 +169,8 @@ public:\
 	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS03(class_name, template_class, template_class02, template_class03); }\
 	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS03(class_name, template_class, template_class02, template_class03); }
 
-//Reusing template variables in base class for class_name<template_class, template_class02> : baseClass<template_class, base_arg02, template_class02>
-#define CRuntime_Arg02Base03_Reused01(class_name, template_class, template_class02, baseClass, base_arg02)\
+//Reusing template variables in base class for class_name<template_class, template_class02> : baseClass<template_class, template_class02, base_arg03>
+#define CRuntime_Arg02Base03_Reused01(class_name, template_class, template_class02, baseClass, base_arg03)\
 private:\
 	static std::string ClassString()\
 	{\
@@ -185,7 +185,7 @@ public:\
 	static const std::string classNameStr;\
 	static LPCSTR ClassName() { return classNameStr.c_str(); }\
 private:\
-	typedef baseClass<template_class, base_arg02, template_class02> TheBaseClass;\
+	typedef baseClass<template_class, template_class02, base_arg03> TheBaseClass;\
 	typedef class_name<template_class, template_class02> ThisClass;\
 protected:\
 	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
