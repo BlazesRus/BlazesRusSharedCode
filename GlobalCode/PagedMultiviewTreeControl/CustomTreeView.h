@@ -1390,7 +1390,7 @@ public:
 	}
 };
 
-CRuntimeImplimentation_Arg03(CustomTreeView, TreeNode, CContextMenu, DocViewType)
+CRuntimeImplimentation_Arg03(CustomTreeView, TreeNode, ContextMenuType, DocViewType)
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
