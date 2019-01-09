@@ -23,6 +23,8 @@
 #endif
 #endif
 
+#include "MultiviewPrecompile.h"
+
 /// <summary>
 /// Class named CContextMenu.
 /// Implements the <see cref="CMenu" />
@@ -39,9 +41,6 @@ public:
 	{
 		m_iWidth = 0;
 		m_iHeight = 0;
-#ifdef EnableCustomTreeSounds
-		m_bSoundOn = TRUE;
-#endif
 	}
 	/// <summary>
 	/// Finalizes an instance of the <see cref="CContextMenu"/> class.
@@ -49,18 +48,6 @@ public:
 	virtual ~CContextMenu();
 
 public:
-#ifdef EnableCustomTreeSounds
-	/// <summary>
-	/// Appends the menu item.
-	/// </summary>
-	/// <param name="nFlags">The n flags.</param>
-	/// <param name="nID">The n identifier.</param>
-	/// <param name="csText">The cs text.</param>
-	/// <param name="pDC">The p dc.</param>
-	/// <param name="csWavFile">The cs wav file.</param>
-	/// <returns>CContextMenu &.</returns>
-	virtual CContextMenu&	AppendMenuItem(UINT nFlags, UINT nID, CString csText, CDC* pDC, CString csWavFile);
-#else
 	/// <summary>
 	/// Appends the menu item.
 	/// </summary>
@@ -70,7 +57,6 @@ public:
 	/// <param name="pDC">The p dc.</param>
 	/// <returns>CContextMenu &.</returns>
 	virtual CContextMenu&	AppendMenuItem(UINT nFlags, UINT nID, CString csText, CDC* pDC);
-#endif
 	/// <summary>
 	/// Sets the text font.
 	/// </summary>
@@ -115,22 +101,7 @@ protected:
 		CContextMenuItem(CString csText)
 		{
 			m_csText = csText;
-#ifdef EnableCustomTreeSounds
-			m_csWavFile = R"()";
-#endif
 		}
-#ifdef EnableCustomTreeSounds
-		/// <summary>
-		/// Initializes a new instance of the <see cref="CContextMenuItem"/> class.
-		/// </summary>
-		/// <param name="csText">The cs text.</param>
-		/// <param name="csWavFile">The cs wav file.</param>
-		CContextMenuItem(CString csText, CString csWavFile)
-		{
-			m_csText	= csText;
-			m_csWavFile	= csWavFile;
-		}
-#endif
 
 		/// <summary>
 		/// Finalizes an instance of the <see cref="CContextMenuItem"/> class.
@@ -138,21 +109,12 @@ protected:
 		~CContextMenuItem()
 		{
 			m_csText.Empty();
-#ifdef EnableCustomTreeSounds
-			m_csWavFile.Empty();
-#endif
 		}
 
 		/// <summary>
 		/// The m cs text
 		/// </summary>
 		CString m_csText;
-#ifdef EnableCustomTreeSounds
-		/// <summary>
-		/// The m cs wav file
-		/// </summary>
-		CString m_csWavFile;
-#endif
 	};
 
 	/// <summary>
@@ -174,15 +136,8 @@ protected:
 	/// </summary>
 	int				m_iHeight;
 
-#ifdef EnableCustomTreeSounds
 	/// <summary>
-	/// The m b sound on
-	/// </summary>
-	BOOL			m_bSoundOn;
-#endif
-
-	/// <summary>
-	/// The m cr selected
+	/// Context Menu color references
 	/// </summary>
 	COLORREF		m_crText, m_crBackground, m_crDisabled, m_crSelected, m_crBorder;
 };

@@ -336,6 +336,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
     </ClCompile>
+    <ClCompile Include="AudioSupportedContextMenu.cpp" />
     <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\BlazesBehaviorFileMerger.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
@@ -418,7 +419,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
     </ClInclude>
+    <ClInclude Include="AudioSupportedContextMenu.h" />
     <ClInclude Include="BasicXMLNode.h" />
+    <ClInclude Include="CustomTreeViewWAudio.h" />
     <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\BlazesBehaviorFileMerger.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>

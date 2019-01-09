@@ -35,26 +35,9 @@ CContextMenu& CContextMenu::SetTextFont( CFont* font )
 	return *this;
 }
 
-#ifdef EnableCustomTreeSounds
-CContextMenu& CContextMenu::ToggleSound( BOOL bSoundOn )
-{
-	m_bSoundOn = bSoundOn;
-	return *this;
-}
-#endif
-
-#ifdef EnableCustomTreeSounds
-CContextMenu& CContextMenu::AppendMenuItem(UINT nFlags, UINT nID, CString csText, CDC* pDC, CString csWavFile)
-#else
 CContextMenu& CContextMenu::AppendMenuItem(UINT nFlags, UINT nID, CString csText, CDC* pDC)
-#endif
 {
-	CContextMenuItem* cccItem = new CContextMenuItem(csText
-#ifdef EnableCustomTreeSounds
-	, csWavFile);
-#else
-	);
-#endif
+	CContextMenuItem* cccItem = new CContextMenuItem(csText);
 
 	// Store the pointer
 	m_cptrMenuItems.Add( cccItem );
@@ -147,7 +130,7 @@ void CContextMenu::DrawItem( LPDRAWITEMSTRUCT lpDIS )
 			else
 			{
 				// If the item is selected, paint a rectangle, change the background color
-				// and play the .wav file if relevant
+				// and play the sound file if relevant
 				if( bSelected )
 				{
 					rItem.DeflateRect( 2, 2, 2, 2 );
@@ -155,15 +138,6 @@ void CContextMenu::DrawItem( LPDRAWITEMSTRUCT lpDIS )
 					rItem.DeflateRect( 1, 1, 1, 1 );
 					pDC->FillSolidRect( rItem, m_crSelected );
 					rItem.DeflateRect( 5, -3, 0, -3 );
-#ifdef EnableCustomTreeSounds
-					if( m_bSoundOn )
-					{
-						// Stop any currently playing wave file
-						PlaySound( NULL, NULL, SND_NOWAIT | SND_PURGE );
-						// Play this item's wave file
-						PlaySound( cccItem->m_csWavFile, NULL, SND_NOWAIT | SND_FILENAME | SND_ASYNC );
-					}
-#endif
 				}
 				else
 					rItem.DeflateRect( 8, 0, 0, 0 );

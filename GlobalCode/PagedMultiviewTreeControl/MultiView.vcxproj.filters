@@ -120,6 +120,9 @@
     <ClCompile Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\HkTreeView.cpp">
       <Filter>NodeTreeStuff</Filter>
     </ClCompile>
+    <ClCompile Include="AudioSupportedContextMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_StringFunctions\StringFunctions.h">
@@ -293,13 +296,19 @@
     <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkClassUsageTree.h">
       <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\HkTreeView.h">
+    <ClInclude Include="$(HkBasedCode)\BasicHkNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HkBasedCode)\HkTreeView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(HkBasedCode)\HkTreeViewNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomTreeViewWAudio.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\BasicHkNode.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\HkTreeViewNode.h">
+    <ClInclude Include="AudioSupportedContextMenu.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
   </ItemGroup>
