@@ -26,10 +26,10 @@
 /// <para/>(base code from https://www.codeproject.com/Articles/9887/CViewTreeCtrl-A-CView-derived-custom-Tree-cont)
 /// <para/>NodeType/TreeNode refers to derived node's class name (for keeping inherited functionality)
 /// </summary>
-template <typename TreeNode, typename DocViewType = MultiViewDoc>
+template <typename TreeNode, typename ContextMenuType = CContextMenu, typename DocViewType = MultiViewDoc>
 class CustomTreeView : public CView
 {
-	CRuntime_Arg02V2(CustomTreeView, TreeNode, DocViewType, CView)
+	CRuntime_Arg03V2(CustomTreeView, TreeNode, ContextMenuType, DocViewType, CView)
 public:
 	typedef TreeNode NodeType;
 #ifdef UNICODE
@@ -1209,7 +1209,7 @@ protected:
 	/// <param name="ccmPopUp">The CCM pop up.</param>
 	/// <param name="nFlag">The n flag.</param>
 	/// <param name="pDC">The p dc.</param>
-	virtual void ApplyMenuGen(CContextMenu* ccmPopUp, UINT nFlag, CDC* pDC)
+	virtual void ApplyMenuGen(ContextMenuType* ccmPopUp, UINT nFlag, CDC* pDC)
 	{
 		ccmPopUp->AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), pDC);
 	}
@@ -1227,13 +1227,9 @@ protected:
 		ScreenToClient(&cp);
 
 		// Find the node that has been clicked on
-		//if (m_pTopNode->pChild == NULL)
-		//	m_pSelected = NULL;		// Empty tree
-		//else
-		//	m_pSelected = FindNodeByPoint(cp, (NodeType*)m_pTopNode->pChild);
 		m_pSelected = FindNodeByRootPoint(cp);
 
-		CContextMenu ccmPopUp;
+		ContextMenuType ccmPopUp;
 
 		ccmPopUp.CreatePopupMenu();
 
@@ -1342,13 +1338,7 @@ public:
 	}
 };
 
-//template <class TreeNode>
-//inline const std::string CustomTreeView<TreeNode>::classNameStr = ClassString();
-//
-//template <class TreeNode>
-//inline AFX_COMDAT const CRuntimeClass CustomTreeView<TreeNode>::DEFINERTCNAME01(CustomTreeView, TreeNode) = { ClassName(), sizeof(CustomTreeView<TreeNode>), 0xFFFF, NULL,&CustomTreeView<TreeNode>::_GetBaseClass, NULL, NULL };
-
-CRuntimeImplimentation_Arg02(CustomTreeView, TreeNode, DocViewType)
+CRuntimeImplimentation_Arg03(CustomTreeView, TreeNode, CContextMenu, DocViewType)
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.

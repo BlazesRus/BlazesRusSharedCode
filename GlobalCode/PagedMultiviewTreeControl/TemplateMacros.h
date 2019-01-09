@@ -20,8 +20,16 @@
 #define RUNTIME_CLASS02(class_name, template_class, template_class02) _RUNTIME_CLASS02(class_name, template_class, template_class02)
 #endif
 
+#define _RUNTIME_CLASS03(class_name, template_class, template_class02, template_class03) ((CRuntimeClass*)(&class_name<template_class,template_class02,template_class03>::class##class_name##_##template_class##_##template_class02##_##template_class03))
+#ifdef _AFXDLL
+#define RUNTIME_CLASS03(class_name, template_class, template_class02, template_class03) (class_name<template_class, template_class02, template_class03>::GetThisClass())
+#else
+#define RUNTIME_CLASS03(class_name, template_class, template_class02, template_class03) _RUNTIME_CLASS03(class_name, template_class, template_class02, template_class03)
+#endif
+
 #define DEFINERTCNAME01(class_name, template_class) class##class_name##_##template_class
 #define DEFINERTCNAME02(class_name, template_class, template_class02) class##class_name##_##template_class##_##template_class02
+#define DEFINERTCNAME03(class_name, template_class, template_class02, template_class03) class##class_name##_##template_class##_##template_class02##_##template_class03
 #define DEFINERTCINIT01(class_name, template_class) _init_##class_name##_##template_class
 #define DEFINERTCNAME(class_name) class##class_name
 
@@ -134,6 +142,32 @@ public:\
 	static const CRuntimeClass class##class_name##_##template_class##_##template_class02;\
 	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }\
 	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }
+
+#define CRuntime_Arg03V2(class_name, template_class, template_class02, template_class03, baseClass)\
+private:\
+	static std::string ClassString()\
+	{\
+		std::string Combined = "class_name<"; \
+		Combined += typeid(template_class).name(); \
+		Combined += ", ";\
+		Combined += typeid(template_class02).name();\
+		Combined += ", ";\
+		Combined += typeid(template_class03).name();\
+		Combined += ">"; \
+		return Combined; \
+	}\
+public:\
+	static const std::string classNameStr;\
+	static LPCSTR ClassName() { return classNameStr.c_str(); }\
+private:\
+	typedef baseClass TheBaseClass;\
+	typedef class_name<template_class, template_class02, template_class03> ThisClass;\
+protected:\
+	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
+public:\
+	static const CRuntimeClass class##class_name##_##template_class##_##template_class02##_##template_class03;\
+	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS03(class_name, template_class, template_class02, template_class03); }\
+	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS03(class_name, template_class, template_class02, template_class03); }
 
 #define CRuntime_Base01(class_name, baseClass, baseargOne)\
 private:\
@@ -257,6 +291,12 @@ template <typename template_class, typename template_class02>\
 inline const std::string class_name<template_class, template_class02>::classNameStr = ClassString();\
 template <typename template_class, typename template_class02>\
 inline AFX_COMDAT const CRuntimeClass class_name<template_class, template_class02>::DEFINERTCNAME02(class_name, template_class, template_class02) = { ClassName(), sizeof(class_name<template_class, template_class02>), 0xFFFF, NULL,&class_name<template_class, template_class02>::_GetBaseClass, NULL, NULL };
+
+#define CRuntimeImplimentation_Arg03(class_name, template_class, template_class02, template_class03)\
+template <typename template_class, typename template_class02, typename template_class03>\
+inline const std::string class_name<template_class, template_class02, template_class03>::classNameStr = ClassString();\
+template <typename template_class, typename template_class02, typename template_class03>\
+inline AFX_COMDAT const CRuntimeClass class_name<template_class, template_class02, template_class03>::DEFINERTCNAME03(class_name, template_class, template_class02, template_class03) = { ClassName(), sizeof(class_name<template_class, template_class02, template_class03>), 0xFFFF, NULL,&class_name<template_class, template_class02, template_class03>::_GetBaseClass, NULL, NULL };
 
 
 #else
