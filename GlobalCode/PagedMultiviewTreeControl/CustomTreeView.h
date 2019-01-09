@@ -690,9 +690,11 @@ protected:
 		size_t tempSize = pNode->ChildNodes.size();
 		if (pFound == nullptr && pNode->bOpen && tempSize>0)
 		{
+			unsigned __int64 ID;
 			for (size_t Index = 0; Index < tempSize && pFound == nullptr; ++Index)
 			{
-
+				ID = pNode->ChildNodes.at(Index);
+				pFound = FindNodeByPoint(point, NodeBank[ID]);
 			}
 		}
 

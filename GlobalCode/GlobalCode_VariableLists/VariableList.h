@@ -93,7 +93,7 @@ public:
 	explicit operator std::list<VariableType>()
 	{
 		List<VariableType> NewSelf;
-		for (int Index = 0; Index < size(); ++Index)
+		for (size_t Index = 0; Index < size(); ++Index)
 		{
 			NewSelf.push_back(this->at(Index));
 		}
