@@ -90,7 +90,7 @@ public:
 		return NewSelf;
 	}
 
-	explicit operator list<VariableType>()
+	explicit operator std::list<VariableType>()
 	{
 		List<VariableType> NewSelf;
 		for (int Index = 0; Index < size(); ++Index)
