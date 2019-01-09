@@ -235,20 +235,36 @@ public:
 		return EmptyNode;//Temporary return
 	}
 */
-	//NodeType* InsertChild(NodeType* pParent, const CString& csLabel, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
-/// <summary>
-/// Inserts the child.
-/// </summary>
-/// <param name="pParent">The p parent.</param>
-/// <param name="nodeName">The node label.</param>
-/// <param name="textColor">The cr textcolor.</param>
-/// <param name="bUseDefaultTextColor">Use default textcolor instead of textColor if true</param>
-/// <param name="bInvalidate">Repaint the control if this is true</param>
-/// <returns>unsigned __int64</returns>
+
+	/// <summary>
+	/// Inserts the child.
+	/// </summary>
+	/// <param name="pParent">The p parent.</param>
+	/// <param name="nodeName">The node label.</param>
+	/// <param name="textColor">The cr textcolor.</param>
+	/// <param name="bUseDefaultTextColor">Use default textcolor instead of textColor if true</param>
+	/// <param name="bInvalidate">Repaint the control if this is true</param>
+	/// <returns>unsigned __int64</returns>
 	unsigned __int64 InsertChild(unsigned __int64 pParent, const CString& nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		return AddNode(nodeName, pParent, tagType, textColor, bUseDefaultTextColor, bInvalidate);
 	}
+
+/*
+	/// <summary>
+	/// Inserts the child.
+	/// </summary>
+	/// <param name="pParent">The p parent.</param>
+	/// <param name="nodeName">The node label.</param>
+	/// <param name="textColor">The cr textcolor.</param>
+	/// <param name="bUseDefaultTextColor">Use default textcolor instead of textColor if true</param>
+	/// <param name="bInvalidate">Repaint the control if this is true</param>
+	/// <returns>unsigned __int64</returns>
+	NodeType* InsertChild(NodeType* pParent, const CString& nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	{
+		return AddNode(nodeName, pParent, tagType, textColor, bUseDefaultTextColor, bInvalidate);
+	}
+*/
 
 #pragma endregion InsertOperations
 
@@ -288,6 +304,35 @@ public:
 		  Invalidate();
 		return IndexPos;
 	}
+
+/*
+	virtual NodeType* AddNode(std::string nodeName, NodeType* parentIndex = nullptr, int tagType = -1, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	{
+		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode(tagType, parentIndex));
+		NodeType& pNewNode = NodeBank[IndexPos];
+		if (RootLvlNodes.size() == 0)//Automatically add to root if no RootLvlNodes yet
+		{
+			RootLvlNodes.Add(IndexPos);
+		}
+		else
+		{
+			if (ParentIndex == EmptyNode)
+			{
+				RootLvlNodes.Add(IndexPos);
+			}
+		}
+		pNewNode.TagType = tagType;
+		pNewNode.csLabel = nodeName;					// New node's label
+
+		if (bUseDefaultTextColor)
+			pNewNode.bUseDefaultTextColor = TRUE;		// Use the default text color
+		else
+			pNewNode.textColor = textColor;					// New node's text color
+		if (bInvalidate)
+			Invalidate();
+		return IndexPos;
+	}
+*/
 
 	/// <summary>
 	/// Adds the node and return the node reference.
@@ -330,6 +375,13 @@ public:
 	{
 		return AddNode(nodeName, parentIndex, tagType, textColor, bUseDefaultTextColor, bInvalidate);
 	}
+
+/*
+	virtual NodeType* AddNode(const CString& nodeName, NodeType* parentIndex = nullptr, int tagType = -1, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	{
+		return AddNode(nodeName, parentIndex, tagType, textColor, bUseDefaultTextColor, bInvalidate);
+	}
+*/
 
 	/// <summary>
 	/// Adds to root.
