@@ -169,6 +169,33 @@ public:\
 	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS03(class_name, template_class, template_class02, template_class03); }\
 	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS03(class_name, template_class, template_class02, template_class03); }
 
+//Reusing template variables in base class for class_name<template_class, template_class02> : baseClass<template_class, base_arg02, template_class02>
+#define CRuntime_Arg02Base03_Reused01(class_name, template_class, template_class02, baseClass, base_arg02)\
+private:\
+	static std::string ClassString()\
+	{\
+		std::string Combined = "class_name<"; \
+		Combined += typeid(template_class).name(); \
+		Combined += ", ";\
+		Combined += typeid(template_class02).name();\
+		Combined += ">"; \
+		return Combined; \
+	}\
+public:\
+	static const std::string classNameStr;\
+	static LPCSTR ClassName() { return classNameStr.c_str(); }\
+private:\
+	typedef baseClass<template_class, base_arg02, template_class02> TheBaseClass;\
+	typedef class_name<template_class, template_class02> ThisClass;\
+protected:\
+	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
+public:\
+	static const CRuntimeClass class##class_name##_##template_class##_##template_class02;\
+	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }\
+	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }
+
+
+
 #define CRuntime_Base01(class_name, baseClass, baseargOne)\
 private:\
 	typedef baseClass<baseargOne> TheBaseClass;\
