@@ -21,14 +21,6 @@
 #include "GlobalCode_IniData/IndexedDictionary.h"
 #include "GlobalCode_VariableLists/VariableTypeLists.h"
 
-template <typename TreeNode> class NodeDictionary : public IndexedLongDictionary<TreeNode>
-{public:
-	Add(std::string displayName)
-	{
-
-	}
-};
-
 /// <summary>
 /// Edited derivable version of CustomTreeControl's CViewTreeCtrl class converted into a view
 /// <para/>(base code from https://www.codeproject.com/Articles/9887/CViewTreeCtrl-A-CView-derived-custom-Tree-cont)

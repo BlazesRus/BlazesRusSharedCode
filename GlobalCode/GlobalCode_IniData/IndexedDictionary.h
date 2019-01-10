@@ -219,6 +219,15 @@ public:
     ~IndexedLongDictionary() {}
 };
 
+template <typename TreeNode> class NodeDictionary : public IndexedLongDictionary<TreeNode>
+{
+public:
+    Add(std::string displayName)
+    {
+
+    }
+};
+
 /// <summary>
 /// Class named IndexedOrderedLDictionary.
 /// Implements the <see cref="CustomOrderedDictionary{unsigned _int64, ValueType}" />
