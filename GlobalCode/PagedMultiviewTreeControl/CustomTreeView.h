@@ -21,7 +21,7 @@
 #include "GlobalCode_IniData/IndexedDictionary.h"
 #include "GlobalCode_VariableLists/VariableTypeLists.h"
 
-template <typename TreeNode> class NodeDictionary : IndexedLongDictionary<TreeNode>
+template <typename TreeNode> class NodeDictionary : public IndexedLongDictionary<TreeNode>
 {public:
 	Add(std::string displayName)
 	{
