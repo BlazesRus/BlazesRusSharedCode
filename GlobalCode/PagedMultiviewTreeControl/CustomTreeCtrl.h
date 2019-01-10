@@ -223,7 +223,7 @@ public:
 		if (bUseDefaultTextColor)
 			pNewNode->bUseDefaultTextColor = TRUE;		// Use the default text color
 		else
-			pNewNode->crText = crText;					// New node's text color
+			pNewNode->textColor = crText;					// New node's text color
 
 		pNewNode->pParent = pInsertAfter->pParent;	// Has the same parent
 
@@ -263,7 +263,7 @@ public:
 		if (bUseDefaultTextColor)
 			pNewNode->bUseDefaultTextColor = TRUE;		// Use the default text color
 		else
-			pNewNode->crText = crText;					// New node's text color
+			pNewNode->textColor = crText;					// New node's text color
 
 		pNewNode->pParent = pParent;	// New node's parent
 
@@ -356,7 +356,7 @@ public:
 		ASSERT(pNode != NULL);
 
 		pNode->bUseDefaultTextColor = FALSE;
-		pNode->crText = crText;
+		pNode->textColor = crText;
 
 		if (bInvalidate)
 			Invalidate();
@@ -413,7 +413,7 @@ protected:
 
 		pNode->rNode.CopyRect(rNode);		// Record the rectangle
 
-		COLORREF cr = (pNode->bUseDefaultTextColor) ? m_crDefaultTextColor : pNode->crText;
+		COLORREF cr = (pNode->bUseDefaultTextColor) ? m_crDefaultTextColor : pNode->textColor;
 		COLORREF crOldText = pDC->SetTextColor(cr);
 
 		// MULTILINE TEXT - begins
@@ -631,7 +631,7 @@ protected:
 	}
 	void OnCM_ChangeNodeColor()
 	{
-		COLORREF cr = (m_pSelected->bUseDefaultTextColor) ? m_crDefaultTextColor : m_pSelected->crText;
+		COLORREF cr = (m_pSelected->bUseDefaultTextColor) ? m_crDefaultTextColor : m_pSelected->textColor;
 
 		CColorDialog ccd(cr, CC_FULLOPEN | CC_ANYCOLOR);
 

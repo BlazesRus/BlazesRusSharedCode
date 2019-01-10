@@ -21,6 +21,14 @@
 #include "GlobalCode_IniData/IndexedDictionary.h"
 #include "GlobalCode_VariableLists/VariableTypeLists.h"
 
+template <typename TreeNode> class NodeDictionary : IndexedLongDictionary<TreeNode>
+{public:
+	Add(std::string displayName)
+	{
+
+	}
+};
+
 /// <summary>
 /// Edited derivable version of CustomTreeControl's CViewTreeCtrl class converted into a view
 /// <para/>(base code from https://www.codeproject.com/Articles/9887/CViewTreeCtrl-A-CView-derived-custom-Tree-cont)
@@ -41,7 +49,7 @@ public:
 	/// <summary>
 	/// The node bank holding all nodes accessed (Dictionary instead of List so that preserves position when nodes removed or added within)
 	/// </summary>
-	IndexedLongDictionary<TreeNode> NodeBank;
+	NodeDictionary<TreeNode> NodeBank;
 	/// <summary>
 	/// List of indexes for Root level nodes inside NodeBank
 	/// </summary>
@@ -80,7 +88,7 @@ public:
 
 	}
 #pragma region TextBasedOptions
-	virtual void SetTextFont(LONG nHeight, BOOL bBold, BOOL bItalic, const CString& csFaceName)
+	virtual void SetTextFont(LONG nHeight, BOOL bBold, BOOL bItalic, std::string csFaceName)
 	{
 		m_lgFont.lfHeight = -MulDiv(nHeight, GetDeviceCaps(GetDC()->m_hDC, LOGPIXELSY), 72);
 		m_lgFont.lfWidth = 0;
@@ -121,7 +129,7 @@ public:
 		m_crDefaultTextColor = textColor;
 	}
 
-	virtual void SetTextSettings(LONG nHeight, BOOL bBold, BOOL bItalic, const CString& csFaceName, COLORREF textColor)
+	virtual void SetTextSettings(LONG nHeight, BOOL bBold, BOOL bItalic, std::string csFaceName, COLORREF textColor)
 	{
 		m_lgFont.lfHeight = -MulDiv(nHeight, GetDeviceCaps(GetDC()->m_hDC, LOGPIXELSY), 72);
 		m_lgFont.lfWidth = 0;
@@ -197,7 +205,7 @@ public:
 
 #pragma region InsertOperations
 /* Disabling InsertSibling function for now
-	//NodeType* InsertSibling(NodeType* pInsertAfter, const CString& csLabel, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	//NodeType* InsertSibling(NodeType* pInsertAfter, std::string csLabel, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 /// <summary>
 /// Inserts the sibling.
 /// </summary>
@@ -207,7 +215,7 @@ public:
 /// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
 /// <param name="bInvalidate">The b invalidate.</param>
 /// <returns>unsigned __int64</returns>
-	unsigned __int64 InsertSibling(unsigned __int64 pInsertAfter, const CString& nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	unsigned __int64 InsertSibling(unsigned __int64 pInsertAfter, std::string nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		//ASSERT(pInsertAfter != NULL);	// Make sure the node exists
 
@@ -245,7 +253,7 @@ public:
 	/// <param name="bUseDefaultTextColor">Use default textcolor instead of textColor if true</param>
 	/// <param name="bInvalidate">Repaint the control if this is true</param>
 	/// <returns>unsigned __int64</returns>
-	unsigned __int64 InsertChild(unsigned __int64 pParent, const CString& nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	unsigned __int64 InsertChild(unsigned __int64 pParent, std::string nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		return AddNode(nodeName, pParent, tagType, textColor, bUseDefaultTextColor, bInvalidate);
 	}
@@ -260,7 +268,7 @@ public:
 	/// <param name="bUseDefaultTextColor">Use default textcolor instead of textColor if true</param>
 	/// <param name="bInvalidate">Repaint the control if this is true</param>
 	/// <returns>unsigned __int64</returns>
-	NodeType* InsertChild(NodeType* pParent, const CString& nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	NodeType* InsertChild(NodeType* pParent, std::string nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		return AddNode(nodeName, pParent, tagType, textColor, bUseDefaultTextColor, bInvalidate);
 	}
@@ -371,13 +379,13 @@ public:
 		return pNewNode;
 	}
 
-	virtual unsigned __int64 AddNode(const CString& nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	virtual unsigned __int64 AddNode(std::string nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		return AddNode(nodeName, parentIndex, tagType, textColor, bUseDefaultTextColor, bInvalidate);
 	}
 
 /*
-	virtual NodeType* AddNode(const CString& nodeName, NodeType* parentIndex = nullptr, int tagType = -1, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	virtual NodeType* AddNode(std::string nodeName, NodeType* parentIndex = nullptr, int tagType = -1, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		return AddNode(nodeName, parentIndex, tagType, textColor, bUseDefaultTextColor, bInvalidate);
 	}
@@ -391,8 +399,8 @@ public:
 	/// <param name="bUseDefaultTextColor">Whether to use default text color.</param>
 	/// <param name="bInvalidate">Whether to invalidate</param>
 	/// <returns>unsigned _int64</returns>
-	virtual unsigned _int64 AddToRoot(const CString& nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
-	{/*virtual NodeType* AddToRoot(const CString& csLabel, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)*/
+	virtual unsigned _int64 AddToRoot(std::string nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	{/*virtual NodeType* AddToRoot(std::string csLabel, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)*/
 		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode());
 		NodeType& pNewNode = NodeBank[IndexPos];
 		RootLvlNodes.Add(IndexPos);

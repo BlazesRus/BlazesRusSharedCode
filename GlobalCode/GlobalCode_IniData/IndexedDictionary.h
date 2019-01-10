@@ -228,11 +228,11 @@ template <typename ValueType>
 class DLL_API IndexedOrderedLDictionary: public CustomOrderedDictionary<unsigned _int64, ValueType>
 {
 public:
-	//Reserve Maxed value for NULL representation
+    //Reserve Maxed value for NULL representation
 /// <summary>
 /// The null
 /// </summary>
-	static unsigned __int64 NullRep = 18446744073709551615;
+    static unsigned __int64 NullRep = 18446744073709551615;
 private:
     /// <summary>
     /// The next index

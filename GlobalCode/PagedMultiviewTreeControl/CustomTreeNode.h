@@ -37,7 +37,7 @@ public:
 	/// </summary>
 	CustomTreeNode()
 	{
-		csLabel.Empty();
+		csLabel.clear();
 		rNode.SetRectEmpty();
 
 		bUseDefaultTextColor = TRUE;
@@ -47,7 +47,7 @@ public:
 		ParentIndex = 18446744073709551615;//Maxed value = NULL
 
 		NBMenuType = -1;//Use default node context menu options
-		crText = RGB(240,240,240);//Default to a off-white grey
+		textColor = RGB(240,240,240);//Default to a off-white grey
 	}
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CustomTreeNode"/> class.
@@ -55,7 +55,7 @@ public:
 	/// <param name="MenuType">Type of the menu.</param>
 	CustomTreeNode(int MenuType)
 	{
-		csLabel.Empty();
+		csLabel.clear();
 		rNode.SetRectEmpty();
 
 		bUseDefaultTextColor = TRUE;
@@ -65,12 +65,12 @@ public:
 		ParentIndex = 18446744073709551615;
 
 		NBMenuType = MenuType;//Use non-default node context menu defined inside a (List<CustomOrderedDictionary<string, ButtonContextData>>)? or defined in override function in CustomTreeView
-		crText = RGB(240, 240, 240);
+		textColor = RGB(240, 240, 240);
 	}
 
 	CustomTreeNode(int MenuType, unsigned _int64 parentIndex)
 	{
-		csLabel.Empty();
+		csLabel.clear();
 		rNode.SetRectEmpty();
 
 		bUseDefaultTextColor = TRUE;
@@ -80,7 +80,7 @@ public:
 		ParentIndex = parentIndex;
 
 		NBMenuType = MenuType;//Use non-default node context menu defined inside a (List<CustomOrderedDictionary<string, ButtonContextData>>)? or defined in override function in CustomTreeView
-		crText = RGB(240, 240, 240);
+		textColor = RGB(240, 240, 240);
 	}
 
 	/// <summary>
@@ -88,22 +88,22 @@ public:
 	/// </summary>
 	virtual ~CustomTreeNode()
 	{
-		csLabel.Empty();
+		csLabel.clear();
 	}
 
 	/// <summary>
-	/// The cs label
+	/// The node label
 	/// </summary>
-	CString		csLabel;
+	std::string		csLabel;
 	/// <summary>
 	/// The r node
 	/// </summary>
 	CRect		rNode;
 
 	/// <summary>
-	/// The cr text
+	/// The text's color
 	/// </summary>
-	COLORREF	crText;
+	COLORREF	textColor;
 	/// <summary>
 	/// The b use default text color
 	/// </summary>
@@ -117,6 +117,11 @@ public:
 	/// Index position of ParentNode (EmptyNode=inside Root Level by default)
 	/// </summary>
 	unsigned __int64 ParentIndex;
+
+	CustomTreeNode(std::string newNodeName) : CustomTreeNode()
+	{
+		this->csLabel = newNodeName;
+	}
 
 	/// <summary>
 	/// Implements the operator ConvertedType* operator.
