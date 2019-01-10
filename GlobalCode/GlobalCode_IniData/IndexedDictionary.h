@@ -54,9 +54,6 @@ public:
             NextIndex++;
         }
         if (Success) { IndexPos = NextIndex; NextIndex++; return IndexPos; }
-        Success = AddOnlyNew(4294967295,Value);
-        //ReverseIndexSearch = true;
-        if(Success){return;}
         NextIndex = LastIndexSlot;
         for (Success = false; !Success || NextIndex == 0; Success = AddOnlyNew(NextIndex, Value))//Search in reverse for slots now
         {
@@ -120,9 +117,6 @@ public:
             NextIndex++;
         }
         if (Success) { IndexPos = NextIndex; NextIndex++; return IndexPos; }
-        Success = AddOnlyNew(4294967295,Value);
-        //ReverseIndexSearch = true;
-        if(Success){return;}
         NextIndex = LastIndexSlot;
         for (Success = false; !Success || NextIndex == 0; Success = AddOnlyNew(NextIndex, Value))//Search in reverse for slots now
         {
@@ -186,12 +180,11 @@ public:
         bool Success = AddOnlyNew(NextIndex,Value);
         if(Success){NextIndex++;return;}
         int LastIndexSlot = NextIndex;//Check higher indexes first so save information of last index to check in reverse later
-        for(Success=false;!Success||NextIndex==18446744073709551615;Success=AddOnlyNew(NextIndex,Value))
+        for(Success=false;!Success||NextIndex==18446744073709551614;Success=AddOnlyNew(NextIndex,Value))
         {
             NextIndex++;
         }
         if (Success) { IndexPos = NextIndex; NextIndex++; return IndexPos; }
-        Success = AddOnlyNew(18446744073709551615,Value);//Unlikely to require getting past this point but just in case
         if (Success) { return; }
         NextIndex = LastIndexSlot;
         for (Success = false; !Success || NextIndex == 0; Success = AddOnlyNew(NextIndex, Value))//Search in reverse for slots now
@@ -234,6 +227,12 @@ public:
 template <typename ValueType>
 class DLL_API IndexedOrderedLDictionary: public CustomOrderedDictionary<unsigned _int64, ValueType>
 {
+public:
+	//Reserve Maxed value for NULL representation
+/// <summary>
+/// The null
+/// </summary>
+	static unsigned __int64 NullRep = 18446744073709551615;
 private:
     /// <summary>
     /// The next index
@@ -251,12 +250,11 @@ public:
         bool Success = AddOnlyNew(NextIndex,Value);
         if (Success) { NextIndex++; return; }
         int LastIndexSlot = NextIndex;//Check higher indexes first so save information of last index to check in reverse later
-        for(Success=false;!Success||NextIndex==18446744073709551615;Success=AddOnlyNew(NextIndex,Value))
+        for(Success=false;!Success||NextIndex== NullRep;Success=AddOnlyNew(NextIndex,Value))
         {
             NextIndex++;
         }
         if (Success) { IndexPos = NextIndex; NextIndex++; return IndexPos; }
-        Success = AddOnlyNew(18446744073709551615,Value);//Unlikely to require getting past this point but just in case
         if (Success) { return; }
         NextIndex = LastIndexSlot;
         for (Success = false; !Success || NextIndex == 0; Success = AddOnlyNew(NextIndex, Value))//Search in reverse for slots now
