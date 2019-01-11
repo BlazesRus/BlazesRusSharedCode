@@ -311,6 +311,9 @@
     <ClInclude Include="AudioSupportedContextMenu.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
+    <ClInclude Include="NonGUINodeTree.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\res\MultiView.ico">
