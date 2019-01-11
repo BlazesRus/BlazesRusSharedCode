@@ -37,7 +37,7 @@ public:
 #else
 	LPCSTR ViewName;
 #endif
-	static unsigned _int64 EmptyNode = 18446744073709551615;
+	static unsigned _int64 EmptyNode;
 	/// <summary>
 	/// The node bank holding all nodes accessed (Dictionary instead of List so that preserves position when nodes removed or added within)
 	/// </summary>
@@ -1391,6 +1391,9 @@ public:
 		return GetThisMessageMap();
 	}
 };
+
+template <typename TreeNode, typename DocViewType, typename ContextMenuType>
+unsigned _int64 CustomTreeView<TreeNode, DocViewType, ContextMenuType>::EmptyNode = 18446744073709551615;
 
 CRuntimeImplimentation_Arg03(CustomTreeView, TreeNode, DocViewType, ContextMenuType)
 
