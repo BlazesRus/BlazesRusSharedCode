@@ -75,7 +75,7 @@ public:
 
 	}
 	template <typename TreeType=CustomTreeView>
-	virtual void CopyNodeFromOtherTree(TreeType TargetTree, unsigned __int64 NodeID, unsigned __int64 ParentIndex)
+	void CopyNodeFromOtherTree(TreeType TargetTree, unsigned __int64 NodeID, unsigned __int64 ParentIndex)
 	{
 
 	}

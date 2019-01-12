@@ -314,6 +314,9 @@
     <ClInclude Include="NonGUINodeTree.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
+    <ClInclude Include="NonGUINode.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\res\MultiView.ico">

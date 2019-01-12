@@ -37,7 +37,7 @@ public:
 	/// </summary>
 	CustomTreeNode()
 	{
-		csLabel.clear();
+		DisplayName.clear();
 		rNode.SetRectEmpty();
 
 		bUseDefaultTextColor = TRUE;
@@ -55,7 +55,7 @@ public:
 	/// <param name="MenuType">Type of the menu.</param>
 	CustomTreeNode(int MenuType)
 	{
-		csLabel.clear();
+		DisplayName.clear();
 		rNode.SetRectEmpty();
 
 		bUseDefaultTextColor = TRUE;
@@ -70,7 +70,7 @@ public:
 
 	CustomTreeNode(int MenuType, unsigned _int64 parentIndex)
 	{
-		csLabel.clear();
+		DisplayName.clear();
 		rNode.SetRectEmpty();
 
 		bUseDefaultTextColor = TRUE;
@@ -88,13 +88,13 @@ public:
 	/// </summary>
 	virtual ~CustomTreeNode()
 	{
-		csLabel.clear();
+		DisplayName.clear();
 	}
 
 	/// <summary>
 	/// The node label
 	/// </summary>
-	std::string		csLabel;
+	std::string		DisplayName;
 	/// <summary>
 	/// The r node
 	/// </summary>
@@ -120,7 +120,7 @@ public:
 
 	CustomTreeNode(std::string newNodeName) : CustomTreeNode()
 	{
-		this->csLabel = newNodeName;
+		this->DisplayName = newNodeName;
 	}
 
 	/// <summary>

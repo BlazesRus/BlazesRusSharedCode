@@ -450,6 +450,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
     </ClInclude>
+    <ClInclude Include="NonGUINode.h" />
     <ClInclude Include="NonGUINodeTree.h" />
   </ItemGroup>
   <ItemGroup>

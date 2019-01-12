@@ -218,7 +218,7 @@ public:
 
 		CustomTreeNode* pNewNode = new TreeNode();
 
-		pNewNode->csLabel = csLabel;					// New node's label
+		pNewNode->DisplayName = csLabel;					// New node's label
 
 		if (bUseDefaultTextColor)
 			pNewNode->bUseDefaultTextColor = TRUE;		// Use the default text color
@@ -258,7 +258,7 @@ public:
 		CustomTreeNode* pNewNode = new TreeNode();
 
 		// Basic node information
-		pNewNode->csLabel = csLabel;	// New node's label
+		pNewNode->DisplayName = csLabel;	// New node's label
 
 		if (bUseDefaultTextColor)
 			pNewNode->bUseDefaultTextColor = TRUE;		// Use the default text color
@@ -417,7 +417,7 @@ protected:
 		COLORREF crOldText = pDC->SetTextColor(cr);
 
 		// MULTILINE TEXT - begins
-		CString	cs = pNode->csLabel;
+		CString	cs = pNode->DisplayName;
 		int		iPos = 0;
 
 		// Draw text until there is nothing left to draw
@@ -623,7 +623,7 @@ protected:
 	}
 	void OnCM_ModifyNodeText()
 	{
-		if (NodeTextDlg(m_pSelected->csLabel) == TRUE)
+		if (NodeTextDlg(m_pSelected->DisplayName) == TRUE)
 		{
 			m_pSelected = NULL;
 			Invalidate();
@@ -919,8 +919,8 @@ protected:
 		// first menu item (always disabled)
 		if (m_pSelected != NULL)
 		{
-			CString	csDots = (m_pSelected->csLabel.GetLength() > 45) ? _T("...") : _T("");
-			CString cs = m_pSelected->csLabel.Left(45) + csDots;
+			CString	csDots = (m_pSelected->DisplayName.GetLength() > 45) ? _T("...") : _T("");
+			CString cs = m_pSelected->DisplayName.Left(45) + csDots;
 #ifdef EnableCustomTreeSounds
 			ccmPopUp.AppendMenuItem(MF_DISABLED, WM_APP, cs, _T(""), pDC);
 			ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);

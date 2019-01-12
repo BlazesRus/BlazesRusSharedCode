@@ -1,41 +1,38 @@
 // ***********************************************************************
 // Code Created by James Michael Armstrong (https://github.com/BlazesRus)
-// Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+// Latest BlazesGlobalCode Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 // ***********************************************************************
-#if !defined(BasicXMLNode_IncludeGuard)
-#define BasicXMLNode_IncludeGuard
+#pragma once
+#if !defined(NonGUINode_IncludeGuard)
+#define NonGUINode_IncludeGuard
 
-#include "MultiviewPrecompile.h"
-#include "GlobalCode_VariableLists/VariableList.h"
 #include "GlobalCode_IniData/IniDataV2.h"
-#include <string>
-//#include "XMLTagViewNode.h"
-
 
 /// <summary>
-/// Struct named BasicXMLNode
+/// Class named NonGUINode.
 /// </summary>
-class BasicXMLNode
-{public:
+class NonGUINode
+{
+public:
 	/// <summary>
 	/// The node name
 	/// </summary>
 	std::string DisplayName;
 	std::string TagContent;
-		/// <summary>
-	/// Initializes a new instance of the <see cref="BasicXMLNode"/> struct.
-	/// </summary>
-	/// <param name="name">The NodeName.</param>
-	BasicXMLNode(std::string name)
+	/// <summary>
+/// Initializes a new instance of the <see cref="NonGUINode"/> struct.
+/// </summary>
+/// <param name="name">The NodeName.</param>
+	NonGUINode(std::string name)
 	{
 		DisplayName = name;
 		TagContent = "";
 	}
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="BasicXMLNode"/> class.
+	/// Initializes a new instance of the <see cref="NonGUINode"/> class.
 	/// </summary>
-	BasicXMLNode()
+	NonGUINode()
 	{
 		DisplayName = "";
 		TagContent = "";
@@ -48,7 +45,7 @@ class BasicXMLNode
 	{
 		std::string TagStr = "<";
 		if (TagType == 3) { TagStr += "?"; }
-		TagStr += NodeName;
+		TagStr += DisplayName;
 		size_t TagSize = AdditionTagOptions.Size();
 		if (TagSize > 0)
 		{
@@ -73,27 +70,6 @@ class BasicXMLNode
 			TagStr += ">";
 		}
 		return TagStr;
-	}
-};
-
-/// <summary>
-/// Class named BasicNodeList(Mainly for temporally storing information about nodes before sending information to tree)
-/// </summary>
-class BasicNodeList : public VariableList<BasicXMLNode>
-{
-public:
-	/// <summary>
-	/// Adds the specified name.
-	/// </summary>
-	/// <param name="name">The name.</param>
-	void Add(std::string name)
-	{
-		int Index = this->AddData();
-		this->at(Index).NodeName = name;
-	}
-	BasicXMLNode& LastNode()
-	{
-		return this->at(size()-1);
 	}
 };
 
