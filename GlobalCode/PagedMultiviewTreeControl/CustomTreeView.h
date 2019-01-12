@@ -1273,17 +1273,6 @@ protected:
 	}
 
 protected:
-	/*/// <summary>
-	/// Applies the menu generation.
-	/// </summary>
-	/// <param name="contextMenuPopUp">The CCM pop up.</param>
-	/// <param name="nFlag">The n flag.</param>
-	/// <param name="pDC">The p dc.</param>
-	virtual void ApplyMenuGen(ContextMenuType* contextMenuPopUp, UINT nFlag, CDC* pDC)
-	{
-		contextMenuPopUp->AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), pDC);
-	}*/
-
 	/// <summary>
 	/// Called when [context menu].
 	/// </summary>
@@ -1340,6 +1329,8 @@ protected:
 			//contextMenuPopUp.AppendMenuItem(MF_ENABLED, CM_INSERTCHILD, _T("Insert Child"), pDC);
 			//contextMenuPopUp.AppendMenuItem(nFlag, CM_INSERTSIBLING, _T("Insert Sibling"), pDC);
 			contextMenuPopUp.AppendMenuItem(nFlag, CM_MODIFYNODETEXT, _T("Modify Node Text"), pDC);
+			contextMenuPopUp.AppendMenuItem(MF_ENABLED, CM_INSERTCHILD, _T("Insert Child"), pDC);
+			contextMenuPopUp.AppendMenuItem(nFlag, CM_INSERTSIBLING, _T("Insert Sibling"), pDC);
 			contextMenuPopUp.AppendMenuItem(nFlag, CM_CHANGENODECOLOR, _T("Change Node Color"), pDC);
 			contextMenuPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T("--Connecting lines related items--"), pDC);
 			contextMenuPopUp.AppendMenuItem(MF_ENABLED, CM_TOGGLECONNECTINGLINES, _T("Toggle Connecting Lines"), pDC);
