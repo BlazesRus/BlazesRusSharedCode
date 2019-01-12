@@ -489,6 +489,25 @@ public:
 		}
 	}
 
+	NodeType* GetParent(unsigned __int64 NodeID)
+	{
+		NodeType* pNode = &NodeBank[NodeID];
+		unsigned __int64 Index = pNode->ParentIndex;
+		return NodeBank[Index];
+	}
+
+	NodeType* GetParent(NodeType* pNode)
+	{
+		unsigned __int64 Index = pNode->ParentIndex;
+		return NodeBank[Index];
+	}
+
+	NodeType* GetParent()
+	{
+		unsigned __int64 Index = m_pSelected->ParentIndex;
+		return NodeBank[Index];
+	}
+
 protected:
 	int DrawNodesRecursive(CDC* pDC, NodeType* pNode, int x, int y, CRect rFrame)
 	{
@@ -753,10 +772,10 @@ protected:
 		if (NodeTextDlg(csText) == TRUE)
 		{
 			if (m_pSelected == NULL)
-				InsertChild(m_pTopNode, csText);
+				AddToRoot(csText);//InsertChild(m_pTopNode, csText);
 			else
 			{
-				InsertChild(m_pSelected, csText);
+				AddNode(csText, m_pSelected);//InsertChild(m_pSelected, csText);
 				m_pSelected = NULL;
 			}
 
@@ -769,7 +788,7 @@ protected:
 
 		if (NodeTextDlg(csText) == TRUE)
 		{
-			InsertSibling(m_pSelected, csText);
+			AddNode(csText, GetParent());//InsertSibling(m_pSelected, csText);
 			m_pSelected = NULL;
 			Invalidate();
 		}
