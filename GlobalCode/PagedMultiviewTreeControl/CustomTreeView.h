@@ -1308,13 +1308,30 @@ protected:
 
 		UINT nFlag = (m_pSelected != NULL) ? MF_ENABLED : MF_GRAYED;
 
+		int Temp = m_pSelected->NBMenuType;
+		if(Temp!=-1)
+			contextMenuPopUp->AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), pDC);
 		//ApplyMenuGen(&contextMenuPopUp, nFlag, pDC);
-		switch(m_pSelected->NBMenuType)
+		switch (Temp)
 		{
 		case -1:
+			contextMenuPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T("No Options Availible"), pDC);
+			break;
+		case 99:
+			//contextMenuPopUp.AppendMenuItem(MF_ENABLED, CM_INSERTCHILD, _T("Insert Child"), pDC);
+			//contextMenuPopUp.AppendMenuItem(nFlag, CM_INSERTSIBLING, _T("Insert Sibling"), pDC);
+			contextMenuPopUp.AppendMenuItem(nFlag, CM_MODIFYNODETEXT, _T("Modify Node Text"), pDC);
+			contextMenuPopUp.AppendMenuItem(nFlag, CM_CHANGENODECOLOR, _T("Change Node Color"), pDC);
+			contextMenuPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T("--Connecting lines related items--"), pDC);
+			contextMenuPopUp.AppendMenuItem(MF_ENABLED, CM_TOGGLECONNECTINGLINES, _T("Toggle Connecting Lines"), pDC);
+			contextMenuPopUp.AppendMenuItem(MF_ENABLED, CM_SETCONNECTINGLINESCOLOR, _T("Set Connecting Lines Color"), pDC);
+			contextMenuPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T("--Tree appearance items--"), pDC);
+			contextMenuPopUp.AppendMenuItem(MF_ENABLED, CM_SETFONT, _T("Set Font"), pDC);
+			contextMenuPopUp.AppendMenuItem(MF_ENABLED, CM_SETDEFAULTCOLOR, _T("Set Default Text Color"), pDC);
+			contextMenuPopUp.AppendMenuItem(MF_ENABLED, CM_SETBACKGROUNDBITMAP, _T("Set Background Bitmap"), pDC);
 			break;
 		default:
-			contextMenuPopUp->AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), pDC);
+
 			break;
 		}
 		// ADDING MENU ITEMS - End
