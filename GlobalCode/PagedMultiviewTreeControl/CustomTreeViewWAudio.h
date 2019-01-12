@@ -903,12 +903,9 @@ protected:
 		ccmPopUp.CreatePopupMenu();
 
 		// Customize the menu appearance and behavior
-		ccmPopUp
-#ifdef EnableCustomTreeSounds
-			.ToggleSound(m_bAudioOn)
-#endif
-			.SetTextFont(&m_Font)
-			.SetColors(RGB(70, 36, 36), RGB(253, 249, 249), RGB(172, 96, 96), RGB(244, 234, 234), RGB(182, 109, 109));
+		ccmPopUp.ToggleSound(m_bAudioOn)
+		.SetTextFont(&m_Font)
+		.SetColors(RGB(70, 36, 36), RGB(253, 249, 249), RGB(172, 96, 96), RGB(244, 234, 234), RGB(182, 109, 109));
 
 		// Get a device context so that it'll be possible for the context menu
 		// to calculate the size of the menu item's text
@@ -924,13 +921,8 @@ protected:
 		{
 			CString	csDots = (m_pSelected->csLabel.GetLength() > 45) ? _T("...") : _T("");
 			CString cs = m_pSelected->csLabel.Left(45) + csDots;
-#ifdef EnableCustomTreeSounds
 			ccmPopUp.AppendMenuItem(MF_DISABLED, WM_APP, cs, _T(""), pDC);
 			ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), _T(""), pDC);
-#else
-			ccmPopUp.AppendMenuItem(MF_DISABLED, WM_APP, cs, pDC);
-			ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), pDC);
-#endif
 		}
 
 		UINT nFlag = (m_pSelected != NULL) ? MF_ENABLED : MF_GRAYED;

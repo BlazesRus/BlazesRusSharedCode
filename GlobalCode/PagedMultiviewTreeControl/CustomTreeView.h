@@ -194,7 +194,7 @@ public:
 
 #pragma region InsertOperations
 /* Disabling InsertSibling function for now
-	//NodeType* InsertSibling(NodeType* pInsertAfter, std::string csLabel, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+	//NodeType* InsertSibling(NodeType* pInsertAfter, std::string DisplayName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 /// <summary>
 /// Inserts the sibling.
 /// </summary>
@@ -210,7 +210,7 @@ public:
 
 		//NodeType* pNewNode = new NodeType();
 
-		//pNewNode->csLabel = nodeName;					// New node's label
+		//pNewNode->DisplayName = nodeName;					// New node's label
 
 		//if (bUseDefaultTextColor)
 		//	pNewNode->bUseDefaultTextColor = TRUE;		// Use the default text color
@@ -291,7 +291,7 @@ public:
 			}
 		}
 		pNewNode.TagType = tagType;
-		pNewNode.csLabel = nodeName;					// New node's label
+		pNewNode.DisplayName = nodeName;					// New node's label
 
 		if (bUseDefaultTextColor)
 			pNewNode.bUseDefaultTextColor = TRUE;		// Use the default text color
@@ -319,7 +319,7 @@ public:
 			}
 		}
 		pNewNode.TagType = tagType;
-		pNewNode.csLabel = nodeName;					// New node's label
+		pNewNode.DisplayName = nodeName;					// New node's label
 
 		if (bUseDefaultTextColor)
 			pNewNode.bUseDefaultTextColor = TRUE;		// Use the default text color
@@ -357,7 +357,7 @@ public:
 			}
 		}
 		pNewNode.TagType = tagType;
-		pNewNode.csLabel = nodeName;					// New node's label
+		pNewNode.DisplayName = nodeName;					// New node's label
 
 		if (bUseDefaultTextColor)
 			pNewNode.bUseDefaultTextColor = TRUE;		// Use the default text color
@@ -389,12 +389,12 @@ public:
 	/// <param name="bInvalidate">Whether to invalidate</param>
 	/// <returns>unsigned _int64</returns>
 	virtual unsigned _int64 AddToRoot(std::string nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
-	{/*virtual NodeType* AddToRoot(std::string csLabel, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)*/
+	{/*virtual NodeType* AddToRoot(std::string DisplayName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)*/
 		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode());
 		NodeType& pNewNode = NodeBank[IndexPos];
 		RootLvlNodes.Add(IndexPos);
 		pNewNode.TagType = tagType;
-		pNewNode.csLabel = nodeName;					// New node's label
+		pNewNode.DisplayName = nodeName;					// New node's label
 
 		if (bUseDefaultTextColor)
 			pNewNode.bUseDefaultTextColor = TRUE;		// Use the default text color
@@ -415,7 +415,7 @@ public:
 		RootLvlNodes.Add(IndexPos);
 		NodeType& pNewNode = NodeBank[IndexPos];
 		pNewNode.bUseDefaultTextColor = TRUE;
-		pNewNode.csLabel = "_";
+		pNewNode.DisplayName = "_";
 		return IndexPos;
 	}
 
@@ -508,7 +508,7 @@ protected:
 		COLORREF crOldText = pDC->SetTextColor(cr);
 
 		// MULTILINE TEXT - begins
-		CString	cs = pNode->csLabel;
+		CString	cs = pNode->DisplayName;
 		int		iPos = 0;
 
 		// Draw text until there is nothing left to draw
@@ -782,7 +782,7 @@ protected:
 	}
 	void OnCM_ModifyNodeText()
 	{
-		if (NodeTextDlg(m_pSelected->csLabel) == TRUE)
+		if (NodeTextDlg(m_pSelected->DisplayName) == TRUE)
 		{
 			m_pSelected = NULL;
 			Invalidate();
@@ -1254,16 +1254,16 @@ protected:
 	}
 
 protected:
-	/// <summary>
+	/*/// <summary>
 	/// Applies the menu generation.
 	/// </summary>
-	/// <param name="ccmPopUp">The CCM pop up.</param>
+	/// <param name="contextMenuPopUp">The CCM pop up.</param>
 	/// <param name="nFlag">The n flag.</param>
 	/// <param name="pDC">The p dc.</param>
-	virtual void ApplyMenuGen(ContextMenuType* ccmPopUp, UINT nFlag, CDC* pDC)
+	virtual void ApplyMenuGen(ContextMenuType* contextMenuPopUp, UINT nFlag, CDC* pDC)
 	{
-		ccmPopUp->AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), pDC);
-	}
+		contextMenuPopUp->AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), pDC);
+	}*/
 
 	/// <summary>
 	/// Called when [context menu].
@@ -1280,12 +1280,12 @@ protected:
 		// Find the node that has been clicked on
 		m_pSelected = FindNodeByRootPoint(cp);
 
-		ContextMenuType ccmPopUp;
+		ContextMenuType contextMenuPopUp;
 
-		ccmPopUp.CreatePopupMenu();
+		contextMenuPopUp.CreatePopupMenu();
 
 		// Customize the menu appearance and behavior
-		ccmPopUp.SetTextFont(&m_Font)
+		contextMenuPopUp.SetTextFont(&m_Font)
 		.SetColors(RGB(70, 36, 36), RGB(253, 249, 249), RGB(172, 96, 96), RGB(244, 234, 234), RGB(182, 109, 109));
 
 		// Get a device context so that it'll be possible for the context menu
@@ -1300,19 +1300,27 @@ protected:
 		// first menu item (always disabled)
 		if (m_pSelected != NULL)
 		{
-			CString	csDots = (m_pSelected->csLabel.GetLength() > 45) ? _T("...") : _T("");
-			CString cs = m_pSelected->csLabel.Left(45) + csDots;
-			ccmPopUp.AppendMenuItem(MF_DISABLED, WM_APP, cs, pDC);
-			ccmPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), pDC);
+			CString	csDots = (m_pSelected->DisplayName.GetLength() > 45) ? _T("...") : _T("");
+			CString cs = m_pSelected->DisplayName.Left(45) + csDots;
+			contextMenuPopUp.AppendMenuItem(MF_DISABLED, WM_APP, cs, pDC);
+			contextMenuPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), pDC);
 		}
 
 		UINT nFlag = (m_pSelected != NULL) ? MF_ENABLED : MF_GRAYED;
 
-		ApplyMenuGen(&ccmPopUp, nFlag, pDC);
+		//ApplyMenuGen(&contextMenuPopUp, nFlag, pDC);
+		switch(m_pSelected->NBMenuType)
+		{
+		case -1:
+			break;
+		default:
+			contextMenuPopUp->AppendMenuItem(nFlag, CM_DELETENODE, _T("Delete Node"), pDC);
+			break;
+		}
 		// ADDING MENU ITEMS - End
 
 		// Display the context menu
-		ccmPopUp.TrackPopupMenu(TPM_LEFTALIGN, point.x, point.y, this);
+		contextMenuPopUp.TrackPopupMenu(TPM_LEFTALIGN, point.x, point.y, this);
 
 		// Clean up
 		pDC->SelectObject(pOldFont);
