@@ -14,10 +14,16 @@
 class NonGUINode
 {
 public:
+	static const unsigned _int64 EmptyNode = 18446744073709551615;
 	/// <summary>
 	/// The node name
 	/// </summary>
 	std::string DisplayName;
+
+	/// <summary>
+	/// Index position of ParentNode (EmptyNode=inside Root Level by default)
+	/// </summary>
+	unsigned __int64 ParentIndex;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="NonGUINode" /> struct.

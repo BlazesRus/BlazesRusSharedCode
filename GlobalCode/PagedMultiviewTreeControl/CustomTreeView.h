@@ -20,6 +20,7 @@
 #include <typeinfo>
 #include "GlobalCode_IniData/IndexedDictionary.h"
 #include "GlobalCode_VariableLists/VariableTypeLists.h"
+#include "NonGUINodeTree.h"
 
 /// <summary>
 /// Edited derivable version of CustomTreeControl's CViewTreeCtrl class converted into a view
@@ -37,7 +38,6 @@ public:
 #else
 	LPCSTR ViewName;
 #endif
-	static const unsigned _int64 EmptyNode = 18446744073709551615;
 	/// <summary>
 	/// The node bank holding all nodes accessed (Dictionary instead of List so that preserves position when nodes removed or added within)
 	/// </summary>

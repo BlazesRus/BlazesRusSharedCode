@@ -7,6 +7,7 @@
 #define NonGUINodeTree_IncludeGuard
 
 #include "GlobalCode_IniData/IndexedDictionary.h"
+#include "GlobalCode_VariableLists/VariableTypeLists.h"
 #include "NonGUINode.h"
 
 /// <summary>
@@ -16,6 +17,10 @@ template <typename TreeNode = NonGUINode> class NonGUINodeTree
 {public:
 	static const unsigned _int64 EmptyNode = 18446744073709551615;
 	NodeDictionary<TreeNode> NodeBank;
+	/// <summary>
+	/// List of indexes for Root level nodes inside NodeBank
+	/// </summary>
+	UXIntList RootLvlNodes;
 public:
 /*
 	/// <summary>

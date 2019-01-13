@@ -7,79 +7,12 @@
 
 #include "MultiviewPrecompile.h"
 #include "GlobalCode_VariableLists/VariableList.h"
-#include "GlobalCode_IniData/IniDataV2.h"
-#include <string>
-//#include "XMLTagViewNode.h"
-
-
-/// <summary>
-/// Struct named BasicXMLNode
-/// </summary>
-class BasicXMLNode
-{public:
-	/// <summary>
-	/// The node name
-	/// </summary>
-	std::string DisplayName;
-	std::string TagContent;
-		/// <summary>
-	/// Initializes a new instance of the <see cref="BasicXMLNode"/> struct.
-	/// </summary>
-	/// <param name="name">The NodeName.</param>
-	BasicXMLNode(std::string name)
-	{
-		DisplayName = name;
-		TagContent = "";
-	}
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="BasicXMLNode"/> class.
-	/// </summary>
-	BasicXMLNode()
-	{
-		DisplayName = "";
-		TagContent = "";
-	}
-	/// <summary>
-	/// Converts to tag string.
-	/// </summary>
-	/// <returns>std::string</returns>
-	std::string ConvertToTagString(IniDataV2 AdditionTagOptions, int TagType = 0)
-	{
-		std::string TagStr = "<";
-		if (TagType == 3) { TagStr += "?"; }
-		TagStr += DisplayName;
-		size_t TagSize = AdditionTagOptions.Size();
-		if (TagSize > 0)
-		{
-			for (auto it = AdditionTagOptions.self.begin(); it != AdditionTagOptions.self.end(); ++it) {
-				TagStr += " ";
-				TagStr += it.key();
-				TagStr += "=\"";
-				TagStr += it.value();
-				TagStr += "\"";
-			}
-		}
-		if (TagType == 1)
-		{
-			TagStr += "/>";
-		}
-		else if (TagType == 3)
-		{
-			TagStr += "?>";
-		}
-		else
-		{
-			TagStr += ">";
-		}
-		return TagStr;
-	}
-};
+#include "NonGUINode.h"
 
 /// <summary>
 /// Class named BasicNodeList(Mainly for temporally storing information about nodes before sending information to tree)
 /// </summary>
-class BasicNodeList : public VariableList<BasicXMLNode>
+class BasicNodeList : public VariableList<TaggedNode>
 {
 public:
 	/// <summary>
@@ -91,7 +24,7 @@ public:
 		int Index = this->AddData();
 		this->at(Index).DisplayName = name;
 	}
-	BasicXMLNode& LastNode()
+	TaggedNode& LastNode()
 	{
 		return this->at(size()-1);
 	}

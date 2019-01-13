@@ -13,13 +13,14 @@
 #include "ContextMenu.h"
 #include "DLG_TreeNodeText.h"
 #include "GlobalCode_VariableLists/VariableTypeLists.h"
+#include "NonGUINode.h"
 
 /// <summary>
 /// Edited derivable version of CustomTreeControl's Node class <para />(base code from https://www.codeproject.com/Articles/9887/CStaticTreeCtrl-A-CStatic-derived-custom-Tree-cont)
 /// <para />NodeCtrl refers to NodeTree holding this class
 /// <para />TreeNode refers to derived class's name (for keeping inherited functionality)
 /// </summary>
-class CustomTreeNode
+class CustomTreeNode : public NonGUINode
 {
 //protected:
 //	typedef CustomTreeNode NodeType;
@@ -44,7 +45,7 @@ public:
 
 		bOpen = TRUE;
 
-		ParentIndex = 18446744073709551615;//Maxed value = NULL
+		ParentIndex = EmptyNode;
 
 		NBMenuType = -1;//Use default node context menu options
 		textColor = RGB(240,240,240);//Default to a off-white grey
@@ -62,7 +63,7 @@ public:
 
 		bOpen = TRUE;
 
-		ParentIndex = 18446744073709551615;
+		ParentIndex = EmptyNode;
 
 		NBMenuType = MenuType;//Use non-default node context menu defined inside a (List<CustomOrderedDictionary<string, ButtonContextData>>)? or defined in override function in CustomTreeView
 		textColor = RGB(240, 240, 240);
@@ -92,10 +93,6 @@ public:
 	}
 
 	/// <summary>
-	/// The node label
-	/// </summary>
-	std::string		DisplayName;
-	/// <summary>
 	/// The r node
 	/// </summary>
 	CRect		rNode;
@@ -113,10 +110,6 @@ public:
 	/// The b open
 	/// </summary>
 	BOOL    bOpen;
-	/// <summary>
-	/// Index position of ParentNode (EmptyNode=inside Root Level by default)
-	/// </summary>
-	unsigned __int64 ParentIndex;
 
 	CustomTreeNode(std::string newNodeName) : CustomTreeNode()
 	{
