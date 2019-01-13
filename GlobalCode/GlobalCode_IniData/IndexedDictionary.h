@@ -22,6 +22,7 @@
 
 #include "CustomOrderedDictionary.h"
 #include "CustomDictionary.h"
+#include <string>
 
 /// <summary>
 /// Class named IndexedDictionary.
@@ -222,9 +223,16 @@ public:
 template <typename TreeNode> class NodeDictionary : public IndexedLongDictionary<TreeNode>
 {
 public:
-    void Add(std::string displayName)
+    /// <summary>
+    /// Adds fresh node with DisplayName of displayName.
+    /// </summary>
+    /// <param name="displayName">The display name.</param>
+    /// <returns>unsigned __int64</returns>
+    unsigned __int64 AddNode(std::string displayName)
     {
-
+        TreeNode newNode;
+        newNode.DisplayName = displayName;
+        return Add(newNode);
     }
 };
 
