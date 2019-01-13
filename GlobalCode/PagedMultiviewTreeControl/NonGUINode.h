@@ -18,30 +18,65 @@ public:
 	/// The node name
 	/// </summary>
 	std::string DisplayName;
-	std::string TagContent;
+
 	/// <summary>
-/// Initializes a new instance of the <see cref="NonGUINode"/> struct.
-/// </summary>
-/// <param name="name">The NodeName.</param>
+	/// Initializes a new instance of the <see cref="NonGUINode" /> struct.
+	/// </summary>
+	/// <param name="name">The NodeName.</param>
 	NonGUINode(std::string name)
 	{
 		DisplayName = name;
-		TagContent = "";
 	}
 
+
 	/// <summary>
-	/// Initializes a new instance of the <see cref="NonGUINode"/> class.
+	/// Initializes a new instance of the <see cref="NonGUINode" /> class.
 	/// </summary>
 	NonGUINode()
 	{
 		DisplayName = "";
+	}
+};
+
+/// <summary>
+/// Class named TaggedNode.
+/// Implements the <see cref="NonGUINode" />
+/// </summary>
+/// <seealso cref="NonGUINode" />
+class TaggedNode : public NonGUINode
+{public:
+	/// <summary>
+	/// The tag content
+	/// </summary>
+	std::string TagContent;
+	/// <summary>
+	/// The addition tag options
+	/// </summary>
+	IniDataV2 AdditionTagOptions;
+	/// <summary>
+	/// Initializes a new instance of the <see cref="TaggedNode"/> class.
+	/// </summary>
+	/// <param name="name">The name.</param>
+	TaggedNode(std::string name)
+	{
+		DisplayName = name;
 		TagContent = "";
 	}
 	/// <summary>
+	/// Initializes a new instance of the <see cref="TaggedNode"/> class.
+	/// </summary>
+	TaggedNode()
+	{
+		DisplayName = "";
+		TagContent = "";
+	}
+
+	/// <summary>
 	/// Converts to tag string.
 	/// </summary>
+	/// <param name="TagType">Type of the tag.</param>
 	/// <returns>std::string</returns>
-	std::string ConvertToTagString(IniDataV2 AdditionTagOptions, int TagType = 0)
+	std::string ConvertToTagString(int TagType = 0)
 	{
 		std::string TagStr = "<";
 		if (TagType == 3) { TagStr += "?"; }
@@ -72,5 +107,4 @@ public:
 		return TagStr;
 	}
 };
-
 #endif

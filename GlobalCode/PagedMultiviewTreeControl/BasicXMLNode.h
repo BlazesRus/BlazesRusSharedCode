@@ -48,7 +48,7 @@ class BasicXMLNode
 	{
 		std::string TagStr = "<";
 		if (TagType == 3) { TagStr += "?"; }
-		TagStr += NodeName;
+		TagStr += DisplayName;
 		size_t TagSize = AdditionTagOptions.Size();
 		if (TagSize > 0)
 		{
@@ -89,7 +89,7 @@ public:
 	void Add(std::string name)
 	{
 		int Index = this->AddData();
-		this->at(Index).NodeName = name;
+		this->at(Index).DisplayName = name;
 	}
 	BasicXMLNode& LastNode()
 	{

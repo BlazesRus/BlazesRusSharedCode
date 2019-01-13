@@ -25,12 +25,14 @@
 #include "CustomDictionary.h"
 #include "CustomOrderedDictionary.h"
 #ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
-#include "StringVectorList.h"
-#include "VariableConversionFunctions.h"
+    #include "StringVectorList.h"
+    #include "VariableConversionFunctions.h"
 #else
-#include "..\GlobalCode_VariableLists\StringVectorList.h"
-#include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
-#include "..\GlobalCode_ExperimentalCode\MediumDec.h"
+    #include "..\GlobalCode_VariableLists\StringVectorList.h"
+    #include "..\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h"
+    #ifndef BlazesGlobalCode_DisableMediumDecIni
+        #include "..\GlobalCode_ExperimentalCode\MediumDec.h"
+    #endif
 #endif
 
 /// <summary>
@@ -38,30 +40,35 @@
 /// </summary>
 class DLL_API IniDataV2
 {
-private:
+public:
     /// <summary>
     /// The int declaration
     /// </summary>
-    const std::string IntDeclaration = "#Int";
-    /// <summary>
-    /// The float declaration
-    /// </summary>
-    const std::string FloatDeclaration = "#Float";
+    const static std::string IntDeclaration;
     /// <summary>
     /// The medium decimal declaration
     /// </summary>
-    const std::string MediumDecDeclaration = "#MediumDec";
+    const static std::string MediumDecDeclaration;
     /// <summary>
     /// The bool declaration
     /// </summary>
-    const std::string BoolDeclaration = "#Bool";
-public:
+    const static std::string BoolDeclaration;
+    /// <summary>
+    /// The Void declaration(No Parameter Value)
+    /// </summary>
+    const static std::string VoidDeclaration;
+
     /// <summary>
     /// The IniSettings with Int Values
     /// </summary>
     CustomDictionary<std::string, int> IntSettings = {};
 
 #ifdef BlazesGlobalCode_EnableFloatingIni
+    /// <summary>
+    /// The float declaration
+    /// </summary>
+    const static std::string FloatDeclaration;
+
     /// <summary>
     /// The IniSettings with Float Values
     /// </summary>
@@ -72,7 +79,6 @@ public:
     /// The bool settings
     /// </summary>
     CustomDictionary<std::string, bool> BoolSettings = {};
-
 
 #ifndef BlazesGlobalCode_DisableMediumDecIni
     /// <summary>
@@ -388,10 +394,23 @@ public:
             {
                 return VariableConversionFunctions::IntToStringConversion(IntSettings[Value]);
             }
-            //else if (ElementValue == MediumDecDeclaration)
-            //{
-            //	return MediumDecSettings[Value].ToFullString();
-            //}
+            else if (ElementValue == BoolDeclaration)
+            {
+                if(BoolSettings[Value]==true)
+                {
+                    return "true";
+                }
+                else
+                {
+                    return "false";
+                }
+            }
+#ifndef BlazesGlobalCode_DisableMediumDecIni
+            else if (ElementValue == MediumDecDeclaration)
+            {
+                return MediumDecSettings[Value].ToFullString();
+            }
+#endif
             else
             {
                 return ElementValue;
@@ -519,7 +538,6 @@ public:
     }
 
 #ifndef BlazesGlobalCode_DisableMediumDecIni
-
     /// <summary>
     /// Adds the specified key.
     /// </summary>
@@ -579,8 +597,7 @@ public:
     /// <returns>size_t.</returns>
     size_t Size()
     {
-        size_t TotalSize = IntSettings.size()+BoolSettings.size();
-        return TotalSize;
+        return self.size();
     }
 
     //std::string operator[](int Index)
@@ -595,11 +612,62 @@ public:
     {
         IntSettings = CustomDictionary<std::string, int>({});
         BoolSettings = CustomDictionary<std::string, bool>({});
+#ifndef BlazesGlobalCode_DisableMediumDecIni
+        MediumDecSettings = CustomDictionary<std::string, MediumDec>({});
+#endif
     };
+
+    /// <summary>
+    /// Copies the data.
+    /// </summary>
+    /// <param name="additionTagOptions">The addition tag options.</param>
+    void CopyData(IniDataV2 additionTagOptions)
+    {
+        std::string TempString;
+        for (auto it = additionTagOptions.self.begin(); it != additionTagOptions.self.end(); ++it) {
+            //it.key();
+            TempString = it.value();
+            if (TempString == IntDeclaration)
+            {
+                Add(it.key(), additionTagOptions.IntSettings[it.key()]);
+            }
+            else if(TempString==BoolDeclaration)
+            {
+                Add(it.key(), additionTagOptions.BoolSettings[it.key()]);
+            }
+#ifndef BlazesGlobalCode_DisableMediumDecIni
+            else if(TempString==MediumDecDeclaration)
+            {
+                Add(it.key(), additionTagOptions.MediumDecSettings[it.key()]);
+            }
+#endif
+#ifdef BlazesGlobalCode_EnableFloatingIni
+            else if(TempString==FloatDeclaration)
+            {
+                Add(it.key(), additionTagOptions.FloatSettings[it.key()]);
+            }
+#endif
+            else
+            {
+                Add(it.key(), TempString);
+            }
+        }
+    }
 
     /// <summary>
     /// Finalizes an instance of the <see cref="IniDataV2" /> class.
     /// </summary>
     ~IniDataV2() {};
 };
+
+const std::string IniDataV2::BoolDeclaration = "#Bool";
+const std::string IniDataV2::IntDeclaration = "#Int";
+const std::string IniDataV2::VoidDeclaration = "#Void";
+#ifndef BlazesGlobalCode_DisableMediumDecIni
+    const std::string IniDataV2::MediumDecDeclaration = "#MediumDec";
+#endif
+#ifdef BlazesGlobalCode_EnableFloatingIni
+    const std::string IniDataV2::FloatDeclaration = "#Float";
+#endif
+
 #endif
