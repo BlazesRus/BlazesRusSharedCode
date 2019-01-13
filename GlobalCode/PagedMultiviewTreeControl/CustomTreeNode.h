@@ -30,10 +30,6 @@ public:
 	/// </summary>
 	int NBMenuType;
 	/// <summary>
-	/// The indexes of all child nodes
-	/// </summary>
-	UXIntList ChildNodes;
-	/// <summary>
 	/// Initializes a new instance of the <see cref="CustomTreeNode"/> class.
 	/// </summary>
 	CustomTreeNode()

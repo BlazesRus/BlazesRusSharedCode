@@ -21,6 +21,11 @@ public:
 	std::string DisplayName;
 
 	/// <summary>
+	/// The indexes of all child nodes
+	/// </summary>
+	UXIntList ChildNodes;
+
+	/// <summary>
 	/// Index position of ParentNode (EmptyNode=inside Root Level by default)
 	/// </summary>
 	unsigned __int64 ParentIndex;
