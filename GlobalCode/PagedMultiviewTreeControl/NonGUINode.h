@@ -49,6 +49,32 @@ public:
 	}
 };
 
+class BufferNode : public NonGUINode
+{public:
+	/// <summary>
+	/// The tag content
+	/// </summary>
+	std::string TagContent;
+	/// <summary>
+	/// Initializes a new instance of the <see cref="BufferNode"/> class.
+	/// </summary>
+	/// <param name="name">The name.</param>
+	BufferNode(std::string name)
+	{
+		DisplayName = name;
+		TagContent = "";
+	}
+	/// <summary>
+	/// Initializes a new instance of the <see cref="BufferNode"/> class.
+	/// </summary>
+	BufferNode()
+	{
+		DisplayName = "";
+		TagContent = "";
+	}
+	~BufferNode(){}
+};
+
 /// <summary>
 /// Class named TaggedNode.
 /// Implements the <see cref="NonGUINode" />

@@ -38,9 +38,9 @@ public:
 	}
 */
 
-/// <summary>
-/// Initializes a new instance of the <see cref="NonGUINodeTree"/> class.
-/// </summary>
+	/// <summary>
+	/// Initializes a new instance of the <see cref="NonGUINodeTree"/> class.
+	/// </summary>
 	NonGUINodeTree()
 	{
 	}

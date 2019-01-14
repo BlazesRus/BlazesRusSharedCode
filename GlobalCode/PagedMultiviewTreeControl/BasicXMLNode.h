@@ -12,7 +12,7 @@
 /// <summary>
 /// Class named BasicNodeList(Mainly for temporally storing information about nodes before sending information to tree)
 /// </summary>
-class BasicNodeList : public VariableList<TaggedNode>
+class BasicNodeList : public VariableList<BufferNode>
 {
 public:
 	/// <summary>
@@ -24,9 +24,13 @@ public:
 		int Index = this->AddData();
 		this->at(Index).DisplayName = name;
 	}
-	TaggedNode& LastNode()
+	///<summary>
+	/// Reference to last node in List
+	///</summary>
+	///<returns>BufferNode&</returns>
+	BufferNode& LastNode()
 	{
-		return this->at(size()-1);
+		return this->at(size() - 1);
 	}
 };
 
