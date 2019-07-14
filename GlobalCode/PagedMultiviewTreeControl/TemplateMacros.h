@@ -328,7 +328,7 @@ inline AFX_COMDAT const CRuntimeClass class_name<template_class, template_class0
 
 #else
 #define CRuntimeImplimentation_Arg01(class_name, template_class, baseClass)\
-template <class TreeNode>\
+template <class template_class>\
 std::string class_name<template_class>::ClassString()\
 {\
 	std::string Combined = "class_name<";\
@@ -346,5 +346,25 @@ inline AFX_COMDAT const CRuntimeClass class_name<template_class>::DEFINERTCNAME0
 inline const CRuntimeClass* class_name::_GetBaseClass() { return _RUNTIME_CLASS01(baseClass, baseargOne); }\
 inline AFX_COMDAT const CRuntimeClass class_name::DEFINERTCNAME(class_name) = { "class_name", sizeof(class_name), 0xFFFF, NULL,&class_name::_GetBaseClass, NULL, NULL };
 #endif
+
+
+#define IMPLEMENT_DYNCREATEV2(class_name, base_class_name) \
+	CObject* PASCAL class_name::CreateObject() \
+		{ return new class_name; } \
+	IMPLEMENT_RUNTIMECLASS(class_name, base_class_name, 0xFFFF, \
+		class_name::CreateObject, NULL)
+
+#define BEGIN_MESSAGE_MAPV2(theClass, baseClass) \
+	PTM_WARNING_DISABLE \
+	const AFX_MSGMAP* theClass::GetMessageMap() const \
+		{ return GetThisMessageMap(); } \
+	const noexcept AFX_MSGMAP* PASCAL theClass::GetThisMessageMap() \
+	{ \
+		typedef theClass ThisClass;						   \
+		typedef baseClass TheBaseClass;					   \
+		__pragma(warning(push))							   \
+		__pragma(warning(disable: 4640)) /* message maps can only be called by single threaded message pump */ \
+		static const AFX_MSGMAP_ENTRY _messageEntries[] =  \
+		{
 
 #endif // TemplateMacros_IncludeGuard

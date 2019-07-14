@@ -297,6 +297,7 @@
 #define IDR_MULTIVTYPE                  129
 #define ID_VIEW_FIRSTVIEW               30771
 #define ID_VIEW_OTHERVIEW               30772
+#define ID_VIEW_SWITCHVIEW              30773
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED

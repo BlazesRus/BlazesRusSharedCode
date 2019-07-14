@@ -2,8 +2,8 @@
 // Code Created by James Michael Armstrong (https://github.com/BlazesRus)
 // Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 // ***********************************************************************
-#if !defined(HalfPagedMultiview_IncludeGuard)
-#define HalfPagedMultiview_IncludeGuard
+#if !defined(PagedMultiviewVarient01_IncludeGuard)
+#define PagedMultiviewVarient01_IncludeGuard
 
 #include "MultiviewPrecompile.h"
 
@@ -12,66 +12,86 @@
 #endif
 #include "TemplateMacros.h"
 
-#include "resource.h"       // main symbols
+#if !defined(ID_APP_ABOUT)
+    #define ID_APP_ABOUT 0xE140
+#endif
+#if !defined(IDR_MAINFRAME)
+    #define IDR_MAINFRAME 128
+#endif
+#if !defined(ID_VIEW_OTHERVIEW)
+#define ID_VIEW_OTHERVIEW 30772
+#endif
+#if !defined(ID_VIEW_SWITCHVIEW)
+#define ID_VIEW_SWITCHVIEW 30773
+#endif
+#if !defined(ID_VIEW_FIRSTVIEW)
+#define ID_VIEW_FIRSTVIEW 30771
+#endif
 
 #include "MultiViewDoc.h"
-#include "MFView.h"
+//#include "MFView.h"
+
 #include "AboutDlg.h"
 
 #include <GlobalCode_VariableLists/VariableList.h>
-
 /// <summary>
 /// Multi-view features based on https://www.codeproject.com/Articles/7686/Using-Multiview
 /// Implements the <see cref="CWinAppEx" />
+/// Defaults to PagedView for initial view
 /// </summary>
 /// <seealso cref="CWinAppEx" />
-template <typename ViewType01, typename ViewType02, typename Frame01>
-class HalfPagedMultiview : public CWinAppEx
+template <typename PagedViewType, typename Frame01, typename ViewType02, typename ViewType03>
+class PagedMultiviewVarient01 : public CWinAppEx
 {
     /// <summary>
-    /// The main view
+    /// The main non-paged view
     /// </summary>
-    CView* MainView;
+    CView* View02;
     /// <summary>
     /// The List holding one or more Alternative Views
     /// </summary>
-    VariableList<ViewType02*> AltView;
-public:
+    VariableList<PagedViewType*> AltView;
     /// <summary>
-    /// The using alt view
+    /// The non-paged view #2
     /// </summary>
-    bool UsingAltView;
+    CView* View03;
+public:
+    static signed int const LoadCurrentAltView = 1000000000;
+    /// <summary>
+    /// The using alt view if ViewNum==0;  
+    /// </summary>
+    int ViewNum;
 
     /// <summary>
     /// Return Main view as non-CView pointer
     /// </summary>
-    /// <returns>ViewType01 *.</returns>
-    ViewType01* GetMainView()
+    /// <returns>ViewType02*</returns>
+    ViewType02* GetView02()
     {
-        if (MainView == nullptr)
+        if (View02 == nullptr)
         {
             return nullptr;
         }
         else
         {
-            return dynamic_cast<ViewType01*>(MainView);
+            return dynamic_cast<ViewType02*>(View02);
         }
     }
     /// <summary>
     /// Switches to alt view.
     /// </summary>
     /// <param name="Num">The number.</param>
-    void SwitchToAltView(unsigned int Num = 1000000000)
+    void SwitchToAltView(unsigned int Num = LoadCurrentAltView)
     {
-        if (UsingAltView == false)
+        if (ViewNum!=0)
         {
             UINT temp = ::GetWindowLong(AltView[CurrentAltView]->m_hWnd, GWL_ID);
-            ::SetWindowLong(AltView[CurrentAltView]->m_hWnd, GWL_ID, ::GetWindowLong(MainView->m_hWnd, GWL_ID));
-            ::SetWindowLong(MainView->m_hWnd, GWL_ID, temp);
+            ::SetWindowLong(AltView[CurrentAltView]->m_hWnd, GWL_ID, ::GetWindowLong(View02->m_hWnd, GWL_ID));
+            ::SetWindowLong(View02->m_hWnd, GWL_ID, temp);
 
-            MainView->ShowWindow(SW_HIDE);
+            View02->ShowWindow(SW_HIDE);
         }
-        if(Num== 1000000000)//Use Current loaded AltView
+        if(Num== LoadCurrentAltView)//Use Current loaded AltView
         {
             AltView[CurrentAltView]->ShowWindow(SW_SHOW);
         }
@@ -84,22 +104,22 @@ public:
         ((Frame01*)m_pMainWnd)->SetActiveView(AltView[CurrentAltView]);
         ((Frame01*)m_pMainWnd)->RecalcLayout();
         AltView[CurrentAltView]->Invalidate();
-        UsingAltView = true;
+        ViewNum = 0;
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="HalfPagedMultiview" /> class.
+    /// Initializes a new instance of the <see cref="PagedMultiviewVarient01" /> class.
     /// </summary>
     /// ///////////////////////////////////////////////////////////////////////////
-    /// HalfPagedMultiview construction
-    HalfPagedMultiview()
+    /// PagedMultiviewVarient01 construction
+    PagedMultiviewVarient01()
     {
         UsingAltView = false;
         // TODO: add construction code here,
         // Place all significant initialization in InitInstance
     }
 
-    //~virtual HalfPagedMultiview()
+    //~virtual PagedMultiviewVarient01()
     //{
     //}
 
@@ -132,7 +152,7 @@ public:
             IDR_MAINFRAME,
             RUNTIME_CLASS(MultiViewDoc),
             RUNTIME_CLASS(Frame01),       // main SDI frame window
-            RUNTIME_CLASS(ViewType01));
+            RUNTIME_CLASS(ViewType02));
         AddDocTemplate(pDocTemplate);
 
         // Parse command line for standard shell commands, DDE, file open
@@ -146,10 +166,10 @@ public:
         }
 
         //CView* pActiveView = ((Frame01*)m_pMainWnd)->GetActiveView();
-        //MainView = static_cast<ViewType01*>(pActiveView);
+        //View02 = static_cast<ViewType02*>(pActiveView);
         CView* pActiveView = ((CFrameWnd*)m_pMainWnd)->GetActiveView();
-        MainView = pActiveView;
-        AltView.Add((ViewType02*) new ViewType02);
+        View02 = pActiveView;
+        AltView.Add((PagedViewType*) new PagedViewType);
 
         CDocument* pDoc = ((Frame01*)m_pMainWnd)->GetActiveDocument();
 
@@ -176,7 +196,7 @@ public:
 
 
 /// <summary>
-/// App command to run the dialog
+/// Application command to run the dialog
 /// </summary>
 /// Implementation
 /// {{AFX_MSG(CMultiViewApp)
@@ -185,43 +205,64 @@ public:
         AboutDlg aboutDlg;
         aboutDlg.DoModal();
     }
-    /// <summary>
-    /// Called when [view otherview].
-    /// </summary>
-    afx_msg void OnViewOtherview()
+    afx_msg void OnPagedView()
     {
         SwitchToAltView();
     }
-    /// <summary>
-    /// Called when [view firstview].
-    /// </summary>
-    afx_msg void OnViewFirstview()
+    afx_msg void OnNonPagedView01()
     {
         // TODO: Add your command handler code here
 
         UINT temp = ::GetWindowWord(AltView[CurrentAltView]->m_hWnd, GWL_ID);
-        ::SetWindowWord(AltView[CurrentAltView]->m_hWnd, GWL_ID, ::GetWindowWord(MainView->m_hWnd, GWL_ID));
-        ::SetWindowWord(MainView->m_hWnd, GWL_ID, temp);
+        ::SetWindowWord(AltView[CurrentAltView]->m_hWnd, GWL_ID, ::GetWindowWord(View02->m_hWnd, GWL_ID));
+        ::SetWindowWord(View02->m_hWnd, GWL_ID, temp);
 
         AltView[CurrentAltView]->ShowWindow(SW_HIDE);
-        MainView->ShowWindow(SW_SHOW);
+        View02->ShowWindow(SW_SHOW);
 
-        //((FrameWindowType*)m_pMainWnd)->SetActiveView(MainView);
-        //((FrameWindowType*)m_pMainWnd)->RecalcLayout();
-        ((Frame01*)m_pMainWnd)->SetActiveView(MainView);
+        ((Frame01*)m_pMainWnd)->SetActiveView(View02);
         ((Frame01*)m_pMainWnd)->RecalcLayout();
-        MainView->Invalidate();
-        UsingAltView = false;
+        View02->Invalidate();
+        ViewNum = 1;
     }
+
+    afx_msg void OnViewSwitchView(int ViewNumber=0)
+    {
+        // TODO: Add your command handler code here
+        if(ViewNumber==0)
+        {
+            SwitchToAltView();
+        }
+        else
+        {
+            UINT temp = ::GetWindowWord(AltView[CurrentAltView]->m_hWnd, GWL_ID);
+            ::SetWindowWord(AltView[CurrentAltView]->m_hWnd, GWL_ID, ::GetWindowWord(View02->m_hWnd, GWL_ID));
+            ::SetWindowWord(View02->m_hWnd, GWL_ID, temp);
+
+            AltView[CurrentAltView]->ShowWindow(SW_HIDE);
+            View02->ShowWindow(SW_SHOW);
+
+            if(ViewNumber==2)
+            {
+                ((Frame01*)m_pMainWnd)->SetActiveView(View03);
+            }
+            else
+            {
+                ((Frame01*)m_pMainWnd)->SetActiveView(View02);
+            }
+            ((Frame01*)m_pMainWnd)->RecalcLayout();
+            View02->Invalidate();
+            ViewNum = ViewNumber;
+        }
+    }
+
     //}}AFX_MSG
 
     BEGIN_AltMESSAGE_MAP()
         ON_COMMAND(ID_APP_ABOUT, &OnAppAbout)
-        ON_COMMAND(ID_VIEW_OTHERVIEW, &OnViewOtherview)
-        ON_COMMAND(ID_VIEW_FIRSTVIEW, &OnViewFirstview)
-        //ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
-        //ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
-        //ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
+        ON_COMMAND(ID_VIEW_OTHERVIEW, &OnPagedView)
+        ON_COMMAND(ID_VIEW_FIRSTVIEW, &OnNonPagedView01)
+        ON_COMMAND(ID_VIEW_SWITCHVIEW, &OnViewSwitchView)
     END_AltMESSAGE_MAP(CWinAppEx)
     /// <summary>
     /// The current alt view
@@ -233,5 +274,5 @@ public:
     //CMultiDocTemplate * m_pDocTemplate;
 };
 
-//extern MultiviewApp<ViewType01, ViewType02 theApp;
+//extern MultiviewApp<ViewType02, PagedViewType theApp;
 #endif

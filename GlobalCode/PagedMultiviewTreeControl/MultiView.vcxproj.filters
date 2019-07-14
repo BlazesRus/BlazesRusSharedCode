@@ -299,12 +299,6 @@
     <ClInclude Include="$(HkBasedCode)\BasicHkNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(HkBasedCode)\HkTreeView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(HkBasedCode)\HkTreeViewNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CustomTreeViewWAudio.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
@@ -315,6 +309,9 @@
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
     <ClInclude Include="NonGUINode.h">
+      <Filter>NodeTreeStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="PagedMultiviewVarient01.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
   </ItemGroup>

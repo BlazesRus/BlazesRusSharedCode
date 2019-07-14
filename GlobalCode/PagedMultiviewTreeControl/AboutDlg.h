@@ -8,7 +8,14 @@
 #error "include 'MultiviewPrecompile.h' before including this file for PCH"
 #endif
 
+#if !defined(BehaviorFileEditorSpeced)
 #include "resource.h"       // main symbols
+#endif
+
+#if !defined(IDD_ABOUTBOX)
+#define IDD_ABOUTBOX                    100
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About
 
