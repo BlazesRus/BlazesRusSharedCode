@@ -182,9 +182,6 @@
     <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\WP_APPDefines.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\HalfPagedMultiview.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
     <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\CustomTreeView.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
@@ -311,8 +308,11 @@
     <ClInclude Include="NonGUINode.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
+    <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\HalfPagedMultiview.h">
+      <Filter>MultiView</Filter>
+    </ClInclude>
     <ClInclude Include="PagedMultiviewVarient01.h">
-      <Filter>NodeTreeStuff</Filter>
+      <Filter>MultiView</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

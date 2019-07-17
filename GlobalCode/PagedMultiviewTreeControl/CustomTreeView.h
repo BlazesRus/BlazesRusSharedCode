@@ -7,8 +7,7 @@
 #if !defined(CustomTreeView_IncludeGuard)
 #define CustomTreeView_IncludeGuard
 
-#include "MultiViewDoc.h"
-#include "TreeCtrlPage.h"
+//#include "MultiViewDoc.h"
 
 #include "WP_APPDefines.h"
 
@@ -27,7 +26,7 @@
 /// <para/>(base code from https://www.codeproject.com/Articles/9887/CViewTreeCtrl-A-CView-derived-custom-Tree-cont)
 /// <para/>NodeType/TreeNode refers to derived node's class name (for keeping inherited functionality)
 /// </summary>
-template <typename TreeNode, typename DocViewType = MultiViewDoc, typename ContextMenuType = CContextMenu>
+template <typename TreeNode, typename DocViewType, typename ContextMenuType = CContextMenu>
 class CustomTreeView : public CView
 {
 	CRuntime_Arg03V2(CustomTreeView, TreeNode, DocViewType, ContextMenuType, CView)
@@ -67,7 +66,12 @@ protected:
 	NodeType*		m_pSelected;
 public:
 	// Operations
-	virtual void DuplicateNode(unsigned __int64 NodeID, unsigned __int64 ParentIndex)
+/// <summary>
+/// Duplicates the node.
+/// </summary>
+/// <param name="NodeID">The node identifier.</param>
+/// <param name="ParentIndex">Index of the parent.</param>
+    virtual void DuplicateNode(unsigned __int64 NodeID, unsigned __int64 ParentIndex)
 	{
 
 	}
@@ -77,7 +81,14 @@ public:
 
 	}
 #pragma region TextBasedOptions
-	virtual void SetTextFont(LONG nHeight, BOOL bBold, BOOL bItalic, std::string csFaceName)
+    /// <summary>
+    /// Sets the text font.
+    /// </summary>
+    /// <param name="nHeight">Height of the n.</param>
+    /// <param name="bBold">The b bold.</param>
+    /// <param name="bItalic">The b italic.</param>
+    /// <param name="csFaceName">Name of the cs face.</param>
+    virtual void SetTextFont(LONG nHeight, BOOL bBold, BOOL bItalic, std::string csFaceName)
 	{
 		m_lgFont.lfHeight = -MulDiv(nHeight, GetDeviceCaps(GetDC()->m_hDC, LOGPIXELSY), 72);
 		m_lgFont.lfWidth = 0;
@@ -113,12 +124,24 @@ public:
 		pDC->RestoreDC(iSaved);
 		ReleaseDC(pDC);
 	}
-	virtual void SetDefaultTextColor(COLORREF textColor)
+    /// <summary>
+    /// Sets the default color of the text.
+    /// </summary>
+    /// <param name="textColor">Color of the text.</param>
+    virtual void SetDefaultTextColor(COLORREF textColor)
 	{
 		m_crDefaultTextColor = textColor;
 	}
 
-	virtual void SetTextSettings(LONG nHeight, BOOL bBold, BOOL bItalic, std::string csFaceName, COLORREF textColor)
+    /// <summary>
+    /// Sets the text settings.
+    /// </summary>
+    /// <param name="nHeight">Height of the n.</param>
+    /// <param name="bBold">The b bold.</param>
+    /// <param name="bItalic">The b italic.</param>
+    /// <param name="csFaceName">Name of the cs face.</param>
+    /// <param name="textColor">Color of the text.</param>
+    virtual void SetTextSettings(LONG nHeight, BOOL bBold, BOOL bItalic, std::string csFaceName, COLORREF textColor)
 	{
 		m_lgFont.lfHeight = -MulDiv(nHeight, GetDeviceCaps(GetDC()->m_hDC, LOGPIXELSY), 72);
 		m_lgFont.lfWidth = 0;
@@ -156,7 +179,13 @@ public:
 		m_crDefaultTextColor = textColor;
 	}
 
-	void SetNodeColor(NodeType* pNode, COLORREF textColor, BOOL bInvalidate = FALSE)
+    /// <summary>
+    /// Sets the color of the node.
+    /// </summary>
+    /// <param name="pNode">The p node.</param>
+    /// <param name="textColor">Color of the text.</param>
+    /// <param name="bInvalidate">The b invalidate.</param>
+    void SetNodeColor(NodeType* pNode, COLORREF textColor, BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pNode != NULL);
 
@@ -167,7 +196,11 @@ public:
 			Invalidate();
 	}
 
-	void SetBackgroundBitmap(BOOL bInvalidate = FALSE)
+    /// <summary>
+    /// Sets the background bitmap.
+    /// </summary>
+    /// <param name="bInvalidate">The b invalidate.</param>
+    void SetBackgroundBitmap(BOOL bInvalidate = FALSE)
 	{
 		CFileDialog fd(TRUE, NULL, NULL, OFN_EXPLORER | OFN_FILEMUSTEXIST, _T("Bitmap Files (*.bmp)|*.bmp||"), this);
 
@@ -233,16 +266,17 @@ public:
 	}
 */
 
-	/// <summary>
-	/// Inserts the child.
-	/// </summary>
-	/// <param name="pParent">The p parent.</param>
-	/// <param name="nodeName">The node label.</param>
-	/// <param name="textColor">The cr textcolor.</param>
-	/// <param name="bUseDefaultTextColor">Use default textcolor instead of textColor if true</param>
-	/// <param name="bInvalidate">Repaint the control if this is true</param>
-	/// <returns>unsigned __int64</returns>
-	unsigned __int64 InsertChild(unsigned __int64 pParent, std::string nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+
+/// <summary>
+/// Inserts the child.
+/// </summary>
+/// <param name="pParent">The p parent.</param>
+/// <param name="nodeName">The node label.</param>
+/// <param name="textColor">The cr textcolor.</param>
+/// <param name="bUseDefaultTextColor">Use default textcolor instead of textColor if true</param>
+/// <param name="bInvalidate">Repaint the control if this is true</param>
+/// <returns>unsigned __int64</returns>
+    unsigned __int64 InsertChild(unsigned __int64 pParent, std::string nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		return AddNode(nodeName, pParent, tagType, textColor, bUseDefaultTextColor, bInvalidate);
 	}
@@ -265,17 +299,18 @@ public:
 
 #pragma endregion InsertOperations
 
-	/// <summary>
-	/// Adds the node.
-	/// </summary>
-	/// <param name="nodeName">The node label.</param>
-	/// <param name="parentIndex">Index of the parent.</param>
-	/// <param name="tagType">Type of the tag.</param>
-	/// <param name="textColor">The cr text.</param>
-	/// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
-	/// <param name="bInvalidate">The b invalidate.</param>
-	/// <returns>unsigned __int64</returns>
-	virtual unsigned __int64 AddNode(std::string nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+
+/// <summary>
+/// Adds the node.
+/// </summary>
+/// <param name="nodeName">The node label.</param>
+/// <param name="parentIndex">Index of the parent.</param>
+/// <param name="tagType">Type of the tag.</param>
+/// <param name="textColor">The cr text.</param>
+/// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
+/// <param name="bInvalidate">The b invalidate.</param>
+/// <returns>unsigned __int64</returns>
+    virtual unsigned __int64 AddNode(std::string nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode(tagType, parentIndex));
 		NodeType& pNewNode = NodeBank[IndexPos];
@@ -331,17 +366,18 @@ public:
 	}
 */
 
-	/// <summary>
-	/// Adds the node and return the node reference.
-	/// </summary>
-	/// <param name="nodeName">The node label.</param>
-	/// <param name="parentIndex">Index of the parent.</param>
-	/// <param name="tagType">Type of the tag.</param>
-	/// <param name="textColor">The cr text.</param>
-	/// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
-	/// <param name="bInvalidate">The b invalidate.</param>
-	/// <returns>NodeType&</returns>
-	virtual NodeType& AddNodeV2(std::string nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+
+/// <summary>
+/// Adds the node v2.
+/// </summary>
+/// <param name="nodeName">Name of the node.</param>
+/// <param name="parentIndex">Index of the parent.</param>
+/// <param name="tagType">Type of the tag.</param>
+/// <param name="textColor">Color of the text.</param>
+/// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
+/// <param name="bInvalidate">The b invalidate.</param>
+/// <returns>NodeType &.</returns>
+    virtual NodeType& AddNodeV2(std::string nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode(tagType, parentIndex));
 		NodeType& pNewNode = NodeBank[IndexPos];
@@ -368,7 +404,17 @@ public:
 		return pNewNode;
 	}
 
-	virtual unsigned __int64 AddNode(std::string nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+    /// <summary>
+    /// Adds the node.
+    /// </summary>
+    /// <param name="nodeName">Name of the node.</param>
+    /// <param name="parentIndex">Index of the parent.</param>
+    /// <param name="tagType">Type of the tag.</param>
+    /// <param name="textColor">Color of the text.</param>
+    /// <param name="bUseDefaultTextColor">Color of the b use default text.</param>
+    /// <param name="bInvalidate">The b invalidate.</param>
+    /// <returns>unsigned __int64.</returns>
+    virtual unsigned __int64 AddNode(std::string nodeName, unsigned _int64 parentIndex = EmptyNode, int tagType = -1, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{
 		return AddNode(nodeName, parentIndex, tagType, textColor, bUseDefaultTextColor, bInvalidate);
 	}
@@ -380,15 +426,16 @@ public:
 	}
 */
 
-	/// <summary>
-	/// Adds to root.
-	/// </summary>
-	/// <param name="nodeName">The node label.</param>
-	/// <param name="textColor">The cr text.</param>
-	/// <param name="bUseDefaultTextColor">Whether to use default text color.</param>
-	/// <param name="bInvalidate">Whether to invalidate</param>
-	/// <returns>unsigned _int64</returns>
-	virtual unsigned _int64 AddToRoot(std::string nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
+
+/// <summary>
+/// Adds to root.
+/// </summary>
+/// <param name="nodeName">The node label.</param>
+/// <param name="textColor">The cr text.</param>
+/// <param name="bUseDefaultTextColor">Whether to use default text color.</param>
+/// <param name="bInvalidate">Whether to invalidate</param>
+/// <returns>unsigned _int64</returns>
+    virtual unsigned _int64 AddToRoot(std::string nodeName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)
 	{/*virtual NodeType* AddToRoot(std::string DisplayName, COLORREF textColor = 0, BOOL bUseDefaultTextColor = TRUE, BOOL bInvalidate = FALSE)*/
 		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode());
 		NodeType& pNewNode = NodeBank[IndexPos];
@@ -405,11 +452,12 @@ public:
 		return IndexPos;
 	}
 
-	/// <summary>
-	/// Adds new blank node to root.
-	/// </summary>
-	/// <returns>unsigned _int64</returns>
-	virtual unsigned _int64 AddNodeToRoot()
+
+    /// <summary>
+    /// Adds new blank node to root.
+    /// </summary>
+    /// <returns>unsigned _int64</returns>
+    virtual unsigned _int64 AddNodeToRoot()
 	{
 		unsigned _int64 IndexPos = NodeBank.Add(XMLTagViewNode());
 		RootLvlNodes.Add(IndexPos);
@@ -419,7 +467,12 @@ public:
 		return IndexPos;
 	}
 
-	virtual void DeleteNode(unsigned __int64 pNode, BOOL bInvalidate = FALSE)
+    /// <summary>
+    /// Deletes the node.
+    /// </summary>
+    /// <param name="pNode">The p node.</param>
+    /// <param name="bInvalidate">The b invalidate.</param>
+    virtual void DeleteNode(unsigned __int64 pNode, BOOL bInvalidate = FALSE)
 	{/*virtual void DeleteNode(NodeType* pNode, BOOL bInvalidate = FALSE)*/
 		DeleteNodeRecursive(pNode);
 
@@ -437,7 +490,12 @@ public:
 			Invalidate();
 	}*/
 
-	void ToggleNode(NodeType* pNode, BOOL bInvalidate = FALSE)
+    /// <summary>
+    /// Toggles the node.
+    /// </summary>
+    /// <param name="pNode">The p node.</param>
+    /// <param name="bInvalidate">The b invalidate.</param>
+    void ToggleNode(NodeType* pNode, BOOL bInvalidate = FALSE)
 	{
 		ASSERT(pNode != NULL);
 
@@ -447,11 +505,12 @@ public:
 			Invalidate();
 	}
 
-	/// <summary>
-	/// Recursively delete node and all child nodes from nodeID
-	/// </summary>
-	/// <param name="pNode">The p node.</param>
-	void DeleteNodeRecursive(unsigned __int64 nodeID)
+
+    /// <summary>
+    /// Recursively delete node and all child nodes from nodeID
+    /// </summary>
+    /// <param name="nodeID">The node identifier.</param>
+    void DeleteNodeRecursive(unsigned __int64 nodeID)
 	{
 		size_t RootIndex = RootLvlNodes.GetElementIndex(nodeID);
 		if (RootIndex != -1) { RootLvlNodes.Remove(RootIndex); }
@@ -474,12 +533,13 @@ public:
 		}
 	}
 
-	/// <summary>
-	/// Adds all children to list.
-	/// </summary>
-	/// <param name="nodeList">The node list.</param>
-	/// <param name="nodeID">The node identifier.</param>
-	void AddAllChildrenToList(UXIntList& nodeList, unsigned __int64 nodeID)
+
+    /// <summary>
+    /// Adds all children to list.
+    /// </summary>
+    /// <param name="nodeList">The node list.</param>
+    /// <param name="nodeID">The node identifier.</param>
+    void AddAllChildrenToList(UXIntList& nodeList, unsigned __int64 nodeID)
 	{
 		NodeType* targetNode = this->NodeBank[nodeID];
 		size_t childSize = targetNode->ChildNodes.size();
@@ -489,20 +549,34 @@ public:
 		}
 	}
 
-	NodeType* GetParent(unsigned __int64 NodeID)
+    /// <summary>
+    /// Gets the parent.
+    /// </summary>
+    /// <param name="NodeID">The node identifier.</param>
+    /// <returns>NodeType *.</returns>
+    NodeType* GetParent(unsigned __int64 NodeID)
 	{
 		NodeType* pNode = &NodeBank[NodeID];
 		unsigned __int64 Index = pNode->ParentIndex;
 		return NodeBank[Index];
 	}
 
-	NodeType* GetParent(NodeType* pNode)
+    /// <summary>
+    /// Gets the parent.
+    /// </summary>
+    /// <param name="pNode">The p node.</param>
+    /// <returns>NodeType *.</returns>
+    NodeType* GetParent(NodeType* pNode)
 	{
 		unsigned __int64 Index = pNode->ParentIndex;
 		return NodeBank[Index];
 	}
 
-	NodeType* GetParent()
+    /// <summary>
+    /// Gets the parent.
+    /// </summary>
+    /// <returns>NodeType *.</returns>
+    NodeType* GetParent()
 	{
 		unsigned __int64 Index = m_pSelected->ParentIndex;
 		return NodeBank[Index];
@@ -859,7 +933,10 @@ protected:
 		SetBackgroundBitmap(TRUE);
 	}
 public:
-	CustomTreeView()
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CustomTreeView"/> class.
+    /// </summary>
+    CustomTreeView()
 	{
 		m_iIndent = 16;				// Indentation for tree branches
 		m_iPadding = 4;				// Padding between tree and the control border
@@ -877,7 +954,10 @@ public:
 		m_pSelected = nullptr;
 		ViewName = "TreeView";
 	}
-	virtual ~CustomTreeView()
+    /// <summary>
+    /// Finalizes an instance of the <see cref="CustomTreeView"/> class.
+    /// </summary>
+    virtual ~CustomTreeView()
 	{
 		//DeleteNode(m_pTopNode);	// Delete all children if there are any
 		//delete m_pTopNode;			// Delete top node
@@ -890,12 +970,13 @@ public:
 		if (m_bmpBackground.GetSafeHandle() != NULL)
 			m_bmpBackground.DeleteObject();
 	}
-	/// <summary>
-	/// Loads the data from file.
-	/// </summary>
-	/// <param name="FilePath">The file path.</param>
-	/// <returns>bool</returns>
-	virtual bool LoadDataFromFile(std::string FilePath)
+
+    /// <summary>
+    /// Loads the data from file.
+    /// </summary>
+    /// <param name="FilePath">The file path.</param>
+    /// <returns>bool</returns>
+    virtual bool LoadDataFromFile(std::string FilePath)
 	{//Only load tags without argument fields etc for basic non-derived version
 		char LineChar;
 		bool InsideXMLComment = false;
@@ -1083,14 +1164,18 @@ public:
 		return true;
 	}
 public:
-	DocViewType* GetDocument()
+    /// <summary>
+    /// Gets the document.
+    /// </summary>
+    /// <returns>DocViewType *.</returns>
+    DocViewType* GetDocument()
 	{
 		return (DocViewType*)m_pDocument;
 	}
 
 	// Overrides
-		// ClassWizard generated virtual function overrides
-		//{{AFX_VIRTUAL(CustomTreeView)
+	// ClassWizard generated virtual function overrides
+	//{{AFX_VIRTUAL(CustomTreeView)
 protected:
 	virtual void OnDraw(CDC* pDC)
 	{
