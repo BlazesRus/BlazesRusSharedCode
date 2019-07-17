@@ -15,7 +15,7 @@
 /// <para/>(base code from https://www.codeproject.com/Articles/9887/CViewTreeCtrl-A-CView-derived-custom-Tree-cont)
 /// <para/>NodeType/TreeNode refers to derived node's class name (for keeping inherited functionality)
 /// </summary>
-template <typename TreeNode, typename DocViewType = MultiViewDoc>
+template <typename TreeNode, typename DocViewType>
 class CustomTreeViewWAudio : public CustomTreeView<TreeNode, DocViewType, AudioSupportedContextMenu>
 {
 	CRuntime_Arg02Base03_Reused01(CustomTreeViewWAudio, TreeNode, DocViewType, CustomTreeView, AudioSupportedContextMenu)
