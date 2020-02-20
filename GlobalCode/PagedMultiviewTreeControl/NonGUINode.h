@@ -6,7 +6,7 @@
 #if !defined(NonGUINode_IncludeGuard)
 #define NonGUINode_IncludeGuard
 
-#include "GlobalCode_IniData/IniDataV2.h"
+#include "IniData/IniDataV2.h"
 
 /// <summary>
 /// Class named NonGUINode.

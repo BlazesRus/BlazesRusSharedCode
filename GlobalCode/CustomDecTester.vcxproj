@@ -156,59 +156,59 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="$(CPPSource)\DLLAPI.h" />
-    <ClCompile Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.cpp">
+    <ClCompile Include="$(CPPSource)\IniData\IniDataV2.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
       <CompileAs>Default</CompileAs>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_QuadVector\QuadVector.cpp">
+    <ClCompile Include="$(CPPSource)\QuadVector\QuadVector.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_QuadVector\QuadVectorFunctions.cpp">
+    <ClCompile Include="$(CPPSource)\QuadVector\QuadVectorFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_StringFunctions\StringFunctions.cpp">
+    <ClCompile Include="$(CPPSource)\StringFunctions\StringFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cpp">
+    <ClCompile Include="$(CPPSource)\VariableConversionFunctions\VariableConversionFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\StringVectorList.cpp">
+    <ClCompile Include="$(CPPSource)\VariableLists\StringVectorList.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\VariableTypeLists.cpp">
+    <ClCompile Include="$(CPPSource)\VariableLists\VariableTypeLists.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.cpp">
+    <ClCompile Include="$(CPPSource)\VariableLists\VariableVectorFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClInclude Include="$(CPPSource)\tsl\ordered_hash.h" />
     <ClInclude Include="$(CPPSource)\tsl\ordered_map.h" />
     <ClInclude Include="$(CPPSource)\tsl\ordered_set.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomDictionary.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomOrderedDictionary.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\PointerDictionary.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\OrderedPointerDictionary.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedDictionary.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedPDictionary.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_QuadVector\QuadVector.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_QuadVector\QuadVectorFunctions.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_StringFunctions\StringFunctions.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\StringVectorList.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableList.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableTypeLists.h" />
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.h" />
-    <ClCompile Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.cpp">
+    <ClInclude Include="$(CPPSource)\IniData\CustomDictionary.h" />
+    <ClInclude Include="$(CPPSource)\IniData\CustomOrderedDictionary.h" />
+    <ClInclude Include="$(CPPSource)\IniData\PointerDictionary.h" />
+    <ClInclude Include="$(CPPSource)\IniData\OrderedPointerDictionary.h" />
+    <ClInclude Include="$(CPPSource)\IniData\IndexedDictionary.h" />
+    <ClInclude Include="$(CPPSource)\IniData\IndexedPDictionary.h" />
+    <ClInclude Include="$(CPPSource)\IniData\IniDataV2.h" />
+    <ClInclude Include="$(CPPSource)\QuadVector\QuadVector.h" />
+    <ClInclude Include="$(CPPSource)\QuadVector\QuadVectorFunctions.h" />
+    <ClInclude Include="$(CPPSource)\StringFunctions\StringFunctions.h" />
+    <ClInclude Include="$(CPPSource)\VariableConversionFunctions\VariableConversionFunctions.h" />
+    <ClInclude Include="$(CPPSource)\VariableLists\StringVectorList.h" />
+    <ClInclude Include="$(CPPSource)\VariableLists\VariableList.h" />
+    <ClInclude Include="$(CPPSource)\VariableLists\VariableTypeLists.h" />
+    <ClInclude Include="$(CPPSource)\VariableLists\VariableVectorFunctions.h" />
+    <ClCompile Include="$(CPPSource)\ExperimentalCode\MediumDec.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h" />
+    <ClInclude Include="$(CPPSource)\ExperimentalCode\MediumDec.h" />
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TemplateMacros.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GlobalCode_ExperimentalCode\ConvertableP.h" />
-    <ClInclude Include="GlobalCode_ExperimentalCode\VirtualType.h" />
+    <ClInclude Include="ExperimentalCode\ConvertableP.h" />
+    <ClInclude Include="ExperimentalCode\VirtualType.h" />
     <ClInclude Include="PagedMultiviewTreeControl\CustomTreeNode.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

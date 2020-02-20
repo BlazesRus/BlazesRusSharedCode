@@ -13,13 +13,13 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="GlobalCode_ExperimentalCode">
+    <Filter Include="ExperimentalCode">
       <UniqueIdentifier>{35796dea-6cba-4616-8b0a-be2150fcce53}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GlobalCode_VariableConversionFunctions">
+    <Filter Include="VariableConversionFunctions">
       <UniqueIdentifier>{dce33406-3f88-4655-9617-a4fb96a9cb10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GlobalCode_IniData">
+    <Filter Include="IniData">
       <UniqueIdentifier>{ca70d12d-cafa-49e3-bc6c-bc4732023273}</UniqueIdentifier>
     </Filter>
     <Filter Include="tsl">
@@ -28,7 +28,7 @@
     <Filter Include="LayoutReference">
       <UniqueIdentifier>{330f6044-7ff4-43aa-9958-43f6e793e392}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GlobalCode_VariableLists">
+    <Filter Include="VariableLists">
       <UniqueIdentifier>{bc952275-4215-4886-8ecd-812dcaf78403}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -39,22 +39,22 @@
     <ClInclude Include="$(CPPSource)\DLLAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_QuadVector\QuadVector.h">
+    <ClInclude Include="$(CPPSource)\QuadVector\QuadVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_QuadVector\QuadVectorFunctions.h">
+    <ClInclude Include="$(CPPSource)\QuadVector\QuadVectorFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_StringFunctions\StringFunctions.h">
+    <ClInclude Include="$(CPPSource)\StringFunctions\StringFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h">
+    <ClInclude Include="$(CPPSource)\VariableConversionFunctions\VariableConversionFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\StringVectorList.h">
+    <ClInclude Include="$(CPPSource)\VariableLists\StringVectorList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.h">
+    <ClInclude Include="$(CPPSource)\ExperimentalCode\MediumDec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(CPPSource)\PagedMultiviewTreeControl\TemplateMacros.h">
@@ -69,26 +69,26 @@
     <ClInclude Include="$(CPPSource)\tsl\ordered_hash.h">
       <Filter>tsl</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedDictionary.h">
-      <Filter>GlobalCode_IniData</Filter>
+    <ClInclude Include="$(CPPSource)\IniData\IndexedDictionary.h">
+      <Filter>IniData</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IndexedPDictionary.h">
-      <Filter>GlobalCode_IniData</Filter>
+    <ClInclude Include="$(CPPSource)\IniData\IndexedPDictionary.h">
+      <Filter>IniData</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.h">
-      <Filter>GlobalCode_IniData</Filter>
+    <ClInclude Include="$(CPPSource)\IniData\IniDataV2.h">
+      <Filter>IniData</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomOrderedDictionary.h">
-      <Filter>GlobalCode_IniData</Filter>
+    <ClInclude Include="$(CPPSource)\IniData\CustomOrderedDictionary.h">
+      <Filter>IniData</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\CustomDictionary.h">
-      <Filter>GlobalCode_IniData</Filter>
+    <ClInclude Include="$(CPPSource)\IniData\CustomDictionary.h">
+      <Filter>IniData</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\OrderedPointerDictionary.h">
-      <Filter>GlobalCode_IniData</Filter>
+    <ClInclude Include="$(CPPSource)\IniData\OrderedPointerDictionary.h">
+      <Filter>IniData</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_IniData\PointerDictionary.h">
-      <Filter>GlobalCode_IniData</Filter>
+    <ClInclude Include="$(CPPSource)\IniData\PointerDictionary.h">
+      <Filter>IniData</Filter>
     </ClInclude>
     <ClInclude Include="PagedMultiviewTreeControl\CustomTreeNode.h">
       <Filter>LayoutReference</Filter>
@@ -96,52 +96,52 @@
     <ClInclude Include="PagedMultiviewTreeControl\CustomTreeView.h">
       <Filter>LayoutReference</Filter>
     </ClInclude>
-    <ClInclude Include="GlobalCode_ExperimentalCode\ConvertableP.h">
-      <Filter>GlobalCode_ExperimentalCode</Filter>
+    <ClInclude Include="ExperimentalCode\ConvertableP.h">
+      <Filter>ExperimentalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableList.h">
-      <Filter>GlobalCode_VariableLists</Filter>
+    <ClInclude Include="$(CPPSource)\VariableLists\VariableList.h">
+      <Filter>VariableLists</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableTypeLists.h">
-      <Filter>GlobalCode_VariableLists</Filter>
+    <ClInclude Include="$(CPPSource)\VariableLists\VariableTypeLists.h">
+      <Filter>VariableLists</Filter>
     </ClInclude>
-    <ClInclude Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.h">
-      <Filter>GlobalCode_VariableLists</Filter>
+    <ClInclude Include="$(CPPSource)\VariableLists\VariableVectorFunctions.h">
+      <Filter>VariableLists</Filter>
     </ClInclude>
-    <ClInclude Include="GlobalCode_ExperimentalCode\VirtualType.h">
-      <Filter>GlobalCode_ExperimentalCode</Filter>
+    <ClInclude Include="ExperimentalCode\VirtualType.h">
+      <Filter>ExperimentalCode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CustomDecTester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_QuadVector\QuadVector.cpp">
+    <ClCompile Include="$(CPPSource)\QuadVector\QuadVector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_QuadVector\QuadVectorFunctions.cpp">
+    <ClCompile Include="$(CPPSource)\QuadVector\QuadVectorFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_StringFunctions\StringFunctions.cpp">
+    <ClCompile Include="$(CPPSource)\StringFunctions\StringFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cpp">
+    <ClCompile Include="$(CPPSource)\VariableConversionFunctions\VariableConversionFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\StringVectorList.cpp">
+    <ClCompile Include="$(CPPSource)\VariableLists\StringVectorList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\VariableTypeLists.cpp">
+    <ClCompile Include="$(CPPSource)\VariableLists\VariableTypeLists.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_VariableLists\VariableVectorFunctions.cpp">
+    <ClCompile Include="$(CPPSource)\VariableLists\VariableVectorFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_ExperimentalCode\MediumDec.cpp">
+    <ClCompile Include="$(CPPSource)\ExperimentalCode\MediumDec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(CPPSource)\GlobalCode_IniData\IniDataV2.cpp">
-      <Filter>GlobalCode_IniData</Filter>
+    <ClCompile Include="$(CPPSource)\IniData\IniDataV2.cpp">
+      <Filter>IniData</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

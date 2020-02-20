@@ -8,8 +8,8 @@
 #include <string>
 #include <fstream>
 using namespace std;
-#include "GlobalCode_VariableLists/StringVectorList.h"
-#include "GlobalCode_IniData/IniDataV2.h"
+#include "VariableLists/StringVectorList.h"
+#include "IniData/IniDataV2.h"
 #include "BasicXMLNode.h"
 
 /// <summary>

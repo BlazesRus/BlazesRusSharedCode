@@ -6,7 +6,7 @@
 #define BasicXMLNode_IncludeGuard
 
 #include "MultiviewPrecompile.h"
-#include "GlobalCode_VariableLists/VariableList.h"
+#include "VariableLists/VariableList.h"
 #include "NonGUINode.h"
 
 /// <summary>

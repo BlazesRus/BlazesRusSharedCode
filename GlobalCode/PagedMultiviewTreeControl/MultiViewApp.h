@@ -18,7 +18,7 @@
 #include "OtherView.h"
 #include "TreePage.h"
 
-#include <GlobalCode_IniData/IniDataV2.h>
+#include <IniData/IniDataV2.h>
 
 /////////////////////////////////////////////////////////////////////////////
 // CMultiViewApp:
