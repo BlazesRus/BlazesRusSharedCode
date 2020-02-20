@@ -39,7 +39,7 @@
     <ClCompile Include="TreeCtrlPage.cpp">
       <Filter>MultiView</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_NodeTrees\VariableData.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\NodeTrees\VariableData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\MainFrm.cpp">
@@ -66,40 +66,40 @@
     <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\MultiViewApp.cpp">
       <Filter>MultiView</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_IniData\IniDataV2.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\IniData\IniDataV2.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_VariableLists\VariableVectorFunctions.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\VariableLists\VariableVectorFunctions.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_VariableLists\VariableTypeLists.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\VariableLists\VariableTypeLists.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\VariableConversionFunctions\VariableConversionFunctions.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_VariableLists\StringVectorList.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\VariableLists\StringVectorList.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_StringFunctions\StringFunctions.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\StringFunctions\StringFunctions.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_QuadVector\QuadVectorFunctions.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\QuadVector\QuadVectorFunctions.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_QuadVector\QuadVector.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\QuadVector\QuadVector.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
     <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\TreePage.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\GlobalCode_ExperimentalCode\MediumDec.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\ExperimentalCode\MediumDec.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp">
+    <ClCompile Include="..\NodeTrees\TagNodeTreeTemplate.cpp">
       <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\GlobalCode_NodeTrees\XMLOption.cpp">
+    <ClCompile Include="..\NodeTrees\XMLOption.cpp">
       <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
     </ClCompile>
     <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\BlazesBehaviorFileMerger.cpp">
@@ -125,10 +125,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_StringFunctions\StringFunctions.h">
+    <ClInclude Include="$(BlazesGlobalCode)\StringFunctions\StringFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_VariableLists\StringVectorList.h">
+    <ClInclude Include="$(BlazesGlobalCode)\VariableLists\StringVectorList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\CustomTreeCtrl.h">
@@ -161,22 +161,22 @@
     <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\MultiviewPrecompile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_IniData\IndexedDictionary.h">
+    <ClInclude Include="$(BlazesGlobalCode)\IniData\IndexedDictionary.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_IniData\IndexedPDictionary.h">
+    <ClInclude Include="$(BlazesGlobalCode)\IniData\IndexedPDictionary.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_IniData\IniDataV2.h">
+    <ClInclude Include="$(BlazesGlobalCode)\IniData\IniDataV2.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_IniData\CustomOrderedDictionary.h">
+    <ClInclude Include="$(BlazesGlobalCode)\IniData\CustomOrderedDictionary.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_IniData\CustomDictionary.h">
+    <ClInclude Include="$(BlazesGlobalCode)\IniData\CustomDictionary.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_ExperimentalCode\MediumDec.h">
+    <ClInclude Include="$(BlazesGlobalCode)\ExperimentalCode\MediumDec.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
     <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\WP_APPDefines.h">
@@ -212,10 +212,10 @@
     <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\TreePage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_IniData\PointerDictionary.h">
+    <ClInclude Include="$(BlazesGlobalCode)\IniData\PointerDictionary.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_IniData\OrderedPointerDictionary.h">
+    <ClInclude Include="$(BlazesGlobalCode)\IniData\OrderedPointerDictionary.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
     <ClInclude Include="$(BlazesGlobalCode)\DLLAPI.h">
@@ -224,10 +224,10 @@
     <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\TreePageNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_QuadVector\QuadVector.h">
+    <ClInclude Include="$(BlazesGlobalCode)\QuadVector\QuadVector.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_QuadVector\QuadVectorFunctions.h">
+    <ClInclude Include="$(BlazesGlobalCode)\QuadVector\QuadVectorFunctions.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
     <ClInclude Include="$(BlazesGlobalCode)\tsl\ordered_map.h">
@@ -245,31 +245,31 @@
     <ClInclude Include="BasicXMLNode.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_VariableLists\VariableList.h">
+    <ClInclude Include="$(BlazesGlobalCode)\VariableLists\VariableList.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h">
+    <ClInclude Include="$(BlazesGlobalCode)\VariableConversionFunctions\VariableConversionFunctions.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_VariableLists\VariableTypeLists.h">
+    <ClInclude Include="$(BlazesGlobalCode)\VariableLists\VariableTypeLists.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_VariableLists\VariableVectorFunctions.h">
+    <ClInclude Include="$(BlazesGlobalCode)\VariableLists\VariableVectorFunctions.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h">
+    <ClInclude Include="..\NodeTrees\LooseNodeTreeTemplate.h">
       <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode_NodeTrees\TagNodeTreeTemplate.h">
+    <ClInclude Include="..\NodeTrees\TagNodeTreeTemplate.h">
       <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\GlobalCode_NodeTrees\VariableData.h">
+    <ClInclude Include="$(BlazesGlobalCode)\NodeTrees\VariableData.h">
       <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode_NodeTrees\XMLOption.h">
+    <ClInclude Include="..\NodeTrees\XMLOption.h">
       <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode_NodeTrees\XMLTagTree.h">
+    <ClInclude Include="..\NodeTrees\XMLTagTree.h">
       <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
     </ClInclude>
     <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\BlazesBehaviorFileMerger.h">

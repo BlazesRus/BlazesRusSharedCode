@@ -12,7 +12,7 @@
 #include "MultiviewPrecompile.h"
 #include "ContextMenu.h"
 #include "DLG_TreeNodeText.h"
-#include "GlobalCode_VariableLists/VariableTypeLists.h"
+#include "VariableLists/VariableTypeLists.h"
 #include "NonGUINode.h"
 
 /// <summary>

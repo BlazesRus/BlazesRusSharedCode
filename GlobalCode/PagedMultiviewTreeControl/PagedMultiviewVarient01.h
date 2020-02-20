@@ -33,7 +33,7 @@
 
 #include "AboutDlg.h"
 
-#include <GlobalCode_VariableLists/VariableList.h>
+#include <VariableLists/VariableList.h>
 /// <summary>
 /// Multi-view features based on https://www.codeproject.com/Articles/7686/Using-Multiview
 /// Implements the <see cref="CWinAppEx" />

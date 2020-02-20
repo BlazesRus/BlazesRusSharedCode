@@ -8,7 +8,7 @@
 #include "MultiviewPrecompile.h"
 #include "TemplateMacros.h"
 #include "CustomTreeNode.h"
-#include "GlobalCode_IniData/IniDataV2.h"
+#include "IniData/IniDataV2.h"
 
 /// <summary>
 /// Class named XMLTagViewNode.

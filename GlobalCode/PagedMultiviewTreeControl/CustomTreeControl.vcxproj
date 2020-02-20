@@ -531,9 +531,9 @@
     <ResourceCompile Include="CustomTreeControl.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\GlobalCode_IniData\CustomDictionary.h" />
-    <ClInclude Include="..\GlobalCode_IniData\CustomOrderedDictionary.h" />
-    <ClInclude Include="..\GlobalCode_IniData\IndexedDictionary.h" />
+    <ClInclude Include="..\IniData\CustomDictionary.h" />
+    <ClInclude Include="..\IniData\CustomOrderedDictionary.h" />
+    <ClInclude Include="..\IniData\IndexedDictionary.h" />
     <ClInclude Include="ContextMenu.h" />
     <ClInclude Include="CustomTreeControl.h" />
     <ClInclude Include="CustomTreeControlDlg.h" />

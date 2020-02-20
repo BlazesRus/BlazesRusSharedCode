@@ -78,47 +78,47 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="GlobalCode_ExperimentalCode\CustomDec.h" />
-    <ClInclude Include="GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.h" />
-    <ClInclude Include="GlobalCode_ExperimentalCode\CustomDec_Templates.h" />
-    <ClInclude Include="GlobalCode_ExperimentalCode\QuadFloatingInt.h" />
-    <ClInclude Include="GlobalCode_ExperimentalCode\SuperDec.h" />
-    <ClInclude Include="GlobalCode_ExperimentalCode\SuperDecHex.h" />
-    <ClInclude Include="GlobalCode_IniData\IniData.h" />
-    <ClInclude Include="GlobalCode_MiscFunctions\MiscFunctions.h" />
-    <ClInclude Include="GlobalCode_NodeTrees\LooseNodeTreeTemplate.h" />
-    <ClInclude Include="GlobalCode_NodeTrees\TagNodeTreeTemplate.h" />
-    <ClInclude Include="GlobalCode_NodeTrees\TagPosition.h" />
-    <ClInclude Include="GlobalCode_NodeTrees\VariableData.h" />
-    <ClInclude Include="GlobalCode_NodeTrees\XMLOption.h" />
-    <ClInclude Include="GlobalCode_NodeTrees\XMLTagTree.h" />
-    <ClInclude Include="GlobalCode_QuadVector\QuadVector.h" />
-    <ClInclude Include="GlobalCode_QuadVector\QuadVectorFunctions.h" />
-    <ClInclude Include="GlobalCode_StringFunctions\StringFunctions.h" />
-    <ClInclude Include="GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h" />
-    <ClInclude Include="GlobalCode_VariableLists\StringVectorList.h" />
-    <ClInclude Include="GlobalCode_VariableLists\VariableList.h" />
-    <ClInclude Include="GlobalCode_VariableLists\VariableTypeLists.h" />
-    <ClInclude Include="GlobalCode_VariableLists\VariableVectorFunctions.h" />
+    <ClInclude Include="ExperimentalCode\CustomDec.h" />
+    <ClInclude Include="ExperimentalCode\SuperDec_ExtraDec64_19Decimal.h" />
+    <ClInclude Include="ExperimentalCode\CustomDec_Templates.h" />
+    <ClInclude Include="ExperimentalCode\QuadFloatingInt.h" />
+    <ClInclude Include="ExperimentalCode\SuperDec.h" />
+    <ClInclude Include="ExperimentalCode\SuperDecHex.h" />
+    <ClInclude Include="IniData\IniData.h" />
+    <ClInclude Include="MiscFunctions\MiscFunctions.h" />
+    <ClInclude Include="NodeTrees\LooseNodeTreeTemplate.h" />
+    <ClInclude Include="NodeTrees\TagNodeTreeTemplate.h" />
+    <ClInclude Include="NodeTrees\TagPosition.h" />
+    <ClInclude Include="NodeTrees\VariableData.h" />
+    <ClInclude Include="NodeTrees\XMLOption.h" />
+    <ClInclude Include="NodeTrees\XMLTagTree.h" />
+    <ClInclude Include="QuadVector\QuadVector.h" />
+    <ClInclude Include="QuadVector\QuadVectorFunctions.h" />
+    <ClInclude Include="StringFunctions\StringFunctions.h" />
+    <ClInclude Include="VariableConversionFunctions\VariableConversionFunctions.h" />
+    <ClInclude Include="VariableLists\StringVectorList.h" />
+    <ClInclude Include="VariableLists\VariableList.h" />
+    <ClInclude Include="VariableLists\VariableTypeLists.h" />
+    <ClInclude Include="VariableLists\VariableVectorFunctions.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GlobalCode_ExperimentalCode\CustomDec.cpp" />
-    <ClCompile Include="GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cpp" />
-    <ClCompile Include="GlobalCode_ExperimentalCode\SuperDec.cpp" />
-    <ClCompile Include="GlobalCode_ExperimentalCode\SuperDecHex.cpp" />
-    <ClCompile Include="GlobalCode_IniData\IniData.cpp" />
-    <ClCompile Include="GlobalCode_MiscFunctions\MiscFunctions.cpp" />
-    <ClCompile Include="GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp" />
-    <ClCompile Include="GlobalCode_NodeTrees\TagPosition.cpp" />
-    <ClCompile Include="GlobalCode_NodeTrees\VariableData.cpp" />
-    <ClCompile Include="GlobalCode_NodeTrees\XMLOption.cpp" />
-    <ClCompile Include="GlobalCode_QuadVector\QuadVector.cpp" />
-    <ClCompile Include="GlobalCode_QuadVector\QuadVectorFunctions.cpp" />
-    <ClCompile Include="GlobalCode_StringFunctions\StringFunctions.cpp" />
-    <ClCompile Include="GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cpp" />
-    <ClCompile Include="GlobalCode_VariableLists\StringVectorList.cpp" />
-    <ClCompile Include="GlobalCode_VariableLists\VariableTypeLists.cpp" />
-    <ClCompile Include="GlobalCode_VariableLists\VariableVectorFunctions.cpp" />
+    <ClCompile Include="ExperimentalCode\CustomDec.cpp" />
+    <ClCompile Include="ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cpp" />
+    <ClCompile Include="ExperimentalCode\SuperDec.cpp" />
+    <ClCompile Include="ExperimentalCode\SuperDecHex.cpp" />
+    <ClCompile Include="IniData\IniData.cpp" />
+    <ClCompile Include="MiscFunctions\MiscFunctions.cpp" />
+    <ClCompile Include="NodeTrees\TagNodeTreeTemplate.cpp" />
+    <ClCompile Include="NodeTrees\TagPosition.cpp" />
+    <ClCompile Include="NodeTrees\VariableData.cpp" />
+    <ClCompile Include="NodeTrees\XMLOption.cpp" />
+    <ClCompile Include="QuadVector\QuadVector.cpp" />
+    <ClCompile Include="QuadVector\QuadVectorFunctions.cpp" />
+    <ClCompile Include="StringFunctions\StringFunctions.cpp" />
+    <ClCompile Include="VariableConversionFunctions\VariableConversionFunctions.cpp" />
+    <ClCompile Include="VariableLists\StringVectorList.cpp" />
+    <ClCompile Include="VariableLists\VariableTypeLists.cpp" />
+    <ClCompile Include="VariableLists\VariableVectorFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="PreprocessorVariables.txt" />

@@ -347,13 +347,6 @@ inline const CRuntimeClass* class_name::_GetBaseClass() { return _RUNTIME_CLASS0
 inline AFX_COMDAT const CRuntimeClass class_name::DEFINERTCNAME(class_name) = { "class_name", sizeof(class_name), 0xFFFF, NULL,&class_name::_GetBaseClass, NULL, NULL };
 #endif
 
-
-#define IMPLEMENT_DYNCREATEV2(class_name, base_class_name) \
-	CObject* PASCAL class_name::CreateObject() \
-		{ return new class_name; } \
-	IMPLEMENT_RUNTIMECLASS(class_name, base_class_name, 0xFFFF, \
-		class_name::CreateObject, NULL)
-
 #define BEGIN_MESSAGE_MAPV2(theClass, baseClass) \
 	PTM_WARNING_DISABLE \
 	const AFX_MSGMAP* theClass::GetMessageMap() const \

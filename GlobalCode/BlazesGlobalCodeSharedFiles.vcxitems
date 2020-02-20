@@ -14,49 +14,49 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\CustomDec.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\CustomDec_Templates.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\CustomDec_UnsignedTemplates.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDecHex.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_IniData\IniData.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_MiscFunctions\MiscFunctions.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\LooseNodeTreeTemplate.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\TagNodeTreeTemplate.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\TagPosition.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\VariableData.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\XMLOption.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\XMLTagTree.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_QuadVector\QuadVector.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_QuadVector\QuadVectorFunctions.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_StringFunctions\StringFunctions.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_VariableConversionFunctions\VariableConversionFunctions.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_VariableLists\StringVectorList.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_VariableLists\VariableList.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_VariableLists\VariableTypeLists.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GlobalCode_VariableLists\VariableVectorFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ExperimentalCode\CustomDec.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ExperimentalCode\SuperDec_ExtraDec64_19Decimal.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ExperimentalCode\CustomDec_Templates.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ExperimentalCode\CustomDec_UnsignedTemplates.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ExperimentalCode\SuperDec.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ExperimentalCode\SuperDecHex.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IniData\IniData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MiscFunctions\MiscFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NodeTrees\LooseNodeTreeTemplate.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NodeTrees\TagNodeTreeTemplate.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NodeTrees\TagPosition.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NodeTrees\VariableData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NodeTrees\XMLOption.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NodeTrees\XMLTagTree.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QuadVector\QuadVector.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QuadVector\QuadVectorFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StringFunctions\StringFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)VariableConversionFunctions\VariableConversionFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)VariableLists\StringVectorList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)VariableLists\VariableList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)VariableLists\VariableTypeLists.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)VariableLists\VariableVectorFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDec.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_ExperimentalCode\SuperDecHex.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_IniData\IniData.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_MiscFunctions\MiscFunctions.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\TagNodeTreeTemplate.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\TagPosition.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\VariableData.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_NodeTrees\XMLOption.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_QuadVector\QuadVector.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_QuadVector\QuadVectorFunctions.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_StringFunctions\StringFunctions.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_VariableLists\StringVectorList.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_VariableLists\VariableTypeLists.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GlobalCode_VariableLists\VariableVectorFunctions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ExperimentalCode\SuperDec.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ExperimentalCode\SuperDecHex.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)IniData\IniData.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MiscFunctions\MiscFunctions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NodeTrees\TagNodeTreeTemplate.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NodeTrees\TagPosition.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NodeTrees\VariableData.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NodeTrees\XMLOption.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QuadVector\QuadVector.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QuadVector\QuadVectorFunctions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)StringFunctions\StringFunctions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)VariableConversionFunctions\VariableConversionFunctions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)VariableLists\StringVectorList.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)VariableLists\VariableTypeLists.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)VariableLists\VariableVectorFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="$(MSBuildThisFileDirectory)PreprocessorVariables.txt" />

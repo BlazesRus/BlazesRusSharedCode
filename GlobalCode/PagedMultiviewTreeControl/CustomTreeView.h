@@ -17,8 +17,8 @@
 #include "TemplateMacros.h"
 #include <string>
 #include <typeinfo>
-#include "GlobalCode_IniData/IndexedDictionary.h"
-#include "GlobalCode_VariableLists/VariableTypeLists.h"
+#include "IniData/IndexedDictionary.h"
+#include "VariableLists/VariableTypeLists.h"
 #include "NonGUINodeTree.h"
 
 /// <summary>

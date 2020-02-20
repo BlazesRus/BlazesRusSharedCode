@@ -5,7 +5,7 @@
 #include "TemplateMacros.h"
 #include "CustomTreeNode.h"
 #include "CustomTreeCtrl.h"
-//#include "GlobalCode_ExperimentalCode/VirtualType.h"
+//#include "ExperimentalCode/VirtualType.h"
 
 class TreeCtrlPageNode;
 class TreeCtrlPageNode : public CustomTreeNode
