@@ -102,44 +102,44 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GlobalCode_ExperimentalCode\CustomDec.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\CustomOrderedDictionary.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\CustomListSet.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\Formula.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\MediumDecPoint.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\MediumDecVector.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_IEquatable.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_MathBasedFunctions.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_MultiplicativeOperations.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_OtherFormulas.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_StandardConversions.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_TypeDescriptors.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\PrivateFieldAccessor.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDecCollection.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDec_IEquatable.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDec_MathBasedFunctions.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDec_MultiplicativeOperations.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDec_OtherFormulas.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDec_StandardConversions.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDec_TypeDescriptors.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDecGlobalCode.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDec.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\MediumDec.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_LargeDec_OperatorFunctions.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_OperatorFunctions.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_OtherConversions.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_Rounding.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\MediumDec_TrigometricFunctions.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SuperDec_ModerateDec_OperatorFunctions.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDec_OperatorFunctions.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDec_OtherConversions.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDec_Rounding.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDec_TrigometricFunctions.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\ValidationOverride.cs" />
-    <Compile Include="GlobalCode_ExperimentalCode\VariableData.cs" />
-    <Compile Include="GlobalCode_IniData\IniData.cs" />
-    <Compile Include="GlobalCode_IniData\IniDataV2.cs" />
+    <Compile Include="ExperimentalCode\CustomDec.cs" />
+    <Compile Include="ExperimentalCode\CustomOrderedDictionary.cs" />
+    <Compile Include="ExperimentalCode\CustomListSet.cs" />
+    <Compile Include="ExperimentalCode\Formula.cs" />
+    <Compile Include="ExperimentalCode\MediumDecPoint.cs" />
+    <Compile Include="ExperimentalCode\MediumDecVector.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_IEquatable.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_MathBasedFunctions.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_MultiplicativeOperations.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_OtherFormulas.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_StandardConversions.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_TypeDescriptors.cs" />
+    <Compile Include="ExperimentalCode\PrivateFieldAccessor.cs" />
+    <Compile Include="ExperimentalCode\SmallDecCollection.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_IEquatable.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_MathBasedFunctions.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_MultiplicativeOperations.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_OtherFormulas.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_StandardConversions.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_TypeDescriptors.cs" />
+    <Compile Include="ExperimentalCode\SuperDecGlobalCode.cs" />
+    <Compile Include="ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cs" />
+    <Compile Include="ExperimentalCode\SmallDec.cs" />
+    <Compile Include="ExperimentalCode\MediumDec.cs" />
+    <Compile Include="ExperimentalCode\SuperDec_LargeDec_OperatorFunctions.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_OperatorFunctions.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_OtherConversions.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_Rounding.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_TrigometricFunctions.cs" />
+    <Compile Include="ExperimentalCode\SuperDec_ModerateDec_OperatorFunctions.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_OperatorFunctions.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_OtherConversions.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_Rounding.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_TrigometricFunctions.cs" />
+    <Compile Include="ExperimentalCode\ValidationOverride.cs" />
+    <Compile Include="ExperimentalCode\VariableData.cs" />
+    <Compile Include="Databases\IniData.cs" />
+    <Compile Include="Databases\IniDataV2.cs" />
     <Compile Include="GlobalCode_NodeTrees\HavokActionTree.cs" />
     <Compile Include="GlobalCode_NodeTrees\NifNodeTree.cs" />
     <Compile Include="GlobalCode_NodeTrees\NodeTreeGlobals.cs" />
@@ -149,49 +149,49 @@
     <Compile Include="GlobalCode_NodeTrees\NodeTreeV2.cs" />
     <Compile Include="GlobalCode_NodeTrees\XMLOption.cs" />
     <Compile Include="GlobalCode_NodeTrees\XMLTagTree.cs" />
-    <Compile Include="GlobalCode_StringFunctions\StringFunctions.cs" />
-    <Compile Include="GlobalCode_VariableConversionFunctions\TypeDataInfo.cs" />
-    <Compile Include="GlobalCode_VariableConversionFunctions\VariableConversionFunctions.cs" />
-    <Compile Include="GlobalCode_VariableLists\IntegerList.cs" />
-    <Compile Include="GlobalCode_VariableLists\MediumDecList.cs" />
-    <Compile Include="GlobalCode_VariableLists\QuadVector.cs" />
-    <Compile Include="GlobalCode_VariableLists\StringList.cs" />
-    <Compile Include="GlobalCode_VariableLists\XIntegerList.cs" />
+    <Compile Include="StringFunctions\StringFunctions.cs" />
+    <Compile Include="VariableConversionFunctions\TypeDataInfo.cs" />
+    <Compile Include="VariableConversionFunctions\VariableConversionFunctions.cs" />
+    <Compile Include="VariableLists\IntegerList.cs" />
+    <Compile Include="VariableLists\MediumDecList.cs" />
+    <Compile Include="VariableLists\QuadVector.cs" />
+    <Compile Include="VariableLists\StringList.cs" />
+    <Compile Include="VariableLists\XIntegerList.cs" />
     <Compile Include="GlobalMiscCode\FileAccessCommands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <!--   <ItemGroup Label="GUIElements">
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDecGUIElement.xaml.cs">
+    <Compile Include="ExperimentalCode\SmallDecGUIElement.xaml.cs">
       <DependentUpon>SmallDecGUIElement.xaml</DependentUpon>
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+      <Link>ExperimentalCode\%(FileName)</Link>
     </Compile>
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDecSlider.xaml.cs">
+    <Compile Include="ExperimentalCode\SmallDecSlider.xaml.cs">
       <DependentUpon>SmallDecSlider.xaml</DependentUpon>
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+      <Link>ExperimentalCode\%(FileName)</Link>
     </Compile>
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDecUpdown.xaml.cs">
+    <Compile Include="ExperimentalCode\SmallDecUpdown.xaml.cs">
       <DependentUpon>SmallDecGUIElement.xaml.cs</DependentUpon>
       <DependentUpon>SmallDecUpdown.xaml</DependentUpon>
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+      <Link>ExperimentalCode\%(FileName)</Link>
     </Compile>
-    <Compile Include="GlobalCode_ExperimentalCode\SmallDecUpdownSlider.xaml.cs">
+    <Compile Include="ExperimentalCode\SmallDecUpdownSlider.xaml.cs">
       <DependentUpon>SmallDecUpdownSlider.xaml</DependentUpon>
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+      <Link>ExperimentalCode\%(FileName)</Link>
     </Compile>
-    <Page Include="GlobalCode_ExperimentalCode\SmallDecUpdown.xaml">
+    <Page Include="ExperimentalCode\SmallDecUpdown.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+      <Link>ExperimentalCode\%(FileName)</Link>
     </Page>
-    <Page Include="GlobalCode_ExperimentalCode\SmallDecUpdownSlider.xaml">
+    <Page Include="ExperimentalCode\SmallDecUpdownSlider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+      <Link>ExperimentalCode\%(FileName)</Link>
     </Page>
-    <Page Include="GlobalCode_ExperimentalCode\SmallDecSlider.xaml">
+    <Page Include="ExperimentalCode\SmallDecSlider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <Link>GlobalCode_ExperimentalCode\%(FileName)</Link>
+      <Link>ExperimentalCode\%(FileName)</Link>
     </Page>
   </ItemGroup> -->
   <ItemGroup />

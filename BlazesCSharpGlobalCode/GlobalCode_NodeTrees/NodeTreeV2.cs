@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using CSharpGlobalCode.GlobalCode_StringFunctions;
-using CSharpGlobalCode.GlobalCode_VariableLists;
+using CSharpGlobalCode.StringFunctions;
+using CSharpGlobalCode.VariableLists;
 using System;
 using System.Collections.Generic;
 using System.Linq;

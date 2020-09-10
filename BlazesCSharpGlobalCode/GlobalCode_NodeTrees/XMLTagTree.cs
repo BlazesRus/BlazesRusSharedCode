@@ -11,10 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using CSharpGlobalCode.GlobalCode_ExperimentalCode;
-using CSharpGlobalCode.GlobalCode_StringFunctions;
-using CSharpGlobalCode.GlobalCode_VariableConversionFunctions;
-using CSharpGlobalCode.GlobalCode_VariableLists;
+using CSharpGlobalCode.ExperimentalCode;
+using CSharpGlobalCode.StringFunctions;
+using CSharpGlobalCode.VariableConversionFunctions;
+using CSharpGlobalCode.VariableLists;
 using System.Collections.Generic;
 using System.Linq;
 

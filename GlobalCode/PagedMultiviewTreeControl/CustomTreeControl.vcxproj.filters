@@ -76,13 +76,13 @@
     <ClInclude Include="CustomTreeNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\IniData\CustomDictionary.h">
+    <ClInclude Include="..\Databases\CustomDictionary.h">
       <Filter>GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="..\IniData\CustomOrderedDictionary.h">
+    <ClInclude Include="..\Databases\CustomOrderedDictionary.h">
       <Filter>GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="..\IniData\IndexedDictionary.h">
+    <ClInclude Include="..\Databases\IndexedDictionary.h">
       <Filter>GlobalCode</Filter>
     </ClInclude>
   </ItemGroup>

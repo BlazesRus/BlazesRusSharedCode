@@ -29,6 +29,7 @@
 #include <typeinfo>
 #include <memory>
 #include <io.h>
+#include "..\StringFunctions\StringFunctions.h"
 
 /// <summary>
 /// Class named VariableList.
@@ -82,20 +83,26 @@ public:
 
 	explicit operator std::vector<VariableType>()
 	{
-		vector<VariableType> NewSelf;
-		for(int Index=0;Index<size();++Index)
+		std::vector<VariableType> NewSelf;
+        //for (size_t Index = 0; Index < size(); ++Index)
+        //{
+        //	NewSelf.push_back(this->at(Index));
+		for(VariableType &Element: this)
 		{
-			NewSelf.push_back(this->at(Index));
+			NewSelf.push_back(Element);
 		}
 		return NewSelf;
 	}
 
 	explicit operator std::list<VariableType>()
 	{
-		List<VariableType> NewSelf;
-		for (size_t Index = 0; Index < size(); ++Index)
-		{
-			NewSelf.push_back(this->at(Index));
+		std::list<VariableType> NewSelf;
+		//for (size_t Index = 0; Index < size(); ++Index)
+		//{
+		//	NewSelf.push_back(this->at(Index));
+        for (VariableType& Element : this)
+        {
+            NewSelf.push_back(Element);
 		}
 		return NewSelf;
 	}
@@ -289,7 +296,7 @@ public:
 		VariableType ElementTemp;
 		for(size_t i = 0; (i < ArraySize)&&!ElementFound; ++i)
 		{
-			ElementTemp = at(i);
+			ElementTemp = this->at(i);
 			if(ElementTemp == ElementValue)
 			{
 				ElementIndex = i;
@@ -395,7 +402,7 @@ public:
 		}
 		else
 		{
-			cout << "Error:Failed to remove element from vector because of invalid index\n";
+			std::cout << "Error:Failed to remove element from vector because of invalid index\n";
 			return false;
 		}
 	}
@@ -407,7 +414,7 @@ public:
 	//	Add ElementValue at position:index in vector
 	void Add(size_t index, VariableType TempValue)
 	{
-		AddElementToIndex(index, ElementValue);
+		AddElementToIndex(index, TempValue);
 	}
 	/**Assign ElementValue at index in vector*/
 	void SetElementAt(size_t index, VariableType ElementValue)
@@ -501,7 +508,7 @@ public:
 	//************************************
 	std::shared_ptr<VariableType> GetElementSharedPointer(size_t index)
 	{
-		VariableType* ArrayPointer = myvector.data();
+		VariableType* ArrayPointer = this->data();
 		return *ArrayPointer[index];
 	}
 
@@ -580,7 +587,11 @@ public:
 		VariableType* CurrentElement;
 		for(size_t Index = 0; Index < SizeTemp;++Index)
 		{
+#ifdef BlazesGlobalCode_EnableGetElementPointerV2
 			CurrentElement = GetElementPointerV2(Index);
+#else
+			CurrentElement = this->at(Index);
+#endif
 			NewVector.push_back(CurrentElement);
 		}
 		return NewVector;

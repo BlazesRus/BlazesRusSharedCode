@@ -66,7 +66,7 @@
     <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\MultiViewApp.cpp">
       <Filter>MultiView</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\IniData\IniDataV2.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\Databases\IniDataV2.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
     <ClCompile Include="$(BlazesGlobalCode)\VariableLists\VariableVectorFunctions.cpp">
@@ -93,7 +93,7 @@
     <ClCompile Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\TreePage.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\ExperimentalCode\MediumDec.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\AltNum\MediumDec.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
     <ClCompile Include="..\NodeTrees\TagNodeTreeTemplate.cpp">
@@ -161,22 +161,22 @@
     <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\MultiviewPrecompile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\IniData\IndexedDictionary.h">
+    <ClInclude Include="$(BlazesGlobalCode)\Databases\IndexedDictionary.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\IniData\IndexedPDictionary.h">
+    <ClInclude Include="$(BlazesGlobalCode)\Databases\IndexedPDictionary.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\IniData\IniDataV2.h">
+    <ClInclude Include="$(BlazesGlobalCode)\Databases\IniDataV2.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\IniData\CustomOrderedDictionary.h">
+    <ClInclude Include="$(BlazesGlobalCode)\Databases\CustomOrderedDictionary.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\IniData\CustomDictionary.h">
+    <ClInclude Include="$(BlazesGlobalCode)\Databases\CustomDictionary.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\ExperimentalCode\MediumDec.h">
+    <ClInclude Include="$(BlazesGlobalCode)\AltNum\MediumDec.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
     <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\WP_APPDefines.h">
@@ -212,10 +212,10 @@
     <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\TreePage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\IniData\PointerDictionary.h">
+    <ClInclude Include="$(BlazesGlobalCode)\Databases\PointerDictionary.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\IniData\OrderedPointerDictionary.h">
+    <ClInclude Include="$(BlazesGlobalCode)\Databases\OrderedPointerDictionary.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
     <ClInclude Include="$(BlazesGlobalCode)\DLLAPI.h">

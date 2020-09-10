@@ -1,5 +1,5 @@
 /*	Code Created by James Michael Armstrong (NexusName:BlazesRus)(https://github.com/BlazesRus)
-	Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
+    Latest Code Release at https://github.com/BlazesRus/MultiPlatformGlobalCode
 */
 #include "TagPosition.h"
 
@@ -19,8 +19,8 @@
 
 std::string TagPosition::PositionString()
 {
-	std::string PositionString = ParentIndexPosition.GenerateAsString();
-	PositionString += "-";
-	PositionString += VariableConversionFunctions::XIntToStringConversion(ListPosition);
-	return PositionString;
+    std::string PositionString = ParentIndexPosition.GenerateAsString();
+    PositionString += "-";
+    PositionString += VariableConversionFunctions::XIntToStringConversion(ListPosition);
+    return PositionString;
 }

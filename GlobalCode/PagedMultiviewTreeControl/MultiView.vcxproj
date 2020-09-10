@@ -294,7 +294,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="$(BlazesGlobalCode)\IniData\IniDataV2.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\Databases\IniDataV2.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
       <CompileAs>Default</CompileAs>
@@ -363,13 +363,13 @@
     <ClInclude Include="$(BlazesGlobalCode)\tsl\ordered_hash.h" />
     <ClInclude Include="$(BlazesGlobalCode)\tsl\ordered_map.h" />
     <ClInclude Include="$(BlazesGlobalCode)\tsl\ordered_set.h" />
-    <ClInclude Include="$(BlazesGlobalCode)\IniData\CustomDictionary.h" />
-    <ClInclude Include="$(BlazesGlobalCode)\IniData\CustomOrderedDictionary.h" />
-    <ClInclude Include="$(BlazesGlobalCode)\IniData\PointerDictionary.h" />
-    <ClInclude Include="$(BlazesGlobalCode)\IniData\OrderedPointerDictionary.h" />
-    <ClInclude Include="$(BlazesGlobalCode)\IniData\IndexedDictionary.h" />
-    <ClInclude Include="$(BlazesGlobalCode)\IniData\IndexedPDictionary.h" />
-    <ClInclude Include="$(BlazesGlobalCode)\IniData\IniDataV2.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\Databases\CustomDictionary.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\Databases\CustomOrderedDictionary.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\Databases\PointerDictionary.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\Databases\OrderedPointerDictionary.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\Databases\IndexedDictionary.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\Databases\IndexedPDictionary.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\Databases\IniDataV2.h" />
     <ClInclude Include="$(BlazesGlobalCode)\QuadVector\QuadVector.h" />
     <ClInclude Include="$(BlazesGlobalCode)\QuadVector\QuadVectorFunctions.h" />
     <ClInclude Include="$(BlazesGlobalCode)\StringFunctions\StringFunctions.h" />
@@ -378,10 +378,10 @@
     <ClInclude Include="$(BlazesGlobalCode)\VariableLists\VariableList.h" />
     <ClInclude Include="$(BlazesGlobalCode)\VariableLists\VariableTypeLists.h" />
     <ClInclude Include="$(BlazesGlobalCode)\VariableLists\VariableVectorFunctions.h" />
-    <ClCompile Include="$(BlazesGlobalCode)\ExperimentalCode\MediumDec.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\AltNum\MediumDec.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClInclude Include="$(BlazesGlobalCode)\ExperimentalCode\MediumDec.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\AltNum\MediumDec.h" />
     <ClInclude Include="$(BlazesGlobalCode)\NodeTrees\VariableData.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>

@@ -11,8 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using CSharpGlobalCode.GlobalCode_VariableLists;
-using CSharpGlobalCode.GlobalCode_VariableConversionFunctions;
+using CSharpGlobalCode.VariableLists;
+using CSharpGlobalCode.VariableConversionFunctions;
 
 namespace CSharpGlobalCode.GlobalCode_NodeTrees
 {

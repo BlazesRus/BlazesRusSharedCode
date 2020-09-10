@@ -304,5 +304,86 @@ public:
 	std::string DisplayFullValues(float x, float y, float z, float w);
 	std::string DisplayFullValues(float x, float y, float z);
 	std::string DisplayFullValues(float x, float y);
+
+    /// <summary>
+	/// Returns the factorial Number from N
+	/// (From https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h Answer for using in Taylor series)
+	/// </summary>
+	/// <param name="n">The n.</param>
+	/// <returns></returns>
+    static int Fact(int n){ return n <= 0 ? 1 : n * Fact(n - 1); }
+
+    /// <summary>
+    /// Performs remainder/Mod operation then saves division result
+    /// C = A – B * (A / B)
+    /// </summary>
+    class ModChecker
+    {//based on https://embeddedgurus.com/stack-overflow/2011/02/efficient-c-tip-13-use-the-modulus-operator-with-caution/
+    public:
+        int divRes = 0;
+        int C = 0;
+		__int64 ExDivRes = 0;
+		__int64 ExtC = 0;
+        /// <summary>
+        /// Calculates if remainder is zero.
+        /// </summary>
+        /// <param name="a">a.</param>
+        /// <param name="b">The b.</param>
+        /// <returns>bool</returns>
+        bool CalcIfZero(int a, int b)
+        {
+            divRes = a / b;
+            C = a - b * divRes;
+            if (C == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        bool CalcIfZero(__int64 a, __int64 b)
+        {
+			ExDivRes = a / b;
+            ExtC = ExtC - b * ExDivRes;
+            if (ExtC == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        bool CalcIfZero(__int64 a, int b)
+        {
+            ExDivRes = a / b;
+            ExtC = ExtC - b * ExDivRes;
+            if (ExtC == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+		/// <summary>
+		/// Calculates the mod.
+		/// </summary>
+		/// <param name="a">a.</param>
+		/// <param name="b">The b.</param>
+		/// <returns>int</returns>
+		int CalcMod(int a, int b)
+        {
+            divRes = a / b;
+            C = a - b * divRes;
+            return C;
+        }
+        __int64 CalcMod(__int64 a, __int64 b)
+        {
+            ExDivRes = a / b;
+            ExtC = ExtC - b * ExDivRes;
+            return ExtC;
+        }
+        __int64 CalcMod(__int64 a, int b)
+        {
+            ExDivRes = a / b;
+            ExtC = ExtC - b * ExDivRes;
+            return ExtC;
+        }
+    };
 };
 #endif

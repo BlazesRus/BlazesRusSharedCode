@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Databases">
+      <UniqueIdentifier>{6a651203-4f20-463c-9c2d-b63511976dd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Databases">
+      <UniqueIdentifier>{9e54fa45-f0df-47c1-b62c-50f814c8bbd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\AltNum">
+      <UniqueIdentifier>{bd16a6e5-8cd7-4b0b-b95f-3e9e6940ef7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AltNum">
+      <UniqueIdentifier>{6b0c053f-b414-40e6-8d16-52e2fb6f045b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VariableConversionFunctions">
+      <UniqueIdentifier>{272f5fc2-0527-4d5d-a22f-94926265c11f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VariableConversionFunctions">
+      <UniqueIdentifier>{e7673aec-d6d0-4711-aaae-188c35242bbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tsl">
+      <UniqueIdentifier>{8b17b1f9-0232-413c-a7c8-4e0ed8b63c8a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ExprFormulaTester.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GlobalCode\VariableConversionFunctions\VariableConversionFunctions.cpp">
+      <Filter>Source Files\VariableConversionFunctions</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\GlobalCode\Databases\CustomDictionary.h">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\Databases\CustomOrderedDictionary.h">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\Databases\DataDictionary.h">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\Databases\IndexedDictionary.h">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\DLLAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\VariableConversionFunctions\VariableConversionFunctions.h">
+      <Filter>Header Files\VariableConversionFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\tsl\ordered_map.h">
+      <Filter>Header Files\tsl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\Databases\AltDecFormula.h">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\AltNum\MediumDec.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -19,12 +19,6 @@
     <Filter Include="Source Files\ExperimentalCode">
       <UniqueIdentifier>{a46acfbf-0ade-45dc-b32e-70c3ff864c00}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\IniData">
-      <UniqueIdentifier>{04fb6e3a-1f1a-4e55-9f02-3c1a8303b0f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\IniData">
-      <UniqueIdentifier>{a20a8876-58df-4a22-b812-fa5f1ec8c785}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\MiscFunctions">
       <UniqueIdentifier>{bba9cfa7-c7c1-408f-a374-da169d1a2ae5}</UniqueIdentifier>
     </Filter>
@@ -64,26 +58,20 @@
     <Filter Include="Documentation">
       <UniqueIdentifier>{b2bc07f8-d60d-490b-9a93-9f72307593b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\AltNum">
+      <UniqueIdentifier>{bb29ff92-3f6f-4f70-819f-61fd45a11156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AltNum">
+      <UniqueIdentifier>{1f9403c4-0e7f-433e-ad62-d08990312b0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Databases">
+      <UniqueIdentifier>{04fb6e3a-1f1a-4e55-9f02-3c1a8303b0f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Databases">
+      <UniqueIdentifier>{a20a8876-58df-4a22-b812-fa5f1ec8c785}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ExperimentalCode\CustomDec.h">
-      <Filter>Header Files\ExperimentalCode</Filter>
-    </ClInclude>
-    <ClInclude Include="ExperimentalCode\SuperDec.h">
-      <Filter>Header Files\ExperimentalCode</Filter>
-    </ClInclude>
-    <ClInclude Include="ExperimentalCode\SuperDecHex.h">
-      <Filter>Header Files\ExperimentalCode</Filter>
-    </ClInclude>
-    <ClInclude Include="ExperimentalCode\CustomDec_Templates.h">
-      <Filter>Header Files\ExperimentalCode</Filter>
-    </ClInclude>
-    <ClInclude Include="ExperimentalCode\QuadFloatingInt.h">
-      <Filter>Header Files\ExperimentalCode</Filter>
-    </ClInclude>
-    <ClInclude Include="IniData\IniData.h">
-      <Filter>Header Files\IniData</Filter>
-    </ClInclude>
     <ClInclude Include="MiscFunctions\MiscFunctions.h">
       <Filter>Header Files\MiscFunctions</Filter>
     </ClInclude>
@@ -129,23 +117,47 @@
     <ClInclude Include="VariableLists\VariableVectorFunctions.h">
       <Filter>Header Files\VariableLists</Filter>
     </ClInclude>
-    <ClInclude Include="ExperimentalCode\SuperDec_ExtraDec64_19Decimal.h">
-      <Filter>Header Files\ExperimentalCode</Filter>
+    <ClInclude Include="Databases\CustomDictionary.h">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\CustomOrderedDictionary.h">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\DataDictionary.h">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\IndexedDictionary.h">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\IniDataV2.h">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\OrderedIndexDictionary.h">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\IndexedIniData.h">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\AltDecFormula.h">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="AltNum\ModCheckerX.h">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="AltNum\AltDec.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="AltNum\MediumDec.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\MediumDecFormula.hpp">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\IntFormula.h">
+      <Filter>Header Files\Databases</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ExperimentalCode\SuperDec.cpp">
-      <Filter>Source Files\ExperimentalCode</Filter>
-    </ClCompile>
-    <ClCompile Include="ExperimentalCode\SuperDecHex.cpp">
-      <Filter>Source Files\ExperimentalCode</Filter>
-    </ClCompile>
-    <ClCompile Include="ExperimentalCode\CustomDec.cpp">
-      <Filter>Source Files\ExperimentalCode</Filter>
-    </ClCompile>
-    <ClCompile Include="IniData\IniData.cpp">
-      <Filter>Source Files\IniData</Filter>
-    </ClCompile>
     <ClCompile Include="MiscFunctions\MiscFunctions.cpp">
       <Filter>Source Files\MiscFunctions</Filter>
     </ClCompile>
@@ -182,8 +194,14 @@
     <ClCompile Include="VariableLists\VariableVectorFunctions.cpp">
       <Filter>Source Files\VariableLists</Filter>
     </ClCompile>
-    <ClCompile Include="ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cpp">
-      <Filter>Source Files\ExperimentalCode</Filter>
+    <ClCompile Include="Databases\IniData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Databases\IniDataV2.cpp">
+      <Filter>Source Files\Databases</Filter>
+    </ClCompile>
+    <ClCompile Include="AltNum\AltDec.cpp">
+      <Filter>Source Files\AltNum</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

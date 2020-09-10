@@ -31,8 +31,8 @@
 #else
 #include "..\VariableLists\StringVectorList.h"
 #include "..\VariableLists\VariableList.h"
-#if !defined(ExcludeExperimentalCode)
-#include "..\ExperimentalCode\MediumDec.h"
+#if defined(IncludeAltDec)
+#include "..\AltNum\MediumDec.h"
 #endif
 #endif
 
@@ -42,24 +42,7 @@
 class DLL_API QuadVector
 {
 public:
-#if defined(ExcludeExperimentalCode)//Default to MediumDec if not using excluder preprocessor
-	/// <summary>
-	/// The position x
-	/// </summary>
-	double PositionX = 0.0;
-	/// <summary>
-	/// The position y
-	/// </summary>
-	double PositionY = 0.0;
-	/// <summary>
-	/// The position z
-	/// </summary>
-	double PositionZ = 0.0;
-	/// <summary>
-	/// The position w
-	/// </summary>
-	double PositionW = 0.0;
-#else
+#if defined(IncludeAltDec)//Default to MediumDec if not using excluder preprocessor
 	/// <summary>
 	/// The position x
 	/// </summary>
@@ -76,6 +59,23 @@ public:
 	/// The position w
 	/// </summary>
 	MediumDec PositionW = MediumDec::Zero;
+#else
+    /// <summary>
+    /// The position x
+    /// </summary>
+    double PositionX = 0.0;
+    /// <summary>
+    /// The position y
+    /// </summary>
+    double PositionY = 0.0;
+    /// <summary>
+    /// The position z
+    /// </summary>
+    double PositionZ = 0.0;
+    /// <summary>
+    /// The position w
+    /// </summary>
+    double PositionW = 0.0;
 #endif
 	//Store values in Position in vector
 /// <summary>
@@ -85,20 +85,20 @@ public:
 /// <param name="TempValue">The temporary value.</param>
 	void StoreInVectorIndex(int index, double TempValue);
 	//Get value based on index value
-#if defined(ExcludeExperimentalCode)
+#if defined(IncludeAltDec)
+/// <summary>
+/// Gets the vector value.
+/// </summary>
+/// <param name="index">The index.</param>
+/// <returns>MediumDec</returns>
+    MediumDec
+#else
 /// <summary>
 /// Gets the vector value.
 /// </summary>
 /// <param name="index">The index.</param>
 /// <returns>double</returns>
 	double
-#else
-/// <summary>
-/// Gets the vector value.
-/// </summary>
-/// <param name="index">The index.</param>
-/// <returns>MediumDec</returns>
-	MediumDec
 #endif
 	GetVectorValue(int index);
 	//Reconstruct as string
@@ -109,18 +109,18 @@ public:
 /// <returns>std.string</returns>
 	std::string ConvertToString();
 	//Reconstruct as Vector
-#if defined(ExcludeExperimentalCode)
-/// <summary>
-/// Converts to list.
-/// </summary>
-/// <returns>DoubleList</returns>
-	DoubleList
-#else
+#if defined(IncludeAltDec)
 /// <summary>
 /// Converts to list.
 /// </summary>
 /// <returns>VariableList&lt;VariableType&gt;</returns>
 	VariableList<MediumDec>
+#else
+/// <summary>
+/// Converts to list.
+/// </summary>
+/// <returns>DoubleList</returns>
+    DoubleList
 #endif
 	ConvertToList();
 	//Construct QuadVector from String

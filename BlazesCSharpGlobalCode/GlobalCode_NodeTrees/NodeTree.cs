@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CSharpGlobalCode.GlobalCode_StringFunctions;
-using CSharpGlobalCode.GlobalCode_VariableLists;
+using CSharpGlobalCode.StringFunctions;
+using CSharpGlobalCode.VariableLists;
 
 namespace CSharpGlobalCode.GlobalCode_NodeTrees
 {
