@@ -27,23 +27,17 @@
 
 class MediumDec;
 
-//Bitwise based operation code likely mostly incorrect in calculations(not that is important for moment)
 //Operations and functions will mess up if IntValue overflows/underflows or reaches exactly -2147483648 which is used to represent negative zero when has decimal values
-
-//Preprocessor Switches
-/*
-*/
 
 /// <summary>
 /// Alternative Non-Integer number representation with focus on accuracy and partially speed within certain range
 /// Represents +- 2147483647.999999999 with 100% consistency of accuracy for most operations as long as don't get too small
-//  Use MediumDec instead if want to use variant of this class that supports radical representation to save some extra precision
+//  Use AltDec instead if want to use variant of this class that supports radical representation to save some extra precision
 /// (8 bytes worth of Variable Storage inside class for each instance)
 /// </summary>
 class DLL_API MediumDec
 {
-    
-private:
+protected:
     /// <summary>
     /// The decimal overflow
     /// </summary>
