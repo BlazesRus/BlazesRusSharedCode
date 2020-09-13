@@ -4,6 +4,7 @@
 
 namespace MediumDecCode
 {
+	using MediumDec = BlazesRusCode::MediumDec;
 #pragma region Math/Trigonomic Etc Functions
     /// <summary>
     /// Forces Number into non-negative
