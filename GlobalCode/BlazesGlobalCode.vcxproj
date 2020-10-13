@@ -213,8 +213,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AltNum\AltDec.hpp" />
+    <ClInclude Include="AltNum\AltNumDebug.hpp" />
+    <ClInclude Include="AltNum\FloatingOperations.hpp" />
     <ClInclude Include="AltNum\MediumDec.hpp" />
-    <ClInclude Include="AltNum\ModCheckerX.h" />
+    <ClInclude Include="AltNum\MediumDec_Math.hpp" />
+    <ClInclude Include="AltNum\MediumDec_OtherMath.hpp" />
+    <ClInclude Include="AltNum\ModCheckerX.hpp" />
+    <ClInclude Include="AltNum\ModCheckerXX.hpp" />
     <ClInclude Include="Databases\AltDecFormula.h" />
     <ClInclude Include="Databases\CustomDictionary.h" />
     <ClInclude Include="Databases\CustomOrderedDictionary.h" />
@@ -242,10 +247,6 @@
     <ClInclude Include="VariableLists\VariableVectorFunctions.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AltNum\AltDec.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
-    </ClCompile>
     <ClCompile Include="Databases\IniData.cpp" />
     <ClCompile Include="Databases\IniDataV2.cpp" />
     <ClCompile Include="MiscFunctions\MiscFunctions.cpp" />

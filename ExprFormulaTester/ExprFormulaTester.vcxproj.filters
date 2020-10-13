@@ -71,5 +71,17 @@
     <ClInclude Include="..\GlobalCode\AltNum\MediumDec.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
+    <ClInclude Include="..\GlobalCode\AltNum\AltNumDebug.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\AltNum\FloatingOperations.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\AltNum\MediumDec_Math.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\AltNum\ModCheckerXX.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

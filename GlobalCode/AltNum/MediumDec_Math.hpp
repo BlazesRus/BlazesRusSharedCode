@@ -4,7 +4,7 @@
 
 namespace MediumDecCode
 {
-	using MediumDec = BlazesRusCode::MediumDec;
+    using MediumDec = BlazesRusCode::MediumDec;
 #pragma region Math/Trigonomic Etc Functions
     /// <summary>
     /// Forces Number into non-negative
@@ -33,7 +33,7 @@ namespace MediumDecCode
         }
         return *this;
     }
-	
+    
     /// <summary>
     /// Returns the largest integer that is smaller than or equal to Value (Rounds downs the nearest integer).
     /// </summary>

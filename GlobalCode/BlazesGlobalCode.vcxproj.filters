@@ -141,9 +141,6 @@
     <ClInclude Include="Databases\AltDecFormula.h">
       <Filter>Header Files\Databases</Filter>
     </ClInclude>
-    <ClInclude Include="AltNum\ModCheckerX.h">
-      <Filter>Header Files\AltNum</Filter>
-    </ClInclude>
     <ClInclude Include="AltNum\AltDec.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
@@ -155,6 +152,24 @@
     </ClInclude>
     <ClInclude Include="Databases\IntFormula.h">
       <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="AltNum\ModCheckerX.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="AltNum\ModCheckerXX.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="AltNum\MediumDec_Math.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="AltNum\MediumDec_OtherMath.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="AltNum\FloatingOperations.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="AltNum\AltNumDebug.hpp">
+      <Filter>Header Files\AltNum</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -199,9 +214,6 @@
     </ClCompile>
     <ClCompile Include="Databases\IniDataV2.cpp">
       <Filter>Source Files\Databases</Filter>
-    </ClCompile>
-    <ClCompile Include="AltNum\AltDec.cpp">
-      <Filter>Source Files\AltNum</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
