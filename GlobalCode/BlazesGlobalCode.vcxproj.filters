@@ -159,9 +159,6 @@
     <ClInclude Include="AltNum\ModCheckerXX.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
-    <ClInclude Include="AltNum\MediumDec_Math.hpp">
-      <Filter>Header Files\AltNum</Filter>
-    </ClInclude>
     <ClInclude Include="AltNum\MediumDec_OtherMath.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>

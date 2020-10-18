@@ -216,7 +216,6 @@
     <ClInclude Include="AltNum\AltNumDebug.hpp" />
     <ClInclude Include="AltNum\FloatingOperations.hpp" />
     <ClInclude Include="AltNum\MediumDec.hpp" />
-    <ClInclude Include="AltNum\MediumDec_Math.hpp" />
     <ClInclude Include="AltNum\MediumDec_OtherMath.hpp" />
     <ClInclude Include="AltNum\ModCheckerX.hpp" />
     <ClInclude Include="AltNum\ModCheckerXX.hpp" />
