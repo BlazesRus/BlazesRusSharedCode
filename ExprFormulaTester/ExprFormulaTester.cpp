@@ -21,10 +21,10 @@ int main()
     resDiff = targetVal + rightVal;
     std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << resDiff.ToString() << std::endl;
 
-    resDiff = BlazesRusDebug::MultOp(targetVal,rightVal);
+    resDiff = targetVal*rightVal;
     double floatingVal = (double)targetVal * (double)rightVal;
     std::cout << targetVal.ToString() << " * " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:"<<floatingVal<< std::endl;
-    resDiff = BlazesRusDebug::DivOp(targetVal,rightVal);
+    resDiff = targetVal/rightVal;
     floatingVal = (double)targetVal / (double)rightVal;
     std::cout << targetVal.ToString() << " / " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:" << floatingVal << std::endl;
     resDiff = targetVal - 3;
@@ -129,26 +129,33 @@ int main()
     //rootTest = BlazesRusDebug::Exp(targetVal);//Exp(5.2) Accuracy only off by 0.000000230... compared to high precision calculator (though more accurate then displayed double floating point based calculation)
     //floatingVal = exp(5.25);
     //std::cout << "Exp(" << targetVal.ToString() << ") = " << rootTest.ToString() << " FloatingResult:" << floatingVal << std::endl;
+
     targetVal = 5;
+    /*
+    //-----------------Both V3 and geekforgeeks variations of code successful at same level of accuracy(matching the rounded double operation)
     floatingVal = BlazesFloatingCode::NthRootV3(5.0, 4);
-    rootTest = BlazesRusDebug::NthRootV1(targetVal, 4);
-    std::cout << "(V1)4th root of " << targetVal.ToString() << "= " << rootTest.ToString() << std::endl;
+    
+    //rootTest = BlazesRusDebug::NthRootV1(targetVal, 4);
+    //std::cout << "(V1)4th root of " << targetVal.ToString() << "= " << rootTest.ToString() << std::endl;
     rootTest = BlazesRusDebug::NthRootV5(targetVal, 4);
     std::cout << "(V5)4th root of " << targetVal.ToString() << "= " << rootTest.ToString()<<std::endl;
-    rootTest = BlazesRusDebug::NthRootV4(targetVal, 4);
-    std::cout << "(V4)4th root of " << targetVal.ToString() << "= " << rootTest.ToString()<<std::endl;
+    //rootTest = BlazesRusDebug::NthRootV4(targetVal, 4);
+    //std::cout << "(V4)4th root of " << targetVal.ToString() << "= " << rootTest.ToString()<<std::endl;
  
     rootTest = MediumDec::NthRoot(targetVal, 4);
     std::cout << "4th root of " << targetVal.ToString() <<"= " << rootTest.ToString()  << std::endl;
     std::cout << "Floating 4th root of" << (double)targetVal << "= " << floatingVal<< std::endl;
-    rootTest = BlazesRusDebug::Ln(targetVal);
-    std::cout << "Ln(" << targetVal.ToString() << ") = " << rootTest.ToString() << " FloatingResult:" << log((double)targetVal) << std::endl;
+    */
+    //----------------------------------------------------------------------
+    //rootTest = MediumDec::Ln(targetVal);
+    //std::cout << "Ln(" << targetVal.ToString() << ") = " << rootTest.ToString() << " FloatingResult:" << log((double)targetVal) << std::endl;
     rightVal = "0.25";
     floatingVal = pow(5.0, 0.25);
-    //rootTest = BlazesRusDebug::PowV2(targetVal, rightVal);
-    //std::cout << targetVal.ToString() << "^" << rightVal.ToString() << " = " << rootTest.ToString() << " FloatingResult:" << floatingVal << std::endl;
-    //rootTest = BlazesRusDebug::PowTest(targetVal, rightVal);
-    //std::cout << targetVal.ToString() << "^" << rightVal.ToString() << " = " << rootTest.ToString() << std::endl;
-    //rootTest02 = MediumDec::FractionalPow(targetVal, 1, 4);
-    //std::cout << "Fractional Power Result:" << rootTest << " compared to built-in calculation of:" << pow(5.0, 0.25) << std::endl;
+    rootTest = MediumDec::Pow(targetVal, rightVal);
+    std::cout << targetVal.ToString() << "^" << rightVal.ToString() << " = " << rootTest.ToString() << " FloatingResult:" << floatingVal << std::endl;
+    targetVal = 5;
+    rightVal = 5;
+    rootTest = MediumDec::Log(targetVal, rightVal);
+    floatingVal = log(5.0) / log(5.0);
+    std::cout << "log base_"<< rightVal.ToString() << "_of" << targetVal.ToString() << " = " << rootTest.ToString() << " FloatingResult:" << floatingVal << std::endl;
 }

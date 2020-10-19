@@ -22,11 +22,15 @@
 #include <cmath>
 #include "..\VariableConversionFunctions\VariableConversionFunctions.h"
 
-#include <boost/rational.hpp>
-#include <boost/math/tools/roots.hpp>
+//#include <boost/rational.hpp>
+//#include <boost/math/tools/roots.hpp>
+#include <boost/multiprecision/cpp_int.hpp> 
 
 namespace BlazesRusCode
 {
+    //class UInt128 : boost::multiprecision::checked_uint128_t
+    //{};
+
     class MediumDec;//Operations and functions will mess up if IntValue overflows/underflows or reaches exactly -2147483648 which is used to represent negative zero when has decimal values
 
     /// <summary>
@@ -1145,11 +1149,11 @@ namespace BlazesRusCode
                     Converting to 2/(5/2) = 4/5
                     4/5 = 800000000
                     2000000000/(2500000000/MediumDec::DecimalOverflowX)=800000000
-
                     */
-                    boost::multiprecision::checked_uint128_t SRep02 = MediumDec::DecimalOverflowX * MediumDec::DecimalOverflowX;
+                    boost::multiprecision::uint128_t SRep02 = MediumDec::DecimalOverflowX * MediumDec::DecimalOverflowX;
                     SRep02 *= self.IntValue;
-                    SRep02 /= MediumDec::DecimalOverflowX * Value.IntValue + Value.DecimalHalf01;
+                    __int64 VRep = MediumDec::DecimalOverflowX * Value.IntValue + Value.DecimalHalf01;
+                    SRep02 /= VRep;
                     __int64 SRep = (__int64)SRep02;
                     if (SRep >= MediumDec::DecimalOverflowX)
                     {
@@ -1207,18 +1211,16 @@ namespace BlazesRusCode
                 }
                 else
                 {//Splitting Integer Half and Decimal Half Division
-                    /* Testing 5.5/1.25
-                    5500000000
-                    1250000000
-                    */
                     __int64 SRep_DecHalf = (__int64)self.DecimalHalf01 * MediumDec::DecimalOverflowX;
                     SRep_DecHalf /= Value.IntValue == 0 ? Value.DecimalHalf01 : MediumDec::DecimalOverflowX * Value.IntValue + (__int64)Value.DecimalHalf01;
                     int IntHalf = SRep_DecHalf / MediumDec::DecimalOverflowX;
                     SRep_DecHalf -= IntHalf * MediumDec::DecimalOverflowX;
 
-                    boost::multiprecision::checked_uint128_t SRep02 = MediumDec::DecimalOverflowX * MediumDec::DecimalOverflowX;
+                    boost::multiprecision::uint128_t SRep02 = MediumDec::DecimalOverflowX * MediumDec::DecimalOverflowX;
+                    //std::cout << "Multi-precision as String:" << SRep02 << std::endl;
                     SRep02 *= self.IntValue;
-                    SRep02 /= MediumDec::DecimalOverflowX * Value.IntValue + Value.DecimalHalf01;
+                    __int64 VRep = MediumDec::DecimalOverflowX * Value.IntValue + Value.DecimalHalf01;
+                    SRep02 /= VRep;
                     __int64 SRep = (__int64)SRep02 + SRep_DecHalf;
                     if (SRep >= MediumDec::DecimalOverflowX)
                     {
@@ -3424,6 +3426,24 @@ namespace BlazesRusCode
                 xPre = xK;
             } while (delX > precision);
             return xK;
+        }
+
+        /// <summary>
+        /// Get the (n)th Root
+        /// Code based mostly from https://rosettacode.org/wiki/Nth_root#C.23
+        /// </summary>
+        /// <param name="n">The n value to apply with root.</param>
+        /// <returns></returns>
+        static MediumDec NthRootV2(MediumDec targetValue, int n, MediumDec& Precision = MediumDec::FiveBillionth)
+        {
+            int nMinus1 = n - 1;
+            MediumDec x[2] = { (MediumDec::One / n) * ((nMinus1 * targetValue) + (targetValue / MediumDec::Pow(targetValue, nMinus1))), targetValue };
+            while (MediumDec::Abs(x[0] - x[1]) > Precision)
+            {
+                x[1] = x[0];
+                x[0] = (MediumDec::One / n) * ((nMinus1 * x[1]) + (targetValue / MediumDec::Pow(x[1], nMinus1)));
+            }
+            return x[0];
         }
 
         /// <summary>

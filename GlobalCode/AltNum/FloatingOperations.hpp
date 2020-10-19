@@ -75,8 +75,8 @@ namespace BlazesFloatingCode
     /// <returns>MediumDec</returns>
     static double NthRootV3(double value, int n, double precision = 0.0000000000001)
     {
-        int nMinus1 = n - 1.0;
-        double xPre = 1.0 + (value - 1.0) / n;//Estimating initial guess based on https://math.stackexchange.com/questions/787019/what-initial-guess-is-used-for-finding-n-th-root-using-newton-raphson-method
+        int nMinus1 = n - 1;
+        double xPre = 1 + (value - 1) / n;//Estimating initial guess based on https://math.stackexchange.com/questions/787019/what-initial-guess-is-used-for-finding-n-th-root-using-newton-raphson-method
 
         // initializing difference between two 
         // roots by INT_MAX 
@@ -105,8 +105,8 @@ namespace BlazesFloatingCode
     /// <returns>MediumDec</returns>
     static double NthRootV4(double value, int n)
     {
-        int nMinus1 = n - 1.0;
-        int nPlus1 = n + 1.0;
+        int nMinus1 = n - 1;
+        int nPlus1 = n + 1;
         const int KSize = 6;
         int minusOne;
         double x[KSize] = { 1.0 };
