@@ -22,8 +22,8 @@
 #include <cmath>
 #include "..\VariableConversionFunctions\VariableConversionFunctions.h"
 
-//#include <boost/rational.hpp>
 //#include <boost/math/tools/roots.hpp>
+#include <boost/rational.hpp>
 #include <boost/multiprecision/cpp_int.hpp> 
 
 namespace BlazesRusCode
