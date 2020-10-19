@@ -24,7 +24,7 @@
 
 //#include <boost/math/tools/roots.hpp>
 #include <boost/rational.hpp>
-#include <boost/multiprecision/cpp_int.hpp> 
+#include <boost/multiprecision/cpp_int.hpp>
 
 namespace BlazesRusCode
 {
@@ -3188,130 +3188,7 @@ namespace BlazesRusCode
                 }
             }
             return targetValue;
-        }
-        
-        /// <summary>
-        /// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
-        /// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <returns></returns>
-        static MediumDec Ln(MediumDec Value)
-        {
-            MediumDec old_sum = Zero;
-            MediumDec xmlxpl = (Value - 1) / (Value + 1);
-            MediumDec xmlxpl_2 = xmlxpl * xmlxpl;
-            int denom = 1;
-            MediumDec frac = xmlxpl;
-            MediumDec term = frac;
-            MediumDec sum = term;
-
-            while (sum != old_sum)
-            {
-                old_sum = sum;
-                denom += 2;
-                frac *= xmlxpl_2;
-                sum += frac / denom;
-            }
-            return 2 * sum;
-        }
-
-        /// <summary>
-        /// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
-        /// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <returns></returns>
-        static MediumDec LnRef(MediumDec& Value)
-        {
-            MediumDec old_sum = Zero;
-            MediumDec xmlxpl = (Value - 1) / (Value + 1);
-            MediumDec xmlxpl_2 = xmlxpl * xmlxpl;
-            int denom = 1;
-            MediumDec frac = xmlxpl;
-            MediumDec term = frac;
-            MediumDec sum = term;
-
-            while (sum != old_sum)
-            {
-                old_sum = sum;
-                denom += 2;
-                frac *= xmlxpl_2;
-                sum += frac / denom;
-            }
-            return 2 * sum;
-        }
-
-        /// <summary>
-        /// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
-        /// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <returns></returns>
-        static MediumDec Ln(int Value)
-        {
-            MediumDec old_sum = Zero;
-            MediumDec xmlxpl = (Value - 1) / (Value + 1);
-            MediumDec xmlxpl_2 = xmlxpl * xmlxpl;
-            int denom = 1;
-            MediumDec frac = xmlxpl;
-            MediumDec term = frac;
-            MediumDec sum = term;
-
-            while (sum != old_sum)
-            {
-                old_sum = sum;
-                denom += 2;
-                frac *= xmlxpl_2;
-                sum += frac / denom;
-            }
-            return 2 * sum;
-        }
-
-        /// <summary>
-        /// Log Base 10 of Value
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <returns>MediumDec</returns>
-        static MediumDec Log10(MediumDec Value)
-        {
-            return Ln(Value) / LN10;
-        }
-
-        /// <summary>
-        /// Log Base 10 of Value
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <returns>MediumDec</returns>
-        static MediumDec Log10(int Value)
-        {
-            return Ln(Value) / LN10;
-        }
-
-        /// <summary>
-        /// Log with Base of BaseVal of Value
-        /// Based on http://home.windstream.net/okrebs/page57.html
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <param name="BaseVal">The base of Log</param>
-        /// <returns>MediumDec</returns>
-        static MediumDec Log(MediumDec Value, MediumDec BaseVal)
-        {
-            return Log10(Value) / Log10(BaseVal);
-        }
-
-        /// <summary>
-        /// Log with Base of BaseVal of Value
-        /// Based on http://home.windstream.net/okrebs/page57.html
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <param name="BaseVal">The base of Log</param>
-        /// <returns>MediumDec</returns>
-        static MediumDec Log(MediumDec Value, int BaseVal)
-        {
-            return Log10(Value) / Log10(BaseVal);
-        }
-        
+        }  
 
         /// <summary>
         /// Perform square root on this instance.(Code other than switch statement from https://www.geeksforgeeks.org/find-square-root-number-upto-given-precision-using-binary-search/)
