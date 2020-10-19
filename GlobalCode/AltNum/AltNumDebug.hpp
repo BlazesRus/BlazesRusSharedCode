@@ -103,17 +103,139 @@ namespace BlazesRusDebug
       }
 
       /// <summary>
-      /// Applies Power of operation based on exp(expValue * log(value)) formula
+      /// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
+      /// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having
       /// </summary>
-      /// <param name="value">The target value.</param>
-      /// <param name="expValue">The exponent value.</param>
-      static MediumDec PowV2(MediumDec targetValue, MediumDec n)
+      /// <param name="Value">The value.</param>
+      /// <returns></returns>
+      static MediumDec Ln(MediumDec Value)
       {
-          double FloatingLn = log((double)targetValue);
-          MediumDec LnVal = MediumDec::Ln(targetValue);
-          std::cout << "LnResult:" << LnVal.ToString() << " Floating Equivalent:" << FloatingLn<<std::endl;
-          return MediumDec::Exp(LnVal * n);
+          MediumDec old_sum = Zero;
+          MediumDec xmlxpl = (Value - 1) / (Value + 1);
+          MediumDec xmlxpl_2 = xmlxpl * xmlxpl;
+          int denom = 1;
+          MediumDec frac = xmlxpl;
+          MediumDec term = frac;
+          MediumDec sum = term;
+
+          while (sum != old_sum)
+          {
+              old_sum = sum;
+              denom += 2;
+              frac *= xmlxpl_2;
+              sum += frac / denom;
+          }
+          return 2 * sum;
       }
+
+      /// <summary>
+      /// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
+      /// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having
+      /// </summary>
+      /// <param name="Value">The value.</param>
+      /// <returns></returns>
+      static MediumDec LnRef(MediumDec& Value)
+      {
+          MediumDec old_sum = Zero;
+          MediumDec xmlxpl = (Value - 1) / (Value + 1);
+          MediumDec xmlxpl_2 = xmlxpl * xmlxpl;
+          int denom = 1;
+          MediumDec frac = xmlxpl;
+          MediumDec term = frac;
+          MediumDec sum = term;
+
+          while (sum != old_sum)
+          {
+              old_sum = sum;
+              denom += 2;
+              frac *= xmlxpl_2;
+              sum += frac / denom;
+          }
+          return 2 * sum;
+      }
+
+      /// <summary>
+      /// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
+      /// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having
+      /// </summary>
+      /// <param name="Value">The value.</param>
+      /// <returns></returns>
+      static MediumDec Ln(int Value)
+      {
+          MediumDec old_sum = Zero;
+          MediumDec xmlxpl = (Value - 1) / (Value + 1);
+          MediumDec xmlxpl_2 = xmlxpl * xmlxpl;
+          int denom = 1;
+          MediumDec frac = xmlxpl;
+          MediumDec term = frac;
+          MediumDec sum = term;
+
+          while (sum != old_sum)
+          {
+              old_sum = sum;
+              denom += 2;
+              frac *= xmlxpl_2;
+              sum += frac / denom;
+          }
+          return 2 * sum;
+      }
+
+      /// <summary>
+      /// Log Base 10 of Value
+      /// </summary>
+      /// <param name="Value">The value.</param>
+      /// <returns>MediumDec</returns>
+      static MediumDec Log10(MediumDec Value)
+      {
+          return Ln(Value) / LN10;
+      }
+
+      /// <summary>
+      /// Log Base 10 of Value
+      /// </summary>
+      /// <param name="Value">The value.</param>
+      /// <returns>MediumDec</returns>
+      static MediumDec Log10(int Value)
+      {
+          return Ln(Value) / LN10;
+      }
+
+      /// <summary>
+      /// Log with Base of BaseVal of Value
+      /// Based on http://home.windstream.net/okrebs/page57.html
+      /// </summary>
+      /// <param name="Value">The value.</param>
+      /// <param name="BaseVal">The base of Log</param>
+      /// <returns>MediumDec</returns>
+      static MediumDec Log(MediumDec Value, MediumDec BaseVal)
+      {
+          return Log10(Value) / Log10(BaseVal);
+      }
+
+      /// <summary>
+      /// Log with Base of BaseVal of Value
+      /// Based on http://home.windstream.net/okrebs/page57.html
+      /// </summary>
+      /// <param name="Value">The value.</param>
+      /// <param name="BaseVal">The base of Log</param>
+      /// <returns>MediumDec</returns>
+      static MediumDec Log(MediumDec Value, int BaseVal)
+      {
+          return Log10(Value) / Log10(BaseVal);
+      }
+
+      ///// <summary>
+      ///// Applies Power of operation based on exp(expValue * log(value)) formula
+      ///// </summary>
+      ///// <param name="value">The target value.</param>
+      ///// <param name="expValue">The exponent value.</param>
+      //static MediumDec PowV2(MediumDec targetValue, MediumDec n)
+      //{
+      //    double FloatingLn = log((double)targetValue);
+      //    MediumDec LnVal = MediumDec::Ln(targetValue);
+      //    std::cout << "LnResult:" << LnVal.ToString() << " Floating Equivalent:" << FloatingLn<<std::endl;
+      //    return MediumDec::Exp(LnVal * n);
+      //}
 
     ///// <summary>
     ///// Finds nTh Root of value based on https://www.geeksforgeeks.org/n-th-root-number/ code
@@ -176,77 +298,6 @@ namespace BlazesRusDebug
     //	return xK;
     //}
 
-    ///// <summary>
-    ///// Calculate value to a fractional power based on https://study.com/academy/lesson/how-to-convert-roots-to-fractional-exponents.html while testing as floating at same time(for debugging)
-    ///// </summary>
-    ///// <param name="value">The target value.</param>
-    ///// <param name="Frac">The exponent value to raise the value to power of.</param>
-    ///// <returns>MediumDec</returns>
-    //MediumDec FractionalPowTest(MediumDec targetVal, boost::rational<int> Frac)
-    //{
-    //	MediumDec CalcVal = MediumDec::PowConstOp(targetVal, Frac.numerator());
-    //	double floatingVal = (double)targetVal;
-    //	double floatingRes = pow(floatingVal, Frac.numerator());
-    //	MediumDec resDiff = CalcVal - (MediumDec)floatingRes;
-    //	CalcVal = NthRootTest(CalcVal, Frac.denominator());
-    //	floatingRes = BlazesFloatingCode::NthRootV3(floatingRes, Frac.denominator());
-    //	resDiff = CalcVal - (MediumDec)floatingRes;
-    //	return CalcVal;
-    //}
-
-/*
-    /// <summary>
-    /// Applies Power of operation while testing as floating at same time(for debugging)
-    /// </summary>
-    /// <param name="value">The target value.</param>
-    /// <param name="expValue">The exponent value.</param>
-    /// <returns>MediumDec</returns>
-    MediumDec PowTest(MediumDec targetVal, MediumDec expVal)
-    {
-        if (expVal.DecimalHalf01 == 0)
-        {
-            return targetVal.Pow(expVal.IntValue);
-        }
-        else
-        {
-            boost::rational<int> Frac = boost::rational<int>(expVal.DecimalHalf01, MediumDec::DecimalOverflow);
-            switch (expVal.IntValue)
-            {
-                case 0:
-                    return FractionalPowTest(targetVal, Frac);
-                    break;
-                case MediumDec::NegativeZero:
-                    return 1 / FractionalPowTest(targetVal, Frac);
-                    break;
-                default:
-                {
-                    if (expVal.IntValue < 0)//Negative Exponent 
-                    {
-                        MediumDec CalcVal = 1 / targetVal.Pow(expVal.IntValue * -1);
-                        double floatingRes = 1 / pow((double)targetVal, expVal.IntValue *-1);
-                        MediumDec resDiff = CalcVal - (MediumDec)floatingRes;
-                        CalcVal /= FractionalPowTest(targetVal, Frac);
-                        floatingRes /= (double)FractionalPowTest(targetVal, Frac);
-                        resDiff = CalcVal - (MediumDec)floatingRes;
-                        return CalcVal;
-                    }
-                    else
-                    {
-                        MediumDec CalcVal = targetVal.Pow(expVal.IntValue);
-                        double floatingRes = pow((double)targetVal, expVal.IntValue);
-                        MediumDec resDiff = CalcVal - (MediumDec)floatingRes;
-                        CalcVal *= MediumDec::FractionalPow(targetVal, Frac);
-                        floatingRes *= (double)FractionalPowTest(targetVal, Frac);
-                        resDiff = CalcVal - (MediumDec)floatingRes;
-                        return CalcVal;
-                    }
-                    break;
-                }
-            }
-        }
-    }
-*/
-
  //   /// <summary>
  //   /// Continued Fractional Log based on https://en.wikipedia.org/wiki/Euler%27s_continued_fraction_formula
  //   /// </summary>
@@ -265,7 +316,7 @@ namespace BlazesRusDebug
     /// Natural log
     /// </summary>
     /// <param name="value">The target value.</param>
-    static MediumDec Ln(MediumDec value)
+    static MediumDec LnV2(MediumDec value)
     {
         //if (value <= 0) {}else//Error if equal or less than 0
         if (value == MediumDec::One)
