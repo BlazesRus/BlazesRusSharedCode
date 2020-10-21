@@ -626,12 +626,16 @@ namespace BlazesRusCode
                             switch (OpIterator->second.ElementCat)
                             {
                             case ElementType::Pow:
-                                leftValue.PowOp(rightValue);
+                                leftValue = MediumDec::PowOp(leftValue, rightValue);
                                 FormCopy.SwitchOpToVal(OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
                                 break;
                             case ElementType::Sqrt:
-                                leftValue.Sqrt(rightValue);
-                                FormCopy.SwitchOpToVal(OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
+                                rightValue = MediumDec::Sqrt(rightValue);
+                                FormCopy.SwitchOpToVal(OpVal, OpIterator->first, LeftVal, RightVal, rightValue);
+                                break;
+                            case ElementType::NthRoot:
+                                rightValue = MediumDec::NthRootV2(rightValue, (int)leftValue);
+                                FormCopy.SwitchOpToVal(OpVal, OpIterator->first, LeftVal, RightVal, rightValue);
                                 break;
                             }
                             break;
@@ -1127,7 +1131,7 @@ namespace BlazesRusCode
             /// Initializes a new instance of the <see cref="MediumDecFormula" /> class.
             /// </summary>
             /// <param name="ElemValue">The elem value to read in order to create formula data.</param>
-            MediumDecFormula(std::string ElemValue)
+            MediumDecFormula(std::string& ElemValue)
             {
                 //0 = ???
                 //1 = Operator
@@ -1440,6 +1444,12 @@ namespace BlazesRusCode
                 }
                 TrimFormula();
             }
+        
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MediumDecFormula" /> class. from StringCopy instead of reference
+            /// </summary>
+            /// <param name="ElemValue">The elem value to read in order to create formula data.</param>
+            MediumDecFormula(std::string ElemValue, bool BlankVar) : MediumDecFormula(ElemValue) {}
         };
         MediumDecFormula Data;
         /// <summary>
