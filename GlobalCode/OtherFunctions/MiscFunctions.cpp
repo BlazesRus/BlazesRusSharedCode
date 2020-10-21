@@ -10,7 +10,7 @@
 #ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
 #include "StringFunctions.h"
 #else
-#include "..\StringFunctions\StringFunctions.h"
+#include "..\OtherFunctions\StringFunctions.h"
 #endif
 
 using std::string;

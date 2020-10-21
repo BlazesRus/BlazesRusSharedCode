@@ -25,14 +25,14 @@
     <Filter Include="Source Files\AltNum">
       <UniqueIdentifier>{6b0c053f-b414-40e6-8d16-52e2fb6f045b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\VariableConversionFunctions">
-      <UniqueIdentifier>{272f5fc2-0527-4d5d-a22f-94926265c11f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\VariableConversionFunctions">
-      <UniqueIdentifier>{e7673aec-d6d0-4711-aaae-188c35242bbb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\tsl">
       <UniqueIdentifier>{8b17b1f9-0232-413c-a7c8-4e0ed8b63c8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\OtherFunctions">
+      <UniqueIdentifier>{272f5fc2-0527-4d5d-a22f-94926265c11f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\OtherFunctions">
+      <UniqueIdentifier>{e7673aec-d6d0-4711-aaae-188c35242bbb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,7 +40,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\GlobalCode\VariableConversionFunctions\VariableConversionFunctions.cpp">
-      <Filter>Source Files\VariableConversionFunctions</Filter>
+      <Filter>Source Files\OtherFunctions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,7 +60,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\GlobalCode\VariableConversionFunctions\VariableConversionFunctions.h">
-      <Filter>Header Files\VariableConversionFunctions</Filter>
+      <Filter>Header Files\OtherFunctions</Filter>
     </ClInclude>
     <ClInclude Include="..\GlobalCode\tsl\ordered_map.h">
       <Filter>Header Files\tsl</Filter>

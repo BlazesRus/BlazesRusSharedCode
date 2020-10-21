@@ -8,7 +8,7 @@
 #ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
 #include "VariableConversionFunctions.h"
 #else
-#include "..\VariableConversionFunctions\VariableConversionFunctions.h"
+#include "..\OtherFunctions\VariableConversionFunctions.h"
 #endif
 
 using std::string;

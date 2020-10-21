@@ -20,7 +20,7 @@
 
 #include <string>
 #include <cmath>
-#include "..\VariableConversionFunctions\VariableConversionFunctions.h"
+#include "..\OtherFunctions\VariableConversionFunctions.h"
 
 //#include <boost/math/tools/roots.hpp>
 #include <boost/rational.hpp>
@@ -219,6 +219,11 @@ namespace BlazesRusCode
         {
             return MediumDec(2, 302585093);
         }
+
+        static MediumDec NilValue()
+        {
+            return MediumDec(-2147483647, -2147483647);
+        }
     public:
         static MediumDec PI;
 
@@ -302,6 +307,11 @@ namespace BlazesRusCode
         /// (Based on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having)
         /// </summary>
         static MediumDec LN10;
+
+        /// <summary>
+        /// Nil Value as proposed by https://docs.google.com/document/d/19n-E8Mu-0MWCcNt0pQnFi2Osq-qdMDW6aCBweMKiEb4/edit
+        /// </summary>
+        static MediumDec Nil;
 
         ///// <summary>
         ///// 16 x 1 Matrix with Values at Zero
@@ -3730,6 +3740,7 @@ namespace BlazesRusCode
     MediumDec MediumDec::TenMillionth = TenMillionthValue();
     MediumDec MediumDec::FiveBillionth = FiveBillionthValue();
     MediumDec MediumDec::OneGMillionth = OneHundredMillionthValue();
+    MediumDec MediumDec::Nil = NilValue();
     #pragma endregion ValueDefine Source
 
     #pragma region String Function Source

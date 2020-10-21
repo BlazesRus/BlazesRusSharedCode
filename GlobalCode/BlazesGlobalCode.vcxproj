@@ -219,7 +219,6 @@
     <ClInclude Include="AltNum\MediumDec_OtherMath.hpp" />
     <ClInclude Include="AltNum\ModCheckerX.hpp" />
     <ClInclude Include="AltNum\ModCheckerXX.hpp" />
-    <ClInclude Include="Databases\AltDecFormula.h" />
     <ClInclude Include="Databases\CustomDictionary.h" />
     <ClInclude Include="Databases\CustomOrderedDictionary.h" />
     <ClInclude Include="Databases\DataDictionary.h" />
@@ -229,7 +228,7 @@
     <ClInclude Include="Databases\IntFormula.h" />
     <ClInclude Include="Databases\MediumDecFormula.hpp" />
     <ClInclude Include="Databases\OrderedIndexDictionary.h" />
-    <ClInclude Include="MiscFunctions\MiscFunctions.h" />
+    <ClInclude Include="OtherFunctions\MiscFunctions.h" />
     <ClInclude Include="NodeTrees\LooseNodeTreeTemplate.h" />
     <ClInclude Include="NodeTrees\TagNodeTreeTemplate.h" />
     <ClInclude Include="NodeTrees\TagPosition.h" />
@@ -238,8 +237,8 @@
     <ClInclude Include="NodeTrees\XMLTagTree.h" />
     <ClInclude Include="QuadVector\QuadVector.h" />
     <ClInclude Include="QuadVector\QuadVectorFunctions.h" />
-    <ClInclude Include="StringFunctions\StringFunctions.h" />
-    <ClInclude Include="VariableConversionFunctions\VariableConversionFunctions.h" />
+    <ClInclude Include="OtherFunctions\StringFunctions.h" />
+    <ClInclude Include="OtherFunctions\VariableConversionFunctions.h" />
     <ClInclude Include="VariableLists\StringVectorList.h" />
     <ClInclude Include="VariableLists\VariableList.h" />
     <ClInclude Include="VariableLists\VariableTypeLists.h" />
@@ -248,15 +247,15 @@
   <ItemGroup>
     <ClCompile Include="Databases\IniData.cpp" />
     <ClCompile Include="Databases\IniDataV2.cpp" />
-    <ClCompile Include="MiscFunctions\MiscFunctions.cpp" />
+    <ClCompile Include="OtherFunctions\MiscFunctions.cpp" />
     <ClCompile Include="NodeTrees\TagNodeTreeTemplate.cpp" />
     <ClCompile Include="NodeTrees\TagPosition.cpp" />
     <ClCompile Include="NodeTrees\VariableData.cpp" />
     <ClCompile Include="NodeTrees\XMLOption.cpp" />
     <ClCompile Include="QuadVector\QuadVector.cpp" />
     <ClCompile Include="QuadVector\QuadVectorFunctions.cpp" />
-    <ClCompile Include="StringFunctions\StringFunctions.cpp" />
-    <ClCompile Include="VariableConversionFunctions\VariableConversionFunctions.cpp" />
+    <ClCompile Include="OtherFunctions\StringFunctions.cpp" />
+    <ClCompile Include="OtherFunctions\VariableConversionFunctions.cpp" />
     <ClCompile Include="VariableLists\StringVectorList.cpp" />
     <ClCompile Include="VariableLists\VariableTypeLists.cpp" />
     <ClCompile Include="VariableLists\VariableVectorFunctions.cpp" />

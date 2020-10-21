@@ -29,7 +29,7 @@
     #include "VariableConversionFunctions.h"
 #else
     #include "..\VariableLists\StringVectorList.h"
-    #include "..\VariableConversionFunctions\VariableConversionFunctions.h"
+    #include "..\OtherFunctions\VariableConversionFunctions.h"
     #ifdef IniDataV2_EnableAltDec
         #include "..\AltNum\MediumDec.h"
     #endif

@@ -29,7 +29,7 @@
 #include <typeinfo>
 #include <memory>
 #include <io.h>
-#include "..\StringFunctions\StringFunctions.h"
+#include "..\OtherFunctions\StringFunctions.h"
 
 /// <summary>
 /// Class named VariableList.

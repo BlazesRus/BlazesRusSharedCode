@@ -25,9 +25,9 @@
 #include "..\NodeTrees\TagPosition.h"
 #include "..\QuadVector\QuadVector.h"
 #include "..\VariableLists\StringVectorList.h"
-#include "..\StringFunctions\StringFunctions.h"
+#include "..\OtherFunctions\StringFunctions.h"
 #include "..\NodeTrees\XMLOption.h"
-#include "..\VariableConversionFunctions\VariableConversionFunctions.h"
+#include "..\OtherFunctions\VariableConversionFunctions.h"
 #endif
 
 //Contains LooseNodeTree BaseData for templating

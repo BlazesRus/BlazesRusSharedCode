@@ -20,7 +20,7 @@
 
 #include <string>
 #include <cmath>
-#include "..\VariableConversionFunctions\VariableConversionFunctions.h"
+#include "..\OtherFunctions\VariableConversionFunctions.h"
 
 #include "boost/rational.hpp"
 #include "MediumDec.hpp"

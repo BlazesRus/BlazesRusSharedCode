@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <vector>
 #include <string>
-#include "..\VariableConversionFunctions\VariableConversionFunctions.h"
+#include "..\OtherFunctions\VariableConversionFunctions.h"
 
 #ifdef BlazesGlobalCode_LocalLayout
 #ifndef DLL_API
@@ -790,6 +790,12 @@ public:
         this->clear();
         this->push_back(IntFormData());//Initialize first (Formula) field
     }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="IntFormula" /> class.(fix for initializing without copying from a string value set)
+    /// </summary>
+    /// <param name="ElemValue">The elem value to read in order to create formula data.</param>
+    IntFormula(const char* strVal) : IntFormula(std::string(strVal)) {}
 
     /// <summary>
     /// Initializes a new instance of the <see cref="IntFormula" /> class.

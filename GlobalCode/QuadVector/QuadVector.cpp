@@ -7,7 +7,7 @@
 #include "VariableConversionFunctions.h"
 #include "VariableTypeLists.h"
 #else
-#include "..\VariableConversionFunctions\VariableConversionFunctions.h"
+#include "..\OtherFunctions\VariableConversionFunctions.h"
 #include "..\VariableLists\VariableTypeLists.h"
 #endif
 

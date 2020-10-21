@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <vector>
 #include <string>
-#include "..\VariableConversionFunctions\VariableConversionFunctions.h"
+#include "..\OtherFunctions\VariableConversionFunctions.h"
 
 #ifdef BlazesGlobalCode_LocalLayout
 #ifndef DLL_API

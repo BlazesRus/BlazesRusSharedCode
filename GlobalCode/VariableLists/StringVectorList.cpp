@@ -11,7 +11,7 @@
 #include "StringFunctions.h"
 #else
 #include "..\VariableLists\StringVectorList.h"
-#include "..\StringFunctions\StringFunctions.h"
+#include "..\OtherFunctions\StringFunctions.h"
 #endif
 
 using std::cout;

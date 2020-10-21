@@ -75,13 +75,13 @@
     <ClCompile Include="$(BlazesGlobalCode)\VariableLists\VariableTypeLists.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\VariableConversionFunctions\VariableConversionFunctions.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\OtherFunctions\VariableConversionFunctions.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
     <ClCompile Include="$(BlazesGlobalCode)\VariableLists\StringVectorList.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\StringFunctions\StringFunctions.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\OtherFunctions\StringFunctions.cpp">
       <Filter>Source Files\GlobalCode</Filter>
     </ClCompile>
     <ClCompile Include="$(BlazesGlobalCode)\QuadVector\QuadVectorFunctions.cpp">
@@ -125,7 +125,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(BlazesGlobalCode)\StringFunctions\StringFunctions.h">
+    <ClInclude Include="$(BlazesGlobalCode)\OtherFunctions\StringFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(BlazesGlobalCode)\VariableLists\StringVectorList.h">
@@ -248,7 +248,7 @@
     <ClInclude Include="$(BlazesGlobalCode)\VariableLists\VariableList.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\VariableConversionFunctions\VariableConversionFunctions.h">
+    <ClInclude Include="$(BlazesGlobalCode)\OtherFunctions\VariableConversionFunctions.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
     <ClInclude Include="$(BlazesGlobalCode)\VariableLists\VariableTypeLists.h">

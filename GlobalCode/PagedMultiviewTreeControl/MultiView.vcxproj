@@ -305,10 +305,10 @@
     <ClCompile Include="$(BlazesGlobalCode)\QuadVector\QuadVectorFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\StringFunctions\StringFunctions.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\OtherFunctions\StringFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(BlazesGlobalCode)\VariableConversionFunctions\VariableConversionFunctions.cpp">
+    <ClCompile Include="$(BlazesGlobalCode)\OtherFunctions\VariableConversionFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="$(BlazesGlobalCode)\VariableLists\StringVectorList.cpp">
@@ -372,8 +372,8 @@
     <ClInclude Include="$(BlazesGlobalCode)\Databases\IniDataV2.h" />
     <ClInclude Include="$(BlazesGlobalCode)\QuadVector\QuadVector.h" />
     <ClInclude Include="$(BlazesGlobalCode)\QuadVector\QuadVectorFunctions.h" />
-    <ClInclude Include="$(BlazesGlobalCode)\StringFunctions\StringFunctions.h" />
-    <ClInclude Include="$(BlazesGlobalCode)\VariableConversionFunctions\VariableConversionFunctions.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\OtherFunctions\StringFunctions.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\OtherFunctions\VariableConversionFunctions.h" />
     <ClInclude Include="$(BlazesGlobalCode)\VariableLists\StringVectorList.h" />
     <ClInclude Include="$(BlazesGlobalCode)\VariableLists\VariableList.h" />
     <ClInclude Include="$(BlazesGlobalCode)\VariableLists\VariableTypeLists.h" />

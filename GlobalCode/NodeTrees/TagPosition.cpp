@@ -7,7 +7,7 @@
 
 //Inside this ifdef block holds GlobalCode Environment library version of header structure (preprocessor defined inside all GlobalCode library configs)
 #ifdef BLAZESGLOBALCODE_LIBRARY
-#include "..\VariableConversionFunctions\VariableConversionFunctions.h"
+#include "..\OtherFunctions\VariableConversionFunctions.h"
 //Local Version of headers here(within else block)
 #else
 #include "VariableConversionFunctions.h"

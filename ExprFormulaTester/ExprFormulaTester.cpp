@@ -11,6 +11,8 @@ using MediumDec = BlazesRusCode::MediumDec;
 
 #include "AltNum\AltNumDebug.hpp"
 #include "AltNum\FloatingOperations.hpp"
+//#include "Databases\IntFormula.h"
+#include "Databases\MediumDecFormula.h"
 
 int main()
 {
@@ -147,15 +149,22 @@ int main()
     std::cout << "Floating 4th root of" << (double)targetVal << "= " << floatingVal<< std::endl;
     */
     //----------------------------------------------------------------------
-    //rootTest = MediumDec::Ln(targetVal);
-    //std::cout << "Ln(" << targetVal.ToString() << ") = " << rootTest.ToString() << " FloatingResult:" << log((double)targetVal) << std::endl;
+    rootTest = BlazesRusDebug::LnV2(targetVal);
+    std::cout << "Ln(" << targetVal.ToString() << ") = " << rootTest.ToString() << " FloatingResult:" << log((double)targetVal) << std::endl;
     rightVal = "0.25";
     floatingVal = pow(5.0, 0.25);
     rootTest = MediumDec::Pow(targetVal, rightVal);
     std::cout << targetVal.ToString() << "^" << rightVal.ToString() << " = " << rootTest.ToString() << " FloatingResult:" << floatingVal << std::endl;
-    targetVal = 5;
+    //---------------Log Tests------------------------------
+    targetVal = "1.5";
     rightVal = 5;
-    rootTest = MediumDec::Log(targetVal, rightVal);
-    floatingVal = log(5.0) / log(5.0);
-    std::cout << "log base_"<< rightVal.ToString() << "_of" << targetVal.ToString() << " = " << rootTest.ToString() << " FloatingResult:" << floatingVal << std::endl;
+    rootTest = BlazesRusDebug::LnV2(targetVal);
+    std::cout << "Ln(" << targetVal.ToString() << ") = " << rootTest.ToString() << " FloatingResult:" << log(1.5) << std::endl;
+    //---------------Testing Formula Code-------------------
+    //IntFormula FormTest01 = "5+5";
+    //MediumDecFormula = "5.5^(1.5+x)+6x";
+    //------------------------------------------------------------------------------------------------
+    //rootTest = MediumDec::Log(targetVal, rightVal);
+    //floatingVal = log(5.0) / log(5.0);
+    //std::cout << "log base_"<< rightVal.ToString() << "_of" << targetVal.ToString() << " = " << rootTest.ToString() << " FloatingResult:" << floatingVal << std::endl;
 }

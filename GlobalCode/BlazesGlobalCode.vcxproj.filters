@@ -19,29 +19,11 @@
     <Filter Include="Source Files\ExperimentalCode">
       <UniqueIdentifier>{a46acfbf-0ade-45dc-b32e-70c3ff864c00}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\MiscFunctions">
-      <UniqueIdentifier>{bba9cfa7-c7c1-408f-a374-da169d1a2ae5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\MiscFunctions">
-      <UniqueIdentifier>{52994d8f-4f18-4a52-a9c0-226a423424c7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\VariableLists">
       <UniqueIdentifier>{49f08e36-8caf-4dfb-89a5-e8a53231c814}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\VariableLists">
       <UniqueIdentifier>{f7cb8e8b-49a6-49ab-894d-6d5b0363cda9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\VariableConversionFunctions">
-      <UniqueIdentifier>{68bf72d5-0ec0-4f91-888c-40b2b6b4d6c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\VariableConversionFunctions">
-      <UniqueIdentifier>{89a092f9-c8c9-4c61-9219-9d02170cf176}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\StringFunctions">
-      <UniqueIdentifier>{23c32711-5495-4cc4-a890-188bf31009e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\StringFunctions">
-      <UniqueIdentifier>{e5b4044c-a53c-4d13-be14-39747b869563}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\QuadVector">
       <UniqueIdentifier>{973546b3-6995-4100-9477-bd4990216a1d}</UniqueIdentifier>
@@ -70,11 +52,14 @@
     <Filter Include="Source Files\Databases">
       <UniqueIdentifier>{a20a8876-58df-4a22-b812-fa5f1ec8c785}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\OtherFunctions">
+      <UniqueIdentifier>{68bf72d5-0ec0-4f91-888c-40b2b6b4d6c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\OtherFunctions">
+      <UniqueIdentifier>{89a092f9-c8c9-4c61-9219-9d02170cf176}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MiscFunctions\MiscFunctions.h">
-      <Filter>Header Files\MiscFunctions</Filter>
-    </ClInclude>
     <ClInclude Include="NodeTrees\LooseNodeTreeTemplate.h">
       <Filter>Header Files\NodeTrees</Filter>
     </ClInclude>
@@ -99,11 +84,8 @@
     <ClInclude Include="QuadVector\QuadVectorFunctions.h">
       <Filter>Header Files\QuadVector</Filter>
     </ClInclude>
-    <ClInclude Include="StringFunctions\StringFunctions.h">
-      <Filter>Header Files\StringFunctions</Filter>
-    </ClInclude>
-    <ClInclude Include="VariableConversionFunctions\VariableConversionFunctions.h">
-      <Filter>Header Files\VariableConversionFunctions</Filter>
+    <ClInclude Include="OtherFunctions\VariableConversionFunctions.h">
+      <Filter>Header Files\OtherFunctions</Filter>
     </ClInclude>
     <ClInclude Include="VariableLists\StringVectorList.h">
       <Filter>Header Files\VariableLists</Filter>
@@ -138,9 +120,6 @@
     <ClInclude Include="Databases\IndexedIniData.h">
       <Filter>Header Files\Databases</Filter>
     </ClInclude>
-    <ClInclude Include="Databases\AltDecFormula.h">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
     <ClInclude Include="AltNum\AltDec.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
@@ -168,11 +147,14 @@
     <ClInclude Include="AltNum\AltNumDebug.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
+    <ClInclude Include="OtherFunctions\MiscFunctions.h">
+      <Filter>Header Files\OtherFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherFunctions\StringFunctions.h">
+      <Filter>Header Files\OtherFunctions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MiscFunctions\MiscFunctions.cpp">
-      <Filter>Source Files\MiscFunctions</Filter>
-    </ClCompile>
     <ClCompile Include="NodeTrees\TagNodeTreeTemplate.cpp">
       <Filter>Source Files\NodeTrees</Filter>
     </ClCompile>
@@ -191,11 +173,8 @@
     <ClCompile Include="QuadVector\QuadVectorFunctions.cpp">
       <Filter>Source Files\QuadVector</Filter>
     </ClCompile>
-    <ClCompile Include="StringFunctions\StringFunctions.cpp">
-      <Filter>Source Files\StringFunctions</Filter>
-    </ClCompile>
-    <ClCompile Include="VariableConversionFunctions\VariableConversionFunctions.cpp">
-      <Filter>Source Files\VariableConversionFunctions</Filter>
+    <ClCompile Include="OtherFunctions\VariableConversionFunctions.cpp">
+      <Filter>Source Files\OtherFunctions</Filter>
     </ClCompile>
     <ClCompile Include="VariableLists\StringVectorList.cpp">
       <Filter>Source Files\VariableLists</Filter>
@@ -211,6 +190,12 @@
     </ClCompile>
     <ClCompile Include="Databases\IniDataV2.cpp">
       <Filter>Source Files\Databases</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherFunctions\StringFunctions.cpp">
+      <Filter>Source Files\OtherFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherFunctions\MiscFunctions.cpp">
+      <Filter>Source Files\OtherFunctions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
