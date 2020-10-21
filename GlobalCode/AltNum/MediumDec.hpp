@@ -3424,7 +3424,7 @@ namespace BlazesRusCode
         /// </summary>
         /// <param name="value">The target value.</param>
         /// <param name="expValue">The exponent value.</param>
-        static MediumDec Pow(MediumDec value, MediumDec expValue)
+        static MediumDec PowOp(MediumDec& value, MediumDec& expValue)
         {
             if (expValue.DecimalHalf01 == 0)
             {
@@ -3459,6 +3459,16 @@ namespace BlazesRusCode
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Applies Power of operation
+        /// </summary>
+        /// <param name="value">The target value.</param>
+        /// <param name="expValue">The exponent value.</param>
+        static MediumDec Pow(MediumDec value, MediumDec expValue)
+        {
+            return PowOp(value, expValue);
         }
     #pragma endregion Math Etc Functions
     #pragma region Trigonomic Etc Functions
