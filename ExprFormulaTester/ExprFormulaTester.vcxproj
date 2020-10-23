@@ -155,7 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\GlobalCode\VariableConversionFunctions\VariableConversionFunctions.cpp" />
+    <ClCompile Include="..\GlobalCode\OtherFunctions\VariableConversionFunctions.cpp" />
     <ClCompile Include="ExprFormulaTester.cpp" />
   </ItemGroup>
   <ItemGroup>
