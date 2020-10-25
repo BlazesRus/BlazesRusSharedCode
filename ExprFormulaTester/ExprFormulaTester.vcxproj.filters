@@ -62,9 +62,6 @@
     <ClInclude Include="..\GlobalCode\tsl\ordered_map.h">
       <Filter>Header Files\tsl</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\Databases\AltDecFormula.h">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
     <ClInclude Include="..\GlobalCode\AltNum\MediumDec.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
@@ -82,9 +79,6 @@
     </ClInclude>
     <ClInclude Include="..\GlobalCode\OtherFunctions\VariableConversionFunctions.h">
       <Filter>Header Files\OtherFunctions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GlobalCode\Databases\MediumDecFormula.hpp">
-      <Filter>Header Files\Databases</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

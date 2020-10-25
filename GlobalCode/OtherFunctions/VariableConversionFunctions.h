@@ -98,24 +98,19 @@ namespace BlazesRusCode
     public:
         static int PowerOfTens[10];
         static long PowerOfTens64Bit[19];
-        //************************************
-        // Method:    NumberOfPlaces
-        // FullName:  VariableConversionFunctions::NumberOfPlaces
-        // Access:    public static
-        // Returns:   int
-        // Qualifier:
-        // Parameter: int Value
-        //************************************
-        static int NumberOfPlaces(int Value);
-        //************************************
-        // Method:    NumberOfPlaces
-        // FullName:  VariableConversionFunctions::NumberOfPlaces
-        // Access:    public static
-        // Returns:   int
-        // Qualifier:
-        // Parameter: unsigned int Value
-        //************************************
-        static int NumberOfPlaces(unsigned int Value);
+
+        /// <summary>
+        /// Outputs the number of digits found inside Integer Value type
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>int</returns>
+        template<typename targetType>
+        static int NumberOfPlaces(targetType Value)
+        {
+            int NumberOfPlaces = floor(log10(Value));
+            return NumberOfPlaces;
+        }
+
         //************************************
         // Method:    NumberOfPlaces
         // FullName:  VariableConversionFunctions::NumberOfPlaces
@@ -125,41 +120,20 @@ namespace BlazesRusCode
         // Parameter: double Value
         //************************************
         static int NumberOfPlaces(double Value);
-        //************************************
-        // Method:    NumberOfPlaces
-        // FullName:  VariableConversionFunctions::NumberOfPlaces
-        // Access:    public static
-        // Returns:   long long int
-        // Qualifier:
-        // Parameter: long long int Value
-        //************************************
-        static long long int NumberOfPlaces(long long int Value);
-        //************************************
-        // Method:    NumberOfPlacesX
-        // FullName:  VariableConversionFunctions::NumberOfPlacesX
-        // Access:    public static
-        // Returns:   long long int
-        // Qualifier:
-        // Parameter: size_t Value
-        //************************************
-        static long long int NumberOfPlacesX(size_t Value);
-        //************************************
-        // Method:    NumberOfDecimalPlaces
-        // FullName:  VariableConversionFunctions::NumberOfDecimalPlaces
-        // Access:    public static
-        // Returns:   int
-        // Qualifier:
-        // Parameter: int Value
-        //************************************
-        static int NumberOfDecimalPlaces(int Value);
-        //************************************
-        // Method:    NumberOfDecimalPlaces
-        // FullName:  VariableConversionFunctions::NumberOfDecimalPlaces
-        // Access:    public static
-        // Returns:   int
-        // Qualifier:
-        // Parameter: double Value
-        //************************************
+
+        /// <summary>
+        /// Retrieves number of decimal places from integer version of decimal half
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>int</returns>
+        static int NumberOfDecimalPlaces(int Value)
+        {
+            int NumberOfPlaces = floor(log(Value));
+            NumberOfPlaces *= -1;
+            NumberOfPlaces += 1;
+            return NumberOfPlaces;
+        }
+
         static int NumberOfDecimalPlaces(double Value);
         //************************************
         // Method:    CharAsInt
@@ -294,15 +268,41 @@ namespace BlazesRusCode
         // Parameter: unsigned int TempValue
         //************************************
         static std::string IntToStringConversion(unsigned int TempValue);
-        //************************************
-        // Method:    XIntToStringConversion
-        // FullName:  VariableConversionFunctions::XIntToStringConversion
-        // Access:    public static
-        // Returns:   std::string
-        // Qualifier:
-        // Parameter: long long TempValue
-        //************************************
-        static std::string XIntToStringConversion(long long TempValue);
+        ////************************************
+        //// Method:    XIntToStringConversion
+        //// FullName:  VariableConversionFunctions::XIntToStringConversion
+        //// Access:    public static
+        //// Returns:   std::string
+        //// Qualifier:
+        //// Parameter: long long TempValue
+        ////************************************
+        //static std::string XIntToStringConversion(long long TempValue)
+        //{
+        //    string TempString = "";
+        //    bool IsNegative = (TempValue < 0) ? true : false;
+        //    if (IsNegative)
+        //    {
+        //        TempString += "-";
+        //        TempValue *= -1;
+        //    }
+        //    long long int IntegerHalf = TempValue;
+        //    unsigned __int8 CurrentDigit;
+        //    if (IntegerHalf == 0)
+        //    {
+        //        TempString += "0";
+        //    }
+        //    else
+        //    {
+        //        for (long long int i = NumberOfPlaces(IntegerHalf); i >= 0; --i)
+        //        {
+        //            CurrentDigit = floor(IntegerHalf / pow(10, i));
+        //            IntegerHalf -= (long long int) floor(CurrentDigit * pow(10, i));
+        //            TempString += DigitAsChar(CurrentDigit);
+        //        }
+        //    }
+        //    return TempString;
+        //}
+
         //************************************
         // Method:    XIntToStringConversion
         // FullName:  VariableConversionFunctions::XIntToStringConversion
@@ -370,7 +370,7 @@ namespace BlazesRusCode
         // Qualifier:
         // Parameter: int32_t Value
         //************************************
-        float Int32ToFloat(int32_t Value);
+        static float Int32ToFloat(int32_t Value);
         std::string DisplayFullValues_Vector(float x, float y, float z, float w);
         std::string DisplayFullValues_Vector(float x, float y, float z);
         std::string DisplayFullValues_Vector(float x, float y);
@@ -391,7 +391,7 @@ namespace BlazesRusCode
         /// </summary>
         /// <param name="expValue">The exponent value.</param>
         template<typename targetType, typename ValueType>
-        targetType IntPowOp(targetType& targetValue, ValueType& expValue)
+        static targetType IntPowOp(targetType& targetValue, ValueType& expValue)
         {
             if (expValue == 1)
                 return targetValue;//Return self

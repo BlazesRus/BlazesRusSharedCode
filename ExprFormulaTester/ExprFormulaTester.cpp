@@ -11,9 +11,9 @@ using MediumDec = BlazesRusCode::MediumDec;
 
 #include "AltNum\AltNumDebug.hpp"
 #include "AltNum\FloatingOperations.hpp"
-#include "Databases\IntFormula.h"
-#include "Databases\MediumDecFormula.hpp"
-using MediumDecFormula = BlazesRusCode::MediumDecFormulaData::MediumDecFormula;
+//#include "Databases\IntFormula.h"
+//#include "Databases\MediumDecFormula.hpp"
+//using MediumDecFormula = BlazesRusCode::MediumDecFormulaData::MediumDecFormula;
 
 int main()
 {
@@ -162,20 +162,20 @@ int main()
     rootTest = BlazesRusDebug::LnV2(targetVal);
     std::cout << "Ln(" << targetVal.ToString() << ") = " << rootTest.ToString() << " FloatingResult:" << log(1.5) << std::endl;
     //---------------Testing Formula Code-------------------
-    IntFormula IntFormTest("(5+5)^2");
-    std::map<std::string, int> IntValueDefinitions;
-    std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
-    IntValueDefinitions.insert_or_assign("x", 2);
-    IntFormTest = "5+10x";
-    std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
-    MediumDecFormula AltFormTest = MediumDecFormula("5.5^(1.5+x)+6x");
-    std::map<std::string, MediumDec&> ValueDefinitions;
-    MediumDec XReference = MediumDec::One;
-    ValueDefinitions.insert_or_assign("x", XReference);
-    rootTest = AltFormTest.EvalValueRefs(ValueDefinitions);
-    std::cout << AltFormTest.ToString() << " = " << rootTest.ToString()<< std::endl;
-    std::map<std::string, MediumDec> ValueDefinitions02;
-    ValueDefinitions02.insert_or_assign("x", "0.5");
+    //IntFormula IntFormTest("(5+5)^2");
+    //std::map<std::string, int> IntValueDefinitions;
+    //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
+    //IntValueDefinitions.insert_or_assign("x", 2);
+    //IntFormTest = "5+10x";
+    //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
+    //MediumDecFormula AltFormTest = MediumDecFormula("5.5^(1.5+x)+6x");
+    //std::map<std::string, MediumDec&> ValueDefinitions;
+    //MediumDec XReference = MediumDec::One;
+    //ValueDefinitions.insert_or_assign("x", XReference);
+    //rootTest = AltFormTest.EvalValueRefs(ValueDefinitions);
+    //std::cout << AltFormTest.ToString() << " = " << rootTest.ToString()<< std::endl;
+    //std::map<std::string, MediumDec> ValueDefinitions02;
+    //ValueDefinitions02.insert_or_assign("x", "0.5");
     //------------------------------------------------------------------------------------------------
     //rootTest = MediumDec::Log(targetVal, rightVal);
     //floatingVal = log(5.0) / log(5.0);

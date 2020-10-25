@@ -16,59 +16,11 @@ long VariableConversionFunctions::PowerOfTens64Bit[19] = { 1, 10, 100, 1000, 100
 // Access:    public static
 // Returns:   int
 // Qualifier:
-// Parameter: int Value
-//************************************
-int VariableConversionFunctions::NumberOfPlaces(int Value)
-{
-    int NumberOfPlaces = floor(log10(Value));
-    return NumberOfPlaces;
-}
-
-int VariableConversionFunctions::NumberOfPlaces(unsigned int Value)
-{
-    int NumberOfPlaces = floor(log10(Value));
-    return NumberOfPlaces;
-}
-
-long long int VariableConversionFunctions::NumberOfPlaces(long long int Value)
-{
-    long long int NumberOfPlaces = floor(log10(Value));
-    return NumberOfPlaces;
-}
-
-long long int VariableConversionFunctions::NumberOfPlacesX(size_t Value)
-{
-    long long int NumberOfPlaces = floor(log10(Value));
-    return NumberOfPlaces;
-}
-
-//************************************
-// Method:    NumberOfPlaces
-// FullName:  VariableConversionFunctions::NumberOfPlaces
-// Access:    public static
-// Returns:   int
-// Qualifier:
 // Parameter: double Value
 //************************************
 int VariableConversionFunctions::NumberOfPlaces(double Value)
 {
     int NumberOfPlaces = floor(log10(Value));
-    return NumberOfPlaces;
-}
-
-//************************************
-// Method:    NumberOfDecimalPlaces
-// FullName:  VariableConversionFunctions::NumberOfDecimalPlaces
-// Access:    public static
-// Returns:   int
-// Qualifier:
-// Parameter: int Value
-//************************************
-int VariableConversionFunctions::NumberOfDecimalPlaces(int Value)
-{
-    int NumberOfPlaces = floor(log(Value));
-    NumberOfPlaces *= -1;
-    NumberOfPlaces += 1;
     return NumberOfPlaces;
 }
 
@@ -216,7 +168,6 @@ double VariableConversionFunctions::ReadDoubleFromString(string TempString)
             //cout << "\nDecimal Part:";
         }
     }
-    //cout << "\nWhole Number Calculations:\n";
     for(size_t i = WholeNumberBuffer.length() - 1; i >= 0; --i)
     {
         StringChar = WholeNumberBuffer.at(i);
@@ -596,98 +547,71 @@ std::string VariableConversionFunctions::DoubleToStringConversion(double TempVal
 // Qualifier:
 // Parameter: int TempValue
 //************************************
-std::string VariableConversionFunctions::IntToStringConversion(int TempValue)
+std::string VariableConversionFunctions::IntToStringConversion(int IntegerHalf)
 {
+    if (IntegerHalf == 0)
+        return "0";
     string TempString = "";
-    bool IsNegative = (TempValue < 0) ? true : false;
+    bool IsNegative = (IntegerHalf < 0) ? true : false;
     if(IsNegative)
     {
         TempString += "-";
-        TempValue *= -1;
+        IntegerHalf *= -1;
     }
-    int IntegerHalf = TempValue;
     unsigned __int8 CurrentDigit;
-    if(IntegerHalf == 0)
+    int PowResult;
+    for (int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
     {
-        TempString += "0";
-    }
-    else
-    {
-        for(int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
-        {
-            CurrentDigit = floor(IntegerHalf / pow(10, i));
-            IntegerHalf -= CurrentDigit*pow(10, i);
-            TempString += DigitAsChar(CurrentDigit);
-        }
+        PowResult = IntPow(10, i);
+        CurrentDigit = floor(IntegerHalf / PowResult);
+        IntegerHalf -= CurrentDigit * PowResult;//(size_t) floor(CurrentDigit*pow(10, i));
+        TempString += DigitAsChar(CurrentDigit);
     }
     return TempString;
 }
 
-std::string VariableConversionFunctions::IntToStringConversion(unsigned int TempValue)
+std::string VariableConversionFunctions::IntToStringConversion(unsigned int IntegerHalf)
 {
+    if (IntegerHalf == 0)
+        return "0";
     string TempString = "";
-    unsigned int IntegerHalf = TempValue;
-    unsigned __int8 CurrentDigit;
-    if(IntegerHalf == 0)
-    {
-        TempString += "0";
-    }
-    else
-    {
-        for(int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
-        {
-            CurrentDigit = floor(IntegerHalf / pow(10, i));
-            IntegerHalf -= CurrentDigit*pow(10, i);
-            TempString += DigitAsChar(CurrentDigit);
-        }
-    }
-    return TempString;
-}
-
-std::string VariableConversionFunctions::XIntToStringConversion(long long int TempValue)
-{
-    string TempString = "";
-    bool IsNegative = (TempValue < 0) ? true : false;
-    if(IsNegative)
+    bool IsNegative = (IntegerHalf < 0) ? true : false;
+    if (IsNegative)
     {
         TempString += "-";
-        TempValue *= -1;
+        IntegerHalf *= -1;
     }
-    long long int IntegerHalf = TempValue;
     unsigned __int8 CurrentDigit;
-    if(IntegerHalf == 0)
+    int PowResult;
+    for (int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
     {
-        TempString += "0";
-    }
-    else
-    {
-        for(long long int i = NumberOfPlaces(IntegerHalf); i >= 0; --i)
-        {
-            CurrentDigit = floor(IntegerHalf / pow(10, i));
-            IntegerHalf -= (long long int) floor(CurrentDigit*pow(10, i));
-            TempString += DigitAsChar(CurrentDigit);
-        }
+        PowResult = IntPow(10, i);
+        CurrentDigit = floor(IntegerHalf / PowResult);
+        IntegerHalf -= CurrentDigit * PowResult;
+        TempString += DigitAsChar(CurrentDigit);
     }
     return TempString;
 }
 
-std::string VariableConversionFunctions::XIntToStringConversion(size_t TempValue)
+std::string VariableConversionFunctions::XIntToStringConversion(size_t IntegerHalf)
 {
-    std::string TempString = "";
-    size_t IntegerHalf = TempValue;
-    unsigned __int8 CurrentDigit;
-    if(IntegerHalf == 0)
+    if (IntegerHalf == 0)
+        return "0";
+    string TempString = "";
+    bool IsNegative = (IntegerHalf < 0) ? true : false;
+    if (IsNegative)
     {
-        TempString += "0";
+        TempString += "-";
+        IntegerHalf *= -1;
     }
-    else
+    unsigned __int8 CurrentDigit;
+    int PowResult;
+    for (int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
     {
-        for(size_t i = NumberOfPlacesX(IntegerHalf); i >= 0; --i)
-        {
-            CurrentDigit = floor(IntegerHalf / pow(10, i));
-            IntegerHalf -= (size_t) floor(CurrentDigit*pow(10, i));
-            TempString += DigitAsChar(CurrentDigit);
-        }
+        PowResult = IntPow(10L, i);
+        CurrentDigit = floor(IntegerHalf / PowResult);
+        IntegerHalf -= CurrentDigit * PowResult;
+        TempString += DigitAsChar(CurrentDigit);
     }
     return TempString;
 }
@@ -715,7 +639,7 @@ std::string VariableConversionFunctions::BoolAsString(bool TempValue)
 }
 
 //FloatToDouble code from https://github.com/PIlin/nanopb/blob/master/example_avr_double/double_conversion.c
-//Licease from project code is From:
+//license from project code is From:
 //Copyright(c) 2011 Petteri Aimonen <jpa at nanopb.mail.kapsi.fi>
 //
 //This software is provided 'as-is', without any express or
@@ -773,7 +697,7 @@ uint64_t VariableConversionFunctions::float_to_double(float value)
         }
         else
         {
-            /* Denormalized */
+            /* De-normalized */
             mantissa <<= 1;
             while(!(mantissa & 0x800000))
             {
@@ -786,7 +710,7 @@ uint64_t VariableConversionFunctions::float_to_double(float value)
 
     /* Combine fields */
     mantissa <<= 29;
-    mantissa |= (uint64_t) (exponent + 1023) << 52;
+    mantissa |= ((uint64_t)exponent + 1023) << 52;
     mantissa |= (uint64_t) sign << 63;
 
     return mantissa;
@@ -828,7 +752,7 @@ float VariableConversionFunctions::double_to_float(uint64_t value)
     }
     else if(exponent < -126)
     {
-        /* Denormalized */
+        /* De-normalized */
         mantissa |= 0x1000000;
         mantissa >>= (-126 - exponent);
         exponent = -127;

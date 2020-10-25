@@ -110,7 +110,7 @@ namespace BlazesRusDebug
       /// <returns></returns>
       static MediumDec Ln(MediumDec Value)
       {
-          MediumDec old_sum = Zero;
+          MediumDec old_sum = MediumDec::Zero;
           MediumDec xmlxpl = (Value - 1) / (Value + 1);
           MediumDec xmlxpl_2 = xmlxpl * xmlxpl;
           int denom = 1;
@@ -136,7 +136,7 @@ namespace BlazesRusDebug
       /// <returns></returns>
       static MediumDec LnRef(MediumDec& Value)
       {
-          MediumDec old_sum = Zero;
+          MediumDec old_sum = MediumDec::Zero;
           MediumDec xmlxpl = (Value - 1) / (Value + 1);
           MediumDec xmlxpl_2 = xmlxpl * xmlxpl;
           int denom = 1;
@@ -162,7 +162,7 @@ namespace BlazesRusDebug
       /// <returns></returns>
       static MediumDec Ln(int Value)
       {
-          MediumDec old_sum = Zero;
+          MediumDec old_sum = MediumDec::Zero;
           MediumDec xmlxpl = (Value - 1) / (Value + 1);
           MediumDec xmlxpl_2 = xmlxpl * xmlxpl;
           int denom = 1;
@@ -187,7 +187,7 @@ namespace BlazesRusDebug
       /// <returns>MediumDec</returns>
       static MediumDec Log10(MediumDec Value)
       {
-          return Ln(Value) / LN10;
+          return Ln(Value) / MediumDec::LN10;
       }
 
       /// <summary>
@@ -197,7 +197,7 @@ namespace BlazesRusDebug
       /// <returns>MediumDec</returns>
       static MediumDec Log10(int Value)
       {
-          return Ln(Value) / LN10;
+          return Ln(Value) / MediumDec::LN10;
       }
 
       /// <summary>
