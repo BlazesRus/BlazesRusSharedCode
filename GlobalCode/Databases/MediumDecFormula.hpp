@@ -25,6 +25,7 @@
 
 #include "..\tsl\ordered_map.h"
 #include "..\AltNum\MediumDec.hpp"
+#include "..\OtherFunctions\VariableConversionFunctions.h"
 
 //Preprocessor Switches
 /*
@@ -568,7 +569,7 @@ namespace BlazesRusCode
         /// Variable02, >, MediumDecValues[0]
         /// Initial FormulaElement Values : @1, &&, @2
         /// </summary>
-        DLL_API class MediumDecFormula : public std::vector<MediumDecFormulaData::FormData>
+        class DLL_API MediumDecFormula : public std::vector<MediumDecFormulaData::FormData>
         {
         public:
             MediumDecFormula() {}
@@ -769,11 +770,14 @@ namespace BlazesRusCode
                     }
                     else if (ElementIter->second.ElementCat == ElementType::Variable)
                     {
-                        throw "Failed to evaluate variable named:" + FormCopy.VariableMap.at(KeyIndex).Name;
+                        std::string ErrorMessage = "Failed to evaluate variable named:" + FormCopy.VariableMap.at(KeyIndex).Name;
+                        throw ErrorMessage;
                     }
                     else
                     {
-                        throw "Failed to evaluate Element with Element Category of:" + ElementIter->second.ElementCat;
+                        std::string ErrorMessage = "Failed to evaluate Element with Element Category of:";
+                        ErrorMessage += VariableConversionFunctions::IntToStringConversion((int)ElementIter->second.ElementCat);
+                        throw ErrorMessage;
                     }
                 }
                 else
@@ -782,7 +786,26 @@ namespace BlazesRusCode
                 }
             }
 
-            void SwapUpdatedFormData(FormData& FormCopy, std::map<std::string, MediumDec&>& ElementValues, size_t FormIndex = 0)
+            void SwapReferencedData(FormData& FormCopy, std::map<std::string, MediumDec&>& ElementValues, size_t FormIndex = 0)
+            {
+                std::string CurString;
+                char firstChar;
+                MediumDec targetResult;
+                for (FormData::iterator CurrentVal = at(FormIndex).begin(), LastVal = at(FormIndex).end(); CurrentVal != LastVal; ++CurrentVal)
+                {
+                    if (CurrentVal->second.ElementCat == ElementType::Formula)//FormulaDetected
+                    {
+                        targetResult = RecursivelyEvalRefValues(ElementValues, CurrentVal->second.Index);
+                        FormCopy.ReplaceFormVal(CurrentVal->first, targetResult);
+                    }
+                    else if (CurrentVal->second.ElementCat == ElementType::Variable)//Swap Variable with values
+                    {
+                        FormCopy.ReplaceFormVal(CurrentVal->first, ElementValues.at(CurString));
+                    }
+                }
+            }
+
+            void SwapUpdatedFormData(FormData& FormCopy, std::map<std::string, MediumDec>& ElementValues, size_t FormIndex = 0)
             {
                 std::string CurString;
                 char firstChar;
@@ -801,14 +824,28 @@ namespace BlazesRusCode
                 }
             }
 
-            MediumDec RecursivelyEvalValues(std::map<std::string, MediumDec&>& ElementValues, size_t FormIndex)
+            MediumDec RecursivelyEvalRefValues(std::map<std::string, MediumDec&>& ElementValues, size_t FormIndex)
+            {//Each Formula Calculates order of operations etc separately
+                FormData FormCopy = at(FormIndex);
+                SwapReferencedData(FormCopy, ElementValues, FormIndex);
+                return EvaluateOrderOfOperations(FormCopy);
+            }
+
+            MediumDec RecursivelyEvalValues(std::map<std::string, MediumDec>& ElementValues, size_t FormIndex)
             {//Each Formula Calculates order of operations etc separately
                 FormData FormCopy = at(FormIndex);
                 SwapUpdatedFormData(FormCopy, ElementValues, FormIndex);
                 return EvaluateOrderOfOperations(FormCopy);
             }
 
-            MediumDec EvalValues(std::map<std::string, MediumDec&> ElementValues)
+            MediumDec EvalValueRefs(std::map<std::string, MediumDec&> ElementValues)
+            {
+                FormData FormCopy = this->at(0);//Duplicate values so can erase parts when calculating
+                SwapReferencedData(FormCopy, ElementValues);
+                return EvaluateOrderOfOperations(FormCopy);
+            }
+
+            MediumDec EvalValues(std::map<std::string, MediumDec> ElementValues)
             {
                 FormData FormCopy = this->at(0);//Duplicate values so can erase parts when calculating
                 SwapUpdatedFormData(FormCopy, ElementValues);
@@ -1120,12 +1157,6 @@ namespace BlazesRusCode
                 this->clear();
                 this->push_back(FormData());//Initialize first (Formula) field
             }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="MediumDecFormula" /> class.(fix for initializing without copying from a string value set)
-            /// </summary>
-            /// <param name="ElemValue">The elem value to read in order to create formula data.</param>
-            MediumDecFormula(const char* strVal) : MediumDecFormula(std::string(strVal)) {}
 
             /// <summary>
             /// Initializes a new instance of the <see cref="MediumDecFormula" /> class.
@@ -1444,12 +1475,18 @@ namespace BlazesRusCode
                 }
                 TrimFormula();
             }
-        
+
             /// <summary>
             /// Initializes a new instance of the <see cref="MediumDecFormula" /> class. from StringCopy instead of reference
             /// </summary>
             /// <param name="ElemValue">The elem value to read in order to create formula data.</param>
             MediumDecFormula(std::string ElemValue, bool BlankVar) : MediumDecFormula(ElemValue) {}
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MediumDecFormula" /> class.(fix for initializing without copying from a string value set)
+            /// </summary>
+            /// <param name="ElemValue">The elem value to read in order to create formula data.</param>
+            MediumDecFormula(const char* strVal) : MediumDecFormula(std::string(strVal), true) {}
         };
         MediumDecFormula Data;
         /// <summary>
@@ -1460,6 +1497,13 @@ namespace BlazesRusCode
         {
             Data = ElemValue;
         }
-        MediumDecFormulaData(const char* strVal) : MediumDecFormulaData(std::string(strVal)) {}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MediumDecFormulaData"/> class.
+        /// </summary>
+        /// <param name="strVal">The string value.</param>
+        MediumDecFormulaData(const char* strVal)//: MediumDecFormulaData(std::string(strVal)) {}
+        {
+            Data = strVal;
+        }
     };
 }

@@ -39,7 +39,7 @@
     <ClCompile Include="ExprFormulaTester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\GlobalCode\VariableConversionFunctions\VariableConversionFunctions.cpp">
+    <ClCompile Include="..\GlobalCode\OtherFunctions\VariableConversionFunctions.cpp">
       <Filter>Source Files\OtherFunctions</Filter>
     </ClCompile>
   </ItemGroup>
@@ -58,9 +58,6 @@
     </ClInclude>
     <ClInclude Include="..\GlobalCode\DLLAPI.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GlobalCode\VariableConversionFunctions\VariableConversionFunctions.h">
-      <Filter>Header Files\OtherFunctions</Filter>
     </ClInclude>
     <ClInclude Include="..\GlobalCode\tsl\ordered_map.h">
       <Filter>Header Files\tsl</Filter>
@@ -82,6 +79,12 @@
     </ClInclude>
     <ClInclude Include="..\GlobalCode\AltNum\ModCheckerXX.hpp">
       <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\OtherFunctions\VariableConversionFunctions.h">
+      <Filter>Header Files\OtherFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\Databases\MediumDecFormula.hpp">
+      <Filter>Header Files\Databases</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
