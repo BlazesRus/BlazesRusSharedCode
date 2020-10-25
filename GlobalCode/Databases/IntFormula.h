@@ -420,19 +420,16 @@ protected://All Derivatives can use
     template<typename ValueType>
     static int PowOp(int& value, ValueType& expValue)
     {
-        if (expValue == 1) { return value; }//Return self
+        if (expValue == 1)
+            return value;//Return self
         else if (expValue == 0)
-        {
             return 1;
-        }
         else if (expValue < 0)//Negative Pow
-        {
             return 0;//Since int can't have decimal format values just setting as one
-        }
         else if (value == 10)
-        {
             return VariableConversionFunctions::PowerOfTens[expValue];
-        }
+        else if (value == -10)
+            return value = expValue % 2 ? VariableConversionFunctions::PowerOfTens[expValue] : VariableConversionFunctions::PowerOfTens[expValue] * -1;
         else
         {
             //Code based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
