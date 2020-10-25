@@ -3029,9 +3029,9 @@ namespace BlazesRusCode
                 }
             }
             else if (DecimalHalf01 == 0 && IntValue == 10)
-            {
                 IntValue = VariableConversionFunctions::PowerOfTens[expValue];
-            }
+            else if (targetValue == -10)
+                IntValue = expValue % 2 ? VariableConversionFunctions::PowerOfTens[expValue] : VariableConversionFunctions::PowerOfTens[expValue] * -1;
             else
             {
                 //Code based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
