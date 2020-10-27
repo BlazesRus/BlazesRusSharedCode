@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros">
     <BoostDir>C:/UserFiles/ProgrammingTools/Libraries/C++Code/BoostLib/</BoostDir>
     <GlobalCode>C:/UserFiles/GitHub/MultiPlatformGlobalCode/GlobalCode/</GlobalCode>
-	<ParallelMap>C:/UserFiles/GitHub/Parallel-Hashmap/</BoostDir>
+	<ParallelMap>C:/UserFiles/GitHub/Parallel-Hashmap/</ParallelMap>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
