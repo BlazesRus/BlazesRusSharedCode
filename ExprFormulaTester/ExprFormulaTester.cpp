@@ -9,14 +9,14 @@ using MediumDec = BlazesRusCode::MediumDec;
 
 #include "AltNum\AltNumDebug.hpp"
 #include "AltNum\FloatingOperations.hpp"
-#include "Databases\MediumDecFormula.hpp"
+//#include "Databases\MediumDecFormula.hpp"
+//using MediumDecFormula = BlazesRusCode::MediumDecFormula;
 //#include "Databases\ExprFormula.h"
-//#include "Databases\IntFormula.hpp"
-//#include "Databases\DoubleFormula.hpp"
-using MediumDecFormula = BlazesRusCode::MediumDecFormula;
 //using ExprFormula = BlazesRusCode::ExprFormula;
+//#include "Databases\IntFormula.hpp"
 //using IntFormula = BlazesRusCode::IntFormula;
-//using DoubleFormula = BlazesRusCode::DoubleFormula;
+#include "Databases\DoubleFormula.hpp"
+using DoubleFormula = BlazesRusCode::DoubleFormula;
 
 int main()
 {
@@ -172,22 +172,23 @@ int main()
     //IntFormTest = "5+10x";
     //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
     std::cout << "----Formula Code Tests----" << std::endl;
-    MediumDecFormula AltFormTest = "5.5^(1.5+x)+6x";
+    //MediumDecFormula AltFormTest = "5.5^(1.5+x)+6x";
     //tsl::ordered_map<std::string, MediumDec&> RefDefinitions;
     //MediumDec XReference = MediumDec::One;
     //RefDefinitions.insert_or_assign("x", XReference);
     //rootTest = AltFormTest.EvalValueRefs(RefDefinitions);
     //std::cout << AltFormTest.ToString() << " = " << rootTest.ToString()<< std::endl;
-    tsl::ordered_map<std::string, MediumDec> ValueDefinitions;
-    ValueDefinitions.insert_or_assign("x", "0.5");
+
+    //tsl::ordered_map<std::string, MediumDec> ValueDefinitions;
+    //ValueDefinitions.insert_or_assign("x", MediumDec::One);
     //rootTest = AltFormTest.EvalValues(ValueDefinitions);
-    std::cout << "(MediumDecFormula) "<< AltFormTest.ToString() << std::endl;//<< " = " << rootTest.ToString() << std::endl;
+    //std::cout << "(MediumDecFormula) "<< AltFormTest.ToString() << std::endl;//<< " = " << rootTest.ToString() << std::endl;
     //ExprFormula FormTest = "5.5^(1.5+x)+6x";
     //std::cout << "(ExprFormula) " << FormTest.ToString() << std::endl;
     //IntFormula IntFormTest = "5.5^(1.5+x)+6x";
     //std::cout << "(IntFormula) " << IntFormTest.ToString() << std::endl;
-    //DoubleFormula DoubleFormTest = "5.5^(1.5+x)+6x";
-    //std::cout << "(DoubleFormula) " << DoubleFormTest.ToString() << std::endl;
+    DoubleFormula DoubleFormTest = "5.5+(5.5+2)";
+    std::cout << "(DoubleFormula) " << DoubleFormTest.ToString() << std::endl;
     //------------------------------------------------------------------------------------------------
     //rootTest = MediumDec::Log(targetVal, rightVal);
     //floatingVal = log(5.0) / log(5.0);

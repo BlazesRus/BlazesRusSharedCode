@@ -86,5 +86,8 @@
     <ClInclude Include="..\GlobalCode\Databases\MediumDecFormula.hpp">
       <Filter>Header Files\Databases</Filter>
     </ClInclude>
+    <ClInclude Include="..\GlobalCode\Databases\DoubleFormula.hpp">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

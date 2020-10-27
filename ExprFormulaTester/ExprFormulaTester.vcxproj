@@ -72,33 +72,34 @@
   <PropertyGroup Label="UserMacros">
     <BoostDir>C:/UserFiles/ProgrammingTools/Libraries/C++Code/BoostLib/</BoostDir>
     <GlobalCode>C:/UserFiles/GitHub/MultiPlatformGlobalCode/GlobalCode/</GlobalCode>
+	<ParallelMap>C:/UserFiles/GitHub/Parallel-Hashmap/</BoostDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(BoostDir)/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
-    <IncludePath>$(BoostDir);$(GlobalCode);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(BoostDir);$(GlobalCode);$(ParallelMap);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(BoostDir)/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
-    <IncludePath>$(BoostDir);$(GlobalCode);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(BoostDir);$(GlobalCode);$(ParallelMap);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(BoostDir)/lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
-    <IncludePath>$(BoostDir);$(GlobalCode);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(BoostDir);$(GlobalCode);$(ParallelMap);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(BoostDir)/lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
-    <IncludePath>$(BoostDir);$(GlobalCode);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(BoostDir);$(GlobalCode);$(ParallelMap);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(BoostDir);$(GlobalCode);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BoostDir);$(GlobalCode);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -113,7 +114,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(BoostDir);$(GlobalCode);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BoostDir);$(GlobalCode);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -128,7 +129,7 @@
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(BoostDir);$(GlobalCode);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BoostDir);$(GlobalCode);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -143,7 +144,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(BoostRoot);$(GlobalCode);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BoostRoot);$(GlobalCode);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -167,6 +168,7 @@
     <ClInclude Include="..\GlobalCode\Databases\CustomDictionary.h" />
     <ClInclude Include="..\GlobalCode\Databases\CustomOrderedDictionary.h" />
     <ClInclude Include="..\GlobalCode\Databases\DataDictionary.h" />
+    <ClInclude Include="..\GlobalCode\Databases\DoubleFormula.hpp" />
     <ClInclude Include="..\GlobalCode\Databases\IndexedDictionary.h" />
     <ClInclude Include="..\GlobalCode\Databases\MediumDecFormula.hpp" />
     <ClInclude Include="..\GlobalCode\Databases\VariableFormula.hpp" />
