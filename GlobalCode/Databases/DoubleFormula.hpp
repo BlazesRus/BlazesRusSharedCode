@@ -16,15 +16,14 @@
 ^ = Power of; * = Multiplication; / = Division; % = Modulus
 + = Addition; - = Subtraction; ! = Not;
 && = And; || = Or;
-$ = XOR (bitwise XOR operation likely to fail because of floating point)
-(Bitwise operators--likely to fail because of floating point)&, |
 ++Prefix; --Prefix;
 SqrtOf = Square Root of (applied to right value) (Not scanned yet but application code inside)
 thRootOf = Nth Root of (left value is equal to N; applied to right value) (Not scanned yet but application code inside)
-
 */
 //Unsupported Operators/Functions(for later)
 /*
+$ = XOR (bitwise XOR operation )
+(Bitwise operators)&, |
  ++Postfix; --Postfix
 PowerOf = (for scanning PowerOf instead of ^)
 ? = TernaryOperator(Not stored/evaluated yet)
@@ -166,7 +165,7 @@ namespace BlazesRusCode
                         switch (OpIterator->second.ElementCat)
                         {
                         case FormulaElementType::Pow:
-                            leftValue = pow(targetValue, expValue);
+                            leftValue = pow(leftValue, rightValue);
                             SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, rightValue);
                             break;
                         case FormulaElementType::Sqrt:
@@ -218,7 +217,7 @@ namespace BlazesRusCode
                             SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
                             break;
                         case FormulaElementType::Rem:
-                            leftValue %= rightValue;
+                            leftValue = fmodf(leftValue, rightValue);//leftValue %= rightValue;
                             SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
                             break;
                         }
@@ -266,18 +265,18 @@ namespace BlazesRusCode
                         }
                         SwitchOpToBoolVal(FormCopy, OpVal, LeftVal, RightVal, TempBool);
                         break;
-                    case 6://&
-                        leftValue = leftValue & rightValue;
-                        SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
-                        break;
-                    case 7://XOR
-                        leftValue = leftValue ^ rightValue;
-                        SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
-                        break;
-                    case 8:// | Bitwise OR (inclusive or)
-                        leftValue = leftValue ^ rightValue;
-                        SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
-                        break;
+                    //case 6://&
+                    //    leftValue = leftValue & rightValue;
+                    //    SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
+                    //    break;
+                    //case 7://XOR
+                    //    leftValue = leftValue ^ rightValue;
+                    //    SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
+                    //    break;
+                    //case 8:// | Bitwise OR (inclusive or)
+                    //    leftValue = leftValue ^ rightValue;
+                    //    SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
+                    //    break;
                     case 9://&&
                         TempBool = leftValue && rightValue;
                         SwitchOpToBoolVal(FormCopy, OpVal, LeftVal, RightVal, TempBool);

@@ -224,6 +224,7 @@
     <ClInclude Include="Databases\DataDictionary.h" />
     <ClInclude Include="Databases\DoubleFormula.hpp" />
     <ClInclude Include="Databases\ElementType.hpp" />
+    <ClInclude Include="Databases\ExprFormula.h" />
     <ClInclude Include="Databases\IndexedDictionary.h" />
     <ClInclude Include="Databases\IndexedIniData.h" />
     <ClInclude Include="Databases\IniDataV2.h" />

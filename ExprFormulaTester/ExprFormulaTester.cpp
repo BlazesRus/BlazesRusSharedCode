@@ -10,7 +10,13 @@ using MediumDec = BlazesRusCode::MediumDec;
 #include "AltNum\AltNumDebug.hpp"
 #include "AltNum\FloatingOperations.hpp"
 #include "Databases\MediumDecFormula.hpp"
+//#include "Databases\ExprFormula.h"
+//#include "Databases\IntFormula.hpp"
+//#include "Databases\DoubleFormula.hpp"
 using MediumDecFormula = BlazesRusCode::MediumDecFormula;
+//using ExprFormula = BlazesRusCode::ExprFormula;
+//using IntFormula = BlazesRusCode::IntFormula;
+//using DoubleFormula = BlazesRusCode::DoubleFormula;
 
 int main()
 {
@@ -165,7 +171,8 @@ int main()
     //IntValueDefinitions.insert_or_assign("x", 2);
     //IntFormTest = "5+10x";
     //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
-    MediumDecFormula AltFormTest = MediumDecFormula("5.5^(1.5+x)+6x");
+    std::cout << "----Formula Code Tests----" << std::endl;
+    MediumDecFormula AltFormTest = "5.5^(1.5+x)+6x";
     //tsl::ordered_map<std::string, MediumDec&> RefDefinitions;
     //MediumDec XReference = MediumDec::One;
     //RefDefinitions.insert_or_assign("x", XReference);
@@ -174,7 +181,13 @@ int main()
     tsl::ordered_map<std::string, MediumDec> ValueDefinitions;
     ValueDefinitions.insert_or_assign("x", "0.5");
     //rootTest = AltFormTest.EvalValues(ValueDefinitions);
-    std::cout << AltFormTest.ToString() << std::endl;//<< " = " << rootTest.ToString() << std::endl;
+    std::cout << "(MediumDecFormula) "<< AltFormTest.ToString() << std::endl;//<< " = " << rootTest.ToString() << std::endl;
+    //ExprFormula FormTest = "5.5^(1.5+x)+6x";
+    //std::cout << "(ExprFormula) " << FormTest.ToString() << std::endl;
+    //IntFormula IntFormTest = "5.5^(1.5+x)+6x";
+    //std::cout << "(IntFormula) " << IntFormTest.ToString() << std::endl;
+    //DoubleFormula DoubleFormTest = "5.5^(1.5+x)+6x";
+    //std::cout << "(DoubleFormula) " << DoubleFormTest.ToString() << std::endl;
     //------------------------------------------------------------------------------------------------
     //rootTest = MediumDec::Log(targetVal, rightVal);
     //floatingVal = log(5.0) / log(5.0);

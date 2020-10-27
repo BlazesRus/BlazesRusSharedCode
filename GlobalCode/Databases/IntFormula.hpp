@@ -163,7 +163,7 @@ namespace BlazesRusCode
                         switch (OpIterator->second.ElementCat)
                         {
                         case FormulaElementType::Pow:
-                            leftValue = VariableConversionFunctions::IntPowOp(targetValue, expValue);
+                            leftValue = VariableConversionFunctions::IntPowOp(leftValue, rightValue);
                             SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, rightValue);
                             break;
       //                  case FormulaElementType::Sqrt:

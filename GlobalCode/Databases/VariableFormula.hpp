@@ -447,7 +447,6 @@ namespace BlazesRusCode
         /// Initializes a new instance of the <see cref="VariableFormula" /> class.
         /// </summary>
         /// <param name="ElemValue">The elem value to read in order to create formula data.</param>
-        VariableFormula() { Data.push_back(FormData());//Initialize first (Formula) field}
-        }
+        VariableFormula() {};
     };
 }
