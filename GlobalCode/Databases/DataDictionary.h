@@ -5,7 +5,7 @@
 #ifndef BasicDataDictionary_IncludeGuard
 #define BasicDataDictionary_IncludeGuard
 
-#include "tsl\ordered_map.h"//Ordered map from https://github.com/Tessil/ordered-map
+#include "..\tsl\ordered_map.h"//Ordered map from https://github.com/Tessil/ordered-map
 
 /// <summary>
 /// Class named BasicDataDictionary.

@@ -129,9 +129,6 @@
     <ClInclude Include="Databases\MediumDecFormula.hpp">
       <Filter>Header Files\Databases</Filter>
     </ClInclude>
-    <ClInclude Include="Databases\IntFormula.h">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
     <ClInclude Include="AltNum\ModCheckerX.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
@@ -152,6 +149,18 @@
     </ClInclude>
     <ClInclude Include="OtherFunctions\StringFunctions.h">
       <Filter>Header Files\OtherFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\VariableFormula.hpp">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\ElementType.hpp">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\DoubleFormula.hpp">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\IntFormula.hpp">
+      <Filter>Header Files\Databases</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

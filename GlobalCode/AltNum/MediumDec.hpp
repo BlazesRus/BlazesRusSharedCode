@@ -3222,7 +3222,8 @@ namespace BlazesRusCode
                 case 100: value.IntValue = 10; break;
                 case 121: value.IntValue = 11; break;
                 case 144: value.IntValue = 12; break;
-                case 196: value.IntValue = 13; break;
+                case 169: value.IntValue = 13; break;
+                case 196: value.IntValue = 14; break;
                 case 225: value.IntValue = 15; break;
                 case 256: value.IntValue = 16; break;
                 case 289: value.IntValue = 17; break;

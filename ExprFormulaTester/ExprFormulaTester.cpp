@@ -3,17 +3,14 @@
 
 #include <iostream>
 
-//#include "AltNum\AltDec.hpp"
 #include "AltNum\MediumDec.hpp"
-//#include "Databases\MediumDecFormula.hpp"
 //#include <boost/timer/timer.hpp>
 using MediumDec = BlazesRusCode::MediumDec;
 
 #include "AltNum\AltNumDebug.hpp"
 #include "AltNum\FloatingOperations.hpp"
-//#include "Databases\IntFormula.h"
-//#include "Databases\MediumDecFormula.hpp"
-//using MediumDecFormula = BlazesRusCode::MediumDecFormulaData::MediumDecFormula;
+#include "Databases\MediumDecFormula.hpp"
+using MediumDecFormula = BlazesRusCode::MediumDecFormula;
 
 int main()
 {
@@ -162,20 +159,22 @@ int main()
     rootTest = BlazesRusDebug::LnV2(targetVal);
     std::cout << "Ln(" << targetVal.ToString() << ") = " << rootTest.ToString() << " FloatingResult:" << log(1.5) << std::endl;
     //---------------Testing Formula Code-------------------
-    //IntFormula IntFormTest("(5+5)^2");
-    //std::map<std::string, int> IntValueDefinitions;
+    //IntFormula IntFormTest = "(5+5)^2";
+    //tsl::ordered_map<std::string, int> IntValueDefinitions;
     //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
     //IntValueDefinitions.insert_or_assign("x", 2);
     //IntFormTest = "5+10x";
     //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
-    //MediumDecFormula AltFormTest = MediumDecFormula("5.5^(1.5+x)+6x");
-    //std::map<std::string, MediumDec&> ValueDefinitions;
+    MediumDecFormula AltFormTest = MediumDecFormula("5.5^(1.5+x)+6x");
+    //tsl::ordered_map<std::string, MediumDec&> RefDefinitions;
     //MediumDec XReference = MediumDec::One;
-    //ValueDefinitions.insert_or_assign("x", XReference);
-    //rootTest = AltFormTest.EvalValueRefs(ValueDefinitions);
+    //RefDefinitions.insert_or_assign("x", XReference);
+    //rootTest = AltFormTest.EvalValueRefs(RefDefinitions);
     //std::cout << AltFormTest.ToString() << " = " << rootTest.ToString()<< std::endl;
-    //std::map<std::string, MediumDec> ValueDefinitions02;
-    //ValueDefinitions02.insert_or_assign("x", "0.5");
+    tsl::ordered_map<std::string, MediumDec> ValueDefinitions;
+    ValueDefinitions.insert_or_assign("x", "0.5");
+    //rootTest = AltFormTest.EvalValues(ValueDefinitions);
+    std::cout << AltFormTest.ToString() << std::endl;//<< " = " << rootTest.ToString() << std::endl;
     //------------------------------------------------------------------------------------------------
     //rootTest = MediumDec::Log(targetVal, rightVal);
     //floatingVal = log(5.0) / log(5.0);

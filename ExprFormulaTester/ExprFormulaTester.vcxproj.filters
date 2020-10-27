@@ -80,5 +80,11 @@
     <ClInclude Include="..\GlobalCode\OtherFunctions\VariableConversionFunctions.h">
       <Filter>Header Files\OtherFunctions</Filter>
     </ClInclude>
+    <ClInclude Include="..\GlobalCode\Databases\VariableFormula.hpp">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GlobalCode\Databases\MediumDecFormula.hpp">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

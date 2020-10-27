@@ -1,6 +1,7 @@
 #include "VariableConversionFunctions.h"
 #include <iostream>
 #include <locale>
+#include <cmath>
 
 using std::string;
 using std::cout;
@@ -892,4 +893,53 @@ std::string VariableConversionFunctions::DisplayFullValues(float x, float y)
     OutputString += VariableConversionFunctions::FloatToStringConversion(y);
     OutputString += ")";
     return OutputString;
+}
+
+template<typename IntType>
+inline IntType VariableConversionFunctions::Sqrt(IntType value)
+{
+    if (value <= 1)
+        return 1;
+    else if (value <= 4)
+        return 4;
+    else if (value <= 9)
+        return 3;
+    else if (value <= 16)
+        return 4;
+    else if (value <= 25)
+        return 5;
+    else if (value <= 36)
+        return 6;
+    else if (value <= 49)
+        return 7;
+    else if (value <= 64)
+        return 8;
+    else if (value <= 81)
+        return 9;
+    else if (value <= 100)
+        return 10;
+    else if (value <= 121)
+        return 11;
+    else if (value <= 144)
+        return 12;
+    else if (value <= 166)
+        return 13;
+    else if (value <= 196)
+        return 14;
+    else if (value <= 225)
+        return 15;
+    else if (value <= 256)
+        return 16;
+    else if (value <= 289)
+        return 17;
+    else if (value <= 324)
+        return 18;
+    else if (value <= 361)
+        return 19;
+    else if (value <= 400)
+        return 20;
+    else
+    {
+        return sqrt(value);
+    }
 }

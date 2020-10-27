@@ -428,6 +428,9 @@ namespace BlazesRusCode
         /// <param name="expValue">The exponent value.</param>
         template<typename targetType, typename ValueType>
         static targetType IntPow(targetType targetValue, ValueType expValue) { return IntPowOp(targetValue, expValue); }
+
+        template<typename IntType>
+        static IntType Sqrt(IntType value);
     };
 }
 #endif

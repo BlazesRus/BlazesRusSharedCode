@@ -5,7 +5,6 @@
 
 #include "..\DLLAPI.h"
 #include "VariableFormula.hpp"
-#include "..\AltNum\MediumDec.hpp"
 #include "ElementType.hpp"
 
 //Preprocessor Switches
@@ -15,13 +14,11 @@
 /*
 ^ = Power of; * = Multiplication; / = Division; % = Modulus
 + = Addition; - = Subtraction; ! = Not;
+- = Negative
 && = And; || = Or;
-$ = XOR (bitwise XOR operation)(Not fully supported by MediumDec yet)
+$ = XOR (bitwise XOR operation)
 ++Prefix; --Prefix;
-(Bitwise operators--Not fully supported by MediumDec yet)&, |
-SqrtOf = Square Root of (applied to right value) (Not scanned yet but application code inside)
-thRootOf = Nth Root of (left value is equal to N; applied to right value) (Not scanned yet but application code inside)
-
+(Bitwise operators)&, |
 */
 //Unsupported Operators/Functions(for later)
 /*
@@ -33,14 +30,14 @@ Assignment operators not supported
 
 namespace BlazesRusCode
 {
-    class DLL_API MediumDecFormula : public VariableFormula<MediumDec>
+    class DLL_API IntFormula : public VariableFormula<int>
     {
     private:
-        using ReferenceMap = tsl::ordered_map<std::string, MediumDec&>;
-        using ValueMap = tsl::ordered_map<std::string, MediumDec>;
+        using ReferenceMap = tsl::ordered_map<std::string, int&>;
+        using ValueMap = tsl::ordered_map<std::string, int>;
     public:
         /// <summary>
-        /// Switches the operator into boolean value and erases old left+right side value.
+        /// Switches the op into boolean value and erases old left+right side value.
         /// </summary>
         /// <param name="FormCopy">The form copy.</param>
         /// <param name="OpVal">The op value.</param>
@@ -86,7 +83,7 @@ namespace BlazesRusCode
         /// <param name="OpKey">The operator key.</param>
         /// <param name="RightIterator">The right side value iterator.</param>
         /// <param name="Value">The value to turn operator into.</param>
-        void SwitchOpToRVal(FormData& FormCopy, FormElement& OpVal, int OpKey, FormData::iterator& RightIterator, MediumDec Value)
+        void SwitchOpToRVal(FormData& FormCopy, FormElement& OpVal, int OpKey, FormData::iterator& RightIterator, int Value)
         {
             FormCopy.NumMap.insert_or_assign(OpKey, Value);
             OpVal.ElementCat = FormulaElementType::Num;
@@ -107,7 +104,7 @@ namespace BlazesRusCode
         /// <param name="RightIterator">The right value iterator.</param>
         /// <param name="RightIterator">The right value iterator.</param>
         /// <param name="Value">The value to turn operator into.</param>
-        void SwitchOpToVal(FormData& FormCopy, FormElement& OpVal, int OpKey, FormData::iterator& LeftIterator, FormData::iterator& RightIterator, MediumDec Value)
+        void SwitchOpToVal(FormData& FormCopy, FormElement& OpVal, int OpKey, FormData::iterator& LeftIterator, FormData::iterator& RightIterator, int Value)
         {
             FormCopy.NumMap.insert_or_assign(OpKey, Value);
             OpVal.ElementCat = FormulaElementType::Num;
@@ -124,22 +121,22 @@ namespace BlazesRusCode
         /// Evaluates the order of operations.
         /// </summary>
         /// <param name="FormCopy">The form copy.</param>
-        /// <returns>BlazesRusCode::MediumDec</returns>
-        MediumDec EvaluateOrderOfOperations(FormData& FormCopy)
+        /// <returns>int</returns>
+        int EvaluateOrderOfOperations(FormData& FormCopy)
         {
-            MediumDec valResult;
+            int valResult;
 
             bool TempBool;
-            MediumDec leftValue;
-            MediumDec rightValue;
+            int leftValue;
+            int rightValue;
 
             IntVector& OpOrderElement = FormCopy.OpOrderMap[0];
             FormData::iterator OpIterator;
             auto OpVal = FormCopy.at(0);
             FormData::iterator LeftVal;
             FormData::iterator RightVal;
-            MediumDec leftResult;
-            MediumDec rightResult;
+            int leftResult;
+            int rightResult;
 
             //Applying operations via C++ variation of order of operations
             //https://en.cppreference.com/w/cpp/language/operator_precedence
@@ -166,17 +163,17 @@ namespace BlazesRusCode
                         switch (OpIterator->second.ElementCat)
                         {
                         case FormulaElementType::Pow:
-                            leftValue = MediumDec::PowOp(leftValue, rightValue);
+                            leftValue = VariableConversionFunctions::IntPowOp(targetValue, expValue);
                             SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, rightValue);
                             break;
-                        case FormulaElementType::Sqrt:
-                            rightValue = MediumDec::Sqrt(rightValue);
-                            SwitchOpToRVal(FormCopy, OpVal, OpIterator->first, RightVal, rightValue);
-                            break;
-                        case FormulaElementType::NthRoot:
-                            rightValue = MediumDec::NthRootV2(rightValue, (int)leftValue);
-                            SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, rightValue);
-                            break;
+      //                  case FormulaElementType::Sqrt:
+      //                      rightValue = int::Sqrt(rightValue);
+      //                      SwitchOpToRVal(FormCopy, OpVal, OpIterator->first, RightVal, rightValue);
+      //                      break;
+      //                  case FormulaElementType::NthRoot:
+      //                      rightValue = int::NthRootV2(rightValue, (int)leftValue);
+      //                      SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, rightValue);
+      //                      break;
                         }
                         break;
                     case 1:
@@ -193,7 +190,7 @@ namespace BlazesRusCode
                             }
                             else
                             {
-                                if (rightValue == MediumDec::Zero)//Zero is false otherwise count as if it was true
+                                if (rightValue == 0)//Zero is false otherwise count as if it was true
                                     SwitchOpToRBoolVal(FormCopy, OpVal, RightVal, true);
                                 else
                                     SwitchOpToRBoolVal(FormCopy, OpVal, RightVal, false);
@@ -201,7 +198,7 @@ namespace BlazesRusCode
                             FormCopy.erase(OpIterator);
                             break;
                         case FormulaElementType::Negative://Only applies to numbers
-                            rightValue.SwapNegativeStatus();//rightValue = -rightValue;
+                            rightValue = -rightValue;
                             FormCopy.NumMap[RightVal->first] = rightValue;
                             break;
                         }
@@ -299,11 +296,11 @@ namespace BlazesRusCode
                 int KeyIndex = ElementIter->first;
                 if (ElementIter->second.ElementCat == FormulaElementType::trueVal)
                 {
-                    return MediumDec::One;
+                    return 1;
                 }
                 else if (ElementIter->second.ElementCat == FormulaElementType::falseVal)
                 {
-                    return MediumDec::Zero;
+                    return 0;
                 }
                 else if (ElementIter->second.ElementCat == FormulaElementType::Num)
                 {
@@ -327,7 +324,7 @@ namespace BlazesRusCode
             }
         }
 
-        MediumDec EvaluateOrderOfOperationsFromCopy(FormData FormCopy)
+        int EvaluateOrderOfOperationsFromCopy(FormData FormCopy)
         {
             return EvaluateOrderOfOperations(FormCopy);
         }
@@ -342,7 +339,7 @@ namespace BlazesRusCode
         {
             std::string CurString;
             char firstChar;
-            MediumDec targetResult;
+            int targetResult;
             for (FormData::iterator CurrentVal = Data.at(FormIndex).begin(), LastVal = Data.at(FormIndex).end(); CurrentVal != LastVal; ++CurrentVal)
             {
                 if (CurrentVal->second.ElementCat == FormulaElementType::Formula)//FormulaDetected
@@ -367,7 +364,7 @@ namespace BlazesRusCode
         {
             std::string CurString;
             char firstChar;
-            MediumDec targetResult;
+            int targetResult;
             for (FormData::iterator CurrentVal = Data.at(FormIndex).begin(), LastVal = Data.at(FormIndex).end(); CurrentVal != LastVal; ++CurrentVal)
             {
                 if (CurrentVal->second.ElementCat == FormulaElementType::Formula)//FormulaDetected
@@ -382,28 +379,28 @@ namespace BlazesRusCode
             }
         }
 
-        MediumDec RecursivelyEvalRefValues(ReferenceMap& ElementValues, size_t FormIndex)
+        int RecursivelyEvalRefValues(ReferenceMap& ElementValues, size_t FormIndex)
         {//Each Formula Calculates order of operations etc separately
             FormData FormCopy = Data.at(FormIndex);
             SwapReferencedData(FormCopy, ElementValues, FormIndex);
             return EvaluateOrderOfOperations(FormCopy);
         }
 
-        MediumDec RecursivelyEvalValues(ValueMap& ElementValues, size_t FormIndex)
+        int RecursivelyEvalValues(ValueMap& ElementValues, size_t FormIndex)
         {//Each Formula Calculates order of operations etc separately
             FormData FormCopy = Data.at(FormIndex);
             SwapUpdatedFormData(FormCopy, ElementValues, FormIndex);
             return EvaluateOrderOfOperations(FormCopy);
         }
 
-        MediumDec EvalValueRefs(ReferenceMap ElementValues)
+        int EvalValueRefs(ReferenceMap ElementValues)
         {
             FormData FormCopy = Data.at(0);//Duplicate values so can erase parts when calculating
             SwapReferencedData(FormCopy, ElementValues);
             return EvaluateOrderOfOperations(FormCopy);
         }
 
-        MediumDec EvalValues(ValueMap ElementValues)
+        int EvalValues(ValueMap ElementValues)
         {
             FormData FormCopy = Data.at(0);//Duplicate values so can erase parts when calculating
             SwapUpdatedFormData(FormCopy, ElementValues);
@@ -431,7 +428,7 @@ namespace BlazesRusCode
                     strBuffer += ")";
                     break;
                 case FormulaElementType::Num:
-                    strBuffer += Data.at(0).NumMap.at(CurrentVal->first).ToString();
+                    strBuffer += Data.at(0).NumMap.at(CurrentVal->first);
                     break;
                 case FormulaElementType::Variable:
                     strBuffer += Data.at(FormIndex).VariableMap.at(CurrentVal->first).Name;
@@ -544,7 +541,7 @@ namespace BlazesRusCode
                     strBuffer += ")";
                     break;
                 case FormulaElementType::Num:
-                    strBuffer += Data.at(0).NumMap.at(CurrentVal->first).ToString();
+                    strBuffer += Data.at(0).NumMap.at(CurrentVal->first);
                     break;
                 case FormulaElementType::Variable:
                     strBuffer += Data.at(0).VariableMap.at(CurrentVal->first).Name;
@@ -640,10 +637,10 @@ namespace BlazesRusCode
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MediumDecFormula" /> class.
+        /// Initializes a new instance of the <see cref="IntFormula" /> class.
         /// </summary>
         /// <param name="ElemValue">The elem value to read in order to create formula data.</param>
-        MediumDecFormula(std::string& ElemValue)
+        IntFormula(std::string& ElemValue)
         {
             //0 = ???
             //1 = Operator
@@ -960,15 +957,15 @@ namespace BlazesRusCode
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MediumDecFormula" /> class from StringCopy instead of reference.
+        /// Initializes a new instance of the <see cref="IntFormula" /> class from StringCopy instead of reference.
         /// </summary>
         /// <param name="ElemValue">The elem value to read in order to create formula data.</param>
-        MediumDecFormula(std::string ElemValue, bool BlankVar) : MediumDecFormula(ElemValue) {}
+        IntFormula(std::string ElemValue, bool BlankVar) : IntFormula(ElemValue) {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MediumDecFormula" /> class.(fix for initializing without copying from a string value set)
+        /// Initializes a new instance of the <see cref="IntFormula" /> class.(fix for initializing without copying from a string value set)
         /// </summary>
         /// <param name="ElemValue">The elem value to read in order to create formula data.</param>
-        MediumDecFormula(const char* strVal) : MediumDecFormula(std::string(strVal),true) {}
+        IntFormula(const char* strVal) : IntFormula(std::string(strVal),true) {}
     };
 }
