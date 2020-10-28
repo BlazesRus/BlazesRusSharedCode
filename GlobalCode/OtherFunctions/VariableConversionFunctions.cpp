@@ -7,6 +7,7 @@ using std::string;
 using std::cout;
 using BlazesRusCode::VariableConversionFunctions;
 
+unsigned __int8 VariableConversionFunctions::UBytePowerOfTens[3] = { 1, 10, 100 };
 int VariableConversionFunctions::PowerOfTens[10] = { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000 };
 long VariableConversionFunctions::PowerOfTens64Bit[19] = { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000, 100000000000, 1000000000000, 10000000000000, 100000000000000, 1000000000000000, 10000000000000000, 100000000000000000, 1000000000000000000 };
 
@@ -562,14 +563,19 @@ std::string VariableConversionFunctions::IntToStringConversion(int IntegerHalf)
     int PowResult;
     for (int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
     {
-        PowResult = IntPow(10, i);
-        CurrentDigit = floor(IntegerHalf / PowResult);
-        IntegerHalf -= CurrentDigit * PowResult;//(size_t) floor(CurrentDigit*pow(10, i));
-        TempString += DigitAsChar(CurrentDigit);
+        if (i == 0)
+            TempString += DigitAsChar(IntegerHalf);
+        else
+        {
+            PowResult = VariableConversionFunctions::PowerOfTens[i];
+            CurrentDigit = floor(IntegerHalf / PowResult);
+            IntegerHalf -= CurrentDigit * PowResult;
+            TempString += DigitAsChar(CurrentDigit);
+        }
     }
     return TempString;
 }
-//
+
 std::string VariableConversionFunctions::IntToStringConversion(unsigned int IntegerHalf)
 {
     if (IntegerHalf == 0)
@@ -579,10 +585,59 @@ std::string VariableConversionFunctions::IntToStringConversion(unsigned int Inte
     int PowResult;
     for (int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
     {
-        PowResult = IntPow(10, i);
-        CurrentDigit = floor(IntegerHalf / PowResult);
-        IntegerHalf -= CurrentDigit * PowResult;
-        TempString += DigitAsChar(CurrentDigit);
+        if (i == 0)
+            TempString += DigitAsChar(IntegerHalf);
+        else
+        {
+            PowResult = VariableConversionFunctions::PowerOfTens[i];
+            CurrentDigit = floor(IntegerHalf / PowResult);
+            IntegerHalf -= CurrentDigit * PowResult;
+            TempString += DigitAsChar(CurrentDigit);
+        }
+    }
+    return TempString;
+}
+
+std::string VariableConversionFunctions::XIntToStringConversion(size_t IntegerHalf)
+{
+    if (IntegerHalf == 0)
+        return "0";
+    string TempString = "";
+    unsigned __int8 CurrentDigit;
+    size_t PowResult;
+    for (int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
+    {
+        if (i == 0)
+            TempString += DigitAsChar(IntegerHalf);
+        else
+        {
+            PowResult = VariableConversionFunctions::PowerOfTens64Bit[i];
+            CurrentDigit = floor(IntegerHalf / PowResult);
+            IntegerHalf -= CurrentDigit * PowResult;
+            TempString += DigitAsChar(CurrentDigit);
+        }
+    }
+    return TempString;
+}
+
+std::string BlazesRusCode::VariableConversionFunctions::UnsignedByteToStringConversion(unsigned __int8 IntegerHalf)
+{
+    if (IntegerHalf == 0)
+        return "0";
+    std::string TempString = "";
+    unsigned __int8 CurrentDigit;
+    int PowResult;
+    for (int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
+    {
+        if (i == 0)
+            TempString += DigitAsChar(IntegerHalf);
+        else
+        {
+            PowResult = VariableConversionFunctions::UBytePowerOfTens[i];
+            CurrentDigit = floor(IntegerHalf / PowResult);
+            IntegerHalf -= CurrentDigit * PowResult;
+            TempString += DigitAsChar(CurrentDigit);
+        }
     }
     return TempString;
 }

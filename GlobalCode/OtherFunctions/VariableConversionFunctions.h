@@ -18,6 +18,7 @@
 #else
     #include "..\DLLAPI.h"
 #endif
+#include <string>
 
 namespace BlazesRusCode
 {
@@ -96,6 +97,10 @@ namespace BlazesRusCode
     class DLL_API VariableConversionFunctions
     {
     public:
+        /// <summary>
+        /// Power of Tens array limited to unsigned int8 range
+        /// </summary>
+        static unsigned __int8 UBytePowerOfTens[3];
         static int PowerOfTens[10];
         static long PowerOfTens64Bit[19];
 
@@ -272,13 +277,19 @@ namespace BlazesRusCode
             int PowResult;
             for (int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
             {
-                PowResult = IntPow(10, i);
-                CurrentDigit = floor(IntegerHalf / PowResult);
-                IntegerHalf -= CurrentDigit * PowResult;//(size_t) floor(CurrentDigit*pow(10, i));
-                TempString += DigitAsChar(CurrentDigit);
+                if (i == 0)
+                    TempString += DigitAsChar(IntegerHalf);
+                else
+                {
+                    PowResult = VariableConversionFunctions::PowerOfTens[i];//IntPow(10, i);
+                    CurrentDigit = floor(IntegerHalf / PowResult);
+                    IntegerHalf -= CurrentDigit * PowResult;//(size_t) floor(CurrentDigit*pow(10, i));
+                    TempString += DigitAsChar(CurrentDigit);
+                }
             }
             return TempString;
         }
+
         /// <summary>
         /// Converts unsigned IntType variable into String
         /// </summary>
@@ -294,13 +305,26 @@ namespace BlazesRusCode
             int PowResult;
             for (int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
             {
-                PowResult = IntPow(10, i);
-                CurrentDigit = floor(IntegerHalf / PowResult);
-                IntegerHalf -= CurrentDigit * PowResult;
-                TempString += DigitAsChar(CurrentDigit);
+                if (i == 0)
+                    TempString += DigitAsChar(IntegerHalf);
+                else
+                {
+                    PowResult = VariableConversionFunctions::PowerOfTens[i];
+                    CurrentDigit = floor(IntegerHalf / PowResult);
+                    IntegerHalf -= CurrentDigit * PowResult;
+                    TempString += DigitAsChar(CurrentDigit);
+                }
             }
             return TempString;
         }
+
+        /// <summary>
+        /// Converts unsigned IntType variable into String
+        /// </summary>
+        /// <param name="IntegerHalf">The integer half.</param>
+        /// <returns>std::string</returns>
+        static std::string UnsignedByteToStringConversion(unsigned __int8 IntegerHalf);
+
         /// <summary>
         /// Converts int into String
         /// </summary>
@@ -313,6 +337,13 @@ namespace BlazesRusCode
         /// <param name="IntegerHalf">The integer half.</param>
         /// <returns>std.string</returns>
         static std::string IntToStringConversion(unsigned int IntegerHalf);
+
+        /// <summary>
+        /// Converts unsigned int64 into String
+        /// </summary>
+        /// <param name="IntegerHalf">The integer half.</param>
+        /// <returns>std.string</returns>
+        static std::string XIntToStringConversion(size_t IntegerHalf);
 
         //************************************
         //FloatToDouble code from https://github.com/PIlin/nanopb/blob/master/example_avr_double/double_conversion.c

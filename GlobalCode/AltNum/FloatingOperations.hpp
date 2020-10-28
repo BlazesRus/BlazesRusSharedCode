@@ -21,6 +21,7 @@
 #endif
 
 #include <cmath>
+#include <cfloat>
 
 namespace BlazesFloatingCode
 {
@@ -200,8 +201,5 @@ namespace BlazesFloatingCode
     {
 
     }
-*/
-/*
-
 */
 }
