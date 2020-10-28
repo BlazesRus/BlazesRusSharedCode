@@ -71,22 +71,13 @@
     <ClInclude Include="..\GlobalCode\AltNum\FloatingOperations.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\AltNum\MediumDec_Math.hpp">
-      <Filter>Header Files\AltNum</Filter>
-    </ClInclude>
     <ClInclude Include="..\GlobalCode\AltNum\ModCheckerXX.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
     <ClInclude Include="..\GlobalCode\OtherFunctions\VariableConversionFunctions.h">
       <Filter>Header Files\OtherFunctions</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\Databases\VariableFormula.hpp">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GlobalCode\Databases\MediumDecFormula.hpp">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GlobalCode\Databases\DoubleFormula.hpp">
+    <ClInclude Include="..\GlobalCode\Databases\ElementType.hpp">
       <Filter>Header Files\Databases</Filter>
     </ClInclude>
   </ItemGroup>

@@ -250,68 +250,69 @@ namespace BlazesRusCode
         // Parameter: double TempValue
         //************************************
         static std::string DoubleToStringConversion(double TempValue);
-        //************************************
-        // Method:    IntToStringConversion
-        // FullName:  VariableConversionFunctions::IntToStringConversion
-        // Access:    public static
-        // Returns:   std::string
-        // Qualifier:
-        // Parameter: int TempValue
-        //************************************
-        static std::string IntToStringConversion(int TempValue);
-        //************************************
-        // Method:    IntToStringConversion
-        // FullName:  VariableConversionFunctions::IntToStringConversion
-        // Access:    public static
-        // Returns:   std::string
-        // Qualifier:
-        // Parameter: unsigned int TempValue
-        //************************************
-        static std::string IntToStringConversion(unsigned int TempValue);
-        ////************************************
-        //// Method:    XIntToStringConversion
-        //// FullName:  VariableConversionFunctions::XIntToStringConversion
-        //// Access:    public static
-        //// Returns:   std::string
-        //// Qualifier:
-        //// Parameter: long long TempValue
-        ////************************************
-        //static std::string XIntToStringConversion(long long TempValue)
-        //{
-        //    string TempString = "";
-        //    bool IsNegative = (TempValue < 0) ? true : false;
-        //    if (IsNegative)
-        //    {
-        //        TempString += "-";
-        //        TempValue *= -1;
-        //    }
-        //    long long int IntegerHalf = TempValue;
-        //    unsigned __int8 CurrentDigit;
-        //    if (IntegerHalf == 0)
-        //    {
-        //        TempString += "0";
-        //    }
-        //    else
-        //    {
-        //        for (long long int i = NumberOfPlaces(IntegerHalf); i >= 0; --i)
-        //        {
-        //            CurrentDigit = floor(IntegerHalf / pow(10, i));
-        //            IntegerHalf -= (long long int) floor(CurrentDigit * pow(10, i));
-        //            TempString += DigitAsChar(CurrentDigit);
-        //        }
-        //    }
-        //    return TempString;
-        //}
 
-        //************************************
-        // Method:    XIntToStringConversion
-        // FullName:  VariableConversionFunctions::XIntToStringConversion
-        // Access:    public static
-        // Returns:   std::string
-        // Qualifier:
-        // Parameter: size_t TempValue
-        //************************************
-        static std::string XIntToStringConversion(size_t TempValue);
+        /// <summary>
+        /// Converts Signed IntType variable into String
+        /// </summary>
+        /// <param name="IntegerHalf">The integer half.</param>
+        /// <returns>std.string</returns>
+        template<typename IntType>
+        static std::string SignedIntToStringConversion(IntType IntegerHalf)
+        {
+            if (IntegerHalf == 0)
+                return "0";
+            std::string TempString = "";
+            bool IsNegative = (IntegerHalf < 0) ? true : false;
+            if (IsNegative)
+            {
+                TempString += "-";
+                IntegerHalf *= -1;
+            }
+            unsigned __int8 CurrentDigit;
+            int PowResult;
+            for (int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
+            {
+                PowResult = IntPow(10, i);
+                CurrentDigit = floor(IntegerHalf / PowResult);
+                IntegerHalf -= CurrentDigit * PowResult;//(size_t) floor(CurrentDigit*pow(10, i));
+                TempString += DigitAsChar(CurrentDigit);
+            }
+            return TempString;
+        }
+        /// <summary>
+        /// Converts unsigned IntType variable into String
+        /// </summary>
+        /// <param name="IntegerHalf">The integer half.</param>
+        /// <returns>std::string</returns>
+        template<typename IntType>
+        static std::string UnsignedIntToStringConversion(IntType IntegerHalf)
+        {
+            if (IntegerHalf == 0)
+                return "0";
+            std::string TempString = "";
+            unsigned __int8 CurrentDigit;
+            int PowResult;
+            for (int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
+            {
+                PowResult = IntPow(10, i);
+                CurrentDigit = floor(IntegerHalf / PowResult);
+                IntegerHalf -= CurrentDigit * PowResult;
+                TempString += DigitAsChar(CurrentDigit);
+            }
+            return TempString;
+        }
+        /// <summary>
+        /// Converts int into String
+        /// </summary>
+        /// <param name="IntegerHalf">The integer half.</param>
+        /// <returns>std.string</returns>
+        static std::string IntToStringConversion(int IntegerHalf);
+        /// <summary>
+        /// Converts unsigned int into String
+        /// </summary>
+        /// <param name="IntegerHalf">The integer half.</param>
+        /// <returns>std.string</returns>
+        static std::string IntToStringConversion(unsigned int IntegerHalf);
 
         //************************************
         //FloatToDouble code from https://github.com/PIlin/nanopb/blob/master/example_avr_double/double_conversion.c

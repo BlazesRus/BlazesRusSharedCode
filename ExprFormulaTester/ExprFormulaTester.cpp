@@ -15,11 +15,17 @@ using MediumDec = BlazesRusCode::MediumDec;
 //using ExprFormula = BlazesRusCode::ExprFormula;
 //#include "Databases\IntFormula.hpp"
 //using IntFormula = BlazesRusCode::IntFormula;
-#include "Databases\DoubleFormula.hpp"
-using DoubleFormula = BlazesRusCode::DoubleFormula;
+//#include "Databases\DoubleFormula.hpp"
+//using DoubleFormula = BlazesRusCode::DoubleFormula;
+
+#include <parallel_hashmap/phmap.h>
+using ParallelIntValMap = phmap::node_hash_map<int, MediumDec>;
+using ParallelStringValMap = phmap::node_hash_map<std::string, MediumDec>;
+using ParallelStringIntMap = phmap::node_hash_map<std::string, int>;
 
 int main()
 {
+
     MediumDec targetVal = "5.5";
     MediumDec rightVal = "1.25";
     MediumDec resDiff = targetVal - rightVal;
@@ -164,14 +170,14 @@ int main()
     rightVal = 5;
     rootTest = BlazesRusDebug::LnV2(targetVal);
     std::cout << "Ln(" << targetVal.ToString() << ") = " << rootTest.ToString() << " FloatingResult:" << log(1.5) << std::endl;
-    //---------------Testing Formula Code-------------------
+    std::cout << "---------------Testing Formula Code-------------------" << std::endl;
     //IntFormula IntFormTest = "(5+5)^2";
     //tsl::ordered_map<std::string, int> IntValueDefinitions;
     //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
     //IntValueDefinitions.insert_or_assign("x", 2);
     //IntFormTest = "5+10x";
     //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
-    std::cout << "----Formula Code Tests----" << std::endl;
+    //std::cout << "-------------------------Formula Code Tests---------------------------------" << std::endl;
     //MediumDecFormula AltFormTest = "5.5^(1.5+x)+6x";
     //tsl::ordered_map<std::string, MediumDec&> RefDefinitions;
     //MediumDec XReference = MediumDec::One;
@@ -183,13 +189,29 @@ int main()
     //ValueDefinitions.insert_or_assign("x", MediumDec::One);
     //rootTest = AltFormTest.EvalValues(ValueDefinitions);
     //std::cout << "(MediumDecFormula) "<< AltFormTest.ToString() << std::endl;//<< " = " << rootTest.ToString() << std::endl;
+
     //ExprFormula FormTest = "5.5^(1.5+x)+6x";
     //std::cout << "(ExprFormula) " << FormTest.ToString() << std::endl;
+
     //IntFormula IntFormTest = "5.5^(1.5+x)+6x";
     //std::cout << "(IntFormula) " << IntFormTest.ToString() << std::endl;
-    DoubleFormula DoubleFormTest = "5.5+(5.5+2)";
-    std::cout << "(DoubleFormula) " << DoubleFormTest.ToString() << std::endl;
-    //------------------------------------------------------------------------------------------------
+
+    //DoubleFormula DoubleFormTest = "5.5+(5.5+2)";
+    //std::cout << "(DoubleFormula) " << DoubleFormTest.ToString() << std::endl;
+    std::cout << "--------------------------Testing ParallelMap Code-----------------------------" << std::endl;
+    /// <summary>
+    /// The map that stores the actual numbers referenced
+    /// </summary>
+    ParallelIntValMap NumMap;
+    NumMap.insert_or_assign(5, MediumDec::Zero);
+    NumMap.insert_or_assign(3, MediumDec::One);
+    /// <summary>
+    /// The variable storage map with Variable Name linked to related Index(shortcut)
+    /// </summary>
+    ParallelStringIntMap VariableStorageMap;
+    VariableStorageMap.insert_or_assign("x", 5);
+    VariableStorageMap.insert_or_assign("y", 3);
+    //std::cout << "-----------------Testing Log Code---------------------" << std::endl;
     //rootTest = MediumDec::Log(targetVal, rightVal);
     //floatingVal = log(5.0) / log(5.0);
     //std::cout << "log base_"<< rightVal.ToString() << "_of" << targetVal.ToString() << " = " << rootTest.ToString() << " FloatingResult:" << floatingVal << std::endl;

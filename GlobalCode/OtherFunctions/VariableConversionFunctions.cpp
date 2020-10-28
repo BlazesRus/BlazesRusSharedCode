@@ -7,7 +7,6 @@ using std::string;
 using std::cout;
 using BlazesRusCode::VariableConversionFunctions;
 
-
 int VariableConversionFunctions::PowerOfTens[10] = { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000 };
 long VariableConversionFunctions::PowerOfTens64Bit[19] = { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000, 100000000000, 1000000000000, 10000000000000, 100000000000000, 1000000000000000, 10000000000000000, 100000000000000000, 1000000000000000000 };
 
@@ -540,14 +539,14 @@ std::string VariableConversionFunctions::DoubleToStringConversion(double TempVal
     return TempString;
 }
 
-//************************************
-// Method:    IntToStringConversion
-// FullName:  VariableConversionFunctions::IntToStringConversion
-// Access:    public static
-// Returns:   std::string
-// Qualifier:
-// Parameter: int TempValue
-//************************************
+////************************************
+//// Method:    IntToStringConversion
+//// FullName:  VariableConversionFunctions::IntToStringConversion
+//// Access:    public static
+//// Returns:   std::string
+//// Qualifier:
+//// Parameter: int TempValue
+////************************************
 std::string VariableConversionFunctions::IntToStringConversion(int IntegerHalf)
 {
     if (IntegerHalf == 0)
@@ -570,46 +569,17 @@ std::string VariableConversionFunctions::IntToStringConversion(int IntegerHalf)
     }
     return TempString;
 }
-
+//
 std::string VariableConversionFunctions::IntToStringConversion(unsigned int IntegerHalf)
 {
     if (IntegerHalf == 0)
         return "0";
     string TempString = "";
-    bool IsNegative = (IntegerHalf < 0) ? true : false;
-    if (IsNegative)
-    {
-        TempString += "-";
-        IntegerHalf *= -1;
-    }
     unsigned __int8 CurrentDigit;
     int PowResult;
     for (int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
     {
         PowResult = IntPow(10, i);
-        CurrentDigit = floor(IntegerHalf / PowResult);
-        IntegerHalf -= CurrentDigit * PowResult;
-        TempString += DigitAsChar(CurrentDigit);
-    }
-    return TempString;
-}
-
-std::string VariableConversionFunctions::XIntToStringConversion(size_t IntegerHalf)
-{
-    if (IntegerHalf == 0)
-        return "0";
-    string TempString = "";
-    bool IsNegative = (IntegerHalf < 0) ? true : false;
-    if (IsNegative)
-    {
-        TempString += "-";
-        IntegerHalf *= -1;
-    }
-    unsigned __int8 CurrentDigit;
-    int PowResult;
-    for (int i = NumberOfPlaces(IntegerHalf); i >= 0; i--)
-    {
-        PowResult = IntPow(10L, i);
         CurrentDigit = floor(IntegerHalf / PowResult);
         IntegerHalf -= CurrentDigit * PowResult;
         TempString += DigitAsChar(CurrentDigit);

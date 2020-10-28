@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros">
     <BoostDir>C:/UserFiles/ProgrammingTools/Libraries/C++Code/BoostLib/</BoostDir>
     <GlobalCode>C:/UserFiles/GitHub/MultiPlatformGlobalCode/GlobalCode/</GlobalCode>
-	<ParallelMap>C:/UserFiles/GitHub/Parallel-Hashmap/</ParallelMap>
+    <ParallelMap>C:/UserFiles/GitHub/Parallel-Hashmap/</ParallelMap>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -146,6 +146,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(BoostRoot);$(GlobalCode);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -163,15 +164,12 @@
     <ClInclude Include="..\GlobalCode\AltNum\AltNumDebug.hpp" />
     <ClInclude Include="..\GlobalCode\AltNum\FloatingOperations.hpp" />
     <ClInclude Include="..\GlobalCode\AltNum\MediumDec.hpp" />
-    <ClInclude Include="..\GlobalCode\AltNum\MediumDec_Math.hpp" />
     <ClInclude Include="..\GlobalCode\AltNum\ModCheckerXX.hpp" />
     <ClInclude Include="..\GlobalCode\Databases\CustomDictionary.h" />
     <ClInclude Include="..\GlobalCode\Databases\CustomOrderedDictionary.h" />
     <ClInclude Include="..\GlobalCode\Databases\DataDictionary.h" />
-    <ClInclude Include="..\GlobalCode\Databases\DoubleFormula.hpp" />
+    <ClInclude Include="..\GlobalCode\Databases\ElementType.hpp" />
     <ClInclude Include="..\GlobalCode\Databases\IndexedDictionary.h" />
-    <ClInclude Include="..\GlobalCode\Databases\MediumDecFormula.hpp" />
-    <ClInclude Include="..\GlobalCode\Databases\VariableFormula.hpp" />
     <ClInclude Include="..\GlobalCode\DLLAPI.h" />
     <ClInclude Include="..\GlobalCode\tsl\ordered_map.h" />
     <ClInclude Include="..\GlobalCode\OtherFunctions\VariableConversionFunctions.h" />
