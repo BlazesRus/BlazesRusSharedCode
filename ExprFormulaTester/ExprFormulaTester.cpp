@@ -9,8 +9,8 @@ using MediumDec = BlazesRusCode::MediumDec;
 
 #include "AltNum\AltNumDebug.hpp"
 #include "AltNum\FloatingOperations.hpp"
-//#include "Databases\MediumDecFormula.hpp"
-//using MediumDecFormula = BlazesRusCode::MediumDecFormula;
+#include "Databases\MediumDecFormula.hpp"
+using MediumDecFormula = BlazesRusCode::MediumDecFormula;
 //#include "Databases\ExprFormula.h"
 //using ExprFormula = BlazesRusCode::ExprFormula;
 //#include "Databases\IntFormula.hpp"
@@ -18,10 +18,10 @@ using MediumDec = BlazesRusCode::MediumDec;
 //#include "Databases\DoubleFormula.hpp"
 //using DoubleFormula = BlazesRusCode::DoubleFormula;
 
-#include <parallel_hashmap/phmap.h>
-using ParallelIntValMap = phmap::node_hash_map<int, MediumDec>;
-using ParallelStringValMap = phmap::node_hash_map<std::string, MediumDec>;
-using ParallelStringIntMap = phmap::node_hash_map<std::string, int>;
+//#include <parallel_hashmap/phmap.h>
+//using ParallelIntValMap = phmap::node_hash_map<int, MediumDec>;
+//using ParallelStringValMap = phmap::node_hash_map<std::string, MediumDec>;
+//using ParallelStringIntMap = phmap::node_hash_map<std::string, int>;
 
 int main()
 {
@@ -159,26 +159,28 @@ int main()
     std::cout << "Floating 4th root of" << (double)targetVal << "= " << floatingVal<< std::endl;
     */
     //----------------------------------------------------------------------
-    rootTest = BlazesRusDebug::LnV2(targetVal);
-    std::cout << "Ln(" << targetVal.ToString() << ") = " << rootTest.ToString() << " FloatingResult:" << log((double)targetVal) << std::endl;
-    rightVal = "0.25";
-    floatingVal = pow(5.0, 0.25);
-    rootTest = MediumDec::Pow(targetVal, rightVal);
-    std::cout << targetVal.ToString() << "^" << rightVal.ToString() << " = " << rootTest.ToString() << " FloatingResult:" << floatingVal << std::endl;
-    //---------------Log Tests------------------------------
-    targetVal = "1.5";
-    rightVal = 5;
-    rootTest = BlazesRusDebug::LnV2(targetVal);
-    std::cout << "Ln(" << targetVal.ToString() << ") = " << rootTest.ToString() << " FloatingResult:" << log(1.5) << std::endl;
+    //floatingVal = pow(5.0, 0.25);
+    //rootTest = MediumDec::Pow(targetVal, rightVal);
+    //std::cout << targetVal.ToString() << "^" << rightVal.ToString() << " = " << rootTest.ToString() << " FloatingResult:" << floatingVal << std::endl;
+    std::cout << "---------------Log Tests------------------------------" << std::endl;
+    BlazesRusDebug::LnV2(targetVal);//Result off by -28(compared to precision) at 43 WPow(20 Loop iterations) compared to precision Calculator
+    targetVal = 10;
+    BlazesRusDebug::LnV2(targetVal);//Result off by (compared to precision) at  WPow( Loop iterations) compared to precision Calculator
+    targetVal = 100;
+    BlazesRusDebug::LnV2(targetVal);//Result off by (compared to precision) at  WPow( Loop iterations) compared to precision Calculator
+    targetVal = 133;
+    BlazesRusDebug::LnV2(targetVal);//Result off by (compared to precision) at  WPow( Loop iterations) compared to precision Calculator
     std::cout << "---------------Testing Formula Code-------------------" << std::endl;
+    //std::cout << "-------------------------Formula Code Tests---------------------------------" << std::endl;
     //IntFormula IntFormTest = "(5+5)^2";
     //tsl::ordered_map<std::string, int> IntValueDefinitions;
     //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
     //IntValueDefinitions.insert_or_assign("x", 2);
     //IntFormTest = "5+10x";
     //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
-    //std::cout << "-------------------------Formula Code Tests---------------------------------" << std::endl;
+
     //MediumDecFormula AltFormTest = "5.5^(1.5+x)+6x";
+
     //tsl::ordered_map<std::string, MediumDec&> RefDefinitions;
     //MediumDec XReference = MediumDec::One;
     //RefDefinitions.insert_or_assign("x", XReference);
@@ -188,31 +190,33 @@ int main()
     //tsl::ordered_map<std::string, MediumDec> ValueDefinitions;
     //ValueDefinitions.insert_or_assign("x", MediumDec::One);
     //rootTest = AltFormTest.EvalValues(ValueDefinitions);
-    //std::cout << "(MediumDecFormula) "<< AltFormTest.ToString() << std::endl;//<< " = " << rootTest.ToString() << std::endl;
+    //std::cout << "(MediumDecFormula) "<< AltFormTest.ToString() << " = " << rootTest.ToString() << std::endl;
+    //AltFormTest = "5+5";
+    //std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << " = " << rootTest.ToString() << std::endl;
+    //AltFormTest = "5+(5/4)";
+    //std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << " = " << rootTest.ToString() << std::endl;
+    //AltFormTest = "(4/3)/2";
+    //std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << " = " << rootTest.ToString() << std::endl;
 
     //ExprFormula FormTest = "5.5^(1.5+x)+6x";
     //std::cout << "(ExprFormula) " << FormTest.ToString() << std::endl;
 
-    //IntFormula IntFormTest = "5.5^(1.5+x)+6x";
-    //std::cout << "(IntFormula) " << IntFormTest.ToString() << std::endl;
 
     //DoubleFormula DoubleFormTest = "5.5+(5.5+2)";
     //std::cout << "(DoubleFormula) " << DoubleFormTest.ToString() << std::endl;
-    std::cout << "--------------------------Testing ParallelMap Code-----------------------------" << std::endl;
-    /// <summary>
-    /// The map that stores the actual numbers referenced
-    /// </summary>
-    ParallelIntValMap NumMap;
-    NumMap.insert_or_assign(5, MediumDec::Zero);
-    NumMap.insert_or_assign(3, MediumDec::One);
-    /// <summary>
-    /// The variable storage map with Variable Name linked to related Index(shortcut)
-    /// </summary>
-    ParallelStringIntMap VariableStorageMap;
-    VariableStorageMap.insert_or_assign("x", 5);
-    VariableStorageMap.insert_or_assign("y", 3);
-    //std::cout << "-----------------Testing Log Code---------------------" << std::endl;
-    //rootTest = MediumDec::Log(targetVal, rightVal);
-    //floatingVal = log(5.0) / log(5.0);
-    //std::cout << "log base_"<< rightVal.ToString() << "_of" << targetVal.ToString() << " = " << rootTest.ToString() << " FloatingResult:" << floatingVal << std::endl;
+    ////std::cout << "--------------------------Testing ParallelMap Code-----------------------------" << std::endl;
+    /////// <summary>
+    /////// The map that stores the actual numbers referenced
+    /////// </summary>
+    ////ParallelIntValMap NumMap;
+    ////NumMap.insert_or_assign(5, MediumDec::Zero);
+    ////NumMap.insert_or_assign(3, MediumDec::One);
+    /////// <summary>
+    /////// The variable storage map with Variable Name linked to related Index(shortcut)
+    /////// </summary>
+    ////ParallelStringIntMap VariableStorageMap;
+    ////VariableStorageMap.insert_or_assign("x", 5);
+    ////VariableStorageMap.insert_or_assign("y", 3);
+    ////auto NumTarget = NumMap.at(5);
+    ////auto StorageTarget = VariableStorageMap.at("x");
 }

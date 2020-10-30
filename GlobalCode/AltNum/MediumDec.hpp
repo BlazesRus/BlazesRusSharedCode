@@ -3198,7 +3198,63 @@ namespace BlazesRusCode
                 }
             }
             return targetValue;
-        }  
+        }
+
+        /// <summary>
+        /// Applies Power of operation (for integer exponents)
+        /// </summary>
+        /// <param name="expValue">The exponent value.</param>
+        template<typename ValueType>
+        static MediumDec PowRef(MediumDec& targetValue, ValueType expValue)
+        {
+            if (expValue == 1)
+                return targetValue;//Return self
+            else if (expValue == 0)
+                return MediumDec::One;
+            else if (expValue < 0)//Negative Pow
+            {
+                if (targetValue.DecimalHalf01 == 0 && targetValue.IntValue == 10 && expValue >= -9)
+                {
+                    return MediumDec(0, MediumDec::DecimalOverflow / VariableConversionFunctions::PowerOfTens[expValue * -1]);
+                }
+                else
+                {
+                    //Code(Reversed in application) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+                    expValue *= -1;
+                    MediumDec self = targetValue;
+                    MediumDec Result = MediumDec::One;
+                    while (expValue > 0)
+                    {
+                        // If expValue is odd, divide self with result
+                        if (expValue % 2 == 1)
+                            Result /= self;
+                        // n must be even now
+                        expValue = expValue >> 1; // y = y/2
+                        self = self / self; // Change x to x^-1
+                    }
+                    return Result;
+                }
+            }
+            else if (targetValue.DecimalHalf01 == 0 && targetValue.IntValue == 10)
+                return MediumDec(VariableConversionFunctions::PowerOfTens[expValue], 0);
+            else
+            {
+                //Code based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+                MediumDec self = targetValue;
+                MediumDec Result = MediumDec::One;
+                while (expValue > 0)
+                {
+                    // If expValue is odd, multiply self with result
+                    if (expValue % 2 == 1)
+                        Result *= self;
+                    // n must be even now
+                    expValue = expValue >> 1; // y = y/2
+                    self = self * self; // Change x to x^2
+                }
+                return Result;
+            }
+            return targetValue;
+        }
 
         /// <summary>
         /// Perform square root on this instance.(Code other than switch statement from https://www.geeksforgeeks.org/find-square-root-number-upto-given-precision-using-binary-search/)
@@ -3470,6 +3526,54 @@ namespace BlazesRusCode
         static MediumDec Pow(MediumDec value, MediumDec expValue)
         {
             return PowOp(value, expValue);
+        }
+
+        /// <summary>
+        /// Natural log
+        /// </summary>
+        /// <param name="value">The target value.</param>
+        static MediumDec LnV2(MediumDec value)
+        {
+            //if (value <= 0) {}else//Error if equal or less than 0
+            if (value == MediumDec::One)
+                return MediumDec::Zero;
+            else if (value.IntValue < 2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+            {//This section gives correct answer
+                MediumDec threshold = "0.00005";  // set this to whatever threshold you want
+                MediumDec base = value - 1;        // Base of the numerator; exponent will be explicit
+                int den = 1;              // Denominator of the nth term
+                bool posSign = true;             // Used to swap the sign of each term
+                MediumDec term = base;       // First term
+                MediumDec prev = 0;          // Previous sum
+                MediumDec result = term;     // Kick it off
+
+                while (MediumDec::Abs(prev - result) > threshold) {
+                    den++;
+                    posSign = !posSign;
+                    term *= base;
+                    prev = result;
+                    if (posSign)
+                        result += term / den;
+                    else
+                        result -= term / den;
+                }
+
+                return result;
+            }
+            else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+            {//Increasing iterations brings closer to accurate result
+                MediumDec W = (value - 1) / (value + 1);
+                MediumDec TotalRes = W;
+                MediumDec AddRes;
+                //for (int WPow = 3; AddRes > MediumDec::JustAboveZero; WPow += 2)
+                int WPow = 3;
+                do
+                {
+                    AddRes = MediumDec::PowRef(W, WPow) / WPow;
+                    TotalRes += AddRes; WPow += 2;
+                } while (AddRes > MediumDec::JustAboveZero);
+                return TotalRes * 2;
+            }
         }
     #pragma endregion Math Etc Functions
     #pragma region Trigonomic Etc Functions

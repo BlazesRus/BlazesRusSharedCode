@@ -224,94 +224,6 @@ namespace BlazesRusDebug
           return Log10(Value) / Log10(BaseVal);
       }
 
-      ///// <summary>
-      ///// Applies Power of operation based on exp(expValue * log(value)) formula
-      ///// </summary>
-      ///// <param name="value">The target value.</param>
-      ///// <param name="expValue">The exponent value.</param>
-      //static MediumDec PowV2(MediumDec targetValue, MediumDec n)
-      //{
-      //    double FloatingLn = log((double)targetValue);
-      //    MediumDec LnVal = MediumDec::Ln(targetValue);
-      //    std::cout << "LnResult:" << LnVal.ToString() << " Floating Equivalent:" << FloatingLn<<std::endl;
-      //    return MediumDec::Exp(LnVal * n);
-      //}
-
-    ///// <summary>
-    ///// Finds nTh Root of value based on https://www.geeksforgeeks.org/n-th-root-number/ code
-    ///// </summary>
-    ///// <param name="value">The target value.</param>
-    ///// <param name="nValue">The nth value.</param>
-    ///// <param name="precision">Precision level (smaller = more precise)</param>
-    ///// <returns>MediumDec</returns>
-    //static MediumDec NthRootTest(MediumDec value, int n)
-    //{
-    //	MediumDec precision = MediumDec(0, 5);
-    //	int nMinus1 = n - 1;
-    //	MediumDec xPre = 1 + (value - 1) / n;//Estimating initial guess based on https://math.stackexchange.com/questions/787019/what-initial-guess-is-used-for-finding-n-th-root-using-newton-raphson-method
-
-    //	// initializing difference between two 
-    //	// roots by INT_MAX 
-    //	MediumDec delX = MediumDec::Maximum;
-
-    //	//  xK denotes current value of x 
-    //	MediumDec xK;
-
-    //	double valueFl = (double)value;
-    //	double xPreFl = 1.0 + (valueFl - 1.0) / n;//Estimating initial guess based on https://math.stackexchange.com/questions/787019/what-initial-guess-is-used-for-finding-n-th-root-using-newton-raphson-method
-
-    //// initializing difference between two 
-    //// roots by INT_MAX 
-    //	double delXFl = INT_MAX;
-
-    //	//  xK denotes current value of x 
-    //	double xKFl;
-
-    //	MediumDec resDiff;
-    //	MediumDec precDiff;
-
-    //	//  loop until we reach desired accuracy
-    //	do
-    //	{//  calculating current value from previous value by newton's method
-    //		xK = nMinus1 * xPre;
-    //		xKFl = nMinus1 * xPreFl;
-    //		xK += value / MediumDec::Pow(xPre, nMinus1);
-    //		xKFl += valueFl / pow(xPreFl, nMinus1);
-    //		xK /= n;
-    //		xKFl /= n;
-    //		delX = MediumDec::Abs(xK - xPre);
-    //		delXFl = abs(xKFl - xPreFl);
-    //		xPre = xK;
-    //		if(delXFl< 0.0000000000001)//Floating precision met at this point
-    //		{
-    //			resDiff = xK - (MediumDec)xKFl;
-    //			precDiff = delX - (MediumDec)delXFl;
-    //			std::cout << "Floating precision met at delX:" << delX.ToString() << " result currently at " << xK.ToString() << " with current result difference of " << resDiff.ToString() << " and current accuracy difference of " << precDiff.ToString() << std::endl;
-    //		}
-    //		else if (delX < precision)
-    //		{
- //               resDiff = xK - (MediumDec)xKFl;
- //               precDiff = delX - (MediumDec)delXFl;
- //               std::cout << "Floating precision met at delX:" << delX.ToString() << " result currently at " << xK.ToString() << " with current result difference of " << resDiff.ToString() << " and current accuracy difference of " << precDiff.ToString() << std::endl;
-    //		}
-    //	} while (delXFl > 0.0000000000001);//(delX > precision);
-    //	return xK;
-    //}
-
- //   /// <summary>
- //   /// Continued Fractional Log based on https://en.wikipedia.org/wiki/Euler%27s_continued_fraction_formula
- //   /// </summary>
- //   /// <param name="value">The target value.</param>
-    ///// <returns>MediumDec</returns>
-    //static MediumDec log10(MediumDec value, int Iterations=20)
-    //{
-    //	MediumDec CalcVal, z = value - 1;
-    //	for(int x=0;x<Iterations;++Iterations)
-    //	{
-
-    //	}
-    //}
-
     /// <summary>
     /// Natural log
     /// </summary>
@@ -322,7 +234,7 @@ namespace BlazesRusDebug
         if (value == MediumDec::One)
             return MediumDec::Zero;
         else if (value.IntValue < 2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
-        {
+        {//This section gives correct answer
             MediumDec threshold = "0.00005";  // set this to whatever threshold you want
             MediumDec base = value - 1;        // Base of the numerator; exponent will be explicit
             int den = 1;              // Denominator of the nth term
@@ -344,31 +256,33 @@ namespace BlazesRusDebug
 
             return result;
         }
-        else//Returns a positive value(continued Fractional 
-        {
-            //based on https://en.wikipedia.org/wiki/Euler%27s_continued_fraction_formula,
-            //https://stackoverflow.com/questions/33849986/how-to-implement-natural-logarithm-with-continued-fraction-in-c,
-            //and https://www.purplemath.com/modules/logs3.htm,
-            int ValueMin = -1;
-            MediumDec MinCalc = MediumDec::One; MediumDec IterCalc = MediumDec::One;
-            while(IterCalc< value)//Manually check each power of E
+        else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+        {//Increasing iterations brings closer to accurate result
+            MediumDec W = (value - 1) / (value + 1);
+            MediumDec TotalRes = W;
+#if(_DEBUG)
+            MediumDec AddRes = MediumDec::Maximum;
+            int WPow;
+            for(WPow=3; AddRes>MediumDec::JustAboveZero;WPow+=2)
             {
-                ++ValueMin;
-                MinCalc = IterCalc;
-                IterCalc*=MediumDec::E;
+                AddRes = MediumDec::PowRef(W, WPow) / WPow;
+                TotalRes += AddRes;
             }
-            if (IterCalc == value)
-                return MediumDec(ValueMin+1, 0);
-            else
+            TotalRes *= 2;
+            std::cout << "Ln(" << value.ToString() << ") = " << TotalRes.ToString() << " FloatingResult:" << log((double)value) <<" WPow:"<< WPow <<" AddRes:"<<AddRes.ToString()<< std::endl;
+            for (int AfterPow = WPow+10; WPow < AfterPow; WPow += 2)//Testing to see if AddRes fluctuates after getting small(to optimize to potentially get more accurate loop iteration number)
             {
-                int n = 8;
-                MediumDec zz = value * value;
-                MediumDec cf = ValueMin;
-                for (int i = n; i >= 1; i--) {
-                    cf = (2 * i - 1) - i * i * zz / cf;
-                }
-                return 2 * value / cf;
+                AddRes = MediumDec::PowRef(W, WPow) / WPow;
+                std::cout << "(AfterPow)" << AddRes.ToString() << " at WPow Val of " << WPow << std::endl;
             }
+            return TotalRes;
+#else
+            for (int WPow = 3; WPow <63; WPow += 2)
+            {
+                TotalRes += MediumDec::PowRef(W, WPow) / WPow;
+            }
+#endif
+            return TotalRes * 2;
         }
     }
 }
