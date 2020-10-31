@@ -3643,7 +3643,7 @@ namespace BlazesRusCode
         /// <param name="value">The target value.</param>
         static MediumDec Ln(MediumDec value, MediumDec threshold)
         {
-            return Ln(value, threshold);
+            return LnRef(value, threshold);
         }
 
         /// <summary>
@@ -3652,7 +3652,7 @@ namespace BlazesRusCode
         /// <param name="value">The target value.</param>
         static MediumDec Ln(MediumDec value)
         {
-            return Ln(value);
+            return LnRef(value);
         }
     #pragma endregion Math Etc Functions
     #pragma region Trigonomic Etc Functions
