@@ -53,6 +53,8 @@ namespace BlazesRusCode
         //&&
         AND,
         // Or ||
-        OR
+        OR,
+        LN,
+        LOGTEN
     };
 }

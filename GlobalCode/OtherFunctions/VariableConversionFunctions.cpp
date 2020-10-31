@@ -169,7 +169,7 @@ double VariableConversionFunctions::ReadDoubleFromString(string TempString)
             //cout << "\nDecimal Part:";
         }
     }
-    for(size_t i = WholeNumberBuffer.length() - 1; i >= 0; --i)
+    for(int i = WholeNumberBuffer.length() - 1; i >= 0; --i)
     {
         StringChar = WholeNumberBuffer.at(i);
         TempInt = CharAsInt(StringChar.at(0));
@@ -251,7 +251,7 @@ float VariableConversionFunctions::ReadFloatFromString(std::string TempString)
         }
     }
     //cout << "\nWhole Number Calculations:\n";
-    for (size_t i = WholeNumberBuffer.length() - 1; i >= 0; --i)
+    for (int i = WholeNumberBuffer.length() - 1; i >= 0; --i)
     {
         StringChar = WholeNumberBuffer.at(i);
         TempInt = CharAsInt(StringChar.at(0));
@@ -321,7 +321,7 @@ int VariableConversionFunctions::ReadIntFromString(string TempString)
         }
     }
     //cout << "\nWhole Number Calculations:\n";
-    for(size_t i = WholeNumberBuffer.length() - 1; i >= 0; --i)
+    for(int i = WholeNumberBuffer.length() - 1; i >= 0; --i)
     {
         StringChar = WholeNumberBuffer.at(i);
         TempInt = CharAsInt(StringChar.at(0));
@@ -368,7 +368,7 @@ long long int VariableConversionFunctions::ReadXIntFromString(std::string TempSt
         }
     }
     //cout << "\nWhole Number Calculations:\n";
-    for(size_t i = WholeNumberBuffer.length() - 1; i >= 0; --i)
+    for(int i = WholeNumberBuffer.length() - 1; i >= 0; --i)
     {
         StringChar = WholeNumberBuffer.at(i);
         TempInt = CharAsInt(StringChar.at(0));

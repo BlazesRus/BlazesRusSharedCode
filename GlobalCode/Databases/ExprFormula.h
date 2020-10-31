@@ -1434,7 +1434,7 @@ namespace BlazesRusCode
                     {
                         if (VariableConversionFunctions::IsDigit(*CurrentVal))
                         {
-                            ScanType == 4; strBuffer += *CurrentVal;
+                            ScanType = 4; strBuffer += *CurrentVal;
                         }
                         else if (*CurrentVal == '-')//-- Operator
                         {
