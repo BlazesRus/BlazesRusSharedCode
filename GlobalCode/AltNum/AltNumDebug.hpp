@@ -103,91 +103,13 @@ namespace BlazesRusDebug
       }
 
       /// <summary>
-      /// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
-      /// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having
-      /// </summary>
-      /// <param name="Value">The value.</param>
-      /// <returns></returns>
-      static MediumDec Ln(MediumDec Value)
-      {
-          MediumDec old_sum = MediumDec::Zero;
-          MediumDec xmlxpl = (Value - 1) / (Value + 1);
-          MediumDec xmlxpl_2 = xmlxpl * xmlxpl;
-          int denom = 1;
-          MediumDec frac = xmlxpl;
-          MediumDec term = frac;
-          MediumDec sum = term;
-
-          while (sum != old_sum)
-          {
-              old_sum = sum;
-              denom += 2;
-              frac *= xmlxpl_2;
-              sum += frac / denom;
-          }
-          return 2 * sum;
-      }
-
-      /// <summary>
-      /// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
-      /// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having
-      /// </summary>
-      /// <param name="Value">The value.</param>
-      /// <returns></returns>
-      static MediumDec LnRef(MediumDec& Value)
-      {
-          MediumDec old_sum = MediumDec::Zero;
-          MediumDec xmlxpl = (Value - 1) / (Value + 1);
-          MediumDec xmlxpl_2 = xmlxpl * xmlxpl;
-          int denom = 1;
-          MediumDec frac = xmlxpl;
-          MediumDec term = frac;
-          MediumDec sum = term;
-
-          while (sum != old_sum)
-          {
-              old_sum = sum;
-              denom += 2;
-              frac *= xmlxpl_2;
-              sum += frac / denom;
-          }
-          return 2 * sum;
-      }
-
-      /// <summary>
-      /// Natural log of Value(https://en.wikipedia.org/wiki/Natural_logarithm)
-      /// Based mostly on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having
-      /// </summary>
-      /// <param name="Value">The value.</param>
-      /// <returns></returns>
-      static MediumDec Ln(int Value)
-      {
-          MediumDec old_sum = MediumDec::Zero;
-          MediumDec xmlxpl = (Value - 1) / (Value + 1);
-          MediumDec xmlxpl_2 = xmlxpl * xmlxpl;
-          int denom = 1;
-          MediumDec frac = xmlxpl;
-          MediumDec term = frac;
-          MediumDec sum = term;
-
-          while (sum != old_sum)
-          {
-              old_sum = sum;
-              denom += 2;
-              frac *= xmlxpl_2;
-              sum += frac / denom;
-          }
-          return 2 * sum;
-      }
-
-      /// <summary>
       /// Log Base 10 of Value
       /// </summary>
       /// <param name="Value">The value.</param>
       /// <returns>MediumDec</returns>
       static MediumDec Log10(MediumDec Value)
       {
-          return Ln(Value) / MediumDec::LN10;
+          return MediumDec::Ln(Value) / MediumDec::LN10;
       }
 
       /// <summary>
@@ -197,7 +119,7 @@ namespace BlazesRusDebug
       /// <returns>MediumDec</returns>
       static MediumDec Log10(int Value)
       {
-          return Ln(Value) / MediumDec::LN10;
+          return MediumDec::Ln(Value) / MediumDec::LN10;
       }
 
       /// <summary>
@@ -228,7 +150,7 @@ namespace BlazesRusDebug
     /// Natural log
     /// </summary>
     /// <param name="value">The target value.</param>
-    static MediumDec LnV2(MediumDec value)
+    static MediumDec Ln(MediumDec value)
     {
         //if (value <= 0) {}else//Error if equal or less than 0
         if (value == MediumDec::One)
