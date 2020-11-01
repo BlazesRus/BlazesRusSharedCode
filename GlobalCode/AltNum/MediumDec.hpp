@@ -226,6 +226,16 @@ namespace BlazesRusCode
             return MediumDec(2, 302585093);
         }
 
+        static MediumDec LN10MultValue()
+        {
+            return MediumDec(0, 434294482);
+        }
+
+        static MediumDec HalfLN10MultValue()
+        {
+            return MediumDec(0, 868588964);
+        }
+
         static MediumDec NilValue()
         {
             return MediumDec(-2147483647, -2147483647);
@@ -318,6 +328,16 @@ namespace BlazesRusCode
         /// (Based on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having)
         /// </summary>
         static MediumDec LN10;
+
+        /// <summary>
+        /// (1 / Ln10) (Ln10 operation as division as recommended by https://helloacm.com/fast-integer-log10/ for speed optimization)
+        /// </summary>
+        static MediumDec LN10Mult;
+
+        /// <summary>
+        /// (1 / Ln10)*2 (Ln10 operation as division as recommended by https://helloacm.com/fast-integer-log10/ for speed optimization)
+        /// </summary>
+        static MediumDec HalfLN10Mult;
 
         /// <summary>
         /// Nil Value as proposed by https://docs.google.com/document/d/19n-E8Mu-0MWCcNt0pQnFi2Osq-qdMDW6aCBweMKiEb4/edit
@@ -963,13 +983,119 @@ namespace BlazesRusCode
         static MediumDec& SubOp(MediumDec& self, MediumDec& Value)
         {
             if (Value == Zero) { return self; }
-            if (Value.DecimalHalf01 == 0) { self.IntValue -= Value.IntValue; }
+            if (Value.DecimalHalf01 == 0) 
+            {
+                if (self.DecimalHalf01 == 0)
+                {
+                    self.IntValue -= Value.IntValue;
+                }
+                else if (self.IntValue == NegativeZero)
+                {
+                    if (Value.IntValue == -1)
+                        self.IntValue = 0;
+                    else if (Value.IntValue < 0)
+                        self.IntValue = Value.IntValue - 1;
+                    else
+                        self.IntValue += Value.IntValue;
+                }
+                else if (self.IntValue < 0)
+                {
+                    if (Value.IntValue < self.IntValue)//-4.5 - -5.5
+                        self.IntValue -= Value.IntValue + 1;
+                    else if (Value.IntValue == self.IntValue)
+                        self.IntValue = NegativeZero; //-1.5 + 1 = -0.5
+                    else
+                        self.IntValue -= self.IntValue;
+                }
+                else
+                {
+                    if (self.IntValue < self.IntValue)//Becomes negative value
+                    {
+                        self.IntValue -= self.IntValue;
+                        if (self.IntValue == -1)
+                            self.IntValue = NegativeZero;
+                        else
+                            ++self.IntValue;
+                    }
+                    else
+                    {
+                        self.IntValue -= self.IntValue;
+                    }
+                }
+                //self.IntValue -= Value.IntValue;
+            }
             else
             {
-                self -= Value.IntValue;
-                self.DecimalHalf01 -= Value.DecimalHalf01;
-                if (self.DecimalHalf01 < 0) { self.DecimalHalf01 += DecimalOverflow; --self; }
-                else if (self.DecimalHalf01 >= DecimalOverflow) { self.DecimalHalf01 -= DecimalOverflow; ++self; }
+                //Deal with Int section first
+                if (self.DecimalHalf01 == 0)
+                {
+                    if(Value.IntValue!=NegativeZero)
+                        self.IntValue -= Value.IntValue;
+                }
+                else if (self.IntValue == NegativeZero)
+                {
+                    if (Value.IntValue == 1)
+                        self.IntValue = 0;
+                    else if (Value.IntValue < 0)
+                        self.IntValue = Value.IntValue - 1;
+                    else
+                        self.IntValue += Value.IntValue;
+                }
+                else if (self.IntValue < 0)
+                {
+                    if (Value.IntValue < self.IntValue)//-4.5 - -5.5
+                        self.IntValue -= Value.IntValue + 1;
+                    else if (Value.IntValue == self.IntValue)
+                        self.IntValue = NegativeZero; //-1.5 + 1 = -0.5
+                    else
+                        self.IntValue -= self.IntValue;
+                }
+                else
+                {
+                    if (self.IntValue < self.IntValue)//Becomes negative value
+                    {
+                        self.IntValue -= self.IntValue;
+                        if (self.IntValue == -1)
+                            self.IntValue = NegativeZero;
+                        else
+                            ++self.IntValue;
+                    }
+                    else
+                    {
+                        self.IntValue -= self.IntValue;
+                    }
+                }
+                //Now deal with the decimal section
+                if(Value.IntValue<0)
+                {
+                    if (self.IntValue < 0)
+                    {
+                        self.DecimalHalf01 -= Value.DecimalHalf01;
+                        if (self.DecimalHalf01 < 0) { self.DecimalHalf01 += DecimalOverflow; --self; }
+                        else if (self.DecimalHalf01 >= DecimalOverflow) { self.DecimalHalf01 -= DecimalOverflow; ++self; }
+                    }
+                    else
+                    {
+                        self.DecimalHalf01 += Value.DecimalHalf01;
+                        if (self.DecimalHalf01 < 0) { self.DecimalHalf01 += DecimalOverflow; ++self; }
+                        else if (self.DecimalHalf01 >= DecimalOverflow) { self.DecimalHalf01 -= DecimalOverflow; --self; }
+                    }
+                }
+                else
+                {
+                    if (self.IntValue < 0)
+                    {
+                        self.DecimalHalf01 += Value.DecimalHalf01;
+                        if (self.DecimalHalf01 < 0) { self.DecimalHalf01 += DecimalOverflow; ++self; }
+                        else if (self.DecimalHalf01 >= DecimalOverflow) { self.DecimalHalf01 -= DecimalOverflow; --self; }
+                    }
+                    else
+                    {
+                        self.DecimalHalf01 -= Value.DecimalHalf01;
+                        if (self.DecimalHalf01 < 0) { self.DecimalHalf01 += DecimalOverflow; --self; }
+                        else if (self.DecimalHalf01 >= DecimalOverflow) { self.DecimalHalf01 -= DecimalOverflow; ++self; }
+                    }
+                }
             }
             return self;
         }
@@ -2049,39 +2175,43 @@ namespace BlazesRusCode
         template<typename IntType>
         static MediumDec& SubOp(MediumDec& self, IntType& value)
         {
-            if(value==0){ return self; }
-            else if(self.DecimalHalf01==0)
+            if (value == 0) { return self; }
+            else if (self.DecimalHalf01 == 0)
             {
                 self.IntValue -= value;
             }
-            else if(self.IntValue==NegativeZero)
+            else if (self.IntValue == MediumDec::NegativeZero)
             {
-                if(value==1)
+                if (value == -1)
                     self.IntValue = 0;
-                else if(value>0)
+                else if (value < 0)
                     self.IntValue = value - 1;
                 else
                     self.IntValue += value;
             }
-            else if(self.IntValue<0)
+            else if (self.IntValue < 0)
             {
-                if(value<self.IntValue)//-4.5 - -5.5
+                if (value < self.IntValue)//-4.5 - -5.5
                     self.IntValue -= value + 1;
-                else if(value==self.IntValue)
-                    self.IntValue = NegativeZero; //-1.5 + 1 = -0.5
+                else if (value == self.IntValue)
+                    self.IntValue = MediumDec::NegativeZero; //-1.5 + 1 = -0.5
                 else
                     self.IntValue -= value;
             }
             else
             {
-                //value to apply to get to negative zero
-                int ReversedAtZero = self.IntValue+1;
-                if(value>self.IntValue)//1.5-3 =-1.5
-                    self.IntValue -= value - 1;
-                else if(value==ReversedAtZero)//1.5 - 2 = -0.5
-                    self.IntValue = NegativeZero;
-                else
+                if (self.IntValue < value)//Becomes negative value
+                {
                     self.IntValue -= value;
+                    if (self.IntValue == -1)
+                        self.IntValue = MediumDec::NegativeZero;
+                    else
+                        ++self.IntValue;
+                }
+                else
+                {
+                    self.IntValue -= value;
+                }
             }
             return self;
         }
@@ -3598,17 +3728,33 @@ namespace BlazesRusCode
             //if (value <= 0) {}else//Error if equal or less than 0
             if (value == MediumDec::One)
                 return MediumDec::Zero;
-            else if (value.IntValue < 2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
-            {//This section gives accurate answer
+            if(value.IntValue==0)//Returns a negative number(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+            {//Example:0.5
+                MediumDec W = (value - 1) / (value + 1);//(-0.5)/(1.5)=-1/3
+                MediumDec TotalRes = W;
+                W.SwapNegativeStatus();
+                MediumDec AddRes;
+                int WPow = 3;
+                do
+                {
+                    AddRes = MediumDec::PowRef(W, WPow) / WPow;
+                    TotalRes -= AddRes;
+                    WPow += 2;
+                } while (AddRes > MediumDec::JustAboveZero);//Total Result should be -0.346573590279972654708616060729088284037750067180127627060340004746696810984847357802931663498209344
+                return TotalRes * 2;//Should result in -0.693147180559
+            }
+            else if (value.IntValue==1)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+            {//This section gives accurate answer(for values between 1 and 2)
                 MediumDec threshold = MediumDec::FiveMillionth;
                 MediumDec base = value - 1;        // Base of the numerator; exponent will be explicit
                 int den = 1;              // Denominator of the nth term
                 bool posSign = true;             // Used to swap the sign of each term
                 MediumDec term = base;       // First term
-                MediumDec prev = 0;          // Previous sum
+                MediumDec prev;          // Previous sum
                 MediumDec result = term;     // Kick it off
 
-                while (MediumDec::Abs(prev - result) > threshold) {
+                do
+                {
                     den++;
                     posSign = !posSign;
                     term *= base;
@@ -3617,7 +3763,7 @@ namespace BlazesRusCode
                         result += term / den;
                     else
                         result -= term / den;
-                }
+                } while (MediumDec::Abs(prev - result) > threshold);
 
                 return result;
             }
@@ -3654,6 +3800,97 @@ namespace BlazesRusCode
         {
             return LnRef(value);
         }
+
+        /// <summary>
+        /// Log Base 10 of Value
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>MediumDec</returns>
+        static MediumDec Log10(MediumDec value)
+        {
+            if (value == MediumDec::One)
+                return MediumDec::Zero;
+            if (value.DecimalHalf01 == 0 && value.IntValue % 10 == 0)
+            {
+                for (int index = 1; index < 9; ++index)
+                {
+                    if (value == BlazesRusCode::VariableConversionFunctions::PowerOfTens[index])
+                        return MediumDec(index, 0);
+                }
+                return MediumDec(9, 0);
+            }
+            if (value.IntValue<2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+            {//This section gives accurate answer for values between 1 & 2
+                MediumDec threshold = MediumDec::FiveBillionth;
+                MediumDec base = value - 1;        // Base of the numerator; exponent will be explicit
+                int den = 1;              // Denominator of the nth term
+                bool posSign = true;             // Used to swap the sign of each term
+                MediumDec term = base;       // First term
+                MediumDec prev = 0;          // Previous sum
+                MediumDec result = term;     // Kick it off
+
+                while (MediumDec::Abs(prev - result) > threshold) {
+                    den++;
+                    posSign = !posSign;
+                    term *= base;
+                    prev = result;
+                    if (posSign)
+                        result += term / den;
+                    else
+                        result -= term / den;
+                }
+                return result*MediumDec::LN10Mult;// result/MediumDec::LN10;//Using Multiplication instead of division for speed improvement
+            }
+            else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+            {
+                MediumDec W = (value - 1) / (value + 1);
+                MediumDec TotalRes = W;
+                MediumDec AddRes;
+                int WPow = 3;
+                do
+                {
+                    AddRes = MediumDec::PowRef(W, WPow) / WPow;
+                    TotalRes += AddRes; WPow += 2;
+                } while (AddRes > MediumDec::JustAboveZero);
+                return TotalRes * MediumDec::HalfLN10Mult;//Gives more accurate answer than attempting to divide by Ln10
+            }
+            //return MediumDec::Ln(value) / MediumDec::HaLN10;//Slightly off because of truncation etc
+        }
+
+        /// <summary>
+        /// Log Base 10 of Value(integer value variant)
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>MediumDec</returns>
+        template<typename ValueType>
+        static MediumDec Log10(ValueType value)
+        {
+            if (value == 1)
+                return MediumDec::Zero;
+            else if (value % 10 == 0)
+            {
+                for (int index = 1; index < 9; ++index)
+                {
+                    if (value == BlazesRusCode::VariableConversionFunctions::PowerOfTens[index])
+                        return MediumDec(index, 0);
+                }
+                return MediumDec(9, 0);
+            }
+            else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+            {
+                MediumDec W = MediumDec((value - 1), 0) / MediumDec((value + 1), 0);
+                MediumDec TotalRes = W;
+                MediumDec AddRes;
+                int WPow = 3;
+                do
+                {
+                    AddRes = MediumDec::PowRef(W, WPow) / WPow;
+                    TotalRes += AddRes; WPow += 2;
+                } while (AddRes > MediumDec::JustAboveZero);
+                return TotalRes * MediumDec::HalfLN10Mult;//Gives more accurate answer than attempting to divide by Ln10
+            }
+        }
+
     #pragma endregion Math Etc Functions
     #pragma region Trigonomic Etc Functions
         /// <summary>
@@ -3931,6 +4168,8 @@ namespace BlazesRusCode
     MediumDec MediumDec::Maximum = MaximumValue();
     MediumDec MediumDec::E = EValue();
     MediumDec MediumDec::LN10 = LN10Value();
+    MediumDec MediumDec::LN10Mult = LN10MultValue();
+    MediumDec MediumDec::HalfLN10Mult = HalfLN10MultValue();
     MediumDec MediumDec::TenMillionth = TenMillionthValue();
     MediumDec MediumDec::FiveMillionth = FiveMillionthValue();
     MediumDec MediumDec::FiveBillionth = FiveBillionthValue();
