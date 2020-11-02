@@ -962,14 +962,144 @@ namespace BlazesRusCode
         /// <returns>MediumDec</returns>
         static MediumDec& AddOp(MediumDec& self, MediumDec& Value)
         {
-            if (Value == Zero) { return self; }
-            if (Value.DecimalHalf01 == 0){ self.IntValue += Value.IntValue; }
+            if (Value.DecimalHalf01 == 0)
+            {
+                if (Value.IntValue == 0)//(Value == Zero)
+                    return self;
+                if (self.DecimalHalf01 == 0)
+                {
+                    self.IntValue += Value.IntValue;
+                }
+                else if (self.IntValue == NegativeZero)
+                {
+                    if (Value.IntValue == 1)//-0.5 + 1
+                        self.IntValue = 0;
+                    else if (Value.IntValue < 0)//-0.5 + - 1
+                    {
+                        self.IntValue = Value.IntValue;
+                    }
+                    else//-0.5+5
+                        self.IntValue = Value.IntValue - 1;
+                }
+                else if (self.IntValue < 0)
+                {
+                    if (Value.IntValue < 0)//-1.5 - 1
+                    {
+                        self.IntValue += Value.IntValue;
+                    }
+                    else
+                    {
+                        int ReversedVal = -self.IntValue;
+                        if (Value.IntValue == ReversedVal)//-1.5 + 1
+                            self.IntValue = NegativeZero;
+                        else if (Value.IntValue < ReversedVal)//-5.5 + 4
+                            self.IntValue += Value.IntValue;
+                        else//-5.5+6
+                            self.IntValue += Value.IntValue - 1;
+                    }
+                }
+                else
+                {
+                    if (Value.IntValue > 0)
+                        self.IntValue += Value.IntValue;
+                    else
+                    {
+                        int ValueForNegZero = -self.IntValue - 1;
+                        if (Value.IntValue == ValueForNegZero)//5.5 - 6
+                            self.IntValue = NegativeZero;
+                        else if (Value.IntValue < ValueForNegZero)//5.5-7
+                            self.IntValue += Value.IntValue + 1;
+                        else//5.5 - 2
+                            self.IntValue += Value.IntValue;
+                    }
+                }
+                //self += Value.IntValue; 
+            }
             else
             {
-                self += Value.IntValue;
-                self.DecimalHalf01 += Value.DecimalHalf01;
-                if (self.DecimalHalf01 < 0) { self.DecimalHalf01 += DecimalOverflow; --self; }
-                else if (self.DecimalHalf01 >= DecimalOverflow) { self.DecimalHalf01 -= DecimalOverflow; ++self; }
+                //Deal with Int section first
+                if (Value.IntValue != NegativeZero)
+                {
+                    if (self.DecimalHalf01 == 0)
+                    {
+                        self.IntValue += Value.IntValue;
+                    }
+                    else if (self.IntValue == NegativeZero)
+                    {
+                        if (Value.IntValue == 1)//-0.5 + 1
+                            self.IntValue = 0;
+                        else if (Value.IntValue < 0)//-0.5 + - 1
+                        {
+                            self.IntValue = Value.IntValue;
+                        }
+                        else//-0.5+5
+                            self.IntValue = Value.IntValue - 1;
+                    }
+                    else if (self.IntValue < 0)
+                    {
+                        if (Value.IntValue < 0)//-1.5 - 1
+                        {
+                            self.IntValue += Value.IntValue;
+                        }
+                        else
+                        {
+                            int ReversedVal = -self.IntValue;
+                            if (Value.IntValue == ReversedVal)//-1.5 + 1
+                                self.IntValue = NegativeZero;
+                            else if (Value.IntValue < ReversedVal)//-5.5 + 4
+                                self.IntValue += Value.IntValue;
+                            else//-5.5+6
+                                self.IntValue += Value.IntValue - 1;
+                        }
+                    }
+                    else
+                    {
+                        if (Value.IntValue > 0)
+                            self.IntValue += Value.IntValue;
+                        else
+                        {
+                            int ValueForNegZero = -self.IntValue - 1;
+                            if (Value.IntValue == ValueForNegZero)//5.5 - 6
+                                self.IntValue = NegativeZero;
+                            else if (Value.IntValue < ValueForNegZero)//5.5-7
+                                self.IntValue += Value.IntValue + 1;
+                            else//5.5 - 2
+                                self.IntValue += Value.IntValue;
+                        }
+                    }
+                    //self += Value.IntValue;
+                }
+                //Now deal with the decimal section
+                if (Value.IntValue < 0)
+                {
+                    if (self.IntValue < 0)
+                    {
+                        self.DecimalHalf01 += Value.DecimalHalf01;
+                        if (self.DecimalHalf01 < 0) { self.DecimalHalf01 += DecimalOverflow; --self; }
+                        else if (self.DecimalHalf01 >= DecimalOverflow) { self.DecimalHalf01 -= DecimalOverflow; ++self; }
+                    }
+                    else
+                    {
+                        self.DecimalHalf01 -= Value.DecimalHalf01;
+                        if (self.DecimalHalf01 < 0) { self.DecimalHalf01 += DecimalOverflow; ++self; }
+                        else if (self.DecimalHalf01 >= DecimalOverflow) { self.DecimalHalf01 -= DecimalOverflow; --self; }
+                    }
+                }
+                else
+                {
+                    if (self.IntValue < 0)
+                    {
+                        self.DecimalHalf01 -= Value.DecimalHalf01;
+                        if (self.DecimalHalf01 < 0) { self.DecimalHalf01 += DecimalOverflow; ++self; }
+                        else if (self.DecimalHalf01 >= DecimalOverflow) { self.DecimalHalf01 -= DecimalOverflow; --self; }
+                    }
+                    else
+                    {
+                        self.DecimalHalf01 += Value.DecimalHalf01;
+                        if (self.DecimalHalf01 < 0) { self.DecimalHalf01 += DecimalOverflow; --self; }
+                        else if (self.DecimalHalf01 >= DecimalOverflow) { self.DecimalHalf01 -= DecimalOverflow; ++self; }
+                    }
+                }
             }
             return self;
         }
@@ -982,9 +1112,10 @@ namespace BlazesRusCode
         /// <returns>MediumDec&</returns>
         static MediumDec& SubOp(MediumDec& self, MediumDec& Value)
         {
-            if (Value == Zero) { return self; }
             if (Value.DecimalHalf01 == 0) 
             {
+                if(Value.IntValue==0)//(Value == Zero)
+                    return self;
                 if (self.DecimalHalf01 == 0)
                 {
                     self.IntValue -= Value.IntValue;
@@ -994,10 +1125,7 @@ namespace BlazesRusCode
                     if (Value.IntValue == -1)
                         self.IntValue = 0;
                     else if (Value.IntValue < 0)
-                    {
-                        if(Value.IntValue!=NegativeZero)
-                            self.IntValue = Value.IntValue - 1;
-                    }
+                        self.IntValue = Value.IntValue - 1;
                     else
                         self.IntValue = Value.IntValue*-1;
                 }
@@ -1030,45 +1158,44 @@ namespace BlazesRusCode
             else
             {
                 //Deal with Int section first
-                if (self.DecimalHalf01 == 0)
+                if (Value.IntValue != NegativeZero)
                 {
-                    if(Value.IntValue!=NegativeZero)
+                    if (self.DecimalHalf01 == 0)
                         self.IntValue -= Value.IntValue;
-                }
-                else if (self.IntValue == NegativeZero)
-                {
-                    if (Value.IntValue == 1)
-                        self.IntValue = 0;
-                    else if (Value.IntValue < 0)
+                    else if (self.IntValue == NegativeZero)
                     {
-                        if (Value.IntValue != NegativeZero)
+                        if (Value.IntValue == 1)
+                            self.IntValue = 0;
+                        else if (Value.IntValue < 0)
+                        {
                             self.IntValue = Value.IntValue - 1;
-                    }
-                    else
-                        self.IntValue = Value.IntValue * -1;
-                }
-                else if (self.IntValue < 0)
-                {
-                    if (Value.IntValue < self.IntValue)//-4.5 - -5.5
-                        self.IntValue -= Value.IntValue + 1;
-                    else if (Value.IntValue == self.IntValue)
-                        self.IntValue = NegativeZero; //-1.5 + 1 = -0.5
-                    else
-                        self.IntValue -= self.IntValue;
-                }
-                else
-                {
-                    if (self.IntValue < self.IntValue)//Becomes negative value
-                    {
-                        self.IntValue -= self.IntValue;
-                        if (self.IntValue == -1)
-                            self.IntValue = NegativeZero;
+                        }
                         else
-                            ++self.IntValue;
+                            self.IntValue = Value.IntValue * -1;
+                    }
+                    else if (self.IntValue < 0)
+                    {
+                        if (Value.IntValue < self.IntValue)//-4.5 - -5.5
+                            self.IntValue -= Value.IntValue + 1;
+                        else if (Value.IntValue == self.IntValue)
+                            self.IntValue = NegativeZero; //-1.5 + 1 = -0.5
+                        else
+                            self.IntValue -= self.IntValue;
                     }
                     else
                     {
-                        self.IntValue -= self.IntValue;
+                        if (self.IntValue < Value.IntValue)//Becomes negative value
+                        {
+                            self.IntValue -= Value.IntValue;
+                            if (self.IntValue == -1)
+                                self.IntValue = NegativeZero;
+                            else
+                                ++self.IntValue;
+                        }
+                        else
+                        {
+                            self.IntValue -= self.IntValue;
+                        }
                     }
                 }
                 //Now deal with the decimal section
@@ -2125,49 +2252,50 @@ namespace BlazesRusCode
         template<typename IntType>
         static MediumDec& AddOp(MediumDec& self, IntType& value)
         {
-            if(value==0){ return self; }
-            else if(self.DecimalHalf01==0)
-            {
+            if (value == 0)
+                return self;
+            if (self.DecimalHalf01 == 0)
                 self.IntValue += value;
-            }
-            else if(self.IntValue==NegativeZero)
+            else if (self.IntValue == NegativeZero)
             {
-                if(value==1)//-0.5 + 1
+                if (value == 1)//-0.5 + 1
                     self.IntValue = 0;
-                else if(value<0)//-0.5 - 1
+                else if (value < 0)//-0.5 + - 1
+                {
                     self.IntValue = value;
-                else//-0.5 + 2 = 1.5
+                }
+                else//-0.5+5
                     self.IntValue = value - 1;
             }
-            else if(self.IntValue==0&&value<0)//0.5 - 1
+            else if (self.IntValue < 0)
             {
-                self.IntValue = value - 1;
-            }
-            else if(self.IntValue<0)
-            {
-                int ReversedIntHalf = self.IntValue*-1;
-                if(value>ReversedIntHalf)//-1.5+ 3
-                    self.IntValue += value -1;
-                else if(value==ReversedIntHalf)
-                    self.IntValue = NegativeZero; //-1.5 + 1
-                else
+                if (value < 0)//-1.5 - 1
                     self.IntValue += value;
+                else
+                {
+                    int ReversedVal = -self.IntValue;
+                    if (value == ReversedVal)//-1.5 + 1
+                        self.IntValue = NegativeZero;
+                    else if (value < ReversedVal)//-5.5 + 4
+                        self.IntValue += value;
+                    else//-5.5+6
+                        self.IntValue += value - 1;
+                }
             }
             else
             {
-                if(value<0)
+                if (value > 0)
+                    self.IntValue += value;
+                else
                 {
-                    int ReversedValue = value*-1;
-                    int ValueAtNegativeZero = self.IntValue*-1 - 1;
-                    if(ReversedValue>self.IntValue)//5.5-7 = 1.5
-                        self.IntValue  += value - 1;
-                    else if(value==ValueAtNegativeZero)
+                    int ValueForNegZero = -self.IntValue - 1;
+                    if (value == ValueForNegZero)//5.5 - 6
                         self.IntValue = NegativeZero;
-                    else
+                    else if (value < ValueForNegZero)//5.5-7
+                        self.IntValue += value + 1;
+                    else//5.5 - 2
                         self.IntValue += value;
                 }
-                else
-                    self.IntValue += value;
             }
             return self;
         }
@@ -2181,8 +2309,9 @@ namespace BlazesRusCode
         template<typename IntType>
         static MediumDec& SubOp(MediumDec& self, IntType& value)
         {
-            if (value == 0) { return self; }
-            else if (self.DecimalHalf01 == 0)
+            if (value == 0) 
+                return self;
+            if (self.DecimalHalf01 == 0)
             {
                 self.IntValue -= value;
             }
