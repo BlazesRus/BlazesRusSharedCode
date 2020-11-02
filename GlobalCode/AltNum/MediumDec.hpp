@@ -994,9 +994,12 @@ namespace BlazesRusCode
                     if (Value.IntValue == -1)
                         self.IntValue = 0;
                     else if (Value.IntValue < 0)
-                        self.IntValue = Value.IntValue - 1;
+                    {
+                        if(Value.IntValue!=NegativeZero)
+                            self.IntValue = Value.IntValue - 1;
+                    }
                     else
-                        self.IntValue += Value.IntValue;
+                        self.IntValue = Value.IntValue*-1;
                 }
                 else if (self.IntValue < 0)
                 {
@@ -1037,9 +1040,12 @@ namespace BlazesRusCode
                     if (Value.IntValue == 1)
                         self.IntValue = 0;
                     else if (Value.IntValue < 0)
-                        self.IntValue = Value.IntValue - 1;
+                    {
+                        if (Value.IntValue != NegativeZero)
+                            self.IntValue = Value.IntValue - 1;
+                    }
                     else
-                        self.IntValue += Value.IntValue;
+                        self.IntValue = Value.IntValue * -1;
                 }
                 else if (self.IntValue < 0)
                 {
@@ -2187,7 +2193,7 @@ namespace BlazesRusCode
                 else if (value < 0)
                     self.IntValue = value - 1;
                 else
-                    self.IntValue += value;
+                    self.IntValue = value*-1;
             }
             else if (self.IntValue < 0)
             {
