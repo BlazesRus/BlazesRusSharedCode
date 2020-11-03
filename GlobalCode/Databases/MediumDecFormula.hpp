@@ -143,7 +143,7 @@ namespace BlazesRusCode
 
             //Applying operations via C++ variation of order of operations
             //https://en.cppreference.com/w/cpp/language/operator_precedence
-            for (int opIndex = 0; opIndex < 12; ++opIndex)
+            for (int opIndex = 0; opIndex < 11; ++opIndex)
             {
                 OpOrderElement = FormCopy.OpOrderMap[opIndex];
                 for (IntVector::iterator CurrentVal = OpOrderElement.begin(), LastVal = OpOrderElement.end(); CurrentVal != LastVal; ++CurrentVal)
@@ -312,18 +312,19 @@ namespace BlazesRusCode
                 else if (ElementIter->second.ElementCat == FormulaElementType::Variable)
                 {
                     std::string ErrorMessage = "Failed to evaluate variable named:" + FormCopy.VariableMap.at(KeyIndex).Name;
-                    throw ErrorMessage;
+                    throw ErrorMessage.c_str();
                 }
                 else
                 {
                     std::string ErrorMessage = "Failed to evaluate Element with Element Category of:";
                     ErrorMessage += VariableConversionFunctions::IntToStringConversion((int)ElementIter->second.ElementCat);
-                    throw ErrorMessage;
+                    throw ErrorMessage.c_str();
                 }
             }
             else
             {
-                throw "Failed to evaluate to single value!";
+                std::string ErrorMessage = "Failed to evaluate "+FormCopy.ToString()+" to single value!";
+                throw ErrorMessage.c_str();
             }
         }
 
@@ -732,7 +733,7 @@ namespace BlazesRusCode
                     {
                         if (VariableConversionFunctions::IsDigit(*CurrentVal))
                         {
-                            ScanType == 4; strBuffer += *CurrentVal;
+                            ScanType = 4; strBuffer += *CurrentVal;
                         }
                         else if (*CurrentVal == '-')//-- Operator
                         {
@@ -956,6 +957,9 @@ namespace BlazesRusCode
                     }
                 }
             }
+            //Finish unfinished potential scans
+            if(!strBuffer.empty())
+                InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
             TrimFormula();
         }
 
