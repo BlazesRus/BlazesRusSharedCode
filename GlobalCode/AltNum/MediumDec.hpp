@@ -3808,77 +3808,13 @@ namespace BlazesRusCode
         /// Natural log (Equivalent to Log_E(value))
         /// </summary>
         /// <param name="value">The target value.</param>
-        /// <param name="threshold">The threshold value for when value is between 0 and 2.</param>
-        /// <returns>BlazesRusCode::MediumDec</returns>
-        static MediumDec LnRef(MediumDec& value, MediumDec threshold)
-        {
-            //if (value <= 0) {}else//Error if equal or less than 0
-            if (value == MediumDec::One)
-                return MediumDec::Zero;
-            else if (value.IntValue < 2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
-            {//This section gives accurate answer
-                MediumDec base = value - 1;        // Base of the numerator; exponent will be explicit
-                int den = 1;              // Denominator of the nth term
-                bool posSign = true;             // Used to swap the sign of each term
-                MediumDec term = base;       // First term
-                MediumDec prev = 0;          // Previous sum
-                MediumDec result = term;     // Kick it off
-
-                while (MediumDec::Abs(prev - result) > threshold) {
-                    den++;
-                    posSign = !posSign;
-                    term *= base;
-                    prev = result;
-                    if (posSign)
-                        result += term / den;
-                    else
-                        result -= term / den;
-                }
-
-                return result;
-            }
-            else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
-            {//Increasing iterations brings closer to accurate result(Larger numbers need more iterations to get accurate level of result)
-                MediumDec W = (value - 1) / (value + 1);
-                MediumDec TotalRes = W;
-                MediumDec AddRes;
-                //for (int WPow = 3; AddRes > MediumDec::JustAboveZero; WPow += 2)
-                int WPow = 3;
-                do
-                {
-                    AddRes = MediumDec::PowRef(W, WPow) / WPow;
-                    TotalRes += AddRes; WPow += 2;
-                } while (AddRes > MediumDec::JustAboveZero);
-                return TotalRes * 2;
-            }
-        }
-
-        /// <summary>
-        /// Natural log (Equivalent to Log_E(value))
-        /// </summary>
-        /// <param name="value">The target value.</param>
         /// <returns>BlazesRusCode::MediumDec</returns>
         static MediumDec LnRef(MediumDec& value)
         {
             //if (value <= 0) {}else//Error if equal or less than 0
             if (value == MediumDec::One)
                 return MediumDec::Zero;
-            if(value.IntValue==0)//Returns a negative number(http://www.netlib.org/cephes/qlibdoc.html#qlog)
-            {//Example:0.5
-                MediumDec W = (value - 1) / (value + 1);//(-0.5)/(1.5)=-1/3
-                MediumDec TotalRes = W;
-                W.SwapNegativeStatus();
-                MediumDec AddRes;
-                int WPow = 3;
-                do
-                {
-                    AddRes = MediumDec::PowRef(W, WPow) / WPow;
-                    TotalRes -= AddRes;
-                    WPow += 2;
-                } while (AddRes > MediumDec::JustAboveZero);//Total Result should be -0.346573590279972654708616060729088284037750067180127627060340004746696810984847357802931663498209344
-                return TotalRes * 2;//Should result in -0.693147180559
-            }
-            else if (value.IntValue==1)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+            if (value.IntValue<2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
             {//This section gives accurate answer(for values between 1 and 2)
                 MediumDec threshold = MediumDec::FiveMillionth;
                 MediumDec base = value - 1;        // Base of the numerator; exponent will be explicit
@@ -3916,15 +3852,6 @@ namespace BlazesRusCode
                 } while (AddRes > MediumDec::JustAboveZero);
                 return TotalRes * 2;
             }
-        }
-
-        /// <summary>
-        /// Natural log (Equivalent to Log_E(value))
-        /// </summary>
-        /// <param name="value">The target value.</param>
-        static MediumDec Ln(MediumDec value, MediumDec threshold)
-        {
-            return LnRef(value, threshold);
         }
 
         /// <summary>

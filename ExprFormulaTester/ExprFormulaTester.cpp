@@ -163,13 +163,19 @@ int main()
     //rootTest = MediumDec::Pow(targetVal, rightVal);
     //std::cout << targetVal.ToString() << "^" << rightVal.ToString() << " = " << rootTest.ToString() << " FloatingResult:" << floatingVal << std::endl;
     std::cout << "---------------Log Tests------------------------------" << std::endl;
-    BlazesRusDebug::LnV2(targetVal);//Result off by -28(compared to precision) at 43 WPow(20 Loop iterations) compared to precision Calculator
-    targetVal = 10;
-    BlazesRusDebug::LnV2(targetVal);//Result off by (compared to precision) at  WPow( Loop iterations) compared to precision Calculator
-    targetVal = 100;
-    BlazesRusDebug::LnV2(targetVal);//Result off by (compared to precision) at  WPow( Loop iterations) compared to precision Calculator
-    targetVal = 133;
-    BlazesRusDebug::LnV2(targetVal);//Result off by (compared to precision) at  WPow( Loop iterations) compared to precision Calculator
+    //for (MediumDec TestVal = MediumDec::FiveMillionth; TestVal<MediumDec::One;TestVal+= MediumDec::FiveMillionth)
+    //{
+    //    floatingRes = log(floatingVal);
+    //    std::cout << "Builtin-Ln(" << floatingVal << ") = " << floatingRes;
+    //    rootTest = MediumDec::Ln(targetVal);
+    //    std::cout << " Ln(" << targetVal.ToString() << ") = " << rootTest.ToString() << std::endl;
+    //    rootTest = MediumDec::Log10(targetVal);
+    //    std::cout << "log10(" << targetVal.ToString() << ") = " << rootTest.ToString();
+    //    rootTest = BlazesRusDebug::LnV2(targetVal);
+    //    std::cout << " LnV2(" << targetVal.ToString() << ") = " << rootTest.ToString() << std::endl;
+    //    floatingVal += 0.000005;
+    //}
+    std::cout << "AlgResult:" << floatingRes << std::endl;
     std::cout << "---------------Testing Formula Code-------------------" << std::endl;
     //std::cout << "-------------------------Formula Code Tests---------------------------------" << std::endl;
     //IntFormula IntFormTest = "(5+5)^2";
@@ -179,7 +185,7 @@ int main()
     //IntFormTest = "5+10x";
     //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
 
-    //MediumDecFormula AltFormTest = "5.5^(1.5+x)+6x";
+    MediumDecFormula AltFormTest = "5.5^(1.5+x)+6x";
 
     //tsl::ordered_map<std::string, MediumDec&> RefDefinitions;
     //MediumDec XReference = MediumDec::One;
@@ -190,7 +196,8 @@ int main()
     //tsl::ordered_map<std::string, MediumDec> ValueDefinitions;
     //ValueDefinitions.insert_or_assign("x", MediumDec::One);
     //rootTest = AltFormTest.EvalValues(ValueDefinitions);
-    //std::cout << "(MediumDecFormula) "<< AltFormTest.ToString() << " = " << rootTest.ToString() << std::endl;
+    std::cout << "(MediumDecFormula) "<< AltFormTest.ToString() <<std::endl;
+    //std::cout << " = " << rootTest.ToString() << std::endl;
     //AltFormTest = "5+5";
     //std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << " = " << rootTest.ToString() << std::endl;
     //AltFormTest = "5+(5/4)";
@@ -198,25 +205,7 @@ int main()
     //AltFormTest = "(4/3)/2";
     //std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << " = " << rootTest.ToString() << std::endl;
 
-    //ExprFormula FormTest = "5.5^(1.5+x)+6x";
-    //std::cout << "(ExprFormula) " << FormTest.ToString() << std::endl;
-
 
     //DoubleFormula DoubleFormTest = "5.5+(5.5+2)";
     //std::cout << "(DoubleFormula) " << DoubleFormTest.ToString() << std::endl;
-    ////std::cout << "--------------------------Testing ParallelMap Code-----------------------------" << std::endl;
-    /////// <summary>
-    /////// The map that stores the actual numbers referenced
-    /////// </summary>
-    ////ParallelIntValMap NumMap;
-    ////NumMap.insert_or_assign(5, MediumDec::Zero);
-    ////NumMap.insert_or_assign(3, MediumDec::One);
-    /////// <summary>
-    /////// The variable storage map with Variable Name linked to related Index(shortcut)
-    /////// </summary>
-    ////ParallelStringIntMap VariableStorageMap;
-    ////VariableStorageMap.insert_or_assign("x", 5);
-    ////VariableStorageMap.insert_or_assign("y", 3);
-    ////auto NumTarget = NumMap.at(5);
-    ////auto StorageTarget = VariableStorageMap.at("x");
 }

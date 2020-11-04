@@ -170,6 +170,7 @@
     <ClInclude Include="..\GlobalCode\Databases\DataDictionary.h" />
     <ClInclude Include="..\GlobalCode\Databases\ElementType.hpp" />
     <ClInclude Include="..\GlobalCode\Databases\IndexedDictionary.h" />
+    <ClInclude Include="..\GlobalCode\Databases\MediumDecFormula.hpp" />
     <ClInclude Include="..\GlobalCode\DLLAPI.h" />
     <ClInclude Include="..\GlobalCode\tsl\ordered_map.h" />
     <ClInclude Include="..\GlobalCode\OtherFunctions\VariableConversionFunctions.h" />
