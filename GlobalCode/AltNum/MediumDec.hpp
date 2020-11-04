@@ -157,6 +157,12 @@ namespace BlazesRusCode
             return NewSelf;
         }
 
+        static MediumDec FiveThousandthValue()
+        {
+            MediumDec NewSelf = MediumDec(0, 5000000);
+            return NewSelf;
+        }
+
         static MediumDec FiveMillionthValue()
         {
             MediumDec NewSelf = MediumDec(0, 5000);
@@ -268,7 +274,7 @@ namespace BlazesRusCode
         static MediumDec PointFive;
 
         /// <summary>
-        /// Returns the value at digit more than zero
+        /// Returns the value at digit one more than zero (0.000000001)
         /// </summary>
         /// <returns>MediumDec</returns>
         static MediumDec JustAboveZero;
@@ -284,6 +290,12 @@ namespace BlazesRusCode
         /// </summary>
         /// <returns>MediumDec</returns>
         static MediumDec OneMillionth;
+
+        /// <summary>
+        /// Returns the value at "0.005"
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec FiveThousandth;
 
         /// <summary>
         /// Returns the value at .000000010
@@ -3840,14 +3852,16 @@ namespace BlazesRusCode
             }
             else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
             {//Increasing iterations brings closer to accurate result(Larger numbers need more iterations to get accurate level of result)
-                MediumDec W = (value - 1) / (value + 1);
-                MediumDec TotalRes = W;
+                //MediumDec W = (value - 1) / (value + 1);
+                MediumDec TotalRes = (value - 1) / (value + 1);//W;
+                MediumDec LastPow = TotalRes;
+                MediumDec WSquared = TotalRes * TotalRes;
                 MediumDec AddRes;
-                //for (int WPow = 3; AddRes > MediumDec::JustAboveZero; WPow += 2)
                 int WPow = 3;
                 do
                 {
-                    AddRes = MediumDec::PowRef(W, WPow) / WPow;
+                    LastPow *= WSquared;
+                    AddRes = LastPow / WPow;//MediumDec::PowRef(W, WPow) / WPow;
                     TotalRes += AddRes; WPow += 2;
                 } while (AddRes > MediumDec::JustAboveZero);
                 return TotalRes * 2;
@@ -4226,6 +4240,7 @@ namespace BlazesRusCode
     MediumDec MediumDec::PointFive = Point5Value();
     MediumDec MediumDec::JustAboveZero = JustAboveZeroValue();
     MediumDec MediumDec::OneMillionth = OneMillionthValue();
+    MediumDec MediumDec::FiveThousandth = FiveThousandthValue();
     MediumDec MediumDec::Minimum = MinimumValue();
     MediumDec MediumDec::Maximum = MaximumValue();
     MediumDec MediumDec::E = EValue();

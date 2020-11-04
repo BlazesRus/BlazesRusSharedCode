@@ -128,54 +128,21 @@ int main()
     //-----------------------------------------------------------------------------------------------------------
     targetVal = 3;
     MediumDec rootTest;
-    floatingVal;
-    //for(int expValue=0;expValue<19;++expValue)//Successful calculations of power of (Integer) with zero inaccuracy for these test iterations in loop
-    //{
-    //    rootTest = MediumDec::Pow(targetVal, expValue);
-    //    floatingVal = BlazesFloatingCode::Pow(3.0, expValue);//built-in pow(3.0, expValue) fails so using alternative
-    //    resDiff = (MediumDec)floatingVal;
-    //    resDiff -= rootTest;
-    //    std::cout << "3 ^ "<<expValue<<" Result:"<< rootTest.ToString()<<" FloatingResult: "<< floatingVal <<" DifFromFloating:" << resDiff.ToString() << std::endl;
-    //}
-    //targetVal = "5.25";
-    //rootTest = BlazesRusDebug::Exp(targetVal);//Exp(5.2) Accuracy only off by 0.000000230... compared to high precision calculator (though more accurate then displayed double floating point based calculation)
-    //floatingVal = exp(5.25);
-    //std::cout << "Exp(" << targetVal.ToString() << ") = " << rootTest.ToString() << " FloatingResult:" << floatingVal << std::endl;
-
-    targetVal = 5;
-    /*
-    //-----------------Both V3 and geekforgeeks variations of code successful at same level of accuracy(matching the rounded double operation)
-    floatingVal = BlazesFloatingCode::NthRootV3(5.0, 4);
-    
-    //rootTest = BlazesRusDebug::NthRootV1(targetVal, 4);
-    //std::cout << "(V1)4th root of " << targetVal.ToString() << "= " << rootTest.ToString() << std::endl;
-    rootTest = BlazesRusDebug::NthRootV5(targetVal, 4);
-    std::cout << "(V5)4th root of " << targetVal.ToString() << "= " << rootTest.ToString()<<std::endl;
-    //rootTest = BlazesRusDebug::NthRootV4(targetVal, 4);
-    //std::cout << "(V4)4th root of " << targetVal.ToString() << "= " << rootTest.ToString()<<std::endl;
- 
-    rootTest = MediumDec::NthRoot(targetVal, 4);
-    std::cout << "4th root of " << targetVal.ToString() <<"= " << rootTest.ToString()  << std::endl;
-    std::cout << "Floating 4th root of" << (double)targetVal << "= " << floatingVal<< std::endl;
-    */
-    //----------------------------------------------------------------------
-    //floatingVal = pow(5.0, 0.25);
-    //rootTest = MediumDec::Pow(targetVal, rightVal);
-    //std::cout << targetVal.ToString() << "^" << rightVal.ToString() << " = " << rootTest.ToString() << " FloatingResult:" << floatingVal << std::endl;
+    targetVal = "0.005";
+    floatingVal = 0.005;
     std::cout << "---------------Log Tests------------------------------" << std::endl;
-    //for (MediumDec TestVal = MediumDec::FiveMillionth; TestVal<MediumDec::One;TestVal+= MediumDec::FiveMillionth)
-    //{
-    //    floatingRes = log(floatingVal);
-    //    std::cout << "Builtin-Ln(" << floatingVal << ") = " << floatingRes;
-    //    rootTest = MediumDec::Ln(targetVal);
-    //    std::cout << " Ln(" << targetVal.ToString() << ") = " << rootTest.ToString() << std::endl;
-    //    rootTest = MediumDec::Log10(targetVal);
-    //    std::cout << "log10(" << targetVal.ToString() << ") = " << rootTest.ToString();
-    //    rootTest = BlazesRusDebug::LnV2(targetVal);
-    //    std::cout << " LnV2(" << targetVal.ToString() << ") = " << rootTest.ToString() << std::endl;
-    //    floatingVal += 0.000005;
-    //}
-    std::cout << "AlgResult:" << floatingRes << std::endl;
+    double floatingRes;
+    for (targetVal = MediumDec::FiveThousandth; targetVal<MediumDec::One; targetVal += MediumDec::FiveThousandth)
+    {
+        floatingRes = log(floatingVal);
+        std::cout << "Builtin-Ln(" << floatingVal << ") = " << floatingRes;
+        floatingRes = BlazesFloatingCode::LnRef(floatingVal);
+        std::cout << " Ln(value) =" << floatingRes << std::endl;
+        floatingVal += 0.005;
+        rootTest = MediumDec::Ln(targetVal);
+        std::cout << "(MediumDec)Ln(" << targetVal.ToString()<<")= " <<rootTest.ToString() << std::endl;
+    }
+
     std::cout << "---------------Testing Formula Code-------------------" << std::endl;
     //std::cout << "-------------------------Formula Code Tests---------------------------------" << std::endl;
     //IntFormula IntFormTest = "(5+5)^2";

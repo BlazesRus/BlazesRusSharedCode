@@ -195,11 +195,65 @@ namespace BlazesFloatingCode
         }
         return targetValue;
     }
-/*
-    //Power with value with no integer half
-    double DecPow(double value, double expValue)
-    {
 
+    /// <summary>
+    /// Natural log (Equivalent to Log_E(value))
+    /// </summary>
+    /// <param name="value">The target value.</param>
+    /// <returns>double</returns>
+    static double LnRef(double& value)
+    {
+        //if (value <= 0) {}else//Error if equal or less than 0
+        if (value == 1.0)
+            return 0.0;
+        if (value < 2.0)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+        {//This section gives accurate answer(for values between 1 and 2)
+            double threshold = 0.000000005;
+            double base = value - 1;        // Base of the numerator; exponent will be explicit
+            int den = 1;              // Denominator of the nth term
+            bool posSign = true;             // Used to swap the sign of each term
+            double term = base;       // First term
+            double prev;          // Previous sum
+            double result = term;     // Kick it off
+
+            do
+            {
+                den++;
+                posSign = !posSign;
+                term *= base;
+                prev = result;
+                if (posSign)
+                    result += term / den;
+                else
+                    result -= term / den;
+            } while (abs(prev - result) > threshold);
+
+            return result;
+        }
+        else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+        {//Increasing iterations brings closer to accurate result(Larger numbers need more iterations to get accurate level of result)
+            //double W = (value - 1) / (value + 1);
+            double TotalRes = (value - 1) / (value + 1);//W;
+            double LastPow = TotalRes;
+            double WSquared = TotalRes * TotalRes;
+            double AddRes;
+            int WPow = 3;
+            do
+            {
+                LastPow *= WSquared;
+                AddRes = LastPow/WPow;//double::PowRef(W, WPow) / WPow;
+                TotalRes += AddRes; WPow += 2;
+            } while (AddRes > 0.000000001);
+            return TotalRes * 2;
+        }
     }
-*/
+
+    /// <summary>
+    /// Natural log (Equivalent to Log_E(value))
+    /// </summary>
+    /// <param name="value">The target value.</param>
+    static double Ln(double value)
+    {
+        return LnRef(value);
+    }
 }
