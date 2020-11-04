@@ -207,7 +207,7 @@ namespace BlazesFloatingCode
         if (value == 1.0)
             return 0.0;
         if (value < 2.0)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
-        {//This section gives accurate answer(for values between 1 and 2)
+        {
             double threshold = 0.000000005;
             double base = value - 1;        // Base of the numerator; exponent will be explicit
             int den = 1;              // Denominator of the nth term

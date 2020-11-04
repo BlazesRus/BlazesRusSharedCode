@@ -28,41 +28,41 @@ int main()
 
     MediumDec targetVal = "5.5";
     MediumDec rightVal = "1.25";
-    MediumDec resDiff = targetVal - rightVal;
-    std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << resDiff.ToString() << std::endl;
-    resDiff = targetVal + rightVal;
-    std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << resDiff.ToString() << std::endl;
+    MediumDec altResult = targetVal - rightVal;
+    std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << std::endl;
+    altResult = targetVal + rightVal;
+    std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << altResult.ToString() << std::endl;
 
-    resDiff = targetVal*rightVal;
+    altResult = targetVal*rightVal;
     double floatingVal = (double)targetVal * (double)rightVal;
-    std::cout << targetVal.ToString() << " * " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:"<<floatingVal<< std::endl;
-    resDiff = targetVal/rightVal;
+    std::cout << targetVal.ToString() << " * " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:"<<floatingVal<< std::endl;
+    altResult = targetVal/rightVal;
     floatingVal = (double)targetVal / (double)rightVal;
-    std::cout << targetVal.ToString() << " / " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:" << floatingVal << std::endl;
-    resDiff = targetVal - 3;
-    std::cout << targetVal.ToString() << " - 3 = " << resDiff.ToString() << std::endl;
-    resDiff = targetVal + 3;
-    std::cout << targetVal.ToString() << " + 3 = " << resDiff.ToString() << std::endl;
-    resDiff = targetVal * 3;
-    std::cout << targetVal.ToString() << " * 3 = " << resDiff.ToString() << std::endl;
-    resDiff = targetVal / 3;
-    std::cout << targetVal.ToString() << " / 3 = " << resDiff.ToString() << std::endl;
-    resDiff = targetVal; resDiff -= rightVal;
-    std::cout << targetVal.ToString() << " -= :" << rightVal.ToString() << " = " << resDiff.ToString() << std::endl;
-    resDiff = targetVal; resDiff += rightVal;
-    std::cout << targetVal.ToString() << " += :" << rightVal.ToString() << " = " << resDiff.ToString() << std::endl;
-    resDiff = targetVal; resDiff *= rightVal;
-    std::cout << targetVal.ToString() << " *= :" << rightVal.ToString() << " = " << resDiff.ToString() << std::endl;
-    resDiff = targetVal; resDiff /= rightVal;
-    std::cout << targetVal.ToString() << " /= :" << rightVal.ToString() << " = " << resDiff.ToString() << std::endl;
-    resDiff = targetVal; resDiff -= 3;
-    std::cout << targetVal.ToString() << " -= 3 :" << resDiff.ToString() << std::endl;
-    resDiff = targetVal; resDiff += 3;
-    std::cout << targetVal.ToString() << " += 3 :" << resDiff.ToString() << std::endl;
-    resDiff = targetVal; resDiff *= 3;
-    std::cout << targetVal.ToString() << " *= 3 :" << resDiff.ToString() << std::endl;
-    resDiff = targetVal; resDiff /= 3;
-    std::cout << targetVal.ToString() << " /= 3 : " << resDiff.ToString() << std::endl;
+    std::cout << targetVal.ToString() << " / " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal - 3;
+    std::cout << targetVal.ToString() << " - 3 = " << altResult.ToString() << std::endl;
+    altResult = targetVal + 3;
+    std::cout << targetVal.ToString() << " + 3 = " << altResult.ToString() << std::endl;
+    altResult = targetVal * 3;
+    std::cout << targetVal.ToString() << " * 3 = " << altResult.ToString() << std::endl;
+    altResult = targetVal / 3;
+    std::cout << targetVal.ToString() << " / 3 = " << altResult.ToString() << std::endl;
+    altResult = targetVal; altResult -= rightVal;
+    std::cout << targetVal.ToString() << " -= :" << rightVal.ToString() << " = " << altResult.ToString() << std::endl;
+    altResult = targetVal; altResult += rightVal;
+    std::cout << targetVal.ToString() << " += :" << rightVal.ToString() << " = " << altResult.ToString() << std::endl;
+    altResult = targetVal; altResult *= rightVal;
+    std::cout << targetVal.ToString() << " *= :" << rightVal.ToString() << " = " << altResult.ToString() << std::endl;
+    altResult = targetVal; altResult /= rightVal;
+    std::cout << targetVal.ToString() << " /= :" << rightVal.ToString() << " = " << altResult.ToString() << std::endl;
+    altResult = targetVal; altResult -= 3;
+    std::cout << targetVal.ToString() << " -= 3 :" << altResult.ToString() << std::endl;
+    altResult = targetVal; altResult += 3;
+    std::cout << targetVal.ToString() << " += 3 :" << altResult.ToString() << std::endl;
+    altResult = targetVal; altResult *= 3;
+    std::cout << targetVal.ToString() << " *= 3 :" << altResult.ToString() << std::endl;
+    altResult = targetVal; altResult /= 3;
+    std::cout << targetVal.ToString() << " /= 3 : " << altResult.ToString() << std::endl;
     bool boolCheck = targetVal < rightVal;
     std::cout << targetVal.ToString() << " < " << rightVal.ToString() << " = " << boolCheck << std::endl;
     boolCheck = targetVal <= rightVal;
@@ -73,64 +73,166 @@ int main()
     std::cout << targetVal.ToString() << " >= " << rightVal.ToString() << " = " << boolCheck << std::endl;
     //-----------------------------------------------------------------------------------------------------------
     //All multiplication & Division tests now successful
-    /*
     targetVal = "0.5";
     rightVal = "0.25";
-    //resDiff = BlazesRusDebug::MultOp(targetVal, rightVal);
-    //floatingVal = (double)targetVal * (double)rightVal;
-    //std::cout << targetVal.ToString() << " * " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:" << floatingVal << std::endl;
-    resDiff = BlazesRusDebug::DivOp(targetVal, rightVal);
+    altResult = targetVal * rightVal;
+    floatingVal = (double)targetVal * (double)rightVal;
+    std::cout << targetVal.ToString() << " * " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal / rightVal;
     floatingVal = (double)targetVal / (double)rightVal;
-    std::cout << targetVal.ToString() << " / " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:" << floatingVal << std::endl;
+    std::cout << targetVal.ToString() << " / " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+
+    altResult = targetVal + rightVal;
+    floatingVal = (double)targetVal + (double)rightVal;
+    std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal - rightVal;
+    floatingVal = (double)targetVal - (double)rightVal;
+    std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
 
     targetVal = "1.5";
-    //resDiff = BlazesRusDebug::MultOp(targetVal, rightVal);
-    //floatingVal = (double)targetVal * (double)rightVal;
-    //std::cout << targetVal.ToString() << " * " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:" << floatingVal << std::endl;
-    resDiff = BlazesRusDebug::DivOp(targetVal, rightVal);
+    altResult = targetVal * rightVal;
+    floatingVal = (double)targetVal * (double)rightVal;
+    std::cout << targetVal.ToString() << " * " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal / rightVal;
     floatingVal = (double)targetVal / (double)rightVal;
-    std::cout << targetVal.ToString() << " / " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:" << floatingVal << std::endl;
+    std::cout << targetVal.ToString() << " / " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
 
     targetVal = "0.5";
     rightVal = "2.5";
-    //resDiff = BlazesRusDebug::MultOp(targetVal, rightVal);
-    //floatingVal = (double)targetVal * (double)rightVal;
-    //std::cout << targetVal.ToString() << " * " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:" << floatingVal << std::endl;
-    resDiff = BlazesRusDebug::DivOp(targetVal, rightVal);
+    altResult = targetVal * rightVal;
+    floatingVal = (double)targetVal * (double)rightVal;
+    std::cout << targetVal.ToString() << " * " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal / rightVal;
     floatingVal = (double)targetVal / (double)rightVal;
-    std::cout << targetVal.ToString() << " / " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:" << floatingVal << std::endl;//Success
+    std::cout << targetVal.ToString() << " / " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+
+    altResult = targetVal + rightVal;
+    floatingVal = (double)targetVal + (double)rightVal;
+    std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal - rightVal;
+    floatingVal = (double)targetVal - (double)rightVal;
+    std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
 
     rightVal = "2.0";
-    //resDiff = BlazesRusDebug::MultOp(targetVal, rightVal);
-    //floatingVal = (double)targetVal * (double)rightVal;
-    //std::cout << targetVal.ToString() << " * " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:" << floatingVal << std::endl;
-    resDiff = BlazesRusDebug::DivOp(targetVal, rightVal);
+    altResult = targetVal * rightVal;
+    floatingVal = (double)targetVal * (double)rightVal;
+    std::cout << targetVal.ToString() << " * " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal / rightVal;
     floatingVal = (double)targetVal / (double)rightVal;
-    std::cout << targetVal.ToString() << " / " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:" << floatingVal << std::endl;//Success
+    std::cout << targetVal.ToString() << " / " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+
+    altResult = targetVal + rightVal;
+    floatingVal = (double)targetVal + (double)rightVal;
+    std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal - rightVal;
+    floatingVal = (double)targetVal - (double)rightVal;
+    std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
 
     targetVal = "4.0";
     rightVal = "2.0";
-    //resDiff = BlazesRusDebug::MultOp(targetVal, rightVal);
-    //floatingVal = (double)targetVal * (double)rightVal;
-    //std::cout << targetVal.ToString() << " * " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:" << floatingVal << std::endl;
-    resDiff = BlazesRusDebug::DivOp(targetVal, rightVal);
+    altResult = targetVal * rightVal;
+    floatingVal = (double)targetVal * (double)rightVal;
+    std::cout << targetVal.ToString() << " * " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal / rightVal;
     floatingVal = (double)targetVal / (double)rightVal;
-    std::cout << targetVal.ToString() << " / " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:" << floatingVal << std::endl;//Success
+    std::cout << targetVal.ToString() << " / " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+
+    altResult = targetVal + rightVal;
+    floatingVal = (double)targetVal + (double)rightVal;
+    std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal - rightVal;
+    floatingVal = (double)targetVal - (double)rightVal;
+    std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
 
     rightVal = "0.5";
-    //resDiff = BlazesRusDebug::MultOp(targetVal, rightVal);
-    //floatingVal = (double)targetVal * (double)rightVal;
-    //std::cout << targetVal.ToString() << " * " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:" << floatingVal << std::endl;
-    resDiff = BlazesRusDebug::DivOp(targetVal, rightVal);
+    altResult = targetVal * rightVal;
+    floatingVal = (double)targetVal * (double)rightVal;
+    std::cout << targetVal.ToString() << " * " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal / rightVal;
     floatingVal = (double)targetVal / (double)rightVal;
-    std::cout << targetVal.ToString() << " / " << rightVal.ToString() << " = " << resDiff.ToString() << " FloatResult:" << floatingVal << std::endl;
-    */
-    //-----------------------------------------------------------------------------------------------------------
-    targetVal = 3;
-    MediumDec rootTest;
+    std::cout << targetVal.ToString() << " / " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+
+    std::cout << "------Additional Addition/Subtraction Tests(For Negative numbers etc)--------------------" << std::endl;
+
+    targetVal = "-0.5";
+    rightVal = "-0.25";
+    altResult = targetVal + rightVal;
+    floatingVal = (double)targetVal + (double)rightVal;
+    std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal - rightVal;
+    floatingVal = (double)targetVal - (double)rightVal;
+    std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    rightVal = "0.25";
+    altResult = targetVal + rightVal;
+    floatingVal = (double)targetVal + (double)rightVal;
+    std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal - rightVal;
+    floatingVal = (double)targetVal - (double)rightVal;
+    std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+
+    targetVal = "-1.5";
+    altResult = targetVal + rightVal;
+    floatingVal = (double)targetVal + (double)rightVal;
+    std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal - rightVal;
+    floatingVal = (double)targetVal - (double)rightVal;
+    std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+
+    targetVal = "-0.5";
+    rightVal = "-2.5";
+    altResult = targetVal + rightVal;
+    floatingVal = (double)targetVal + (double)rightVal;
+    std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal - rightVal;
+    floatingVal = (double)targetVal - (double)rightVal;
+    std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+
+    rightVal = "2.5";
+    altResult = targetVal + rightVal;
+    floatingVal = (double)targetVal + (double)rightVal;
+    std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal - rightVal;
+    floatingVal = (double)targetVal - (double)rightVal;
+    std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+
+
+    rightVal = "-2.0";
+    altResult = targetVal + rightVal;
+    floatingVal = (double)targetVal + (double)rightVal;
+    std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal - rightVal;
+    floatingVal = (double)targetVal - (double)rightVal;
+    std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+
+
+    targetVal = "-4.0";
+    rightVal = "-2.0";
+    altResult = targetVal + rightVal;
+    floatingVal = (double)targetVal + (double)rightVal;
+    std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal - rightVal;
+    floatingVal = (double)targetVal - (double)rightVal;
+    std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+
+    rightVal = "0.5";
+    altResult = targetVal + rightVal;
+    floatingVal = (double)targetVal + (double)rightVal;
+    std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal - rightVal;
+    floatingVal = (double)targetVal - (double)rightVal;
+    std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+
+    rightVal = "-0.5";
+    altResult = targetVal + rightVal;
+    floatingVal = (double)targetVal + (double)rightVal;
+    std::cout << targetVal.ToString() << " + " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+    altResult = targetVal - rightVal;
+    floatingVal = (double)targetVal - (double)rightVal;
+    std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
+
+    std::cout << "---------------Log Tests------------------------------" << std::endl;
     targetVal = "0.005";
     floatingVal = 0.005;
-    std::cout << "---------------Log Tests------------------------------" << std::endl;
     double floatingRes;
     for (targetVal = MediumDec::FiveThousandth; targetVal<MediumDec::One; targetVal += MediumDec::FiveThousandth)
     {
@@ -139,8 +241,8 @@ int main()
         floatingRes = BlazesFloatingCode::LnRef(floatingVal);
         std::cout << " Ln(value) =" << floatingRes << std::endl;
         floatingVal += 0.005;
-        rootTest = MediumDec::Ln(targetVal);
-        std::cout << "(MediumDec)Ln(" << targetVal.ToString()<<")= " <<rootTest.ToString() << std::endl;
+        altResult = BlazesRusDebug::LnTestRef(floatingVal,targetVal);
+        std::cout << "(MediumDec)Ln(" << targetVal.ToString()<<")= " << altResult.ToString() << std::endl;
     }
 
     std::cout << "---------------Testing Formula Code-------------------" << std::endl;

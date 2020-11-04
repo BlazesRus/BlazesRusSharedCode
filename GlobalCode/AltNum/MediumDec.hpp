@@ -3830,7 +3830,7 @@ namespace BlazesRusCode
             {//This section gives accurate answer(for values between 1 and 2)
                 MediumDec threshold = MediumDec::FiveMillionth;
                 MediumDec base = value - 1;        // Base of the numerator; exponent will be explicit
-                int den = 1;              // Denominator of the nth term
+                int den = 2;              // Denominator of the nth term
                 bool posSign = true;             // Used to swap the sign of each term
                 MediumDec term = base;       // First term
                 MediumDec prev;          // Previous sum
@@ -3838,7 +3838,6 @@ namespace BlazesRusCode
 
                 do
                 {
-                    den++;
                     posSign = !posSign;
                     term *= base;
                     prev = result;
@@ -3846,6 +3845,7 @@ namespace BlazesRusCode
                         result += term / den;
                     else
                         result -= term / den;
+                    ++den;
                 } while (MediumDec::Abs(prev - result) > threshold);
 
                 return result;

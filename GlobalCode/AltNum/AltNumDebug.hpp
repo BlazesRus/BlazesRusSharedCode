@@ -266,6 +266,113 @@ namespace BlazesRusDebug
         return LnRef(value, threshold);
     }
 
+    /// <summary>
+    /// Natural log TestVersion(Equivalent to Log_E(value))
+    /// </summary>
+    /// <param name="value">The target value.</param>
+    /// <returns>double</returns>
+    static MediumDec LnTestRef(double& fvalue, MediumDec& value)
+    {
+        //if (value <= 0) {}else//Error if equal or less than 0
+        if (value==MediumDec::One)
+            return MediumDec::Zero;
+        if (value.IntValue==0)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+        {
+            double fthreshold = 0.000000005;
+            double fbase = fvalue - 1;        // Base of the numerator; exponent will be explicit
+            int den = 2;              // Denominator of the nth term
+            bool posSign = true;             // Used to swap the sign of each term
+            double fterm = fbase;       // First term
+            double fprev;          // Previous sum
+            double fresult = fterm;     // Kick it off
+            double fAddRes;
+
+            MediumDec threshold = MediumDec::FiveMillionth;
+            MediumDec base = value - 1;        // Base of the numerator; exponent will be explicit
+            int den = 2;              // Denominator of the nth term
+            bool posSign = true;             // Used to swap the sign of each term
+            MediumDec term = base;       // First term
+            MediumDec prev;          // Previous sum
+            MediumDec result = term;     // Kick it off
+            MediumDec AddRes;
+
+            do
+            {
+                posSign = !posSign;
+
+                fterm *= fbase;
+                term *= base;
+
+                fprev = fresult;
+                prev = result;
+
+                fAddRes = fterm / den;
+                AddRes = term / den;
+
+                if (posSign)
+                    fresult += fAddRes;
+                else
+                    fresult -= fAddRes;
+                if (posSign)
+                    result += term / den;
+                else
+                    result -= term / den;
+
+                den++;
+            } while (abs(fprev - fresult) > fthreshold);
+
+            //return result;
+        }
+        else if(value.IntValue==1)
+        {
+            MediumDec threshold = MediumDec::FiveMillionth;
+            MediumDec base = value - 1;        // Base of the numerator; exponent will be explicit
+            int den = 2;              // Denominator of the nth term
+            bool posSign = true;             // Used to swap the sign of each term
+            MediumDec term = base;       // First term
+            MediumDec prev;          // Previous sum
+            MediumDec result = term;     // Kick it off
+
+            do
+            {
+                posSign = !posSign;
+                term *= base;
+                prev = result;
+                if (posSign)
+                    result += term / den;
+                else
+                    result -= term / den;
+                den++;
+            } while (MediumDec::Abs(prev - result) > threshold);
+
+            return result;
+        }
+        else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+        {//Increasing iterations brings closer to accurate result(Larger numbers need more iterations to get accurate level of result)
+            MediumDec TotalRes = (value - 1) / (value + 1);//W;
+            MediumDec LastPow = TotalRes;
+            MediumDec WSquared = TotalRes * TotalRes;
+            MediumDec AddRes;
+            int WPow = 3;
+            do
+            {
+                LastPow *= WSquared;
+                AddRes = LastPow / WPow;//MediumDec::PowRef(W, WPow) / WPow;
+                TotalRes += AddRes; WPow += 2;
+            } while (AddRes > MediumDec::JustAboveZero);
+            return TotalRes * 2;
+        }
+    }
+
+    /// <summary>
+    /// Natural log (Equivalent to Log_E(value))
+    /// </summary>
+    /// <param name="value">The target value.</param>
+    static MediumDec LnTest(double fvalue, MediumDec value)
+    {
+        return LnTestRef(fvalue, value);
+    }
+
     /*
     /// <summary>
     /// Natural log
