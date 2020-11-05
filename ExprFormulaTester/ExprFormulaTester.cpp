@@ -231,19 +231,19 @@ int main()
     std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
 
     std::cout << "---------------Log Tests------------------------------" << std::endl;
-    targetVal = "0.005";
-    floatingVal = 0.005;
-    double floatingRes;
-    for (targetVal = MediumDec::FiveThousandth; targetVal<MediumDec::One; targetVal += MediumDec::FiveThousandth)
-    {
-        floatingRes = log(floatingVal);
-        std::cout << "Builtin-Ln(" << floatingVal << ") = " << floatingRes;
-        floatingRes = BlazesFloatingCode::LnRef(floatingVal);
-        std::cout << " Ln(value) =" << floatingRes << std::endl;
-        floatingVal += 0.005;
-        altResult = BlazesRusDebug::LnTestRef(floatingVal,targetVal);
-        std::cout << "(MediumDec)Ln(" << targetVal.ToString()<<")= " << altResult.ToString() << std::endl;
-    }
+    //targetVal = "0.005";
+    //floatingVal = 0.005;
+    //double floatingRes;
+    //for (targetVal = MediumDec::FiveThousandth; targetVal<MediumDec::One; targetVal += MediumDec::FiveThousandth)
+    //{
+    //    floatingRes = log(floatingVal);
+    //    std::cout << "Builtin-Ln(" << floatingVal << ") = " << floatingRes;
+    //    floatingRes = BlazesFloatingCode::LnRef(floatingVal);
+    //    std::cout << " Ln(value) =" << floatingRes << std::endl;
+    //    floatingVal += 0.005;
+    //    altResult = BlazesRusDebug::LnTestRef(floatingVal,targetVal);
+    //    std::cout << "(MediumDec)Ln(" << targetVal.ToString()<<")= " << altResult.ToString() << std::endl;
+    //}
 
     std::cout << "---------------Testing Formula Code-------------------" << std::endl;
     //std::cout << "-------------------------Formula Code Tests---------------------------------" << std::endl;

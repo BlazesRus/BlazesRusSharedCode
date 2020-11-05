@@ -342,7 +342,6 @@ namespace BlazesRusCode
         void SwapReferencedData(FormData& FormCopy, ReferenceMap& ElementValues, size_t FormIndex = 0)
         {
             std::string CurString;
-            char firstChar;
             MediumDec targetResult;
             for (FormData::iterator CurrentVal = Data.at(FormIndex).begin(), LastVal = Data.at(FormIndex).end(); CurrentVal != LastVal; ++CurrentVal)
             {
@@ -367,7 +366,6 @@ namespace BlazesRusCode
         void SwapUpdatedFormData(FormData& FormCopy, ValueMap& ElementValues, size_t FormIndex = 0)
         {
             std::string CurString;
-            char firstChar;
             MediumDec targetResult;
             for (FormData::iterator CurrentVal = Data.at(FormIndex).begin(), LastVal = Data.at(FormIndex).end(); CurrentVal != LastVal; ++CurrentVal)
             {

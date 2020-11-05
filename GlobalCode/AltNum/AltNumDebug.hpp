@@ -289,8 +289,6 @@ namespace BlazesRusDebug
 
             MediumDec threshold = MediumDec::FiveMillionth;
             MediumDec base = value - 1;        // Base of the numerator; exponent will be explicit
-            int den = 2;              // Denominator of the nth term
-            bool posSign = true;             // Used to swap the sign of each term
             MediumDec term = base;       // First term
             MediumDec prev;          // Previous sum
             MediumDec result = term;     // Kick it off
@@ -321,7 +319,7 @@ namespace BlazesRusDebug
                 den++;
             } while (abs(fprev - fresult) > fthreshold);
 
-            //return result;
+            return result;
         }
         else if(value.IntValue==1)
         {

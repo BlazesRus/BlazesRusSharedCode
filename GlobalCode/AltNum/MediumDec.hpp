@@ -2438,7 +2438,7 @@ namespace BlazesRusCode
                 {
                     __int64 OverflowVal = SRep / DecimalOverflow;
                     SRep -= OverflowVal * DecimalOverflow;
-                    self.IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
+                    self.IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
                     self.DecimalHalf01 = (signed int)SRep;
                 }
                 else
@@ -2461,7 +2461,7 @@ namespace BlazesRusCode
                 {
                     __int64 OverflowVal = SRep / DecimalOverflowX;
                     SRep -= DecimalOverflowX * OverflowVal;
-                    self.IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
+                    self.IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
                     self.DecimalHalf01 = (signed int)SRep;
                 }
                 else
@@ -2514,8 +2514,8 @@ namespace BlazesRusCode
                 SRep -= IntResult * VRep;
                 __int64 IntHalf = SRep / DecimalOverflow;
                 SRep -= IntHalf * (__int64)DecimalOverflow;
-                if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? NegativeZero : 0; }
-                else { self.IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
+                if (IntHalf == 0) { self.IntValue = SelfIsNegative ? (signed int)NegativeZero : 0; }
+                else { self.IntValue = (signed int)(SelfIsNegative ? IntHalf * -1 : IntHalf); }
                 self.DecimalHalf01 = (signed int)SRep;
             }
             return self;
