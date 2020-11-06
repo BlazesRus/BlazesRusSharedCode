@@ -231,19 +231,19 @@ int main()
     std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
 
     std::cout << "---------------Log Tests------------------------------" << std::endl;
-    //targetVal = "0.005";
-    //floatingVal = 0.005;
-    //double floatingRes;
-    //for (targetVal = MediumDec::FiveThousandth; targetVal<MediumDec::One; targetVal += MediumDec::FiveThousandth)
-    //{
-    //    floatingRes = log(floatingVal);
-    //    std::cout << "Builtin-Ln(" << floatingVal << ") = " << floatingRes;
-    //    floatingRes = BlazesFloatingCode::LnRef(floatingVal);
-    //    std::cout << " Ln(value) =" << floatingRes << std::endl;
-    //    floatingVal += 0.005;
-    //    altResult = BlazesRusDebug::LnTestRef(floatingVal,targetVal);
-    //    std::cout << "(MediumDec)Ln(" << targetVal.ToString()<<")= " << altResult.ToString() << std::endl;
-    //}
+    targetVal = "0.005";
+    floatingVal = 0.005;
+    double floatingRes;
+    for (targetVal = MediumDec::FiveThousandth; targetVal < MediumDec::One; targetVal += MediumDec::FiveThousandth)
+    {
+        floatingRes = log(floatingVal);
+        std::cout << "Builtin-Ln(" << floatingVal << ") = " << floatingRes;
+        floatingRes = BlazesFloatingCode::LnRef(floatingVal);
+        std::cout << " Ln(value) =" << floatingRes << std::endl;
+        floatingVal += 0.005;
+        altResult = BlazesRusDebug::LnTestRef(floatingVal, targetVal);
+        std::cout << "(MediumDec)Ln(" << targetVal.ToString() << ")= " << altResult.ToString() << std::endl;
+    }
 
     std::cout << "---------------Testing Formula Code-------------------" << std::endl;
     //std::cout << "-------------------------Formula Code Tests---------------------------------" << std::endl;
@@ -254,7 +254,9 @@ int main()
     //IntFormTest = "5+10x";
     //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
 
-    MediumDecFormula AltFormTest = "5.5^(1.5+x)+6x";
+    MediumDecFormula AltFormTest = "5+5+x";
+    tsl::ordered_map<std::string, MediumDec> ValueDefinitions;
+    ValueDefinitions.insert_or_assign("x", MediumDec::One);
 
     //tsl::ordered_map<std::string, MediumDec&> RefDefinitions;
     //MediumDec XReference = MediumDec::One;
@@ -262,12 +264,13 @@ int main()
     //rootTest = AltFormTest.EvalValueRefs(RefDefinitions);
     //std::cout << AltFormTest.ToString() << " = " << rootTest.ToString()<< std::endl;
 
-    //tsl::ordered_map<std::string, MediumDec> ValueDefinitions;
-    //ValueDefinitions.insert_or_assign("x", MediumDec::One);
-    //rootTest = AltFormTest.EvalValues(ValueDefinitions);
+    //
+
     std::cout << "(MediumDecFormula) "<< AltFormTest.ToString() <<std::endl;
+    AltFormTest = AltFormTest.SimplifyFormula(ValueDefinitions);
+    std::cout << " = " << AltFormTest.ToString() << std::endl;
     //std::cout << " = " << rootTest.ToString() << std::endl;
-    //AltFormTest = "5+5";
+    //AltFormTest = "5.5^(1.5+x)+6x";
     //std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << " = " << rootTest.ToString() << std::endl;
     //AltFormTest = "5+(5/4)";
     //std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << " = " << rootTest.ToString() << std::endl;

@@ -49,6 +49,9 @@ namespace BlazesRusCode
     template<typename VarType>
     class DLL_API VariableFormula
     {
+    protected:
+        using ReferenceMap = tsl::ordered_map<std::string, VarType&>;
+        using ValueMap = tsl::ordered_map<std::string, VarType>;
     public:
         class DLL_API VariableStoreData
         {

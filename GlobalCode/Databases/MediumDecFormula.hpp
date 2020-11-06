@@ -35,335 +35,14 @@ namespace BlazesRusCode
 {
     class DLL_API MediumDecFormula : public VariableFormula<MediumDec>
     {
-    private:
-        using ReferenceMap = tsl::ordered_map<std::string, MediumDec&>;
-        using ValueMap = tsl::ordered_map<std::string, MediumDec>;
     public:
-        /// <summary>
-        /// Switches the operator into boolean value and erases old left+right side value.
-        /// </summary>
-        /// <param name="FormCopy">The form copy.</param>
-        /// <param name="OpVal">The op value.</param>
-        /// <param name="LeftIterator">The left iterator.</param>
-        /// <param name="RightIterator">The right iterator.</param>
-        /// <param name="Value">The value.</param>
-        void SwitchOpToBoolVal(FormData& FormCopy, FormElement& OpVal, FormData::iterator& LeftIterator, FormData::iterator& RightIterator, bool Value)
-        {
-            if (Value) { OpVal.ElementCat = FormulaElementType::trueVal; }
-            else { OpVal.ElementCat = FormulaElementType::falseVal; }
-
-            if (LeftIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(LeftIterator->first); }
-            if (RightIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(RightIterator->first); }
-
-            int LeftKey = LeftIterator->first; int RightKey = RightIterator->first;
-            FormCopy.erase(LeftIterator); FormCopy.erase(RightKey);
-            FormCopy.RemovedIndexes.push_back(LeftKey); FormCopy.RemovedIndexes.push_back(RightKey);
-        }
-
-        /// <summary>
-        /// Switches the operator into boolean value and erases old right side value.
-        /// </summary>
-        /// <param name="FormCopy">The formula data copy.</param>
-        /// <param name="OpVal">The op value.</param>
-        /// <param name="RightIterator">The right side value iterator.</param>
-        /// <param name="Value">The value.</param>
-        void SwitchOpToRBoolVal(FormData& FormCopy, FormElement& OpVal, FormData::iterator& RightIterator, bool Value)
-        {
-            if (Value) { OpVal.ElementCat = FormulaElementType::trueVal; }
-            else { OpVal.ElementCat = FormulaElementType::falseVal; }
-
-            if (RightIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(RightIterator->first); }
-
-            FormCopy.erase(RightIterator);
-            FormCopy.RemovedIndexes.push_back(RightIterator->first);
-        }
-
-        /// <summary>
-        /// Switches the operator into Value and erases old right side Value
-        /// </summary>
-        /// <param name="FormCopy">The formula data copy.</param>
-        /// <param name="OpVal">The operator element value.</param>
-        /// <param name="OpKey">The operator key.</param>
-        /// <param name="RightIterator">The right side value iterator.</param>
-        /// <param name="Value">The value to turn operator into.</param>
-        void SwitchOpToRVal(FormData& FormCopy, FormElement& OpVal, int OpKey, FormData::iterator& RightIterator, MediumDec Value)
-        {
-            FormCopy.NumMap.insert_or_assign(OpKey, Value);
-            OpVal.ElementCat = FormulaElementType::Num;
-
-            if (RightIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(RightIterator->first); }
-
-            int RightKey = RightIterator->first;
-            FormCopy.erase(RightKey);
-            FormCopy.RemovedIndexes.push_back(RightKey);
-        }
-
-        /// <summary>
-        /// Switches the operator into Value and erases old left+right side Value
-        /// </summary>
-        /// <param name="FormCopy">The formula data copy.</param>
-        /// <param name="OpVal">The operator element value.</param>
-        /// <param name="OpKey">The operator key.</param>
-        /// <param name="RightIterator">The right value iterator.</param>
-        /// <param name="RightIterator">The right value iterator.</param>
-        /// <param name="Value">The value to turn operator into.</param>
-        void SwitchOpToVal(FormData& FormCopy, FormElement& OpVal, int OpKey, FormData::iterator& LeftIterator, FormData::iterator& RightIterator, MediumDec Value)
-        {
-            FormCopy.NumMap.insert_or_assign(OpKey, Value);
-            OpVal.ElementCat = FormulaElementType::Num;
-
-            if (LeftIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(LeftIterator->first); }
-            if (RightIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(RightIterator->first); }
-
-            int LeftKey = LeftIterator->first; int RightKey = RightIterator->first;
-            FormCopy.erase(LeftIterator); FormCopy.erase(RightKey);
-            FormCopy.RemovedIndexes.push_back(LeftKey); FormCopy.RemovedIndexes.push_back(RightKey);
-        }
-
-        /// <summary>
-        /// Evaluates the order of operations.
-        /// </summary>
-        /// <param name="FormCopy">The form copy.</param>
-        /// <returns>BlazesRusCode::MediumDec</returns>
-        MediumDec EvaluateOrderOfOperations(FormData& FormCopy)
-        {
-            MediumDec valResult;
-
-            bool TempBool;
-            MediumDec leftValue;
-            MediumDec rightValue;
-
-            IntVector& OpOrderElement = FormCopy.OpOrderMap[0];
-            FormData::iterator OpIterator;
-            auto OpVal = FormCopy.at(0);
-            FormData::iterator LeftVal;
-            FormData::iterator RightVal;
-            MediumDec leftResult;
-            MediumDec rightResult;
-
-            //Applying operations via C++ variation of order of operations
-            //https://en.cppreference.com/w/cpp/language/operator_precedence
-            for (int opIndex = 0; opIndex < 11; ++opIndex)
-            {
-                OpOrderElement = FormCopy.OpOrderMap[opIndex];
-                for (IntVector::iterator CurrentVal = OpOrderElement.begin(), LastVal = OpOrderElement.end(); CurrentVal != LastVal; ++CurrentVal)
-                {
-                    OpIterator = FormCopy.find(*CurrentVal);
-                    OpVal = FormCopy[*CurrentVal];
-                    if (OpIterator->second.ElementCat != FormulaElementType::Not && OpIterator->second.ElementCat != FormulaElementType::Sqrt)
-                    {
-                        LeftVal = OpIterator - 1;
-                        leftValue = LeftVal->second.ElementCat == FormulaElementType::trueVal ? 1 : (LeftVal->second.ElementCat == FormulaElementType::falseVal ? 0 : FormCopy.NumMap[LeftVal->first]);
-                    }
-                    RightVal = OpIterator + 1;
-                    rightValue = RightVal->second.ElementCat == FormulaElementType::trueVal ? 1 : (RightVal->second.ElementCat == FormulaElementType::falseVal ? 0 : FormCopy.NumMap[RightVal->first]);
-
-                    switch (opIndex)
-                    {
-                    default://placeholder code
-                        break;
-                    case 0:
-                        switch (OpIterator->second.ElementCat)
-                        {
-                        case FormulaElementType::Pow:
-                            leftValue = MediumDec::PowOp(leftValue, rightValue);
-                            SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, rightValue);
-                            break;
-                        case FormulaElementType::Sqrt:
-                            rightValue = MediumDec::Sqrt(rightValue);
-                            SwitchOpToRVal(FormCopy, OpVal, OpIterator->first, RightVal, rightValue);
-                            break;
-                        case FormulaElementType::NthRoot:
-                            rightValue = MediumDec::NthRootV2(rightValue, (int)leftValue);
-                            SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, rightValue);
-                            break;
-                        }
-                        break;
-                    case 1:
-                        switch (OpIterator->second.ElementCat)
-                        {
-                        case FormulaElementType::Not:
-                            if (RightVal->second.ElementCat == FormulaElementType::trueVal)
-                            {
-                                FormCopy.at(RightVal->first).ElementCat = FormulaElementType::falseVal;
-                            }
-                            else if (RightVal->second.ElementCat == FormulaElementType::falseVal)
-                            {
-                                FormCopy.at(RightVal->first).ElementCat = FormulaElementType::trueVal;
-                            }
-                            else
-                            {
-                                if (rightValue == MediumDec::Zero)//Zero is false otherwise count as if it was true
-                                    SwitchOpToRBoolVal(FormCopy, OpVal, RightVal, true);
-                                else
-                                    SwitchOpToRBoolVal(FormCopy, OpVal, RightVal, false);
-                            }
-                            FormCopy.erase(OpIterator);
-                            break;
-                        case FormulaElementType::Negative://Only applies to numbers
-                            rightValue.SwapNegativeStatus();//rightValue = -rightValue;
-                            FormCopy.NumMap[RightVal->first] = rightValue;
-                            break;
-                        }
-                        break;
-                    case 2:// 	Multiplication, division, and remainder
-                        switch (OpIterator->second.ElementCat)
-                        {
-                        case FormulaElementType::Mult:
-                            leftValue *= rightValue;
-                            SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
-                            break;
-                        case FormulaElementType::Div:
-                            leftValue /= rightValue;
-                            SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
-                            break;
-                        case FormulaElementType::Rem:
-                            leftValue %= rightValue;
-                            SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
-                            break;
-                        }
-                        break;
-                    case 3://Addition and subtraction
-                        switch (OpIterator->second.ElementCat)
-                        {
-                        case FormulaElementType::Add:
-                            leftValue += rightValue;
-                            SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
-                            break;
-                        case FormulaElementType::Sub:
-                            leftValue -= rightValue;
-                            SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
-                            break;
-                        }
-                        break;
-                    case 4://<,<=, >, >=
-                        switch (OpIterator->second.ElementCat)
-                        {
-                        case FormulaElementType::LessThan:
-                            TempBool = leftValue < rightValue;
-                            break;
-                        case FormulaElementType::LessOrEqual:
-                            TempBool = leftValue <= rightValue;
-                            break;
-                        case FormulaElementType::GreaterThan:
-                            TempBool = leftValue > rightValue;
-                            break;
-                        case FormulaElementType::GreaterOrEqual:
-                            TempBool = leftValue >= rightValue;
-                            break;
-                        }
-                        SwitchOpToBoolVal(FormCopy, OpVal, LeftVal, RightVal, TempBool);
-                        break;
-                    case 5://==, !=
-                        switch (OpIterator->second.ElementCat)
-                        {
-                        case FormulaElementType::Equal:
-                            TempBool = leftValue == rightValue;
-                            break;
-                        case FormulaElementType::NotEqual:
-                            TempBool = leftValue != rightValue;
-                            break;
-                        }
-                        SwitchOpToBoolVal(FormCopy, OpVal, LeftVal, RightVal, TempBool);
-                        break;
-                    case 6://&
-                        leftValue = leftValue & rightValue;
-                        SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
-                        break;
-                    case 7://XOR
-                        leftValue = leftValue ^ rightValue;
-                        SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
-                        break;
-                    case 8:// | Bitwise OR (inclusive or)
-                        leftValue = leftValue ^ rightValue;
-                        SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
-                        break;
-                    case 9://&&
-                        TempBool = leftValue && rightValue;
-                        SwitchOpToBoolVal(FormCopy, OpVal, LeftVal, RightVal, TempBool);
-                        break;
-                    case 10:// || (Logical OR)
-                        TempBool = leftValue || rightValue;
-                        SwitchOpToBoolVal(FormCopy, OpVal, LeftVal, RightVal, TempBool);
-                        break;
-/*
-                    case 11://Ternary conditional, =, +=,   -=, *=,   /=,   %=,<<=,   >>=, &= ,  ^=,   |= (Not supported yet)
-                        break;
-*/
-                    }
-                }
-            }
-            if (FormCopy.size() == 1)
-            {
-                FormData::iterator ElementIter = FormCopy.begin();
-                int KeyIndex = ElementIter->first;
-                if (ElementIter->second.ElementCat == FormulaElementType::trueVal)
-                {
-                    return MediumDec::One;
-                }
-                else if (ElementIter->second.ElementCat == FormulaElementType::falseVal)
-                {
-                    return MediumDec::Zero;
-                }
-                else if (ElementIter->second.ElementCat == FormulaElementType::Num)
-                {
-                    return FormCopy.NumMap[KeyIndex];
-                }
-                else if (ElementIter->second.ElementCat == FormulaElementType::Variable)
-                {
-                    std::string ErrorMessage = "Failed to evaluate variable named:" + FormCopy.VariableMap.at(KeyIndex).Name;
-                    throw ErrorMessage.c_str();
-                }
-                else
-                {
-                    std::string ErrorMessage = "Failed to evaluate Element with Element Category of:";
-                    ErrorMessage += VariableConversionFunctions::IntToStringConversion((int)ElementIter->second.ElementCat);
-                    throw ErrorMessage.c_str();
-                }
-            }
-            else
-            {
-                std::string ErrorMessage = "Failed to evaluate "+FormCopy.ToString()+" to single value!";
-                throw ErrorMessage.c_str();
-            }
-        }
-
-        MediumDec EvaluateOrderOfOperationsFromCopy(FormData FormCopy)
-        {
-            return EvaluateOrderOfOperations(FormCopy);
-        }
-
-        /// <summary>
-        /// Swaps the referenced data.
-        /// </summary>
-        /// <param name="FormCopy">The form copy.</param>
-        /// <param name="ElementValues">The element values.</param>
-        /// <param name="FormIndex">Index of the form.</param>
-        void SwapReferencedData(FormData& FormCopy, ReferenceMap& ElementValues, size_t FormIndex = 0)
-        {
-            std::string CurString;
-            MediumDec targetResult;
-            for (FormData::iterator CurrentVal = Data.at(FormIndex).begin(), LastVal = Data.at(FormIndex).end(); CurrentVal != LastVal; ++CurrentVal)
-            {
-                if (CurrentVal->second.ElementCat == FormulaElementType::Formula)//FormulaDetected
-                {
-                    targetResult = RecursivelyEvalRefValues(ElementValues, CurrentVal->second.Index);
-                    FormCopy.ReplaceFormVal(CurrentVal->first, targetResult);
-                }
-                else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
-                {
-                    FormCopy.ReplaceFormVal(CurrentVal->first, ElementValues.at(CurString));
-                }
-            }
-        }
-
         /// <summary>
         /// Swaps the updated form data.
         /// </summary>
         /// <param name="FormCopy">The form copy.</param>
         /// <param name="ElementValues">The element values.</param>
         /// <param name="FormIndex">Index of the form.</param>
-        void SwapUpdatedFormData(FormData& FormCopy, ValueMap& ElementValues, size_t FormIndex = 0)
+        void SwapUpdatedFormData(ValueMap& ElementValues, size_t FormIndex = 0)
         {
             std::string CurString;
             MediumDec targetResult;
@@ -371,42 +50,25 @@ namespace BlazesRusCode
             {
                 if (CurrentVal->second.ElementCat == FormulaElementType::Formula)//FormulaDetected
                 {
-                    targetResult = RecursivelyEvalValues(ElementValues, CurrentVal->second.Index);
-                    FormCopy.ReplaceFormVal(CurrentVal->first, targetResult);
+                    SwapUpdatedFormData(ElementValues, CurrentVal->second.Index);
+                    //if(Data.at(FormIndex).size() == 1)
+                    //    ReplaceFormVal(CurrentVal->first, targetResult);
                 }
                 else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
-                {
-                    FormCopy.ReplaceFormVal(CurrentVal->first, ElementValues.at(CurString));
-                }
+                    Data.at(FormIndex).ReplaceFormVal(CurrentVal->first, ElementValues.at(CurString));
             }
         }
 
-        MediumDec RecursivelyEvalRefValues(ReferenceMap& ElementValues, size_t FormIndex)
-        {//Each Formula Calculates order of operations etc separately
-            FormData FormCopy = Data.at(FormIndex);
-            SwapReferencedData(FormCopy, ElementValues, FormIndex);
-            return EvaluateOrderOfOperations(FormCopy);
-        }
-
-        MediumDec RecursivelyEvalValues(ValueMap& ElementValues, size_t FormIndex)
-        {//Each Formula Calculates order of operations etc separately
-            FormData FormCopy = Data.at(FormIndex);
-            SwapUpdatedFormData(FormCopy, ElementValues, FormIndex);
-            return EvaluateOrderOfOperations(FormCopy);
-        }
-
-        MediumDec EvalValueRefs(ReferenceMap ElementValues)
+        /// <summary>
+        /// Simplifies and evaluates the formula and then returns the copy.
+        /// </summary>
+        /// <param name="ElementValues">The element values.</param>
+        /// <returns>BlazesRusCode.MediumDecFormula</returns>
+        MediumDecFormula SimplifyFormula(ValueMap ElementValues)
         {
-            FormData FormCopy = Data.at(0);//Duplicate values so can erase parts when calculating
-            SwapReferencedData(FormCopy, ElementValues);
-            return EvaluateOrderOfOperations(FormCopy);
-        }
-
-        MediumDec EvalValues(ValueMap ElementValues)
-        {
-            FormData FormCopy = Data.at(0);//Duplicate values so can erase parts when calculating
-            SwapUpdatedFormData(FormCopy, ElementValues);
-            return EvaluateOrderOfOperations(FormCopy);
+            MediumDecFormula FormCopy = *this;//Duplicate values so can erase parts when calculating
+            FormCopy.SwapUpdatedFormData(ElementValues);
+            return FormCopy;//EvaluateOrderOfOperations(FormCopy);
         }
 
         /// <summary>
