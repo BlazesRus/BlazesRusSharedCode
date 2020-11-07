@@ -231,20 +231,22 @@ int main()
     std::cout << targetVal.ToString() << " - " << rightVal.ToString() << " = " << altResult.ToString() << " FloatResult:" << floatingVal << std::endl;
 
     std::cout << "---------------Log Tests------------------------------" << std::endl;
-    targetVal = "0.005";
+    targetVal = MediumDec::FiveThousandth;
     floatingVal = 0.005;
     double floatingRes;
-    for (targetVal = MediumDec::FiveThousandth; targetVal < MediumDec::One; targetVal += MediumDec::FiveThousandth)
+    do 
     {
         floatingRes = log(floatingVal);
         std::cout << "Builtin-Ln(" << floatingVal << ") = " << floatingRes;
-        floatingRes = BlazesFloatingCode::LnRef(floatingVal);
+        floatingRes = BlazesFloatingCode::LnRefV2(floatingVal);
         std::cout << " Ln(value) =" << floatingRes << std::endl;
-        floatingVal += 0.005;
-        altResult = BlazesRusDebug::LnTestRef(floatingVal, targetVal);
-        std::cout << "(MediumDec)Ln(" << targetVal.ToString() << ")= " << altResult.ToString() << std::endl;
-    }
 
+        altResult = MediumDec::LnRef(targetVal);
+        std::cout << "(MediumDec)Ln(" << targetVal.ToString() << ")= " << altResult.ToString() << std::endl;
+        altResult = MediumDec::LnRefV2(targetVal);
+        std::cout << "(MediumDec)LnV2(" << targetVal.ToString() << ")= " << altResult.ToString() << std::endl;
+        targetVal += MediumDec::FiveThousandth; floatingVal += 0.005;
+    } while (targetVal < MediumDec::One);
     std::cout << "---------------Testing Formula Code-------------------" << std::endl;
     //std::cout << "-------------------------Formula Code Tests---------------------------------" << std::endl;
     //IntFormula IntFormTest = "(5+5)^2";
@@ -267,9 +269,8 @@ int main()
     //
 
     std::cout << "(MediumDecFormula) "<< AltFormTest.ToString() <<std::endl;
-    AltFormTest = AltFormTest.SimplifyFormula(ValueDefinitions);
-    std::cout << " = " << AltFormTest.ToString() << std::endl;
-    //std::cout << " = " << rootTest.ToString() << std::endl;
+    //AltFormTest = AltFormTest.SimplifyFormula(ValueDefinitions);
+    //std::cout << " = " << AltFormTest.ToString() << std::endl;
     //AltFormTest = "5.5^(1.5+x)+6x";
     //std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << " = " << rootTest.ToString() << std::endl;
     //AltFormTest = "5+(5/4)";

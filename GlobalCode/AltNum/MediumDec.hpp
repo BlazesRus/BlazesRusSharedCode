@@ -984,26 +984,31 @@ namespace BlazesRusCode
                 }
                 else
                 {
-                    if (self.IntValue < 0)
+                    bool WasNegative = self.IntValue < 0;
+                    if (WasNegative)
                         self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
                     self.IntValue += Value.IntValue;
                     if (self.IntValue == -1)
                         self.IntValue = self.DecimalHalf01 == 0 ? 0 : MediumDec::NegativeZero;
                     else if (self.IntValue < 0)
                         ++self.IntValue;
+                    //If flips to other side of negative, invert the decimals
+                    if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
+                        self.DecimalHalf01 = MediumDec::DecimalOverflow - self.DecimalHalf01;
                 }
             }
             else
             {
+                bool WasNegative = self.IntValue < 0;
                 //Deal with Int section first
-                if (self.IntValue < 0)
+                if (WasNegative)
                     self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
                 if (Value.IntValue != 0 && Value.IntValue != MediumDec::NegativeZero)
                     self.IntValue += Value.IntValue;
                 //Now deal with the decimal section
                 if (Value.IntValue < 0)
                 {
-                    if (self.IntValue < 0)
+                    if (WasNegative)
                     {
                         self.DecimalHalf01 += Value.DecimalHalf01;
                         if (self.DecimalHalf01 < 0) { self.DecimalHalf01 += MediumDec::DecimalOverflow; ++self.IntValue; }
@@ -1018,7 +1023,7 @@ namespace BlazesRusCode
                 }
                 else
                 {
-                    if (self.IntValue < 0)
+                    if (WasNegative)
                     {
                         self.DecimalHalf01 -= Value.DecimalHalf01;
                         if (self.DecimalHalf01 < 0) { self.DecimalHalf01 += MediumDec::DecimalOverflow; ++self.IntValue; }
@@ -1035,6 +1040,9 @@ namespace BlazesRusCode
                     self.IntValue = self.DecimalHalf01 == 0 ? 0 : MediumDec::NegativeZero;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
+                //If flips to other side of negative, invert the decimals
+                if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
+                    self.DecimalHalf01 = MediumDec::DecimalOverflow - self.DecimalHalf01;
             }
             return self;
         }
@@ -1057,27 +1065,32 @@ namespace BlazesRusCode
                 }
                 else
                 {
-                    if (self.IntValue < 0)
+                    bool WasNegative = self.IntValue < 0;
+                    if (WasNegative)
                         self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
-                    if (Value.IntValue != 0 && Value.IntValue != MediumDec::NegativeZero)
+                    if (Value.IntValue != 0)
                         self.IntValue -= Value.IntValue;
                     if(self.IntValue==-1)
                         self.IntValue = self.DecimalHalf01 == 0?0:MediumDec::NegativeZero;
                     else if(self.IntValue<0)
                         ++self.IntValue;
+                    //If flips to other side of negative, invert the decimals
+                    if ((WasNegative && self.IntValue >= 0)||(WasNegative == 0 && self.IntValue < 0))
+                        self.DecimalHalf01 = MediumDec::DecimalOverflow - self.DecimalHalf01;
                 }
             }
             else
             {
+                bool WasNegative = self.IntValue < 0;
                 //Deal with Int section first
-                if (self.IntValue < 0)
+                if (WasNegative)
                     self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
                 if(Value.IntValue!=0&&Value.IntValue!=MediumDec::NegativeZero)
                     self.IntValue -= Value.IntValue;
                 //Now deal with the decimal section
                 if (Value.IntValue < 0)
                 {
-                    if (self.IntValue < 0)//-4.0 - -0.5 = -3.5
+                    if (WasNegative)//-4.0 - -0.5 = -3.5
                     {
                         self.DecimalHalf01 -= Value.DecimalHalf01;
                         if (self.DecimalHalf01 < 0) { self.DecimalHalf01 += MediumDec::DecimalOverflow; ++self.IntValue; }
@@ -1092,13 +1105,13 @@ namespace BlazesRusCode
                 }
                 else
                 {
-                    if (self.IntValue < 0)//-4.5 - 5.6
+                    if (WasNegative)//-4.5 - 5.6
                     {
                         self.DecimalHalf01 += Value.DecimalHalf01;
                         if (self.DecimalHalf01 < 0) { self.DecimalHalf01 += MediumDec::DecimalOverflow; ++self.IntValue; }
                         else if (self.DecimalHalf01 >= MediumDec::DecimalOverflow) { self.DecimalHalf01 -= MediumDec::DecimalOverflow; --self.IntValue; }
                     }
-                    else
+                    else//0.995 - 1 = 
                     {
                         self.DecimalHalf01 -= Value.DecimalHalf01;
                         if (self.DecimalHalf01 < 0) { self.DecimalHalf01 += MediumDec::DecimalOverflow; --self.IntValue; }
@@ -1109,6 +1122,9 @@ namespace BlazesRusCode
                     self.IntValue = self.DecimalHalf01 == 0 ? 0 : MediumDec::NegativeZero;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
+                //If flips to other side of negative, invert the decimals
+                if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
+                    self.DecimalHalf01 = MediumDec::DecimalOverflow - self.DecimalHalf01;
             }
             return self;
         }
@@ -2138,13 +2154,17 @@ namespace BlazesRusCode
                 self.IntValue += value;
             else
             {
-                if (self.IntValue < 0)
+                bool WasNegative = self.IntValue < 0;
+                if (WasNegative)
                     self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
                 self.IntValue += value;
                 if (self.IntValue == -1)
                     self.IntValue = self.DecimalHalf01 == 0 ? 0 : MediumDec::NegativeZero;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
+                //If flips to other side of negative, invert the decimals
+                if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
+                    self.DecimalHalf01 = MediumDec::DecimalOverflow - self.DecimalHalf01;
             }
             return self;
         }
@@ -2164,13 +2184,17 @@ namespace BlazesRusCode
                 self.IntValue -= value;
             else
             {
-                if (self.IntValue < 0)
+                bool WasNegative = self.IntValue < 0;
+                if (WasNegative)
                     self.IntValue = self.IntValue==MediumDec::NegativeZero ? -1 : --self.IntValue;
                 self.IntValue -= value;
                 if (self.IntValue == -1)
                     self.IntValue = self.DecimalHalf01 == 0 ? 0 : MediumDec::NegativeZero;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
+                //If flips to other side of negative, invert the decimals
+                if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
+                    self.DecimalHalf01 = MediumDec::DecimalOverflow - self.DecimalHalf01;
             }
             return self;
         }
@@ -3658,6 +3682,77 @@ namespace BlazesRusCode
             if (value == MediumDec::One)
                 return MediumDec::Zero;
             if (value.IntValue<2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+            {//This section gives accurate answer(for values between 1 and 2)
+                MediumDec threshold = MediumDec::FiveMillionth;
+                MediumDec base = value - 1;        // Base of the numerator; exponent will be explicit
+                int den = 2;              // Denominator of the nth term
+                bool posSign = true;             // Used to swap the sign of each term
+                MediumDec term = base;       // First term
+                MediumDec prev;          // Previous sum
+                MediumDec result = term;     // Kick it off
+
+                do
+                {
+                    posSign = !posSign;
+                    term *= base;
+                    prev = result;
+                    if (posSign)
+                        result += term / den;
+                    else
+                        result -= term / den;
+                    ++den;
+                } while (MediumDec::Abs(prev - result) > threshold);
+
+                return result;
+            }
+            else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+            {//Increasing iterations brings closer to accurate result(Larger numbers need more iterations to get accurate level of result)
+                //MediumDec W = (value - 1) / (value + 1);
+                MediumDec TotalRes = (value - 1) / (value + 1);//W;
+                MediumDec LastPow = TotalRes;
+                MediumDec WSquared = TotalRes * TotalRes;
+                MediumDec AddRes;
+                int WPow = 3;
+                do
+                {
+                    LastPow *= WSquared;
+                    AddRes = LastPow / WPow;//MediumDec::PowRef(W, WPow) / WPow;
+                    TotalRes += AddRes; WPow += 2;
+                } while (AddRes > MediumDec::JustAboveZero);
+                return TotalRes * 2;
+            }
+        }
+
+        /// <summary>
+        /// Natural log (Equivalent to Log_E(value))
+        /// </summary>
+        /// <param name="value">The target value.</param>
+        /// <returns>BlazesRusCode::MediumDec</returns>
+        static MediumDec LnRefV2(MediumDec& value)
+        {
+            //if (value <= 0) {}else//Error if equal or less than 0
+            if (value == MediumDec::One)
+                return MediumDec::Zero;
+            if(value.IntValue==0)//Returns a negative number derived from (http://www.netlib.org/cephes/qlibdoc.html#qlog)
+            {
+                MediumDec W = (value - 1)/ (value + 1);
+                MediumDec TotalRes = W;
+                W.SwapNegativeStatus();
+                MediumDec LastPow = W;
+                MediumDec WSquared = W * W;
+                int WPow = 3;
+                MediumDec AddRes;
+
+                do
+                {
+                    LastPow *= WSquared;
+                    AddRes = LastPow / WPow;
+                    TotalRes -= AddRes;
+                    WPow += 2;
+                } while (AddRes > MediumDec::JustAboveZero);
+                return TotalRes * 2;
+            }
+            else if (value.IntValue==1)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
             {//This section gives accurate answer(for values between 1 and 2)
                 MediumDec threshold = MediumDec::FiveMillionth;
                 MediumDec base = value - 1;        // Base of the numerator; exponent will be explicit

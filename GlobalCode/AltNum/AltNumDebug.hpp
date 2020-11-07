@@ -276,52 +276,47 @@ namespace BlazesRusDebug
         //if (value <= 0) {}else//Error if equal or less than 0
         if (value==MediumDec::One)
             return MediumDec::Zero;
-        //if (value.IntValue==0)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
-        //{
-        //    double fthreshold = 0.000000005;
-        //    double fbase = fvalue - 1;        // Base of the numerator; exponent will be explicit
-        //    int den = 2;              // Denominator of the nth term
-        //    bool posSign = true;             // Used to swap the sign of each term
-        //    double fterm = fbase;       // First term
-        //    double fprev;          // Previous sum
-        //    double fresult = fterm;     // Kick it off
-        //    double fAddRes;
+        if (value.IntValue==0)//Returns a negative number derived from (http://www.netlib.org/cephes/qlibdoc.html#qlog)
+        {
+            double fW = (fvalue - 1.0);
+            MediumDec W = (value - 1);
+            std::cout << "--Floating W Numerator:" << fW << " vs " << W.ToString() << "--" << std::endl;
+            double fDenom = (fvalue + 1.0);
+            fW /= fDenom;//(-0.5)/(1.5)=-1/3
+            MediumDec Denom = (value + 1);
+            std::cout << "--Floating W Denom:" << fDenom << " vs " << Denom.ToString() << "--" << std::endl;
+            W /= Denom;
+            double fTotalRes = fW;
+            fW *= -1;
+            double fLastPow = fW;
+            double fWSquared = fW * fW;
+            double fAddRes;
+            int WPow = 3;
 
-        //    MediumDec threshold = MediumDec::FiveMillionth;
-        //    MediumDec base = value - 1;        // Base of the numerator; exponent will be explicit
-        //    MediumDec term = base;       // First term
-        //    MediumDec prev;          // Previous sum
-        //    MediumDec result = term;     // Kick it off
-        //    MediumDec AddRes;
+            MediumDec TotalRes = W;
+            W.SwapNegativeStatus();
+            MediumDec LastPow = W;
+            MediumDec WSquared = W * W;
+            MediumDec AddRes;
+            std::cout << "--Floating W:" << fW << " vs " << W.ToString() << "--" << std::endl;
+            do
+            {
+                fLastPow *= fWSquared;
+                LastPow *= WSquared;
+                //std::cout << "-----Floating LastPow:" << fLastPow << " vs " << LastPow.ToString() << "--" << std::endl;
 
-        //    do
-        //    {
-        //        posSign = !posSign;
+                fAddRes = fLastPow / WPow;
+                AddRes = LastPow / WPow;
+                //std::cout << "-----Floating AddRes:" << fAddRes << " vs " << AddRes.ToString() << "--" << std::endl;
 
-        //        fterm *= fbase;
-        //        term *= base;
+                fTotalRes -= fAddRes;
+                TotalRes -= AddRes;
 
-        //        fprev = fresult;
-        //        prev = result;
-
-        //        fAddRes = fterm / den;
-        //        AddRes = term / den;
-
-        //        if (posSign)
-        //            fresult += fAddRes;
-        //        else
-        //            fresult -= fAddRes;
-        //        if (posSign)
-        //            result += term / den;
-        //        else
-        //            result -= term / den;
-
-        //        den++;
-        //    } while (abs(fprev - fresult) > fthreshold);
-
-        //    return result;
-        //} else
-        if(value.IntValue<2)
+                WPow += 2;
+            } while (AddRes > MediumDec::JustAboveZero);//Total Result should be -0.346573590279972654708616060729088284037750067180127627060340004746696810984847357802931663498209344
+            return TotalRes * 2;//Should result in -0.693147180559
+        }
+        else if(value.IntValue==1)
         {
             MediumDec threshold = MediumDec::FiveMillionth;
             MediumDec base = value - 1;        // Base of the numerator; exponent will be explicit
