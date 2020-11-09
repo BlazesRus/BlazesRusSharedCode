@@ -43,7 +43,7 @@ namespace BlazesRusCode
         /// <param name="FormCopy">The form copy.</param>
         /// <param name="ElementValues">The element values.</param>
         /// <param name="FormIndex">Index of the form.</param>
-        void SwapUpdatedFormData(ValueMap& ElementValues, size_t FormIndex = 0)
+        void ReplaceVariablesWithValues(ValueMap& ElementValues, size_t FormIndex = 0)
         {
             std::string CurString;
             MediumDec targetResult;
@@ -52,7 +52,7 @@ namespace BlazesRusCode
             {
                 if (CurrentVal->second.ElementCat == FormulaElementType::Formula)//FormulaDetected
                 {
-                    SwapUpdatedFormData(ElementValues, CurrentVal->second.Index);
+                    ReplaceVariablesWithValues(ElementValues, CurrentVal->second.Index);
                     //if (Data.at(FormIndex).size() == 1)
                     //{
                     //    FormData& ContainedFormulaElement = Data.at(CurrentVal->first);
@@ -89,10 +89,10 @@ namespace BlazesRusCode
         /// </summary>
         /// <param name="ElementValues">The element values.</param>
         /// <returns>BlazesRusCode.MediumDecFormula</returns>
-        MediumDecFormula SimplifyFormula(ValueMap ElementValues)
+        MediumDecFormula EvaluateToSimplifiedForm(ValueMap ElementValues)
         {
             MediumDecFormula FormCopy = *this;//Duplicate values so can erase parts when calculating
-            FormCopy.SwapUpdatedFormData(ElementValues);
+            FormCopy.ReplaceVariablesWithValues(ElementValues);
             return FormCopy;//EvaluateOrderOfOperations(FormCopy);
         }
 

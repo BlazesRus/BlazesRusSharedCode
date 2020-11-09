@@ -256,12 +256,12 @@ int main()
     //IntFormTest = "5+10x";
     //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
 
-    MediumDecFormula AltFormTest = "5+5+x";
+    MediumDecFormula AltFormTest = "5+5+x+(x)";
     tsl::ordered_map<std::string, MediumDec> ValueDefinitions;
     ValueDefinitions.insert_or_assign("x", MediumDec::One);
 
     std::cout << "(MediumDecFormula) "<< AltFormTest.ToString() <<std::endl;
-    AltFormTest = AltFormTest.SimplifyFormula(ValueDefinitions);
+    AltFormTest = AltFormTest.EvaluateToSimplifiedForm(ValueDefinitions);
     std::cout << " = " << AltFormTest.ToString() << std::endl;
     //AltFormTest = "5.5^(1.5+x)+6x";
     //std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << " = " << rootTest.ToString() << std::endl;
