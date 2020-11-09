@@ -7,6 +7,7 @@
 #include "VariableFormula.hpp"
 #include "..\AltNum\MediumDec.hpp"
 #include "ElementType.hpp"
+#include "tsl\ordered_map.h"
 
 //Preprocessor Switches
 /*
@@ -46,16 +47,40 @@ namespace BlazesRusCode
         {
             std::string CurString;
             MediumDec targetResult;
-            for (FormData::iterator CurrentVal = Data.at(FormIndex).begin(), LastVal = Data.at(FormIndex).end(); CurrentVal != LastVal; ++CurrentVal)
+            FormData& FormDRef = Data.at(FormIndex);
+            for (FormData::iterator CurrentVal = FormDRef.begin(), LastVal = FormDRef.end(); CurrentVal != LastVal; ++CurrentVal)
             {
                 if (CurrentVal->second.ElementCat == FormulaElementType::Formula)//FormulaDetected
                 {
                     SwapUpdatedFormData(ElementValues, CurrentVal->second.Index);
-                    //if(Data.at(FormIndex).size() == 1)
-                    //    ReplaceFormVal(CurrentVal->first, targetResult);
+                    //if (Data.at(FormIndex).size() == 1)
+                    //{
+                    //    FormData& ContainedFormulaElement = Data.at(CurrentVal->first);
+                    //    auto FirstElement = ContainedFormulaElement.front();
+                    //    /*
+                    //    if(ContainedFormulaElement.ElementCat == FormulaElementType::Num)
+                    //    {
+                    //    }
+                    //    */
+                    //    //targetResult = ContainedFormulaElement.;
+                    //    //FormDRef.ReplaceFormVal(CurrentVal->first, targetResult);
+                    //}
                 }
                 else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
-                    Data.at(FormIndex).ReplaceFormVal(CurrentVal->first, ElementValues.at(CurString));
+                {
+                    CurString = FormDRef.VariableMap.at(CurrentVal->first).Name;
+                    tsl::ordered_map<std::string, MediumDec>::iterator KeyedElemVal = ElementValues.find(CurString);
+                    if(KeyedElemVal!= ElementValues.end())//Only attempt to replace variable if matching variable is found
+                    {
+                        FormDRef.at(CurrentVal->first).ElementCat = FormulaElementType::Num;
+                        targetResult = KeyedElemVal.value();
+                        FormDRef.NumMap.insert_or_assign(CurrentVal->first, targetResult);//ElementValues.at(CurString));
+                    }
+                    else
+                    {
+                        std::cout << "Failed to replace variable named " << CurString << " with value data" << std::endl;
+                    }
+                }
             }
         }
 

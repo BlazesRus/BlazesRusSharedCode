@@ -260,17 +260,9 @@ int main()
     tsl::ordered_map<std::string, MediumDec> ValueDefinitions;
     ValueDefinitions.insert_or_assign("x", MediumDec::One);
 
-    //tsl::ordered_map<std::string, MediumDec&> RefDefinitions;
-    //MediumDec XReference = MediumDec::One;
-    //RefDefinitions.insert_or_assign("x", XReference);
-    //rootTest = AltFormTest.EvalValueRefs(RefDefinitions);
-    //std::cout << AltFormTest.ToString() << " = " << rootTest.ToString()<< std::endl;
-
-    //
-
     std::cout << "(MediumDecFormula) "<< AltFormTest.ToString() <<std::endl;
-    //AltFormTest = AltFormTest.SimplifyFormula(ValueDefinitions);
-    //std::cout << " = " << AltFormTest.ToString() << std::endl;
+    AltFormTest = AltFormTest.SimplifyFormula(ValueDefinitions);
+    std::cout << " = " << AltFormTest.ToString() << std::endl;
     //AltFormTest = "5.5^(1.5+x)+6x";
     //std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << " = " << rootTest.ToString() << std::endl;
     //AltFormTest = "5+(5/4)";
@@ -278,6 +270,11 @@ int main()
     //AltFormTest = "(4/3)/2";
     //std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << " = " << rootTest.ToString() << std::endl;
 
+    //tsl::ordered_map<std::string, MediumDec&> RefDefinitions;
+    //MediumDec XReference = MediumDec::One;
+    //RefDefinitions.insert_or_assign("x", XReference);
+    //rootTest = AltFormTest.EvalValueRefs(RefDefinitions);
+    //std::cout << AltFormTest.ToString() << " = " << rootTest.ToString()<< std::endl;
 
     //DoubleFormula DoubleFormTest = "5.5+(5.5+2)";
     //std::cout << "(DoubleFormula) " << DoubleFormTest.ToString() << std::endl;

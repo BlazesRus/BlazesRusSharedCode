@@ -161,7 +161,7 @@ namespace BlazesRusCode
             /// <summary>
             /// The map that stores the Variable Names and potential pointers to the referenced variable
             /// </summary>
-            ParallelIntVariable VariableMap;
+            ParallelIntVariable VariableMap;//To-Do later place since map of this inside main formula code
 
             /// <summary>
             /// The variable storage map with Variable Name linked to related Index(shortcut)
@@ -229,14 +229,13 @@ namespace BlazesRusCode
             }
 
             /// <summary>
-            /// Replaces the non-number based form value (and add to number map).
+            /// Replaces the non-(number/Variable-Storage) based form value (and add to number map).
             /// </summary>
             /// <param name="Key">The key.</param>
             /// <param name="Value">The value.</param>
             void ReplaceFormVal(int Key, VarType Value)
             {
-                FormElement& KeyedVal = this->at(Key);
-                KeyedVal.ElementCat = FormulaElementType::Num;
+                this->at(Key).ElementCat = FormulaElementType::Num;
                 NumMap.insert_or_assign(Key, Value);
             }
 
