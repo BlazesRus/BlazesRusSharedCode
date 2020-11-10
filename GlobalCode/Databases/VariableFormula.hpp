@@ -309,14 +309,49 @@ namespace BlazesRusCode
                 LastAdded = Add(FormElement(value));
                 switch (value)
                 {
-                    //"++PostFix"||Value=="--PostFix")//(Group 2 precedence, left to right associativity)
-                case FormulaElementType::Pow:
-                    OpOrderMap[0].push_back(LastAdded);
+                case FormulaElementType::Add:
+                case FormulaElementType::Sub:
+                    OpOrderMap[3].push_back(LastAdded);
                     break;
-                    //++Prefix, --Prefix as well(Group 3 precedence, right to left associativity)
+                case FormulaElementType::Mult:
+                case FormulaElementType::Div:
+                case FormulaElementType::Rem:
+                    OpOrderMap[2].push_back(LastAdded);
+                    break;
+                case FormulaElementType::Equal:
+                case FormulaElementType::NotEqual:
+                    OpOrderMap[5].push_back(LastAdded);
+                    break;
+                case FormulaElementType::LessThan:
+                case FormulaElementType::LessOrEqual:
+                case FormulaElementType::GreaterThan:
+                case FormulaElementType::GreaterOrEqual:
+                    OpOrderMap[4].push_back(LastAdded);
+                    break;
+                case FormulaElementType::AND:
+                    OpOrderMap[9].push_back(LastAdded);
+                    break;
+                case FormulaElementType::OR:
+                    OpOrderMap[10].push_back(LastAdded);
+                    break;
                 case FormulaElementType::Not:
+                case FormulaElementType::Negative:
                     OpOrderMap[1].push_back(LastAdded);
                     break;
+                case FormulaElementType::Pow:
+                case FormulaElementType::Sqrt:
+                case FormulaElementType::NthRoot:
+                case FormulaElementType::LN:
+                case FormulaElementType::LOGTEN:
+                case FormulaElementType::BaseNLog:
+                    OpOrderMap[0].push_back(LastAdded);
+                    break;
+                case FormulaElementType::BitwiseAND:
+                    OpOrderMap[6].push_back(LastAdded);
+                case FormulaElementType::XOR:
+                    OpOrderMap[7].push_back(LastAdded);
+                case FormulaElementType::BitwiseOr:
+                    OpOrderMap[8].push_back(LastAdded);
                 default:
                     break;
                 }
