@@ -330,6 +330,54 @@ namespace BlazesRusCode
         /// <param name="FormCopy">The form copy.</param>
         /// <param name="ElementValues">The element values.</param>
         /// <param name="FormIndex">Index of the form.</param>
+        void ReplaceVariablesWithRefValues(ReferenceMap ElementValues, size_t FormIndex = 0)
+        {
+            std::string CurString;
+            MediumDec targetResult;
+            FormData& FormDRef = Data.at(FormIndex);
+            for (FormData::iterator CurrentVal = FormDRef.begin(), LastVal = FormDRef.end(); CurrentVal != LastVal; ++CurrentVal)
+            {
+                if (CurrentVal->second.ElementCat == FormulaElementType::Formula)//FormulaDetected
+                {
+                    ReplaceVariablesWithRefValues(ElementValues, CurrentVal->second.Index);
+                }
+                else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
+                {
+                    CurString = FormDRef.VariableMap.at(CurrentVal->first).Name;
+                    tsl::ordered_map<std::string, MediumDec&>::iterator KeyedElemVal = ElementValues.find(CurString);
+                    if (KeyedElemVal != ElementValues.end())//Only attempt to replace variable if matching variable is found
+                    {
+                        FormDRef.at(CurrentVal->first).ElementCat = FormulaElementType::Num;
+                        targetResult = KeyedElemVal.value();
+                        FormDRef.NumMap.insert_or_assign(CurrentVal->first, targetResult);//ElementValues.at(CurString));
+                    }
+                    else
+                    {
+                        std::cout << "Failed to replace variable named " << CurString << " with value data" << std::endl;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Simplifies and evaluates the formula and then returns the copy.
+        /// </summary>
+        /// <param name="ElementValues">The element values.</param>
+        /// <returns>BlazesRusCode.MediumDecFormula</returns>
+        MediumDecFormula EvaluateRefToSimplifiedForm(ReferenceMap ElementValues)
+        {
+            MediumDecFormula FormCopy = *this;//Duplicate values so can erase parts when calculating
+            FormCopy.ReplaceVariablesWithRefValues(ElementValues);
+            FormCopy.EvaluateOperations();
+            return FormCopy;
+        }
+
+        /// <summary>
+        /// Swaps the updated form data.
+        /// </summary>
+        /// <param name="FormCopy">The form copy.</param>
+        /// <param name="ElementValues">The element values.</param>
+        /// <param name="FormIndex">Index of the form.</param>
         void ReplaceVariablesWithValues(ValueMap& ElementValues, size_t FormIndex = 0)
         {
             std::string CurString;
@@ -380,7 +428,7 @@ namespace BlazesRusCode
         {
             MediumDecFormula FormCopy = *this;//Duplicate values so can erase parts when calculating
             FormCopy.ReplaceVariablesWithValues(ElementValues);
-            //FormCopy.EvaluateOperations();
+            FormCopy.EvaluateOperations();
             return FormCopy;
         }
 
