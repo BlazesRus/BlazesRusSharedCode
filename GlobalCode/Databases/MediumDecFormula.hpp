@@ -46,59 +46,14 @@ namespace BlazesRusCode
         /// <param name="LeftIterator">The left iterator.</param>
         /// <param name="RightIterator">The right iterator.</param>
         /// <param name="Value">The value.</param>
-        void SwitchOpToBoolVal(FormData& FormCopy, FormElement& OpVal, FormData::iterator& LeftIterator, FormData::iterator& RightIterator, bool Value)
+        void SwitchOpToBoolVal(FormData& FormCopy, FormElement& OpVal, bool Value)
         {
             if (Value) { OpVal.ElementCat = FormulaElementType::trueVal; }
             else { OpVal.ElementCat = FormulaElementType::falseVal; }
-
-            if (LeftIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(LeftIterator->first); }
-            if (RightIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(RightIterator->first); }
-
-            int LeftKey = LeftIterator->first; int RightKey = RightIterator->first;
-            FormCopy.erase(LeftIterator); FormCopy.erase(RightKey);
-            FormCopy.RemovedIndexes.push_back(LeftKey); FormCopy.RemovedIndexes.push_back(RightKey);
         }
 
         /// <summary>
-        /// Switches the operator into boolean value and erases old right side value.
-        /// </summary>
-        /// <param name="FormCopy">The formula data copy.</param>
-        /// <param name="OpVal">The op value.</param>
-        /// <param name="RightIterator">The right side value iterator.</param>
-        /// <param name="Value">The value.</param>
-        void SwitchOpToRBoolVal(FormData& FormCopy, FormElement& OpVal, FormData::iterator& RightIterator, bool Value)
-        {
-            if (Value) { OpVal.ElementCat = FormulaElementType::trueVal; }
-            else { OpVal.ElementCat = FormulaElementType::falseVal; }
-
-            if (RightIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(RightIterator->first); }
-
-            FormCopy.erase(RightIterator);
-            FormCopy.RemovedIndexes.push_back(RightIterator->first);
-        }
-
-        /// <summary>
-        /// Switches the operator into Value and erases old right side Value
-        /// </summary>
-        /// <param name="FormCopy">The formula data copy.</param>
-        /// <param name="OpVal">The operator element value.</param>
-        /// <param name="OpKey">The operator key.</param>
-        /// <param name="RightIterator">The right side value iterator.</param>
-        /// <param name="Value">The value to turn operator into.</param>
-        void SwitchOpToRVal(FormData& FormCopy, FormElement& OpVal, int OpKey, FormData::iterator& RightIterator, MediumDec Value)
-        {
-            FormCopy.NumMap.insert_or_assign(OpKey, Value);
-            OpVal.ElementCat = FormulaElementType::Num;
-
-            if (RightIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(RightIterator->first); }
-
-            int RightKey = RightIterator->first;
-            FormCopy.erase(RightKey);
-            FormCopy.RemovedIndexes.push_back(RightKey);
-        }
-
-        /// <summary>
-        /// Switches the operator into Value and erases old left+right side Value
+        /// Switches the operator into Value
         /// </summary>
         /// <param name="FormCopy">The formula data copy.</param>
         /// <param name="OpVal">The operator element value.</param>
@@ -106,22 +61,16 @@ namespace BlazesRusCode
         /// <param name="RightIterator">The right value iterator.</param>
         /// <param name="RightIterator">The right value iterator.</param>
         /// <param name="Value">The value to turn operator into.</param>
-        void SwitchOpToVal(FormData& FormCopy, FormElement& OpVal, int OpKey, FormData::iterator& LeftIterator, FormData::iterator& RightIterator, MediumDec Value)
+        void SwitchOpToVal(FormData& FormCopy, FormElement& OpVal, int OpKey, MediumDec Value)
         {
             FormCopy.NumMap.insert_or_assign(OpKey, Value);
             OpVal.ElementCat = FormulaElementType::Num;
-
-            if (LeftIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(LeftIterator->first); }
-            if (RightIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(RightIterator->first); }
-
-            int LeftKey = LeftIterator->first; int RightKey = RightIterator->first;
-            FormCopy.erase(LeftIterator); FormCopy.erase(RightKey);
-            FormCopy.RemovedIndexes.push_back(LeftKey); FormCopy.RemovedIndexes.push_back(RightKey);
         }
 
         void EvaluateOperations(size_t FormIndex = 0)
         {
             FormData& FormDRef = Data.at(FormIndex);
+            std::cout << "Performing Evaluation on FormSegment#" << FormIndex << " with formula content:" << FormDRef.ToString() << std::endl;
             MediumDec valResult;
 
             bool TempBool;
@@ -136,6 +85,7 @@ namespace BlazesRusCode
             MediumDec leftResult;
             MediumDec rightResult;
             int OpTargetKey;
+            int leftKey;
 
             //Applying operations via C++ variation of order of operations
             //https://en.cppreference.com/w/cpp/language/operator_precedence
@@ -147,7 +97,7 @@ namespace BlazesRusCode
                     OpTargetKey = *CurrentVal;
                     OpIterator = FormDRef.find(OpTargetKey);
                     OpVal = FormDRef[*CurrentVal];
-                    if (OpVal.ElementCat != FormulaElementType::Not && OpVal.ElementCat != FormulaElementType::Sqrt)
+                    if (opIndex != 1 && (opIndex != 0 || (OpVal.ElementCat != FormulaElementType::Sqrt && OpVal.ElementCat != FormulaElementType::LN && OpVal.ElementCat != FormulaElementType::LOGTEN)))
                     {
                         LeftVal = OpIterator - 1;
                         if (LeftVal->second.ElementCat == FormulaElementType::Formula)//FormulaDetected
@@ -176,12 +126,16 @@ namespace BlazesRusCode
                                 else
                                     continue;//Ignore if not condensed down to single value
                             }
+                            std::cout << "Left Formula condensed into " << leftValue.ToString() << std::endl;
                         }
                         else if (LeftVal->second.ElementCat == FormulaElementType::Variable)//Ignore non-set variables for this version
                             continue;
                         else
                             leftValue = LeftVal->second.ElementCat == FormulaElementType::trueVal ? 1 : (LeftVal->second.ElementCat == FormulaElementType::falseVal ? 0 : FormDRef.NumMap[LeftVal->first]);
+                        leftKey = LeftVal->first;
                     }
+                    else
+                        leftKey = -1;
                     RightVal = OpIterator + 1;
                     if (RightVal->second.ElementCat == FormulaElementType::Formula)//FormulaDetected
                     {
@@ -190,7 +144,7 @@ namespace BlazesRusCode
                         {
                             FormData::iterator targetElem = FormDRef.begin();
                             if (targetElem->second.ElementCat != FormulaElementType::Variable)
-                                leftValue = targetElem->second.ElementCat == FormulaElementType::trueVal ? MediumDec::One : (targetElem->second.ElementCat == FormulaElementType::falseVal ? MediumDec::Zero : targetSegmentRef.NumMap[targetElem->first]);
+                                rightValue = targetElem->second.ElementCat == FormulaElementType::trueVal ? MediumDec::One : (targetElem->second.ElementCat == FormulaElementType::falseVal ? MediumDec::Zero : targetSegmentRef.NumMap[targetElem->first]);
                             else
                                 continue;//Ignore operation with unknown variable value
                         }
@@ -209,11 +163,28 @@ namespace BlazesRusCode
                             else
                                 continue;//Ignore if not condensed down to single value
                         }
+                        std::cout << "Right Formula condensed into " << rightValue.ToString() << std::endl;
                     }
                     else if (RightVal->second.ElementCat == FormulaElementType::Variable)
                         continue;
                     else
                         rightValue = RightVal->second.ElementCat == FormulaElementType::trueVal ? 1 : (RightVal->second.ElementCat == FormulaElementType::falseVal ? 0 : FormDRef.NumMap[RightVal->first]);
+                    if(opIndex!=1)//Erase left and right values ahead of time(in most most cases)
+                    {
+                        int RightKey = RightVal->first;
+                        if(leftKey!=-1)
+                        {
+                            if (LeftVal->second.ElementCat == FormulaElementType::Num) { FormDRef.NumMap.erase(leftKey); }
+                            FormDRef.erase(leftKey);
+                        }
+                        if (RightVal->second.ElementCat == FormulaElementType::Num) { FormDRef.NumMap.erase(RightKey); }
+                        FormDRef.erase(RightKey);
+
+                        //if(OpIterator->first!= OpTargetKey)//Fix operator target if needed
+                        //    OpVal = FormDRef[OpTargetKey];
+                    }
+
+
 
                     switch (opIndex)
                     {
@@ -224,33 +195,33 @@ namespace BlazesRusCode
                         {
                         case FormulaElementType::Pow:
                             leftValue = MediumDec::PowOp(leftValue, rightValue);
-                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, LeftVal, RightVal, rightValue);
+                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, rightValue);
                             break;
                         case FormulaElementType::Sqrt:
                             rightValue = MediumDec::Sqrt(rightValue);
-                            SwitchOpToRVal(FormDRef, OpVal, OpTargetKey, RightVal, rightValue);
+                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, rightValue);
                             break;
                         case FormulaElementType::NthRoot:
                             rightValue = MediumDec::NthRootV2(rightValue, (int)leftValue);
-                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, LeftVal, RightVal, rightValue);
+                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, rightValue);
                             break;
                         case FormulaElementType::LN:
                             rightValue = MediumDec::Ln(rightValue);
-                            SwitchOpToRVal(FormDRef, OpVal, OpTargetKey, RightVal, rightValue);
+                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, rightValue);
                             break;
                         case FormulaElementType::LOGTEN:
                             rightValue = MediumDec::Log10(rightValue);
-                            SwitchOpToRVal(FormDRef, OpVal, OpTargetKey, RightVal, rightValue);
+                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, rightValue);
                             break;
                         case FormulaElementType::BaseNLog:
                             rightValue = MediumDec::Log(rightValue, leftValue);
-                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, LeftVal, RightVal, rightValue);
+                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, rightValue);
                             break;
                         default://placeholder code
                             break;
                         }
                         break;
-                    case 1:
+                    case 1://Remove operator in this case and change right side value
                         switch (OpVal.ElementCat)
                         {
                         case FormulaElementType::Not:
@@ -262,37 +233,50 @@ namespace BlazesRusCode
                             {
                                 FormDRef.at(RightVal->first).ElementCat = FormulaElementType::trueVal;
                             }
-                            else
+                            else if (RightVal->second.ElementCat == FormulaElementType::Formula)
+                            {
+                                FormDRef.at(RightVal->first).ElementCat = rightValue == MediumDec::Zero ? FormulaElementType::trueVal : FormulaElementType::falseVal;
+                            }
+                            else//Assuming is number
                             {
                                 if (rightValue == MediumDec::Zero)//Zero is false otherwise count as if it was true
-                                    SwitchOpToRBoolVal(FormDRef, OpVal, RightVal, true);
+                                    FormDRef.NumMap[RightVal->first] = MediumDec::One;//SwitchOpToBoolVal(FormDRef, OpVal, true);
                                 else
-                                    SwitchOpToRBoolVal(FormDRef, OpVal, RightVal, false);
+                                    FormDRef.NumMap[RightVal->first] = MediumDec::Zero;//SwitchOpToBoolVal(FormDRef, OpVal, false);
                             }
-                            FormDRef.erase(OpIterator);
                             break;
-                        case FormulaElementType::Negative://Only applies to numbers
-                            rightValue.SwapNegativeStatus();//rightValue = -rightValue;
-                            FormDRef.NumMap[RightVal->first] = rightValue;
+                        case FormulaElementType::Negative://Only applies to numbers or Formulas(for now)
+                            if (RightVal->second.ElementCat == FormulaElementType::Formula)
+                            {
+                                rightValue.SwapNegativeStatus();
+                                FormDRef.at(RightVal->first).ElementCat = FormulaElementType::Num;
+                                FormDRef.NumMap.insert_or_assign(RightVal->first, rightValue);
+                            }
+                            else
+                            {
+                                rightValue.SwapNegativeStatus();//rightValue = -rightValue;
+                                FormDRef.NumMap[RightVal->first] = rightValue;
+                            }
                             break;
                         default://placeholder code
                             break;
                         }
+                        FormDRef.erase(OpIterator);
                         break;
                     case 2:// 	Multiplication, division, and remainder
                         switch (OpVal.ElementCat)
                         {
                         case FormulaElementType::Mult:
                             leftValue *= rightValue;
-                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, LeftVal, RightVal, leftValue);
+                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, leftValue);
                             break;
                         case FormulaElementType::Div:
                             leftValue /= rightValue;
-                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, LeftVal, RightVal, leftValue);
+                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, leftValue);
                             break;
                         case FormulaElementType::Rem:
                             leftValue %= rightValue;
-                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, LeftVal, RightVal, leftValue);
+                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, leftValue);
                             break;
                         default://placeholder code
                             break;
@@ -304,21 +288,14 @@ namespace BlazesRusCode
                         case FormulaElementType::Add:
                         {
                             leftValue += rightValue;
-                            //SwitchOpToVal(FormDRef, OpVal, OpTargetKey, LeftVal, RightVal, leftValue);
+                            //SwitchOpToVal(FormDRef, OpVal, OpTargetKey, leftValue);
                             FormDRef.NumMap.insert_or_assign(OpTargetKey, leftValue);
                             FormDRef[OpTargetKey].ElementCat = FormulaElementType::Num;
-
-                            //if (LeftVal->second.ElementCat == FormulaElementType::Num) { FormDRef.NumMap.erase(LeftVal->first); }
-                            //if (RightVal->second.ElementCat == FormulaElementType::Num) { FormDRef.NumMap.erase(RightVal->first); }
-
-                            int LeftKey = LeftVal->first; int RightKey = RightVal->first;
-                            FormDRef.erase(LeftVal); FormDRef.erase(RightKey);
-                            //FormDRef.RemovedIndexes.push_back(LeftKey); FormDRef.RemovedIndexes.push_back(RightKey);
                             break;
                         }
                         case FormulaElementType::Sub:
                             leftValue -= rightValue;
-                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, LeftVal, RightVal, leftValue);
+                            SwitchOpToVal(FormDRef, OpVal, OpTargetKey, leftValue);
                             break;
                         }
                         break;
@@ -338,7 +315,7 @@ namespace BlazesRusCode
                             TempBool = leftValue >= rightValue;
                             break;
                         }
-                        SwitchOpToBoolVal(FormDRef, OpVal, LeftVal, RightVal, TempBool);
+                        SwitchOpToBoolVal(FormDRef, OpVal, TempBool);
                         break;
                     case 5://==, !=
                         switch (OpVal.ElementCat)
@@ -350,27 +327,27 @@ namespace BlazesRusCode
                             TempBool = leftValue != rightValue;
                             break;
                         }
-                        SwitchOpToBoolVal(FormDRef, OpVal, LeftVal, RightVal, TempBool);
+                        SwitchOpToBoolVal(FormDRef, OpVal, TempBool);
                         break;
                     case 6://&
                         leftValue = leftValue & rightValue;
-                        SwitchOpToVal(FormDRef, OpVal, OpTargetKey, LeftVal, RightVal, leftValue);
+                        SwitchOpToVal(FormDRef, OpVal, OpTargetKey, leftValue);
                         break;
                     case 7://XOR
                         leftValue = leftValue ^ rightValue;
-                        SwitchOpToVal(FormDRef, OpVal, OpTargetKey, LeftVal, RightVal, leftValue);
+                        SwitchOpToVal(FormDRef, OpVal, OpTargetKey, leftValue);
                         break;
                     case 8:// | Bitwise OR (inclusive or)
                         leftValue = leftValue ^ rightValue;
-                        SwitchOpToVal(FormDRef, OpVal, OpTargetKey, LeftVal, RightVal, leftValue);
+                        SwitchOpToVal(FormDRef, OpVal, OpTargetKey, leftValue);
                         break;
                     case 9://&&
                         TempBool = leftValue && rightValue;
-                        SwitchOpToBoolVal(FormDRef, OpVal, LeftVal, RightVal, TempBool);
+                        SwitchOpToBoolVal(FormDRef, OpVal, TempBool);
                         break;
                     case 10:// || (Logical OR)
                         TempBool = leftValue || rightValue;
-                        SwitchOpToBoolVal(FormDRef, OpVal, LeftVal, RightVal, TempBool);
+                        SwitchOpToBoolVal(FormDRef, OpVal, TempBool);
                         break;
                         //case 11://Ternary conditional, =, +=,   -=, *=,   /=,   %=,<<=,   >>=, &= ,  ^=,   |= (Not supported yet)
                         //    break;

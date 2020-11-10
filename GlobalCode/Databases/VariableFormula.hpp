@@ -168,10 +168,12 @@ namespace BlazesRusCode
             /// </summary>
             ParallelStringIntMap VariableStorageMap;
 
+#ifdef BlazesEnable_VariableFormula_IndexRecycling//Enable the recycling of index values after remove them from formula 
             /// <summary>
             /// Indexes last removed from map
             /// </summary>
             std::vector<int> RemovedIndexes;
+#endif
         private:
             /// <summary>
             /// The next index
@@ -191,11 +193,14 @@ namespace BlazesRusCode
             int Add(FormElement Value)
             {
                 int IndexPos;
+#ifdef BlazesEnable_VariableFormula_IndexRecycling
                 if (RemovedIndexes.empty())//Adds new Indexes in order
                 {
+#endif
                     IndexPos = NextIndex;
                     Add(NextIndex, Value);
                     NextIndex++; return IndexPos;
+#ifdef BlazesEnable_VariableFormula_IndexRecycling
                 }
                 else//Otherwise adds based on last removed key
                 {
@@ -204,6 +209,7 @@ namespace BlazesRusCode
                     RemovedIndexes.pop_back();
                     return TargetIndex;
                 }
+#endif
             }
 
             /// <summary>
@@ -213,7 +219,9 @@ namespace BlazesRusCode
             void Remove(int Key)
             {
                 this->erase(Key);
+#ifdef BlazesEnable_VariableFormula_IndexRecycling
                 RemovedIndexes.push_back(Key);
+#endif
             }
         public:
             /// <summary>
@@ -245,7 +253,9 @@ namespace BlazesRusCode
             void clear()
             {
                 NextIndex = 0;//Free up all index slots usage as well
+#ifdef BlazesEnable_VariableFormula_IndexRecycling
                 RemovedIndexes.clear();
+#endif
             }
 
             /// <summary>
