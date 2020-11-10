@@ -202,7 +202,7 @@ namespace BlazesRusCode
                             {
                                 FormData::iterator targetElem = FormDRef.begin();
                                 if (targetElem->second.ElementCat != FormulaElementType::Variable)
-                                    leftValue = targetElem->second.ElementCat == FormulaElementType::trueVal ? MediumDec::One : (targetElem->second.ElementCat == FormulaElementType::falseVal ? MediumDec::Zero : targetSegmentRef.NumMap[targetElem->first]);
+                                    rightValue = targetElem->second.ElementCat == FormulaElementType::trueVal ? MediumDec::One : (targetElem->second.ElementCat == FormulaElementType::falseVal ? MediumDec::Zero : targetSegmentRef.NumMap[targetElem->first]);
                                 else
                                     continue;//Ignore operation with unknown variable value
                             }
