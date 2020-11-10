@@ -292,6 +292,15 @@ namespace BlazesRusCode
             }
 
             /// <summary>
+            /// Adds the formula reference to data
+            /// </summary>
+            /// <param name="Value">The value.</param>
+            void AddFormIndex(size_t Value)
+            {
+                LastAdded = Add(FormElement(FormulaElementType::Formula, Value));
+            }
+
+            /// <summary>
             /// Adds the specified operator value.
             /// </summary>
             /// <param name="Value">The value.</param>
@@ -347,7 +356,7 @@ namespace BlazesRusCode
                     {
                     case FormulaElementType::Formula:
                         strBuffer += "@";
-                        strBuffer += CurrentVal->second.Index;
+                        strBuffer += VariableConversionFunctions::IntToStringConversion(CurrentVal->second.Index);
                         break;
                     case FormulaElementType::Num:
                         strBuffer += this->NumMap.at(CurrentVal->first).ToString();
@@ -483,6 +492,14 @@ namespace BlazesRusCode
             {
                 Data[0] = Data[1]; Data.pop_back();//Reduce formula in (@1) to just @1
             }
+        }
+
+        size_t AddFormulaToBuffer(size_t& FormulaIndex)
+        {
+            size_t newFormulaIndex = Data.size();
+            Data.at(FormulaIndex).AddFormIndex(newFormulaIndex);
+            Data.push_back(FormData());
+            return newFormulaIndex;
         }
 
         /// <summary>

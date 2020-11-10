@@ -3671,8 +3671,7 @@ namespace BlazesRusCode
             }
             else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
             {//Increasing iterations brings closer to accurate result(Larger numbers need more iterations to get accurate level of result)
-                //MediumDec W = (value - 1) / (value + 1);
-                MediumDec TotalRes = (value - 1) / (value + 1);//W;
+                MediumDec TotalRes = (value - 1) / (value + 1);
                 MediumDec LastPow = TotalRes;
                 MediumDec WSquared = TotalRes * TotalRes;
                 MediumDec AddRes;
@@ -3680,7 +3679,7 @@ namespace BlazesRusCode
                 do
                 {
                     LastPow *= WSquared;
-                    AddRes = LastPow / WPow;//MediumDec::PowRef(W, WPow) / WPow;
+                    AddRes = LastPow / WPow;
                     TotalRes += AddRes; WPow += 2;
                 } while (AddRes > MediumDec::JustAboveZero);
                 return TotalRes * 2;
@@ -3742,8 +3741,7 @@ namespace BlazesRusCode
             }
             else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
             {//Increasing iterations brings closer to accurate result(Larger numbers need more iterations to get accurate level of result)
-                //MediumDec W = (value - 1) / (value + 1);
-                MediumDec TotalRes = (value - 1) / (value + 1);//W;
+                MediumDec TotalRes = (value - 1) / (value + 1);
                 MediumDec LastPow = TotalRes;
                 MediumDec WSquared = TotalRes * TotalRes;
                 MediumDec AddRes;
@@ -3751,7 +3749,7 @@ namespace BlazesRusCode
                 do
                 {
                     LastPow *= WSquared;
-                    AddRes = LastPow / WPow;//MediumDec::PowRef(W, WPow) / WPow;
+                    AddRes = LastPow / WPow;
                     TotalRes += AddRes; WPow += 2;
                 } while (AddRes > MediumDec::JustAboveZero);
                 return TotalRes * 2;
@@ -3809,13 +3807,15 @@ namespace BlazesRusCode
             }
             else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
             {
-                MediumDec W = (value - 1) / (value + 1);
-                MediumDec TotalRes = W;
+                MediumDec TotalRes = (value - 1) / (value + 1);
+                MediumDec LastPow = TotalRes;
+                MediumDec WSquared = TotalRes * TotalRes;
                 MediumDec AddRes;
                 int WPow = 3;
                 do
                 {
-                    AddRes = MediumDec::PowRef(W, WPow) / WPow;
+                    LastPow *= WSquared;
+                    AddRes = LastPow / WPow;
                     TotalRes += AddRes; WPow += 2;
                 } while (AddRes > MediumDec::JustAboveZero);
                 return TotalRes * MediumDec::HalfLN10Mult;//Gives more accurate answer than attempting to divide by Ln10
@@ -3844,7 +3844,111 @@ namespace BlazesRusCode
             }
             else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
             {
-                MediumDec W = MediumDec((value - 1), 0) / MediumDec((value + 1), 0);
+                MediumDec TotalRes = MediumDec((value - 1), 0) / MediumDec((value + 1), 0);
+                MediumDec LastPow = TotalRes;
+                MediumDec WSquared = TotalRes * TotalRes;
+                MediumDec AddRes;
+                int WPow = 3;
+                do
+                {
+                    LastPow *= WSquared;
+                    AddRes = LastPow / WPow;
+                    TotalRes += AddRes; WPow += 2;
+                } while (AddRes > MediumDec::JustAboveZero);
+                return TotalRes * MediumDec::HalfLN10Mult;//Gives more accurate answer than attempting to divide by Ln10
+            }
+        }
+
+        /// <summary>
+        /// Log with Base of BaseVal of Value
+        /// Based on http://home.windstream.net/okrebs/page57.html
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="baseVal">The base of Log</param>
+        /// <returns>MediumDec</returns>
+        static MediumDec Log(MediumDec value, MediumDec baseVal)
+        {
+            if (value == MediumDec::One)
+                return MediumDec::Zero;
+            return Log10(value) / Log10(baseVal);
+        }
+
+        /// <summary>
+        /// Log with Base of BaseVal of Value
+        /// Based on http://home.windstream.net/okrebs/page57.html
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <param name="BaseVal">The base of Log</param>
+        /// <returns>MediumDec</returns>
+        static MediumDec Log(MediumDec value, int baseVal)
+        {
+            if (value == MediumDec::One)
+                return MediumDec::Zero;
+            //Calculate Base log first
+            MediumDec baseTotalRes;
+            bool lnMultLog = true;
+            if (baseVal % 10 == 0)
+            {
+                for (int index = 1; index < 9; ++index)
+                {
+                    if (baseVal == BlazesRusCode::VariableConversionFunctions::PowerOfTens[index])
+                    {
+                        baseTotalRes = MediumDec(index, 0);
+                        break;
+                    }
+                }
+                baseTotalRes = MediumDec(9, 0); lnMultLog = false;
+            }
+            else//Returns a positive baseVal(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+            {
+                baseTotalRes = MediumDec((baseVal - 1), 0) / MediumDec((baseVal + 1), 0);
+                MediumDec baseLastPow = baseTotalRes;
+                MediumDec baseWSquared = baseTotalRes * baseTotalRes;
+                MediumDec baseAddRes;
+                int baseWPow = 3;
+                do
+                {
+                    baseLastPow *= baseWSquared;
+                    baseAddRes = baseLastPow / baseWPow;
+                    baseTotalRes += baseAddRes; baseWPow += 2;
+                } while (baseAddRes > MediumDec::JustAboveZero);
+            }
+
+            //Now calculate other log
+            if (value.DecimalHalf01 == 0 && value.IntValue % 10 == 0)
+            {
+                for (int index = 1; index < 9; ++index)
+                {
+                    if (value == BlazesRusCode::VariableConversionFunctions::PowerOfTens[index])
+                        return lnMultLog ? MediumDec(index, 0) / (baseTotalRes * MediumDec::HalfLN10Mult): MediumDec(index, 0)/ baseTotalRes;
+                }
+                return lnMultLog? MediumDec(9, 0) / (baseTotalRes*MediumDec::HalfLN10Mult):MediumDec(9, 0)/baseTotalRes;
+            }
+            if (value.IntValue < 2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+            {//This section gives accurate answer for values between 1 & 2
+                MediumDec threshold = MediumDec::FiveBillionth;
+                MediumDec base = value - 1;        // Base of the numerator; exponent will be explicit
+                int den = 1;              // Denominator of the nth term
+                bool posSign = true;             // Used to swap the sign of each term
+                MediumDec term = base;       // First term
+                MediumDec prev = 0;          // Previous sum
+                MediumDec result = term;     // Kick it off
+
+                while (MediumDec::Abs(prev - result) > threshold) {
+                    den++;
+                    posSign = !posSign;
+                    term *= base;
+                    prev = result;
+                    if (posSign)
+                        result += term / den;
+                    else
+                        result -= term / den;
+                }
+                return lnMultLog? result/baseTotalRes:(result*2)/ baseTotalRes;
+            }
+            else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+            {
+                MediumDec W = (value - 1) / (value + 1);
                 MediumDec TotalRes = W;
                 MediumDec AddRes;
                 int WPow = 3;
@@ -3853,8 +3957,9 @@ namespace BlazesRusCode
                     AddRes = MediumDec::PowRef(W, WPow) / WPow;
                     TotalRes += AddRes; WPow += 2;
                 } while (AddRes > MediumDec::JustAboveZero);
-                return TotalRes * MediumDec::HalfLN10Mult;//Gives more accurate answer than attempting to divide by Ln10
+                return lnMultLog? TotalRes/baseTotalRes:(TotalRes * MediumDec::HalfLN10Mult)/ baseTotalRes;
             }
+            //return Log10(Value) / Log10(BaseVal);
         }
 
     #pragma endregion Math Etc Functions
