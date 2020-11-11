@@ -56,6 +56,7 @@ namespace BlazesRusCode
         OR,
         LN,
         LOGTEN,
-        BaseNLog
+        BaseNLog,
+        BuildInVariable
     };
 }

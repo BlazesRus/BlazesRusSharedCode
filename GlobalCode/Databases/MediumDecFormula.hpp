@@ -20,14 +20,16 @@
 $ = XOR (bitwise XOR operation)(Not fully supported by MediumDec yet)
 ++Prefix; --Prefix;
 (Bitwise operators--Not fully supported by MediumDec yet)&, |
-SqrtOf = Square Root of (applied to right value) (Not scanned yet but application code inside)
-thRootOf = Nth Root of (left value is equal to N; applied to right value) (Not scanned yet but application code inside)
-
+SqrtOf = Square Root of (applied to right value)
+thRootOf = Nth Root of (left value is equal to N; applied to right value)
+PowerOf = Power of
+Ln = Natural log function
+thBaseLog = Base N Log function of right value
+LogTen = Log base 10 function of right value
 */
 //Unsupported Operators/Functions(for later)
 /*
  ++Postfix; --Postfix (Need to update to code changes)
-PowerOf = (for scanning PowerOf instead of ^)
 ? = TernaryOperator(Not stored/evaluated yet)
 Assignment operators not supported
 */
@@ -363,10 +365,10 @@ namespace BlazesRusCode
                         targetResult = KeyedElemVal.value();
                         FormDRef.NumMap.insert_or_assign(CurrentVal->first, targetResult);//ElementValues.at(CurString));
                     }
-                    else
-                    {
-                        std::cout << "Failed to replace variable named " << CurString << " with value data" << std::endl;
-                    }
+                    //else
+                    //{
+                    //    std::cout << "Failed to replace variable named " << CurString << " with value data" << std::endl;
+                    //}
                 }
             }
         }
@@ -400,18 +402,6 @@ namespace BlazesRusCode
                 if (CurrentVal->second.ElementCat == FormulaElementType::Formula)//FormulaDetected
                 {
                     ReplaceVariablesWithValues(ElementValues, CurrentVal->second.Index);
-                    //if (Data.at(CurrentVal->second.Index).size() == 1)
-                    //{
-                    //    FormData& ContainedFormulaElement = Data.at(CurrentVal->first);
-                    //    auto FirstElement = ContainedFormulaElement.front();
-                    //    /*
-                    //    if(ContainedFormulaElement.ElementCat == FormulaElementType::Num)
-                    //    {
-                    //    }
-                    //    */
-                    //    //targetResult = ContainedFormulaElement.;
-                    //    //FormDRef.ReplaceFormVal(CurrentVal->first, targetResult);
-                    //}
                 }
                 else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
                 {
@@ -423,10 +413,10 @@ namespace BlazesRusCode
                         targetResult = KeyedElemVal.value();
                         FormDRef.NumMap.insert_or_assign(CurrentVal->first, targetResult);//ElementValues.at(CurString));
                     }
-                    else
-                    {
-                        std::cout << "Failed to replace variable named " << CurString << " with value data" << std::endl;
-                    }
+                    //else
+                    //{
+                    //    std::cout << "Failed to replace variable named " << CurString << " with value data" << std::endl;
+                    //}
                 }
             }
         }
@@ -522,10 +512,19 @@ namespace BlazesRusCode
                     strBuffer += "^";
                     break;
                 case FormulaElementType::Sqrt:
-                    strBuffer += " SqrtOf";
+                    strBuffer += "SqrtOf";
                     break;
                 case FormulaElementType::NthRoot:
                     strBuffer += "thRootOf";
+                    break;
+                case FormulaElementType::LOGTEN:
+                    strBuffer += "LogTen";
+                    break;
+                case FormulaElementType::LN:
+                    strBuffer += "Ln";
+                    break;
+                case FormulaElementType::BaseNLog:
+                    strBuffer += "thBaseLog";
                     break;
                 case FormulaElementType::Rem:
                     strBuffer += "%";
@@ -575,7 +574,7 @@ namespace BlazesRusCode
                 case FormulaElementType::Formula:
                     strBuffer += "(";
                     indexBuffer = CurrentVal->second.Index;
-                    RecursivelyAddToString(strBuffer, indexBuffer);//CurrentVal->second.Index);
+                    RecursivelyAddToString(strBuffer, indexBuffer);
                     strBuffer += ")";
                     break;
                 case FormulaElementType::Num:
@@ -636,10 +635,19 @@ namespace BlazesRusCode
                     strBuffer += "^";
                     break;
                 case FormulaElementType::Sqrt:
-                    strBuffer += " SqrtOf";
+                    strBuffer += "SqrtOf";
                     break;
                 case FormulaElementType::NthRoot:
                     strBuffer += "thRootOf";
+                    break;
+                case FormulaElementType::LOGTEN :
+                    strBuffer += "LogTen";
+                    break;
+                case FormulaElementType::LN:
+                    strBuffer += "Ln";
+                    break;
+                case FormulaElementType::BaseNLog :
+                    strBuffer += "thBaseLog";
                     break;
                 case FormulaElementType::Rem:
                     strBuffer += "%";

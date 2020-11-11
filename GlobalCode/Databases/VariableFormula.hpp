@@ -94,8 +94,6 @@ namespace BlazesRusCode
     public:
         class DLL_API FormElement
         {
-        protected:
-
         public:
             //0 = Num; 1 = Variable; 2 = Formula; 3 = true; 4 = false ; 5 >= Op;
             FormulaElementType ElementCat;
@@ -512,6 +510,15 @@ namespace BlazesRusCode
                 case FormulaElementType::NthRoot:
                     strBuffer += "thRootOf";
                     break;
+                case FormulaElementType::LOGTEN:
+                    strBuffer += "LogTen";
+                    break;
+                case FormulaElementType::LN:
+                    strBuffer += "Ln";
+                    break;
+                case FormulaElementType::BaseNLog:
+                    strBuffer += "thBaseLog";
+                    break;
                 case FormulaElementType::Rem:
                     strBuffer += "%";
                     break;
@@ -586,7 +593,15 @@ namespace BlazesRusCode
             }
             else if (ScanType == 3)
             {
-                this->AddVariable(strBuffer, targetFormSegment);
+                if (strBuffer == "Ln") { targetFormSegment.AddOp(FormulaElementType::LN); }
+                else if (strBuffer == "LogTen") { targetFormSegment.AddOp(FormulaElementType::LOGTEN); }
+                else if (strBuffer == "thBaseLog") { targetFormSegment.AddOp(FormulaElementType::BaseNLog); }
+                else if (strBuffer == "SqrtOf") { targetFormSegment.AddOp(FormulaElementType::Sqrt); }
+                else if (strBuffer == "thRootOf") { targetFormSegment.AddOp(FormulaElementType::NthRoot); }
+                else if (strBuffer == "PowerOf") { targetFormSegment.AddOp(FormulaElementType::Pow); }
+                //BuildInVariable detection here as well(for derived formula class)
+                else
+                    this->AddVariable(strBuffer, targetFormSegment);
             }
             else if (ScanType == 4)
             {
@@ -594,26 +609,22 @@ namespace BlazesRusCode
             }
             else if (ScanType == 1)
             {
-                if (strBuffer == "+") { targetFormSegment.AddOp(FormulaElementType::Add); }
-                else if (strBuffer == "-") { targetFormSegment.AddOp(FormulaElementType::Sub); }
-                else if (strBuffer == "*") { targetFormSegment.AddOp(FormulaElementType::Mult); }
-                else if (strBuffer == "/") { targetFormSegment.AddOp(FormulaElementType::Div); }
-                else if (strBuffer == "%") { targetFormSegment.AddOp(FormulaElementType::Rem); }
-                else if (strBuffer == "^") { targetFormSegment.AddOp(FormulaElementType::Pow); }
-                else if (strBuffer == "SqrtOf") { targetFormSegment.AddOp(FormulaElementType::Sqrt); }
-                else if (strBuffer == "==") { targetFormSegment.AddOp(FormulaElementType::Equal); }
-                else if (strBuffer == "!=") { targetFormSegment.AddOp(FormulaElementType::NotEqual); }
-                else if (strBuffer == "<") { targetFormSegment.AddOp(FormulaElementType::LessThan); }
-                else if (strBuffer == "<=") { targetFormSegment.AddOp(FormulaElementType::LessOrEqual); }
-                else if (strBuffer == ">") { targetFormSegment.AddOp(FormulaElementType::GreaterThan); }
-                else if (strBuffer == ">=") { targetFormSegment.AddOp(FormulaElementType::GreaterOrEqual); }
-                else if (strBuffer == "&&") { targetFormSegment.AddOp(FormulaElementType::AND); }
-                else if (strBuffer == "||") { targetFormSegment.AddOp(FormulaElementType::OR); }
-                else if (strBuffer == "thRootOf") { targetFormSegment.AddOp(FormulaElementType::NthRoot); }
-                else if (strBuffer == "PowerOf") { targetFormSegment.AddOp(FormulaElementType::Pow); }
-                else if (strBuffer == "&") { targetFormSegment.AddOp(FormulaElementType::BitwiseAND); }
-                else if (strBuffer == "|") { targetFormSegment.AddOp(FormulaElementType::BitwiseOr); }
-                else if (strBuffer == "$") { targetFormSegment.AddOp(FormulaElementType::XOR); }
+                switch (strBuffer.front())
+                {
+                case '+': targetFormSegment.AddOp(FormulaElementType::Add); break;
+                case '-': targetFormSegment.AddOp(FormulaElementType::Sub); break;
+                case '*': targetFormSegment.AddOp(FormulaElementType::Mult); break;
+                case '/': targetFormSegment.AddOp(FormulaElementType::Div); break;
+                case '%': targetFormSegment.AddOp(FormulaElementType::Rem); break;
+                case '^': targetFormSegment.AddOp(FormulaElementType::Pow); break;
+                case '<': targetFormSegment.AddOp(strBuffer.size() == 2 ? FormulaElementType::LessOrEqual : FormulaElementType::LessThan); break;
+                case '>': targetFormSegment.AddOp(strBuffer.size() == 2 ? FormulaElementType::GreaterOrEqual : FormulaElementType::GreaterThan); break;
+                case '=': targetFormSegment.AddOp(FormulaElementType::Equal); break;//== detected
+                case '&': targetFormSegment.AddOp(strBuffer.size() == 2 ? FormulaElementType::AND : FormulaElementType::BitwiseAND); break;
+                case '|': targetFormSegment.AddOp(strBuffer.size() == 2 ? FormulaElementType::OR : FormulaElementType::BitwiseOr); break;
+                case '!': targetFormSegment.AddOp(strBuffer.size() == 2 ? FormulaElementType::NotEqual : FormulaElementType::Negative); break;
+                case '$': targetFormSegment.AddOp(FormulaElementType::XOR); break;//XOR
+                }
             }
             else if (ScanType == 11)//Prefix ++ or --
             {

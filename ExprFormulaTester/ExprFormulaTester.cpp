@@ -258,4 +258,25 @@ int main()
     std::cout << " = " << AltFormTest.ToString() << std::endl;
     AltFormTest.EvaluateOperations();
     std::cout << " = " << AltFormTest.ToString() << std::endl;
+
+    AltFormTest = "9.0 thBaseLog 4";
+    std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << std::endl;
+    AltFormTest.ReplaceVariablesWithValues(ValueDefinitions);
+    std::cout << " = " << AltFormTest.ToString() << std::endl;
+    AltFormTest.EvaluateOperations();
+    std::cout << " = " << AltFormTest.ToString() << std::endl;
+
+    AltFormTest = "(x+1)^(5+4/0.5-2)";
+    std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << std::endl;
+    AltFormTest.ReplaceVariablesWithValues(ValueDefinitions);
+    std::cout << " = " << AltFormTest.ToString() << std::endl;
+    AltFormTest.EvaluateOperations();
+    std::cout << " = " << AltFormTest.ToString() << std::endl;
+
+    AltFormTest = "(x+1)^(5+4*0.5-2)";
+    std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << std::endl;
+    AltFormTest.ReplaceVariablesWithValues(ValueDefinitions);
+    std::cout << " = " << AltFormTest.ToString() << std::endl;
+    AltFormTest.EvaluateOperations();
+    std::cout << " = " << AltFormTest.ToString() << std::endl;
 }
