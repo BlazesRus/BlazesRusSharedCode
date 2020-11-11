@@ -70,7 +70,7 @@ namespace BlazesRusCode
         void EvaluateOperations(size_t FormIndex = 0)
         {
             FormData& FormDRef = Data.at(FormIndex);
-            std::cout << "Performing Evaluation on FormSegment#" << FormIndex << " with formula content:" << FormDRef.ToString() << std::endl;
+            std::cout << "Performing Evaluation on FormSegment#" << FormIndex << " with formula content:" << FormToString(FormDRef) << std::endl;
             MediumDec valResult;
 
             bool TempBool;
@@ -375,7 +375,7 @@ namespace BlazesRusCode
                 }
                 else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
                 {
-                    CurString = FormDRef.VariableMap.at(CurrentVal->first).Name;
+                    CurString = this->VariableMap.at(CurrentVal->first).Name;
                     tsl::ordered_map<std::string, MediumDec&>::iterator KeyedElemVal = ElementValues.find(CurString);
                     if (KeyedElemVal != ElementValues.end())//Only attempt to replace variable if matching variable is found
                     {
@@ -435,7 +435,7 @@ namespace BlazesRusCode
                 }
                 else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
                 {
-                    CurString = FormDRef.VariableMap.at(CurrentVal->first).Name;
+                    CurString = this->VariableMap.at(CurrentVal->first).Name;
                     tsl::ordered_map<std::string, MediumDec>::iterator KeyedElemVal = ElementValues.find(CurString);
                     if(KeyedElemVal!= ElementValues.end())//Only attempt to replace variable if matching variable is found
                     {
@@ -488,7 +488,7 @@ namespace BlazesRusCode
                     strBuffer += FormDRef.NumMap.at(CurrentVal->first).ToString();
                     break;
                 case FormulaElementType::Variable:
-                    strBuffer += FormDRef.VariableMap.at(CurrentVal->first).Name;
+                    strBuffer += this->VariableMap.at(CurrentVal->first).Name;
                     break;
                 case FormulaElementType::trueVal:
                     strBuffer += "true";
@@ -552,19 +552,19 @@ namespace BlazesRusCode
                     break;
                 case FormulaElementType::PostFixPlus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += FormDRef.VariableMap.at(indexBuffer).Name + "++";
+                    strBuffer += this->VariableMap.at(indexBuffer).Name + "++";
                     break;
                 case FormulaElementType::PostFixMinus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += FormDRef.VariableMap.at(indexBuffer).Name + "++";
+                    strBuffer += this->VariableMap.at(indexBuffer).Name + "++";
                     break;
                 case FormulaElementType::PrefixPlus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "++" + FormDRef.VariableMap.at(indexBuffer).Name;
+                    strBuffer += "++" + this->VariableMap.at(indexBuffer).Name;
                     break;
                 case FormulaElementType::PrefixMinus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "--" + FormDRef.VariableMap.at(indexBuffer).Name;
+                    strBuffer += "--" + this->VariableMap.at(indexBuffer).Name;
                     break;
                 case FormulaElementType::BitwiseAND:
                     strBuffer += "&";
@@ -602,7 +602,7 @@ namespace BlazesRusCode
                     strBuffer += FormDRef.NumMap.at(CurrentVal->first).ToString();
                     break;
                 case FormulaElementType::Variable:
-                    strBuffer += FormDRef.VariableMap.at(CurrentVal->first).Name;
+                    strBuffer += this->VariableMap.at(CurrentVal->first).Name;
                     break;
                 case FormulaElementType::trueVal:
                     strBuffer += "true";
@@ -666,19 +666,19 @@ namespace BlazesRusCode
                     break;
                 case FormulaElementType::PostFixPlus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += FormDRef.VariableMap.at(indexBuffer).Name + "++";
+                    strBuffer += this->VariableMap.at(indexBuffer).Name + "++";
                     break;
                 case FormulaElementType::PostFixMinus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += FormDRef.VariableMap.at(indexBuffer).Name + "++";
+                    strBuffer += this->VariableMap.at(indexBuffer).Name + "++";
                     break;
                 case FormulaElementType::PrefixPlus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "++" + FormDRef.VariableMap.at(indexBuffer).Name;
+                    strBuffer += "++" + this->VariableMap.at(indexBuffer).Name;
                     break;
                 case FormulaElementType::PrefixMinus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "--" + FormDRef.VariableMap.at(indexBuffer).Name;
+                    strBuffer += "--" + this->VariableMap.at(indexBuffer).Name;
                     break;
                 case FormulaElementType::BitwiseAND:
                     strBuffer += "&";
@@ -718,15 +718,14 @@ namespace BlazesRusCode
                 {
                     //if(ScanType==10){strBuffer = at(FormulaIndex).back()+strBuffer;at(FormulaIndex).back()=strBuffer;}
                     if (!strBuffer.empty()){ InsertFromBuffer(strBuffer, FormulaIndex, ScanType); strBuffer.clear(); }
-                    FormulaIndex = AddFormulaToBuffer(FormulaIndex);
+                    FormulaIndex = AddFormulaToBuffer(FormulaIndex); ScanType = 0;
                 }
                 else if (*CurrentVal == ')')
                 {
                     InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
-                    strBuffer = ""; ScanType = 0;
                     --FormulaIndex;
                 }
-                else if (ScanType == 0 || ScanType == 10)//Almost only at either start of a formula or after operator
+                else if (ScanType == 0 || ScanType == 10)
                 {
                     if (ScanType == 10)//Prefix/postfix detection for ++/--
                     {
@@ -751,6 +750,7 @@ namespace BlazesRusCode
                     {
                         strBuffer = '-'; ScanType = 1;//Either Number or operator
                     }
+                    //---Other operations here as well in case of auto-sending variable on whitespace
                     else if (*CurrentVal == '!')//Negative Operator only valid for in front of NonOperators
                     {
                         Data.at(FormulaIndex).AddOp(FormulaElementType::Not);
@@ -759,6 +759,39 @@ namespace BlazesRusCode
                     {
                         Data.at(FormulaIndex).AddOp(FormulaElementType::Pow);
                     }
+                    else if (*CurrentVal == '&')
+                    {
+                        strBuffer = '&'; ScanType = 1;
+                    }
+                    else if (*CurrentVal == '|')
+                    {
+                        strBuffer = '|'; ScanType = 1;
+                    }
+                    else if (*CurrentVal == '>')
+                    {
+                        strBuffer = '>'; ScanType = 1;
+                    }
+                    else if (*CurrentVal == '<')
+                    {
+                        strBuffer = '<'; ScanType = 1;
+                    }
+                    else if (*CurrentVal == '/')
+                    {
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::Div);
+                    }
+                    else if (*CurrentVal == '*')
+                    {
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::Mult);
+                    }
+                    else if (*CurrentVal == '^')//Power of function
+                    {
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::Pow);
+                    }
+                    else if (*CurrentVal == '$')//Shorthand for XOR for now
+                    {
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::XOR);
+                    }
+                    //---End of extra mid-formula operations
 /*
                     else if(*CurrentVal == '?')//TernaryOperator detection start
                     {
@@ -766,6 +799,7 @@ namespace BlazesRusCode
                     	ScanType = 12;
                     }
 */
+
                     else
                     {
                         if (VariableConversionFunctions::IsDigit(*CurrentVal))
@@ -773,7 +807,7 @@ namespace BlazesRusCode
                             ScanType = 4;
                             strBuffer = *CurrentVal;
                         }
-                        else if (*CurrentVal != ' ' && *CurrentVal != '\t')//Not Whitespace
+                        else if (*CurrentVal != ' ' && *CurrentVal != '\t')//If not whitespace, register as potential variable
                         {
                             ScanType = 3;
                             strBuffer = *CurrentVal;
@@ -943,7 +977,7 @@ namespace BlazesRusCode
                     }
                 }
                 else
-                {//Scan type either number or variable at this point
+                {//Scanning either number or variable at this point
                     if (*CurrentVal == '+')//++ or +
                     {
                         InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
@@ -1003,6 +1037,10 @@ namespace BlazesRusCode
                     {
                         InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
                         Data.at(FormulaIndex).AddOp(FormulaElementType::XOR);
+                    }
+                    else if(*CurrentVal == ' ' || *CurrentVal == '\t')//Immediately send variable if encounter whitespace
+                    {
+                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
                     }
                     else
                     {

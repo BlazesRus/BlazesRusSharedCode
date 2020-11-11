@@ -249,35 +249,19 @@ int main()
     //IntFormTest = "5+10x";
     //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
 
-    MediumDecFormula AltFormTest = "x+5";
+    MediumDecFormula AltFormTest = "x*5+(5+4)";//= "x+5";//Successful for simple addition calculation without inner formula
     tsl::ordered_map<std::string, MediumDec> ValueDefinitions;
-    ValueDefinitions.insert_or_assign("x", MediumDec::One);
+    ValueDefinitions.insert_or_assign("x", MediumDec::Two);
 
     std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << std::endl;
-    AltFormTest = AltFormTest.EvaluateToSimplifiedForm(ValueDefinitions);
+    AltFormTest.ReplaceVariablesWithValues(ValueDefinitions);
     std::cout << " = " << AltFormTest.ToString() << std::endl;
-    AltFormTest = "(x+1)+(5+4)";
+    AltFormTest.EvaluateOperations();
+    std::cout << " = " << AltFormTest.ToString() << std::endl;
+    AltFormTest = "(x+1)^(5+4)";//3^9=19683
     std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << std::endl;
-    AltFormTest = AltFormTest.EvaluateToSimplifiedForm(ValueDefinitions);
+    AltFormTest.ReplaceVariablesWithValues(ValueDefinitions);
     std::cout << " = " << AltFormTest.ToString() << std::endl;
-    //AltFormTest = "5.5^(1.5+x)+6*x";
-    //std::cout << "(MediumDecFormula) " << AltFormTest.ToString();
-    //AltFormTest = AltFormTest.EvaluateToSimplifiedForm(ValueDefinitions);
-    //std::cout << " = " << AltFormTest.ToString() << std::endl;
-    //AltFormTest = "5+(5/4)";
-    //std::cout << "(MediumDecFormula) " << AltFormTest.ToString();
-    //AltFormTest = AltFormTest.EvaluateToSimplifiedForm(ValueDefinitions);
-    //std::cout << " = " << AltFormTest.ToString() << std::endl;
-    //AltFormTest = "(4/3)/2";
-    //std::cout << "(MediumDecFormula) " << AltFormTest.ToString();
-    //AltFormTest = AltFormTest.EvaluateToSimplifiedForm(ValueDefinitions);
-    //std::cout << " = " << AltFormTest.ToString() << std::endl;
-    //tsl::ordered_map<std::string, MediumDec&> RefDefinitions;
-    //MediumDec XReference = MediumDec::One;
-    //RefDefinitions.insert_or_assign("x", XReference);
-    //rootTest = AltFormTest.EvalValueRefs(RefDefinitions);
-    //std::cout << AltFormTest.ToString() << " = " << rootTest.ToString()<< std::endl;
-
-    //DoubleFormula DoubleFormTest = "5.5+(5.5+2)";
-    //std::cout << "(DoubleFormula) " << DoubleFormTest.ToString() << std::endl;
+    AltFormTest.EvaluateOperations();
+    std::cout << " = " << AltFormTest.ToString() << std::endl;
 }
