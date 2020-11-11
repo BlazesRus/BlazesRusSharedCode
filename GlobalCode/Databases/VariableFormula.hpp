@@ -100,6 +100,12 @@ namespace BlazesRusCode
             //0 = Num; 1 = Variable; 2 = Formula; 3 = true; 4 = false ; 5 >= Op;
             FormulaElementType ElementCat;
 
+            //0 = Num; 1 = Variable; 2 = Formula; 3 = true; 4 = false ; 5 >= Op;
+            void SetCatType(FormulaElementType catType)
+            {
+                ElementCat = catType;
+            }
+
             /// <summary>
             /// (Primarily used for FormElements, ++,--, and TernaryOperator)
             /// The index/Key position of stored element (not used for booleans)
@@ -107,6 +113,17 @@ namespace BlazesRusCode
             //   For Increment/Decrement Op: Refers to index of related value
             /// </summary>
             int Index;
+
+            /// <summary>
+            /// (Primarily used for FormElements, ++,--, and TernaryOperator)
+            /// The index/Key position of stored element (not used for booleans)
+            //   For variable names: If not -1, refers to stored related Value Key(which is used for prefix/postfix ops as well)
+            //   For Increment/Decrement Op: Refers to index of related value
+            /// </summary>
+            void SetIndex(int indexVal)
+            {
+                Index = indexVal;
+            }
 
             /// <summary>
             /// Initializes a new instance of the <see cref="VarTypeFormElement"/> class. (Defaults as boolean with true value)
