@@ -58,6 +58,9 @@
     <Filter Include="Source Files\OtherFunctions">
       <UniqueIdentifier>{89a092f9-c8c9-4c61-9219-9d02170cf176}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\tsl">
+      <UniqueIdentifier>{62c732ee-f84d-43df-a6dd-310aeba034a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NodeTrees\LooseNodeTreeTemplate.h">
@@ -164,6 +167,9 @@
     </ClInclude>
     <ClInclude Include="Databases\ExprFormula.h">
       <Filter>Header Files\Databases</Filter>
+    </ClInclude>
+    <ClInclude Include="tsl\ordered_map.h">
+      <Filter>Header Files\tsl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

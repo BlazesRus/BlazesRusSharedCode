@@ -70,7 +70,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
     <BoostDir>C:/UserFiles/ProgrammingTools/Libraries/C++Code/BoostLib/</BoostDir>
-	<ParallelMap>C:/UserFiles/GitHub/Parallel-Hashmap/</ParallelMap>
+    <ParallelMap>C:/UserFiles/GitHub/Parallel-Hashmap/</ParallelMap>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -244,6 +244,7 @@
     <ClInclude Include="QuadVector\QuadVectorFunctions.h" />
     <ClInclude Include="OtherFunctions\StringFunctions.h" />
     <ClInclude Include="OtherFunctions\VariableConversionFunctions.h" />
+    <ClInclude Include="tsl\ordered_map.h" />
     <ClInclude Include="VariableLists\StringVectorList.h" />
     <ClInclude Include="VariableLists\VariableList.h" />
     <ClInclude Include="VariableLists\VariableTypeLists.h" />

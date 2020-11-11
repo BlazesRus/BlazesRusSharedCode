@@ -40,18 +40,18 @@ namespace tsl {
 
 
 /**
- * Implementation of an hash map using open adressing with robin hood with backshift delete to resolve collisions.
+ * Implementation of an hash map using open addressing with robin hood with backshift delete to resolve collisions.
  * 
  * The particularity of this hash map is that it remembers the order in which the elements were added and
  * provide a way to access the structure which stores these values through the 'values_container()' method. 
  * The used container is defined by ValueTypeContainer, by default a std::deque is used (grows faster) but
  * a std::vector may be used. In this case the map provides a 'data()' method which give a direct access 
- * to the memory used to store the values (which can be usefull to communicate with C API's).
+ * to the memory used to store the values (which can be useful to communicate with C API's).
  * 
  * The Key and T must be copy constructible and/or move constructible. To use `unordered_erase` they both
  * must be swappable.
  * 
- * The behaviour of the hash map is undefinded if the destructor of Key or T throws an exception.
+ * The behaviour of the hash map is undefined if the destructor of Key or T throws an exception.
  * 
  * Iterators invalidation:
  *  - clear, operator=, reserve, rehash: always invalidate the iterators (also invalidate end()).
