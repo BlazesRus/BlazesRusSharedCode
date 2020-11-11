@@ -249,16 +249,10 @@ int main()
     //IntFormTest = "5+10x";
     //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
 
-    MediumDecFormula AltFormTest = "x*5+(5+4)";//= "x+5";//Successful for simple addition calculation without inner formula
+    MediumDecFormula AltFormTest = "(x+1)^(5+4)";
     tsl::ordered_map<std::string, MediumDec> ValueDefinitions;
     ValueDefinitions.insert_or_assign("x", MediumDec::Two);
 
-    std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << std::endl;
-    AltFormTest.ReplaceVariablesWithValues(ValueDefinitions);
-    std::cout << " = " << AltFormTest.ToString() << std::endl;
-    AltFormTest.EvaluateOperations();
-    std::cout << " = " << AltFormTest.ToString() << std::endl;
-    AltFormTest = "(x+1)^(5+4)";//3^9=19683
     std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << std::endl;
     AltFormTest.ReplaceVariablesWithValues(ValueDefinitions);
     std::cout << " = " << AltFormTest.ToString() << std::endl;
