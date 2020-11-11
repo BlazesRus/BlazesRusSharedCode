@@ -100,6 +100,7 @@ namespace BlazesRusCode
                     if (opIndex != 1 && (opIndex != 0 || (OpVal.ElementCat != FormulaElementType::Sqrt && OpVal.ElementCat != FormulaElementType::LN && OpVal.ElementCat != FormulaElementType::LOGTEN)))
                     {
                         LeftVal = OpIterator - 1;
+                        leftKey = LeftVal->first;
                         if (LeftVal->second.ElementCat == FormulaElementType::Formula)//FormulaDetected
                         {
                             FormData& targetSegmentRef = Data.at(LeftVal->second.Index);
@@ -132,7 +133,6 @@ namespace BlazesRusCode
                             continue;
                         else
                             leftValue = LeftVal->second.ElementCat == FormulaElementType::trueVal ? 1 : (LeftVal->second.ElementCat == FormulaElementType::falseVal ? 0 : FormDRef.NumMap[LeftVal->first]);
-                        leftKey = LeftVal->first;
                     }
                     else
                         leftKey = -1;
@@ -375,7 +375,7 @@ namespace BlazesRusCode
                 }
                 else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
                 {
-                    CurString = this->VariableMap.at(CurrentVal->first).Name;
+                    CurString = this->VariableMap.at(CurrentVal->first);
                     tsl::ordered_map<std::string, MediumDec&>::iterator KeyedElemVal = ElementValues.find(CurString);
                     if (KeyedElemVal != ElementValues.end())//Only attempt to replace variable if matching variable is found
                     {
@@ -435,7 +435,7 @@ namespace BlazesRusCode
                 }
                 else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
                 {
-                    CurString = this->VariableMap.at(CurrentVal->first).Name;
+                    CurString = this->VariableMap.at(CurrentVal->first);
                     tsl::ordered_map<std::string, MediumDec>::iterator KeyedElemVal = ElementValues.find(CurString);
                     if(KeyedElemVal!= ElementValues.end())//Only attempt to replace variable if matching variable is found
                     {
@@ -488,7 +488,7 @@ namespace BlazesRusCode
                     strBuffer += FormDRef.NumMap.at(CurrentVal->first).ToString();
                     break;
                 case FormulaElementType::Variable:
-                    strBuffer += this->VariableMap.at(CurrentVal->first).Name;
+                    strBuffer += this->VariableMap.at(CurrentVal->first);
                     break;
                 case FormulaElementType::trueVal:
                     strBuffer += "true";
@@ -552,19 +552,19 @@ namespace BlazesRusCode
                     break;
                 case FormulaElementType::PostFixPlus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += this->VariableMap.at(indexBuffer).Name + "++";
+                    strBuffer += this->VariableMap.at(indexBuffer) + "++";
                     break;
                 case FormulaElementType::PostFixMinus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += this->VariableMap.at(indexBuffer).Name + "++";
+                    strBuffer += this->VariableMap.at(indexBuffer) + "++";
                     break;
                 case FormulaElementType::PrefixPlus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "++" + this->VariableMap.at(indexBuffer).Name;
+                    strBuffer += "++" + this->VariableMap.at(indexBuffer);
                     break;
                 case FormulaElementType::PrefixMinus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "--" + this->VariableMap.at(indexBuffer).Name;
+                    strBuffer += "--" + this->VariableMap.at(indexBuffer);
                     break;
                 case FormulaElementType::BitwiseAND:
                     strBuffer += "&";
@@ -602,7 +602,7 @@ namespace BlazesRusCode
                     strBuffer += FormDRef.NumMap.at(CurrentVal->first).ToString();
                     break;
                 case FormulaElementType::Variable:
-                    strBuffer += this->VariableMap.at(CurrentVal->first).Name;
+                    strBuffer += this->VariableMap.at(CurrentVal->first);
                     break;
                 case FormulaElementType::trueVal:
                     strBuffer += "true";
@@ -666,19 +666,19 @@ namespace BlazesRusCode
                     break;
                 case FormulaElementType::PostFixPlus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += this->VariableMap.at(indexBuffer).Name + "++";
+                    strBuffer += this->VariableMap.at(indexBuffer) + "++";
                     break;
                 case FormulaElementType::PostFixMinus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += this->VariableMap.at(indexBuffer).Name + "++";
+                    strBuffer += this->VariableMap.at(indexBuffer) + "++";
                     break;
                 case FormulaElementType::PrefixPlus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "++" + this->VariableMap.at(indexBuffer).Name;
+                    strBuffer += "++" + this->VariableMap.at(indexBuffer);
                     break;
                 case FormulaElementType::PrefixMinus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "--" + this->VariableMap.at(indexBuffer).Name;
+                    strBuffer += "--" + this->VariableMap.at(indexBuffer);
                     break;
                 case FormulaElementType::BitwiseAND:
                     strBuffer += "&";
