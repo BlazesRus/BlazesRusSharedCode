@@ -53,34 +53,34 @@ namespace BlazesRusCode
         using ReferenceMap = tsl::ordered_map<std::string, VarType&>;
         using ValueMap = tsl::ordered_map<std::string, VarType>;
     public:
-        class DLL_API VariableStoreData
-        {
-        public:
-            /// <summary>
-            /// Stored Variable Name
-            /// </summary>
-            std::string Name;
+        //class DLL_API VariableStoreData
+        //{
+        //public:
+        //    /// <summary>
+        //    /// Stored Variable Name
+        //    /// </summary>
+        //    std::string Name;
 
-            ///// <summary>
-            ///// The variable pointer data
-            ///// </summary>
-            //VarType* varPointerData;
+        //    ///// <summary>
+        //    ///// The variable pointer data
+        //    ///// </summary>
+        //    //VarType* varPointerData;
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="VariableStoreData"/> class.
-            /// </summary>
-            /// <param name="name">The name.</param>
-            VariableStoreData(std::string name="")//, VarType* pData=nullptr)
-            {
-                //varPointerData = pData;
-                Name = name;
-            }
-        };
+        //    /// <summary>
+        //    /// Initializes a new instance of the <see cref="VariableStoreData"/> class.
+        //    /// </summary>
+        //    /// <param name="name">The name.</param>
+        //    VariableStoreData(std::string name="")//, VarType* pData=nullptr)
+        //    {
+        //        //varPointerData = pData;
+        //        Name = name;
+        //    }
+        //};
     protected:
         using ParallelIntValMap = phmap::node_hash_map<int, VarType>;
         using ParallelStringValMap = phmap::node_hash_map<std::string, VarType>;
         using ParallelStringIntMap = phmap::node_hash_map<std::string, int>;
-        using ParallelIntVariable = phmap::node_hash_map<int, VariableStoreData>;
+        using ParallelIntVariable = phmap::node_hash_map<int, std::string>;//VariableStoreData>;
     public:
         /// <summary>
         /// The map that stores the Variable Names and potential pointers to the referenced variable
@@ -436,7 +436,7 @@ namespace BlazesRusCode
                     strBuffer += targetFormSegment.NumMap.at(CurrentVal->first).ToString();
                     break;
                 case FormulaElementType::Variable:
-                    strBuffer += this->VariableMap.at(CurrentVal->first).Name;
+                    strBuffer += this->VariableMap.at(CurrentVal->first);//.Name;
                     break;
                 case FormulaElementType::trueVal:
                     strBuffer += "true";
@@ -500,19 +500,19 @@ namespace BlazesRusCode
                     break;
                 case FormulaElementType::PostFixPlus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += this->VariableMap.at(indexBuffer).Name + "++";
+                    strBuffer += this->VariableMap.at(indexBuffer) + "++";
                     break;
                 case FormulaElementType::PostFixMinus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += this->VariableMap.at(indexBuffer).Name + "++";
+                    strBuffer += this->VariableMap.at(indexBuffer) + "++";
                     break;
                 case FormulaElementType::PrefixPlus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "++" + this->VariableMap.at(indexBuffer).Name;
+                    strBuffer += "++" + this->VariableMap.at(indexBuffer);
                     break;
                 case FormulaElementType::PrefixMinus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "--" + this->VariableMap.at(indexBuffer).Name;
+                    strBuffer += "--" + this->VariableMap.at(indexBuffer);
                     break;
                 case FormulaElementType::BitwiseAND:
                     strBuffer += "&";
