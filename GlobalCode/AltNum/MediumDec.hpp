@@ -4229,7 +4229,7 @@ namespace BlazesRusCode
     #pragma region ValueDefine Source
     MediumDec MediumDec::PI = PIValue();
     MediumDec MediumDec::One = OneValue();
-    MediumDec MediumDec::Two = OneValue();
+    MediumDec MediumDec::Two = TwoValue();
     MediumDec MediumDec::NegativeOne = NegativeOneValue();
     MediumDec MediumDec::Zero = ZeroValue();
     MediumDec MediumDec::PointFive = Point5Value();
