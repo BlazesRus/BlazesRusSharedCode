@@ -101,7 +101,6 @@ namespace BlazesRusCode
                     {
                         LeftVal = OpIterator - 1;
                         leftKey = LeftVal->first;
-                        std::cout << "Formula content after check: " << FormToString(FormDRef) << std::endl;
                         switch (FormDRef[leftKey].ElementCat)
                         {
                         case FormulaElementType::Variable:
@@ -357,7 +356,7 @@ namespace BlazesRusCode
                 }
                 else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
                 {
-                    CurString = this->VariableMap.at(CurrentVal->first);
+                    CurString = this->VariableStore.at(CurrentVal->first);
                     tsl::ordered_map<std::string, MediumDec&>::iterator KeyedElemVal = ElementValues.find(CurString);
                     if (KeyedElemVal != ElementValues.end())//Only attempt to replace variable if matching variable is found
                     {
@@ -405,13 +404,15 @@ namespace BlazesRusCode
                 }
                 else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
                 {
-                    CurString = this->VariableMap.at(CurrentVal->first);
+                    CurString = this->VariableStore.at(CurrentVal->second.Index);
                     tsl::ordered_map<std::string, MediumDec>::iterator KeyedElemVal = ElementValues.find(CurString);
                     if(KeyedElemVal!= ElementValues.end())//Only attempt to replace variable if matching variable is found
                     {
                         FormDRef.at(CurrentVal->first).ElementCat = FormulaElementType::Num;
                         targetResult = KeyedElemVal.value();
+                        //std::cout << "Swapping variable named " << CurString << " with " << targetResult.ToString() << std::endl;
                         FormDRef.NumMap.insert_or_assign(CurrentVal->first, targetResult);//ElementValues.at(CurString));
+                        //std::cout << "Successful insert into NumMap position" << CurrentVal->first << std::endl;
                     }
                     //else
                     //{
@@ -442,7 +443,6 @@ namespace BlazesRusCode
         void RecursivelyAddToString(std::string& strBuffer, size_t FormIndex)
         {
             FormData& FormDRef = Data.at(FormIndex);
-            int indexBuffer;
             for (FormData::iterator CurrentVal = FormDRef.begin(), LastVal = FormDRef.end(); CurrentVal != LastVal; ++CurrentVal)
             {
                 switch (CurrentVal->second.ElementCat)
@@ -458,7 +458,7 @@ namespace BlazesRusCode
                     strBuffer += FormDRef.NumMap.at(CurrentVal->first).ToString();
                     break;
                 case FormulaElementType::Variable:
-                    strBuffer += this->VariableMap.at(CurrentVal->first);
+                    strBuffer += this->VariableStore.at(CurrentVal->second.Index);
                     break;
                 case FormulaElementType::trueVal:
                     strBuffer += "true";
@@ -530,20 +530,16 @@ namespace BlazesRusCode
                     strBuffer += "%";
                     break;
                 case FormulaElementType::PostFixPlus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += this->VariableMap.at(indexBuffer) + "++";
+                    strBuffer += VariableStore.at(CurrentVal->second.Index) + "++";
                     break;
                 case FormulaElementType::PostFixMinus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += this->VariableMap.at(indexBuffer) + "++";
+                    strBuffer += VariableStore.at(CurrentVal->second.Index) + "++";
                     break;
                 case FormulaElementType::PrefixPlus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "++" + this->VariableMap.at(indexBuffer);
+                    strBuffer += "++" + VariableStore.at(CurrentVal->second.Index);
                     break;
                 case FormulaElementType::PrefixMinus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "--" + this->VariableMap.at(indexBuffer);
+                    strBuffer += "--" + VariableStore.at(CurrentVal->second.Index);
                     break;
                 case FormulaElementType::BitwiseAND:
                     strBuffer += "&";
@@ -566,22 +562,21 @@ namespace BlazesRusCode
         {
             std::string strBuffer = "";
             FormData& FormDRef = Data.at(0);
-            int indexBuffer;
             for (FormData::iterator CurrentVal = FormDRef.begin(), LastVal = FormDRef.end(); CurrentVal != LastVal; ++CurrentVal)
             {
                 switch (CurrentVal->second.ElementCat)
                 {
                 case FormulaElementType::Formula:
                     strBuffer += "(";
-                    indexBuffer = CurrentVal->second.Index;
-                    RecursivelyAddToString(strBuffer, indexBuffer);
+                    RecursivelyAddToString(strBuffer, CurrentVal->second.Index);
                     strBuffer += ")";
                     break;
                 case FormulaElementType::Num:
                     strBuffer += FormDRef.NumMap.at(CurrentVal->first).ToString();
                     break;
                 case FormulaElementType::Variable:
-                    strBuffer += this->VariableMap.at(CurrentVal->first);
+
+                    strBuffer += this->VariableStore.at(CurrentVal->second.Index);
                     break;
                 case FormulaElementType::trueVal:
                     strBuffer += "true";
@@ -653,20 +648,16 @@ namespace BlazesRusCode
                     strBuffer += "%";
                     break;
                 case FormulaElementType::PostFixPlus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += this->VariableMap.at(indexBuffer) + "++";
+                    strBuffer += VariableStore.at(CurrentVal->second.Index) + "++";
                     break;
                 case FormulaElementType::PostFixMinus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += this->VariableMap.at(indexBuffer) + "++";
+                    strBuffer += VariableStore.at(CurrentVal->second.Index) + "++";
                     break;
                 case FormulaElementType::PrefixPlus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "++" + this->VariableMap.at(indexBuffer);
+                    strBuffer += "++" + VariableStore.at(CurrentVal->second.Index);
                     break;
                 case FormulaElementType::PrefixMinus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "--" + this->VariableMap.at(indexBuffer);
+                    strBuffer += "--" + VariableStore.at(CurrentVal->second.Index);
                     break;
                 case FormulaElementType::BitwiseAND:
                     strBuffer += "&";

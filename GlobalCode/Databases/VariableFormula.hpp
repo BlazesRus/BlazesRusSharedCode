@@ -21,7 +21,7 @@
 #include <string>
 #include "..\OtherFunctions\VariableConversionFunctions.h"
 #include "..\tsl\ordered_map.h"
-//#include <map>
+#include <algorithm>
 #include <vector>
 #include <parallel_hashmap/phmap.h>
 
@@ -80,17 +80,11 @@ namespace BlazesRusCode
         using ParallelIntValMap = phmap::node_hash_map<int, VarType>;
         using ParallelStringValMap = phmap::node_hash_map<std::string, VarType>;
         using ParallelStringIntMap = phmap::node_hash_map<std::string, int>;
-        using ParallelIntVariable = phmap::node_hash_map<int, std::string>;//VariableStoreData>;
     public:
         /// <summary>
-        /// The map that stores the Variable Names and potential pointers to the referenced variable
+        /// The vector storage that holds stored Variables referenced
         /// </summary>
-        ParallelIntVariable VariableMap;//To-Do later place since map of this inside main formula code
-
-        /// <summary>
-        /// The variable storage map with Variable Name linked to related Index(shortcut)
-        /// </summary>
-        ParallelStringIntMap VariableStorageMap;
+        std::vector<std::string> VariableStore;
     public:
         class DLL_API FormElement
         {
@@ -415,19 +409,43 @@ namespace BlazesRusCode
         /// <param name="Value">The value.</param>
         void AddVariable(std::string& Value, FormData& targetFormSegment)
         {
-            //Only add new variable index to map
-            ParallelStringIntMap::const_iterator foundValue = VariableStorageMap.find(Value);
-            if (foundValue == VariableStorageMap.end())
+#ifdef Blazes_Enable_CatchFormulaExceptions
+            try
             {
-                targetFormSegment.LastAdded = targetFormSegment.Add(FormElement(FormulaElementType::Variable));
-                targetFormSegment.at(targetFormSegment.LastAdded).Index = targetFormSegment.LastAdded;
-                VariableMap.insert_or_assign(targetFormSegment.LastAdded, Value);
-                VariableStorageMap.insert_or_assign(Value, targetFormSegment.LastAdded);
+#endif
+                auto StoreStart = VariableStore.begin();
+                auto StoreEnd = VariableStore.end();
+                auto ValSearch = std::find(VariableStore.begin(), VariableStore.end(), Value);
+
+                if (ValSearch != StoreEnd)
+                {
+                    int VarIndex = ValSearch - StoreStart;
+                    targetFormSegment.LastAdded = targetFormSegment.Add(FormElement(FormulaElementType::Variable, VarIndex));
+                }
+                else
+                {
+                    int VarIndex = VariableStore.size();
+                    VariableStore.push_back(Value);
+                    targetFormSegment.LastAdded = targetFormSegment.Add(FormElement(FormulaElementType::Variable, VarIndex));
+                }
+#ifdef Blazes_Enable_CatchFormulaExceptions
             }
-            else
+            catch (const std::runtime_error& re)
             {
-                targetFormSegment.LastAdded = targetFormSegment.Add(FormElement(FormulaElementType::Variable, foundValue->second));
+                std::cerr << "Runtime error on attempt to add variable: " << re.what() << std::endl;
             }
+            catch (const std::exception& ex)
+            {
+                // specific handling for all exceptions extending std::exception, except
+                // std::runtime_error which is handled explicitly
+                std::cerr << "Error occurred on attempt to add variable: " << ex.what() << std::endl;
+            }
+            catch (...)
+            {
+                // catch any other errors (that we have no information about)
+                std::cerr << "Unknown failure occurred on attempt to add variable. Possible memory corruption" << std::endl;
+            }
+#endif
         }
 
         /// <summary>
@@ -451,7 +469,7 @@ namespace BlazesRusCode
                     strBuffer += targetFormSegment.NumMap.at(CurrentVal->first).ToString();
                     break;
                 case FormulaElementType::Variable:
-                    strBuffer += this->VariableMap.at(CurrentVal->first);//.Name;
+                    strBuffer += this->VariableStore.at(CurrentVal->second.Index);
                     break;
                 case FormulaElementType::trueVal:
                     strBuffer += "true";
@@ -524,19 +542,19 @@ namespace BlazesRusCode
                     break;
                 case FormulaElementType::PostFixPlus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += this->VariableMap.at(indexBuffer) + "++";
+                    strBuffer += VariableStore.at(CurrentVal->second.Index) + "++";
                     break;
                 case FormulaElementType::PostFixMinus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += this->VariableMap.at(indexBuffer) + "++";
+                    strBuffer += VariableStore.at(CurrentVal->second.Index) + "++";
                     break;
                 case FormulaElementType::PrefixPlus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "++" + this->VariableMap.at(indexBuffer);
+                    strBuffer += "++" + VariableStore.at(CurrentVal->second.Index);
                     break;
                 case FormulaElementType::PrefixMinus:
                     indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "--" + this->VariableMap.at(indexBuffer);
+                    strBuffer += "--" + VariableStore.at(CurrentVal->second.Index);
                     break;
                 case FormulaElementType::BitwiseAND:
                     strBuffer += "&";

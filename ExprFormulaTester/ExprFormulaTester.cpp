@@ -249,34 +249,51 @@ int main()
     //IntFormTest = "5+10x";
     //std::cout << IntFormTest.ToString() << " = " << IntFormTest.EvalValues(IntValueDefinitions) << std::endl;
 
-    MediumDecFormula AltFormTest = "(x+1)^(5+4)";
     tsl::ordered_map<std::string, MediumDec> ValueDefinitions;
     ValueDefinitions.insert_or_assign("x", MediumDec::Two);
+    MediumDecFormula AltFormTest = "x+x";//"(x+1)^(5+4)";
 
-    std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << std::endl;
-    AltFormTest.ReplaceVariablesWithValues(ValueDefinitions);
-    std::cout << " = " << AltFormTest.ToString() << std::endl;
-    AltFormTest.EvaluateOperations();
-    std::cout << " = " << AltFormTest.ToString() << std::endl;
+    try
+    {
+        std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << std::endl;
+        AltFormTest.ReplaceVariablesWithValues(ValueDefinitions);
+        std::cout << " = " << AltFormTest.ToString() << std::endl;
+        AltFormTest.EvaluateOperations();
+        std::cout << " = " << AltFormTest.ToString() << std::endl;
 
-    AltFormTest = "9.0 thBaseLog 4";
-    std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << std::endl;
-    AltFormTest.ReplaceVariablesWithValues(ValueDefinitions);
-    std::cout << " = " << AltFormTest.ToString() << std::endl;
-    AltFormTest.EvaluateOperations();
-    std::cout << " = " << AltFormTest.ToString() << std::endl;
+        //AltFormTest = "9.0 thBaseLog 4";
+        //std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << std::endl;
+        //AltFormTest.ReplaceVariablesWithValues(ValueDefinitions);
+        //std::cout << " = " << AltFormTest.ToString() << std::endl;
+        //AltFormTest.EvaluateOperations();
+        //std::cout << " = " << AltFormTest.ToString() << std::endl;
 
-    AltFormTest = "(x+1)^(5+4/0.5-2)";
-    std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << std::endl;
-    AltFormTest.ReplaceVariablesWithValues(ValueDefinitions);
-    std::cout << " = " << AltFormTest.ToString() << std::endl;
-    AltFormTest.EvaluateOperations();
-    std::cout << " = " << AltFormTest.ToString() << std::endl;
+        AltFormTest = "(x+1)^(5+4/0.5-2)";
+        std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << std::endl;
+        AltFormTest.ReplaceVariablesWithValues(ValueDefinitions);
+        std::cout << " = " << AltFormTest.ToString() << std::endl;
+        AltFormTest.EvaluateOperations();
+        std::cout << " = " << AltFormTest.ToString() << std::endl;
 
-    AltFormTest = "(x+1)^(5+4*0.5-2)";
-    std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << std::endl;
-    AltFormTest.ReplaceVariablesWithValues(ValueDefinitions);
-    std::cout << " = " << AltFormTest.ToString() << std::endl;
-    AltFormTest.EvaluateOperations();
-    std::cout << " = " << AltFormTest.ToString() << std::endl;
+        AltFormTest = "(x+1)^(5+4*0.5-2)";
+        std::cout << "(MediumDecFormula) " << AltFormTest.ToString() << std::endl;
+        AltFormTest.ReplaceVariablesWithValues(ValueDefinitions);
+        std::cout << " = " << AltFormTest.ToString() << std::endl;
+        AltFormTest.EvaluateOperations();
+        std::cout << " = " << AltFormTest.ToString() << std::endl;
+    }
+    catch (const std::runtime_error& re)
+    {
+        std::cerr << "Runtime error: " << re.what() << std::endl;
+    }
+    catch (const std::exception& ex)
+    {
+        // specific handling for all exceptions extending std::exception, except
+        // std::runtime_error which is handled explicitly
+        std::cerr << "Error occurred: " << ex.what() << std::endl;
+    }
+    catch(...)
+    {
+        std::cout << "Unknown exception" << std::endl;
+    }
 }
