@@ -5,7 +5,9 @@
 
 #include "..\DLLAPI.h"
 #include "VariableFormula.hpp"
+#include "..\AltNum\FloatingOperations.hpp"
 #include "ElementType.hpp"
+#include "..\tsl\ordered_map.h"
 
 //Preprocessor Switches
 /*
@@ -14,16 +16,22 @@
 /*
 ^ = Power of; * = Multiplication; / = Division; % = Modulus
 + = Addition; - = Subtraction; ! = Not;
-- = Negative
 && = And; || = Or;
+++Prefix; --Prefix; (might not be fully implimented)
+PowerOf = Power of
+(Bitwise operators--&, |
 $ = XOR (bitwise XOR operation)
-++Prefix; --Prefix;
-(Bitwise operators)&, |
+
+Partial Support for with loss of accuracy from floating point conversion etc:
+SqrtOf = Square Root of (applied to right value)
+Ln = Natural log function
+thBaseLog = Base N Log function of right value
+LogTen = Log base 10 function of right value
 */
 //Unsupported Operators/Functions(for later)
 /*
+thRootOf = Nth Root of (left value is equal to N; applied to right value)
  ++Postfix; --Postfix (Need to update to code changes)
-PowerOf = (for scanning PowerOf instead of ^)
 ? = TernaryOperator(Not stored/evaluated yet)
 Assignment operators not supported
 */
@@ -32,129 +40,172 @@ namespace BlazesRusCode
 {
     class DLL_API IntFormula : public VariableFormula<int>
     {
-    private:
-        using ReferenceMap = tsl::ordered_map<std::string, int&>;
-        using ValueMap = tsl::ordered_map<std::string, int>;
     public:
         /// <summary>
-        /// Switches the op into boolean value and erases old left+right side value.
+        /// Switches the operator into boolean value and erases old left+right side value.
         /// </summary>
         /// <param name="FormCopy">The form copy.</param>
-        /// <param name="OpVal">The op value.</param>
+        /// <param name="FormDRef[*CurrentVal]">The op value.</param>
         /// <param name="LeftIterator">The left iterator.</param>
         /// <param name="RightIterator">The right iterator.</param>
         /// <param name="Value">The value.</param>
-        void SwitchOpToBoolVal(FormData& FormCopy, FormElement& OpVal, FormData::iterator& LeftIterator, FormData::iterator& RightIterator, bool Value)
+        void SwitchOpToBoolVal(FormData& FormCopy, FormElement& OpVal, bool Value)
         {
             if (Value) { OpVal.ElementCat = FormulaElementType::trueVal; }
             else { OpVal.ElementCat = FormulaElementType::falseVal; }
-
-            if (LeftIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(LeftIterator->first); }
-            if (RightIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(RightIterator->first); }
-
-            int LeftKey = LeftIterator->first; int RightKey = RightIterator->first;
-            FormCopy.erase(LeftIterator); FormCopy.erase(RightKey);
-            FormCopy.RemovedIndexes.push_back(LeftKey); FormCopy.RemovedIndexes.push_back(RightKey);
         }
 
         /// <summary>
-        /// Switches the operator into boolean value and erases old right side value.
+        /// Switches the operator into Value
         /// </summary>
         /// <param name="FormCopy">The formula data copy.</param>
-        /// <param name="OpVal">The op value.</param>
-        /// <param name="RightIterator">The right side value iterator.</param>
-        /// <param name="Value">The value.</param>
-        void SwitchOpToRBoolVal(FormData& FormCopy, FormElement& OpVal, FormData::iterator& RightIterator, bool Value)
-        {
-            if (Value) { OpVal.ElementCat = FormulaElementType::trueVal; }
-            else { OpVal.ElementCat = FormulaElementType::falseVal; }
-
-            if (RightIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(RightIterator->first); }
-
-            FormCopy.erase(RightIterator);
-            FormCopy.RemovedIndexes.push_back(RightIterator->first);
-        }
-
-        /// <summary>
-        /// Switches the operator into Value and erases old right side Value
-        /// </summary>
-        /// <param name="FormCopy">The formula data copy.</param>
-        /// <param name="OpVal">The operator element value.</param>
-        /// <param name="OpKey">The operator key.</param>
-        /// <param name="RightIterator">The right side value iterator.</param>
-        /// <param name="Value">The value to turn operator into.</param>
-        void SwitchOpToRVal(FormData& FormCopy, FormElement& OpVal, int OpKey, FormData::iterator& RightIterator, int Value)
-        {
-            FormCopy.NumMap.insert_or_assign(OpKey, Value);
-            OpVal.ElementCat = FormulaElementType::Num;
-
-            if (RightIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(RightIterator->first); }
-
-            int RightKey = RightIterator->first;
-            FormCopy.erase(RightKey);
-            FormCopy.RemovedIndexes.push_back(RightKey);
-        }
-
-        /// <summary>
-        /// Switches the operator into Value and erases old left+right side Value
-        /// </summary>
-        /// <param name="FormCopy">The formula data copy.</param>
-        /// <param name="OpVal">The operator element value.</param>
+        /// <param name="FormDRef[*CurrentVal]">The operator element value.</param>
         /// <param name="OpKey">The operator key.</param>
         /// <param name="RightIterator">The right value iterator.</param>
         /// <param name="RightIterator">The right value iterator.</param>
         /// <param name="Value">The value to turn operator into.</param>
-        void SwitchOpToVal(FormData& FormCopy, FormElement& OpVal, int OpKey, FormData::iterator& LeftIterator, FormData::iterator& RightIterator, int Value)
+        void SwitchOpToVal(FormData& FormCopy, FormElement& OpVal, int OpKey, int Value)
         {
             FormCopy.NumMap.insert_or_assign(OpKey, Value);
             OpVal.ElementCat = FormulaElementType::Num;
-
-            if (LeftIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(LeftIterator->first); }
-            if (RightIterator->second.ElementCat == FormulaElementType::Num) { FormCopy.NumMap.erase(RightIterator->first); }
-
-            int LeftKey = LeftIterator->first; int RightKey = RightIterator->first;
-            FormCopy.erase(LeftIterator); FormCopy.erase(RightKey);
-            FormCopy.RemovedIndexes.push_back(LeftKey); FormCopy.RemovedIndexes.push_back(RightKey);
         }
 
-        /// <summary>
-        /// Evaluates the order of operations.
-        /// </summary>
-        /// <param name="FormCopy">The form copy.</param>
-        /// <returns>int</returns>
-        int EvaluateOrderOfOperations(FormData& FormCopy)
+        void EvaluateOperations(size_t FormIndex = 0)
         {
+            FormData& FormDRef = Data.at(FormIndex);
+            FormData::iterator segmentStart = FormDRef.begin();
             int valResult;
 
             bool TempBool;
             int leftValue;
             int rightValue;
 
-            IntVector& OpOrderElement = FormCopy.OpOrderMap[0];
+            IntVector& OpOrderElement = FormDRef.OpOrderMap[0];
             FormData::iterator OpIterator;
-            auto OpVal = FormCopy.at(0);
             FormData::iterator LeftVal;
             FormData::iterator RightVal;
             int leftResult;
             int rightResult;
+            int OpTargetKey;
+            int leftKey;
 
             //Applying operations via C++ variation of order of operations
             //https://en.cppreference.com/w/cpp/language/operator_precedence
-            for (int opIndex = 0; opIndex < 12; ++opIndex)
+            for (int opIndex = 0; opIndex < 11; ++opIndex)
             {
-                OpOrderElement = FormCopy.OpOrderMap[opIndex];
+                OpOrderElement = FormDRef.OpOrderMap[opIndex];
+                if (OpOrderElement.empty())
+                    continue;
                 for (IntVector::iterator CurrentVal = OpOrderElement.begin(), LastVal = OpOrderElement.end(); CurrentVal != LastVal; ++CurrentVal)
                 {
-                    OpIterator = FormCopy.find(*CurrentVal);
-                    OpVal = FormCopy[*CurrentVal];
-                    if (OpIterator->second.ElementCat != FormulaElementType::Not && OpIterator->second.ElementCat != FormulaElementType::Sqrt)
+                    OpTargetKey = *CurrentVal;
+                    OpIterator = FormDRef.find(OpTargetKey);
+                    if (opIndex == 1)
+                    {
+#ifndef Blazes_DisableFormula_NegativeSwapping
+                        if (OpIterator->second.ElementCat == FormulaElementType::Negative && OpIterator != segmentStart)//Special conditional to potentially swap negative with minus
+                        {
+                            LeftVal = OpIterator - 1;
+                            switch (LeftVal->second.ElementCat)
+                            {
+                            case FormulaElementType::Variable:
+                                continue; break;//Ignore non-set variables for this version
+                            case FormulaElementType::Formula:
+                            case FormulaElementType::Num:
+                            case FormulaElementType::trueVal:
+                            case FormulaElementType::falseVal://Swapping out Negative application to right side, instead to a left-right subtraction operation
+                            {
+                                FormDRef[*CurrentVal].ElementCat = FormulaElementType::Sub;
+                                //Making sure move the operation in correct operation order
+                                if (FormDRef.OpOrderMap[3].empty() || FormDRef.OpOrderMap[3].back() < OpTargetKey)//If higher position then last element, then just add to end
+                                    FormDRef.OpOrderMap[3].push_back(OpTargetKey);
+                                else
+                                {//Keys with lower indexes are normally in front
+                                    for (IntVector::iterator cVal = FormDRef.OpOrderMap[3].begin(), LastSubVal = FormDRef.OpOrderMap[3].end(); cVal != LastSubVal; ++cVal)
+                                    {
+                                        if (*cVal > OpTargetKey)
+                                        {
+                                            FormDRef.OpOrderMap[3].insert(cVal, OpTargetKey);
+                                            break;
+                                        }
+                                    }
+                                }
+                                continue;
+                            }
+                            default:
+                                leftKey = -1;
+                            }
+                        }
+                        else
+#endif
+                            leftKey = -1;
+                    }
+                    else if (opIndex != 0 || (OpIterator->second.ElementCat != FormulaElementType::Sqrt && OpIterator->second.ElementCat != FormulaElementType::LN && OpIterator->second.ElementCat != FormulaElementType::LOGTEN))
                     {
                         LeftVal = OpIterator - 1;
-                        leftValue = LeftVal->second.ElementCat == FormulaElementType::trueVal ? 1 : (LeftVal->second.ElementCat == FormulaElementType::falseVal ? 0 : FormCopy.NumMap[LeftVal->first]);
+                        leftKey = LeftVal->first;
+                        switch (LeftVal->second.ElementCat)
+                        {
+                        case FormulaElementType::Variable:
+                            continue; break;//Ignore non-set variables for this version
+                        case FormulaElementType::Formula:
+                        {
+                            EvaluateOperations(LeftVal->second.Index);//Condense inner formula if can
+                            FormData& targetSegmentRef = Data.at(LeftVal->second.Index);
+                            if (targetSegmentRef.size() == 1)
+                            {
+                                FormData::iterator targetElem = targetSegmentRef.begin();
+                                if (targetElem->second.ElementCat != FormulaElementType::Variable)
+                                    leftValue = targetElem->second.ElementCat == FormulaElementType::trueVal ? 1 : (targetElem->second.ElementCat == FormulaElementType::falseVal ? 0 : targetSegmentRef.NumMap[targetElem->first]);
+                                else
+                                    continue;//Ignore operation with unknown variable value
+                            }
+                            else
+                                continue;//Ignore if not condensed down to single value
+                        }
+                        break;
+                        case FormulaElementType::Num:
+                            leftValue = FormDRef.NumMap[leftKey]; break;
+                        case FormulaElementType::trueVal:
+                            leftValue = 1;
+                        case FormulaElementType::falseVal:
+                            leftValue = 0;
+                        default:
+                            continue; break;
+                        }
                     }
+                    else
+                        leftKey = -1;
                     RightVal = OpIterator + 1;
-                    rightValue = RightVal->second.ElementCat == FormulaElementType::trueVal ? 1 : (RightVal->second.ElementCat == FormulaElementType::falseVal ? 0 : FormCopy.NumMap[RightVal->first]);
-
+                    switch (RightVal->second.ElementCat)
+                    {
+                    case FormulaElementType::Variable:
+                        continue; break;//Ignore non-set variables for this version
+                    case FormulaElementType::Formula:
+                    {
+                        FormData& targetSegmentRef = Data.at(RightVal->second.Index);
+                        EvaluateOperations(RightVal->second.Index);//Condense inner formula if can
+                        if (targetSegmentRef.size() == 1)
+                        {
+                            FormData::iterator targetElem = targetSegmentRef.begin();
+                            if (targetElem->second.ElementCat != FormulaElementType::Variable)
+                                rightValue = targetElem->second.ElementCat == FormulaElementType::trueVal ? 1 : (targetElem->second.ElementCat == FormulaElementType::falseVal ? 0 : targetSegmentRef.NumMap[targetElem->first]);
+                            else
+                                continue;//Ignore operation with unknown variable value
+                        }
+                        else
+                            continue;//Ignore if not condensed down to single value
+                    }
+                    break;
+                    case FormulaElementType::Num:
+                        rightValue = FormDRef.NumMap[RightVal->first]; break;
+                    case FormulaElementType::trueVal:
+                        rightValue = 1;
+                    case FormulaElementType::falseVal:
+                        rightValue = 0;
+                    default:
+                        continue; break;
+                    }
                     switch (opIndex)
                     {
                     default://placeholder code
@@ -164,59 +215,86 @@ namespace BlazesRusCode
                         {
                         case FormulaElementType::Pow:
                             leftValue = VariableConversionFunctions::IntPowOp(leftValue, rightValue);
-                            SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, rightValue);
+                            SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, leftValue);
                             break;
-      //                  case FormulaElementType::Sqrt:
-      //                      rightValue = int::Sqrt(rightValue);
-      //                      SwitchOpToRVal(FormCopy, OpVal, OpIterator->first, RightVal, rightValue);
-      //                      break;
-      //                  case FormulaElementType::NthRoot:
-      //                      rightValue = int::NthRootV2(rightValue, (int)leftValue);
-      //                      SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, rightValue);
-      //                      break;
+                        case FormulaElementType::Sqrt:
+                            rightValue = sqrt(rightValue);
+                            SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, rightValue);
+                            break;
+                        case FormulaElementType::LN:
+                            rightValue = log(rightValue);//BlazesFloatingCode::LnRef(rightValue);
+                            SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, rightValue);
+                            break;
+                        case FormulaElementType::LOGTEN:
+                            rightValue = log10(rightValue);
+                            SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, rightValue);
+                            break;
+                        case FormulaElementType::BaseNLog:
+                            rightValue = log(rightValue) / log(leftValue);
+                            SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, rightValue);
+                            break;
+                        default://placeholder code
+                            break;
                         }
                         break;
-                    case 1:
+                    case 1://Remove operator in this case and change right side value
                         switch (OpIterator->second.ElementCat)
                         {
                         case FormulaElementType::Not:
                             if (RightVal->second.ElementCat == FormulaElementType::trueVal)
                             {
-                                FormCopy.at(RightVal->first).ElementCat = FormulaElementType::falseVal;
+                                FormDRef.at(RightVal->first).ElementCat = FormulaElementType::falseVal;
                             }
                             else if (RightVal->second.ElementCat == FormulaElementType::falseVal)
                             {
-                                FormCopy.at(RightVal->first).ElementCat = FormulaElementType::trueVal;
+                                FormDRef.at(RightVal->first).ElementCat = FormulaElementType::trueVal;
+                            }
+                            else if (RightVal->second.ElementCat == FormulaElementType::Formula)
+                            {
+                                FormDRef.at(RightVal->first).ElementCat = rightValue == 0 ? FormulaElementType::trueVal : FormulaElementType::falseVal;
+                            }
+                            else//Assuming is number
+                            {
+                                if (rightValue == 0)//Zero is false otherwise count as if it was true
+                                    FormDRef.NumMap[RightVal->first] = 1;
+                                else
+                                    FormDRef.NumMap[RightVal->first] = 0;
+                            }
+                            break;
+                        case FormulaElementType::Negative://Only applies to numbers or Formulas(for now)
+                            if (RightVal->second.ElementCat == FormulaElementType::Formula)
+                            {
+                                rightValue = -rightValue;
+                                FormDRef.at(RightVal->first).ElementCat = FormulaElementType::Num;
+                                FormDRef.NumMap.insert_or_assign(RightVal->first, rightValue);
                             }
                             else
                             {
-                                if (rightValue == 0)//Zero is false otherwise count as if it was true
-                                    SwitchOpToRBoolVal(FormCopy, OpVal, RightVal, true);
-                                else
-                                    SwitchOpToRBoolVal(FormCopy, OpVal, RightVal, false);
+                                rightValue = -rightValue;
+                                FormDRef.NumMap[RightVal->first] = rightValue;
                             }
-                            FormCopy.erase(OpIterator);
                             break;
-                        case FormulaElementType::Negative://Only applies to numbers
-                            rightValue = -rightValue;
-                            FormCopy.NumMap[RightVal->first] = rightValue;
+                        default://placeholder code
                             break;
                         }
+                        FormDRef.erase(OpIterator);
                         break;
                     case 2:// 	Multiplication, division, and remainder
                         switch (OpIterator->second.ElementCat)
                         {
                         case FormulaElementType::Mult:
                             leftValue *= rightValue;
-                            SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
+                            SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, leftValue);
                             break;
                         case FormulaElementType::Div:
                             leftValue /= rightValue;
-                            SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
+                            SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, leftValue);
                             break;
                         case FormulaElementType::Rem:
-                            leftValue %= rightValue;
-                            SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
+                            leftValue = fmodf(leftValue, rightValue);
+                            SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, leftValue);
+                            break;
+                        default://placeholder code
                             break;
                         }
                         break;
@@ -224,12 +302,14 @@ namespace BlazesRusCode
                         switch (OpIterator->second.ElementCat)
                         {
                         case FormulaElementType::Add:
+                        {
                             leftValue += rightValue;
-                            SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
+                            SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, leftValue);
                             break;
+                        }
                         case FormulaElementType::Sub:
                             leftValue -= rightValue;
-                            SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
+                            SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, leftValue);
                             break;
                         }
                         break;
@@ -249,7 +329,7 @@ namespace BlazesRusCode
                             TempBool = leftValue >= rightValue;
                             break;
                         }
-                        SwitchOpToBoolVal(FormCopy, OpVal, LeftVal, RightVal, TempBool);
+                        SwitchOpToBoolVal(FormDRef, FormDRef[*CurrentVal], TempBool);
                         break;
                     case 5://==, !=
                         switch (OpIterator->second.ElementCat)
@@ -261,95 +341,61 @@ namespace BlazesRusCode
                             TempBool = leftValue != rightValue;
                             break;
                         }
-                        SwitchOpToBoolVal(FormCopy, OpVal, LeftVal, RightVal, TempBool);
+                        SwitchOpToBoolVal(FormDRef, FormDRef[*CurrentVal], TempBool);
                         break;
-                    case 6://&
-                        leftValue = leftValue & rightValue;
-                        SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
-                        break;
-                    case 7://XOR
-                        leftValue = leftValue ^ rightValue;
-                        SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
-                        break;
-                    case 8:// | Bitwise OR (inclusive or)
-                        leftValue = leftValue ^ rightValue;
-                        SwitchOpToVal(FormCopy, OpVal, OpIterator->first, LeftVal, RightVal, leftValue);
-                        break;
+                        //               case 6://&
+                        //                   leftValue = leftValue & rightValue;
+                        //                   SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, leftValue);
+                        //                   break;
+                        //               case 7://XOR
+                        //                   leftValue = leftValue ^ rightValue;
+                        //                   SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, leftValue);
+                        //                   break;
+                        //               case 8:// | Bitwise OR (inclusive or)
+                        //                   leftValue = leftValue ^ rightValue;
+                        //                   SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, leftValue);
+                        //                   break;
                     case 9://&&
                         TempBool = leftValue && rightValue;
-                        SwitchOpToBoolVal(FormCopy, OpVal, LeftVal, RightVal, TempBool);
+                        SwitchOpToBoolVal(FormDRef, FormDRef[*CurrentVal], TempBool);
                         break;
                     case 10:// || (Logical OR)
                         TempBool = leftValue || rightValue;
-                        SwitchOpToBoolVal(FormCopy, OpVal, LeftVal, RightVal, TempBool);
+                        SwitchOpToBoolVal(FormDRef, FormDRef[*CurrentVal], TempBool);
                         break;
-/*
-                    case 11://Ternary conditional, =, +=,   -=, *=,   /=,   %=,<<=,   >>=, &= ,  ^=,   |= (Not supported yet)
-                        break;
-*/
                     }
-                }
-            }
-            if (FormCopy.size() == 1)
-            {
-                FormData::iterator ElementIter = FormCopy.begin();
-                int KeyIndex = ElementIter->first;
-                if (ElementIter->second.ElementCat == FormulaElementType::trueVal)
-                {
-                    return 1;
-                }
-                else if (ElementIter->second.ElementCat == FormulaElementType::falseVal)
-                {
-                    return 0;
-                }
-                else if (ElementIter->second.ElementCat == FormulaElementType::Num)
-                {
-                    return FormCopy.NumMap[KeyIndex];
-                }
-                else if (ElementIter->second.ElementCat == FormulaElementType::Variable)
-                {
-                    std::string ErrorMessage = "Failed to evaluate variable named:" + FormCopy.VariableMap.at(KeyIndex).Name;
-                    throw ErrorMessage;
-                }
-                else
-                {
-                    std::string ErrorMessage = "Failed to evaluate Element with Element Category of:";
-                    ErrorMessage += VariableConversionFunctions::IntToStringConversion((int)ElementIter->second.ElementCat);
-                    throw ErrorMessage;
-                }
-            }
-            else
-            {
-                throw "Failed to evaluate to single value!";
-            }
-        }
-
-        int EvaluateOrderOfOperationsFromCopy(FormData FormCopy)
-        {
-            return EvaluateOrderOfOperations(FormCopy);
-        }
-
-        /// <summary>
-        /// Swaps the referenced data.
-        /// </summary>
-        /// <param name="FormCopy">The form copy.</param>
-        /// <param name="ElementValues">The element values.</param>
-        /// <param name="FormIndex">Index of the form.</param>
-        void SwapReferencedData(FormData& FormCopy, ReferenceMap& ElementValues, size_t FormIndex = 0)
-        {
-            std::string CurString;
-            char firstChar;
-            int targetResult;
-            for (FormData::iterator CurrentVal = Data.at(FormIndex).begin(), LastVal = Data.at(FormIndex).end(); CurrentVal != LastVal; ++CurrentVal)
-            {
-                if (CurrentVal->second.ElementCat == FormulaElementType::Formula)//FormulaDetected
-                {
-                    targetResult = RecursivelyEvalRefValues(ElementValues, CurrentVal->second.Index);
-                    FormCopy.ReplaceFormVal(CurrentVal->first, targetResult);
-                }
-                else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
-                {
-                    FormCopy.ReplaceFormVal(CurrentVal->first, ElementValues.at(CurString));
+                    if (opIndex != 1)
+                    {
+#ifdef Blazes_Enable_CatchFormulaExceptions
+                        try
+                        {
+#endif
+                            int RightKey = RightVal->first;
+                            if (leftKey != -1)
+                            {
+                                FormDRef.erase(leftKey);
+                            }
+                            FormDRef.erase(RightKey);
+                            //if (moreOperations)
+                            //    std::cout << "Formula content (" << FormToStringV2(FormDRef) << ") after using operation(after removal of left+right values)" << std::endl;
+#ifdef Blazes_Enable_CatchFormulaExceptions
+                        }
+                        catch (const std::runtime_error& re)
+                        {
+                            std::cerr << "Runtime error during evaluation's removal of values: " << re.what() << std::endl;
+                        }
+                        catch (const std::exception& ex)
+                        {
+                            // specific handling for all exceptions extending std::exception, except
+                            // std::runtime_error which is handled explicitly
+                            std::cerr << "Error occurred during evaluation's removal of values: " << ex.what() << std::endl;
+                        }
+                        catch (...)
+                        {
+                            std::cout << "Unknown exception during evaluation's removal of values" << std::endl;
+                        }
+#endif
+                    }
                 }
             }
         }
@@ -360,51 +406,86 @@ namespace BlazesRusCode
         /// <param name="FormCopy">The form copy.</param>
         /// <param name="ElementValues">The element values.</param>
         /// <param name="FormIndex">Index of the form.</param>
-        void SwapUpdatedFormData(FormData& FormCopy, ValueMap& ElementValues, size_t FormIndex = 0)
+        void ReplaceVariablesWithRefValues(ReferenceMap ElementValues, size_t FormIndex = 0)
         {
             std::string CurString;
-            char firstChar;
             int targetResult;
-            for (FormData::iterator CurrentVal = Data.at(FormIndex).begin(), LastVal = Data.at(FormIndex).end(); CurrentVal != LastVal; ++CurrentVal)
+            FormData& FormDRef = Data.at(FormIndex);
+            for (FormData::iterator CurrentVal = FormDRef.begin(), LastVal = FormDRef.end(); CurrentVal != LastVal; ++CurrentVal)
             {
                 if (CurrentVal->second.ElementCat == FormulaElementType::Formula)//FormulaDetected
                 {
-                    targetResult = RecursivelyEvalValues(ElementValues, CurrentVal->second.Index);
-                    FormCopy.ReplaceFormVal(CurrentVal->first, targetResult);
+                    ReplaceVariablesWithRefValues(ElementValues, CurrentVal->second.Index);
                 }
                 else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
                 {
-                    FormCopy.ReplaceFormVal(CurrentVal->first, ElementValues.at(CurString));
+                    CurString = this->VariableStore.at(CurrentVal->first);
+                    tsl::ordered_map<std::string, int&>::iterator KeyedElemVal = ElementValues.find(CurString);
+                    if (KeyedElemVal != ElementValues.end())//Only attempt to replace variable if matching variable is found
+                    {
+                        FormDRef.at(CurrentVal->first).ElementCat = FormulaElementType::Num;
+                        targetResult = KeyedElemVal.value();
+                        FormDRef.NumMap.insert_or_assign(CurrentVal->first, targetResult);
+                    }
                 }
             }
         }
 
-        int RecursivelyEvalRefValues(ReferenceMap& ElementValues, size_t FormIndex)
-        {//Each Formula Calculates order of operations etc separately
-            FormData FormCopy = Data.at(FormIndex);
-            SwapReferencedData(FormCopy, ElementValues, FormIndex);
-            return EvaluateOrderOfOperations(FormCopy);
-        }
-
-        int RecursivelyEvalValues(ValueMap& ElementValues, size_t FormIndex)
-        {//Each Formula Calculates order of operations etc separately
-            FormData FormCopy = Data.at(FormIndex);
-            SwapUpdatedFormData(FormCopy, ElementValues, FormIndex);
-            return EvaluateOrderOfOperations(FormCopy);
-        }
-
-        int EvalValueRefs(ReferenceMap ElementValues)
+        /// <summary>
+        /// Simplifies and evaluates the formula and then returns the copy.
+        /// </summary>
+        /// <param name="ElementValues">The element values.</param>
+        /// <returns>BlazesRusCode.IntFormula</returns>
+        IntFormula EvaluateRefToSimplifiedForm(ReferenceMap ElementValues)
         {
-            FormData FormCopy = Data.at(0);//Duplicate values so can erase parts when calculating
-            SwapReferencedData(FormCopy, ElementValues);
-            return EvaluateOrderOfOperations(FormCopy);
+            IntFormula FormCopy = *this;//Duplicate values so can erase parts when calculating
+            FormCopy.ReplaceVariablesWithRefValues(ElementValues);
+            FormCopy.EvaluateOperations();
+            return FormCopy;
         }
 
-        int EvalValues(ValueMap ElementValues)
+        /// <summary>
+        /// Swaps the updated form data.
+        /// </summary>
+        /// <param name="FormCopy">The form copy.</param>
+        /// <param name="ElementValues">The element values.</param>
+        /// <param name="FormIndex">Index of the form.</param>
+        void ReplaceVariablesWithValues(ValueMap& ElementValues, size_t FormIndex = 0)
         {
-            FormData FormCopy = Data.at(0);//Duplicate values so can erase parts when calculating
-            SwapUpdatedFormData(FormCopy, ElementValues);
-            return EvaluateOrderOfOperations(FormCopy);
+            std::string CurString;
+            int targetResult;
+            FormData& FormDRef = Data.at(FormIndex);
+            for (FormData::iterator CurrentVal = FormDRef.begin(), LastVal = FormDRef.end(); CurrentVal != LastVal; ++CurrentVal)
+            {
+                if (CurrentVal->second.ElementCat == FormulaElementType::Formula)//FormulaDetected
+                {
+                    ReplaceVariablesWithValues(ElementValues, CurrentVal->second.Index);
+                }
+                else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
+                {
+                    CurString = this->VariableStore.at(CurrentVal->second.Index);
+                    tsl::ordered_map<std::string, int>::iterator KeyedElemVal = ElementValues.find(CurString);
+                    if (KeyedElemVal != ElementValues.end())//Only attempt to replace variable if matching variable is found
+                    {
+                        FormDRef.at(CurrentVal->first).ElementCat = FormulaElementType::Num;
+                        targetResult = KeyedElemVal.value();
+                        FormDRef.NumMap.insert_or_assign(CurrentVal->first, targetResult);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Simplifies and evaluates the formula and then returns the copy.
+        /// </summary>
+        /// <param name="ElementValues">The element values.</param>
+        /// <returns>BlazesRusCode.IntFormula</returns>
+        IntFormula EvaluateToSimplifiedForm(ValueMap ElementValues)
+        {
+            IntFormula FormCopy = *this;//Duplicate values so can erase parts when calculating
+            FormCopy.ReplaceVariablesWithValues(ElementValues);
+            FormCopy.EvaluateOperations();
+            return FormCopy;
         }
 
         /// <summary>
@@ -414,9 +495,8 @@ namespace BlazesRusCode
         /// <param name="FormIndex">Index of the form.</param>
         void RecursivelyAddToString(std::string& strBuffer, size_t FormIndex)
         {
-            std::string CurString;
-            int indexBuffer;
-            for (FormData::iterator CurrentVal = Data.at(FormIndex).begin(), LastVal = Data.at(FormIndex).end(); CurrentVal != LastVal; ++CurrentVal)
+            FormData& FormDRef = Data.at(FormIndex);
+            for (FormData::iterator CurrentVal = FormDRef.begin(), LastVal = FormDRef.end(); CurrentVal != LastVal; ++CurrentVal)
             {
                 switch (CurrentVal->second.ElementCat)
                 {
@@ -428,10 +508,10 @@ namespace BlazesRusCode
                     strBuffer += ")";
                     break;
                 case FormulaElementType::Num:
-                    strBuffer += Data.at(0).NumMap.at(CurrentVal->first);
+                    strBuffer += FormDRef.NumMap.at(CurrentVal->first);
                     break;
                 case FormulaElementType::Variable:
-                    strBuffer += Data.at(FormIndex).VariableMap.at(CurrentVal->first).Name;
+                    strBuffer += this->VariableStore.at(CurrentVal->second.Index);
                     break;
                 case FormulaElementType::trueVal:
                     strBuffer += "true";
@@ -485,29 +565,34 @@ namespace BlazesRusCode
                     strBuffer += "^";
                     break;
                 case FormulaElementType::Sqrt:
-                    strBuffer += " SqrtOf";
+                    strBuffer += "SqrtOf";
                     break;
                 case FormulaElementType::NthRoot:
                     strBuffer += "thRootOf";
+                    break;
+                case FormulaElementType::LOGTEN:
+                    strBuffer += "LogTen";
+                    break;
+                case FormulaElementType::LN:
+                    strBuffer += "Ln";
+                    break;
+                case FormulaElementType::BaseNLog:
+                    strBuffer += "thBaseLog";
                     break;
                 case FormulaElementType::Rem:
                     strBuffer += "%";
                     break;
                 case FormulaElementType::PostFixPlus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += Data.at(FormIndex).VariableMap.at(indexBuffer).Name + "++";
+                    strBuffer += VariableStore.at(CurrentVal->second.Index) + "++";
                     break;
                 case FormulaElementType::PostFixMinus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += Data.at(FormIndex).VariableMap.at(indexBuffer).Name + "++";
+                    strBuffer += VariableStore.at(CurrentVal->second.Index) + "++";
                     break;
                 case FormulaElementType::PrefixPlus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "++" + Data.at(FormIndex).VariableMap.at(indexBuffer).Name;
+                    strBuffer += "++" + VariableStore.at(CurrentVal->second.Index);
                     break;
                 case FormulaElementType::PrefixMinus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "--" + Data.at(FormIndex).VariableMap.at(indexBuffer).Name;
+                    strBuffer += "--" + VariableStore.at(CurrentVal->second.Index);
                     break;
                 case FormulaElementType::BitwiseAND:
                     strBuffer += "&";
@@ -529,9 +614,8 @@ namespace BlazesRusCode
         std::string ToString()
         {
             std::string strBuffer = "";
-            std::string CurString;
-            int indexBuffer;
-            for (FormData::iterator CurrentVal = Data.at(0).begin(), LastVal = Data.at(0).end(); CurrentVal != LastVal; ++CurrentVal)
+            FormData& FormDRef = Data.at(0);
+            for (FormData::iterator CurrentVal = FormDRef.begin(), LastVal = FormDRef.end(); CurrentVal != LastVal; ++CurrentVal)
             {
                 switch (CurrentVal->second.ElementCat)
                 {
@@ -541,10 +625,11 @@ namespace BlazesRusCode
                     strBuffer += ")";
                     break;
                 case FormulaElementType::Num:
-                    strBuffer += Data.at(0).NumMap.at(CurrentVal->first);
+                    strBuffer += FormDRef.NumMap.at(CurrentVal->first);
                     break;
                 case FormulaElementType::Variable:
-                    strBuffer += Data.at(0).VariableMap.at(CurrentVal->first).Name;
+
+                    strBuffer += this->VariableStore.at(CurrentVal->second.Index);
                     break;
                 case FormulaElementType::trueVal:
                     strBuffer += "true";
@@ -598,29 +683,34 @@ namespace BlazesRusCode
                     strBuffer += "^";
                     break;
                 case FormulaElementType::Sqrt:
-                    strBuffer += " SqrtOf";
+                    strBuffer += "SqrtOf";
                     break;
                 case FormulaElementType::NthRoot:
                     strBuffer += "thRootOf";
+                    break;
+                case FormulaElementType::LOGTEN:
+                    strBuffer += "LogTen";
+                    break;
+                case FormulaElementType::LN:
+                    strBuffer += "Ln";
+                    break;
+                case FormulaElementType::BaseNLog:
+                    strBuffer += "thBaseLog";
                     break;
                 case FormulaElementType::Rem:
                     strBuffer += "%";
                     break;
                 case FormulaElementType::PostFixPlus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += Data.at(0).VariableMap.at(indexBuffer).Name + "++";
+                    strBuffer += VariableStore.at(CurrentVal->second.Index) + "++";
                     break;
                 case FormulaElementType::PostFixMinus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += Data.at(0).VariableMap.at(indexBuffer).Name + "++";
+                    strBuffer += VariableStore.at(CurrentVal->second.Index) + "++";
                     break;
                 case FormulaElementType::PrefixPlus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "++" + Data.at(0).VariableMap.at(indexBuffer).Name;
+                    strBuffer += "++" + VariableStore.at(CurrentVal->second.Index);
                     break;
                 case FormulaElementType::PrefixMinus:
-                    indexBuffer = CurrentVal->second.Index;
-                    strBuffer += "--" + Data.at(0).VariableMap.at(indexBuffer).Name;
+                    strBuffer += "--" + VariableStore.at(CurrentVal->second.Index);
                     break;
                 case FormulaElementType::BitwiseAND:
                     strBuffer += "&";
@@ -651,6 +741,7 @@ namespace BlazesRusCode
             //Extra buffer for saving potential postfix etc(send as variable if confirmed not as postfix op)
             std::string secondaryBuffer = "";
             size_t FormulaIndex = 0;
+            bool numberWasLast = false;//Variable,Numbers, and formulas before - sets it to treat it as minus instead of negative
             //size_t CurrentFormElement = 0;
             Data.push_back(FormData());//Initialize first (Formula) field
             //auto targetForm = at(0);
@@ -658,24 +749,22 @@ namespace BlazesRusCode
             {
                 if (*CurrentVal == '(')
                 {
-                    //if(ScanType==10){strBuffer = at(FormulaIndex).back()+strBuffer;at(FormulaIndex).back()=strBuffer;}
-                    if (!strBuffer.empty()) { InsertFromBuffer(strBuffer, FormulaIndex, ScanType); }
-                    FormulaIndex = Data.size();
-                    Data.push_back(FormData());
+                    numberWasLast = false;
+                    if (!strBuffer.empty()) { InsertFromBuffer(strBuffer, FormulaIndex, ScanType, numberWasLast); strBuffer.clear(); }
+                    FormulaIndex = AddFormulaToBuffer(FormulaIndex); ScanType = 0;
                 }
                 else if (*CurrentVal == ')')
                 {
-                    InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
-                    strBuffer = ""; ScanType = 0;
+                    InsertFromBuffer(strBuffer, FormulaIndex, ScanType, numberWasLast);
                     --FormulaIndex;
+                    numberWasLast = true;
                 }
-                else if (ScanType == 0 || ScanType == 10)//Almost only at either start of a formula or after operator
+                else if (ScanType == 0 || ScanType == 10)
                 {
                     if (ScanType == 10)//Prefix/postfix detection for ++/--
                     {
                         if (*CurrentVal == ' ' || *CurrentVal == '*' || *CurrentVal == '/' || *CurrentVal == '&' || *CurrentVal == '|' || *CurrentVal == '<' || *CurrentVal == '>' || *CurrentVal == '=' || *CurrentVal == '!' || *CurrentVal == '+' || *CurrentVal == '-')//Postfix
                         {
-                            //Data.at(FormulaIndex).ChangeLastToPostfixOp(strBuffer, FormulaIndex);
                             ScanType = 0;
                         }
                         else//Likely prefix
@@ -685,7 +774,6 @@ namespace BlazesRusCode
                             continue;
                         }
                     }
-                    //operators = ['==', '!=', '>=', '<=', '&&', '||', '&', '|', '-', '+', '>', '<', '/', '*', '!','++','--']
                     if (*CurrentVal == '+')
                     {
                         strBuffer = '+'; ScanType = 1;
@@ -694,21 +782,48 @@ namespace BlazesRusCode
                     {
                         strBuffer = '-'; ScanType = 1;//Either Number or operator
                     }
+                    //---Other operations here as well in case of auto-sending variable on whitespace
                     else if (*CurrentVal == '!')//Negative Operator only valid for in front of NonOperators
                     {
-                        Data.at(FormulaIndex).AddOp(FormulaElementType::Not);
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::Not); numberWasLast = false;
                     }
                     else if (*CurrentVal == '^')
                     {
-                        Data.at(FormulaIndex).AddOp(FormulaElementType::Pow);
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::Pow); numberWasLast = false;
                     }
-/*
-                    else if(*CurrentVal == '?')//TernaryOperator detection start
+                    else if (*CurrentVal == '&')
                     {
-                    	strBuffer = Data.at(FormulaIndex).ExtractLastElem();
-                    	ScanType = 12;
+                        strBuffer = '&'; ScanType = 1;
                     }
-*/
+                    else if (*CurrentVal == '|')
+                    {
+                        strBuffer = '|'; ScanType = 1;
+                    }
+                    else if (*CurrentVal == '>')
+                    {
+                        strBuffer = '>'; ScanType = 1;
+                    }
+                    else if (*CurrentVal == '<')
+                    {
+                        strBuffer = '<'; ScanType = 1;
+                    }
+                    else if (*CurrentVal == '/')
+                    {
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::Div); numberWasLast = false;
+                    }
+                    else if (*CurrentVal == '*')
+                    {
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::Mult); numberWasLast = false;
+                    }
+                    else if (*CurrentVal == '^')//Power of function
+                    {
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::Pow); numberWasLast = false;
+                    }
+                    else if (*CurrentVal == '$')//Shorthand for XOR for now
+                    {
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::XOR); numberWasLast = false;
+                    }
+                    //---End of extra mid-formula operations
                     else
                     {
                         if (VariableConversionFunctions::IsDigit(*CurrentVal))
@@ -716,7 +831,7 @@ namespace BlazesRusCode
                             ScanType = 4;
                             strBuffer = *CurrentVal;
                         }
-                        else if (*CurrentVal != ' ' && *CurrentVal != '\t')//Not Whitespace
+                        else if (*CurrentVal != ' ' && *CurrentVal != '\t')//If not whitespace, register as potential variable
                         {
                             ScanType = 3;
                             strBuffer = *CurrentVal;
@@ -729,7 +844,15 @@ namespace BlazesRusCode
                     {
                         if (VariableConversionFunctions::IsDigit(*CurrentVal))
                         {
-                            ScanType == 4; strBuffer += *CurrentVal;
+                            ScanType = 4;
+                            if (numberWasLast)
+                            {
+                                Data.at(FormulaIndex).AddOp(FormulaElementType::Sub);
+                                numberWasLast = false;
+                                strBuffer = *CurrentVal;
+                            }
+                            else
+                                strBuffer += *CurrentVal;
                         }
                         else if (*CurrentVal == '-')//-- Operator
                         {
@@ -750,6 +873,7 @@ namespace BlazesRusCode
                     }
                     else if (strBuffer == "!")
                     {
+                        numberWasLast = false;
                         if (*CurrentVal == '=')//!= Operator
                         {
                             Data.at(FormulaIndex).AddOp(FormulaElementType::NotEqual); strBuffer.clear(); ScanType = 0;
@@ -762,7 +886,7 @@ namespace BlazesRusCode
                     }
                     else if (strBuffer == "+")
                     {
-                        strBuffer += *CurrentVal;
+                        numberWasLast = false;
                         //To-Do Create detection of Prefix/postfix detection
                         if (*CurrentVal == '+')//++ Operator
                         {
@@ -791,7 +915,7 @@ namespace BlazesRusCode
                     }
                     else if (strBuffer == "&")
                     {
-                        strBuffer += *CurrentVal;
+                        numberWasLast = false;
                         if (*CurrentVal == '&')
                         {
                             Data.at(FormulaIndex).AddOp(FormulaElementType::AND); strBuffer.clear(); ScanType = 0;
@@ -819,7 +943,7 @@ namespace BlazesRusCode
                     }
                     else if (strBuffer == "|")
                     {
-                        strBuffer += *CurrentVal;
+                        numberWasLast = false;
                         if (*CurrentVal == '|')
                         {
                             Data.at(FormulaIndex).AddOp(FormulaElementType::Not); strBuffer.clear(); ScanType = 0;
@@ -886,66 +1010,70 @@ namespace BlazesRusCode
                     }
                 }
                 else
-                {//Scan type either number or variable at this point
+                {//Scanning either number or variable at this point
                     if (*CurrentVal == '+')//++ or +
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '+'; ScanType = 1;
                     }
-                    else if (*CurrentVal == '-')//-- or -
+                    else if (*CurrentVal == '-')//--, -, or (unlikely) negative number
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '-'; ScanType = 1;
                     }
                     else if (*CurrentVal == '!')//!=
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '!'; ScanType = 1;
                     }
                     else if (*CurrentVal == '&')
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '&'; ScanType = 1;
                     }
                     else if (*CurrentVal == '|')
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '|'; ScanType = 1;
                     }
                     else if (*CurrentVal == '=')
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '='; ScanType = 1;
                     }
                     else if (*CurrentVal == '>')
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '>'; ScanType = 1;
                     }
                     else if (*CurrentVal == '<')
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '<'; ScanType = 1;
                     }
                     else if (*CurrentVal == '/')
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         Data.at(FormulaIndex).AddOp(FormulaElementType::Div);
                     }
                     else if (*CurrentVal == '*')
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         Data.at(FormulaIndex).AddOp(FormulaElementType::Mult);
                     }
                     else if (*CurrentVal == '^')//Power of function
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         Data.at(FormulaIndex).AddOp(FormulaElementType::Pow);
                     }
                     else if (*CurrentVal == '$')//Shorthand for XOR for now
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         Data.at(FormulaIndex).AddOp(FormulaElementType::XOR);
+                    }
+                    else if (*CurrentVal == ' ' || *CurrentVal == '\t')//Immediately send variable if encounter whitespace
+                    {
+                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType, numberWasLast);
                     }
                     else
                     {
@@ -953,6 +1081,9 @@ namespace BlazesRusCode
                     }
                 }
             }
+            //Finish unfinished potential scans
+            if (!strBuffer.empty())
+                InsertFromBuffer(strBuffer, FormulaIndex, ScanType, numberWasLast);
             TrimFormula();
         }
 
@@ -966,6 +1097,6 @@ namespace BlazesRusCode
         /// Initializes a new instance of the <see cref="IntFormula" /> class.(fix for initializing without copying from a string value set)
         /// </summary>
         /// <param name="ElemValue">The elem value to read in order to create formula data.</param>
-        IntFormula(const char* strVal) : IntFormula(std::string(strVal),true) {}
+        IntFormula(const char* strVal) : IntFormula(std::string(strVal), true) {}
     };
 }

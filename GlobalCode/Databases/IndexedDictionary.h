@@ -30,7 +30,7 @@
 /// </summary>
 /// <seealso cref="CustomDictionary{unsigned int, ValueType}" />
 template <typename ValueType>
-class DLL_API IndexedDictionary:public CustomDictionary<unsigned int, ValueType>
+class DLL_API IndexedDictionary :public CustomDictionary<unsigned int, ValueType>
 {
 private:
     /// <summary>
@@ -47,10 +47,10 @@ public:
     unsigned int Add(ValueType Value)
     {
         unsigned int IndexPos;
-        bool Success = AddOnlyNew(NextIndex,Value);
-        if(Success){NextIndex++;return;}
+        bool Success = AddOnlyNew(NextIndex, Value);
+        if (Success) { NextIndex++; return; }
         int LastIndexSlot = NextIndex;//Check higher indexes first so save information of last index to check in reverse later
-        for(Success=false;!Success||NextIndex==4294967295;Success=AddOnlyNew(NextIndex,Value))
+        for (Success = false; !Success || NextIndex == 4294967295; Success = AddOnlyNew(NextIndex, Value))
         {
             NextIndex++;
         }
@@ -93,7 +93,7 @@ public:
 /// </summary>
 /// <seealso cref="CustomDictionary{unsigned _int64, ValueType}" />
 template <typename ValueType>
-class DLL_API IndexedLongDictionary: public CustomDictionary<unsigned _int64, ValueType>
+class DLL_API IndexedLongDictionary : public CustomDictionary<unsigned _int64, ValueType>
 {
 public:
     //Reserve Maxed value for NULL representation
@@ -115,10 +115,10 @@ public:
     unsigned _int64 Add(ValueType Value)
     {
         unsigned _int64 IndexPos;
-        bool Success = AddOnlyNew(NextIndex,Value);
-        if(Success){NextIndex++;return;}
+        bool Success = AddOnlyNew(NextIndex, Value);
+        if (Success) { NextIndex++; return; }
         int LastIndexSlot = NextIndex;//Check higher indexes first so save information of last index to check in reverse later
-        for(Success=false;!Success||NextIndex==18446744073709551614;Success=AddOnlyNew(NextIndex,Value))
+        for (Success = false; !Success || NextIndex == 18446744073709551614; Success = AddOnlyNew(NextIndex, Value))
         {
             NextIndex++;
         }
@@ -179,7 +179,7 @@ public:
 /// </summary>
 /// <seealso cref="CustomOrderedDictionary{unsigned _int64, ValueType}" />
 template <typename ValueType>
-class DLL_API IndexedOrderedLDictionary: public CustomOrderedDictionary<unsigned _int64, ValueType>
+class DLL_API IndexedOrderedLDictionary : public CustomOrderedDictionary<unsigned _int64, ValueType>
 {
 public:
     //Reserve Maxed value for NULL representation
@@ -201,10 +201,10 @@ public:
     unsigned _int64 Add(ValueType Value)
     {
         unsigned _int64 IndexPos;
-        bool Success = AddOnlyNew(NextIndex,Value);
+        bool Success = AddOnlyNew(NextIndex, Value);
         if (Success) { NextIndex++; return; }
         int LastIndexSlot = NextIndex;//Check higher indexes first so save information of last index to check in reverse later
-        for(Success=false;!Success||NextIndex== NullRep;Success=AddOnlyNew(NextIndex,Value))
+        for (Success = false; !Success || NextIndex == NullRep; Success = AddOnlyNew(NextIndex, Value))
         {
             NextIndex++;
         }

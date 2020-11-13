@@ -7,7 +7,7 @@
 #include "VariableFormula.hpp"
 #include "..\AltNum\MediumDec.hpp"
 #include "ElementType.hpp"
-#include "tsl\ordered_map.h"
+#include "..\tsl\ordered_map.h"
 
 //Preprocessor Switches
 /*
@@ -108,10 +108,10 @@ namespace BlazesRusCode
                         //OpApplied = OpIterator->second.ElementCat;
                         //std::cout << "Performing operation \"" << ElementTypeToString(OpApplied) << "\" of order precedence #" << FormIndex << " with formula content:" << FormToStringV2(FormDRef) << std::endl;
                     //}
-                    if(opIndex==1)
+                    if (opIndex == 1)
                     {
 #ifndef Blazes_DisableFormula_NegativeSwapping
-                        if(OpIterator->second.ElementCat==FormulaElementType::Negative&&OpIterator!=segmentStart)//Special conditional to potentially swap negative with minus
+                        if (OpIterator->second.ElementCat == FormulaElementType::Negative && OpIterator != segmentStart)//Special conditional to potentially swap negative with minus
                         {
                             LeftVal = OpIterator - 1;
                             switch (LeftVal->second.ElementCat)
@@ -125,7 +125,7 @@ namespace BlazesRusCode
                             {
                                 FormDRef[*CurrentVal].ElementCat = FormulaElementType::Sub;
                                 //Making sure move the operation in correct operation order
-                                if (FormDRef.OpOrderMap[3].empty()|| FormDRef.OpOrderMap[3].back() < OpTargetKey)//If higher position then last element, then just add to end
+                                if (FormDRef.OpOrderMap[3].empty() || FormDRef.OpOrderMap[3].back() < OpTargetKey)//If higher position then last element, then just add to end
                                     FormDRef.OpOrderMap[3].push_back(OpTargetKey);
                                 else
                                 {//Keys with lower indexes are normally in front
@@ -174,7 +174,7 @@ namespace BlazesRusCode
                         }
                         break;
                         case FormulaElementType::Num:
-                            leftValue = FormDRef.NumMap[leftKey];break;
+                            leftValue = FormDRef.NumMap[leftKey]; break;
                         case FormulaElementType::trueVal:
                             leftValue = MediumDec::One;
                         case FormulaElementType::falseVal:
@@ -208,7 +208,7 @@ namespace BlazesRusCode
                     }
                     break;
                     case FormulaElementType::Num:
-                        rightValue = FormDRef.NumMap[RightVal->first];break;
+                        rightValue = FormDRef.NumMap[RightVal->first]; break;
                     case FormulaElementType::trueVal:
                         rightValue = MediumDec::One;
                     case FormulaElementType::falseVal:
@@ -489,7 +489,7 @@ namespace BlazesRusCode
                 {
                     CurString = this->VariableStore.at(CurrentVal->second.Index);
                     tsl::ordered_map<std::string, MediumDec>::iterator KeyedElemVal = ElementValues.find(CurString);
-                    if(KeyedElemVal!= ElementValues.end())//Only attempt to replace variable if matching variable is found
+                    if (KeyedElemVal != ElementValues.end())//Only attempt to replace variable if matching variable is found
                     {
                         FormDRef.at(CurrentVal->first).ElementCat = FormulaElementType::Num;
                         targetResult = KeyedElemVal.value();
@@ -718,13 +718,13 @@ namespace BlazesRusCode
                 case FormulaElementType::NthRoot:
                     strBuffer += "thRootOf";
                     break;
-                case FormulaElementType::LOGTEN :
+                case FormulaElementType::LOGTEN:
                     strBuffer += "LogTen";
                     break;
                 case FormulaElementType::LN:
                     strBuffer += "Ln";
                     break;
-                case FormulaElementType::BaseNLog :
+                case FormulaElementType::BaseNLog:
                     strBuffer += "thBaseLog";
                     break;
                 case FormulaElementType::Rem:
@@ -779,9 +779,9 @@ namespace BlazesRusCode
             {
                 if (*CurrentVal == '(')
                 {
-                    numberWasLast = false;;
+                    numberWasLast = false;
                     //if(ScanType==10){strBuffer = at(FormulaIndex).back()+strBuffer;at(FormulaIndex).back()=strBuffer;}
-                    if (!strBuffer.empty()){ InsertFromBuffer(strBuffer, FormulaIndex, ScanType, numberWasLast); strBuffer.clear(); }
+                    if (!strBuffer.empty()) { InsertFromBuffer(strBuffer, FormulaIndex, ScanType, numberWasLast); strBuffer.clear(); }
                     FormulaIndex = AddFormulaToBuffer(FormulaIndex); ScanType = 0;
                 }
                 else if (*CurrentVal == ')')
@@ -860,8 +860,8 @@ namespace BlazesRusCode
 /*
                     else if(*CurrentVal == '?')//TernaryOperator detection start
                     {
-                    	strBuffer = Data.at(FormulaIndex).ExtractLastElem();
-                    	ScanType = 12;
+                        strBuffer = Data.at(FormulaIndex).ExtractLastElem();
+                        ScanType = 12;
                     }
 */
 
@@ -886,7 +886,7 @@ namespace BlazesRusCode
                         if (VariableConversionFunctions::IsDigit(*CurrentVal))
                         {
                             ScanType = 4;
-                            if(numberWasLast)
+                            if (numberWasLast)
                             {
                                 Data.at(FormulaIndex).AddOp(FormulaElementType::Sub);
                                 numberWasLast = false;
@@ -1112,7 +1112,7 @@ namespace BlazesRusCode
                         InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         Data.at(FormulaIndex).AddOp(FormulaElementType::XOR);
                     }
-                    else if(*CurrentVal == ' ' || *CurrentVal == '\t')//Immediately send variable if encounter whitespace
+                    else if (*CurrentVal == ' ' || *CurrentVal == '\t')//Immediately send variable if encounter whitespace
                     {
                         InsertFromBuffer(strBuffer, FormulaIndex, ScanType, numberWasLast);
                     }
@@ -1123,7 +1123,7 @@ namespace BlazesRusCode
                 }
             }
             //Finish unfinished potential scans
-            if(!strBuffer.empty())
+            if (!strBuffer.empty())
                 InsertFromBuffer(strBuffer, FormulaIndex, ScanType, numberWasLast);
             TrimFormula();
         }
@@ -1138,6 +1138,6 @@ namespace BlazesRusCode
         /// Initializes a new instance of the <see cref="MediumDecFormula" /> class.(fix for initializing without copying from a string value set)
         /// </summary>
         /// <param name="ElemValue">The elem value to read in order to create formula data.</param>
-        MediumDecFormula(const char* strVal) : MediumDecFormula(std::string(strVal),true) {}
+        MediumDecFormula(const char* strVal) : MediumDecFormula(std::string(strVal), true) {}
     };
 }

@@ -28,7 +28,7 @@
 /// </summary>
 /// <seealso cref="tsl::ordered_map{EntryType, ValueType}" />
 template <typename EntryType, typename ValueType>
-class DLL_API CustomOrderedDictionary : public tsl ::ordered_map<EntryType, ValueType>
+class DLL_API CustomOrderedDictionary : public tsl::ordered_map<EntryType, ValueType>
 {
 public:
     /// <summary>
@@ -66,7 +66,7 @@ public:
     //{
     //	return
     //}
-    CustomOrderedDictionary(){}
-    ~CustomOrderedDictionary(){}
+    CustomOrderedDictionary() {}
+    ~CustomOrderedDictionary() {}
 };
 #endif

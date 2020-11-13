@@ -13,7 +13,7 @@
 /// </summary>
 /// <seealso cref="std::unordered_map{std::string, DataNode}" />
 template <typename DataNode>
-class BasicDataDictionary : public tsl ::ordered_map<unsigned int, DataNode>
+class BasicDataDictionary : public tsl::ordered_map<unsigned int, DataNode>
 {
 private:
     /// <summary>
@@ -38,11 +38,11 @@ public:
     unsigned int Add(DataNode Value)
     {
         unsigned int IndexPos;
-        if(RemoveIndexes.empty())//Adds new Indexes in order
+        if (RemoveIndexes.empty())//Adds new Indexes in order
         {
             IndexPos = NextIndex;
             Add(NextIndex, Value);
-            NextIndex++;return IndexPos;
+            NextIndex++; return IndexPos;
         }
         else//Otherwise adds based on last removed key
         {

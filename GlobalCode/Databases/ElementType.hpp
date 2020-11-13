@@ -57,6 +57,7 @@ namespace BlazesRusCode
         LN,
         LOGTEN,
         BaseNLog,
-        BuildInVariable
+        BuildInVariable,
+        IntNumber//Integer number(for derivative classes that use more than one storage type)
     };
 }
