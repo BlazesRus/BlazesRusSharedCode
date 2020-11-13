@@ -63,6 +63,9 @@ namespace BlazesRusCode
             case FormulaElementType::Sub:
                 return "-";
                 break;
+            case FormulaElementType::Negative:
+                return "Negative";
+                break;
             case FormulaElementType::Mult:
                 return "*";
                 break;
@@ -672,7 +675,7 @@ namespace BlazesRusCode
                     strBuffer += " -";
                     break;
                 case FormulaElementType::Negative:
-                    strBuffer += " -";
+                    strBuffer += " (Negative)";
                     break;
                 case FormulaElementType::Mult:
                     strBuffer += " *";
@@ -756,7 +759,7 @@ namespace BlazesRusCode
         /// <param name="strBuffer">The string buffer.</param>
         /// <param name="FormulaIndex">Index of the formula.</param>
         /// <param name="ScanType">Type of the scan.</param>
-        void InsertFromBuffer(std::string& strBuffer, size_t& FormulaIndex, short& ScanType)
+        void InsertFromBuffer(std::string& strBuffer, size_t& FormulaIndex, short& ScanType, bool& NumWasLast)
         {
             //https://thispointer.com/converting-a-string-to-upper-lower-case-in-c-using-stl-boost-library/
             std::string ConvertedStr = strBuffer;
@@ -764,11 +767,11 @@ namespace BlazesRusCode
             FormData& targetFormSegment = Data.at(FormulaIndex);
             if (ConvertedStr == "true")
             {
-                targetFormSegment.AddBool(true);
+                targetFormSegment.AddBool(true); NumWasLast = true;
             }
             else if (ConvertedStr == "false")
             {
-                targetFormSegment.AddBool(false);
+                targetFormSegment.AddBool(false); NumWasLast = true;
             }
             else if (ScanType == 3)
             {
@@ -780,11 +783,13 @@ namespace BlazesRusCode
                 else if (strBuffer == "PowerOf") { targetFormSegment.AddOp(FormulaElementType::Pow); }
                 //BuildInVariable detection here as well(for derived formula class)
                 else
-                    this->AddVariable(strBuffer, targetFormSegment);
+                {
+                    this->AddVariable(strBuffer, targetFormSegment); NumWasLast = true;
+                }
             }
             else if (ScanType == 4)
             {
-                targetFormSegment.AddNum(strBuffer);
+                targetFormSegment.AddNum(strBuffer); NumWasLast = true;
             }
             else if (ScanType == 1)
             {
@@ -819,10 +824,55 @@ namespace BlazesRusCode
             //}
             else//CATCH-ALL
             {
+                this->AddVariable(strBuffer, targetFormSegment); NumWasLast = true;
+            }
+            ScanType = 0;
+            strBuffer.clear();
+        }
+
+        /// <summary>
+        /// Inserts non-operator from buffer with operator insert function after.(Non-Valid operation combinations are excluded)
+        /// </summary>
+        /// <param name="strBuffer">The string buffer.</param>
+        /// <param name="FormulaIndex">Index of the formula.</param>
+        /// <param name="ScanType">Type of the scan.</param>
+        void InsertFromBufferV2(std::string& strBuffer, size_t& FormulaIndex, short& ScanType, bool& NumWasLast)
+        {
+            //https://thispointer.com/converting-a-string-to-upper-lower-case-in-c-using-stl-boost-library/
+            std::string ConvertedStr = strBuffer;
+            std::for_each(ConvertedStr.begin(), ConvertedStr.end(), [](char& c) {c = ::tolower(c); });
+            FormData& targetFormSegment = Data.at(FormulaIndex);
+            if (ConvertedStr == "true")
+                targetFormSegment.AddBool(true);
+            else if (ConvertedStr == "false")
+                targetFormSegment.AddBool(false);
+            else if (ScanType == 3)
+            {
+                this->AddVariable(strBuffer, targetFormSegment);
+            }
+            else if (ScanType == 4)
+            {
+                targetFormSegment.AddNum(strBuffer);
+            }
+            else if (ScanType == 11)//Prefix ++ or --
+            {
+                targetFormSegment.AddPrefixOp(strBuffer);
+            }
+            else if (ScanType == 10)//Postfix Op ++ or --
+            {
+                //Data.at(FormulaIndex).ChangeLastToPostfixOp(strBuffer, FormulaIndex);
+            }
+            //else if(ScanType==12)
+            //{
+            //	Data.at(FormulaIndex).AddTernaryOperatorOp(strBuffer);
+            //}
+            else//CATCH-ALL
+            {
                 this->AddVariable(strBuffer, targetFormSegment);
             }
             ScanType = 0;
             strBuffer.clear();
+            NumWasLast = false;
         }
 
         /// <summary>

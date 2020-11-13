@@ -72,7 +72,8 @@ namespace BlazesRusCode
         void EvaluateOperations(size_t FormIndex = 0)
         {
             FormData& FormDRef = Data.at(FormIndex);
-            std::cout << "Performing Evaluation on FormSegment#" << FormIndex << " with formula content:" << FormToStringV2(FormDRef) << std::endl;
+            //std::cout << "Performing Evaluation on FormSegment#" << FormIndex << " with formula content:" << FormToStringV2(FormDRef) << std::endl;
+            FormData::iterator segmentStart = FormDRef.begin();
             MediumDec valResult;
 
             bool TempBool;
@@ -88,7 +89,8 @@ namespace BlazesRusCode
             FormulaElementType OpApplied;
             int OpTargetKey;
             int leftKey;
-            bool moreOperations = FormDRef.size() > 3;
+
+            //bool moreOperations = FormDRef.size() > 3;
 
             //Applying operations via C++ variation of order of operations
             //https://en.cppreference.com/w/cpp/language/operator_precedence
@@ -101,17 +103,56 @@ namespace BlazesRusCode
                 {
                     OpTargetKey = *CurrentVal;
                     OpIterator = FormDRef.find(OpTargetKey);
-                    if (moreOperations)
+                    //if (moreOperations)
+                    //{
+                        //OpApplied = OpIterator->second.ElementCat;
+                        //std::cout << "Performing operation \"" << ElementTypeToString(OpApplied) << "\" of order precedence #" << FormIndex << " with formula content:" << FormToStringV2(FormDRef) << std::endl;
+                    //}
+                    if(opIndex==1)
                     {
-                        OpApplied = OpIterator->second.ElementCat;
-                        std::cout << "Performing operation \"" << ElementTypeToString(OpApplied) << "\" of order precedence #" << FormIndex << " with formula content:" << FormToStringV2(FormDRef);
-                        std::cout << std::endl;
+#ifndef Blazes_DisableFormula_NegativeSwapping
+                        if(OpIterator->second.ElementCat==FormulaElementType::Negative&&OpIterator!=segmentStart)//Special conditional to potentially swap negative with minus
+                        {
+                            LeftVal = OpIterator - 1;
+                            switch (LeftVal->second.ElementCat)
+                            {
+                            case FormulaElementType::Variable:
+                                continue; break;//Ignore non-set variables for this version
+                            case FormulaElementType::Formula:
+                            case FormulaElementType::Num:
+                            case FormulaElementType::trueVal:
+                            case FormulaElementType::falseVal://Swapping out Negative application to right side, instead to a left-right subtraction operation
+                            {
+                                FormDRef[*CurrentVal].ElementCat = FormulaElementType::Sub;
+                                //Making sure move the operation in correct operation order
+                                if (FormDRef.OpOrderMap[3].empty()|| FormDRef.OpOrderMap[3].back() < OpTargetKey)//If higher position then last element, then just add to end
+                                    FormDRef.OpOrderMap[3].push_back(OpTargetKey);
+                                else
+                                {//Keys with lower indexes are normally in front
+                                    for (IntVector::iterator cVal = FormDRef.OpOrderMap[3].begin(), LastSubVal = FormDRef.OpOrderMap[3].end(); cVal != LastSubVal; ++cVal)
+                                    {
+                                        if (*cVal > OpTargetKey)
+                                        {
+                                            FormDRef.OpOrderMap[3].insert(cVal, OpTargetKey);
+                                            break;
+                                        }
+                                    }
+                                }
+                                continue;
+                            }
+                            default:
+                                leftKey = -1;
+                            }
+                        }
+                        else
+#endif
+                            leftKey = -1;
                     }
-                    if (opIndex != 1 && (opIndex != 0 || (OpIterator->second.ElementCat != FormulaElementType::Sqrt && OpIterator->second.ElementCat != FormulaElementType::LN && OpIterator->second.ElementCat != FormulaElementType::LOGTEN)))
+                    else if (opIndex != 0 || (OpIterator->second.ElementCat != FormulaElementType::Sqrt && OpIterator->second.ElementCat != FormulaElementType::LN && OpIterator->second.ElementCat != FormulaElementType::LOGTEN))
                     {
                         LeftVal = OpIterator - 1;
                         leftKey = LeftVal->first;
-                        switch (FormDRef[leftKey].ElementCat)
+                        switch (LeftVal->second.ElementCat)
                         {
                         case FormulaElementType::Variable:
                             continue; break;//Ignore non-set variables for this version
@@ -129,11 +170,17 @@ namespace BlazesRusCode
                             }
                             else
                                 continue;//Ignore if not condensed down to single value
-                            std::cout << "Left Formula condensed into " << leftValue.ToString() << std::endl;
+                            //std::cout << "Left Formula condensed into " << leftValue.ToString() << std::endl;
                         }
                         break;
+                        case FormulaElementType::Num:
+                            leftValue = FormDRef.NumMap[leftKey];break;
+                        case FormulaElementType::trueVal:
+                            leftValue = MediumDec::One;
+                        case FormulaElementType::falseVal:
+                            leftValue = MediumDec::Zero;
                         default:
-                            leftValue = LeftVal->second.ElementCat == FormulaElementType::trueVal ? MediumDec::One : (LeftVal->second.ElementCat == FormulaElementType::falseVal ? MediumDec::Zero : FormDRef.NumMap[leftKey]); break;
+                            continue; break;
                         }
                     }
                     else
@@ -157,11 +204,17 @@ namespace BlazesRusCode
                         }
                         else
                             continue;//Ignore if not condensed down to single value
-                        std::cout << "Right Formula condensed into " << rightValue.ToString() << std::endl;
+                        //std::cout << "Right Formula condensed into " << rightValue.ToString() << std::endl;
                     }
                     break;
+                    case FormulaElementType::Num:
+                        rightValue = FormDRef.NumMap[RightVal->first];break;
+                    case FormulaElementType::trueVal:
+                        rightValue = MediumDec::One;
+                    case FormulaElementType::falseVal:
+                        rightValue = MediumDec::Zero;
                     default:
-                        rightValue = RightVal->second.ElementCat == FormulaElementType::trueVal ? 1 : (RightVal->second.ElementCat == FormulaElementType::falseVal ? 0 : FormDRef.NumMap[RightVal->first]); break;
+                        continue; break;
                     }
                     switch (opIndex)
                     {
@@ -329,8 +382,8 @@ namespace BlazesRusCode
                         //case 11://Ternary conditional, =, +=,   -=, *=,   /=,   %=,<<=,   >>=, &= ,  ^=,   |= (Not supported yet)
                         //    break;
                     }
-                    if (moreOperations)
-                        std::cout<<"Formula content (" << FormToStringV2(FormDRef) << ") after using operation(before removal of left+right values)"<<std::endl;
+                    //if (moreOperations)
+                    //    std::cout<<"Formula content (" << FormToStringV2(FormDRef) << ") after using operation(before removal of left+right values)"<<std::endl;
                     if (opIndex != 1)
                     {
 #ifdef Blazes_Enable_CatchFormulaExceptions
@@ -340,13 +393,11 @@ namespace BlazesRusCode
                             int RightKey = RightVal->first;
                             if (leftKey != -1)
                             {
-                                //if (LeftVal->second.ElementCat == FormulaElementType::Num) { FormDRef.NumMap.erase(leftKey); }
                                 FormDRef.erase(leftKey);
                             }
-                            //if (RightVal->second.ElementCat == FormulaElementType::Num) { FormDRef.NumMap.erase(RightKey); }
                             FormDRef.erase(RightKey);
-                            if (moreOperations)
-                                std::cout << "Formula content (" << FormToStringV2(FormDRef) << ") after using operation(after removal of left+right values)" << std::endl;
+                            //if (moreOperations)
+                            //    std::cout << "Formula content (" << FormToStringV2(FormDRef) << ") after using operation(after removal of left+right values)" << std::endl;
 #ifdef Blazes_Enable_CatchFormulaExceptions
                         }
                         catch (const std::runtime_error& re)
@@ -720,6 +771,7 @@ namespace BlazesRusCode
             //Extra buffer for saving potential postfix etc(send as variable if confirmed not as postfix op)
             std::string secondaryBuffer = "";
             size_t FormulaIndex = 0;
+            bool numberWasLast = false;//Variable,Numbers, and formulas before - sets it to treat it as minus instead of negative
             //size_t CurrentFormElement = 0;
             Data.push_back(FormData());//Initialize first (Formula) field
             //auto targetForm = at(0);
@@ -727,14 +779,16 @@ namespace BlazesRusCode
             {
                 if (*CurrentVal == '(')
                 {
+                    numberWasLast = false;;
                     //if(ScanType==10){strBuffer = at(FormulaIndex).back()+strBuffer;at(FormulaIndex).back()=strBuffer;}
-                    if (!strBuffer.empty()){ InsertFromBuffer(strBuffer, FormulaIndex, ScanType); strBuffer.clear(); }
+                    if (!strBuffer.empty()){ InsertFromBuffer(strBuffer, FormulaIndex, ScanType, numberWasLast); strBuffer.clear(); }
                     FormulaIndex = AddFormulaToBuffer(FormulaIndex); ScanType = 0;
                 }
                 else if (*CurrentVal == ')')
                 {
-                    InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                    InsertFromBuffer(strBuffer, FormulaIndex, ScanType, numberWasLast);
                     --FormulaIndex;
+                    numberWasLast = true;
                 }
                 else if (ScanType == 0 || ScanType == 10)
                 {
@@ -764,11 +818,11 @@ namespace BlazesRusCode
                     //---Other operations here as well in case of auto-sending variable on whitespace
                     else if (*CurrentVal == '!')//Negative Operator only valid for in front of NonOperators
                     {
-                        Data.at(FormulaIndex).AddOp(FormulaElementType::Not);
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::Not); numberWasLast = false;
                     }
                     else if (*CurrentVal == '^')
                     {
-                        Data.at(FormulaIndex).AddOp(FormulaElementType::Pow);
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::Pow); numberWasLast = false;
                     }
                     else if (*CurrentVal == '&')
                     {
@@ -788,19 +842,19 @@ namespace BlazesRusCode
                     }
                     else if (*CurrentVal == '/')
                     {
-                        Data.at(FormulaIndex).AddOp(FormulaElementType::Div);
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::Div); numberWasLast = false;
                     }
                     else if (*CurrentVal == '*')
                     {
-                        Data.at(FormulaIndex).AddOp(FormulaElementType::Mult);
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::Mult); numberWasLast = false;
                     }
                     else if (*CurrentVal == '^')//Power of function
                     {
-                        Data.at(FormulaIndex).AddOp(FormulaElementType::Pow);
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::Pow); numberWasLast = false;
                     }
                     else if (*CurrentVal == '$')//Shorthand for XOR for now
                     {
-                        Data.at(FormulaIndex).AddOp(FormulaElementType::XOR);
+                        Data.at(FormulaIndex).AddOp(FormulaElementType::XOR); numberWasLast = false;
                     }
                     //---End of extra mid-formula operations
 /*
@@ -831,7 +885,15 @@ namespace BlazesRusCode
                     {
                         if (VariableConversionFunctions::IsDigit(*CurrentVal))
                         {
-                            ScanType = 4; strBuffer += *CurrentVal;
+                            ScanType = 4;
+                            if(numberWasLast)
+                            {
+                                Data.at(FormulaIndex).AddOp(FormulaElementType::Sub);
+                                numberWasLast = false;
+                                strBuffer = *CurrentVal;
+                            }
+                            else
+                                strBuffer += *CurrentVal;
                         }
                         else if (*CurrentVal == '-')//-- Operator
                         {
@@ -852,6 +914,7 @@ namespace BlazesRusCode
                     }
                     else if (strBuffer == "!")
                     {
+                        numberWasLast = false;
                         if (*CurrentVal == '=')//!= Operator
                         {
                             Data.at(FormulaIndex).AddOp(FormulaElementType::NotEqual); strBuffer.clear(); ScanType = 0;
@@ -864,7 +927,7 @@ namespace BlazesRusCode
                     }
                     else if (strBuffer == "+")
                     {
-                        strBuffer += *CurrentVal;
+                        numberWasLast = false;
                         //To-Do Create detection of Prefix/postfix detection
                         if (*CurrentVal == '+')//++ Operator
                         {
@@ -893,7 +956,7 @@ namespace BlazesRusCode
                     }
                     else if (strBuffer == "&")
                     {
-                        strBuffer += *CurrentVal;
+                        numberWasLast = false;
                         if (*CurrentVal == '&')
                         {
                             Data.at(FormulaIndex).AddOp(FormulaElementType::AND); strBuffer.clear(); ScanType = 0;
@@ -921,7 +984,7 @@ namespace BlazesRusCode
                     }
                     else if (strBuffer == "|")
                     {
-                        strBuffer += *CurrentVal;
+                        numberWasLast = false;
                         if (*CurrentVal == '|')
                         {
                             Data.at(FormulaIndex).AddOp(FormulaElementType::Not); strBuffer.clear(); ScanType = 0;
@@ -991,67 +1054,67 @@ namespace BlazesRusCode
                 {//Scanning either number or variable at this point
                     if (*CurrentVal == '+')//++ or +
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '+'; ScanType = 1;
                     }
-                    else if (*CurrentVal == '-')//-- or -
+                    else if (*CurrentVal == '-')//--, -, or (unlikely) negative number
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '-'; ScanType = 1;
                     }
                     else if (*CurrentVal == '!')//!=
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '!'; ScanType = 1;
                     }
                     else if (*CurrentVal == '&')
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '&'; ScanType = 1;
                     }
                     else if (*CurrentVal == '|')
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '|'; ScanType = 1;
                     }
                     else if (*CurrentVal == '=')
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '='; ScanType = 1;
                     }
                     else if (*CurrentVal == '>')
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '>'; ScanType = 1;
                     }
                     else if (*CurrentVal == '<')
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         strBuffer = '<'; ScanType = 1;
                     }
                     else if (*CurrentVal == '/')
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         Data.at(FormulaIndex).AddOp(FormulaElementType::Div);
                     }
                     else if (*CurrentVal == '*')
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         Data.at(FormulaIndex).AddOp(FormulaElementType::Mult);
                     }
                     else if (*CurrentVal == '^')//Power of function
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         Data.at(FormulaIndex).AddOp(FormulaElementType::Pow);
                     }
                     else if (*CurrentVal == '$')//Shorthand for XOR for now
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBufferV2(strBuffer, FormulaIndex, ScanType, numberWasLast);
                         Data.at(FormulaIndex).AddOp(FormulaElementType::XOR);
                     }
                     else if(*CurrentVal == ' ' || *CurrentVal == '\t')//Immediately send variable if encounter whitespace
                     {
-                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                        InsertFromBuffer(strBuffer, FormulaIndex, ScanType, numberWasLast);
                     }
                     else
                     {
@@ -1061,7 +1124,7 @@ namespace BlazesRusCode
             }
             //Finish unfinished potential scans
             if(!strBuffer.empty())
-                InsertFromBuffer(strBuffer, FormulaIndex, ScanType);
+                InsertFromBuffer(strBuffer, FormulaIndex, ScanType, numberWasLast);
             TrimFormula();
         }
 

@@ -1284,7 +1284,8 @@ namespace BlazesRusCode
         {
             if (Value == MediumDec::Zero)
                 throw "Target value can not be divided by zero";
-            if (self == MediumDec::Zero) { return self; }
+            if (self == MediumDec::Zero)
+                return self;
             if (Value.IntValue < 0)
             {
                 if (Value.IntValue == MediumDec::NegativeZero) { Value.IntValue = 0; }
