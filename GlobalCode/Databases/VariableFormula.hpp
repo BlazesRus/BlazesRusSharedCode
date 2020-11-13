@@ -53,6 +53,56 @@ namespace BlazesRusCode
         using ReferenceMap = tsl::ordered_map<std::string, VarType&>;
         using ValueMap = tsl::ordered_map<std::string, VarType>;
     public:
+        static std::string ElementTypeToString(FormulaElementType& catType)
+        {
+            switch(catType)
+            {
+            case FormulaElementType::Add:
+                return "+";
+                break;
+            case FormulaElementType::Sub:
+                return "-";
+                break;
+            case FormulaElementType::Mult:
+                return "*";
+                break;
+            case FormulaElementType::Div:
+                return "/";
+                break;
+            case FormulaElementType::Pow:
+                return "PowerOf";
+                break;
+            case FormulaElementType::Equal:
+                return "Equals";
+                break;
+            case FormulaElementType::NotEqual:
+                return "NotEqualTo";
+                break;
+            case FormulaElementType::LessThan:
+                return "LesserThan";
+                break;
+            case FormulaElementType::GreaterThan:
+                return "GreaterThan";
+                break;
+            case FormulaElementType::LessOrEqual:
+                return "LesserThanOrEqualTo";
+                break;
+            case FormulaElementType::GreaterOrEqual:
+                return "GreaterThanOrEqual";
+                break;
+            case FormulaElementType::Formula:
+                return "Formula";
+                break;
+            case FormulaElementType::Num :
+                return "Number";
+                break;
+            case FormulaElementType::Variable:
+                return "Variable";
+                break;
+            default:
+                return "ElementType#" + VariableConversionFunctions::IntToStringConversion((int)catType); break;
+            }
+        }
         //class DLL_API VariableStoreData
         //{
         //public:
@@ -388,18 +438,7 @@ namespace BlazesRusCode
         };
 
         /// <summary>
-        /// Class VariableFormula. (FormulaElement)Operator(FormulaElement)
-        /// FormulaElements stored as std::vector<std::string>
-        /// Expression Example: ((Variable01 >= 1)&&(Variable02>2.5))
-        /// with (Variable01 >= 1) FormulaElement values:
-        /// Variable01, >=, #i0
-        /// with (Variable01 >= 1) values referenced from:
-        /// Variable01, >=, IntValues[0]
-        /// with (Variable02>2.5) FormulaElement values:
-        /// Variable02, >, #i0
-        /// with (Variable02>2.5) values referenced from:
-        /// Variable02, >, VarTypeValues[0]
-        /// Initial FormulaElement Values : @1, &&, @2
+        /// Vector holding formula segments such as operations inside ()
         /// </summary>
         std::vector<FormData> Data;
 
@@ -564,6 +603,128 @@ namespace BlazesRusCode
                     break;
                 case FormulaElementType::BitwiseOr:
                     strBuffer += "|";
+                    break;
+                }
+            }
+            return strBuffer;
+        }
+
+        /// <summary>
+        /// Converts Formula Segment into string(with extra spacing applied for most).
+        /// </summary>
+        /// <returns>std.string.</returns>
+        std::string FormToStringV2(FormData& targetFormSegment)
+        {
+            std::string strBuffer = "";
+            std::string CurString;
+            int indexBuffer;
+            for (auto CurrentVal = targetFormSegment.begin(), LastVal = targetFormSegment.end(); CurrentVal != LastVal; ++CurrentVal)
+            {
+                switch (CurrentVal->second.ElementCat)
+                {
+                case FormulaElementType::Formula:
+                    strBuffer += " @";
+                    strBuffer += VariableConversionFunctions::IntToStringConversion(CurrentVal->second.Index);
+                    break;
+                case FormulaElementType::Num:
+                    strBuffer += " " + targetFormSegment.NumMap.at(CurrentVal->first).ToString();
+                    break;
+                case FormulaElementType::Variable:
+                    strBuffer += " "+this->VariableStore.at(CurrentVal->second.Index);
+                    break;
+                case FormulaElementType::trueVal:
+                    strBuffer += " true";
+                    break;
+                case FormulaElementType::falseVal:
+                    strBuffer += " false";
+                    break;
+                case FormulaElementType::Equal:
+                    strBuffer += " ==";
+                    break;
+                case FormulaElementType::NotEqual:
+                    strBuffer += " !=";
+                    break;
+                case FormulaElementType::AND:
+                    strBuffer += " &&";
+                    break;
+                case FormulaElementType::OR:
+                    strBuffer += " ||";
+                    break;
+                case FormulaElementType::Not:
+                    strBuffer += " !";
+                    break;
+                case FormulaElementType::LessThan:
+                    strBuffer += " <";
+                    break;
+                case FormulaElementType::LessOrEqual:
+                    strBuffer += " <=";
+                    break;
+                case FormulaElementType::GreaterThan:
+                    strBuffer += " >";
+                    break;
+                case FormulaElementType::GreaterOrEqual:
+                    strBuffer += " >=";
+                    break;
+                case FormulaElementType::Add:
+                    strBuffer += " +";
+                    break;
+                case FormulaElementType::Sub:
+                    strBuffer += " -";
+                    break;
+                case FormulaElementType::Negative:
+                    strBuffer += " -";
+                    break;
+                case FormulaElementType::Mult:
+                    strBuffer += " *";
+                    break;
+                case FormulaElementType::Div:
+                    strBuffer += " /";
+                    break;
+                case FormulaElementType::Pow:
+                    strBuffer += " ^";
+                    break;
+                case FormulaElementType::Sqrt:
+                    strBuffer += " SqrtOf";
+                    break;
+                case FormulaElementType::NthRoot:
+                    strBuffer += "thRootOf";
+                    break;
+                case FormulaElementType::LOGTEN:
+                    strBuffer += " LogTen";
+                    break;
+                case FormulaElementType::LN:
+                    strBuffer += " Ln";
+                    break;
+                case FormulaElementType::BaseNLog:
+                    strBuffer += "thBaseLog";
+                    break;
+                case FormulaElementType::Rem:
+                    strBuffer += " %";
+                    break;
+                case FormulaElementType::PostFixPlus:
+                    indexBuffer = CurrentVal->second.Index;
+                    strBuffer += " "+VariableStore.at(CurrentVal->second.Index) + "++";
+                    break;
+                case FormulaElementType::PostFixMinus:
+                    indexBuffer = CurrentVal->second.Index;
+                    strBuffer += " "+VariableStore.at(CurrentVal->second.Index) + "++";
+                    break;
+                case FormulaElementType::PrefixPlus:
+                    indexBuffer = CurrentVal->second.Index;
+                    strBuffer += " ++" + VariableStore.at(CurrentVal->second.Index);
+                    break;
+                case FormulaElementType::PrefixMinus:
+                    indexBuffer = CurrentVal->second.Index;
+                    strBuffer += " --" + VariableStore.at(CurrentVal->second.Index);
+                    break;
+                case FormulaElementType::BitwiseAND:
+                    strBuffer += " &";
+                    break;
+                case FormulaElementType::XOR:
+                    strBuffer += " XOR";
+                    break;
+                case FormulaElementType::BitwiseOr:
+                    strBuffer += " |";
                     break;
                 }
             }

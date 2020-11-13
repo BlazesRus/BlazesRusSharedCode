@@ -72,7 +72,7 @@ namespace BlazesRusCode
         void EvaluateOperations(size_t FormIndex = 0)
         {
             FormData& FormDRef = Data.at(FormIndex);
-            std::cout << "Performing Evaluation on FormSegment#" << FormIndex << " with formula content:" << FormToString(FormDRef) << std::endl;
+            std::cout << "Performing Evaluation on FormSegment#" << FormIndex << " with formula content:" << FormToStringV2(FormDRef) << std::endl;
             MediumDec valResult;
 
             bool TempBool;
@@ -85,18 +85,28 @@ namespace BlazesRusCode
             FormData::iterator RightVal;
             MediumDec leftResult;
             MediumDec rightResult;
+            FormulaElementType OpApplied;
             int OpTargetKey;
             int leftKey;
+            bool moreOperations = FormDRef.size() > 3;
 
             //Applying operations via C++ variation of order of operations
             //https://en.cppreference.com/w/cpp/language/operator_precedence
             for (int opIndex = 0; opIndex < 11; ++opIndex)
             {
                 OpOrderElement = FormDRef.OpOrderMap[opIndex];
+                if (OpOrderElement.empty())
+                    continue;
                 for (IntVector::iterator CurrentVal = OpOrderElement.begin(), LastVal = OpOrderElement.end(); CurrentVal != LastVal; ++CurrentVal)
                 {
                     OpTargetKey = *CurrentVal;
                     OpIterator = FormDRef.find(OpTargetKey);
+                    if (moreOperations)
+                    {
+                        OpApplied = OpIterator->second.ElementCat;
+                        std::cout << "Performing operation \"" << ElementTypeToString(OpApplied) << "\" of order precedence #" << FormIndex << " with formula content:" << FormToStringV2(FormDRef);
+                        std::cout << std::endl;
+                    }
                     if (opIndex != 1 && (opIndex != 0 || (OpIterator->second.ElementCat != FormulaElementType::Sqrt && OpIterator->second.ElementCat != FormulaElementType::LN && OpIterator->second.ElementCat != FormulaElementType::LOGTEN)))
                     {
                         LeftVal = OpIterator - 1;
@@ -123,7 +133,7 @@ namespace BlazesRusCode
                         }
                         break;
                         default:
-                            leftValue = LeftVal->second.ElementCat == FormulaElementType::trueVal ? 1 : (LeftVal->second.ElementCat == FormulaElementType::falseVal ? 0 : FormDRef.NumMap[leftKey]); break;
+                            leftValue = LeftVal->second.ElementCat == FormulaElementType::trueVal ? MediumDec::One : (LeftVal->second.ElementCat == FormulaElementType::falseVal ? MediumDec::Zero : FormDRef.NumMap[leftKey]); break;
                         }
                     }
                     else
@@ -153,20 +163,6 @@ namespace BlazesRusCode
                     default:
                         rightValue = RightVal->second.ElementCat == FormulaElementType::trueVal ? 1 : (RightVal->second.ElementCat == FormulaElementType::falseVal ? 0 : FormDRef.NumMap[RightVal->first]); break;
                     }
-                    if(opIndex!=1)//Erase left and right values ahead of time(in most most cases)
-                    {
-                        int RightKey = RightVal->first;
-                        if(leftKey!=-1)
-                        {
-                            if (LeftVal->second.ElementCat == FormulaElementType::Num) { FormDRef.NumMap.erase(leftKey); }
-                            FormDRef.erase(leftKey);
-                        }
-                        if (RightVal->second.ElementCat == FormulaElementType::Num) { FormDRef.NumMap.erase(RightKey); }
-                        FormDRef.erase(RightKey);
-                    }
-
-
-
                     switch (opIndex)
                     {
                     default://placeholder code
@@ -332,6 +328,42 @@ namespace BlazesRusCode
                         break;
                         //case 11://Ternary conditional, =, +=,   -=, *=,   /=,   %=,<<=,   >>=, &= ,  ^=,   |= (Not supported yet)
                         //    break;
+                    }
+                    if (moreOperations)
+                        std::cout<<"Formula content (" << FormToStringV2(FormDRef) << ") after using operation(before removal of left+right values)"<<std::endl;
+                    if (opIndex != 1)
+                    {
+#ifdef Blazes_Enable_CatchFormulaExceptions
+                        try
+                        {
+#endif
+                            int RightKey = RightVal->first;
+                            if (leftKey != -1)
+                            {
+                                //if (LeftVal->second.ElementCat == FormulaElementType::Num) { FormDRef.NumMap.erase(leftKey); }
+                                FormDRef.erase(leftKey);
+                            }
+                            //if (RightVal->second.ElementCat == FormulaElementType::Num) { FormDRef.NumMap.erase(RightKey); }
+                            FormDRef.erase(RightKey);
+                            if (moreOperations)
+                                std::cout << "Formula content (" << FormToStringV2(FormDRef) << ") after using operation(after removal of left+right values)" << std::endl;
+#ifdef Blazes_Enable_CatchFormulaExceptions
+                        }
+                        catch (const std::runtime_error& re)
+                        {
+                            std::cerr << "Runtime error during evaluation's removal of values: " << re.what() << std::endl;
+                        }
+                        catch (const std::exception& ex)
+                        {
+                            // specific handling for all exceptions extending std::exception, except
+                            // std::runtime_error which is handled explicitly
+                            std::cerr << "Error occurred during evaluation's removal of values: " << ex.what() << std::endl;
+                        }
+                        catch (...)
+                        {
+                            std::cout << "Unknown exception during evaluation's removal of values" << std::endl;
+                        }
+#endif
                     }
                 }
             }
