@@ -25,8 +25,6 @@
 #include <vector>
 #include <parallel_hashmap/phmap.h>
 
-#include "..\AltNum\MediumDec.hpp"
-
 namespace BlazesRusCode
 {
     using IntVector = std::vector<int>;

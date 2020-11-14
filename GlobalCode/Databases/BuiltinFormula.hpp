@@ -5,37 +5,13 @@
 
 #include "..\DLLAPI.h"
 #include "VariableFormula.hpp"
-#include "..\AltNum\MediumDec.hpp"
-#include "ElementType.hpp"
 
-//Preprocessor Switches
-/*
-*/
-//Supported Operators/Functions
-/*
-^ = Power of; * = Multiplication; / = Division; % = Modulus
-+ = Addition; - = Subtraction; ! = Not;
-&& = And; || = Or;
-$ = XOR (bitwise XOR operation)(Not fully supported by MediumDec yet)
-++Prefix; --Prefix;
-(Bitwise operators--Not fully supported by MediumDec yet)&, |
-SqrtOf = Square Root of (applied to right value)
-thRootOf = Nth Root of (left value is equal to N; applied to right value)
-PowerOf = Power of
-Ln = Natural log function
-thBaseLog = Base N Log function of right value
-LogTen = Log base 10 function of right value
-*/
-//Unsupported Operators/Functions(for later)
-/*
- ++Postfix; --Postfix (Need to update to code changes)
-? = TernaryOperator(Not stored/evaluated yet)
-Assignment operators not supported
-*/
+#include "..\AltNum\MediumDec.hpp"
 
 namespace BlazesRusCode
 {
-    class DLL_API MediumDecFormula : public VariableFormula<MediumDec>
+    template<typename VarType, typename VarStoreType>
+    class DLL_API BuiltinFormula : public VariableFormula<VarType>
     {
     public:
 
@@ -62,7 +38,7 @@ namespace BlazesRusCode
         /// <param name="RightIterator">The right value iterator.</param>
         /// <param name="RightIterator">The right value iterator.</param>
         /// <param name="Value">The value to turn operator into.</param>
-        void SwitchOpToVal(FormData& FormCopy, FormElement& OpVal, int OpKey, MediumDec Value)
+        void SwitchOpToVal(FormData& FormCopy, FormElement& OpVal, int OpKey, VarType Value)
         {
             FormCopy.NumMap.insert_or_assign(OpKey, Value);
             OpVal.ElementCat = FormulaElementType::Num;
@@ -71,20 +47,19 @@ namespace BlazesRusCode
         void EvaluateOperations(size_t FormIndex = 0)
         {
             FormData& FormDRef = Data.at(FormIndex);
-            //std::cout << "Performing Evaluation on FormSegment#" << FormIndex << " with formula content:" << FormToStringV2(FormDRef) << std::endl;
             FormData::iterator segmentStart = FormDRef.begin();
-            MediumDec valResult;
+            VarType valResult;
 
             bool TempBool;
-            MediumDec leftValue;
-            MediumDec rightValue;
+            VarType leftValue;
+            VarType rightValue;
 
             IntVector& OpOrderElement = FormDRef.OpOrderMap[0];
             FormData::iterator OpIterator;
             FormData::iterator LeftVal;
             FormData::iterator RightVal;
-            MediumDec leftResult;
-            MediumDec rightResult;
+            VarType leftResult;
+            VarType rightResult;
             FormulaElementType OpApplied;
             int OpTargetKey;
             int leftKey;
@@ -102,11 +77,6 @@ namespace BlazesRusCode
                 {
                     OpTargetKey = *CurrentVal;
                     OpIterator = FormDRef.find(OpTargetKey);
-                    //if (moreOperations)
-                    //{
-                        //OpApplied = OpIterator->second.ElementCat;
-                        //std::cout << "Performing operation \"" << ElementTypeToString(OpApplied) << "\" of order precedence #" << FormIndex << " with formula content:" << FormToStringV2(FormDRef) << std::endl;
-                    //}
                     if (opIndex == 1)
                     {
 #ifndef Blazes_DisableFormula_NegativeSwapping
@@ -163,21 +133,20 @@ namespace BlazesRusCode
                             {
                                 FormData::iterator targetElem = targetSegmentRef.begin();
                                 if (targetElem->second.ElementCat != FormulaElementType::Variable)
-                                    leftValue = targetElem->second.ElementCat == FormulaElementType::trueVal ? MediumDec::One : (targetElem->second.ElementCat == FormulaElementType::falseVal ? MediumDec::Zero : targetSegmentRef.NumMap[targetElem->first]);
+                                    leftValue = targetElem->second.ElementCat == FormulaElementType::trueVal ? VarType::One : (targetElem->second.ElementCat == FormulaElementType::falseVal ? VarType::Zero : targetSegmentRef.NumMap[targetElem->first]);
                                 else
                                     continue;//Ignore operation with unknown variable value
                             }
                             else
                                 continue;//Ignore if not condensed down to single value
-                            //std::cout << "Left Formula condensed into " << leftValue.ToString() << std::endl;
                         }
                         break;
                         case FormulaElementType::Num:
                             leftValue = FormDRef.NumMap[leftKey]; break;
                         case FormulaElementType::trueVal:
-                            leftValue = MediumDec::One;
+                            leftValue = VarType::One;
                         case FormulaElementType::falseVal:
-                            leftValue = MediumDec::Zero;
+                            leftValue = VarType::Zero;
                         default:
                             continue; break;
                         }
@@ -197,21 +166,20 @@ namespace BlazesRusCode
                         {
                             FormData::iterator targetElem = targetSegmentRef.begin();
                             if (targetElem->second.ElementCat != FormulaElementType::Variable)
-                                rightValue = targetElem->second.ElementCat == FormulaElementType::trueVal ? MediumDec::One : (targetElem->second.ElementCat == FormulaElementType::falseVal ? MediumDec::Zero : targetSegmentRef.NumMap[targetElem->first]);
+                                rightValue = targetElem->second.ElementCat == FormulaElementType::trueVal ? VarType::One : (targetElem->second.ElementCat == FormulaElementType::falseVal ? VarType::Zero : targetSegmentRef.NumMap[targetElem->first]);
                             else
                                 continue;//Ignore operation with unknown variable value
                         }
                         else
                             continue;//Ignore if not condensed down to single value
-                        //std::cout << "Right Formula condensed into " << rightValue.ToString() << std::endl;
                     }
                     break;
                     case FormulaElementType::Num:
                         rightValue = FormDRef.NumMap[RightVal->first]; break;
                     case FormulaElementType::trueVal:
-                        rightValue = MediumDec::One;
+                        rightValue = VarType::One;
                     case FormulaElementType::falseVal:
-                        rightValue = MediumDec::Zero;
+                        rightValue = VarType::Zero;
                     default:
                         continue; break;
                     }
@@ -223,27 +191,27 @@ namespace BlazesRusCode
                         switch (OpIterator->second.ElementCat)
                         {
                         case FormulaElementType::Pow:
-                            leftValue = MediumDec::PowOp(leftValue, rightValue);
+                            leftValue = VarType::PowOp(leftValue, rightValue);
                             SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, leftValue);
                             break;
                         case FormulaElementType::Sqrt:
-                            rightValue = MediumDec::Sqrt(rightValue);
+                            rightValue = VarType::Sqrt(rightValue);
                             SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, rightValue);
                             break;
                         case FormulaElementType::NthRoot:
-                            rightValue = MediumDec::NthRootV2(rightValue, (int)leftValue);
+                            rightValue = VarType::NthRootV2(rightValue, (int)leftValue);
                             SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, rightValue);
                             break;
                         case FormulaElementType::LN:
-                            rightValue = MediumDec::Ln(rightValue);
+                            rightValue = VarType::Ln(rightValue);
                             SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, rightValue);
                             break;
                         case FormulaElementType::LOGTEN:
-                            rightValue = MediumDec::Log10(rightValue);
+                            rightValue = VarType::Log10(rightValue);
                             SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, rightValue);
                             break;
                         case FormulaElementType::BaseNLog:
-                            rightValue = MediumDec::Log(rightValue, leftValue);
+                            rightValue = VarType::Log(rightValue, leftValue);
                             SwitchOpToVal(FormDRef, FormDRef[*CurrentVal], OpTargetKey, rightValue);
                             break;
                         default://placeholder code
@@ -264,14 +232,14 @@ namespace BlazesRusCode
                             }
                             else if (RightVal->second.ElementCat == FormulaElementType::Formula)
                             {
-                                FormDRef.at(RightVal->first).ElementCat = rightValue == MediumDec::Zero ? FormulaElementType::trueVal : FormulaElementType::falseVal;
+                                FormDRef.at(RightVal->first).ElementCat = rightValue == VarType::Zero ? FormulaElementType::trueVal : FormulaElementType::falseVal;
                             }
                             else//Assuming is number
                             {
-                                if (rightValue == MediumDec::Zero)//Zero is false otherwise count as if it was true
-                                    FormDRef.NumMap[RightVal->first] = MediumDec::One;//SwitchOpToBoolVal(FormDRef, FormDRef[*CurrentVal], true);
+                                if (rightValue == VarType::Zero)//Zero is false otherwise count as if it was true
+                                    FormDRef.NumMap[RightVal->first] = VarType::One;//SwitchOpToBoolVal(FormDRef, FormDRef[*CurrentVal], true);
                                 else
-                                    FormDRef.NumMap[RightVal->first] = MediumDec::Zero;//SwitchOpToBoolVal(FormDRef, FormDRef[*CurrentVal], false);
+                                    FormDRef.NumMap[RightVal->first] = VarType::Zero;//SwitchOpToBoolVal(FormDRef, FormDRef[*CurrentVal], false);
                             }
                             break;
                         case FormulaElementType::Negative://Only applies to numbers or Formulas(for now)
@@ -378,42 +346,15 @@ namespace BlazesRusCode
                         TempBool = leftValue || rightValue;
                         SwitchOpToBoolVal(FormDRef, FormDRef[*CurrentVal], TempBool);
                         break;
-                        //case 11://Ternary conditional, =, +=,   -=, *=,   /=,   %=,<<=,   >>=, &= ,  ^=,   |= (Not supported yet)
-                        //    break;
                     }
-                    //if (moreOperations)
-                    //    std::cout<<"Formula content (" << FormToStringV2(FormDRef) << ") after using operation(before removal of left+right values)"<<std::endl;
                     if (opIndex != 1)
                     {
-#ifdef Blazes_Enable_CatchFormulaExceptions
-                        try
+                        int RightKey = RightVal->first;
+                        if (leftKey != -1)
                         {
-#endif
-                            int RightKey = RightVal->first;
-                            if (leftKey != -1)
-                            {
-                                FormDRef.erase(leftKey);
-                            }
-                            FormDRef.erase(RightKey);
-                            //if (moreOperations)
-                            //    std::cout << "Formula content (" << FormToStringV2(FormDRef) << ") after using operation(after removal of left+right values)" << std::endl;
-#ifdef Blazes_Enable_CatchFormulaExceptions
+                            FormDRef.erase(leftKey);
                         }
-                        catch (const std::runtime_error& re)
-                        {
-                            std::cerr << "Runtime error during evaluation's removal of values: " << re.what() << std::endl;
-                        }
-                        catch (const std::exception& ex)
-                        {
-                            // specific handling for all exceptions extending std::exception, except
-                            // std::runtime_error which is handled explicitly
-                            std::cerr << "Error occurred during evaluation's removal of values: " << ex.what() << std::endl;
-                        }
-                        catch (...)
-                        {
-                            std::cout << "Unknown exception during evaluation's removal of values" << std::endl;
-                        }
-#endif
+                        FormDRef.erase(RightKey);
                     }
                 }
             }
@@ -428,7 +369,7 @@ namespace BlazesRusCode
         void ReplaceVariablesWithRefValues(ReferenceMap ElementValues, size_t FormIndex = 0)
         {
             std::string CurString;
-            MediumDec targetResult;
+            VarType targetResult;
             FormData& FormDRef = Data.at(FormIndex);
             for (FormData::iterator CurrentVal = FormDRef.begin(), LastVal = FormDRef.end(); CurrentVal != LastVal; ++CurrentVal)
             {
@@ -439,17 +380,13 @@ namespace BlazesRusCode
                 else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
                 {
                     CurString = this->VariableStore.at(CurrentVal->first);
-                    tsl::ordered_map<std::string, MediumDec&>::iterator KeyedElemVal = ElementValues.find(CurString);
+                    tsl::ordered_map<std::string, VarType&>::iterator KeyedElemVal = ElementValues.find(CurString);
                     if (KeyedElemVal != ElementValues.end())//Only attempt to replace variable if matching variable is found
                     {
                         FormDRef.at(CurrentVal->first).ElementCat = FormulaElementType::Num;
                         targetResult = KeyedElemVal.value();
                         FormDRef.NumMap.insert_or_assign(CurrentVal->first, targetResult);//ElementValues.at(CurString));
                     }
-                    //else
-                    //{
-                    //    std::cout << "Failed to replace variable named " << CurString << " with value data" << std::endl;
-                    //}
                 }
             }
         }
@@ -458,10 +395,10 @@ namespace BlazesRusCode
         /// Simplifies and evaluates the formula and then returns the copy.
         /// </summary>
         /// <param name="ElementValues">The element values.</param>
-        /// <returns>BlazesRusCode.MediumDecFormula</returns>
-        MediumDecFormula EvaluateRefToSimplifiedForm(ReferenceMap ElementValues)
+        /// <returns>BlazesRusCode.BuiltinFormula</returns>
+        BuiltinFormula EvaluateRefToSimplifiedForm(ReferenceMap ElementValues)
         {
-            MediumDecFormula FormCopy = *this;//Duplicate values so can erase parts when calculating
+            BuiltinFormula FormCopy = *this;//Duplicate values so can erase parts when calculating
             FormCopy.ReplaceVariablesWithRefValues(ElementValues);
             FormCopy.EvaluateOperations();
             return FormCopy;
@@ -476,7 +413,7 @@ namespace BlazesRusCode
         void ReplaceVariablesWithValues(ValueMap& ElementValues, size_t FormIndex = 0)
         {
             std::string CurString;
-            MediumDec targetResult;
+            VarType targetResult;
             FormData& FormDRef = Data.at(FormIndex);
             for (FormData::iterator CurrentVal = FormDRef.begin(), LastVal = FormDRef.end(); CurrentVal != LastVal; ++CurrentVal)
             {
@@ -487,19 +424,13 @@ namespace BlazesRusCode
                 else if (CurrentVal->second.ElementCat == FormulaElementType::Variable)//Swap Variable with values
                 {
                     CurString = this->VariableStore.at(CurrentVal->second.Index);
-                    tsl::ordered_map<std::string, MediumDec>::iterator KeyedElemVal = ElementValues.find(CurString);
+                    tsl::ordered_map<std::string, VarType>::iterator KeyedElemVal = ElementValues.find(CurString);
                     if (KeyedElemVal != ElementValues.end())//Only attempt to replace variable if matching variable is found
                     {
                         FormDRef.at(CurrentVal->first).ElementCat = FormulaElementType::Num;
                         targetResult = KeyedElemVal.value();
-                        //std::cout << "Swapping variable named " << CurString << " with " << targetResult.ToString() << std::endl;
                         FormDRef.NumMap.insert_or_assign(CurrentVal->first, targetResult);//ElementValues.at(CurString));
-                        //std::cout << "Successful insert into NumMap position" << CurrentVal->first << std::endl;
                     }
-                    //else
-                    //{
-                    //    std::cout << "Failed to replace variable named " << CurString << " with value data" << std::endl;
-                    //}
                 }
             }
         }
@@ -508,10 +439,10 @@ namespace BlazesRusCode
         /// Simplifies and evaluates the formula and then returns the copy.
         /// </summary>
         /// <param name="ElementValues">The element values.</param>
-        /// <returns>BlazesRusCode.MediumDecFormula</returns>
-        MediumDecFormula EvaluateToSimplifiedForm(ValueMap ElementValues)
+        /// <returns>BlazesRusCode.BuiltinFormula</returns>
+        BuiltinFormula EvaluateToSimplifiedForm(ValueMap ElementValues)
         {
-            MediumDecFormula FormCopy = *this;//Duplicate values so can erase parts when calculating
+            BuiltinFormula FormCopy = *this;//Duplicate values so can erase parts when calculating
             FormCopy.ReplaceVariablesWithValues(ElementValues);
             FormCopy.EvaluateOperations();
             return FormCopy;
@@ -756,10 +687,10 @@ namespace BlazesRusCode
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MediumDecFormula" /> class.
+        /// Initializes a new instance of the <see cref="BuiltinFormula" /> class.
         /// </summary>
         /// <param name="ElemValue">The elem value to read in order to create formula data.</param>
-        MediumDecFormula(std::string& ElemValue)
+        BuiltinFormula(std::string& ElemValue)
         {
             //0 = ???
             //1 = Operator
@@ -856,14 +787,6 @@ namespace BlazesRusCode
                         Data.at(FormulaIndex).AddOp(FormulaElementType::XOR); numberWasLast = false;
                     }
                     //---End of extra mid-formula operations
-/*
-                    else if(*CurrentVal == '?')//TernaryOperator detection start
-                    {
-                        strBuffer = Data.at(FormulaIndex).ExtractLastElem();
-                        ScanType = 12;
-                    }
-*/
-
                     else
                     {
                         if (VariableConversionFunctions::IsDigit(*CurrentVal))
@@ -1128,15 +1051,26 @@ namespace BlazesRusCode
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MediumDecFormula" /> class from StringCopy instead of reference.
+        /// Initializes a new instance of the <see cref="BuiltinFormula" /> class from StringCopy instead of reference.
         /// </summary>
         /// <param name="ElemValue">The elem value to read in order to create formula data.</param>
-        MediumDecFormula(std::string ElemValue, bool BlankVar) : MediumDecFormula(ElemValue) {}
+        BuiltinFormula(std::string ElemValue, bool BlankVar) : BuiltinFormula(ElemValue) {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MediumDecFormula" /> class.(fix for initializing without copying from a string value set)
+        /// Initializes a new instance of the <see cref="BuiltinFormula" /> class.(fix for initializing without copying from a string value set)
         /// </summary>
         /// <param name="ElemValue">The elem value to read in order to create formula data.</param>
-        MediumDecFormula(const char* strVal) : MediumDecFormula(std::string(strVal), true) {}
+        BuiltinFormula(const char* strVal) : BuiltinFormula(std::string(strVal), true) {}
+    };
+
+    class TestFormVarStore
+    {
+    public:
+        MediumDec x = MediumDec::Two;
+    };
+
+    class DLL_API MediumDecFormulaV2 : public BuiltinFormula<MediumDec, TestFormVarStore>
+    {
+
     };
 }
