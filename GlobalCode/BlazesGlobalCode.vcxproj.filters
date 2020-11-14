@@ -171,6 +171,9 @@
     <ClInclude Include="tsl\ordered_map.h">
       <Filter>Header Files\tsl</Filter>
     </ClInclude>
+    <ClInclude Include="Databases\BuiltinFormula.hpp">
+      <Filter>Header Files\Databases</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NodeTrees\TagNodeTreeTemplate.cpp">

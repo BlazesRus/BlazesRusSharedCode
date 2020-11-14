@@ -220,6 +220,7 @@
     <ClInclude Include="AltNum\MediumDec_OtherMath.hpp" />
     <ClInclude Include="AltNum\ModCheckerX.hpp" />
     <ClInclude Include="AltNum\ModCheckerXX.hpp" />
+    <ClInclude Include="Databases\BuiltinFormula.hpp" />
     <ClInclude Include="Databases\CustomDictionary.h" />
     <ClInclude Include="Databases\CustomOrderedDictionary.h" />
     <ClInclude Include="Databases\DataDictionary.h" />
