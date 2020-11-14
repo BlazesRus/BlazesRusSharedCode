@@ -104,29 +104,6 @@ namespace BlazesRusCode
                 return "ElementType#" + VariableConversionFunctions::IntToStringConversion((int)catType); break;
             }
         }
-        //class DLL_API VariableStoreData
-        //{
-        //public:
-        //    /// <summary>
-        //    /// Stored Variable Name
-        //    /// </summary>
-        //    std::string Name;
-
-        //    ///// <summary>
-        //    ///// The variable pointer data
-        //    ///// </summary>
-        //    //VarType* varPointerData;
-
-        //    /// <summary>
-        //    /// Initializes a new instance of the <see cref="VariableStoreData"/> class.
-        //    /// </summary>
-        //    /// <param name="name">The name.</param>
-        //    VariableStoreData(std::string name="")//, VarType* pData=nullptr)
-        //    {
-        //        //varPointerData = pData;
-        //        Name = name;
-        //    }
-        //};
     protected:
         using ParallelIntValMap = phmap::node_hash_map<int, VarType>;
         using ParallelStringValMap = phmap::node_hash_map<std::string, VarType>;
@@ -673,7 +650,7 @@ namespace BlazesRusCode
                     strBuffer += " -";
                     break;
                 case FormulaElementType::Negative:
-                    strBuffer += " (Negative)";
+                    strBuffer += " -";
                     break;
                 case FormulaElementType::Mult:
                     strBuffer += " *";

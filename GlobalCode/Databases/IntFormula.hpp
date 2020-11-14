@@ -5,9 +5,6 @@
 
 #include "..\DLLAPI.h"
 #include "VariableFormula.hpp"
-#include "..\AltNum\FloatingOperations.hpp"
-#include "ElementType.hpp"
-#include "..\tsl\ordered_map.h"
 
 //Preprocessor Switches
 /*

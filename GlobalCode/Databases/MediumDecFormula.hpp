@@ -6,7 +6,6 @@
 #include "..\DLLAPI.h"
 #include "VariableFormula.hpp"
 #include "..\AltNum\MediumDec.hpp"
-#include "ElementType.hpp"
 
 //Preprocessor Switches
 /*
