@@ -22,21 +22,25 @@
 #include <cmath>
 #include "..\OtherFunctions\VariableConversionFunctions.h"
 
-//#include <boost/math/tools/roots.hpp>
 #include <boost/rational.hpp>
 #include <boost/multiprecision/cpp_int.hpp>
 
 namespace BlazesRusCode
 {
-    //class UInt128 : boost::multiprecision::checked_uint128_t
-    //{};
-
-    class MediumDec;//Operations and functions will mess up if IntValue overflows/underflows or reaches exactly -2147483648 which is used to represent negative zero when has decimal values
+    class MediumDec;
 
     /// <summary>
-    /// Alternative Non-Integer number representation with focus on accuracy and partially speed within certain range
-    /// Represents +- 2147483647.999999999 with 100% consistency of accuracy for most operations as long as don't get too small
-    //  Use AltDec instead if want to use variant of this class that supports radical representation to save some extra precision
+    /// Represents +- 2147483647.999999999 with:
+    /// * 100% consistency of accuracy for all integer value multiplication operations.
+    /// * 100% consistency of accuracy for addition/subtraction operations within 9th decimal place of representation.
+    /// * Partial but still high accuracy for non-integer representation variations of multiplication because of truncation
+	///  (values get lost if get too small)
+	/// * Partial but still high accuracy for division because of truncation
+	///  (values get lost if get too small)
+	/// * Other operations like Ln and Sqrt contained with decent level of accuracy
+	///  (still loses a little accuracy because of truncation etc)
+	/// * Operations and functions will mess up if IntValue overflows/underflows
+	///  or reaches exactly -2147483648 which is used to represent negative zero when it has decimal values
     /// (8 bytes worth of Variable Storage inside class for each instance)
     /// </summary>
     class DLL_API MediumDec
