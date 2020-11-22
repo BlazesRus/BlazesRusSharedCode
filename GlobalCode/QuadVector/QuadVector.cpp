@@ -13,10 +13,10 @@
 
 void QuadVector::StoreInVectorIndex(int index, double TempValue)
 {
-    if(index == 0) { PositionX = TempValue; }
-    else if(index == 1) { PositionY = TempValue; }
-    else if(index == 2) { PositionZ = TempValue; }
-    else if(index == 3) { PositionW = TempValue; }
+    if (index == 0) { PositionX = TempValue; }
+    else if (index == 1) { PositionY = TempValue; }
+    else if (index == 2) { PositionZ = TempValue; }
+    else if (index == 3) { PositionW = TempValue; }
 }
 
 #if defined(ExcludeExperimentalCode)
@@ -26,10 +26,10 @@ MediumDec
 #endif
 QuadVector::GetVectorValue(int index)
 {
-    if(index == 0) { return PositionX; }
-    else if(index == 1) { return PositionY; }
-    else if(index == 2) { return PositionZ; }
-    else if(index == 3) { return PositionW; }
+    if (index == 0) { return PositionX; }
+    else if (index == 1) { return PositionY; }
+    else if (index == 2) { return PositionZ; }
+    else if (index == 3) { return PositionW; }
     else { return 0.0;/*Error Value but return 0.0 to prevent crash*/ }
 }
 
@@ -72,8 +72,8 @@ QuadVector::ConvertToList()
 #else
     VariableList<MediumDec>
 #endif
-    TempValue;
-    for(int i = 0; i < 4; i++)
+        TempValue;
+    for (int i = 0; i < 4; i++)
     {
         TempValue.Add(GetVectorValue(i));
     }
@@ -94,12 +94,12 @@ void QuadVector::ReadQuadVectorFromString(std::string LineString)
     bool ScanningDouble = false;
     //Total size of LineString to load
     size_t StringSize = LineString.size();
-    for(size_t i = 0; i < StringSize&&VectorIndex < 4; ++i)
+    for (size_t i = 0; i < StringSize && VectorIndex < 4; ++i)
     {
         StringChar = LineString.at(i);
-        if(StringChar == ' ' || StringChar == '	'&&PartialSearchBuffer != "")
+        if (StringChar == ' ' || StringChar == '	' && PartialSearchBuffer != "")
         {
-            if(ScanningDouble)
+            if (ScanningDouble)
             {
                 DoubleStorageTemp = VariableConversionFunctions::ReadDoubleFromString(PartialSearchBuffer);
                 StoreInVectorIndex(VectorIndex, DoubleStorageTemp);
@@ -107,10 +107,10 @@ void QuadVector::ReadQuadVectorFromString(std::string LineString)
                 VectorIndex++;
             }
         }
-        else if(StringChar == '.' || StringChar == '0' || StringChar == '1' || StringChar == '2' || StringChar == '3' || StringChar == '4' || StringChar == '5' || StringChar == '6' || StringChar == '7' || StringChar == '8' || StringChar == '9' || StringChar == '-')
+        else if (StringChar == '.' || StringChar == '0' || StringChar == '1' || StringChar == '2' || StringChar == '3' || StringChar == '4' || StringChar == '5' || StringChar == '6' || StringChar == '7' || StringChar == '8' || StringChar == '9' || StringChar == '-')
         {
             PartialSearchBuffer += StringChar;
-            if(ScanningDouble == false) { ScanningDouble = true; }
+            if (ScanningDouble == false) { ScanningDouble = true; }
         }
     }
 }
@@ -126,12 +126,12 @@ QuadVector::QuadVector(std::string TempString)
     std::string StringChar;
     //Vector index of value to store
     unsigned __int8 VectorIndex = 0;
-    for(unsigned __int8 i = 0; i < StringLength&&VectorIndex < 4; i++)
+    for (unsigned __int8 i = 0; i < StringLength && VectorIndex < 4; i++)
     {
         StringChar = TempString.at(i);
-        if(StringChar == " " || StringChar == "\t" || StringChar == ")")
+        if (StringChar == " " || StringChar == "\t" || StringChar == ")")
         {
-            if(ValueExtractionBuffer != "")
+            if (ValueExtractionBuffer != "")
             {
                 //std::cout << "ValueStored:" << ValueExtractionBuffer << " VectorIndex:" << VectorIndex << "\n";
                 DoubleStorageTemp = VariableConversionFunctions::ReadDoubleFromString(ValueExtractionBuffer);
@@ -140,7 +140,7 @@ QuadVector::QuadVector(std::string TempString)
                 VectorIndex++;
             }
         }
-        else if(StringChar == "." || VariableConversionFunctions::IsDigit(StringChar) || StringChar == "-")
+        else if (StringChar == "." || VariableConversionFunctions::IsDigit(StringChar) || StringChar == "-")
         {
             ValueExtractionBuffer += StringChar;
         }
@@ -163,7 +163,7 @@ size_t QuadVectorList::AddData()
 
 void QuadVectorList::ConvertStringToVectorList(std::string Content)
 {
-    if(Size() != 0)
+    if (Size() != 0)
     {
         Reset();
     }
@@ -171,19 +171,19 @@ void QuadVectorList::ConvertStringToVectorList(std::string Content)
     char CurrentChar;
     std::string CurrentElement = "";
     QuadVector CurrentElementVector;
-    for(size_t Index=0; Index < StringSize; ++Index)
+    for (size_t Index = 0; Index < StringSize; ++Index)
     {
         CurrentChar = Content.at(Index);
-        if(CurrentElement == "")
+        if (CurrentElement == "")
         {
-            if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement = CurrentChar;
             }
         }
         else
         {
-            if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement += CurrentChar;
             }
@@ -229,7 +229,6 @@ std::string QuadDoubleVector::ConvertToString()
     return TempString;
 }
 
-
 void QuadDoubleVector::ReadQuadVectorFromString(std::string LineString)
 {
     //Current character loaded in steam
@@ -244,10 +243,10 @@ void QuadDoubleVector::ReadQuadVectorFromString(std::string LineString)
     bool ScanningDouble = false;
     //Total size of LineString to load
     size_t StringSize = LineString.size();
-    for (size_t i = 0; i < StringSize&&VectorIndex < 4; ++i)
+    for (size_t i = 0; i < StringSize && VectorIndex < 4; ++i)
     {
         StringChar = LineString.at(i);
-        if (StringChar == ' ' || StringChar == '	'&&PartialSearchBuffer != "")
+        if (StringChar == ' ' || StringChar == '	' && PartialSearchBuffer != "")
         {
             if (ScanningDouble)
             {
@@ -276,7 +275,7 @@ QuadDoubleVector::QuadDoubleVector(std::string TempString)
     std::string StringChar;
     //Vector index of value to store
     unsigned __int8 VectorIndex = 0;
-    for (unsigned __int8 i = 0; i < StringLength&&VectorIndex < 4; i++)
+    for (unsigned __int8 i = 0; i < StringLength && VectorIndex < 4; i++)
     {
         StringChar = TempString.at(i);
         if (StringChar == " " || StringChar == "\t" || StringChar == ")")
@@ -326,14 +325,14 @@ void QuadDoubleVectorList::ConvertStringToVectorList(std::string Content)
         CurrentChar = Content.at(Index);
         if (CurrentElement == "")
         {
-            if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement = CurrentChar;
             }
         }
         else
         {
-            if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement += CurrentChar;
             }

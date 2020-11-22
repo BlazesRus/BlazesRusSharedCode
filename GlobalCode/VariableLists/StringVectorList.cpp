@@ -27,26 +27,26 @@ size_t StringVectorList::AddData()
 
 void StringVectorList::ConvertStringToStringVectorList(std::string Content)
 {
-    if(Size()!=0)
+    if (Size() != 0)
     {
         Reset();
     }
     const size_t StringSize = Content.length();
     char CurrentChar;
     string CurrentElement = "";
-    for(size_t Index=0; Index < StringSize; ++Index)
+    for (size_t Index = 0; Index < StringSize; ++Index)
     {
         CurrentChar = Content.at(Index);
-        if(CurrentElement == "")
+        if (CurrentElement == "")
         {
-            if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement = CurrentChar;
             }
         }
         else
         {
-            if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement += CurrentChar;
             }
@@ -65,11 +65,11 @@ void StringVectorList::SaveDataToFileV2(std::string FileName)
     std::fstream CraftedIniFile;
     CraftedIniFile.open(FileName.c_str(), std::ios::out | std::ios::trunc);
     size_t DataSize = Size();
-    if(CraftedIniFile.is_open())
+    if (CraftedIniFile.is_open())
     {
-        for(size_t i = 0; i < DataSize; ++i)
+        for (size_t i = 0; i < DataSize; ++i)
         {
-            if(i != 0)
+            if (i != 0)
             {//Carriage Return to next line
                 CraftedIniFile << "\r\n";
             }
@@ -88,7 +88,7 @@ bool StringVectorList::ScanData(std::string LineString)
 {
     size_t StringLength = LineString.length();
     char StringChar;
-    for(size_t i = 0; i < StringLength; ++i)
+    for (size_t i = 0; i < StringLength; ++i)
     {
         StringChar = LineString.at(i);
     }
@@ -104,22 +104,22 @@ bool StringVectorList::LoadFileData(std::string FileName)
     string LineChar;
     char NextChar = ' ';
     std::fstream LoadedFileStream;
-    while(FileStreamState >= 0)
+    while (FileStreamState >= 0)
     {
-        if(FileStreamOpen == false)
+        if (FileStreamOpen == false)
         {
             LoadedFileStream.open(FileName.c_str());//, std::ios::in | std::ios::out
             FileStreamState = 1;
             FileStreamOpen = true;
             //return 1;
         }
-        else if(LoadedFileStream.is_open())
+        else if (LoadedFileStream.is_open())
         {
             NextChar = LoadedFileStream.peek();
-            if(LoadedFileStream.good())
+            if (LoadedFileStream.good())
             {//Current Line has data in it
                 LineChar = LoadedFileStream.get();
-                if(LineChar == "\n")
+                if (LineChar == "\n")
                 {
                     //FileStreamLineExtraction(LoadedFileStream, LineString, FileString, VariableScanningData);
                     Add(LineString);
@@ -134,9 +134,9 @@ bool StringVectorList::LoadFileData(std::string FileName)
                 FileStreamState = 2;
                 //return 2;
             }
-            else if(NextChar == EOF || LoadedFileStream.eof())
+            else if (NextChar == EOF || LoadedFileStream.eof())
             {
-                if(LineString != "")
+                if (LineString != "")
                 {
                     Add(LineString);
                     LineString = "";
@@ -149,20 +149,20 @@ bool StringVectorList::LoadFileData(std::string FileName)
             }
             else
             {
-                if(LoadedFileStream.bad())
+                if (LoadedFileStream.bad())
                 {
                     cout << "Failed Read/Write operation Error \n";
                     FileStreamState = -1;
                 }
-                else if(LoadedFileStream.fail())
+                else if (LoadedFileStream.fail())
                 {
-                    cout << "Failed format-based Error on path "<<FileName<<"\n";
+                    cout << "Failed format-based Error on path " << FileName << "\n";
                     system("pause");
                     FileStreamState = -1;
                 }
-                else if(LoadedFileStream.bad())
+                else if (LoadedFileStream.bad())
                 {
-                    cout << "Failed Read/Write operation Error on path "<<FileName<<"\n";
+                    cout << "Failed Read/Write operation Error on path " << FileName << "\n";
                     system("pause");
                     FileStreamState = -1;
                 }
@@ -176,16 +176,16 @@ bool StringVectorList::LoadFileData(std::string FileName)
         else
         {
             cout << "Failed to open" << FileName << "\n";
-            if(LoadedFileStream.eof())
+            if (LoadedFileStream.eof())
             {
                 cout << "Reached end of file Error \n";
             }
-            else if(LoadedFileStream.bad())
+            else if (LoadedFileStream.bad())
             {
                 cout << "Failed Read/Write operation Error on path " << FileName << "\n";
                 system("pause");
             }
-            else if(LoadedFileStream.fail())
+            else if (LoadedFileStream.fail())
             {
                 cout << "Failed format-based Error on path " << FileName << "\n";
                 system("pause");
@@ -195,7 +195,7 @@ bool StringVectorList::LoadFileData(std::string FileName)
         }
         //return 0;
     }
-    if(FileStreamState == -3)
+    if (FileStreamState == -3)
     {
         return true;
     }
@@ -213,22 +213,22 @@ bool StringVectorList::AddFileData(std::string FileName)
     string LineChar;
     char NextChar = ' ';
     std::fstream LoadedFileStream;
-    while(FileStreamState >= 0)
+    while (FileStreamState >= 0)
     {
-        if(FileStreamOpen == false)
+        if (FileStreamOpen == false)
         {
             LoadedFileStream.open(FileName.c_str());//, std::ios::in | std::ios::out
             FileStreamState = 1;
             FileStreamOpen = true;
             //return 1;
         }
-        else if(LoadedFileStream.is_open())
+        else if (LoadedFileStream.is_open())
         {
             NextChar = LoadedFileStream.peek();
-            if(LoadedFileStream.good())
+            if (LoadedFileStream.good())
             {//Current Line has data in it
                 LineChar = LoadedFileStream.get();
-                if(LineChar == "\n")
+                if (LineChar == "\n")
                 {
                     //FileStreamLineExtraction(LoadedFileStream, LineString, FileString, VariableScanningData);
                     Add(LineString);
@@ -243,9 +243,9 @@ bool StringVectorList::AddFileData(std::string FileName)
                 FileStreamState = 2;
                 //return 2;
             }
-            else if(NextChar == EOF || LoadedFileStream.eof())
+            else if (NextChar == EOF || LoadedFileStream.eof())
             {
-                if(LineString != "")
+                if (LineString != "")
                 {
                     Add(LineString);
                     LineString = "";
@@ -258,17 +258,17 @@ bool StringVectorList::AddFileData(std::string FileName)
             }
             else
             {
-                if(LoadedFileStream.bad())
+                if (LoadedFileStream.bad())
                 {
                     cout << "Failed Read/Write operation Error \n";
                     FileStreamState = -1;
                 }
-                else if(LoadedFileStream.fail())
+                else if (LoadedFileStream.fail())
                 {
                     cout << "Failed format-based Error \n";
                     FileStreamState = -1;
                 }
-                else if(LoadedFileStream.bad())
+                else if (LoadedFileStream.bad())
                 {
                     cout << "Failed Read/Write operation Error \n";
                     FileStreamState = -1;
@@ -283,19 +283,19 @@ bool StringVectorList::AddFileData(std::string FileName)
         else
         {
             cout << "Failed to open" << FileName << "\n";
-            if(LoadedFileStream.eof())
+            if (LoadedFileStream.eof())
             {
                 cout << "Reached end of file Error \n";
             }
-            else if(LoadedFileStream.bad())
+            else if (LoadedFileStream.bad())
             {
                 cout << "Failed Read/Write operation Error \n";
             }
-            else if(LoadedFileStream.fail())
+            else if (LoadedFileStream.fail())
             {
                 cout << "Failed format-based Error \n";
             }
-            else if(LoadedFileStream.bad())
+            else if (LoadedFileStream.bad())
             {
                 cout << "Failed Read/Write operation Error \n";
             }
@@ -304,7 +304,7 @@ bool StringVectorList::AddFileData(std::string FileName)
         }
         //return 0;
     }
-    if(FileStreamState == -3)
+    if (FileStreamState == -3)
     {
         return true;
     }
@@ -328,33 +328,33 @@ void StringVectorList::LoadXMLFileWithoutComments(std::string InputFile)
     bool ScanningXMLComments = false;
     size_t CommentIndex = 0;
     std::fstream LoadedFileStream;
-    while(FileStreamState >= 0)
+    while (FileStreamState >= 0)
     {
-        if(FileStreamOpen == false)
+        if (FileStreamOpen == false)
         {
             LoadedFileStream.open(InputFile.c_str());//, std::ios::in | std::ios::out
             FileStreamState = 1;
             FileStreamOpen = true;
             //return 1;
         }
-        else if(LoadedFileStream.is_open())
+        else if (LoadedFileStream.is_open())
         {
             NextChar = LoadedFileStream.peek();
-            if(LoadedFileStream.good())
+            if (LoadedFileStream.good())
             {//Current Line has data in it
                 LineChar = LoadedFileStream.get();
-                if(ScanningXMLComments)
+                if (ScanningXMLComments)
                 {
-                    if(LineChar.at(0) == XMLCommentFooter.at(CommentIndex))
+                    if (LineChar.at(0) == XMLCommentFooter.at(CommentIndex))
                     {
                         XMLCommentBuffer += LineChar;
-                        if(XMLCommentBuffer == XMLCommentFooter)
+                        if (XMLCommentBuffer == XMLCommentFooter)
                         {
                             XMLCommentBuffer = "";
                             ScanningXMLComments = true;
                             CommentIndex = 0;
                         }
-                        else if(CommentIndex < 2)
+                        else if (CommentIndex < 2)
                         {
                             CommentIndex++;
                         }
@@ -370,18 +370,18 @@ void StringVectorList::LoadXMLFileWithoutComments(std::string InputFile)
                         CommentIndex = 0;
                     }
                 }
-                else if(XMLCommentBuffer != "")
+                else if (XMLCommentBuffer != "")
                 {
-                    if(LineChar.at(0) == XMLCommentHeader.at(CommentIndex))
+                    if (LineChar.at(0) == XMLCommentHeader.at(CommentIndex))
                     {
                         XMLCommentBuffer += LineChar;
-                        if(XMLCommentBuffer == XMLCommentHeader)
+                        if (XMLCommentBuffer == XMLCommentHeader)
                         {
                             XMLCommentBuffer = "";
                             ScanningXMLComments = true;
                             CommentIndex = 0;
                         }
-                        else if(CommentIndex < 3)
+                        else if (CommentIndex < 3)
                         {
                             CommentIndex++;
                         }
@@ -395,12 +395,12 @@ void StringVectorList::LoadXMLFileWithoutComments(std::string InputFile)
                         LineString += XMLCommentBuffer;
                     }
                 }
-                else if(LineChar == "\n")
+                else if (LineChar == "\n")
                 {
                     Add(LineString);
                     LineString = "";
                 }
-                else if(LineChar == "<"&&XMLCommentBuffer == "")
+                else if (LineChar == "<" && XMLCommentBuffer == "")
                 {
                     XMLCommentBuffer = "<";
                     CommentIndex = 1;
@@ -411,13 +411,13 @@ void StringVectorList::LoadXMLFileWithoutComments(std::string InputFile)
                 }
                 FileStreamState = 2;
             }
-            else if(NextChar == EOF || LoadedFileStream.eof())
+            else if (NextChar == EOF || LoadedFileStream.eof())
             {
-                if(XMLCommentBuffer != "")
+                if (XMLCommentBuffer != "")
                 {
                     LineString += XMLCommentBuffer;
                 }
-                if(LineString != "")
+                if (LineString != "")
                 {
                     Add(LineString);
                     LineString = "";
@@ -429,18 +429,18 @@ void StringVectorList::LoadXMLFileWithoutComments(std::string InputFile)
             }
             else
             {
-                if(LoadedFileStream.bad())
+                if (LoadedFileStream.bad())
                 {
                     cout << "Failed Read/Write operation Error \n";
                     FileStreamState = -1;
                 }
-                else if(LoadedFileStream.fail())
+                else if (LoadedFileStream.fail())
                 {
-                    cout << "Failed format-based Error at Path"<<InputFile<<"\n";
+                    cout << "Failed format-based Error at Path" << InputFile << "\n";
                     system("pause");
                     FileStreamState = -1;
                 }
-                else if(LoadedFileStream.bad())
+                else if (LoadedFileStream.bad())
                 {
                     cout << "Failed Read/Write operation Error \n";
                     FileStreamState = -1;
@@ -455,17 +455,17 @@ void StringVectorList::LoadXMLFileWithoutComments(std::string InputFile)
         else
         {
             cout << "Failed to open" << InputFile << "\n";
-            if(LoadedFileStream.eof())
+            if (LoadedFileStream.eof())
             {
                 cout << "Reached end of file Error \n";
             }
-            else if(LoadedFileStream.bad())
+            else if (LoadedFileStream.bad())
             {
                 cout << "Failed Read/Write operation Error \n";
             }
-            else if(LoadedFileStream.fail())
+            else if (LoadedFileStream.fail())
             {
-                cout << "Failed format-based Error at Path"<<InputFile<<"\n";
+                cout << "Failed format-based Error at Path" << InputFile << "\n";
             }
             FileStreamState = 0;
         }
@@ -491,30 +491,30 @@ void StringVectorList::LoadFileWithoutComments(std::string InputFile)
     //-------------------------
     size_t CommentIndex = 0;
     std::fstream LoadedFileStream;
-    while(FileStreamState >= 0)
+    while (FileStreamState >= 0)
     {
-        if(FileStreamOpen == false)
+        if (FileStreamOpen == false)
         {
             LoadedFileStream.open(InputFile.c_str());//, std::ios::in | std::ios::out
             FileStreamState = 1;
             FileStreamOpen = true;
             //return 1;
         }
-        else if(LoadedFileStream.is_open())
+        else if (LoadedFileStream.is_open())
         {
             NextChar = LoadedFileStream.peek();
-            if(LoadedFileStream.good())
+            if (LoadedFileStream.good())
             {//Current Line has data in it
                 LineChar = LoadedFileStream.get();
-                if(ScanningComments02)
+                if (ScanningComments02)
                 {
-                    if(LineCommentType == false)
+                    if (LineCommentType == false)
                     {
-                        if(LineChar == "*")
+                        if (LineChar == "*")
                         {
                             CommentBuffer = "*";
                         }
-                        else if(LineChar == "/"&&CommentBuffer == "*")
+                        else if (LineChar == "/" && CommentBuffer == "*")
                         {
                             ScanningComments02 = false;
                             CommentBuffer = "";
@@ -525,40 +525,40 @@ void StringVectorList::LoadFileWithoutComments(std::string InputFile)
                         }
                     }
                 }
-                else if(LineChar == "*"&&CommentBuffer == "/")
+                else if (LineChar == "*" && CommentBuffer == "/")
                 {
                     LineCommentType = false;
                     ScanningComments02 = true;
                 }
-                else if(LineChar == "/")
+                else if (LineChar == "/")
                 {
                     CommentBuffer += '/';
-                    if(CommentBuffer == "//")
+                    if (CommentBuffer == "//")
                     {
                         LineCommentType = true;
                         ScanningComments02 = true;
                     }
-                    else if(CommentBuffer != "/")
+                    else if (CommentBuffer != "/")
                     {//Force buffer as "/" if anything other
                         CommentBuffer = "/";
                     }
-                    else if(CommentBuffer.size() > 2)
+                    else if (CommentBuffer.size() > 2)
                     {
                         CommentBuffer = "";
                     }
                 }
-                else if(ScanningXMLComments)
+                else if (ScanningXMLComments)
                 {
-                    if(LineChar.at(0) == XMLCommentFooter.at(CommentIndex))
+                    if (LineChar.at(0) == XMLCommentFooter.at(CommentIndex))
                     {
                         CommentBuffer += LineChar;
-                        if(CommentBuffer == XMLCommentFooter)
+                        if (CommentBuffer == XMLCommentFooter)
                         {
                             CommentBuffer = "";
                             ScanningXMLComments = true;
                             CommentIndex = 0;
                         }
-                        else if(CommentIndex < 2)
+                        else if (CommentIndex < 2)
                         {
                             CommentIndex++;
                         }
@@ -574,18 +574,18 @@ void StringVectorList::LoadFileWithoutComments(std::string InputFile)
                         CommentIndex = 0;
                     }
                 }
-                else if(CommentBuffer != "")
+                else if (CommentBuffer != "")
                 {
-                    if(LineChar.at(0) == XMLCommentHeader.at(CommentIndex))
+                    if (LineChar.at(0) == XMLCommentHeader.at(CommentIndex))
                     {
                         CommentBuffer += LineChar;
-                        if(CommentBuffer == XMLCommentHeader)
+                        if (CommentBuffer == XMLCommentHeader)
                         {
                             CommentBuffer = "";
                             ScanningXMLComments = true;
                             CommentIndex = 0;
                         }
-                        else if(CommentIndex < 3)
+                        else if (CommentIndex < 3)
                         {
                             CommentIndex++;
                         }
@@ -599,12 +599,12 @@ void StringVectorList::LoadFileWithoutComments(std::string InputFile)
                         LineString += CommentBuffer;
                     }
                 }
-                else if(LineChar == "\n")
+                else if (LineChar == "\n")
                 {
                     Add(LineString);
                     LineString = "";
                 }
-                else if(LineChar == "<"&&CommentBuffer == "")
+                else if (LineChar == "<" && CommentBuffer == "")
                 {
                     CommentBuffer = "<";
                     CommentIndex = 1;
@@ -615,13 +615,13 @@ void StringVectorList::LoadFileWithoutComments(std::string InputFile)
                 }
                 FileStreamState = 2;
             }
-            else if(NextChar == EOF || LoadedFileStream.eof())
+            else if (NextChar == EOF || LoadedFileStream.eof())
             {
-                if(CommentBuffer != "")
+                if (CommentBuffer != "")
                 {
                     LineString += CommentBuffer;
                 }
-                if(LineString != "")
+                if (LineString != "")
                 {
                     Add(LineString);
                     LineString = "";
@@ -633,17 +633,17 @@ void StringVectorList::LoadFileWithoutComments(std::string InputFile)
             }
             else
             {
-                if(LoadedFileStream.bad())
+                if (LoadedFileStream.bad())
                 {
                     cout << "Failed Read/Write operation Error \n";
                     FileStreamState = -1;
                 }
-                else if(LoadedFileStream.fail())
+                else if (LoadedFileStream.fail())
                 {
-                    cout << "Failed format-based Error at Path"<<InputFile<<"\n";
+                    cout << "Failed format-based Error at Path" << InputFile << "\n";
                     FileStreamState = -1;
                 }
-                else if(LoadedFileStream.bad())
+                else if (LoadedFileStream.bad())
                 {
                     cout << "Failed Read/Write operation Error \n";
                     FileStreamState = -1;
@@ -658,19 +658,19 @@ void StringVectorList::LoadFileWithoutComments(std::string InputFile)
         else
         {
             cout << "Failed to open" << InputFile << "\n";
-            if(LoadedFileStream.eof())
+            if (LoadedFileStream.eof())
             {
                 cout << "Reached end of file Error \n";
             }
-            else if(LoadedFileStream.bad())
+            else if (LoadedFileStream.bad())
             {
                 cout << "Failed Read/Write operation Error \n";
             }
-            else if(LoadedFileStream.fail())
+            else if (LoadedFileStream.fail())
             {
-                cout << "Failed format-based Error at Path"<<InputFile<<"\n";
+                cout << "Failed format-based Error at Path" << InputFile << "\n";
             }
-            else if(LoadedFileStream.bad())
+            else if (LoadedFileStream.bad())
             {
                 cout << "Failed Read/Write operation Error \n";
             }
@@ -683,9 +683,9 @@ std::string StringVectorList::ConvertToString()
 {
     string ConvertedString = "";
     size_t NumberLines = Size();
-    for(size_t i = 0; i < NumberLines; ++i)
+    for (size_t i = 0; i < NumberLines; ++i)
     {
-        if(i != 0)
+        if (i != 0)
         {
             ConvertedString += "\n";
         }
@@ -706,10 +706,10 @@ void StringVectorList::CreateFileIfDoesntExist(std::string FileName)
     //	std::cout << "File already exists" << std::endl;
     //	return;
     //}
-    if(!FileExists)
+    if (!FileExists)
     {
         std::ofstream file(FileName);
-        if(!file)
+        if (!file)
         {
             std::cout << "File could not be created" << std::endl;
             return;
@@ -727,21 +727,21 @@ void StringVectorList::SaveDataToFileV3(std::string FileName, bool Verbose/*=fal
     CreateFileIfDoesntExist(FileName);
     LoadedFileStream.open(FileName.c_str(), std::fstream::out | std::fstream::trunc);
     size_t DataSize = Size();
-    if(LoadedFileStream.is_open())
+    if (LoadedFileStream.is_open())
     {
-        if(LoadedFileStream.good())
+        if (LoadedFileStream.good())
         {
-            for(size_t i = 0; i < DataSize; ++i)
+            for (size_t i = 0; i < DataSize; ++i)
             {
-                if(i != 0)
+                if (i != 0)
                 {//Carriage Return to next line
                     LoadedFileStream << "\n";
                 }
                 LineString = ElementAt(i);
-                if(Verbose) { std::cout << LineString << "\n"; }
+                if (Verbose) { std::cout << LineString << "\n"; }
                 //LoadedFileStream << LineString;
                 StringLength = LineString.length();
-                for(size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
+                for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
                 {
                     StringChar = LineString.at(StringIndex);
                     LoadedFileStream << StringChar;
@@ -750,10 +750,10 @@ void StringVectorList::SaveDataToFileV3(std::string FileName, bool Verbose/*=fal
         }
         else
         {
-            if(LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
-            else if(LoadedFileStream.fail()) { std::cout << "Failed format based Error!\n"; }
-            else if(LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
-            else if(LoadedFileStream.eof()) {/*Send debug message of reaching end of file?*/ }
+            if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
+            else if (LoadedFileStream.fail()) { std::cout << "Failed format based Error!\n"; }
+            else if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
+            else if (LoadedFileStream.eof()) {/*Send debug message of reaching end of file?*/ }
         }
         LoadedFileStream.close();
     }
@@ -783,23 +783,23 @@ bool StringVectorList::LoadFileDataV2(std::string FileName, unsigned short Confi
     bool LineCommentType = false;
     //-------------------------
     size_t CommentIndex = 0;
-    if(LoadedFileStream.is_open())
+    if (LoadedFileStream.is_open())
     {
-        if(LoadedFileStream.good())
+        if (LoadedFileStream.good())
         {
             std::filebuf* FileBuffer = LoadedFileStream.rdbuf();
-            for(LineChar = FileBuffer->sbumpc(); LineChar != EOF; LineChar = FileBuffer->sbumpc())
+            for (LineChar = FileBuffer->sbumpc(); LineChar != EOF; LineChar = FileBuffer->sbumpc())
             {
                 //std::cout << LineChar;
-                if(ScanningComments02)
+                if (ScanningComments02)
                 {
-                    if(LineCommentType == false)
+                    if (LineCommentType == false)
                     {
-                        if(LineChar == '*')
+                        if (LineChar == '*')
                         {
                             CommentBuffer = "*";
                         }
-                        else if(LineChar == '/'&&CommentBuffer == "*")
+                        else if (LineChar == '/' && CommentBuffer == "*")
                         {
                             ScanningComments02 = false;
                             CommentBuffer = "";
@@ -810,40 +810,40 @@ bool StringVectorList::LoadFileDataV2(std::string FileName, unsigned short Confi
                         }
                     }
                 }
-                else if(ConfigSetting != 0 && LineChar == '*'&&CommentBuffer == "/")
+                else if (ConfigSetting != 0 && LineChar == '*' && CommentBuffer == "/")
                 {
                     LineCommentType = false;
                     ScanningComments02 = true;
                 }
-                else if(ConfigSetting != 0 && LineChar == '/')
+                else if (ConfigSetting != 0 && LineChar == '/')
                 {
                     CommentBuffer += '/';
-                    if(CommentBuffer == "//")
+                    if (CommentBuffer == "//")
                     {
                         LineCommentType = true;
                         ScanningComments02 = true;
                     }
-                    else if(CommentBuffer != "/")
+                    else if (CommentBuffer != "/")
                     {//Force buffer as "/" if anything other
                         CommentBuffer = "/";
                     }
-                    else if(CommentBuffer.size() > 2)
+                    else if (CommentBuffer.size() > 2)
                     {
                         CommentBuffer = "";
                     }
                 }
-                else if(ScanningXMLComments)
+                else if (ScanningXMLComments)
                 {
-                    if(LineChar == XMLCommentFooter.at(CommentIndex))
+                    if (LineChar == XMLCommentFooter.at(CommentIndex))
                     {
                         CommentBuffer += LineChar;
-                        if(CommentBuffer == XMLCommentFooter)
+                        if (CommentBuffer == XMLCommentFooter)
                         {
                             CommentBuffer = "";
                             ScanningXMLComments = true;
                             CommentIndex = 0;
                         }
-                        else if(CommentIndex < 2)
+                        else if (CommentIndex < 2)
                         {
                             CommentIndex++;
                         }
@@ -859,18 +859,18 @@ bool StringVectorList::LoadFileDataV2(std::string FileName, unsigned short Confi
                         CommentIndex = 0;
                     }
                 }
-                else if(CommentBuffer != "")
+                else if (CommentBuffer != "")
                 {
-                    if(LineChar == XMLCommentHeader.at(CommentIndex))
+                    if (LineChar == XMLCommentHeader.at(CommentIndex))
                     {
                         CommentBuffer += LineChar;
-                        if(CommentBuffer == XMLCommentHeader)
+                        if (CommentBuffer == XMLCommentHeader)
                         {
                             CommentBuffer = "";
                             ScanningXMLComments = true;
                             CommentIndex = 0;
                         }
-                        else if(CommentIndex < 3)
+                        else if (CommentIndex < 3)
                         {
                             CommentIndex++;
                         }
@@ -884,12 +884,12 @@ bool StringVectorList::LoadFileDataV2(std::string FileName, unsigned short Confi
                         LineString += CommentBuffer;
                     }
                 }
-                else if(LineChar == '\n')
+                else if (LineChar == '\n')
                 {
                     Add(LineString);
                     LineString = "";
                 }
-                else if(ConfigSetting != 0 && LineChar == '<'&&CommentBuffer == "")
+                else if (ConfigSetting != 0 && LineChar == '<' && CommentBuffer == "")
                 {
                     CommentBuffer = "<";
                     CommentIndex = 1;
@@ -903,10 +903,10 @@ bool StringVectorList::LoadFileDataV2(std::string FileName, unsigned short Confi
         }
         else
         {
-            if(LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
-            else if(LoadedFileStream.fail()) { std::cout << "Failed format based Error!\n"; }
-            else if(LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
-            else if(LoadedFileStream.eof()) {/*Send debug message of reaching end of file?*/ }
+            if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
+            else if (LoadedFileStream.fail()) { std::cout << "Failed format based Error!\n"; }
+            else if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
+            else if (LoadedFileStream.eof()) {/*Send debug message of reaching end of file?*/ }
             return false;
         }
         LoadedFileStream.close();

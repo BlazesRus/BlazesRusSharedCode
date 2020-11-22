@@ -16,11 +16,11 @@ void DoubleList::SaveDataToFile(std::string Path)
     std::fstream CraftedIniFile;
     CraftedIniFile.open(Path, std::ios::out | std::ios::trunc);
     size_t DataSize = Size();
-    if(CraftedIniFile.is_open())
+    if (CraftedIniFile.is_open())
     {
-        for(size_t i = 0; i < DataSize; ++i)
+        for (size_t i = 0; i < DataSize; ++i)
         {
-            if(i != 0)
+            if (i != 0)
             {//Carriage Return to next line
                 CraftedIniFile << "\r\n";
             }
@@ -65,11 +65,11 @@ void IntegerList::SaveDataToFile(std::string Path)
     std::fstream CraftedIniFile;
     CraftedIniFile.open(Path, std::ios::out | std::ios::trunc);
     size_t DataSize = Size();
-    if(CraftedIniFile.is_open())
+    if (CraftedIniFile.is_open())
     {
-        for(size_t i = 0; i < DataSize; ++i)
+        for (size_t i = 0; i < DataSize; ++i)
         {
-            if(i != 0)
+            if (i != 0)
             {//Carriage Return to next line
                 CraftedIniFile << "\r\n";
             }
@@ -90,11 +90,11 @@ void XIntegerList::SaveDataToFile(std::string Path)
     std::fstream CraftedIniFile;
     CraftedIniFile.open(Path, std::ios::out | std::ios::trunc);
     size_t DataSize = Size();
-    if(CraftedIniFile.is_open())
+    if (CraftedIniFile.is_open())
     {
-        for(size_t i = 0; i < DataSize; ++i)
+        for (size_t i = 0; i < DataSize; ++i)
         {
-            if(i != 0)
+            if (i != 0)
             {//Carriage Return to next line
                 CraftedIniFile << "\r\n";
             }
@@ -114,7 +114,7 @@ StringVectorList DoubleList::AsStringList()
     StringVectorList TempStringList;
     std::string TempString;
     size_t TempInt = Size();
-    for(size_t i = 0; i < TempInt; ++i)
+    for (size_t i = 0; i < TempInt; ++i)
     {
         TempString = VariableConversionFunctions::DoubleAsString(ElementAt(i));
         TempStringList.Add(TempString);
@@ -124,26 +124,26 @@ StringVectorList DoubleList::AsStringList()
 
 void DoubleList::ConvertStringToVectorList(std::string Content)
 {
-    if(Size() != 0)
+    if (Size() != 0)
     {
         Reset();
     }
     const size_t StringSize = Content.length();
     char CurrentChar;
     string CurrentElement = "";
-    for(size_t Index=0; Index < StringSize; ++Index)
+    for (size_t Index = 0; Index < StringSize; ++Index)
     {
         CurrentChar = Content.at(Index);
-        if(CurrentElement == "")
+        if (CurrentElement == "")
         {
-            if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement = CurrentChar;
             }
         }
         else
         {
-            if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement += CurrentChar;
             }
@@ -161,7 +161,7 @@ StringVectorList IntegerList::AsStringList()
     StringVectorList TempStringList;
     std::string TempString;
     size_t TempInt = Size();
-    for(size_t i = 0; i < TempInt; ++i)
+    for (size_t i = 0; i < TempInt; ++i)
     {
         TempString = VariableConversionFunctions::IntToStringConversion(ElementAt(i));
         TempStringList.Add(TempString);
@@ -196,10 +196,10 @@ std::string IntegerList::GenerateAsString()
     string ListString;
     int TempValue;
     size_t TempSize = this->Size();
-    for(int i = 0; i < TempSize; i++)
+    for (int i = 0; i < TempSize; i++)
     {
         TempValue = this->ElementAt(i);
-        if(i == 0)
+        if (i == 0)
         {
             ListString = VariableConversionFunctions::IntToStringConversion(TempValue);
         }
@@ -214,26 +214,26 @@ std::string IntegerList::GenerateAsString()
 
 void IntegerList::ConvertStringToVectorList(std::string Content)
 {
-    if(Size() != 0)
+    if (Size() != 0)
     {
         Reset();
     }
     const size_t StringSize = Content.length();
     char CurrentChar;
     string CurrentElement = "";
-    for(size_t Index=0; Index < StringSize; ++Index)
+    for (size_t Index = 0; Index < StringSize; ++Index)
     {
         CurrentChar = Content.at(Index);
-        if(CurrentElement == "")
+        if (CurrentElement == "")
         {
-            if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement = CurrentChar;
             }
         }
         else
         {
-            if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement += CurrentChar;
             }
@@ -251,10 +251,10 @@ std::string XIntegerList::GenerateAsString()
     string ListString;
     long long int TempValue;
     size_t TempSize = this->Size();
-    for(size_t i = 0; i < TempSize; ++i)
+    for (size_t i = 0; i < TempSize; ++i)
     {
         TempValue = this->ElementAt(i);
-        if(i == 0)
+        if (i == 0)
         {
             ListString = VariableConversionFunctions::XIntToStringConversion(TempValue);
         }
@@ -269,26 +269,26 @@ std::string XIntegerList::GenerateAsString()
 
 void XIntegerList::ConvertStringToVectorList(std::string Content)
 {
-    if(Size() != 0)
+    if (Size() != 0)
     {
         Reset();
     }
     const size_t StringSize = Content.length();
     char CurrentChar;
     string CurrentElement = "";
-    for(size_t Index=0; Index < StringSize; ++Index)
+    for (size_t Index = 0; Index < StringSize; ++Index)
     {
         CurrentChar = Content.at(Index);
-        if(CurrentElement == "")
+        if (CurrentElement == "")
         {
-            if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement = CurrentChar;
             }
         }
         else
         {
-            if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement += CurrentChar;
             }
@@ -315,11 +315,11 @@ void BoolList::SaveDataToFile(std::string Path)
     std::fstream CraftedIniFile;
     CraftedIniFile.open(Path, std::ios::out || std::ios::trunc);
     size_t DataSize = Size();
-    if(CraftedIniFile.is_open())
+    if (CraftedIniFile.is_open())
     {
-        for(size_t i = 0; i < DataSize; i++)
+        for (size_t i = 0; i < DataSize; i++)
         {
-            if(i != 0)
+            if (i != 0)
             {//Carriage Return to next line
                 CraftedIniFile << "\r\n";
             }
@@ -339,7 +339,7 @@ StringVectorList BoolList::AsStringList()
     StringVectorList TempStringList;
     std::string TempString;
     size_t TempInt = Size();
-    for(size_t i = 0; i < TempInt; i++)
+    for (size_t i = 0; i < TempInt; i++)
     {
         TempString = VariableConversionFunctions::BoolAsString(ElementAt(i));
         TempStringList.Add(TempString);
@@ -349,26 +349,26 @@ StringVectorList BoolList::AsStringList()
 
 void BoolList::ConvertStringToVectorList(std::string Content)
 {
-    if(Size() != 0)
+    if (Size() != 0)
     {
         Reset();
     }
     const size_t StringSize = Content.length();
     char CurrentChar;
     string CurrentElement = "";
-    for(size_t Index=0; Index < StringSize; ++Index)
+    for (size_t Index = 0; Index < StringSize; ++Index)
     {
         CurrentChar = Content.at(Index);
-        if(CurrentElement == "")
+        if (CurrentElement == "")
         {
-            if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement = CurrentChar;
             }
         }
         else
         {
-            if(CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement += CurrentChar;
             }

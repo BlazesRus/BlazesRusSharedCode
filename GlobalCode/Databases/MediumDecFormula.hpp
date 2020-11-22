@@ -88,8 +88,6 @@ namespace BlazesRusCode
             int OpTargetKey;
             int leftKey;
 
-            //bool moreOperations = FormDRef.size() > 3;
-
             //Applying operations via C++ variation of order of operations
             //https://en.cppreference.com/w/cpp/language/operator_precedence
             for (int opIndex = 0; opIndex < 11; ++opIndex)

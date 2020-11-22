@@ -21,14 +21,14 @@ StringVectorList VariableVectorFunctions::ReadStringParamFromStringList(StringVe
     size_t StringLength;
     char StringChar;
     string LineString;
-    for(size_t ListLine = 0; TempStringList.StreamLineData(); ++ListLine)
+    for (size_t ListLine = 0; TempStringList.StreamLineData(); ++ListLine)
     {
         LineString = TempStringList.CurrentStreamedLineString();
         StringLength = LineString.length();
-        for(int i = 0; i < StringLength; i++)
+        for (int i = 0; i < StringLength; i++)
         {
             StringChar = LineString.at(i);
-            if(StringChar == ' ' || StringChar == '	'&&!TempString.empty())
+            if (StringChar == ' ' || StringChar == '	' && !TempString.empty())
             {
                 ParamList.Add(TempString);
                 TempString = "";
@@ -39,7 +39,7 @@ StringVectorList VariableVectorFunctions::ReadStringParamFromStringList(StringVe
             }
         }
     }
-    if(!TempString.empty())
+    if (!TempString.empty())
     {
         ParamList.Add(TempString);
     }
@@ -53,14 +53,14 @@ IntegerList VariableVectorFunctions::ReadIntParamFromStringList(StringVectorList
     size_t StringLength;
     char StringChar;
     string LineString;
-    for(size_t ListLine = 0; TempStringList.StreamLineData(); ++ListLine)
+    for (size_t ListLine = 0; TempStringList.StreamLineData(); ++ListLine)
     {
         LineString = TempStringList.CurrentStreamedLineString();
         StringLength = LineString.length();
-        for(int i = 0; i < StringLength; i++)
+        for (int i = 0; i < StringLength; i++)
         {
             StringChar = LineString.at(i);
-            if(StringChar == ' ' || StringChar == '	'&& !TempString.empty())
+            if (StringChar == ' ' || StringChar == '	' && !TempString.empty())
             {
                 ParamList.Add(VariableConversionFunctions::ReadIntFromString(TempString));
                 TempString = "";
@@ -71,7 +71,7 @@ IntegerList VariableVectorFunctions::ReadIntParamFromStringList(StringVectorList
             }
         }
     }
-    if(!TempString.empty())
+    if (!TempString.empty())
     {
         ParamList.Add(VariableConversionFunctions::ReadIntFromString(TempString));
     }
@@ -85,14 +85,14 @@ DoubleList VariableVectorFunctions::ReadDoubleParamFromStringList(StringVectorLi
     size_t StringLength;
     char StringChar;
     string LineString;
-    for(size_t ListLine = 0; TempStringList.StreamLineData(); ++ListLine)
+    for (size_t ListLine = 0; TempStringList.StreamLineData(); ++ListLine)
     {
         LineString = TempStringList.CurrentStreamedLineString();
         StringLength = LineString.length();
-        for(int i = 0; i < StringLength; i++)
+        for (int i = 0; i < StringLength; i++)
         {
             StringChar = LineString.at(i);
-            if(StringChar == ' ' || StringChar == '	')
+            if (StringChar == ' ' || StringChar == '	')
             {
                 ParamList.Add(VariableConversionFunctions::ReadDoubleFromString(TempString));
                 TempString = "";
@@ -103,7 +103,7 @@ DoubleList VariableVectorFunctions::ReadDoubleParamFromStringList(StringVectorLi
             }
         }
     }
-    if(!TempString.empty())
+    if (!TempString.empty())
     {
         ParamList.Add(VariableConversionFunctions::ReadDoubleFromString(TempString));
     }
@@ -121,10 +121,10 @@ StringVectorList VariableVectorFunctions::ParamInfoFromString(string LineString)
     StringVectorList ParamList;
     size_t StringLength = LineString.length();
     char StringChar;
-    for(int i = 0; i < StringLength; i++)
+    for (int i = 0; i < StringLength; i++)
     {
         StringChar = LineString.at(i);
-        if(StringChar == ',')
+        if (StringChar == ',')
         {
             ParamList.Add(TempString);
             TempString = "";
@@ -134,7 +134,7 @@ StringVectorList VariableVectorFunctions::ParamInfoFromString(string LineString)
             TempString += StringChar;
         }
     }
-    if(!TempString.empty())
+    if (!TempString.empty())
     {
         ParamList.Add(TempString);
     }
@@ -164,9 +164,9 @@ StringVectorList VariableVectorFunctions::ConvertStringEntriesToStringRows(Strin
     StringVectorList StringRows;
     string CurrentRowString = "";
     int ColumnNum = 0;
-    for(int i = 0; i < TempStringList.length(); i++)
+    for (int i = 0; i < TempStringList.length(); i++)
     {
-        if(ColumnNum == 0)
+        if (ColumnNum == 0)
         {
             CurrentRowString = TempStringList.elementAt(i);
         }
@@ -175,13 +175,13 @@ StringVectorList VariableVectorFunctions::ConvertStringEntriesToStringRows(Strin
             CurrentRowString += " " + TempStringList.elementAt(i);
         }
         ColumnNum++;
-        if(ColumnNum >= 16)
+        if (ColumnNum >= 16)
         {
             StringRows.Add(CurrentRowString);
             ColumnNum = 0;
         }
     }
-    if(ColumnNum != 0)
+    if (ColumnNum != 0)
     {
         StringRows.Add(CurrentRowString);
     }
@@ -195,25 +195,25 @@ StringVectorList VariableVectorFunctions::IniInfoFromString(string LineString)
     size_t StringLength = LineString.length();
     string StringChar;
     bool IgnoreWhitespace = true;
-    for(size_t i = 0; i < StringLength; ++i)
+    for (size_t i = 0; i < StringLength; ++i)
     {
         StringChar = LineString.at(i);
-        if(StringChar == "=")
+        if (StringChar == "=")
         {
             ParamList.Add(TempString);
             TempString = "";
         }
-        else if(StringChar == "\\\"")
+        else if (StringChar == "\\\"")
         {
             IgnoreWhitespace = !IgnoreWhitespace;
         }
-        else if(IgnoreWhitespace && StringChar == "[^\\\\d]") {}
+        else if (IgnoreWhitespace && StringChar == "[^\\\\d]") {}
         else
         {
             TempString += StringChar;
         }
     }
-    if(!TempString.empty())
+    if (!TempString.empty())
     {
         ParamList.Add(TempString);
     }
@@ -227,14 +227,14 @@ StringVectorList VariableVectorFunctions::ParamInfoFromStringList(StringVectorLi
     size_t StringLength;
     char StringChar;
     string LineString;
-    for(size_t ListLine = 0; TempStringList.StreamLineData(); ++ListLine)
+    for (size_t ListLine = 0; TempStringList.StreamLineData(); ++ListLine)
     {
         LineString = TempStringList.CurrentStreamedLineString();
         StringLength = LineString.length();
-        for(size_t i = 0; i < StringLength; i++)
+        for (size_t i = 0; i < StringLength; i++)
         {
             StringChar = LineString.at(i);
-            if(StringChar == ',')
+            if (StringChar == ',')
             {
                 ParamList.Add(TempString);
                 TempString = "";
@@ -245,7 +245,7 @@ StringVectorList VariableVectorFunctions::ParamInfoFromStringList(StringVectorLi
             }
         }
     }
-    if(!TempString.empty())
+    if (!TempString.empty())
     {
         ParamList.Add(TempString);
     }
@@ -273,14 +273,14 @@ inline DoubleList VariableVectorFunctions::ConvertStringToDoubleList(std::string
         CurrentChar = Content.at(Index);
         if (CurrentElement.empty())
         {
-            if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement = CurrentChar;
             }
         }
         else
         {
-            if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement += CurrentChar;
             }
@@ -305,14 +305,14 @@ inline IntegerList VariableVectorFunctions::ConvertStringToIntegerList(std::stri
         CurrentChar = Content.at(Index);
         if (CurrentElement.empty())
         {
-            if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement = CurrentChar;
             }
         }
         else
         {
-            if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement += CurrentChar;
             }
@@ -337,14 +337,14 @@ inline XIntegerList VariableVectorFunctions::ConvertStringToXIntegerList(std::st
         CurrentChar = Content.at(Index);
         if (CurrentElement.empty())
         {
-            if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement = CurrentChar;
             }
         }
         else
         {
-            if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement += CurrentChar;
             }
@@ -369,14 +369,14 @@ inline BoolList VariableVectorFunctions::ConvertStringToBoolList(std::string Con
         CurrentChar = Content.at(Index);
         if (CurrentElement.empty())
         {
-            if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement = CurrentChar;
             }
         }
         else
         {
-            if (CurrentChar != '\n'&&CurrentChar != ' '&&CurrentChar != '\t'&&CurrentChar != '	')
+            if (CurrentChar != '\n' && CurrentChar != ' ' && CurrentChar != '\t' && CurrentChar != '	')
             {
                 CurrentElement += CurrentChar;
             }

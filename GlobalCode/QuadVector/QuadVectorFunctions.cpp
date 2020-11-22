@@ -4,7 +4,6 @@
 #include "QuadVectorFunctions.h"
 #include <string>
 
-
 #ifdef BlazesGlobalCode_LocalLayout//(Local version style layout)
 #include "VariableConversionFunctions.h"
 #else
@@ -28,12 +27,12 @@ QuadVector QuadVectorFunctions::ReadQuadVectorFromString(string LineString)
     bool ScanningDouble = false;
     //Total size of LineString to load
     size_t StringSize = LineString.size();
-    for(size_t i = 0; i < StringSize&&VectorIndex < 4; ++i)
+    for (size_t i = 0; i < StringSize && VectorIndex < 4; ++i)
     {
         StringChar = LineString.at(i);
-        if(StringChar == ' ' || StringChar == '	'&&PartialSearchBuffer != "")
+        if (StringChar == ' ' || StringChar == '	' && PartialSearchBuffer != "")
         {
-            if(ScanningDouble)
+            if (ScanningDouble)
             {
                 DoubleStorageTemp = VariableConversionFunctions::ReadDoubleFromString(PartialSearchBuffer);
                 StorageValue.StoreInVectorIndex(VectorIndex, DoubleStorageTemp);
@@ -41,10 +40,10 @@ QuadVector QuadVectorFunctions::ReadQuadVectorFromString(string LineString)
                 VectorIndex++;
             }
         }
-        else if(StringChar == '.' || StringChar == '0' || StringChar == '1' || StringChar == '2' || StringChar == '3' || StringChar == '4' || StringChar == '5' || StringChar == '6' || StringChar == '7' || StringChar == '8' || StringChar == '9' || StringChar == '-')
+        else if (StringChar == '.' || StringChar == '0' || StringChar == '1' || StringChar == '2' || StringChar == '3' || StringChar == '4' || StringChar == '5' || StringChar == '6' || StringChar == '7' || StringChar == '8' || StringChar == '9' || StringChar == '-')
         {
             PartialSearchBuffer += StringChar;
-            if(ScanningDouble == false) { ScanningDouble = true; }
+            if (ScanningDouble == false) { ScanningDouble = true; }
         }
     }
     return StorageValue;
@@ -61,10 +60,10 @@ QuadVectorList QuadVectorFunctions::ReadQuadVectorListFromString(std::string Lin
     std::string CurrentQuadVectorString = "";
     char StringChar;
     size_t StringSize = LineString.size();
-    for(size_t i = 0; i < StringSize; ++i)
+    for (size_t i = 0; i < StringSize; ++i)
     {
         StringChar = LineString.at(i);
-        if(StringChar == '\n')
+        if (StringChar == '\n')
         {
             StorageValue.Add(ReadQuadVectorFromString(CurrentQuadVectorString));
         }
@@ -73,7 +72,7 @@ QuadVectorList QuadVectorFunctions::ReadQuadVectorListFromString(std::string Lin
             CurrentQuadVectorString += StringChar;
         }
     }
-    if(CurrentQuadVectorString!="")
+    if (CurrentQuadVectorString != "")
     {
         StorageValue.Add(ReadQuadVectorFromString(CurrentQuadVectorString));
     }

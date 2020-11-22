@@ -29,32 +29,32 @@
 class QuadVectorFunctions
 {
 public:
-	//Returns QuadValue from string;returns value of (0.0,0.0,0.0,0.0) if either invalid string sent
+    //Returns QuadValue from string;returns value of (0.0,0.0,0.0,0.0) if either invalid string sent
 /// <summary>
 /// Reads the quad vector from string.
 /// </summary>
 /// <param name="LineString">The line string.</param>
 /// <returns>QuadVector</returns>
-	static QuadVector ReadQuadVectorFromString(std::string LineString);
-	/// <summary>
-	/// Quads the vector to string conversion.
-	/// </summary>
-	/// <param name="TempValue">The temporary value.</param>
-	/// <returns>std.string</returns>
-	static std::string QuadVectorToStringConversion(QuadVector TempValue);
-	/// <summary>
-	/// Reads the quad vector list from string.
-	/// </summary>
-	/// <param name="LineString">The line string.</param>
-	/// <returns>QuadVectorList</returns>
-	static QuadVectorList ReadQuadVectorListFromString(std::string LineString);
-	/// <summary>
-	/// Initializes a new instance of the <see cref="QuadVectorFunctions"/> class.
-	/// </summary>
-	QuadVectorFunctions();
-	/// <summary>
-	/// Finalizes an instance of the <see cref="QuadVectorFunctions"/> class.
-	/// </summary>
-	~QuadVectorFunctions();
+    static QuadVector ReadQuadVectorFromString(std::string LineString);
+    /// <summary>
+    /// Quads the vector to string conversion.
+    /// </summary>
+    /// <param name="TempValue">The temporary value.</param>
+    /// <returns>std.string</returns>
+    static std::string QuadVectorToStringConversion(QuadVector TempValue);
+    /// <summary>
+    /// Reads the quad vector list from string.
+    /// </summary>
+    /// <param name="LineString">The line string.</param>
+    /// <returns>QuadVectorList</returns>
+    static QuadVectorList ReadQuadVectorListFromString(std::string LineString);
+    /// <summary>
+    /// Initializes a new instance of the <see cref="QuadVectorFunctions"/> class.
+    /// </summary>
+    QuadVectorFunctions();
+    /// <summary>
+    /// Finalizes an instance of the <see cref="QuadVectorFunctions"/> class.
+    /// </summary>
+    ~QuadVectorFunctions();
 };
 #endif
