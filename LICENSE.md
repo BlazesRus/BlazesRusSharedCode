@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2017 James Michael Armstrong (NexusName:BlazesRus)(GitHub UserName:BlazesRus)
+Copyright (c) 2016-2020 James Michael Armstrong (https://github.com/BlazesRus)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
