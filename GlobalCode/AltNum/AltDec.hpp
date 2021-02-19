@@ -150,8 +150,14 @@ namespace BlazesRusCode
 				else
 				{
 #endif
-				UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = DecimalHalf;
-				#ifdef AltDec_EnableInfinityRep
+				if(DecimalHalf==0&&IntValue==10)
+					UpdateTarget.IntValue = 31; UpdateTarget.DecimalHalf = 415926536;
+				else
+				{
+					UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = DecimalHalf;
+					UpdateTarget *= MediumDec::PI;
+				}
+#ifdef AltDec_EnableInfinityRep
 				}
 #endif
 			}

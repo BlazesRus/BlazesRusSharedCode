@@ -192,13 +192,13 @@ namespace BlazesRusCode
         }
 
         /// <summary>
-        /// Returns PI(3.1415926535897932384626433) with tenth digit rounded up(3.141592655)
+        /// Returns PI(3.1415926535897932384626433) with tenth digit rounded up(3.141592654)
         /// (about 1.000000000448883 times actual value of PI with digits past 15th cut off)
         /// </summary>
         /// <returns>MediumDec</returns>
         static MediumDec PIValue()
         {
-            MediumDec NewSelf = MediumDec(3, 141592655);
+            MediumDec NewSelf = MediumDec(3, 141592654);
             return NewSelf;
         }
 
