@@ -248,7 +248,7 @@ namespace BlazesRusCode
 
         static MediumDec NilValue()
         {
-            return MediumDec(-2147483647, -2147483647);
+            return MediumDec(-2147483648, -2147483648);
         }
     public:
         static MediumDec PI;
@@ -463,6 +463,7 @@ namespace BlazesRusCode
         ///// <returns>string</returns>
         //friend std::string operator+=(std::string targetString, MediumDec self) { return targetString + self.ToString(); }
     #pragma endregion String Commands
+
     #pragma region From Standard types to this type
         /// <summary>
         /// Sets the value.
@@ -600,6 +601,7 @@ namespace BlazesRusCode
             this->SetVal(Value);
         }
     #pragma endregion From Standard types to this type
+
     #pragma region From this type to Standard types
         /// <summary>
         /// MediumDec to float explicit conversion
@@ -675,6 +677,7 @@ namespace BlazesRusCode
         template<typename IntType>
         explicit operator IntType() { return IntValue; }
     #pragma endregion From this type to Standard types
+
     #pragma region Comparison Operators
         /// <summary>
         /// Equal to Operation Between MediumDecs
