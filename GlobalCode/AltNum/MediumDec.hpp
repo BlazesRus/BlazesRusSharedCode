@@ -97,6 +97,11 @@ namespace BlazesRusCode
             IntValue = Value.IntValue;
             DecimalHalf = Value.DecimalHalf;
         }
+		
+		void SetAsZero()
+		{
+			IntValue = 0; DecimalHalf = 0;
+		}
 
     #pragma region ValueDefines
     private:
@@ -1431,7 +1436,7 @@ namespace BlazesRusCode
         {
             bool SelfIsWholeN = self.DecimalHalf == 0;
             bool ValueIsWholeN = Value.DecimalHalf == 0;
-            if (Value.IntValue == 0 && ValueIsWholeN) { return MediumDec::Zero; }//Return zero instead of N/A
+            if (Value.IntValue == 0 && ValueIsWholeN) { self.SetAsZero(); return self; }//Return zero instead of N/A
             if (SelfIsWholeN && ValueIsWholeN)//WholeNumbers
             {
                 self.IntValue %= Value.IntValue;
@@ -2327,7 +2332,7 @@ namespace BlazesRusCode
         template<typename IntType>
         static MediumDec& RemOp(MediumDec& self, IntType& Value)
         {
-            if (Value == 0 || self == MediumDec::Zero) { return MediumDec::Zero; }
+            if (Value == 0 || self == MediumDec::Zero) { self.SetAsZero(); return self; }
             if (self.DecimalHalf == 0)
             {
                 if (self.IntValue < 0)//https://www.quora.com/How-does-the-modulo-operation-work-with-negative-numbers-and-why
