@@ -11,13 +11,23 @@
 //Bitwise based operation code will be coded later(not fully implimented yet--though likely inaccurate even for normal representation) 
 //Optional rep based code will be finished last(not fully implimented yet) 
 
+// If AltDec_EnableENum is true and AltDec_EnableImaginaryNum is false(used when ExtraRep is negative if only one of them is enabled),
+//  then will support +- 2147483647.999999999E and +- 2147483647.999999999E/(Denom in range 1-2147483646)
+// If AltDec_EnableImaginaryNum is true and AltDec_EnableENum is false(used when ExtraRep is negative if only one of them is enabled),
+//  then will support +- 2147483647.999999999i and +- 2147483647.999999999i/(Denom in range 1-2147483646)
+// If both AltDec_EnableENum and AltDec_EnableImaginaryNum are enabled, then will support a lesser range of numbers for both
+
 //Preprocessor Switches
 /*
 AltDec_SeparateMixedFractionWithTile = Separate mixed fraction with _ instead of space on OptimalString(Not Implimented)
+
+AltDec_EnableMixedFractional = (Not Fully Implimented)
 AltDec_EnableImaginaryNum = (Not Fully Implimented)
 AltDec_EnableENum = (Not Fully Implimented)
-AltDec_EnableInfinityRep = (Not Fully Implimented)
-AltDec_EnableMixedFractional = (Not Fully Implimented)
+Only one of below can be enabled(when ExtraRep<0&&ExtraRep>-2147483647):
+AltDec_EnablePIPowers = (Not Implimented)
+AltDec_ImaginaryNumDividedAsNegativeRep = (Not Implimented)
+AltDec_ENumDividedAsNegativeRep = (Not Implimented)
 */
 
 namespace BlazesRusCode
@@ -28,12 +38,8 @@ namespace BlazesRusCode
     /// Alternative Non-Integer number representation with focus on accuracy and partially speed within certain range
     /// Represents +- 2147483647.999999999 with 100% consistency of accuracy for most operations as long as don't get too small
     /// plus support for some fractal operations etc
-	/// (Support for Num/denominator representation, (Value*PI), Mixed Fractions(if AltDec_EnableMixedFractional), and other optional reps)
-	/// If AltDec_EnableENum is true and AltDec_EnableImaginaryNum is false(used when ExtraRep is negative if only one of them is enabled),
-	///  then will support +- 2147483647.999999999E and +- 2147483647.999999999E/(Denom in range 1-2147483646)
-	/// If AltDec_EnableImaginaryNum is true and AltDec_EnableENum is false(used when ExtraRep is negative if only one of them is enabled),
-	///  then will support +- 2147483647.999999999i and +- 2147483647.999999999i/(Denom in range 1-2147483646)
-	/// If both AltDec_EnableENum and AltDec_EnableImaginaryNum are enabled, then will support a lesser range of numbers for both
+	/// (Support for Num/denominator representation, (Value*PI),
+	/// (Value*PI^X if AltDec_EnablePIPowers), Mixed Fractions(if AltDec_EnableMixedFractional), and other optional reps)
 	/// If AltDec_EnableInfinityRep is true, then will support positive and negative infinity representations
     /// (12 bytes worth of Variable Storage inside class for each instance)
     /// </summary>
@@ -335,7 +341,7 @@ public:
 					IntValue = 31; DecimalHalf = 415926536;
 				else
 				{
-					PartialAddOp(PINum);
+					BasicAddOp(PINum);
 				}
 #ifdef AltDec_EnableInfinityRep
 				}
@@ -353,7 +359,7 @@ public:
 					int TempAdd = IntValue;
 					IntValue = DecimalHalf*-1; DecimalHalf = 0;
 					BasicDivOp(ExtraRep);
-					PartialAddOp(TempAdd);
+					BasicAddOp(TempAdd);
 				}
 				else//Value Divided by ExtraRep
 				{
@@ -372,7 +378,7 @@ public:
 #elif defined(AltDec_EnableENum) || (!defined(AltDec_EnableImaginaryNum)
 			else(ExtraRep<0)
 			{
-				PartialAddOp(ENum);
+				BasicAddOp(ENum);
 				if(ExtraRep!=-2147483647)
 				{
 					int TempDiv = ExtraRep*-1;
@@ -686,78 +692,26 @@ public:
 		
     #pragma region AltDec-To-AltDec Operators
     public:
-		void PartialAddOp(AltDec& Value)
+        /// <summary>
+        /// Basic Addition Operation Between AltDecs
+        /// </summary>
+        /// <param name="Value">The value.</param>
+		void BasicAddOp(AltDec& Value)
 		{
-#if AltDec_EnableMixedFractional
-			if(DecimalHalf<0)//MixedFractional
+			if (Value.DecimalHalf == 0)
 			{
-			
-			}
-			else
-			{
-#endif
-				if (Value.DecimalHalf == 0)
+				if (Value.IntValue == 0)//(Value == Zero)
+					return self;
+				if (DecimalHalf == 0)
 				{
-					if (Value.IntValue == 0)//(Value == Zero)
-						return self;
-					if (DecimalHalf == 0)
-					{
-						IntValue += Value.IntValue;
-					}
-					else
-					{
-						bool WasNegative = IntValue < 0;
-						if (WasNegative)
-							IntValue = IntValue == AltDec::NegativeZero ? -1 : --IntValue;
-						IntValue += Value.IntValue;
-						if (IntValue == -1)
-							IntValue = DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
-						else if (IntValue < 0)
-							++IntValue;
-						//If flips to other side of negative, invert the decimals
-						if ((WasNegative && IntValue >= 0) || (WasNegative == 0 && IntValue < 0))
-							DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
-					}
+					IntValue += Value.IntValue;
 				}
 				else
 				{
 					bool WasNegative = IntValue < 0;
-					//Deal with Int section first
 					if (WasNegative)
 						IntValue = IntValue == AltDec::NegativeZero ? -1 : --IntValue;
-					if (Value.IntValue != 0 && Value.IntValue != AltDec::NegativeZero)
-						IntValue += Value.IntValue;
-					//Now deal with the decimal section
-					if (Value.IntValue < 0)
-					{
-						if (WasNegative)
-						{
-							DecimalHalf += Value.DecimalHalf;
-							if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; ++IntValue; }
-							else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; --IntValue; }
-						}
-						else
-						{
-							DecimalHalf -= Value.DecimalHalf;
-							if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; --IntValue; }
-							else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; ++IntValue; }
-						}
-					}
-					else
-					{
-						if (WasNegative)
-						{
-							DecimalHalf -= Value.DecimalHalf;
-							if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; ++IntValue; }
-							else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; --IntValue; }
-						}
-						else
-						{
-							DecimalHalf += Value.DecimalHalf;
-							if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; --IntValue; }
-							else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; ++IntValue; }
-						}
-					}
+					IntValue += Value.IntValue;
 					if (IntValue == -1)
 						IntValue = DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
 					else if (IntValue < 0)
@@ -766,9 +720,54 @@ public:
 					if ((WasNegative && IntValue >= 0) || (WasNegative == 0 && IntValue < 0))
 						DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
 				}
-#if AltDec_EnableMixedFractional
 			}
-#endif
+			else
+			{
+				bool WasNegative = IntValue < 0;
+				//Deal with Int section first
+				if (WasNegative)
+					IntValue = IntValue == AltDec::NegativeZero ? -1 : --IntValue;
+				if (Value.IntValue != 0 && Value.IntValue != AltDec::NegativeZero)
+					IntValue += Value.IntValue;
+				//Now deal with the decimal section
+				if (Value.IntValue < 0)
+				{
+					if (WasNegative)
+					{
+						DecimalHalf += Value.DecimalHalf;
+						if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; ++IntValue; }
+						else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; --IntValue; }
+					}
+					else
+					{
+						DecimalHalf -= Value.DecimalHalf;
+						if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; --IntValue; }
+						else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; ++IntValue; }
+					}
+				}
+				else
+				{
+					if (WasNegative)
+					{
+						DecimalHalf -= Value.DecimalHalf;
+						if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; ++IntValue; }
+						else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; --IntValue; }
+					}
+					else
+					{
+						DecimalHalf += Value.DecimalHalf;
+						if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; --IntValue; }
+						else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; ++IntValue; }
+					}
+				}
+				if (IntValue == -1)
+					IntValue = DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+				else if (IntValue < 0)
+					++IntValue;
+				//If flips to other side of negative, invert the decimals
+				if ((WasNegative && IntValue >= 0) || (WasNegative == 0 && IntValue < 0))
+					DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
+			}
 		}
 	
         /// <summary>
@@ -783,7 +782,18 @@ public:
 			{
 				if(self.ExtraRep==0||ExtraRep==NegativeZero)
 				{
-					self.PartialAddOp(Value);
+#if AltDec_EnableMixedFractional
+					if(DecimalHalf<0)//MixedFractional
+					{
+					
+					}
+					else
+					{
+#endif
+						self.BasicAddOp(Value);
+#if AltDec_EnableMixedFractional
+					}
+#endif
 				}
 	#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
 				else if(ExtraRep==RevMaxInt)
@@ -803,93 +813,99 @@ public:
 				}
 	#endif
 			}
+			else
+			{
+				if(self.ExtraRep==0)
+				{
+				
+				}
+				else//Catch-all for other representation combinations
+				{
+					AltDec ValueCopy = Value;
+					Value.ConvertToNumRep();
+					self.BasicAddOp(ValueCopy);
+				}
+			}
             return self;
         }
 
-		void PartialSubOp(AltDec& Value)
+        /// <summary>
+        /// Basic Subtraction Operation Between AltDecs
+        /// </summary>
+        /// <param name="Value">The value.</param>
+		void BasicSubOp(AltDec& Value)
 		{
-#if AltDec_EnableMixedFractional
-			if(DecimalHalf<0)//MixedFractional
+			if (Value.DecimalHalf == 0)
 			{
-			
-			}
-			else
-			{
-#endif
-				if (Value.DecimalHalf == 0)
+				if (Value.IntValue == 0)//(Value == Zero)
+					return self;
+				if (DecimalHalf == 0)
 				{
-					if (Value.IntValue == 0)//(Value == Zero)
-						return self;
-					if (DecimalHalf == 0)
-					{
-						IntValue -= Value.IntValue;
-					}
-					else
-					{
-						bool WasNegative = IntValue < 0;
-						if (WasNegative)
-							IntValue = IntValue == AltDec::NegativeZero ? -1 : --IntValue;
-						if (Value.IntValue != 0)
-							IntValue -= Value.IntValue;
-						if(IntValue==-1)
-							IntValue = DecimalHalf == 0?0:AltDec::NegativeZero;
-						else if(IntValue<0)
-							++IntValue;
-						//If flips to other side of negative, invert the decimals
-						if ((WasNegative && IntValue >= 0)||(WasNegative == 0 && IntValue < 0))
-							DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
-					}
+					IntValue -= Value.IntValue;
 				}
 				else
 				{
 					bool WasNegative = IntValue < 0;
-					//Deal with Int section first
 					if (WasNegative)
 						IntValue = IntValue == AltDec::NegativeZero ? -1 : --IntValue;
-					if(Value.IntValue!=0&&Value.IntValue!=AltDec::NegativeZero)
+					if (Value.IntValue != 0)
 						IntValue -= Value.IntValue;
-					//Now deal with the decimal section
-					if (Value.IntValue < 0)
-					{
-						if (WasNegative)//-4.0 - -0.5 = -3.5
-						{
-							DecimalHalf -= Value.DecimalHalf;
-							if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; ++IntValue; }
-							else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; --IntValue; }
-						}
-						else//4.3 -  - 1.8
-						{
-							DecimalHalf += Value.DecimalHalf;
-							if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; --IntValue; }
-							else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; ++IntValue; }
-						}
-					}
-					else
-					{
-						if (WasNegative)//-4.5 - 5.6
-						{
-							DecimalHalf += Value.DecimalHalf;
-							if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; ++IntValue; }
-							else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; --IntValue; }
-						}
-						else//0.995 - 1 = 
-						{
-							DecimalHalf -= Value.DecimalHalf;
-							if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; --IntValue; }
-							else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; ++IntValue; }
-						}
-					}
-					if (IntValue == -1)
-						IntValue = DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
-					else if (IntValue < 0)
+					if(IntValue==-1)
+						IntValue = DecimalHalf == 0?0:AltDec::NegativeZero;
+					else if(IntValue<0)
 						++IntValue;
 					//If flips to other side of negative, invert the decimals
-					if ((WasNegative && IntValue >= 0) || (WasNegative == 0 && IntValue < 0))
+					if ((WasNegative && IntValue >= 0)||(WasNegative == 0 && IntValue < 0))
 						DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
 				}
-#if AltDec_EnableMixedFractional
 			}
-#endif
+			else
+			{
+				bool WasNegative = IntValue < 0;
+				//Deal with Int section first
+				if (WasNegative)
+					IntValue = IntValue == AltDec::NegativeZero ? -1 : --IntValue;
+				if(Value.IntValue!=0&&Value.IntValue!=AltDec::NegativeZero)
+					IntValue -= Value.IntValue;
+				//Now deal with the decimal section
+				if (Value.IntValue < 0)
+				{
+					if (WasNegative)//-4.0 - -0.5 = -3.5
+					{
+						DecimalHalf -= Value.DecimalHalf;
+						if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; ++IntValue; }
+						else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; --IntValue; }
+					}
+					else//4.3 -  - 1.8
+					{
+						DecimalHalf += Value.DecimalHalf;
+						if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; --IntValue; }
+						else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; ++IntValue; }
+					}
+				}
+				else
+				{
+					if (WasNegative)//-4.5 - 5.6
+					{
+						DecimalHalf += Value.DecimalHalf;
+						if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; ++IntValue; }
+						else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; --IntValue; }
+					}
+					else//0.995 - 1 = 
+					{
+						DecimalHalf -= Value.DecimalHalf;
+						if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; --IntValue; }
+						else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; ++IntValue; }
+					}
+				}
+				if (IntValue == -1)
+					IntValue = DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+				else if (IntValue < 0)
+					++IntValue;
+				//If flips to other side of negative, invert the decimals
+				if ((WasNegative && IntValue >= 0) || (WasNegative == 0 && IntValue < 0))
+					DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
+			}
 		}
 
         /// <summary>
@@ -904,7 +920,18 @@ public:
 			{
 				if(self.ExtraRep==0||ExtraRep==NegativeZero)
 				{
-					self.PartialSubOp(Value);
+#if AltDec_EnableMixedFractional
+					if(DecimalHalf<0)//MixedFractional
+					{
+					
+					}
+					else
+					{
+#endif
+						self.BasicSubOp(Value);
+#if AltDec_EnableMixedFractional
+					}
+#endif
 				}
 	#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
 				else if(ExtraRep==RevMaxInt)
@@ -926,9 +953,21 @@ public:
 				if(self.ExtraRep!=0&&self.IntValue==0&&self.DecimalStatus==0)
 					self.ExtraRep = 0;
 			}
+			else
+			{
+				if(self.ExtraRep==0)
+				{
+				
+				}
+				else//Catch-all for other representation combinations
+				{
+					AltDec ValueCopy = Value;
+					Value.ConvertToNumRep();
+					self.BasicAddOp(ValueCopy);
+				}
+			}
 			return self;
         }
-
 
 		void PartialMultOp(AltDec& Value)
 		{
@@ -1063,6 +1102,11 @@ public:
 			}
 		}
 
+        /// <summary>
+        /// Basic Multiplication Operation Between AltDecs
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>AltDec&</returns>
 		void BasicMultOp(AltDec& Value)
 		{
             if (Value == AltDec::Zero) { SetAsZero(); return; }
@@ -1087,7 +1131,18 @@ public:
 			{
 				if(self.ExtraRep==0)
 				{
-					self.PartialMultOp(Value);
+#if AltDec_EnableMixedFractional
+					if(DecimalHalf<0)//MixedFractional
+					{
+					
+					}
+					else
+					{
+#endif
+						self.PartialMultOp(Value);
+#if AltDec_EnableMixedFractional
+					}
+#endif
 				}
 				else if(ExtraRep==NegativeZero)//Value*Pi Representation
 				{
@@ -1269,7 +1324,18 @@ public:
 			{
 				if(self.ExtraRep==0)
 				{
-					self.PartialDivOp(Value);
+#if AltDec_EnableMixedFractional
+					if(DecimalHalf<0)//MixedFractional
+					{
+					
+					}
+					else
+					{
+#endif
+						self.PartialDivOp(Value);
+#if AltDec_EnableMixedFractional
+					}
+#endif
 				}
 				else if(ExtraRep==NegativeZero)//Value*Pi Representation
 				{
