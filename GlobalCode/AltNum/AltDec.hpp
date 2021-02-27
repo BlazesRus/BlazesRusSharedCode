@@ -783,7 +783,7 @@ public:
                 if(self.ExtraRep==0||ExtraRep==NegativeZero)
                 {
 #if AltDec_EnableMixedFractional
-                    if(DecimalHalf<0)//MixedFractional
+                    if(self.DecimalHalf<0)//MixedFractional
                     {
                     
                     }
@@ -796,12 +796,12 @@ public:
 #endif
                 }
     #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-                else if(ExtraRep==RevMaxInt)
+                else if(self.ExtraRep==RevMaxInt)
                 {
                 }
-                else if(ExtraRep>0)
+                else if(self.ExtraRep>0)
     #else
-                else//(Value*Pi)/ExtraRep Representation
+                else//(Value/ExtraRep) Representation
     #endif
                 {
                 
@@ -918,10 +918,10 @@ public:
         {
             if(self.ExtraRep==Value.ExtraRep)
             {
-                if(self.ExtraRep==0||ExtraRep==NegativeZero)
+                if(self.ExtraRep==0||self.ExtraRep==NegativeZero)
                 {
 #if AltDec_EnableMixedFractional
-                    if(DecimalHalf<0)//MixedFractional
+                    if(self.DecimalHalf<0)//MixedFractional
                     {
                     
                     }
@@ -934,12 +934,12 @@ public:
 #endif
                 }
     #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-                else if(ExtraRep==RevMaxInt)
+                else if(self.ExtraRep==RevMaxInt)
                 {
                 }
-                else if(ExtraRep>0)
+                else if(self.ExtraRep>0)
     #else
-                else//(Value*Pi)/ExtraRep Representation
+                else//(Value/ExtraRep) Representation
     #endif
                 {
                 
@@ -1132,7 +1132,7 @@ public:
                 if(self.ExtraRep==0)
                 {
 #if AltDec_EnableMixedFractional
-                    if(DecimalHalf<0)//MixedFractional
+                    if(self.DecimalHalf<0)//MixedFractional
                     {
                     
                     }
@@ -1144,17 +1144,17 @@ public:
                     }
 #endif
                 }
-                else if(ExtraRep==NegativeZero)//Value*Pi Representation
+                else if(self.ExtraRep==NegativeZero)//Value*Pi Representation
                 {
                 
                 }
     #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-                else if(ExtraRep==RevMaxInt)
+                else if(self.ExtraRep==RevMaxInt)
                 {
                 }
-                else if(ExtraRep>0)
+                else if(self.ExtraRep>0)
     #else
-                else//(Value*Pi)/ExtraRep Representation
+                else//(Value/ExtraRep) Representation
     #endif
                 {
                 
@@ -1325,7 +1325,7 @@ public:
                 if(self.ExtraRep==0)
                 {
 #if AltDec_EnableMixedFractional
-                    if(DecimalHalf<0)//MixedFractional
+                    if(self.DecimalHalf<0)//MixedFractional
                     {
                     
                     }
@@ -1337,17 +1337,17 @@ public:
                     }
 #endif
                 }
-                else if(ExtraRep==NegativeZero)//Value*Pi Representation
+                else if(self.ExtraRep==NegativeZero)//Value*Pi Representation
                 {
                 
                 }
     #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-                else if(ExtraRep==RevMaxInt)
+                else if(self.ExtraRep==RevMaxInt)
                 {
                 }
-                else if(ExtraRep>0)
+                else if(self.ExtraRep>0)
     #else
-                else//(Value*Pi)/ExtraRep Representation
+                else//(Value/ExtraRep) Representation
     #endif
                 {
                 
@@ -1419,17 +1419,17 @@ public:
                         self.DecimalHalf = (signed int)SRep;
                     }
                 }
-                else if(ExtraRep==NegativeZero)//Value*Pi Representation
+                else if(self.ExtraRep==NegativeZero)//Value*Pi Representation
                 {
                 
                 }
     #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-                else if(ExtraRep==RevMaxInt)
+                else if(self.ExtraRep==RevMaxInt)
                 {
                 }
-                else if(ExtraRep>0)
+                else if(self.ExtraRep>0)
     #else
-                else//(Value*Pi)/ExtraRep Representation
+                else//(Value/ExtraRep) Representation
     #endif
                 {
                 
@@ -2114,7 +2114,18 @@ public:
         {
             if (value == 0)
                 return self;
-            if(ExtraRep==0)
+			if(self.ExtraRep==NegativeZero)//Value*Pi Representation
+				self.ConvertToNumRep();
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else if(self.ExtraRep==RevMaxInt)
+            {
+            }
+            else if(self.ExtraRep>0)
+#else
+            else//(Value/ExtraRep) Representation
+#endif
+				self.ConvertToNumRep();
+            if(self.ExtraRep==0)
             {
                 if (self.DecimalHalf == 0)
                     self.IntValue += value;
@@ -2132,21 +2143,6 @@ public:
                     if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
                         self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
                 }
-            }
-            else if(ExtraRep==NegativeZero)//Value*Pi Representation
-            {
-            
-            }
-#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-            else if(ExtraRep==RevMaxInt)
-            {
-            }
-            else if(>0)
-#else
-            else//(Value*Pi)/ExtraRep Representation
-#endif
-            {
-            
             }
 #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
             else
@@ -2168,7 +2164,18 @@ public:
         {
             if (value == 0)
                 return self;
-            if(ExtraRep==0)//Normal Representation
+			if(self.ExtraRep==NegativeZero)//Value*Pi Representation
+				self.ConvertToNumRep();
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else if(self.ExtraRep==RevMaxInt)
+            {
+            }
+            else if(self.ExtraRep>0)
+#else
+            else//(Value/ExtraRep) Representation
+#endif
+				self.ConvertToNumRep();
+            if(self.ExtraRep==0)//Normal Representation
             {
                 if (self.DecimalHalf == 0)
                     self.IntValue -= value;
@@ -2186,21 +2193,6 @@ public:
                     if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
                         self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
                 }
-            }
-            else if(ExtraRep==NegativeZero)//Value*Pi Representation
-            {
-            
-            }
-#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-            else if(ExtraRep==RevMaxInt)
-            {
-            }
-            else if(>0)
-#else
-            else//(Value*Pi)/ExtraRep Representation
-#endif
-            {
-            
             }
 #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
             else
@@ -2232,7 +2224,7 @@ public:
             {
                 self.SetAsZero(); return self;
             }
-            if(ExtraRep==0)
+            if(self.ExtraRep==0)
             {
                 if (self.DecimalHalf == 0)
                 {
@@ -2270,9 +2262,9 @@ public:
             else if(ExtraRep==RevMaxInt)
             {
             }
-            else if(>0)
+            else if(ExtraRep>0)
 #else
-            else//(Value*Pi)/ExtraRep Representation
+            else//(Value/ExtraRep) Representation
 #endif
             {
             
@@ -2304,7 +2296,7 @@ public:
                 else { Value *= -1; }
                 self.SwapNegativeStatus();
             }
-            if(ExtraRep==0)
+            if(self.ExtraRep==0)
             {
                 //if (self.DecimalHalf == 0)
                 //{
@@ -2349,6 +2341,7 @@ public:
                 //		self.DecimalHalf = (signed int)SRep;
                 //	}
                 //}
+				ExtraRep = Value;
             }
             else if(ExtraRep==NegativeZero)//Value*Pi Representation
             {
@@ -2358,9 +2351,9 @@ public:
             else if(ExtraRep==RevMaxInt)
             {
             }
-            else if(>0)
+            else if(ExtraRep>0)
 #else
-            else//(Value*Pi)/ExtraRep Representation
+            else//(Value/ExtraRep) Representation
 #endif
             {
             
@@ -2389,7 +2382,7 @@ public:
                 self.SetAsZero();
                 return self;
             }
-            if(ExtraRep==0)
+            if(self.ExtraRep==0)
             {
                 if (self.DecimalHalf == 0)
                 {
@@ -2426,17 +2419,17 @@ public:
                     self.DecimalHalf = (signed int)SRep;
                 }
             }
-            else if(ExtraRep==NegativeZero)//Value*Pi Representation
+            else if(self.ExtraRep==NegativeZero)//Value*Pi Representation
             {
             
             }
 #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-            else if(ExtraRep==RevMaxInt)
+            else if(self.ExtraRep==RevMaxInt)
             {
             }
-            else if(>0)
+            else if(self.ExtraRep>0)
 #else
-            else//(Value*Pi)/ExtraRep Representation
+            else//(Value/ExtraRep) Representation
 #endif
             {
             
@@ -2461,7 +2454,18 @@ public:
         {
             if(value==0)
                 return self;
-            if(ExtraRep==0)
+			if(self.ExtraRep==NegativeZero)//Value*Pi Representation
+				self.ConvertToNumRep();
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else if(self.ExtraRep==RevMaxInt)
+            {
+            }
+            else if(self.ExtraRep>0)
+#else
+            else//(Value/ExtraRep) Representation
+#endif
+				self.ConvertToNumRep();
+            if(self.ExtraRep==0)
             {
                 if(self.DecimalHalf==0|| self.IntValue > 0)
                     self.IntValue += value;
@@ -2479,21 +2483,6 @@ public:
                     if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
                         self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
                 }
-            }
-            else if(ExtraRep==NegativeZero)//Value*Pi Representation
-            {
-            
-            }
-#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-            else if(ExtraRep==RevMaxInt)
-            {
-            }
-            else if(>0)
-#else
-            else//(Value*Pi)/ExtraRep Representation
-#endif
-            {
-            
             }
 #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
             else
@@ -2515,7 +2504,18 @@ public:
         {
             if (value == 0)
                 return self;
-            if(ExtraRep==0)
+			if(self.ExtraRep==NegativeZero)//Value*Pi Representation
+				self.ConvertToNumRep();
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else if(self.ExtraRep==RevMaxInt)
+            {
+            }
+            else if(self.ExtraRep>0)
+#else
+            else//(Value/ExtraRep) Representation
+#endif
+				self.ConvertToNumRep();
+            if(self.ExtraRep==0)
             {
                 if (self.DecimalHalf == 0)
                     self.IntValue -= value;
@@ -2537,21 +2537,6 @@ public:
                     if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
                         self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
                 }
-            }
-            else if(ExtraRep==NegativeZero)//Value*Pi Representation
-            {
-            
-            }
-#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-            else if(ExtraRep==RevMaxInt)
-            {
-            }
-            else if(>0)
-#else
-            else//(Value*Pi)/ExtraRep Representation
-#endif
-            {
-            
             }
 #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
             else
@@ -2577,8 +2562,7 @@ public:
             {
                 self.SetAsZero(); return self;
             }
-            return self; }
-            if(ExtraRep==0)
+            if(self.ExtraRep==0)
             {
                 if (self.DecimalHalf == 0)
                 {
@@ -2608,17 +2592,17 @@ public:
                     }
                 }
             }
-            else if(ExtraRep==NegativeZero)//Value*Pi Representation
+            else if(self.ExtraRep==NegativeZero)//Value*Pi Representation
             {
             
             }
 #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-            else if(ExtraRep==RevMaxInt)
+            else if(self.ExtraRep==RevMaxInt)
             {
             }
-            else if(>0)
+            else if(self.ExtraRep>0)
 #else
-            else//(Value*Pi)/ExtraRep Representation
+            else//(Value/ExtraRep) Representation
 #endif
             {
             
@@ -2632,6 +2616,8 @@ public:
             return self;
         }
 
+
+
         /// <summary>
         /// Division Operation Between AltDec and Integer Value
         /// </summary>
@@ -2642,7 +2628,7 @@ public:
         static AltDec& UnsignedDivOp(AltDec& self, IntType& Value)
         {
             if (Value == 0) { throw "Target value can not be divided by zero"; }
-            if(ExtraRep==0)
+            if(self.ExtraRep==0)
             {
                 if (self == Zero) { return self; }
                 if (self.DecimalHalf == 0)
@@ -2689,17 +2675,17 @@ public:
                     }
                 }
             }
-            else if(ExtraRep==NegativeZero)//Value*Pi Representation
+            else if(self.ExtraRep==NegativeZero)//Value*Pi Representation
             {
             
             }
 #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-            else if(ExtraRep==RevMaxInt)
+            else if(self.ExtraRep==RevMaxInt)
             {
             }
-            else if(>0)
+            else if(self.ExtraRep>0)
 #else
-            else//(Value*Pi)/ExtraRep Representation
+            else//(Value/ExtraRep) Representation
 #endif
             {
             
@@ -2712,6 +2698,18 @@ public:
 #endif
             return self;
         }
+		
+        /// <summary>
+        /// Division Operation Between AltDec and Integer Value
+        /// </summary>
+        /// <param name="self">The self.</param>
+        /// <param name="Value">The value.</param>
+        /// <returns>AltDec&</returns>
+        template<typename IntType>
+        static AltDec& UnsignedDivOpV2(AltDec& self, IntType Value)
+		{
+			return UnsignedDivOp(self, Value);
+		}
         
         /// <summary>
         /// Remainder/Modulus Operation Between AltDec and Integer Value
@@ -2760,9 +2758,9 @@ public:
             else if(ExtraRep==RevMaxInt)
             {
             }
-            else if(>0)
+            else if(ExtraRep>0)
 #else
-            else//(Value*Pi)/ExtraRep Representation
+            else//(Value/ExtraRep) Representation
 #endif
             {
             
