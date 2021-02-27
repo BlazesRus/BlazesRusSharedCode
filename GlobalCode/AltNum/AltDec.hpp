@@ -2203,7 +2203,7 @@ public:
             return self;
         }
 
-        PartialMulOp(IntType& Value)
+        PartialMultOp(IntType& Value)
         {
             if (DecimalHalf == 0)
             {
