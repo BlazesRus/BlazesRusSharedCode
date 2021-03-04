@@ -218,6 +218,7 @@
     <ClInclude Include="AltNum\FloatingOperations.hpp" />
     <ClInclude Include="AltNum\MediumDec.hpp" />
     <ClInclude Include="AltNum\MediumDec_OtherMath.hpp" />
+    <ClInclude Include="AltNum\MixedDec.hpp" />
     <ClInclude Include="AltNum\ModCheckerX.hpp" />
     <ClInclude Include="AltNum\ModCheckerXX.hpp" />
     <ClInclude Include="Databases\BuiltinFormula.hpp" />

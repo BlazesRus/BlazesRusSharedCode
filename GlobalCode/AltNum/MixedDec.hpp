@@ -31,18 +31,18 @@ namespace BlazesRusCode
     /// </summary>
     class DLL_API MixedDec : BlazesRusCode::MediumDec
     {
-	private:
+    private:
 #if defined(MixedDec_EnablePIRep)
-		float PIRep = -1.0f;
+        float PIRep = -1.0f;
 #endif
 #if defined(MixedDec_EnableENumRep)
-		float ERep = -2.0f;
+        float ERep = -2.0f;
 #endif
 #if defined(MixedDec_EnableImaginaryNumRep)
-		float IRep = -3.0f;
+        float IRep = -3.0f;
 #endif
 #if defined(MixedDec_EnableImaginaryNumRep)
-		float IRep = -4.0f;
+        float IRep = -4.0f;
 #endif
     public:
         // <summary>
@@ -81,7 +81,7 @@ namespace BlazesRusCode
             IntValue = Value.IntValue;
             DecimalHalf01 = Value.DecimalHalf01; ExtraRep = Value.ExtraRep;
         }
-		
+        
         /// <summary>
         /// Sets the value.
         /// </summary>
@@ -121,7 +121,7 @@ protected:
         {
             return MixedDec(1, 0, -2147483648);
         }
-		
+        
         static MixedDec ZeroValue()
         {
             return MixedDec(0, 0, 0);
@@ -154,8 +154,8 @@ public:
         static MixedDec PI;
         
         static MixedDec E;
-		
-		static MixedDec Zero;
+        
+        static MixedDec Zero;
         
 #if defined(MixedDec_EnableImaginaryNumRep)
         void SetImaginaryVal(MediumDec Value)
@@ -199,36 +199,36 @@ public:
 
         void UpdateValue(MediumDec& UpdateTarget)
         {
-			UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = DecimalHalf;
+            UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = DecimalHalf;
 #if defined(MixedDec_EnablePIRep)
-			if(ExtraRep==PIRep)
-			{
-				UpdateTarget *= MediumDec::PI;
-				return;
-			}
+            if(ExtraRep==PIRep)
+            {
+                UpdateTarget *= MediumDec::PI;
+                return;
+            }
 #endif
 #if defined(MixedDec_EnableENumRep)
-			if(ExtraRep==ERep)
-			{
-				UpdateTarget *= MediumDec::E;
-			}
+            if(ExtraRep==ERep)
+            {
+                UpdateTarget *= MediumDec::E;
+            }
 #endif
         }
         
         void ConvertToNumRep()
         {
 #if defined(MixedDec_EnablePIRep)
-			if(ExtraRep==PIRep)
-			{
-				UpdateTarget *= PINum; ExtraRep = 0.0f;
-				return;
-			}
+            if(ExtraRep==PIRep)
+            {
+                UpdateTarget *= PINum; ExtraRep = 0.0f;
+                return;
+            }
 #endif
 #if defined(MixedDec_EnableERep)
-			if(ExtraRep==ERep)
-			{
-				UpdateTarget *= ENum; ExtraRep = 0.0f;
-			}
+            if(ExtraRep==ERep)
+            {
+                UpdateTarget *= ENum; ExtraRep = 0.0f;
+            }
 #endif
         }
         
@@ -2157,46 +2157,46 @@ public:
             {
                 if (self.DecimalHalf == 0)
                 {
-                	bool SelfIsNegative = self.IntValue < 0;
-                	if (SelfIsNegative)
-                		self.IntValue *= -1;
-                	__int64 SRep = DecimalOverflowX * self.IntValue;
-                	SRep /= Value;
-                	if (SRep >= DecimalOverflowX)
-                	{
-                		__int64 OverflowVal = SRep / DecimalOverflow;
-                		SRep -= OverflowVal * DecimalOverflow;
-                		self.IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
-                		self.DecimalHalf = (signed int)SRep;
-                	}
-                	else
-                	{
-                		self.IntValue = SelfIsNegative?NegativeZero:0;
-                		self.DecimalHalf = (signed int)SRep;
-                	}
+                    bool SelfIsNegative = self.IntValue < 0;
+                    if (SelfIsNegative)
+                        self.IntValue *= -1;
+                    __int64 SRep = DecimalOverflowX * self.IntValue;
+                    SRep /= Value;
+                    if (SRep >= DecimalOverflowX)
+                    {
+                        __int64 OverflowVal = SRep / DecimalOverflow;
+                        SRep -= OverflowVal * DecimalOverflow;
+                        self.IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
+                        self.DecimalHalf = (signed int)SRep;
+                    }
+                    else
+                    {
+                        self.IntValue = SelfIsNegative?NegativeZero:0;
+                        self.DecimalHalf = (signed int)SRep;
+                    }
                 }
                 else
                 {
-                	bool SelfIsNegative = self.IntValue < 0;
-                	if (SelfIsNegative)
-                	{
-                		if (self.IntValue == NegativeZero) { self.IntValue = 0; }
-                		else { self.IntValue *= -1; }
-                	}
-                	__int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                	SRep /= Value;
-                	if (SRep >= DecimalOverflowX)
-                	{
-                		__int64 OverflowVal = SRep / DecimalOverflowX;
-                		SRep -= DecimalOverflowX * OverflowVal;
-                		self.IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
-                		self.DecimalHalf = (signed int)SRep;
-                	}
-                	else
-                	{
-                		self.IntValue = 0;
-                		self.DecimalHalf = (signed int)SRep;
-                	}
+                    bool SelfIsNegative = self.IntValue < 0;
+                    if (SelfIsNegative)
+                    {
+                        if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                        else { self.IntValue *= -1; }
+                    }
+                    __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
+                    SRep /= Value;
+                    if (SRep >= DecimalOverflowX)
+                    {
+                        __int64 OverflowVal = SRep / DecimalOverflowX;
+                        SRep -= DecimalOverflowX * OverflowVal;
+                        self.IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
+                        self.DecimalHalf = (signed int)SRep;
+                    }
+                    else
+                    {
+                        self.IntValue = 0;
+                        self.DecimalHalf = (signed int)SRep;
+                    }
                 }
             }
 #if defined(MixedDec_EnableImaginaryNum) || defined(MixedDec_EnableENum)
@@ -2208,7 +2208,7 @@ public:
             else//(Value/ExtraRep) Representation
 #endif
             {
-				ExtraRep *= Value;
+                ExtraRep *= Value;
             }
 #if defined(MixedDec_EnableImaginaryNum) || defined(MixedDec_EnableENum)
             else
@@ -2469,46 +2469,46 @@ public:
             {
                 if (self.DecimalHalf == 0)
                 {
-                	bool SelfIsNegative = self.IntValue < 0;
-                	if (SelfIsNegative)
-                		self.IntValue *= -1;
-                	__int64 SRep = DecimalOverflowX * self.IntValue;
-                	SRep /= Value;
-                	if (SRep >= DecimalOverflowX)
-                	{
-                		__int64 OverflowVal = SRep / DecimalOverflow;
-                		SRep -= OverflowVal * DecimalOverflow;
-                		self.IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
-                		self.DecimalHalf = (signed int)SRep;
-                	}
-                	else
-                	{
-                		self.IntValue = SelfIsNegative?NegativeZero:0;
-                		self.DecimalHalf = (signed int)SRep;
-                	}
+                    bool SelfIsNegative = self.IntValue < 0;
+                    if (SelfIsNegative)
+                        self.IntValue *= -1;
+                    __int64 SRep = DecimalOverflowX * self.IntValue;
+                    SRep /= Value;
+                    if (SRep >= DecimalOverflowX)
+                    {
+                        __int64 OverflowVal = SRep / DecimalOverflow;
+                        SRep -= OverflowVal * DecimalOverflow;
+                        self.IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
+                        self.DecimalHalf = (signed int)SRep;
+                    }
+                    else
+                    {
+                        self.IntValue = SelfIsNegative?NegativeZero:0;
+                        self.DecimalHalf = (signed int)SRep;
+                    }
                 }
                 else
                 {
-                	bool SelfIsNegative = self.IntValue < 0;
-                	if (SelfIsNegative)
-                	{
-                		if (self.IntValue == NegativeZero) { self.IntValue = 0; }
-                		else { self.IntValue *= -1; }
-                	}
-                	__int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                	SRep /= Value;
-                	if (SRep >= DecimalOverflowX)
-                	{
-                		__int64 OverflowVal = SRep / DecimalOverflowX;
-                		SRep -= DecimalOverflowX * OverflowVal;
-                		self.IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
-                		self.DecimalHalf = (signed int)SRep;
-                	}
-                	else
-                	{
-                		self.IntValue = 0;
-                		self.DecimalHalf = (signed int)SRep;
-                	}
+                    bool SelfIsNegative = self.IntValue < 0;
+                    if (SelfIsNegative)
+                    {
+                        if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                        else { self.IntValue *= -1; }
+                    }
+                    __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
+                    SRep /= Value;
+                    if (SRep >= DecimalOverflowX)
+                    {
+                        __int64 OverflowVal = SRep / DecimalOverflowX;
+                        SRep -= DecimalOverflowX * OverflowVal;
+                        self.IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
+                        self.DecimalHalf = (signed int)SRep;
+                    }
+                    else
+                    {
+                        self.IntValue = 0;
+                        self.DecimalHalf = (signed int)SRep;
+                    }
                 }
             }
 #if defined(MixedDec_EnableImaginaryNum) || defined(MixedDec_EnableENum)
@@ -2520,7 +2520,7 @@ public:
             else//(Value/ExtraRep) Representation
 #endif
             {
-				ExtraRep *= Value;
+                ExtraRep *= Value;
             }
 #if defined(MixedDec_EnableImaginaryNum) || defined(MixedDec_EnableENum)
             else
@@ -3277,5 +3277,5 @@ public:
     MixedDec MixedDec::E = EValue();
     MixedDec MixedDec::PINum = PINumValue();
     MixedDec MixedDec::ENum = ENumValue();
-	MixedDec MixedDec::Zero = ZeroValue();
+    MixedDec MixedDec::Zero = ZeroValue();
 }

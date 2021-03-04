@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlazesGlobalCode", "BlazesGlobalCode.vcxproj", "{4EB28D56-F4EE-4139-AE46-074B01E7FDE3}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlazesGlobalCodeSharedFiles", "BlazesGlobalCodeSharedFiles.vcxitems", "{7975AB8C-358A-4DF2-93FE-52E471C58AA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +28,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B6AFBAF3-3A9B-45D4-91C6-B2EEDB70D109}
 	EndGlobalSection
 EndGlobal

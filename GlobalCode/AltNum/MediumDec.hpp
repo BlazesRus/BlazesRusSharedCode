@@ -34,13 +34,13 @@ namespace BlazesRusCode
     /// * 100% consistency of accuracy for all integer value multiplication operations.
     /// * 100% consistency of accuracy for addition/subtraction operations within 9th decimal place of representation.
     /// * Partial but still high accuracy for non-integer representation variations of multiplication because of truncation
-	///  (values get lost if get too small)
-	/// * Partial but still high accuracy for division because of truncation
-	///  (values get lost if get too small)
-	/// * Other operations like Ln and Sqrt contained with decent level of accuracy
-	///  (still loses a little accuracy because of truncation etc)
-	/// * Operations and functions will mess up if IntValue overflows/underflows
-	///  or reaches exactly -2147483648 which is used to represent negative zero when it has decimal values
+    ///  (values get lost if get too small)
+    /// * Partial but still high accuracy for division because of truncation
+    ///  (values get lost if get too small)
+    /// * Other operations like Ln and Sqrt contained with decent level of accuracy
+    ///  (still loses a little accuracy because of truncation etc)
+    /// * Operations and functions will mess up if IntValue overflows/underflows
+    ///  or reaches exactly -2147483648 which is used to represent negative zero when it has decimal values
     /// (8 bytes worth of Variable Storage inside class for each instance)
     /// </summary>
     class DLL_API MediumDec
@@ -97,11 +97,11 @@ namespace BlazesRusCode
             IntValue = Value.IntValue;
             DecimalHalf = Value.DecimalHalf;
         }
-		
-		void SetAsZero()
-		{
-			IntValue = 0; DecimalHalf = 0;
-		}
+        
+        void SetAsZero()
+        {
+            IntValue = 0; DecimalHalf = 0;
+        }
 
     #pragma region ValueDefines
     private:
