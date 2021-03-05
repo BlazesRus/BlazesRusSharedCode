@@ -4275,6 +4275,22 @@ public:
     #pragma endregion ValueDefine Source
 
     #pragma region String Function Source
+	private float CharAsFloat(char Temp)
+	{
+		float Value;
+		if(Temp == '0') { Value = 0.0f; }
+		else if(Temp == '1') { Value = 1.0f; }
+		else if(Temp == '2') { Value = 2.0f; }
+		else if(Temp == '3') { Value = 3.0f; }
+		else if(Temp == '4') { Value = 4.0f; }
+		else if(Temp == '5') { Value = 5.0f; }
+		else if(Temp == '6') { Value = 6.0f; }
+		else if(Temp == '7') { Value = 7.0f; }
+		else if(Temp == '8') { Value = 8.0f; }
+		else if(Temp == '9') { Value = 9.0f; }
+		return Value;
+	}
+	
     /// <summary>
     /// Reads the string.
     /// </summary>
@@ -4283,19 +4299,37 @@ public:
     {
         IntValue = 0; DecimalHalf = 0;
         bool IsNegative = false;
-        int PlaceNumber;
+        int PlaceNumber = 0;
         std::string WholeNumberBuffer = "";
         std::string DecimalBuffer = "";
 
         bool ReadingDecimal = false;
+		bool ReadingExtra = false;
         int TempInt;
         int TempInt02;
+		int TempFloat;
+		float DigitMultiplier = 0.1f;
+		ExtraRep = 0.0f;
         for (char const& StringChar : Value)
         {
             if (VariableConversionFunctions::IsDigit(StringChar))
             {
-                if (ReadingDecimal) { DecimalBuffer += StringChar; }
-                else { WholeNumberBuffer += StringChar; }
+				if(ReadingExtra)//Extra Floating Point based digits
+				{
+					TempFloat = CharAsFloat(StringChar);
+					ExtraRep += TempFloat * DigitMultiplier;
+					DigitMultiplier *= 0.1f;
+				}
+                else if (ReadingDecimal)
+				{
+					DecimalBuffer += StringChar;
+					if(++PlaceNumber==9)//Only 9 decimal digits are stored as fixed point
+					{
+						ReadingExtra = true;
+					}
+				}
+                else
+					WholeNumberBuffer += StringChar;
             }
             else if (StringChar == '-')
             {

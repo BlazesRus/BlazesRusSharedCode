@@ -61,6 +61,9 @@
     <Filter Include="Header Files\tsl">
       <UniqueIdentifier>{62c732ee-f84d-43df-a6dd-310aeba034a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Formulas">
+      <UniqueIdentifier>{5dc16027-2916-408f-9425-708dfeb64181}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NodeTrees\LooseNodeTreeTemplate.h">
@@ -129,9 +132,6 @@
     <ClInclude Include="AltNum\MediumDec.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
-    <ClInclude Include="Databases\MediumDecFormula.hpp">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
     <ClInclude Include="AltNum\ModCheckerX.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
@@ -153,29 +153,32 @@
     <ClInclude Include="OtherFunctions\StringFunctions.h">
       <Filter>Header Files\OtherFunctions</Filter>
     </ClInclude>
-    <ClInclude Include="Databases\VariableFormula.hpp">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
     <ClInclude Include="Databases\ElementType.hpp">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
-    <ClInclude Include="Databases\DoubleFormula.hpp">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
-    <ClInclude Include="Databases\IntFormula.hpp">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
-    <ClInclude Include="Databases\ExprFormula.h">
       <Filter>Header Files\Databases</Filter>
     </ClInclude>
     <ClInclude Include="tsl\ordered_map.h">
       <Filter>Header Files\tsl</Filter>
     </ClInclude>
-    <ClInclude Include="Databases\BuiltinFormula.hpp">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
     <ClInclude Include="AltNum\MixedDec.hpp">
       <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\ExprFormula.h">
+      <Filter>Header Files\Formulas</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\BuiltinFormula.hpp">
+      <Filter>Header Files\Formulas</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\IntFormula.hpp">
+      <Filter>Header Files\Formulas</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\MediumDecFormula.hpp">
+      <Filter>Header Files\Formulas</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\VariableFormula.hpp">
+      <Filter>Header Files\Formulas</Filter>
+    </ClInclude>
+    <ClInclude Include="Databases\DoubleFormula.hpp">
+      <Filter>Header Files\Formulas</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
