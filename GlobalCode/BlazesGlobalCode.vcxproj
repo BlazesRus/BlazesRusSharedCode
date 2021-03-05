@@ -69,8 +69,8 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <BoostDir>C:/UserFiles/ProgrammingTools/Libraries/C++Code/BoostLib/</BoostDir>
-    <ParallelMap>C:/UserFiles/GitHub/Parallel-Hashmap/</ParallelMap>
+    <BoostDir>C:/UserFiles/ProgrammingLibraries/BoostLib/</BoostDir>
+    <ParallelMap>C:/UserFiles/GitHub/parallel-hashmap/</ParallelMap>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
