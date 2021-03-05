@@ -29,18 +29,22 @@ namespace BlazesRusCode
 {
     class MediumDec;
 
+/*---Accuracy Tests:
+ * 100% accuracy for all integer value multiplication operations.
+ * 100% accuracy for addition/subtraction operations
+ * Partial but still high accuracy for non-integer representation variations of multiplication because of truncation
+   (values get lost if get too small)
+ * Partial but still high accuracy for division because of truncation
+   (values get lost if get too small)
+ * Other operations like Ln and Sqrt contained with decent level of accuracy
+   (still loses a little accuracy because of truncation etc)
+ * Operations and functions will mess up if IntValue overflows/underflows
+   or reaches exactly -2147483648 which is used to represent negative zero when it has decimal values
+*/
+
     /// <summary>
-    /// Represents +- 2147483647.999999999 with:
-    /// * 100% consistency of accuracy for all integer value multiplication operations.
-    /// * 100% consistency of accuracy for addition/subtraction operations within 9th decimal place of representation.
-    /// * Partial but still high accuracy for non-integer representation variations of multiplication because of truncation
-    ///  (values get lost if get too small)
-    /// * Partial but still high accuracy for division because of truncation
-    ///  (values get lost if get too small)
-    /// * Other operations like Ln and Sqrt contained with decent level of accuracy
-    ///  (still loses a little accuracy because of truncation etc)
-    /// * Operations and functions will mess up if IntValue overflows/underflows
-    ///  or reaches exactly -2147483648 which is used to represent negative zero when it has decimal values
+    /// Fixed point based number class representing +- 2147483647.999999999 with 100% consistency of accuracy for most operations as long as don't get too small
+	/// (values will be lost past 9th decimal digit)
     /// (8 bytes worth of Variable Storage inside class for each instance)
     /// </summary>
     class DLL_API MediumDec
