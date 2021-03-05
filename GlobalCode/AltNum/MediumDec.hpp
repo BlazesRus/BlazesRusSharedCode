@@ -44,7 +44,7 @@ namespace BlazesRusCode
 
     /// <summary>
     /// Fixed point based number class representing +- 2147483647.999999999 with 100% consistency of accuracy for most operations as long as don't get too small
-	/// (values will be lost past 9th decimal digit)
+    /// (values will be lost past 9th decimal digit)
     /// (8 bytes worth of Variable Storage inside class for each instance)
     /// </summary>
     class DLL_API MediumDec

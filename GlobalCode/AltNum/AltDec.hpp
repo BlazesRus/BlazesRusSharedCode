@@ -106,7 +106,7 @@ namespace BlazesRusCode
             IntValue = 0; DecimalHalf = 0;
             ExtraRep = 0;
         }
-		
+        
         /// <summary>
         /// Sets the value.
         /// </summary>
@@ -700,6 +700,11 @@ public:
         /// </summary>
         /// <param name="Value">The value.</param>
         AltDec(bool Value)
+        {
+            this->SetVal(Value);
+        }
+
+        AltDec(MediumDec Value)
         {
             this->SetVal(Value);
         }
