@@ -1240,6 +1240,68 @@ public:
             }
             return self;
         }
+
+        /// <summary>
+        /// Addition Operation Between MixedDec and Integer value
+        /// </summary>
+        /// <param name="self">The self.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>MixedDec&</returns>
+        template<typename IntType>
+        static MixedDec& UnsignedAddOp(MixedDec& self, IntType& value)
+        {
+            if (value == 0) { return self; }
+            else if (self.DecimalHalf == 0 || self.IntValue > 0)
+                self.IntValue += value;
+            else
+            {
+                bool WasNegative = self.IntValue < 0;
+                if (WasNegative)
+                    self.IntValue = self.IntValue == MixedDec::NegativeZero ? -1 : --self.IntValue;
+                self.IntValue += value;
+                if (self.IntValue == -1)
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : MixedDec::NegativeZero;
+                else if (self.IntValue < 0)
+                    ++self.IntValue;
+                //If flips to other side of negative, invert the decimals
+                if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
+                    self.DecimalHalf = MixedDec::DecimalOverflow - self.DecimalHalf;
+            }
+            return self;
+        }
+
+        /// <summary>
+        /// Subtraction Operation Between MixedDec and Integer value
+        /// </summary>
+        /// <param name="self">The self.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>MixedDec</returns>
+        template<typename IntType>
+        static MixedDec& UnsignedSubOp(MixedDec& self, IntType& value)
+        {
+            if (value == 0) { return self; }
+            else if (self.DecimalHalf == 0)
+                self.IntValue -= value;
+            else if (self.IntValue == NegativeZero)
+                self.IntValue = (signed int)value * -1;
+            else if (self.IntValue < 0)
+                self.IntValue -= value;
+            else
+            {
+                bool WasNegative = self.IntValue < 0;
+                if (WasNegative)
+                    self.IntValue = self.IntValue == MixedDec::NegativeZero ? -1 : --self.IntValue;
+                self.IntValue -= value;
+                if (self.IntValue == -1)
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : MixedDec::NegativeZero;
+                else if (self.IntValue < 0)
+                    ++self.IntValue;
+                //If flips to other side of negative, invert the decimals
+                if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
+                    self.DecimalHalf = MixedDec::DecimalOverflow - self.DecimalHalf;
+            }
+            return self;
+        }
 #pragma endregion Addition/Subtraction Operations
 
 #pragma region Multiplication/Division Operations
@@ -1631,12 +1693,108 @@ public:
             return self;
         }
 
+        /// <summary>
+        /// Multiplication Operation Between MixedDec and Integer Value
+        /// </summary>
+        /// <param name="self">The self.</param>
+        /// <param name="Value">The value.</param>
+        /// <returns>MixedDec</returns>
+        template<typename IntType>
+        static MixedDec& UnsignedMultOp(MixedDec& self, IntType& Value)
+        {
+            if (self == Zero) {}
+            else if (Value == 0) { self.IntValue = 0; self.DecimalHalf = 0; }
+            else if (self.DecimalHalf == 0)
+            {
+                self.IntValue *= Value;
+            }
+            else
+            {
+                bool SelfIsNegative = self.IntValue < 0;
+                if (SelfIsNegative)
+                {
+                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                    else { self.IntValue *= -1; }
+                }
+                __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
+                SRep *= Value;
+                if (SRep >= DecimalOverflowX)
+                {
+                    __int64 OverflowVal = SRep / DecimalOverflowX;
+                    SRep -= OverflowVal * DecimalOverflowX;
+                    self.IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
+                    self.DecimalHalf = (signed int)SRep;
+                }
+                else
+                {
+                    self.IntValue = SelfIsNegative ? NegativeZero : 0;
+                    self.DecimalHalf = (signed int)SRep;
+                }
+            }
+            return self;
+        }
+
+        /// <summary>
+        /// Division Operation Between MixedDec and Integer Value
+        /// </summary>
+        /// <param name="self">The self.</param>
+        /// <param name="Value">The value.</param>
+        /// <returns>MixedDec&</returns>
+        template<typename IntType>
+        static MixedDec& UnsignedDivOp(MixedDec& self, IntType& Value)
+        {
+            if (Value == 0) { throw "Target value can not be divided by zero"; }
+            else if (self == Zero) { return self; }
+            if (self.DecimalHalf == 0)
+            {
+                bool SelfIsNegative = self.IntValue < 0;
+                if (SelfIsNegative)
+                    self.IntValue *= -1;
+                __int64 SRep = DecimalOverflowX * self.IntValue;
+                SRep /= Value;
+                if (SRep >= DecimalOverflowX)
+                {
+                    __int64 OverflowVal = SRep / DecimalOverflow;
+                    SRep -= OverflowVal * DecimalOverflow;
+                    self.IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
+                    self.DecimalHalf = (signed int)SRep;
+                }
+                else
+                {
+                    self.IntValue = SelfIsNegative ? NegativeZero : 0;
+                    self.DecimalHalf = (signed int)SRep;
+                }
+            }
+            else
+            {
+                bool SelfIsNegative = self.IntValue < 0;
+                if (SelfIsNegative)
+                {
+                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                    else { self.IntValue *= -1; }
+                }
+                __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
+                SRep /= Value;
+                if (SRep >= DecimalOverflowX)
+                {
+                    __int64 OverflowVal = SRep / DecimalOverflowX;
+                    SRep -= DecimalOverflowX * OverflowVal;
+                    self.IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
+                    self.DecimalHalf = (signed int)SRep;
+                }
+                else
+                {
+                    self.IntValue = 0;
+                    self.DecimalHalf = (signed int)SRep;
+                }
+            }
+            return self;
+        }
 #pragma endregion Multiplication/Division Operations
 
-#pragma region MixedDec-To-MixedDec Operators
-    public:
+#pragma region Remainder Operations
         /// <summary>
-        /// Remainder/Modulus Operation Between MixedDecs
+        /// Remainder Operation Between MixedDecs
         /// </summary>
         /// <param name="self">The left side value</param>
         /// <param name="Value">The right side value</param>
@@ -1684,7 +1842,94 @@ public:
             }
             return self;
         }
-        
+
+        /// <summary>
+        /// Remainder/Modulus Operation Between MixedDec and Integer Value
+        /// </summary>
+        /// <param name="self">The self.</param>
+        /// <param name="Value">The value.</param>
+        /// <returns>MixedDec&</returns>
+        template<typename IntType>
+        static MixedDec& RemOp(MixedDec& self, IntType& Value)
+        {
+            if (Value == 0 || self == MixedDec::Zero) { self.SetAsZero(); return self; }
+            if (self.DecimalHalf == 0)
+            {
+                if (self.IntValue < 0)//https://www.quora.com/How-does-the-modulo-operation-work-with-negative-numbers-and-why
+                {
+                    self.IntValue %= Value;
+                    self.IntValue = (signed int)(Value - self.IntValue);
+                }
+                else
+                {
+                    self.IntValue %= Value; return self;
+                }
+            }
+            else//leftValue is non-whole number
+            {
+                if (Value < 0) { self.SwapNegativeStatus(); Value *= -1; }
+                bool SelfIsNegative = self.IntValue < 0;
+                if (SelfIsNegative)
+                {
+                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                    else { self.IntValue *= -1; }
+                }
+                __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
+                SRep %= Value;
+                __int64 VRep = DecimalOverflowX * Value;
+                SRep /= VRep;
+                __int64 IntResult = SRep;
+                SRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalHalf;
+                SRep -= IntResult * VRep;
+                __int64 IntHalf = SRep / DecimalOverflow;
+                SRep -= IntHalf * (__int64)DecimalOverflow;
+                if (IntHalf == 0) { self.IntValue = SelfIsNegative ? (signed int)NegativeZero : 0; }
+                else { self.IntValue = (signed int)(SelfIsNegative ? IntHalf * -1 : IntHalf); }
+                self.DecimalHalf = (signed int)SRep;
+            }
+            return self;
+        }
+
+        /// <summary>
+        /// Remainder/Modulus Operation Between MixedDec and Integer Value
+        /// </summary>
+        /// <param name="self">The self.</param>
+        /// <param name="Value">The value.</param>
+        /// <returns>MixedDec&</returns>
+        template<typename IntType>
+        static MixedDec& UnsignedRemOp(MixedDec& self, IntType& Value)
+        {
+            if (self == MixedDec::Zero) { return self; }
+            if (Value == 0) { self.IntValue = 0; self.DecimalHalf = 0; return self; }
+            if (self.DecimalHalf == 0)
+            {
+                self.IntValue %= Value; return self;
+            }
+            else//leftValue is non-whole number
+            {
+                __int64 SRep;
+                if (self.IntValue == NegativeZero) { SRep = (__int64)self.DecimalHalf * -1; }
+                else if (self.IntValue < 0) { SRep = DecimalOverflowX * self.IntValue - self.DecimalHalf; }
+                else { SRep = DecimalOverflowX * self.IntValue + self.DecimalHalf; }
+                bool SelfIsNegative = SRep < 0;
+                if (SelfIsNegative) { SRep *= -1; }
+                SRep %= Value;
+                __int64 VRep = DecimalOverflowX * Value;
+                SRep /= VRep;
+                __int64 IntResult = SRep;
+                SRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalHalf;
+                SRep -= IntResult * VRep;
+                __int64 IntHalf = SRep / DecimalOverflow;
+                SRep -= IntHalf * (__int64)DecimalOverflow;
+                if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? NegativeZero : 0; }
+                else { self.IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
+                self.DecimalHalf = (signed int)SRep;
+            }
+            return self;
+        }
+#pragma endregion Remainder Operations
+
+#pragma region MixedDec-To-MixedDec Operators
     public:
         /// <summary>
         /// Addition Operation Between MixedDecs
@@ -2332,256 +2577,6 @@ public:
 
     #pragma endregion Other Operations
     #pragma region MixedDec-To-Integer Operations
-    public:
-        /// <summary>
-        /// Remainder/Modulus Operation Between MixedDec and Integer Value
-        /// </summary>
-        /// <param name="self">The self.</param>
-        /// <param name="Value">The value.</param>
-        /// <returns>MixedDec&</returns>
-        template<typename IntType>
-        static MixedDec& RemOp(MixedDec& self, IntType& Value)
-        {
-            if (Value == 0 || self == MixedDec::Zero) { self.SetAsZero(); return self; }
-            if (self.DecimalHalf == 0)
-            {
-                if (self.IntValue < 0)//https://www.quora.com/How-does-the-modulo-operation-work-with-negative-numbers-and-why
-                {
-                    self.IntValue %= Value;
-                    self.IntValue = (signed int)(Value - self.IntValue);
-                }
-                else
-                {
-                    self.IntValue %= Value; return self;
-                }
-            }
-            else//leftValue is non-whole number
-            {
-                if (Value < 0) { self.SwapNegativeStatus(); Value *= -1; }
-                bool SelfIsNegative = self.IntValue < 0;
-                if (SelfIsNegative)
-                {
-                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
-                    else { self.IntValue *= -1; }
-                }
-                __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                SRep %= Value;
-                __int64 VRep = DecimalOverflowX * Value;
-                SRep /= VRep;
-                __int64 IntResult = SRep;
-                SRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalHalf;
-                SRep -= IntResult * VRep;
-                __int64 IntHalf = SRep / DecimalOverflow;
-                SRep -= IntHalf * (__int64)DecimalOverflow;
-                if (IntHalf == 0) { self.IntValue = SelfIsNegative ? (signed int)NegativeZero : 0; }
-                else { self.IntValue = (signed int)(SelfIsNegative ? IntHalf * -1 : IntHalf); }
-                self.DecimalHalf = (signed int)SRep;
-            }
-            return self;
-        }
-
-        /// <summary>
-        /// Addition Operation Between MixedDec and Integer value
-        /// </summary>
-        /// <param name="self">The self.</param>
-        /// <param name="value">The value.</param>
-        /// <returns>MixedDec&</returns>
-        template<typename IntType>
-        static MixedDec& UnsignedAddOp(MixedDec& self, IntType& value)
-        {
-            if(value==0){ return self; }
-            else if(self.DecimalHalf==0|| self.IntValue > 0)
-                self.IntValue += value;
-            else
-            {
-                bool WasNegative = self.IntValue < 0;
-                if (WasNegative)
-                    self.IntValue = self.IntValue == MixedDec::NegativeZero ? -1 : --self.IntValue;
-                self.IntValue += value;
-                if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : MixedDec::NegativeZero;
-                else if (self.IntValue < 0)
-                    ++self.IntValue;
-                //If flips to other side of negative, invert the decimals
-                if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
-                    self.DecimalHalf = MixedDec::DecimalOverflow - self.DecimalHalf;
-            }
-            return self;
-        }
-
-        /// <summary>
-        /// Subtraction Operation Between MixedDec and Integer value
-        /// </summary>
-        /// <param name="self">The self.</param>
-        /// <param name="value">The value.</param>
-        /// <returns>MixedDec</returns>
-        template<typename IntType>
-        static MixedDec& UnsignedSubOp(MixedDec& self, IntType& value)
-        {
-            if (value == 0) { return self; }
-            else if (self.DecimalHalf == 0)
-                self.IntValue -= value;
-            else if (self.IntValue == NegativeZero)
-                self.IntValue = (signed int)value * -1;
-            else if(self.IntValue < 0)
-                self.IntValue -= value;
-            else
-            {
-                bool WasNegative = self.IntValue < 0;
-                if (WasNegative)
-                    self.IntValue = self.IntValue == MixedDec::NegativeZero ? -1 : --self.IntValue;
-                self.IntValue -= value;
-                if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : MixedDec::NegativeZero;
-                else if (self.IntValue < 0)
-                    ++self.IntValue;
-                //If flips to other side of negative, invert the decimals
-                if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
-                    self.DecimalHalf = MixedDec::DecimalOverflow - self.DecimalHalf;
-            }
-            return self;
-        }
-
-        /// <summary>
-        /// Multiplication Operation Between MixedDec and Integer Value
-        /// </summary>
-        /// <param name="self">The self.</param>
-        /// <param name="Value">The value.</param>
-        /// <returns>MixedDec</returns>
-        template<typename IntType>
-        static MixedDec& UnsignedMultOp(MixedDec& self, IntType& Value)
-        {
-            if (self == Zero) {}
-            else if (Value == 0) { self.IntValue = 0; self.DecimalHalf = 0; }
-            else if (self.DecimalHalf == 0)
-            {
-                self.IntValue *= Value;
-            }
-            else
-            {
-                bool SelfIsNegative = self.IntValue < 0;
-                if (SelfIsNegative)
-                {
-                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
-                    else { self.IntValue *= -1; }
-                }
-                __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                SRep *= Value;
-                if (SRep >= DecimalOverflowX)
-                {
-                    __int64 OverflowVal = SRep / DecimalOverflowX;
-                    SRep -= OverflowVal * DecimalOverflowX;
-                    self.IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
-                    self.DecimalHalf = (signed int)SRep;
-                }
-                else
-                {
-                    self.IntValue = SelfIsNegative?NegativeZero:0;
-                    self.DecimalHalf = (signed int)SRep;
-                }
-            }
-            return self;
-        }
-
-        /// <summary>
-        /// Division Operation Between MixedDec and Integer Value
-        /// </summary>
-        /// <param name="self">The self.</param>
-        /// <param name="Value">The value.</param>
-        /// <returns>MixedDec&</returns>
-        template<typename IntType>
-        static MixedDec& UnsignedDivOp(MixedDec& self, IntType& Value)
-        {
-            if (Value == 0) { throw "Target value can not be divided by zero"; }
-            else if (self == Zero) { return self; }
-            if (self.DecimalHalf == 0)
-            {
-                bool SelfIsNegative = self.IntValue < 0;
-                if (SelfIsNegative)
-                    self.IntValue *= -1;
-                __int64 SRep = DecimalOverflowX * self.IntValue;
-                SRep /= Value;
-                if (SRep >= DecimalOverflowX)
-                {
-                    __int64 OverflowVal = SRep / DecimalOverflow;
-                    SRep -= OverflowVal * DecimalOverflow;
-                    self.IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
-                    self.DecimalHalf = (signed int)SRep;
-                }
-                else
-                {
-                    self.IntValue = SelfIsNegative?NegativeZero:0;
-                    self.DecimalHalf = (signed int)SRep;
-                }
-            }
-            else
-            {
-                bool SelfIsNegative = self.IntValue < 0;
-                if (SelfIsNegative)
-                {
-                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
-                    else { self.IntValue *= -1; }
-                }
-                __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                SRep /= Value;
-                if (SRep >= DecimalOverflowX)
-                {
-                    __int64 OverflowVal = SRep / DecimalOverflowX;
-                    SRep -= DecimalOverflowX * OverflowVal;
-                    self.IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
-                    self.DecimalHalf = (signed int)SRep;
-                }
-                else
-                {
-                    self.IntValue = 0;
-                    self.DecimalHalf = (signed int)SRep;
-                }
-            }
-            return self;
-        }
-        
-        /// <summary>
-        /// Remainder/Modulus Operation Between MixedDec and Integer Value
-        /// </summary>
-        /// <param name="self">The self.</param>
-        /// <param name="Value">The value.</param>
-        /// <returns>MixedDec&</returns>
-        template<typename IntType>
-        static MixedDec& UnsignedRemOp(MixedDec& self, IntType& Value)
-        {
-            if(self == MixedDec::Zero) { return self; }
-            if (Value == 0){ self.IntValue=0; self.DecimalHalf = 0; return self; }
-            if (self.DecimalHalf == 0)
-            {
-                self.IntValue %= Value; return self;
-            }
-            else//leftValue is non-whole number
-            {
-                __int64 SRep;
-                if (self.IntValue == NegativeZero) { SRep = (__int64)self.DecimalHalf * -1; }
-                else if (self.IntValue < 0) { SRep = DecimalOverflowX * self.IntValue - self.DecimalHalf; }
-                else { SRep = DecimalOverflowX * self.IntValue + self.DecimalHalf; }
-                bool SelfIsNegative = SRep < 0;
-                if (SelfIsNegative) { SRep *= -1; }
-                SRep %= Value;
-                __int64 VRep = DecimalOverflowX * Value;
-                SRep /= VRep;
-                __int64 IntResult = SRep;
-                SRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalHalf;
-                SRep -= IntResult * VRep;
-                __int64 IntHalf = SRep / DecimalOverflow;
-                SRep -= IntHalf * (__int64)DecimalOverflow;
-                if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? NegativeZero : 0; }
-                else { self.IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
-                self.DecimalHalf = (signed int)SRep;
-            }
-            return self;
-        }
-
-     //   template<typename IntType>
-     //   static MixedDec& SignedModulusOp(MixedDec& self, IntType& Value)
-     //   {
-        //}
     public:
         friend MixedDec operator+(MixedDec self, unsigned char Value){ return UnsignedAddOp(self, Value); }
         friend MixedDec operator-(MixedDec self, unsigned char Value){ return UnsignedSubOp(self, Value); }
