@@ -4275,22 +4275,22 @@ public:
     #pragma endregion ValueDefine Source
 
     #pragma region String Function Source
-	private float CharAsFloat(char Temp)
-	{
-		float Value;
-		if(Temp == '0') { Value = 0.0f; }
-		else if(Temp == '1') { Value = 1.0f; }
-		else if(Temp == '2') { Value = 2.0f; }
-		else if(Temp == '3') { Value = 3.0f; }
-		else if(Temp == '4') { Value = 4.0f; }
-		else if(Temp == '5') { Value = 5.0f; }
-		else if(Temp == '6') { Value = 6.0f; }
-		else if(Temp == '7') { Value = 7.0f; }
-		else if(Temp == '8') { Value = 8.0f; }
-		else if(Temp == '9') { Value = 9.0f; }
-		return Value;
-	}
-	
+    float CharAsFloat(char Temp)
+    {
+        float Value;
+        if(Temp == '0') { Value = 0.0f; }
+        else if(Temp == '1') { Value = 1.0f; }
+        else if(Temp == '2') { Value = 2.0f; }
+        else if(Temp == '3') { Value = 3.0f; }
+        else if(Temp == '4') { Value = 4.0f; }
+        else if(Temp == '5') { Value = 5.0f; }
+        else if(Temp == '6') { Value = 6.0f; }
+        else if(Temp == '7') { Value = 7.0f; }
+        else if(Temp == '8') { Value = 8.0f; }
+        else if(Temp == '9') { Value = 9.0f; }
+        return Value;
+    }
+    
     /// <summary>
     /// Reads the string.
     /// </summary>
@@ -4304,32 +4304,32 @@ public:
         std::string DecimalBuffer = "";
 
         bool ReadingDecimal = false;
-		bool ReadingExtra = false;
+        bool ReadingExtra = false;
         int TempInt;
         int TempInt02;
-		int TempFloat;
-		float DigitMultiplier = 0.1f;
-		ExtraRep = 0.0f;
+        int TempFloat;
+        float DigitMultiplier = 0.1f;
+        ExtraRep = 0.0f;
         for (char const& StringChar : Value)
         {
             if (VariableConversionFunctions::IsDigit(StringChar))
             {
-				if(ReadingExtra)//Extra Floating Point based digits
-				{
-					TempFloat = CharAsFloat(StringChar);
-					ExtraRep += TempFloat * DigitMultiplier;
-					DigitMultiplier *= 0.1f;
-				}
+                if(ReadingExtra)//Extra Floating Point based digits
+                {
+                    TempFloat = CharAsFloat(StringChar);
+                    ExtraRep += TempFloat * DigitMultiplier;
+                    DigitMultiplier *= 0.1f;
+                }
                 else if (ReadingDecimal)
-				{
-					DecimalBuffer += StringChar;
-					if(++PlaceNumber==9)//Only 9 decimal digits are stored as fixed point
-					{
-						ReadingExtra = true;
-					}
-				}
+                {
+                    DecimalBuffer += StringChar;
+                    if(++PlaceNumber==9)//Only 9 decimal digits are stored as fixed point
+                    {
+                        ReadingExtra = true;
+                    }
+                }
                 else
-					WholeNumberBuffer += StringChar;
+                    WholeNumberBuffer += StringChar;
             }
             else if (StringChar == '-')
             {
