@@ -1042,6 +1042,8 @@ public:
 #if defined(MixedDec_EnableInfinityRep)
             if (self.DecimalHalf==-1)
                 return self;
+            if (Value.DecimalHalf == -1)
+                return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
 #endif
             if (Value.DecimalHalf == 0)
             {
@@ -1127,6 +1129,8 @@ public:
 #if defined(MixedDec_EnableInfinityRep)
             if (self.DecimalHalf == -1)
                 return self;
+            if (Value.DecimalHalf == -1)
+                return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
 #endif
             if (Value.DecimalHalf == 0)
             {
@@ -1352,7 +1356,11 @@ public:
         {
 #if defined(MixedDec_EnableInfinityRep)
             if (self.DecimalHalf == -1)
+            {
+                if (self.IntValue == -1 || Value.IntValue == -1)
+                    self.IntValue = 1;//based on valid infinity from https://oregonstate.edu/instruct/mth251/cq/Stage4/Lesson/infinity.html
                 return self;
+            }
 #endif
             if (Value == MixedDec::Zero) { self.IntValue = 0; self.DecimalHalf = 0; return self; }
             if (self == MixedDec::Zero || Value == MixedDec::One)
