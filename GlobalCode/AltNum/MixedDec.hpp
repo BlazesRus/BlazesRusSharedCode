@@ -61,9 +61,6 @@ namespace BlazesRusCode
 #if defined(MixedDec_EnableImaginaryNumRep)
         float IRep = -3.0f;
 #endif
-#if defined(MixedDec_EnableInfinityRep)
-        float InfinityRep = -4.0f;
-#endif
     public:
         /// <summary>
         /// The decimal overflow
@@ -128,6 +125,22 @@ namespace BlazesRusCode
             DecimalHalf = Value.DecimalHalf;
         }
         
+#if defined(MixedDec_EnableInfinityRep)
+        //Ininity operations based on https://www.gnu.org/software/libc/manual/html_node/Infinity-and-NaN.html
+        // and https://tutorial.math.lamar.edu/classes/calcI/typesofinfinity.aspx
+        void SetAsInfinity()
+        {
+            IntValue = 1; DecimalHalf = -1;
+            ExtraRep = 0.0f;
+        }
+
+        void SetAsNegativeInfinity()
+        {
+            IntValue = -1; DecimalHalf = -1;
+            ExtraRep = 0.0f;
+        }
+#endif
+
         void SetAsZero()
         {
             IntValue = 0; DecimalHalf = 0;
@@ -1026,6 +1039,10 @@ public:
         /// <returns>MixedDec</returns>
         static MixedDec& AddOp(MixedDec& self, MixedDec& Value)
         {
+#if defined(MixedDec_EnableInfinityRep)
+            if (self.DecimalHalf==-1)
+                return self;
+#endif
             if (Value.DecimalHalf == 0)
             {
                 if (Value.IntValue == 0)//(Value == Zero)
@@ -1107,6 +1124,10 @@ public:
         /// <returns>MixedDec&</returns>
         static MixedDec& SubOp(MixedDec& self, MixedDec& Value)
         {
+#if defined(MixedDec_EnableInfinityRep)
+            if (self.DecimalHalf == -1)
+                return self;
+#endif
             if (Value.DecimalHalf == 0)
             {
                 if (Value.IntValue == 0)//(Value == Zero)
@@ -1190,6 +1211,10 @@ public:
         template<typename IntType>
         static MixedDec& AddIntOp(MixedDec& self, IntType& value)
         {
+#if defined(MixedDec_EnableInfinityRep)
+            if (self.DecimalHalf == -1)
+                return self;
+#endif
             if (value == 0)
                 return self;
             if (self.DecimalHalf == 0)
@@ -1220,6 +1245,10 @@ public:
         template<typename IntType>
         static MixedDec& SubIntOp(MixedDec& self, IntType& value)
         {
+#if defined(MixedDec_EnableInfinityRep)
+            if (self.DecimalHalf == -1)
+                return self;
+#endif
             if (value == 0)
                 return self;
             if (self.DecimalHalf == 0)
@@ -1250,6 +1279,10 @@ public:
         template<typename IntType>
         static MixedDec& UnsignedAddOp(MixedDec& self, IntType& value)
         {
+#if defined(MixedDec_EnableInfinityRep)
+            if (self.DecimalHalf == -1)
+                return self;
+#endif
             if (value == 0) { return self; }
             else if (self.DecimalHalf == 0 || self.IntValue > 0)
                 self.IntValue += value;
@@ -1279,6 +1312,10 @@ public:
         template<typename IntType>
         static MixedDec& UnsignedSubOp(MixedDec& self, IntType& value)
         {
+#if defined(MixedDec_EnableInfinityRep)
+            if (self.DecimalHalf == -1)
+                return self;
+#endif
             if (value == 0) { return self; }
             else if (self.DecimalHalf == 0)
                 self.IntValue -= value;
@@ -1313,6 +1350,10 @@ public:
         /// <returns>MixedDec&</returns>
         static MixedDec& MultOp(MixedDec& self, MixedDec& Value)
         {
+#if defined(MixedDec_EnableInfinityRep)
+            if (self.DecimalHalf == -1)
+                return self;
+#endif
             if (Value == MixedDec::Zero) { self.IntValue = 0; self.DecimalHalf = 0; return self; }
             if (self == MixedDec::Zero || Value == MixedDec::One)
                 return self;
@@ -1458,6 +1499,10 @@ public:
         /// <returns>MixedDec&</returns>
         static MixedDec& DivOp(MixedDec& self, MixedDec& Value)
         {
+#if defined(MixedDec_EnableInfinityRep)
+            if (value.DecimalHalf == -1)
+                return self.SetAsZero();
+#endif
             if (Value == MixedDec::Zero)
                 throw "Target value can not be divided by zero";
             if (self == MixedDec::Zero)
