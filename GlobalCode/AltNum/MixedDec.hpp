@@ -1055,55 +1055,55 @@ public:
             if (Value.DecimalHalf == -1)
                 return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
 #endif
-            if (Value.DecimalHalf == 0)
+            if (Value.ExtraRep > 0.0f)
             {
-                if (Value.IntValue == 0)
+                if (self.ExtraRep == 0)
                 {
-                    if(Value.ExtraRep==0.0f)//(Value == Zero)
-                        return;
-                    else//Value is Really small(Can't be Zero Pi/E)
-                    {
-                        self.ExtraRep += Value.ExtraRep;
-                        if (self.ExtraRep >= 1.0f)
-                        {
-                            self.ExtraRep -= 1.0f;
-                            ++self.DecimalHalf;
-                        }
-                    }
+                    if (self.IntValue > 0)
+                        self.ExtraRep = 1.0f - Value.ExtraRep;
+                    else
+                        self.ExtraRep = Value.ExtraRep;
                 }
-                if (self.DecimalHalf == 0)
+                else
                 {
-                    if (self.ExtraRep == 0.0f)
+                    if (self.IntValue > 0)
                     {
-                        self.IntValue += Value.IntValue;
+
                     }
                     else
                     {
-                        bool WasNegative = self.IntValue < 0;
-                        if (WasNegative)
-                            self.IntValue = self.IntValue == MixedDec::NegativeZero ? -1 : --self.IntValue;
-                        self.IntValue += Value.IntValue;
-                        if (self.IntValue == -1)
-                            self.IntValue = self.DecimalHalf == 0 ? 0 : MixedDec::NegativeZero;
-                        else if (self.IntValue < 0)
-                            ++self.IntValue;
-                    }
+                        if (Value.IntValue > 0)
+                        {
 
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                }
+            }
+            if (Value.DecimalHalf == 0)
+            {
+                if (Value.IntValue == 0)
+                    return self;
+                if (self.DecimalHalf == 0 && self.ExtraRep <= 0.0f)
+                {
+                    self.IntValue += Value.IntValue;
                 }
                 else
                 {
                     bool WasNegative = self.IntValue < 0;
                     if (WasNegative)
-                        self.IntValue = self.IntValue == MixedDec::NegativeZero ? -1 : --self.IntValue;
+                        self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
                     self.IntValue += Value.IntValue;
-
                     if (self.IntValue == -1)
-                        self.IntValue = self.DecimalHalf == 0 ? 0 : MixedDec::NegativeZero;
+                        self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeZero;
                     else if (self.IntValue < 0)
                         ++self.IntValue;
                     //If flips to other side of negative, invert the decimals
                     if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
-                        self.DecimalHalf = MixedDec::DecimalOverflow - self.DecimalHalf;
+                        self.DecimalHalf = MediumDec::DecimalOverflow - self.DecimalHalf;
                 }
             }
             else
@@ -1111,8 +1111,8 @@ public:
                 bool WasNegative = self.IntValue < 0;
                 //Deal with Int section first
                 if (WasNegative)
-                    self.IntValue = self.IntValue == MixedDec::NegativeZero ? -1 : --self.IntValue;
-                if (Value.IntValue != 0 && Value.IntValue != MixedDec::NegativeZero)
+                    self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
+                if (Value.IntValue != 0 && Value.IntValue != MediumDec::NegativeZero)
                     self.IntValue += Value.IntValue;
                 //Now deal with the decimal section
                 if (Value.IntValue < 0)
@@ -1120,14 +1120,14 @@ public:
                     if (WasNegative)
                     {
                         self.DecimalHalf += Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += MixedDec::DecimalOverflow; ++self.IntValue; }
-                        else if (self.DecimalHalf >= MixedDec::DecimalOverflow) { self.DecimalHalf -= MixedDec::DecimalOverflow; --self.IntValue; }
+                        if (self.DecimalHalf < 0) { self.DecimalHalf += MediumDec::DecimalOverflow; ++self.IntValue; }
+                        else if (self.DecimalHalf >= MediumDec::DecimalOverflow) { self.DecimalHalf -= MediumDec::DecimalOverflow; --self.IntValue; }
                     }
                     else
                     {
                         self.DecimalHalf -= Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += MixedDec::DecimalOverflow; --self.IntValue; }
-                        else if (self.DecimalHalf >= MixedDec::DecimalOverflow) { self.DecimalHalf -= MixedDec::DecimalOverflow; ++self.IntValue; }
+                        if (self.DecimalHalf < 0) { self.DecimalHalf += MediumDec::DecimalOverflow; --self.IntValue; }
+                        else if (self.DecimalHalf >= MediumDec::DecimalOverflow) { self.DecimalHalf -= MediumDec::DecimalOverflow; ++self.IntValue; }
                     }
                 }
                 else
@@ -1135,23 +1135,23 @@ public:
                     if (WasNegative)
                     {
                         self.DecimalHalf -= Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += MixedDec::DecimalOverflow; ++self.IntValue; }
-                        else if (self.DecimalHalf >= MixedDec::DecimalOverflow) { self.DecimalHalf -= MixedDec::DecimalOverflow; --self.IntValue; }
+                        if (self.DecimalHalf < 0) { self.DecimalHalf += MediumDec::DecimalOverflow; ++self.IntValue; }
+                        else if (self.DecimalHalf >= MediumDec::DecimalOverflow) { self.DecimalHalf -= MediumDec::DecimalOverflow; --self.IntValue; }
                     }
                     else
                     {
                         self.DecimalHalf += Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += MixedDec::DecimalOverflow; --self.IntValue; }
-                        else if (self.DecimalHalf >= MixedDec::DecimalOverflow) { self.DecimalHalf -= MixedDec::DecimalOverflow; ++self.IntValue; }
+                        if (self.DecimalHalf < 0) { self.DecimalHalf += MediumDec::DecimalOverflow; --self.IntValue; }
+                        else if (self.DecimalHalf >= MediumDec::DecimalOverflow) { self.DecimalHalf -= MediumDec::DecimalOverflow; ++self.IntValue; }
                     }
                 }
                 if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : MixedDec::NegativeZero;
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeZero;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
                 //If flips to other side of negative, invert the decimals
                 if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
-                    self.DecimalHalf = MixedDec::DecimalOverflow - self.DecimalHalf;
+                    self.DecimalHalf = MediumDec::DecimalOverflow - self.DecimalHalf;
             }
             return self;
         }
@@ -1170,45 +1170,32 @@ public:
             if (Value.DecimalHalf == -1)
                 return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
 #endif
+            if (Value.ExtraRep > 0.0f)
+            {
+                //Apply small part of value
+            }
             if (Value.DecimalHalf == 0)
             {
                 if (Value.IntValue == 0)
-                {
-                    if (Value.ExtraRep == 0.0f)//(Value == Zero)
-                        return;
-                    else//Value is Really small(Can't be Zero Pi/E)
-                    {
-                        self.ExtraRep += Value.ExtraRep;
-                        if (self.ExtraRep <= -1.0f)
-                        {
-                            self.ExtraRep += 1.0f;
-                            --self.DecimalHalf;
-                        }
-                    }
-                }
+                    return self;
                 if (self.DecimalHalf == 0)
                 {
-                    if (Value.ExtraRep == 0.0f)
-                        self.IntValue -= Value.IntValue;
-                    else
-                    {
-
-                    }
+                    self.IntValue -= Value.IntValue;
                 }
                 else
                 {
                     bool WasNegative = self.IntValue < 0;
                     if (WasNegative)
-                        self.IntValue = self.IntValue == MixedDec::NegativeZero ? -1 : --self.IntValue;
+                        self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
                     if (Value.IntValue != 0)
                         self.IntValue -= Value.IntValue;
                     if (self.IntValue == -1)
-                        self.IntValue = self.DecimalHalf == 0 ? 0 : MixedDec::NegativeZero;
+                        self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeZero;
                     else if (self.IntValue < 0)
                         ++self.IntValue;
                     //If flips to other side of negative, invert the decimals
                     if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
-                        self.DecimalHalf = MixedDec::DecimalOverflow - self.DecimalHalf;
+                        self.DecimalHalf = MediumDec::DecimalOverflow - self.DecimalHalf;
                 }
             }
             else
@@ -1216,8 +1203,8 @@ public:
                 bool WasNegative = self.IntValue < 0;
                 //Deal with Int section first
                 if (WasNegative)
-                    self.IntValue = self.IntValue == MixedDec::NegativeZero ? -1 : --self.IntValue;
-                if (Value.IntValue != 0 && Value.IntValue != MixedDec::NegativeZero)
+                    self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
+                if (Value.IntValue != 0 && Value.IntValue != MediumDec::NegativeZero)
                     self.IntValue -= Value.IntValue;
                 //Now deal with the decimal section
                 if (Value.IntValue < 0)
@@ -1225,14 +1212,14 @@ public:
                     if (WasNegative)//-4.0 - -0.5 = -3.5
                     {
                         self.DecimalHalf -= Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += MixedDec::DecimalOverflow; ++self.IntValue; }
-                        else if (self.DecimalHalf >= MixedDec::DecimalOverflow) { self.DecimalHalf -= MixedDec::DecimalOverflow; --self.IntValue; }
+                        if (self.DecimalHalf < 0) { self.DecimalHalf += MediumDec::DecimalOverflow; ++self.IntValue; }
+                        else if (self.DecimalHalf >= MediumDec::DecimalOverflow) { self.DecimalHalf -= MediumDec::DecimalOverflow; --self.IntValue; }
                     }
                     else//4.3 -  - 1.8
                     {
                         self.DecimalHalf += Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += MixedDec::DecimalOverflow; --self.IntValue; }
-                        else if (self.DecimalHalf >= MixedDec::DecimalOverflow) { self.DecimalHalf -= MixedDec::DecimalOverflow; ++self.IntValue; }
+                        if (self.DecimalHalf < 0) { self.DecimalHalf += MediumDec::DecimalOverflow; --self.IntValue; }
+                        else if (self.DecimalHalf >= MediumDec::DecimalOverflow) { self.DecimalHalf -= MediumDec::DecimalOverflow; ++self.IntValue; }
                     }
                 }
                 else
@@ -1240,23 +1227,23 @@ public:
                     if (WasNegative)//-4.5 - 5.6
                     {
                         self.DecimalHalf += Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += MixedDec::DecimalOverflow; ++self.IntValue; }
-                        else if (self.DecimalHalf >= MixedDec::DecimalOverflow) { self.DecimalHalf -= MixedDec::DecimalOverflow; --self.IntValue; }
+                        if (self.DecimalHalf < 0) { self.DecimalHalf += MediumDec::DecimalOverflow; ++self.IntValue; }
+                        else if (self.DecimalHalf >= MediumDec::DecimalOverflow) { self.DecimalHalf -= MediumDec::DecimalOverflow; --self.IntValue; }
                     }
                     else//0.995 - 1 = 
                     {
                         self.DecimalHalf -= Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += MixedDec::DecimalOverflow; --self.IntValue; }
-                        else if (self.DecimalHalf >= MixedDec::DecimalOverflow) { self.DecimalHalf -= MixedDec::DecimalOverflow; ++self.IntValue; }
+                        if (self.DecimalHalf < 0) { self.DecimalHalf += MediumDec::DecimalOverflow; --self.IntValue; }
+                        else if (self.DecimalHalf >= MediumDec::DecimalOverflow) { self.DecimalHalf -= MediumDec::DecimalOverflow; ++self.IntValue; }
                     }
                 }
                 if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : MixedDec::NegativeZero;
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeZero;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
                 //If flips to other side of negative, invert the decimals
                 if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
-                    self.DecimalHalf = MixedDec::DecimalOverflow - self.DecimalHalf;
+                    self.DecimalHalf = MediumDec::DecimalOverflow - self.DecimalHalf;
             }
             return self;
         }
