@@ -1357,10 +1357,12 @@ public:
 #if defined(MixedDec_EnableInfinityRep)
             if (self.DecimalHalf == -1)
             {
-                if (self.IntValue == -1 || Value.IntValue == -1)
-                    self.IntValue = 1;//based on valid infinity from https://oregonstate.edu/instruct/mth251/cq/Stage4/Lesson/infinity.html
+                if(Value.DecimalHalf == -1&&self.IntValue==Value.IntValue&&self.IntValue==-1)
+                    self.IntValue = 1;
                 return self;
             }
+            else if (Value.DecimalHalf == -1)
+                return self;
 #endif
             if (Value == MixedDec::Zero) { self.IntValue = 0; self.DecimalHalf = 0; return self; }
             if (self == MixedDec::Zero || Value == MixedDec::One)
