@@ -139,6 +139,16 @@ namespace BlazesRusCode
             IntValue = -1; DecimalHalf = -1;
             ExtraRep = 0.0f;
         }
+        void SetAsNaN()
+        {
+            IntValue = 0; DecimalHalf = -2;
+            ExtraRep = 0.0f;
+        }
+        void SetAsApproachingZero()
+        {
+            IntValue = 0; DecimalHalf = -3;//If DecimalHalf==-3, then definited as infinitely approaching IntValue
+            ExtraRep = 0.0f;
+        }
 #endif
 
         void SetAsZero()
@@ -1047,11 +1057,38 @@ public:
 #endif
             if (Value.DecimalHalf == 0)
             {
-                if (Value.IntValue == 0)//(Value == Zero)
-                    return self;
+                if (Value.IntValue == 0)
+                {
+                    if(Value.ExtraRep==0.0f)//(Value == Zero)
+                        return;
+                    else//Value is Really small(Can't be Zero Pi/E)
+                    {
+                        self.ExtraRep += Value.ExtraRep;
+                        if (self.ExtraRep >= 1.0f)
+                        {
+                            self.ExtraRep -= 1.0f;
+                            ++self.DecimalHalf;
+                        }
+                    }
+                }
                 if (self.DecimalHalf == 0)
                 {
-                    self.IntValue += Value.IntValue;
+                    if (self.ExtraRep == 0.0f)
+                    {
+                        self.IntValue += Value.IntValue;
+                    }
+                    else
+                    {
+                        bool WasNegative = self.IntValue < 0;
+                        if (WasNegative)
+                            self.IntValue = self.IntValue == MixedDec::NegativeZero ? -1 : --self.IntValue;
+                        self.IntValue += Value.IntValue;
+                        if (self.IntValue == -1)
+                            self.IntValue = self.DecimalHalf == 0 ? 0 : MixedDec::NegativeZero;
+                        else if (self.IntValue < 0)
+                            ++self.IntValue;
+                    }
+
                 }
                 else
                 {
@@ -1059,6 +1096,7 @@ public:
                     if (WasNegative)
                         self.IntValue = self.IntValue == MixedDec::NegativeZero ? -1 : --self.IntValue;
                     self.IntValue += Value.IntValue;
+
                     if (self.IntValue == -1)
                         self.IntValue = self.DecimalHalf == 0 ? 0 : MixedDec::NegativeZero;
                     else if (self.IntValue < 0)
@@ -1134,11 +1172,28 @@ public:
 #endif
             if (Value.DecimalHalf == 0)
             {
-                if (Value.IntValue == 0)//(Value == Zero)
-                    return self;
+                if (Value.IntValue == 0)
+                {
+                    if (Value.ExtraRep == 0.0f)//(Value == Zero)
+                        return;
+                    else//Value is Really small(Can't be Zero Pi/E)
+                    {
+                        self.ExtraRep += Value.ExtraRep;
+                        if (self.ExtraRep <= -1.0f)
+                        {
+                            self.ExtraRep += 1.0f;
+                            --self.DecimalHalf;
+                        }
+                    }
+                }
                 if (self.DecimalHalf == 0)
                 {
-                    self.IntValue -= Value.IntValue;
+                    if (Value.ExtraRep == 0.0f)
+                        self.IntValue -= Value.IntValue;
+                    else
+                    {
+
+                    }
                 }
                 else
                 {
@@ -1346,6 +1401,140 @@ public:
 #pragma endregion Addition/Subtraction Operations
 
 #pragma region Multiplication/Division Operations
+        void PartialMultOp(MixedDec& Value)
+        {
+            if (DecimalHalf == 0)
+            {
+                if (IntValue == 1)
+                {
+                    IntValue = Value.IntValue; DecimalHalf = Value.DecimalHalf;
+                    ExtraRep = Value.ExtraRep;
+                    return; 
+                }
+                else if (Value.DecimalHalf == 0)
+                {
+                    IntValue *= Value.IntValue;
+                }
+                else
+                {
+                    Value *= IntValue;
+                    IntValue = Value.IntValue; DecimalHalf = Value.DecimalHalf;
+                    ExtraRep = Value.ExtraRep;
+                }
+            }
+            else if (IntValue == 0)
+            {
+                __int64 SRep = (__int64)DecimalHalf;
+                SRep *= Value.DecimalHalf;
+                SRep /= MixedDec::DecimalOverflowX;
+                if (Value.IntValue == 0)
+                {
+                    DecimalHalf = (signed int)SRep;
+                }
+                else
+                {
+                    SRep += (__int64)DecimalHalf * Value.IntValue;
+                    if (SRep >= MixedDec::DecimalOverflowX)
+                    {
+                        __int64 OverflowVal = SRep / MixedDec::DecimalOverflowX;
+                        SRep -= OverflowVal * MixedDec::DecimalOverflowX;
+                        IntValue = OverflowVal;
+                        DecimalHalf = (signed int)SRep;
+                    }
+                    else
+                    {
+                        DecimalHalf = (signed int)SRep;
+                    }
+                }
+            }
+            else if (IntValue == MixedDec::NegativeZero)
+            {
+                __int64 SRep = (__int64)DecimalHalf;
+                SRep *= Value.DecimalHalf;
+                SRep /= MixedDec::DecimalOverflowX;
+                if (Value.IntValue == 0)
+                {
+                    DecimalHalf = (signed int)SRep;
+                }
+                else
+                {
+                    SRep += (__int64)DecimalHalf * Value.IntValue;
+                    if (SRep >= MixedDec::DecimalOverflowX)
+                    {
+                        __int64 OverflowVal = SRep / MixedDec::DecimalOverflowX;
+                        SRep -= OverflowVal * MixedDec::DecimalOverflowX;
+                        IntValue = -OverflowVal;
+                        DecimalHalf = (signed int)SRep;
+                    }
+                    else
+                    {
+                        DecimalHalf = (signed int)SRep;
+                    }
+                }
+            }
+            else
+            {
+                bool SelfIsNegative = IntValue < 0;
+                if (SelfIsNegative)
+                {
+                    IntValue *= -1;
+                }
+                if (Value.IntValue == 0)
+                {
+                    __int64 SRep = MixedDec::DecimalOverflowX * IntValue + DecimalHalf;
+                    SRep *= Value.DecimalHalf;
+                    SRep /= MixedDec::DecimalOverflowX;
+                    if (SRep >= MixedDec::DecimalOverflowX)
+                    {
+                        __int64 OverflowVal = SRep / MixedDec::DecimalOverflowX;
+                        SRep -= OverflowVal * MixedDec::DecimalOverflowX;
+                        IntValue = (signed int)(SelfIsNegative ? -OverflowVal : OverflowVal);
+                        DecimalHalf = (signed int)SRep;
+                    }
+                    else
+                    {
+                        IntValue = SelfIsNegative ? MixedDec::NegativeZero : 0;
+                        DecimalHalf = (signed int)SRep;
+                    }
+                }
+                else if (Value.DecimalHalf == 0)//Y is integer
+                {
+                    __int64 SRep = MixedDec::DecimalOverflowX * IntValue + DecimalHalf;
+                    SRep *= Value.IntValue;
+                    if (SRep >= MixedDec::DecimalOverflowX)
+                    {
+                        __int64 OverflowVal = SRep / MixedDec::DecimalOverflowX;
+                        SRep -= OverflowVal * MixedDec::DecimalOverflowX;
+                        IntValue = (signed int)OverflowVal;
+                        DecimalHalf = (signed int)SRep;
+                    }
+                    else
+                    {
+                        IntValue = 0;
+                        DecimalHalf = (signed int)SRep;
+                    }
+                    return;
+                }
+                else
+                {
+                    //X.Y * Z.V == ((X * Z) + (X * .V) + (.Y * Z) + (.Y * .V))
+                    __int64 SRep = IntValue == 0 ? DecimalHalf : MixedDec::DecimalOverflowX * IntValue + DecimalHalf;
+                    SRep *= Value.IntValue;//SRep holds __int64 version of X.Y * Z
+                    //X.Y *.V
+                    __int64 Temp03 = (__int64)IntValue * Value.DecimalHalf;//Temp03 holds __int64 version of X *.V
+                    __int64 Temp04 = (__int64)DecimalHalf * (__int64)Value.DecimalHalf;
+                    Temp04 /= MixedDec::DecimalOverflow;
+                    //Temp04 holds __int64 version of .Y * .V
+                    __int64 IntegerRep = SRep + Temp03 + Temp04;
+                    __int64 IntHalf = IntegerRep / MixedDec::DecimalOverflow;
+                    IntegerRep -= IntHalf * (__int64)MixedDec::DecimalOverflow;
+                    if (IntHalf == 0) { IntValue = (signed int)SelfIsNegative ? MixedDec::NegativeZero : 0; }
+                    else { IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
+                    DecimalHalf = (signed int)IntegerRep;
+                }
+            }
+        }
+
         /// <summary>
         /// Multiplication Operation Between MixedDecs
         /// </summary>
@@ -1373,132 +1562,123 @@ public:
                 else { Value.IntValue *= -1; }
                 self.SwapNegativeStatus();
             }
-            if (self.DecimalHalf == 0)
+            self.PartialMultOp(Value);
+            if (self == MixedDec::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
+            return self;
+        }
+
+        void PartialDivOp(MixedDec& Value)
+        {
+            if (DecimalHalf == 0)
             {
-                if (self.IntValue == 1) { self = Value; return self; }
-                else if (Value.DecimalHalf == 0)
+                bool SelfIsNegative = IntValue < 0;
+                if (SelfIsNegative)
                 {
-                    self.IntValue *= Value.IntValue; return self;
+                    IntValue *= -1;
                 }
-                else
+                if (Value.DecimalHalf == 0)//Both are integers
                 {
-                    Value *= self.IntValue;
-                    self = Value;
-                }
-            }
-            else if (self.IntValue == 0)
-            {
-                __int64 SRep = (__int64)self.DecimalHalf;
-                SRep *= Value.DecimalHalf;
-                SRep /= MixedDec::DecimalOverflowX;
-                if (Value.IntValue == 0)
-                {
-                    self.DecimalHalf = (signed int)SRep;
-                }
-                else
-                {
-                    SRep += (__int64)self.DecimalHalf * Value.IntValue;
+                    if (IntValue < 0) { IntValue *= -1; }
+                    __int64 SRep = IntValue * MixedDec::DecimalOverflowX;
+                    __int64 YRep = Value.IntValue;
+                    SRep /= Value.IntValue;
                     if (SRep >= MixedDec::DecimalOverflowX)
                     {
                         __int64 OverflowVal = SRep / MixedDec::DecimalOverflowX;
                         SRep -= OverflowVal * MixedDec::DecimalOverflowX;
-                        self.IntValue = OverflowVal;
-                        self.DecimalHalf = (signed int)SRep;
+                        IntValue = IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
                     }
                     else
                     {
-                        self.DecimalHalf = (signed int)SRep;
+                        IntValue = SelfIsNegative ? MixedDec::NegativeZero : 0;
                     }
+                    DecimalHalf = (signed int)SRep;
                 }
-            }
-            else if (self.IntValue == MixedDec::NegativeZero)
-            {
-                __int64 SRep = (__int64)self.DecimalHalf;
-                SRep *= Value.DecimalHalf;
-                SRep /= MixedDec::DecimalOverflowX;
-                if (Value.IntValue == 0)
+                else//Only self is integer while Value has both sides
                 {
-                    self.DecimalHalf = (signed int)SRep;
-                }
-                else
-                {
-                    SRep += (__int64)self.DecimalHalf * Value.IntValue;
+                    boost::multiprecision::uint128_t SRep02 = MixedDec::DecimalOverflowX * MixedDec::DecimalOverflowX;
+                    SRep02 *= IntValue;
+                    __int64 VRep = MixedDec::DecimalOverflowX * Value.IntValue + Value.DecimalHalf;
+                    SRep02 /= VRep;
+                    __int64 SRep = (__int64)SRep02;
                     if (SRep >= MixedDec::DecimalOverflowX)
                     {
                         __int64 OverflowVal = SRep / MixedDec::DecimalOverflowX;
                         SRep -= OverflowVal * MixedDec::DecimalOverflowX;
-                        self.IntValue = -OverflowVal;
-                        self.DecimalHalf = (signed int)SRep;
+                        IntValue = (signed int)SelfIsNegative ? -OverflowVal : OverflowVal;
                     }
                     else
                     {
-                        self.DecimalHalf = (signed int)SRep;
+                        IntValue = 0;
                     }
+                    DecimalHalf = (signed int)SRep;
                 }
+            }
+            else if (IntValue == 0)
+            {
+                __int64 SRep = (__int64)DecimalHalf * MixedDec::DecimalOverflowX;
+                SRep /= Value.IntValue == 0 ? Value.DecimalHalf : MixedDec::DecimalOverflowX * Value.IntValue + (__int64)Value.DecimalHalf;
+                int IntHalf = SRep / MixedDec::DecimalOverflowX;
+                SRep -= IntHalf * MixedDec::DecimalOverflowX;
+                IntValue = IntHalf;
+                DecimalHalf = (signed int)SRep;
+            }
+            else if (IntValue == MixedDec::NegativeZero)
+            {
+                __int64 SRep = (__int64)DecimalHalf * MixedDec::DecimalOverflowX;
+                SRep /= Value.IntValue == 0 ? Value.DecimalHalf : MixedDec::DecimalOverflowX * Value.IntValue + (__int64)Value.DecimalHalf;
+                int IntHalf = SRep / MixedDec::DecimalOverflowX;
+                SRep -= IntHalf * MixedDec::DecimalOverflowX;
+                IntValue = IntHalf == 0 ? MixedDec::NegativeZero : -IntHalf;
+                DecimalHalf = (signed int)SRep;
             }
             else
             {
-                bool SelfIsNegative = self.IntValue < 0;
+                bool SelfIsNegative = IntValue < 0;
                 if (SelfIsNegative)
                 {
-                    self.IntValue *= -1;
+                    IntValue *= -1;
                 }
-                if (Value.IntValue == 0)
+                if (Value.DecimalHalf == 0)//Y is integer but self is not
                 {
-                    __int64 SRep = MixedDec::DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                    SRep *= Value.DecimalHalf;
-                    SRep /= MixedDec::DecimalOverflowX;
+                    __int64 SRep = MixedDec::DecimalOverflowX * IntValue + DecimalHalf;
+                    SRep /= Value.IntValue;
                     if (SRep >= MixedDec::DecimalOverflowX)
                     {
                         __int64 OverflowVal = SRep / MixedDec::DecimalOverflowX;
                         SRep -= OverflowVal * MixedDec::DecimalOverflowX;
-                        self.IntValue = (signed int)(SelfIsNegative ? -OverflowVal : OverflowVal);
-                        self.DecimalHalf = (signed int)SRep;
+                        IntValue = (signed int)SelfIsNegative ? -OverflowVal : OverflowVal;
                     }
                     else
                     {
-                        self.IntValue = SelfIsNegative ? MixedDec::NegativeZero : 0;
-                        self.DecimalHalf = (signed int)SRep;
+                        IntValue = 0;
                     }
-                }
-                else if (Value.DecimalHalf == 0)//Y is integer
-                {
-                    __int64 SRep = MixedDec::DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                    SRep *= Value.IntValue;
-                    if (SRep >= MixedDec::DecimalOverflowX)
-                    {
-                        __int64 OverflowVal = SRep / MixedDec::DecimalOverflowX;
-                        SRep -= OverflowVal * MixedDec::DecimalOverflowX;
-                        self.IntValue = (signed int)OverflowVal;
-                        self.DecimalHalf = (signed int)SRep;
-                    }
-                    else
-                    {
-                        self.IntValue = 0;
-                        self.DecimalHalf = (signed int)SRep;
-                    }
-                    return self;
+                    DecimalHalf = (signed int)SRep;
                 }
                 else
-                {
-                    //X.Y * Z.V == ((X * Z) + (X * .V) + (.Y * Z) + (.Y * .V))
-                    __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : MixedDec::DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                    SRep *= Value.IntValue;//SRep holds __int64 version of X.Y * Z
-                    //X.Y *.V
-                    __int64 Temp03 = (__int64)self.IntValue * Value.DecimalHalf;//Temp03 holds __int64 version of X *.V
-                    __int64 Temp04 = (__int64)self.DecimalHalf * (__int64)Value.DecimalHalf;
-                    Temp04 /= MixedDec::DecimalOverflow;
-                    //Temp04 holds __int64 version of .Y * .V
-                    __int64 IntegerRep = SRep + Temp03 + Temp04;
-                    __int64 IntHalf = IntegerRep / MixedDec::DecimalOverflow;
-                    IntegerRep -= IntHalf * (__int64)MixedDec::DecimalOverflow;
-                    if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? MixedDec::NegativeZero : 0; }
-                    else { self.IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
-                    self.DecimalHalf = (signed int)IntegerRep;
+                {//Splitting Integer Half and Decimal Half Division
+                    __int64 SRep_DecHalf = (__int64)DecimalHalf * MixedDec::DecimalOverflowX;
+                    SRep_DecHalf /= Value.IntValue == 0 ? Value.DecimalHalf : MixedDec::DecimalOverflowX * Value.IntValue + (__int64)Value.DecimalHalf;
+                    int IntHalf = SRep_DecHalf / MixedDec::DecimalOverflowX;
+                    SRep_DecHalf -= IntHalf * MixedDec::DecimalOverflowX;
+
+                    boost::multiprecision::uint128_t SRep02 = MixedDec::DecimalOverflowX * MixedDec::DecimalOverflowX;
+                    //std::cout << "Multi-precision as String:" << SRep02 << std::endl;
+                    SRep02 *= IntValue;
+                    __int64 VRep = MixedDec::DecimalOverflowX * Value.IntValue + Value.DecimalHalf;
+                    SRep02 /= VRep;
+                    __int64 SRep = (__int64)SRep02 + SRep_DecHalf;
+                    if (SRep >= MixedDec::DecimalOverflowX)
+                    {
+                        __int64 OverflowVal = SRep / MixedDec::DecimalOverflowX;
+                        SRep -= OverflowVal * MixedDec::DecimalOverflowX;
+                        IntHalf += OverflowVal;
+                    }
+                    if (IntHalf == 0) { IntValue = (signed int)SelfIsNegative ? MixedDec::NegativeZero : 0; }
+                    else { IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
+                    DecimalHalf = (signed int)SRep;
                 }
             }
-            if (self == MixedDec::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
-            return self;
         }
 
         /// <summary>
@@ -1512,9 +1692,12 @@ public:
 #if defined(MixedDec_EnableInfinityRep)
             if (value.DecimalHalf == -1)
                 return self.SetAsZero();
-#endif
+            if (Value == MixedDec::Zero)
+                return self.IntValue<0?self.SetAsNegativeInfinity:self.SetAsInfinity();
+#else
             if (Value == MixedDec::Zero)
                 throw "Target value can not be divided by zero";
+#endif
             if (self == MixedDec::Zero)
                 return self;
             if (Value.IntValue < 0)
@@ -1523,116 +1706,7 @@ public:
                 else { Value.IntValue *= -1; }
                 self.SwapNegativeStatus();
             }
-            if (self.DecimalHalf == 0)
-            {
-                bool SelfIsNegative = self.IntValue < 0;
-                if (SelfIsNegative)
-                {
-                    self.IntValue *= -1;
-                }
-                if (Value.DecimalHalf == 0)//Both are integers
-                {
-                    if (self.IntValue < 0) { self.IntValue *= -1; }
-                    __int64 SRep = self.IntValue * MixedDec::DecimalOverflowX;
-                    __int64 YRep = Value.IntValue;
-                    SRep /= Value.IntValue;
-                    if (SRep >= MixedDec::DecimalOverflowX)
-                    {
-                        __int64 OverflowVal = SRep / MixedDec::DecimalOverflowX;
-                        SRep -= OverflowVal * MixedDec::DecimalOverflowX;
-                        self.IntValue = self.IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
-                    }
-                    else
-                    {
-                        self.IntValue = SelfIsNegative ? MixedDec::NegativeZero : 0;
-                    }
-                    self.DecimalHalf = (signed int)SRep;
-                }
-                else//Only self is integer while Value has both sides
-                {
-                    boost::multiprecision::uint128_t SRep02 = MixedDec::DecimalOverflowX * MixedDec::DecimalOverflowX;
-                    SRep02 *= self.IntValue;
-                    __int64 VRep = MixedDec::DecimalOverflowX * Value.IntValue + Value.DecimalHalf;
-                    SRep02 /= VRep;
-                    __int64 SRep = (__int64)SRep02;
-                    if (SRep >= MixedDec::DecimalOverflowX)
-                    {
-                        __int64 OverflowVal = SRep / MixedDec::DecimalOverflowX;
-                        SRep -= OverflowVal * MixedDec::DecimalOverflowX;
-                        self.IntValue = (signed int)SelfIsNegative ? -OverflowVal : OverflowVal;
-                    }
-                    else
-                    {
-                        self.IntValue = 0;
-                    }
-                    self.DecimalHalf = (signed int)SRep;
-                }
-            }
-            else if (self.IntValue == 0)
-            {
-                __int64 SRep = (__int64)self.DecimalHalf * MixedDec::DecimalOverflowX;
-                SRep /= Value.IntValue == 0 ? Value.DecimalHalf : MixedDec::DecimalOverflowX * Value.IntValue + (__int64)Value.DecimalHalf;
-                int IntHalf = SRep / MixedDec::DecimalOverflowX;
-                SRep -= IntHalf * MixedDec::DecimalOverflowX;
-                self.IntValue = IntHalf;
-                self.DecimalHalf = (signed int)SRep;
-            }
-            else if (self.IntValue == MixedDec::NegativeZero)
-            {
-                __int64 SRep = (__int64)self.DecimalHalf * MixedDec::DecimalOverflowX;
-                SRep /= Value.IntValue == 0 ? Value.DecimalHalf : MixedDec::DecimalOverflowX * Value.IntValue + (__int64)Value.DecimalHalf;
-                int IntHalf = SRep / MixedDec::DecimalOverflowX;
-                SRep -= IntHalf * MixedDec::DecimalOverflowX;
-                self.IntValue = IntHalf == 0 ? MixedDec::NegativeZero : -IntHalf;
-                self.DecimalHalf = (signed int)SRep;
-            }
-            else
-            {
-                bool SelfIsNegative = self.IntValue < 0;
-                if (SelfIsNegative)
-                {
-                    self.IntValue *= -1;
-                }
-                if (Value.DecimalHalf == 0)//Y is integer but self is not
-                {
-                    __int64 SRep = MixedDec::DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                    SRep /= Value.IntValue;
-                    if (SRep >= MixedDec::DecimalOverflowX)
-                    {
-                        __int64 OverflowVal = SRep / MixedDec::DecimalOverflowX;
-                        SRep -= OverflowVal * MixedDec::DecimalOverflowX;
-                        self.IntValue = (signed int)SelfIsNegative ? -OverflowVal : OverflowVal;
-                    }
-                    else
-                    {
-                        self.IntValue = 0;
-                    }
-                    self.DecimalHalf = (signed int)SRep;
-                }
-                else
-                {//Splitting Integer Half and Decimal Half Division
-                    __int64 SRep_DecHalf = (__int64)self.DecimalHalf * MixedDec::DecimalOverflowX;
-                    SRep_DecHalf /= Value.IntValue == 0 ? Value.DecimalHalf : MixedDec::DecimalOverflowX * Value.IntValue + (__int64)Value.DecimalHalf;
-                    int IntHalf = SRep_DecHalf / MixedDec::DecimalOverflowX;
-                    SRep_DecHalf -= IntHalf * MixedDec::DecimalOverflowX;
-
-                    boost::multiprecision::uint128_t SRep02 = MixedDec::DecimalOverflowX * MixedDec::DecimalOverflowX;
-                    //std::cout << "Multi-precision as String:" << SRep02 << std::endl;
-                    SRep02 *= self.IntValue;
-                    __int64 VRep = MixedDec::DecimalOverflowX * Value.IntValue + Value.DecimalHalf;
-                    SRep02 /= VRep;
-                    __int64 SRep = (__int64)SRep02 + SRep_DecHalf;
-                    if (SRep >= MixedDec::DecimalOverflowX)
-                    {
-                        __int64 OverflowVal = SRep / MixedDec::DecimalOverflowX;
-                        SRep -= OverflowVal * MixedDec::DecimalOverflowX;
-                        IntHalf += OverflowVal;
-                    }
-                    if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? MixedDec::NegativeZero : 0; }
-                    else { self.IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
-                    self.DecimalHalf = (signed int)SRep;
-                }
-            }
+            self.PartialDivOp(Value);
             if (self == MixedDec::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
             return self;
         }
