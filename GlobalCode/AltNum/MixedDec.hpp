@@ -52,13 +52,12 @@ namespace BlazesRusCode
     class DLL_API MixedDec
     {
     private:
-        static
 #if defined(MixedDec_ExtendTrailingDigits)
-        double
+        using TrailingType = double;
 #else
-        float
+        using TrailingType = float;
 #endif
-        TrailingZeroValue()
+        static TrailingType TrailingZeroValue()
         {
             return
 #if defined(MixedDec_ExtendTrailingDigits)
@@ -67,21 +66,52 @@ namespace BlazesRusCode
                 0.0f;
 #endif
         }
-        static
+        static TrailingType TrailingOneValue()
+        {
+            return
 #if defined(MixedDec_ExtendTrailingDigits)
-            double
+                0.0;
 #else
-            float
+                0.0f;
 #endif
-            TrailingZero;
+        }
+        static TrailingType TrailingZero;
+        static TrailingType TrailingOne;
 #if defined(MixedDec_EnablePIRep)
-        float PIRep = -1.0f;
+        static TrailingType PIRepValue()
+        {
+            return
+#if defined(MixedDec_ExtendTrailingDigits)
+                -1.0;
+#else
+                -1.0f;
+#endif
+        }
+        TrailingType PIRep;
 #endif
 #if defined(MixedDec_EnableENumRep)
-        float ERep = -2.0f;
+        static TrailingType ERepValue()
+        {
+            return
+#if defined(MixedDec_ExtendTrailingDigits)
+                -2.0;
+#else
+                -2.0f;
+#endif
+        }
+        TrailingType ERep;
 #endif
 #if defined(MixedDec_EnableImaginaryNumRep)
-        float IRep = -3.0f;
+        static TrailingType IRepValue()
+        {
+            return
+#if defined(MixedDec_ExtendTrailingDigits)
+                -3.0;
+#else
+                -3.0f;
+#endif
+        }
+        TrailingType IRep;
 #endif
     public:
         /// <summary>
@@ -130,11 +160,11 @@ namespace BlazesRusCode
         /// <param name="intVal">The int value.</param>
         /// <param name="decVal01">The decimal val01.</param>
         /// <param name="decVal02">ExtraRep.</param>
-        MixedDec(signed int intVal = 0, signed int decVal = 0,
+        MixedDec(signed int intVal = 0, signed int decVal = 0, TrailingType extraVal =
 #if defined(MixedDec_ExtendTrailingDigits)
-        double extraVal = 0.0)
+        0.0)
 #else
-        float extraVal = 0.0f)
+        0.0f)
 #endif
 
         {
@@ -4397,12 +4427,17 @@ public:
     };
 
     #pragma region ValueDefine Source
-#if defined(MixedDec_ExtendTrailingDigits)
-    double
-#else
-    float
+    MixedDec::TrailingType MixedDec::TrailingZero = TrailingZeroValue();
+    MixedDec::TrailingType MixedDec::TrailingOne = TrailingOneValue();
+#if defined(MixedDec_EnablePIRep)
+    MixedDec::TrailingType MixedDec::PIRep = PIRepValue();
 #endif
-    MixedDec::TrailingZero = TrailingZeroValue();
+#if defined(MixedDec_EnableENumRep)
+    MixedDec::TrailingType MixedDec::ERep = PIRepValue();
+#endif
+#if defined(MixedDec_EnableImaginaryNumRep)
+    MixedDec::TrailingType MixedDec::IRep = PIRepValue();
+#endif
     MixedDec MixedDec::PI = PIValue();
     MixedDec MixedDec::One = OneValue();
     MixedDec MixedDec::Two = TwoValue();
