@@ -29,7 +29,7 @@ namespace BlazesRusDebug
     static MediumDec NthRootV1(MediumDec value, int n)
     {//Accuracy is off for 4th root of 4 compared to calculator at (1.65625 compared to 1.4953487812212205419118989941409)
         MediumDec Prec = MediumDec(0, 10);
-        MediumDec NegPrec = MediumDec(MediumDec::NegativeZero, 10);//-Prec;
+        MediumDec NegPrec = MediumDec(MediumDec::NegativeRep, 10);//-Prec;
         double PrecFl = DBL_EPSILON * 10;
         double NegPrecFL = -DBL_EPSILON * 10;
         

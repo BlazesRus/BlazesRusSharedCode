@@ -68,7 +68,7 @@ namespace BlazesRusCode
         /// <summary>
         /// Value when IntValue is at negative zero (when has decimal part)
         /// </summary>
-        static signed int const NegativeZero = -2147483648;
+        static signed int const NegativeRep = -2147483648;
 
         /// <summary>
         /// Stores whole half of number(Including positive/negative status)
@@ -473,13 +473,13 @@ public:
         /// </summary>
         void SwapNegativeStatus()
         {
-            if (IntValue == NegativeZero)
+            if (IntValue == NegativeRep)
             {
                 IntValue = 0;
             }
             else if (IntValue == 0)
             {
-                IntValue = NegativeZero;
+                IntValue = NegativeRep;
             }
             else
             {
@@ -720,7 +720,7 @@ public:
             float Value;
             if (IntValue < 0)
             {
-                Value = IntValue == NegativeZero ? 0.0f : (float)IntValue;
+                Value = IntValue == NegativeRep ? 0.0f : (float)IntValue;
                 if (DecimalHalf != 0) { Value -= ((float)DecimalHalf * 0.000000001f); }
             }
             else
@@ -739,7 +739,7 @@ public:
             double Value;
             if (IntValue < 0)
             {
-                Value = IntValue == NegativeZero ? 0.0 : (double)IntValue;
+                Value = IntValue == NegativeRep ? 0.0 : (double)IntValue;
                 if (DecimalHalf != 0) { Value -= ((double)DecimalHalf * 0.000000001); }
             }
             else
@@ -759,7 +759,7 @@ public:
             ldouble Value;
             if (IntValue < 0)
             {
-                Value = IntValue == NegativeZero ? 0.0L : (ldouble)IntValue;
+                Value = IntValue == NegativeRep ? 0.0L : (ldouble)IntValue;
                 if (DecimalHalf != 0) { Value -= ((ldouble)DecimalHalf * 0.000000001L); }
             }
             else
@@ -832,7 +832,7 @@ public:
                             return self.IntValue < Value.IntValue;
                         else
                         {
-                            if (self.IntValue == NegativeZero)
+                            if (self.IntValue == NegativeRep)
                             {//-0.5<0
                                 if (Value.IntValue >= 0)
                                     return true;
@@ -843,7 +843,7 @@ public:
                     }
                     else if (self.DecimalHalf == 0)
                     {
-                        if (Value.IntValue == NegativeZero)
+                        if (Value.IntValue == NegativeRep)
                         {
                             if (self.IntValue <= -1)
                                 return true;
@@ -854,9 +854,9 @@ public:
                             return Value.IntValue < 0 ? false : true;//5 < 5.5 vs -5 > -5.5
                     }
                     //Assuming both are non-whole numbers if reach here
-                    if (self.IntValue == NegativeZero)
+                    if (self.IntValue == NegativeRep)
                         self.IntValue = 0;
-                    if (Value.IntValue == NegativeZero)
+                    if (Value.IntValue == NegativeRep)
                         Value.IntValue = 0;
                     if (SelfIsNegative)
                     {//Larger number = farther down into negative
@@ -900,7 +900,7 @@ public:
                             return self.IntValue <= Value.IntValue;
                         else
                         {
-                            if (self.IntValue == NegativeZero)
+                            if (self.IntValue == NegativeRep)
                             {//-0.5<0
                                 if (Value >= 0)
                                     return true;
@@ -911,7 +911,7 @@ public:
                     }
                     else if (self.DecimalHalf == 0)
                     {
-                        if (Value.IntValue == NegativeZero && self.IntValue <= 1)
+                        if (Value.IntValue == NegativeRep && self.IntValue <= 1)
                         {//-1<-0.5
                             if (self.IntValue <= -1)
                                 return true;
@@ -922,9 +922,9 @@ public:
                             return Value.IntValue < 0 ? false : true;//5 <= 5.5 vs -5 >= -5.5
                     }
                     //Assuming both are non-whole numbers if reach here
-                    if (self.IntValue == NegativeZero)
+                    if (self.IntValue == NegativeRep)
                         self.IntValue = 0;
-                    if (Value.IntValue == NegativeZero)
+                    if (Value.IntValue == NegativeRep)
                         Value.IntValue = 0;
                     if (SelfIsNegative)//Both are either positive or negative
                     {//Larger number = farther down into negative
@@ -967,7 +967,7 @@ public:
                         return self.IntValue > Value.IntValue;
                     else
                     {
-                        if (self.IntValue == NegativeZero)
+                        if (self.IntValue == NegativeRep)
                         {//-0.5>-1
                             if (Value <= -1)
                                 return true;
@@ -978,7 +978,7 @@ public:
                 }
                 else if (self.DecimalHalf == 0)
                 {
-                    if (Value.IntValue == NegativeZero)
+                    if (Value.IntValue == NegativeRep)
                     {
                         if (self.IntValue >= 0)
                             return true;
@@ -989,9 +989,9 @@ public:
                         return Value.IntValue < 0 ? true : false;//5 < 5.5 vs -5 > -5.5
                 }
                 //Assuming both are non-whole numbers if reach here
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                     self.IntValue = 0;
-                if (Value.IntValue == NegativeZero)
+                if (Value.IntValue == NegativeRep)
                     Value.IntValue = 0;
                 if (SelfIsNegative)//Both are either positive or negative
                 {//Larger number = farther down into negative
@@ -1032,7 +1032,7 @@ public:
                         return self.IntValue >= Value.IntValue;
                     else
                     {
-                        if (self.IntValue == NegativeZero)
+                        if (self.IntValue == NegativeRep)
                         {
                             if (Value <= -1)
                                 return true;
@@ -1045,7 +1045,7 @@ public:
                 }
                 else if (self.DecimalHalf == 0)//return self.IntValue > Value;
                 {
-                    if (Value.IntValue == NegativeZero)
+                    if (Value.IntValue == NegativeRep)
                     {//0>-0.5
                         if (self.IntValue >= 0)
                             return true;
@@ -1056,9 +1056,9 @@ public:
                         return Value.IntValue < 0 ? true : false;//5 <= 5.5 vs -5 >= -5.5
                 }
                 //Assuming both are non-whole numbers if reach here
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                     self.IntValue = 0;
-                if (Value.IntValue == NegativeZero)
+                if (Value.IntValue == NegativeRep)
                     Value.IntValue = 0;
                 if (SelfIsNegative)//Both are either positive or negative
                 {//Larger number = farther down into negative
@@ -1101,10 +1101,10 @@ public:
                 {
                     bool WasNegative = self.IntValue < 0;
                     if (WasNegative)
-                        self.IntValue = self.IntValue == AltDec::NegativeZero ? -1 : --self.IntValue;
+                        self.IntValue = self.IntValue == AltDec::NegativeRep ? -1 : --self.IntValue;
                     self.IntValue += Value.IntValue;
                     if (self.IntValue == -1)
-                        self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+                        self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
                     else if (self.IntValue < 0)
                         ++self.IntValue;
                     //If flips to other side of negative, invert the decimals
@@ -1117,8 +1117,8 @@ public:
                 bool WasNegative = self.IntValue < 0;
                 //Deal with Int section first
                 if (WasNegative)
-                    self.IntValue = self.IntValue == AltDec::NegativeZero ? -1 : --self.IntValue;
-                if (Value.IntValue != 0 && Value.IntValue != AltDec::NegativeZero)
+                    self.IntValue = self.IntValue == AltDec::NegativeRep ? -1 : --self.IntValue;
+                if (Value.IntValue != 0 && Value.IntValue != AltDec::NegativeRep)
                     self.IntValue += Value.IntValue;
                 //Now deal with the decimal section
                 if (Value.IntValue < 0)
@@ -1152,7 +1152,7 @@ public:
                     }
                 }
                 if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
                 //If flips to other side of negative, invert the decimals
@@ -1182,11 +1182,11 @@ public:
                 {
                     bool WasNegative = self.IntValue < 0;
                     if (WasNegative)
-                        self.IntValue = self.IntValue == AltDec::NegativeZero ? -1 : --self.IntValue;
+                        self.IntValue = self.IntValue == AltDec::NegativeRep ? -1 : --self.IntValue;
                     if (Value.IntValue != 0)
                         self.IntValue -= Value.IntValue;
                     if(self.IntValue==-1)
-                        self.IntValue = self.DecimalHalf == 0?0:AltDec::NegativeZero;
+                        self.IntValue = self.DecimalHalf == 0?0:AltDec::NegativeRep;
                     else if(self.IntValue<0)
                         ++self.IntValue;
                     //If flips to other side of negative, invert the decimals
@@ -1199,8 +1199,8 @@ public:
                 bool WasNegative = self.IntValue < 0;
                 //Deal with Int section first
                 if (WasNegative)
-                    self.IntValue = self.IntValue == AltDec::NegativeZero ? -1 : --self.IntValue;
-                if(Value.IntValue!=0&&Value.IntValue!=AltDec::NegativeZero)
+                    self.IntValue = self.IntValue == AltDec::NegativeRep ? -1 : --self.IntValue;
+                if(Value.IntValue!=0&&Value.IntValue!=AltDec::NegativeRep)
                     self.IntValue -= Value.IntValue;
                 //Now deal with the decimal section
                 if (Value.IntValue < 0)
@@ -1234,7 +1234,7 @@ public:
                     }
                 }
                 if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
                 //If flips to other side of negative, invert the decimals
@@ -1257,7 +1257,7 @@ public:
                 return self;
             if (Value.IntValue < 0)
             {
-                if (Value.IntValue == AltDec::NegativeZero) { Value.IntValue = 0; }
+                if (Value.IntValue == AltDec::NegativeRep) { Value.IntValue = 0; }
                 else { Value.IntValue *= -1; }
                 self.SwapNegativeStatus();
             }
@@ -1299,7 +1299,7 @@ public:
                     }
                 }
             }
-            else if (self.IntValue == AltDec::NegativeZero)
+            else if (self.IntValue == AltDec::NegativeRep)
             {
                 __int64 SRep = (__int64)self.DecimalHalf;
                 SRep *= Value.DecimalHalf;
@@ -1345,7 +1345,7 @@ public:
                     }
                     else
                     {
-                        self.IntValue = SelfIsNegative ? AltDec::NegativeZero : 0;
+                        self.IntValue = SelfIsNegative ? AltDec::NegativeRep : 0;
                         self.DecimalHalf = (signed int)SRep;
                     }
                 }
@@ -1380,7 +1380,7 @@ public:
                     __int64 IntegerRep = SRep + Temp03 + Temp04;
                     __int64 IntHalf = IntegerRep / AltDec::DecimalOverflow;
                     IntegerRep -= IntHalf * (__int64)AltDec::DecimalOverflow;
-                    if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? AltDec::NegativeZero : 0; }
+                    if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? AltDec::NegativeRep : 0; }
                     else { self.IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
                     self.DecimalHalf = (signed int)IntegerRep;
                 }
@@ -1403,7 +1403,7 @@ public:
                 return self;
             if (Value.IntValue < 0)
             {
-                if (Value.IntValue == AltDec::NegativeZero) { Value.IntValue = 0; }
+                if (Value.IntValue == AltDec::NegativeRep) { Value.IntValue = 0; }
                 else { Value.IntValue *= -1; }
                 self.SwapNegativeStatus();
             }
@@ -1428,7 +1428,7 @@ public:
                     }
                     else
                     {
-                        self.IntValue = SelfIsNegative ? AltDec::NegativeZero : 0;
+                        self.IntValue = SelfIsNegative ? AltDec::NegativeRep : 0;
                     }
                     self.DecimalHalf = (signed int)SRep;
                 }
@@ -1469,13 +1469,13 @@ public:
                 self.IntValue = IntHalf;
                 self.DecimalHalf = (signed int)SRep;
             }
-            else if (self.IntValue == AltDec::NegativeZero)
+            else if (self.IntValue == AltDec::NegativeRep)
             {
                 __int64 SRep = (__int64)self.DecimalHalf * AltDec::DecimalOverflowX;
                 SRep /= Value.IntValue == 0 ? Value.DecimalHalf : AltDec::DecimalOverflowX * Value.IntValue + (__int64)Value.DecimalHalf;
                 int IntHalf = SRep / AltDec::DecimalOverflowX;
                 SRep -= IntHalf * AltDec::DecimalOverflowX;
-                self.IntValue = IntHalf == 0 ? AltDec::NegativeZero : -IntHalf;
+                self.IntValue = IntHalf == 0 ? AltDec::NegativeRep : -IntHalf;
                 self.DecimalHalf = (signed int)SRep;
             }
             else
@@ -1520,7 +1520,7 @@ public:
                         SRep -= OverflowVal * AltDec::DecimalOverflowX;
                         IntHalf += OverflowVal;
                     }
-                    if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? AltDec::NegativeZero : 0; }
+                    if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? AltDec::NegativeRep : 0; }
                     else { self.IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
                     self.DecimalHalf = (signed int)SRep;
                 }
@@ -1554,12 +1554,12 @@ public:
                 if (Value.IntValue < 0)
                 {
                     self.IntValue *= -1;
-                    if (Value.IntValue == NegativeZero) { Value.IntValue = 0; }
+                    if (Value.IntValue == NegativeRep) { Value.IntValue = 0; }
                 }
                 bool SelfIsNegative = self.IntValue < 0;
                 if (SelfIsNegative)
                 {
-                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
                     else { self.IntValue *= -1; }
                 }
                 __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
@@ -1572,7 +1572,7 @@ public:
                 //Gives enough buffer room that doesn't lose the decimal values
                 SRep_DecHalf *= DecimalOverflowX;
                 SRep_DecHalf %= VRep;
-                if (IntResult == 0) { self.IntValue = (signed int)SelfIsNegative ? NegativeZero : 0; }
+                if (IntResult == 0) { self.IntValue = (signed int)SelfIsNegative ? NegativeRep : 0; }
                 else { self.IntValue = (signed int)SelfIsNegative ? IntResult * -1 : IntResult; }
                 self.DecimalHalf = (signed int)SRep;
             }
@@ -1750,14 +1750,14 @@ public:
             {
                 bool SelfIsNegative = self.IntValue < 0;
                 bool ValIsNegative = Value.IntValue < 0;
-                if (SelfIsNegative && self.IntValue == NegativeZero)
+                if (SelfIsNegative && self.IntValue == NegativeRep)
                 {
                     self.IntValue = (0 ^ Value.IntValue) * -1;
                     self.DecimalHalf ^= Value.DecimalHalf;
                 }
                 else
                 {
-                    if (ValIsNegative && Value.IntValue == NegativeZero)
+                    if (ValIsNegative && Value.IntValue == NegativeRep)
                     {
                         self.IntValue = (self.IntValue ^ 0) * -1;
                         self.DecimalHalf ^= Value.DecimalHalf;
@@ -1787,14 +1787,14 @@ public:
             {
                 bool SelfIsNegative = self.IntValue < 0;
                 bool ValIsNegative = Value.IntValue < 0;
-                if (SelfIsNegative && self.IntValue == NegativeZero)
+                if (SelfIsNegative && self.IntValue == NegativeRep)
                 {
                     self.IntValue = (0 | Value.IntValue) * -1;
                     self.DecimalHalf |= Value.DecimalHalf;
                 }
                 else
                 {
-                    if (ValIsNegative && Value.IntValue == NegativeZero)
+                    if (ValIsNegative && Value.IntValue == NegativeRep)
                     {
                         self.IntValue = (self.IntValue & 0) * -1;
                         self.DecimalHalf |= Value.DecimalHalf;
@@ -1823,14 +1823,14 @@ public:
             {
                 bool SelfIsNegative = self.IntValue < 0;
                 bool ValIsNegative = Value.IntValue < 0;
-                if (SelfIsNegative && self.IntValue == NegativeZero)
+                if (SelfIsNegative && self.IntValue == NegativeRep)
                 {
                     self.IntValue = (0 & Value.IntValue) * -1;
                     self.DecimalHalf &= Value.DecimalHalf;
                 }
                 else
                 {
-                    if (ValIsNegative && Value.IntValue == NegativeZero)
+                    if (ValIsNegative && Value.IntValue == NegativeRep)
                     {
                         self.IntValue = (self.IntValue & 0) * -1;
                         self.DecimalHalf &= Value.DecimalHalf;
@@ -1860,9 +1860,9 @@ public:
         /// <returns>AltDec &</returns>
         AltDec& operator ++()
         {
-            if (IntValue == NegativeZero) { IntValue = 0; }
+            if (IntValue == NegativeRep) { IntValue = 0; }
             else if (DecimalHalf == 0) { ++IntValue; }
-            else if (IntValue == -1) { IntValue = NegativeZero; }
+            else if (IntValue == -1) { IntValue = NegativeRep; }
             else { ++IntValue; }
             return *this;
         }
@@ -1873,9 +1873,9 @@ public:
         /// <returns>AltDec &</returns>
         AltDec& operator --()
         {
-            if (IntValue == NegativeZero) { IntValue = -1; }
+            if (IntValue == NegativeRep) { IntValue = -1; }
             else if (DecimalHalf == 0) { --IntValue; }
-            else if (IntValue == 0) { IntValue = NegativeZero; }
+            else if (IntValue == 0) { IntValue = NegativeRep; }
             else { --IntValue; }
             return *this;
         }
@@ -1983,7 +1983,7 @@ public:
             }
             else
             {
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                 {//-0.5<0
                     if (Value >= 0)
                         return true;
@@ -2008,7 +2008,7 @@ public:
             }
             else
             {
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                 {//-0.5<0
                     if (Value >= 0)
                         return true;
@@ -2033,7 +2033,7 @@ public:
             }
             else
             {
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                 {//-0.5>-1
                     if (Value <= -1)
                         return true;
@@ -2058,7 +2058,7 @@ public:
             }
             else
             {
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                 {
                     if (Value <= -1)
                         return true;
@@ -2110,7 +2110,7 @@ public:
             }
             else
             {
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                 {
                     if (Value <= -1)
                         return true;
@@ -2135,7 +2135,7 @@ public:
             }
             else
             {
-                if (self.IntValue == NegativeZero && Value <= 1)
+                if (self.IntValue == NegativeRep && Value <= 1)
                 {//-1<-0.5
                     if (Value <= -1)
                         return true;
@@ -2160,7 +2160,7 @@ public:
             }
             else
             {
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                 {
                     if (Value >= 0)
                         return true;
@@ -2185,7 +2185,7 @@ public:
             }
             else
             {
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                 {//0>-0.5
                     if (Value >= 0)
                         return true;
@@ -2272,10 +2272,10 @@ public:
             {
                 bool WasNegative = self.IntValue < 0;
                 if (WasNegative)
-                    self.IntValue = self.IntValue == AltDec::NegativeZero ? -1 : --self.IntValue;
+                    self.IntValue = self.IntValue == AltDec::NegativeRep ? -1 : --self.IntValue;
                 self.IntValue += value;
                 if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
                 //If flips to other side of negative, invert the decimals
@@ -2302,10 +2302,10 @@ public:
             {
                 bool WasNegative = self.IntValue < 0;
                 if (WasNegative)
-                    self.IntValue = self.IntValue==AltDec::NegativeZero ? -1 : --self.IntValue;
+                    self.IntValue = self.IntValue==AltDec::NegativeRep ? -1 : --self.IntValue;
                 self.IntValue -= value;
                 if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
                 //If flips to other side of negative, invert the decimals
@@ -2326,7 +2326,7 @@ public:
         {
             if (Value < 0)
             {
-                if (Value == NegativeZero) { Value = 0; }
+                if (Value == NegativeRep) { Value = 0; }
                 else { Value *= -1; }
                 self.SwapNegativeStatus();
             }
@@ -2341,7 +2341,7 @@ public:
                 bool SelfIsNegative = self.IntValue < 0;
                 if (SelfIsNegative)
                 {
-                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
                     else { self.IntValue *= -1; }
                 }
                 __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
@@ -2355,7 +2355,7 @@ public:
                 }
                 else
                 {
-                    self.IntValue = SelfIsNegative?NegativeZero:0;
+                    self.IntValue = SelfIsNegative?NegativeRep:0;
                     self.DecimalHalf = (signed int)SRep;
                 }
             }
@@ -2375,7 +2375,7 @@ public:
             else if (self == Zero) { return self; }
             if (Value < 0)
             {
-                if (Value == NegativeZero) { Value = 0; }
+                if (Value == NegativeRep) { Value = 0; }
                 else { Value *= -1; }
                 self.SwapNegativeStatus();
             }
@@ -2395,7 +2395,7 @@ public:
                 }
                 else
                 {
-                    self.IntValue = SelfIsNegative?NegativeZero:0;
+                    self.IntValue = SelfIsNegative?NegativeRep:0;
                     self.DecimalHalf = (signed int)SRep;
                 }
             }
@@ -2404,7 +2404,7 @@ public:
                 bool SelfIsNegative = self.IntValue < 0;
                 if (SelfIsNegative)
                 {
-                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
                     else { self.IntValue *= -1; }
                 }
                 __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
@@ -2454,7 +2454,7 @@ public:
                 bool SelfIsNegative = self.IntValue < 0;
                 if (SelfIsNegative)
                 {
-                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
                     else { self.IntValue *= -1; }
                 }
                 __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
@@ -2466,7 +2466,7 @@ public:
                 SRep -= IntResult * VRep;
                 __int64 IntHalf = SRep / DecimalOverflow;
                 SRep -= IntHalf * (__int64)DecimalOverflow;
-                if (IntHalf == 0) { self.IntValue = SelfIsNegative ? (signed int)NegativeZero : 0; }
+                if (IntHalf == 0) { self.IntValue = SelfIsNegative ? (signed int)NegativeRep : 0; }
                 else { self.IntValue = (signed int)(SelfIsNegative ? IntHalf * -1 : IntHalf); }
                 self.DecimalHalf = (signed int)SRep;
             }
@@ -2489,10 +2489,10 @@ public:
             {
                 bool WasNegative = self.IntValue < 0;
                 if (WasNegative)
-                    self.IntValue = self.IntValue == AltDec::NegativeZero ? -1 : --self.IntValue;
+                    self.IntValue = self.IntValue == AltDec::NegativeRep ? -1 : --self.IntValue;
                 self.IntValue += value;
                 if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
                 //If flips to other side of negative, invert the decimals
@@ -2514,7 +2514,7 @@ public:
             if (value == 0) { return self; }
             else if (self.DecimalHalf == 0)
                 self.IntValue -= value;
-            else if (self.IntValue == NegativeZero)
+            else if (self.IntValue == NegativeRep)
                 self.IntValue = (signed int)value * -1;
             else if(self.IntValue < 0)
                 self.IntValue -= value;
@@ -2522,10 +2522,10 @@ public:
             {
                 bool WasNegative = self.IntValue < 0;
                 if (WasNegative)
-                    self.IntValue = self.IntValue == AltDec::NegativeZero ? -1 : --self.IntValue;
+                    self.IntValue = self.IntValue == AltDec::NegativeRep ? -1 : --self.IntValue;
                 self.IntValue -= value;
                 if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
                 //If flips to other side of negative, invert the decimals
@@ -2555,7 +2555,7 @@ public:
                 bool SelfIsNegative = self.IntValue < 0;
                 if (SelfIsNegative)
                 {
-                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
                     else { self.IntValue *= -1; }
                 }
                 __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
@@ -2569,7 +2569,7 @@ public:
                 }
                 else
                 {
-                    self.IntValue = SelfIsNegative?NegativeZero:0;
+                    self.IntValue = SelfIsNegative?NegativeRep:0;
                     self.DecimalHalf = (signed int)SRep;
                 }
             }
@@ -2603,7 +2603,7 @@ public:
                 }
                 else
                 {
-                    self.IntValue = SelfIsNegative?NegativeZero:0;
+                    self.IntValue = SelfIsNegative?NegativeRep:0;
                     self.DecimalHalf = (signed int)SRep;
                 }
             }
@@ -2612,7 +2612,7 @@ public:
                 bool SelfIsNegative = self.IntValue < 0;
                 if (SelfIsNegative)
                 {
-                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
                     else { self.IntValue *= -1; }
                 }
                 __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
@@ -2651,7 +2651,7 @@ public:
             else//leftValue is non-whole number
             {
                 __int64 SRep;
-                if (self.IntValue == NegativeZero) { SRep = (__int64)self.DecimalHalf * -1; }
+                if (self.IntValue == NegativeRep) { SRep = (__int64)self.DecimalHalf * -1; }
                 else if (self.IntValue < 0) { SRep = DecimalOverflowX * self.IntValue - self.DecimalHalf; }
                 else { SRep = DecimalOverflowX * self.IntValue + self.DecimalHalf; }
                 bool SelfIsNegative = SRep < 0;
@@ -2664,7 +2664,7 @@ public:
                 SRep -= IntResult * VRep;
                 __int64 IntHalf = SRep / DecimalOverflow;
                 SRep -= IntHalf * (__int64)DecimalOverflow;
-                if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? NegativeZero : 0; }
+                if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? NegativeRep : 0; }
                 else { self.IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
                 self.DecimalHalf = (signed int)SRep;
             }
@@ -2891,7 +2891,7 @@ public:
             {
                 bool SelfIsNegative = self.IntValue < 0;
                 bool ValIsNegative = Value < 0;
-                if (SelfIsNegative && self.IntValue == NegativeZero)
+                if (SelfIsNegative && self.IntValue == NegativeRep)
                 {
                     self.IntValue = (0 & Value) * -1;
                     self.DecimalHalf ^= Value;
@@ -2918,7 +2918,7 @@ public:
             {
                 bool SelfIsNegative = self.IntValue < 0;
                 bool ValIsNegative = Value < 0;
-                if (SelfIsNegative && self.IntValue == NegativeZero)
+                if (SelfIsNegative && self.IntValue == NegativeRep)
                 {
                     self.IntValue = (0 & Value) * -1;
                     self.DecimalHalf |= Value;
@@ -2945,7 +2945,7 @@ public:
             {
                 bool SelfIsNegative = self.IntValue < 0;
                 bool ValIsNegative = Value < 0;
-                if (SelfIsNegative && self.IntValue == NegativeZero)
+                if (SelfIsNegative && self.IntValue == NegativeRep)
                 {
                     self.IntValue = (0 & Value) * -1;
                     self.DecimalHalf &= Value;
@@ -3068,7 +3068,7 @@ public:
                 return *this;
             }
             DecimalHalf = 0;
-            if (IntValue == NegativeZero) { IntValue = -1; }
+            if (IntValue == NegativeRep) { IntValue = -1; }
             else
             {
                 --IntValue;
@@ -3106,7 +3106,7 @@ public:
             case 1: Value.DecimalHalf /= 100000000; Value.DecimalHalf *= 100000000; break;
             default: Value.DecimalHalf = 0; break;
             }
-            if (Value.IntValue == NegativeZero && Value.DecimalHalf == 0) { Value.DecimalHalf = 0; }
+            if (Value.IntValue == NegativeRep && Value.DecimalHalf == 0) { Value.DecimalHalf = 0; }
             return Value;
         }
         
@@ -3121,7 +3121,7 @@ public:
                 return *this;
             }
             DecimalHalf = 0;
-            if (IntValue == NegativeZero) { IntValue = 0; }
+            if (IntValue == NegativeRep) { IntValue = 0; }
             else
             {
                 ++IntValue;
@@ -3139,7 +3139,7 @@ public:
             {
                 return Value.IntValue;
             }
-            if (Value.IntValue == NegativeZero) { return -1; }
+            if (Value.IntValue == NegativeRep) { return -1; }
             else
             {
                 return Value.IntValue - 1;
@@ -3156,7 +3156,7 @@ public:
             {
                 return Value.IntValue;
             }
-            if (Value.IntValue == NegativeZero) { return 0; }
+            if (Value.IntValue == NegativeRep) { return 0; }
             else
             {
                 return Value.IntValue+1;
@@ -3180,7 +3180,7 @@ public:
         AltDec& Trunc()
         {
             DecimalHalf = 0;
-            if (IntValue == NegativeZero) { IntValue = 0; }
+            if (IntValue == NegativeRep) { IntValue = 0; }
             return *this;
         }
         
@@ -3200,7 +3200,7 @@ public:
         /// <returns>AltDec&</returns>
         AltDec& Abs()
         {
-            if (IntValue == NegativeZero) { IntValue = 0; }
+            if (IntValue == NegativeRep) { IntValue = 0; }
             else if (IntValue < 0) { IntValue *= -1; }
             return *this;
         }
@@ -3718,7 +3718,7 @@ public:
                     case 0:
                         return FractionalPow(value, Frac);
                         break;
-                    case AltDec::NegativeZero:
+                    case AltDec::NegativeRep:
                         return 1 / FractionalPow(value, Frac);
                         break;
                     default:
@@ -4090,7 +4090,7 @@ public:
         {
             if (Value.IntValue < 0)
             {
-                if (Value.IntValue == NegativeZero)
+                if (Value.IntValue == NegativeRep)
                 {
                     Value.IntValue = 359; Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf;
                 }
@@ -4146,7 +4146,7 @@ public:
         {
             if (Value.IntValue < 0)
             {
-                if (Value.IntValue == NegativeZero)
+                if (Value.IntValue == NegativeRep)
                 {
                     Value.IntValue = 359; Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf;
                 }
@@ -4251,7 +4251,7 @@ public:
         {
             if (Value.IntValue < 0)
             {
-                if (Value.IntValue == NegativeZero)
+                if (Value.IntValue == NegativeRep)
                 {
                     Value.IntValue = 359; Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf;
                 }
@@ -4427,7 +4427,7 @@ public:
         }
         if (IsNegative)
         {
-            if (IntValue == 0) { IntValue = NegativeZero; }
+            if (IntValue == 0) { IntValue = NegativeRep; }
             else { IntValue *= -1; }
         }
     }
@@ -4453,7 +4453,7 @@ public:
         if (IntValue < 0)
         {
             Value += "-";
-            if (IntValue == NegativeZero) { CurrentSection = 0; }
+            if (IntValue == NegativeRep) { CurrentSection = 0; }
             else { CurrentSection *= -1; }
         }
         for (__int8 Index = VariableConversionFunctions::NumberOfPlaces(CurrentSection); Index >= 0; Index--)
@@ -4496,7 +4496,7 @@ public:
         if (IntValue < 0)
         {
             Value += "-";
-            if (IntValue == NegativeZero) { CurrentSection = 0; }
+            if (IntValue == NegativeRep) { CurrentSection = 0; }
             else { CurrentSection *= -1; }
         }
         for (__int8 Index = VariableConversionFunctions::NumberOfPlaces(CurrentSection); Index >= 0; Index--)

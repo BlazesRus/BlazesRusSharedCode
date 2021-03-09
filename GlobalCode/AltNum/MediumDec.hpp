@@ -68,7 +68,7 @@ namespace BlazesRusCode
         /// <summary>
         /// Value when IntValue is at negative zero (when has decimal part)
         /// </summary>
-        static signed int const NegativeZero = -2147483648;
+        static signed int const NegativeRep = -2147483648;
 
         /// <summary>
         /// Stores whole half of number(Including positive/negative status)
@@ -379,13 +379,13 @@ namespace BlazesRusCode
         /// </summary>
         void SwapNegativeStatus()
         {
-            if (IntValue == NegativeZero)
+            if (IntValue == NegativeRep)
             {
                 IntValue = 0;
             }
             else if (IntValue == 0)
             {
-                IntValue = NegativeZero;
+                IntValue = NegativeRep;
             }
             else
             {
@@ -621,7 +621,7 @@ namespace BlazesRusCode
             float Value;
             if (IntValue < 0)
             {
-                Value = IntValue == NegativeZero ? 0.0f : (float)IntValue;
+                Value = IntValue == NegativeRep ? 0.0f : (float)IntValue;
                 if (DecimalHalf != 0) { Value -= ((float)DecimalHalf * 0.000000001f); }
             }
             else
@@ -640,7 +640,7 @@ namespace BlazesRusCode
             double Value;
             if (IntValue < 0)
             {
-                Value = IntValue == NegativeZero ? 0.0 : (double)IntValue;
+                Value = IntValue == NegativeRep ? 0.0 : (double)IntValue;
                 if (DecimalHalf != 0) { Value -= ((double)DecimalHalf * 0.000000001); }
             }
             else
@@ -660,7 +660,7 @@ namespace BlazesRusCode
             ldouble Value;
             if (IntValue < 0)
             {
-                Value = IntValue == NegativeZero ? 0.0L : (ldouble)IntValue;
+                Value = IntValue == NegativeRep ? 0.0L : (ldouble)IntValue;
                 if (DecimalHalf != 0) { Value -= ((ldouble)DecimalHalf * 0.000000001L); }
             }
             else
@@ -733,7 +733,7 @@ namespace BlazesRusCode
                             return self.IntValue < Value.IntValue;
                         else
                         {
-                            if (self.IntValue == NegativeZero)
+                            if (self.IntValue == NegativeRep)
                             {//-0.5<0
                                 if (Value.IntValue >= 0)
                                     return true;
@@ -744,7 +744,7 @@ namespace BlazesRusCode
                     }
                     else if (self.DecimalHalf == 0)
                     {
-                        if (Value.IntValue == NegativeZero)
+                        if (Value.IntValue == NegativeRep)
                         {
                             if (self.IntValue <= -1)
                                 return true;
@@ -755,9 +755,9 @@ namespace BlazesRusCode
                             return Value.IntValue < 0 ? false : true;//5 < 5.5 vs -5 > -5.5
                     }
                     //Assuming both are non-whole numbers if reach here
-                    if (self.IntValue == NegativeZero)
+                    if (self.IntValue == NegativeRep)
                         self.IntValue = 0;
-                    if (Value.IntValue == NegativeZero)
+                    if (Value.IntValue == NegativeRep)
                         Value.IntValue = 0;
                     if (SelfIsNegative)
                     {//Larger number = farther down into negative
@@ -801,7 +801,7 @@ namespace BlazesRusCode
                             return self.IntValue <= Value.IntValue;
                         else
                         {
-                            if (self.IntValue == NegativeZero)
+                            if (self.IntValue == NegativeRep)
                             {//-0.5<0
                                 if (Value >= 0)
                                     return true;
@@ -812,7 +812,7 @@ namespace BlazesRusCode
                     }
                     else if (self.DecimalHalf == 0)
                     {
-                        if (Value.IntValue == NegativeZero && self.IntValue <= 1)
+                        if (Value.IntValue == NegativeRep && self.IntValue <= 1)
                         {//-1<-0.5
                             if (self.IntValue <= -1)
                                 return true;
@@ -823,9 +823,9 @@ namespace BlazesRusCode
                             return Value.IntValue < 0 ? false : true;//5 <= 5.5 vs -5 >= -5.5
                     }
                     //Assuming both are non-whole numbers if reach here
-                    if (self.IntValue == NegativeZero)
+                    if (self.IntValue == NegativeRep)
                         self.IntValue = 0;
-                    if (Value.IntValue == NegativeZero)
+                    if (Value.IntValue == NegativeRep)
                         Value.IntValue = 0;
                     if (SelfIsNegative)//Both are either positive or negative
                     {//Larger number = farther down into negative
@@ -868,7 +868,7 @@ namespace BlazesRusCode
                         return self.IntValue > Value.IntValue;
                     else
                     {
-                        if (self.IntValue == NegativeZero)
+                        if (self.IntValue == NegativeRep)
                         {//-0.5>-1
                             if (Value <= -1)
                                 return true;
@@ -879,7 +879,7 @@ namespace BlazesRusCode
                 }
                 else if (self.DecimalHalf == 0)
                 {
-                    if (Value.IntValue == NegativeZero)
+                    if (Value.IntValue == NegativeRep)
                     {
                         if (self.IntValue >= 0)
                             return true;
@@ -890,9 +890,9 @@ namespace BlazesRusCode
                         return Value.IntValue < 0 ? true : false;//5 < 5.5 vs -5 > -5.5
                 }
                 //Assuming both are non-whole numbers if reach here
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                     self.IntValue = 0;
-                if (Value.IntValue == NegativeZero)
+                if (Value.IntValue == NegativeRep)
                     Value.IntValue = 0;
                 if (SelfIsNegative)//Both are either positive or negative
                 {//Larger number = farther down into negative
@@ -933,7 +933,7 @@ namespace BlazesRusCode
                         return self.IntValue >= Value.IntValue;
                     else
                     {
-                        if (self.IntValue == NegativeZero)
+                        if (self.IntValue == NegativeRep)
                         {
                             if (Value <= -1)
                                 return true;
@@ -946,7 +946,7 @@ namespace BlazesRusCode
                 }
                 else if (self.DecimalHalf == 0)//return self.IntValue > Value;
                 {
-                    if (Value.IntValue == NegativeZero)
+                    if (Value.IntValue == NegativeRep)
                     {//0>-0.5
                         if (self.IntValue >= 0)
                             return true;
@@ -957,9 +957,9 @@ namespace BlazesRusCode
                         return Value.IntValue < 0 ? true : false;//5 <= 5.5 vs -5 >= -5.5
                 }
                 //Assuming both are non-whole numbers if reach here
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                     self.IntValue = 0;
-                if (Value.IntValue == NegativeZero)
+                if (Value.IntValue == NegativeRep)
                     Value.IntValue = 0;
                 if (SelfIsNegative)//Both are either positive or negative
                 {//Larger number = farther down into negative
@@ -1002,10 +1002,10 @@ namespace BlazesRusCode
                 {
                     bool WasNegative = self.IntValue < 0;
                     if (WasNegative)
-                        self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
+                        self.IntValue = self.IntValue == MediumDec::NegativeRep ? -1 : --self.IntValue;
                     self.IntValue += Value.IntValue;
                     if (self.IntValue == -1)
-                        self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeZero;
+                        self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeRep;
                     else if (self.IntValue < 0)
                         ++self.IntValue;
                     //If flips to other side of negative, invert the decimals
@@ -1018,8 +1018,8 @@ namespace BlazesRusCode
                 bool WasNegative = self.IntValue < 0;
                 //Deal with Int section first
                 if (WasNegative)
-                    self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
-                if (Value.IntValue != 0 && Value.IntValue != MediumDec::NegativeZero)
+                    self.IntValue = self.IntValue == MediumDec::NegativeRep ? -1 : --self.IntValue;
+                if (Value.IntValue != 0 && Value.IntValue != MediumDec::NegativeRep)
                     self.IntValue += Value.IntValue;
                 //Now deal with the decimal section
                 if (Value.IntValue < 0)
@@ -1053,7 +1053,7 @@ namespace BlazesRusCode
                     }
                 }
                 if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeZero;
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeRep;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
                 //If flips to other side of negative, invert the decimals
@@ -1083,11 +1083,11 @@ namespace BlazesRusCode
                 {
                     bool WasNegative = self.IntValue < 0;
                     if (WasNegative)
-                        self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
+                        self.IntValue = self.IntValue == MediumDec::NegativeRep ? -1 : --self.IntValue;
                     if (Value.IntValue != 0)
                         self.IntValue -= Value.IntValue;
                     if(self.IntValue==-1)
-                        self.IntValue = self.DecimalHalf == 0?0:MediumDec::NegativeZero;
+                        self.IntValue = self.DecimalHalf == 0?0:MediumDec::NegativeRep;
                     else if(self.IntValue<0)
                         ++self.IntValue;
                     //If flips to other side of negative, invert the decimals
@@ -1100,8 +1100,8 @@ namespace BlazesRusCode
                 bool WasNegative = self.IntValue < 0;
                 //Deal with Int section first
                 if (WasNegative)
-                    self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
-                if(Value.IntValue!=0&&Value.IntValue!=MediumDec::NegativeZero)
+                    self.IntValue = self.IntValue == MediumDec::NegativeRep ? -1 : --self.IntValue;
+                if(Value.IntValue!=0&&Value.IntValue!=MediumDec::NegativeRep)
                     self.IntValue -= Value.IntValue;
                 //Now deal with the decimal section
                 if (Value.IntValue < 0)
@@ -1135,7 +1135,7 @@ namespace BlazesRusCode
                     }
                 }
                 if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeZero;
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeRep;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
                 //If flips to other side of negative, invert the decimals
@@ -1158,7 +1158,7 @@ namespace BlazesRusCode
                 return self;
             if (Value.IntValue < 0)
             {
-                if (Value.IntValue == MediumDec::NegativeZero) { Value.IntValue = 0; }
+                if (Value.IntValue == MediumDec::NegativeRep) { Value.IntValue = 0; }
                 else { Value.IntValue *= -1; }
                 self.SwapNegativeStatus();
             }
@@ -1200,7 +1200,7 @@ namespace BlazesRusCode
                     }
                 }
             }
-            else if (self.IntValue == MediumDec::NegativeZero)
+            else if (self.IntValue == MediumDec::NegativeRep)
             {
                 __int64 SRep = (__int64)self.DecimalHalf;
                 SRep *= Value.DecimalHalf;
@@ -1246,7 +1246,7 @@ namespace BlazesRusCode
                     }
                     else
                     {
-                        self.IntValue = SelfIsNegative ? MediumDec::NegativeZero : 0;
+                        self.IntValue = SelfIsNegative ? MediumDec::NegativeRep : 0;
                         self.DecimalHalf = (signed int)SRep;
                     }
                 }
@@ -1281,7 +1281,7 @@ namespace BlazesRusCode
                     __int64 IntegerRep = SRep + Temp03 + Temp04;
                     __int64 IntHalf = IntegerRep / MediumDec::DecimalOverflow;
                     IntegerRep -= IntHalf * (__int64)MediumDec::DecimalOverflow;
-                    if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? MediumDec::NegativeZero : 0; }
+                    if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? MediumDec::NegativeRep : 0; }
                     else { self.IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
                     self.DecimalHalf = (signed int)IntegerRep;
                 }
@@ -1304,7 +1304,7 @@ namespace BlazesRusCode
                 return self;
             if (Value.IntValue < 0)
             {
-                if (Value.IntValue == MediumDec::NegativeZero) { Value.IntValue = 0; }
+                if (Value.IntValue == MediumDec::NegativeRep) { Value.IntValue = 0; }
                 else { Value.IntValue *= -1; }
                 self.SwapNegativeStatus();
             }
@@ -1329,7 +1329,7 @@ namespace BlazesRusCode
                     }
                     else
                     {
-                        self.IntValue = SelfIsNegative ? MediumDec::NegativeZero : 0;
+                        self.IntValue = SelfIsNegative ? MediumDec::NegativeRep : 0;
                     }
                     self.DecimalHalf = (signed int)SRep;
                 }
@@ -1370,13 +1370,13 @@ namespace BlazesRusCode
                 self.IntValue = IntHalf;
                 self.DecimalHalf = (signed int)SRep;
             }
-            else if (self.IntValue == MediumDec::NegativeZero)
+            else if (self.IntValue == MediumDec::NegativeRep)
             {
                 __int64 SRep = (__int64)self.DecimalHalf * MediumDec::DecimalOverflowX;
                 SRep /= Value.IntValue == 0 ? Value.DecimalHalf : MediumDec::DecimalOverflowX * Value.IntValue + (__int64)Value.DecimalHalf;
                 int IntHalf = SRep / MediumDec::DecimalOverflowX;
                 SRep -= IntHalf * MediumDec::DecimalOverflowX;
-                self.IntValue = IntHalf == 0 ? MediumDec::NegativeZero : -IntHalf;
+                self.IntValue = IntHalf == 0 ? MediumDec::NegativeRep : -IntHalf;
                 self.DecimalHalf = (signed int)SRep;
             }
             else
@@ -1421,7 +1421,7 @@ namespace BlazesRusCode
                         SRep -= OverflowVal * MediumDec::DecimalOverflowX;
                         IntHalf += OverflowVal;
                     }
-                    if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? MediumDec::NegativeZero : 0; }
+                    if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? MediumDec::NegativeRep : 0; }
                     else { self.IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
                     self.DecimalHalf = (signed int)SRep;
                 }
@@ -1455,12 +1455,12 @@ namespace BlazesRusCode
                 if (Value.IntValue < 0)
                 {
                     self.IntValue *= -1;
-                    if (Value.IntValue == NegativeZero) { Value.IntValue = 0; }
+                    if (Value.IntValue == NegativeRep) { Value.IntValue = 0; }
                 }
                 bool SelfIsNegative = self.IntValue < 0;
                 if (SelfIsNegative)
                 {
-                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
                     else { self.IntValue *= -1; }
                 }
                 __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
@@ -1473,7 +1473,7 @@ namespace BlazesRusCode
                 //Gives enough buffer room that doesn't lose the decimal values
                 SRep_DecHalf *= DecimalOverflowX;
                 SRep_DecHalf %= VRep;
-                if (IntResult == 0) { self.IntValue = (signed int)SelfIsNegative ? NegativeZero : 0; }
+                if (IntResult == 0) { self.IntValue = (signed int)SelfIsNegative ? NegativeRep : 0; }
                 else { self.IntValue = (signed int)SelfIsNegative ? IntResult * -1 : IntResult; }
                 self.DecimalHalf = (signed int)SRep;
             }
@@ -1651,14 +1651,14 @@ namespace BlazesRusCode
             {
                 bool SelfIsNegative = self.IntValue < 0;
                 bool ValIsNegative = Value.IntValue < 0;
-                if (SelfIsNegative && self.IntValue == NegativeZero)
+                if (SelfIsNegative && self.IntValue == NegativeRep)
                 {
                     self.IntValue = (0 ^ Value.IntValue) * -1;
                     self.DecimalHalf ^= Value.DecimalHalf;
                 }
                 else
                 {
-                    if (ValIsNegative && Value.IntValue == NegativeZero)
+                    if (ValIsNegative && Value.IntValue == NegativeRep)
                     {
                         self.IntValue = (self.IntValue ^ 0) * -1;
                         self.DecimalHalf ^= Value.DecimalHalf;
@@ -1688,14 +1688,14 @@ namespace BlazesRusCode
             {
                 bool SelfIsNegative = self.IntValue < 0;
                 bool ValIsNegative = Value.IntValue < 0;
-                if (SelfIsNegative && self.IntValue == NegativeZero)
+                if (SelfIsNegative && self.IntValue == NegativeRep)
                 {
                     self.IntValue = (0 | Value.IntValue) * -1;
                     self.DecimalHalf |= Value.DecimalHalf;
                 }
                 else
                 {
-                    if (ValIsNegative && Value.IntValue == NegativeZero)
+                    if (ValIsNegative && Value.IntValue == NegativeRep)
                     {
                         self.IntValue = (self.IntValue & 0) * -1;
                         self.DecimalHalf |= Value.DecimalHalf;
@@ -1724,14 +1724,14 @@ namespace BlazesRusCode
             {
                 bool SelfIsNegative = self.IntValue < 0;
                 bool ValIsNegative = Value.IntValue < 0;
-                if (SelfIsNegative && self.IntValue == NegativeZero)
+                if (SelfIsNegative && self.IntValue == NegativeRep)
                 {
                     self.IntValue = (0 & Value.IntValue) * -1;
                     self.DecimalHalf &= Value.DecimalHalf;
                 }
                 else
                 {
-                    if (ValIsNegative && Value.IntValue == NegativeZero)
+                    if (ValIsNegative && Value.IntValue == NegativeRep)
                     {
                         self.IntValue = (self.IntValue & 0) * -1;
                         self.DecimalHalf &= Value.DecimalHalf;
@@ -1761,9 +1761,9 @@ namespace BlazesRusCode
         /// <returns>MediumDec &</returns>
         MediumDec& operator ++()
         {
-            if (IntValue == NegativeZero) { IntValue = 0; }
+            if (IntValue == NegativeRep) { IntValue = 0; }
             else if (DecimalHalf == 0) { ++IntValue; }
-            else if (IntValue == -1) { IntValue = NegativeZero; }
+            else if (IntValue == -1) { IntValue = NegativeRep; }
             else { ++IntValue; }
             return *this;
         }
@@ -1774,9 +1774,9 @@ namespace BlazesRusCode
         /// <returns>MediumDec &</returns>
         MediumDec& operator --()
         {
-            if (IntValue == NegativeZero) { IntValue = -1; }
+            if (IntValue == NegativeRep) { IntValue = -1; }
             else if (DecimalHalf == 0) { --IntValue; }
-            else if (IntValue == 0) { IntValue = NegativeZero; }
+            else if (IntValue == 0) { IntValue = NegativeRep; }
             else { --IntValue; }
             return *this;
         }
@@ -1884,7 +1884,7 @@ namespace BlazesRusCode
             }
             else
             {
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                 {//-0.5<0
                     if (Value >= 0)
                         return true;
@@ -1909,7 +1909,7 @@ namespace BlazesRusCode
             }
             else
             {
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                 {//-0.5<0
                     if (Value >= 0)
                         return true;
@@ -1934,7 +1934,7 @@ namespace BlazesRusCode
             }
             else
             {
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                 {//-0.5>-1
                     if (Value <= -1)
                         return true;
@@ -1959,7 +1959,7 @@ namespace BlazesRusCode
             }
             else
             {
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                 {
                     if (Value <= -1)
                         return true;
@@ -2011,7 +2011,7 @@ namespace BlazesRusCode
             }
             else
             {
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                 {
                     if (Value <= -1)
                         return true;
@@ -2036,7 +2036,7 @@ namespace BlazesRusCode
             }
             else
             {
-                if (self.IntValue == NegativeZero && Value <= 1)
+                if (self.IntValue == NegativeRep && Value <= 1)
                 {//-1<-0.5
                     if (Value <= -1)
                         return true;
@@ -2061,7 +2061,7 @@ namespace BlazesRusCode
             }
             else
             {
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                 {
                     if (Value >= 0)
                         return true;
@@ -2086,7 +2086,7 @@ namespace BlazesRusCode
             }
             else
             {
-                if (self.IntValue == NegativeZero)
+                if (self.IntValue == NegativeRep)
                 {//0>-0.5
                     if (Value >= 0)
                         return true;
@@ -2173,10 +2173,10 @@ namespace BlazesRusCode
             {
                 bool WasNegative = self.IntValue < 0;
                 if (WasNegative)
-                    self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
+                    self.IntValue = self.IntValue == MediumDec::NegativeRep ? -1 : --self.IntValue;
                 self.IntValue += value;
                 if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeZero;
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeRep;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
                 //If flips to other side of negative, invert the decimals
@@ -2203,10 +2203,10 @@ namespace BlazesRusCode
             {
                 bool WasNegative = self.IntValue < 0;
                 if (WasNegative)
-                    self.IntValue = self.IntValue==MediumDec::NegativeZero ? -1 : --self.IntValue;
+                    self.IntValue = self.IntValue==MediumDec::NegativeRep ? -1 : --self.IntValue;
                 self.IntValue -= value;
                 if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeZero;
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeRep;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
                 //If flips to other side of negative, invert the decimals
@@ -2227,7 +2227,7 @@ namespace BlazesRusCode
         {
             if (Value < 0)
             {
-                if (Value == NegativeZero) { Value = 0; }
+                if (Value == NegativeRep) { Value = 0; }
                 else { Value *= -1; }
                 self.SwapNegativeStatus();
             }
@@ -2242,7 +2242,7 @@ namespace BlazesRusCode
                 bool SelfIsNegative = self.IntValue < 0;
                 if (SelfIsNegative)
                 {
-                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
                     else { self.IntValue *= -1; }
                 }
                 __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
@@ -2256,7 +2256,7 @@ namespace BlazesRusCode
                 }
                 else
                 {
-                    self.IntValue = SelfIsNegative?NegativeZero:0;
+                    self.IntValue = SelfIsNegative?NegativeRep:0;
                     self.DecimalHalf = (signed int)SRep;
                 }
             }
@@ -2276,7 +2276,7 @@ namespace BlazesRusCode
             else if (self == Zero) { return self; }
             if (Value < 0)
             {
-                if (Value == NegativeZero) { Value = 0; }
+                if (Value == NegativeRep) { Value = 0; }
                 else { Value *= -1; }
                 self.SwapNegativeStatus();
             }
@@ -2296,7 +2296,7 @@ namespace BlazesRusCode
                 }
                 else
                 {
-                    self.IntValue = SelfIsNegative?NegativeZero:0;
+                    self.IntValue = SelfIsNegative?NegativeRep:0;
                     self.DecimalHalf = (signed int)SRep;
                 }
             }
@@ -2305,7 +2305,7 @@ namespace BlazesRusCode
                 bool SelfIsNegative = self.IntValue < 0;
                 if (SelfIsNegative)
                 {
-                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
                     else { self.IntValue *= -1; }
                 }
                 __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
@@ -2355,7 +2355,7 @@ namespace BlazesRusCode
                 bool SelfIsNegative = self.IntValue < 0;
                 if (SelfIsNegative)
                 {
-                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
                     else { self.IntValue *= -1; }
                 }
                 __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
@@ -2367,7 +2367,7 @@ namespace BlazesRusCode
                 SRep -= IntResult * VRep;
                 __int64 IntHalf = SRep / DecimalOverflow;
                 SRep -= IntHalf * (__int64)DecimalOverflow;
-                if (IntHalf == 0) { self.IntValue = SelfIsNegative ? (signed int)NegativeZero : 0; }
+                if (IntHalf == 0) { self.IntValue = SelfIsNegative ? (signed int)NegativeRep : 0; }
                 else { self.IntValue = (signed int)(SelfIsNegative ? IntHalf * -1 : IntHalf); }
                 self.DecimalHalf = (signed int)SRep;
             }
@@ -2390,10 +2390,10 @@ namespace BlazesRusCode
             {
                 bool WasNegative = self.IntValue < 0;
                 if (WasNegative)
-                    self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
+                    self.IntValue = self.IntValue == MediumDec::NegativeRep ? -1 : --self.IntValue;
                 self.IntValue += value;
                 if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeZero;
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeRep;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
                 //If flips to other side of negative, invert the decimals
@@ -2415,7 +2415,7 @@ namespace BlazesRusCode
             if (value == 0) { return self; }
             else if (self.DecimalHalf == 0)
                 self.IntValue -= value;
-            else if (self.IntValue == NegativeZero)
+            else if (self.IntValue == NegativeRep)
                 self.IntValue = (signed int)value * -1;
             else if(self.IntValue < 0)
                 self.IntValue -= value;
@@ -2423,10 +2423,10 @@ namespace BlazesRusCode
             {
                 bool WasNegative = self.IntValue < 0;
                 if (WasNegative)
-                    self.IntValue = self.IntValue == MediumDec::NegativeZero ? -1 : --self.IntValue;
+                    self.IntValue = self.IntValue == MediumDec::NegativeRep ? -1 : --self.IntValue;
                 self.IntValue -= value;
                 if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeZero;
+                    self.IntValue = self.DecimalHalf == 0 ? 0 : MediumDec::NegativeRep;
                 else if (self.IntValue < 0)
                     ++self.IntValue;
                 //If flips to other side of negative, invert the decimals
@@ -2456,7 +2456,7 @@ namespace BlazesRusCode
                 bool SelfIsNegative = self.IntValue < 0;
                 if (SelfIsNegative)
                 {
-                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
                     else { self.IntValue *= -1; }
                 }
                 __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
@@ -2470,7 +2470,7 @@ namespace BlazesRusCode
                 }
                 else
                 {
-                    self.IntValue = SelfIsNegative?NegativeZero:0;
+                    self.IntValue = SelfIsNegative?NegativeRep:0;
                     self.DecimalHalf = (signed int)SRep;
                 }
             }
@@ -2504,7 +2504,7 @@ namespace BlazesRusCode
                 }
                 else
                 {
-                    self.IntValue = SelfIsNegative?NegativeZero:0;
+                    self.IntValue = SelfIsNegative?NegativeRep:0;
                     self.DecimalHalf = (signed int)SRep;
                 }
             }
@@ -2513,7 +2513,7 @@ namespace BlazesRusCode
                 bool SelfIsNegative = self.IntValue < 0;
                 if (SelfIsNegative)
                 {
-                    if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
                     else { self.IntValue *= -1; }
                 }
                 __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
@@ -2552,7 +2552,7 @@ namespace BlazesRusCode
             else//leftValue is non-whole number
             {
                 __int64 SRep;
-                if (self.IntValue == NegativeZero) { SRep = (__int64)self.DecimalHalf * -1; }
+                if (self.IntValue == NegativeRep) { SRep = (__int64)self.DecimalHalf * -1; }
                 else if (self.IntValue < 0) { SRep = DecimalOverflowX * self.IntValue - self.DecimalHalf; }
                 else { SRep = DecimalOverflowX * self.IntValue + self.DecimalHalf; }
                 bool SelfIsNegative = SRep < 0;
@@ -2565,7 +2565,7 @@ namespace BlazesRusCode
                 SRep -= IntResult * VRep;
                 __int64 IntHalf = SRep / DecimalOverflow;
                 SRep -= IntHalf * (__int64)DecimalOverflow;
-                if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? NegativeZero : 0; }
+                if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? NegativeRep : 0; }
                 else { self.IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
                 self.DecimalHalf = (signed int)SRep;
             }
@@ -2792,7 +2792,7 @@ namespace BlazesRusCode
             {
                 bool SelfIsNegative = self.IntValue < 0;
                 bool ValIsNegative = Value < 0;
-                if (SelfIsNegative && self.IntValue == NegativeZero)
+                if (SelfIsNegative && self.IntValue == NegativeRep)
                 {
                     self.IntValue = (0 & Value) * -1;
                     self.DecimalHalf ^= Value;
@@ -2819,7 +2819,7 @@ namespace BlazesRusCode
             {
                 bool SelfIsNegative = self.IntValue < 0;
                 bool ValIsNegative = Value < 0;
-                if (SelfIsNegative && self.IntValue == NegativeZero)
+                if (SelfIsNegative && self.IntValue == NegativeRep)
                 {
                     self.IntValue = (0 & Value) * -1;
                     self.DecimalHalf |= Value;
@@ -2846,7 +2846,7 @@ namespace BlazesRusCode
             {
                 bool SelfIsNegative = self.IntValue < 0;
                 bool ValIsNegative = Value < 0;
-                if (SelfIsNegative && self.IntValue == NegativeZero)
+                if (SelfIsNegative && self.IntValue == NegativeRep)
                 {
                     self.IntValue = (0 & Value) * -1;
                     self.DecimalHalf &= Value;
@@ -2969,7 +2969,7 @@ namespace BlazesRusCode
                 return *this;
             }
             DecimalHalf = 0;
-            if (IntValue == NegativeZero) { IntValue = -1; }
+            if (IntValue == NegativeRep) { IntValue = -1; }
             else
             {
                 --IntValue;
@@ -3007,7 +3007,7 @@ namespace BlazesRusCode
             case 1: Value.DecimalHalf /= 100000000; Value.DecimalHalf *= 100000000; break;
             default: Value.DecimalHalf = 0; break;
             }
-            if (Value.IntValue == NegativeZero && Value.DecimalHalf == 0) { Value.DecimalHalf = 0; }
+            if (Value.IntValue == NegativeRep && Value.DecimalHalf == 0) { Value.DecimalHalf = 0; }
             return Value;
         }
         
@@ -3022,7 +3022,7 @@ namespace BlazesRusCode
                 return *this;
             }
             DecimalHalf = 0;
-            if (IntValue == NegativeZero) { IntValue = 0; }
+            if (IntValue == NegativeRep) { IntValue = 0; }
             else
             {
                 ++IntValue;
@@ -3040,7 +3040,7 @@ namespace BlazesRusCode
             {
                 return Value.IntValue;
             }
-            if (Value.IntValue == NegativeZero) { return -1; }
+            if (Value.IntValue == NegativeRep) { return -1; }
             else
             {
                 return Value.IntValue - 1;
@@ -3057,7 +3057,7 @@ namespace BlazesRusCode
             {
                 return Value.IntValue;
             }
-            if (Value.IntValue == NegativeZero) { return 0; }
+            if (Value.IntValue == NegativeRep) { return 0; }
             else
             {
                 return Value.IntValue+1;
@@ -3081,7 +3081,7 @@ namespace BlazesRusCode
         MediumDec& Trunc()
         {
             DecimalHalf = 0;
-            if (IntValue == NegativeZero) { IntValue = 0; }
+            if (IntValue == NegativeRep) { IntValue = 0; }
             return *this;
         }
         
@@ -3101,7 +3101,7 @@ namespace BlazesRusCode
         /// <returns>MediumDec&</returns>
         MediumDec& Abs()
         {
-            if (IntValue == NegativeZero) { IntValue = 0; }
+            if (IntValue == NegativeRep) { IntValue = 0; }
             else if (IntValue < 0) { IntValue *= -1; }
             return *this;
         }
@@ -3619,7 +3619,7 @@ namespace BlazesRusCode
                     case 0:
                         return FractionalPow(value, Frac);
                         break;
-                    case MediumDec::NegativeZero:
+                    case MediumDec::NegativeRep:
                         return 1 / FractionalPow(value, Frac);
                         break;
                     default:
@@ -3991,7 +3991,7 @@ namespace BlazesRusCode
         {
             if (Value.IntValue < 0)
             {
-                if (Value.IntValue == NegativeZero)
+                if (Value.IntValue == NegativeRep)
                 {
                     Value.IntValue = 359; Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf;
                 }
@@ -4047,7 +4047,7 @@ namespace BlazesRusCode
         {
             if (Value.IntValue < 0)
             {
-                if (Value.IntValue == NegativeZero)
+                if (Value.IntValue == NegativeRep)
                 {
                     Value.IntValue = 359; Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf;
                 }
@@ -4152,7 +4152,7 @@ namespace BlazesRusCode
         {
             if (Value.IntValue < 0)
             {
-                if (Value.IntValue == NegativeZero)
+                if (Value.IntValue == NegativeRep)
                 {
                     Value.IntValue = 359; Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf;
                 }
@@ -4326,7 +4326,7 @@ namespace BlazesRusCode
         }
         if (IsNegative)
         {
-            if (IntValue == 0) { IntValue = NegativeZero; }
+            if (IntValue == 0) { IntValue = NegativeRep; }
             else { IntValue *= -1; }
         }
     }
@@ -4352,7 +4352,7 @@ namespace BlazesRusCode
         if (IntValue < 0)
         {
             Value += "-";
-            if (IntValue == NegativeZero) { CurrentSection = 0; }
+            if (IntValue == NegativeRep) { CurrentSection = 0; }
             else { CurrentSection *= -1; }
         }
         for (__int8 Index = VariableConversionFunctions::NumberOfPlaces(CurrentSection); Index >= 0; Index--)
@@ -4395,7 +4395,7 @@ namespace BlazesRusCode
         if (IntValue < 0)
         {
             Value += "-";
-            if (IntValue == NegativeZero) { CurrentSection = 0; }
+            if (IntValue == NegativeRep) { CurrentSection = 0; }
             else { CurrentSection *= -1; }
         }
         for (__int8 Index = VariableConversionFunctions::NumberOfPlaces(CurrentSection); Index >= 0; Index--)
