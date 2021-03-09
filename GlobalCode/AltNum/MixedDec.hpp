@@ -52,6 +52,28 @@ namespace BlazesRusCode
     class DLL_API MixedDec
     {
     private:
+        static
+#if defined(MixedDec_ExtendTrailingDigits)
+        double
+#else
+        float
+#endif
+        TrailingZeroValue()
+        {
+            return
+#if defined(MixedDec_ExtendTrailingDigits)
+                0.0;
+#else
+                0.0f;
+#endif
+        }
+        static
+#if defined(MixedDec_ExtendTrailingDigits)
+            double
+#else
+            float
+#endif
+            TrailingZero;
 #if defined(MixedDec_EnablePIRep)
         float PIRep = -1.0f;
 #endif
@@ -108,7 +130,13 @@ namespace BlazesRusCode
         /// <param name="intVal">The int value.</param>
         /// <param name="decVal01">The decimal val01.</param>
         /// <param name="decVal02">ExtraRep.</param>
-        MixedDec(signed int intVal = 0, signed int decVal = 0, float extraVal = 0.0f)
+        MixedDec(signed int intVal = 0, signed int decVal = 0,
+#if defined(MixedDec_ExtendTrailingDigits)
+        double extraVal = 0.0)
+#else
+        float extraVal = 0.0f)
+#endif
+
         {
             IntValue = intVal;
             DecimalHalf = decVal;
@@ -131,23 +159,23 @@ namespace BlazesRusCode
         void SetAsInfinity()
         {
             IntValue = 1; DecimalHalf = -1;
-            ExtraRep = 0.0f;
+            ExtraRep = TrailingZero;
         }
 
         void SetAsNegativeInfinity()
         {
             IntValue = -1; DecimalHalf = -1;
-            ExtraRep = 0.0f;
+            ExtraRep = TrailingZero;
         }
         void SetAsNaN()
         {
             IntValue = 0; DecimalHalf = -2;
-            ExtraRep = 0.0f;
+            ExtraRep = TrailingZero;
         }
         void SetAsApproachingZero()
         {
             IntValue = 0; DecimalHalf = -3;//If DecimalHalf==-3, then definited as infinitely approaching IntValue
-            ExtraRep = 0.0f;
+            ExtraRep = TrailingZero;
         }
 
 #endif
@@ -155,14 +183,14 @@ namespace BlazesRusCode
         void SetAsNegativeZero()
         {
             IntValue = 0; DecimalHalf = -4;
-            ExtraRep = 0.0f;
+            ExtraRep = TrailingZero;
         }
 #endif
 
         void SetAsZero()
         {
             IntValue = 0; DecimalHalf = 0;
-            ExtraRep = 0.0f;
+            ExtraRep = TrailingZero;
         }
         
         /// <summary>
@@ -182,7 +210,7 @@ namespace BlazesRusCode
         void SetVal(MediumDec Value)
         {
             IntValue = Value.IntValue;
-            DecimalHalf = Value.DecimalHalf; ExtraRep = 0.0f;
+            DecimalHalf = Value.DecimalHalf; ExtraRep = TrailingZero;
         }
         
 #if defined(MixedDec_EnablePIRep)
@@ -1063,7 +1091,7 @@ public:
             if (Value.DecimalHalf == -1)
                 return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
 #endif
-            if (Value.ExtraRep > 0.0f)
+            if (Value.ExtraRep > TrailingZero)
             {
                 if (self.ExtraRep == 0)
                 {
@@ -1095,7 +1123,7 @@ public:
             {
                 if (Value.IntValue == 0)
                     return self;
-                if (self.DecimalHalf == 0 && self.ExtraRep <= 0.0f)
+                if (self.DecimalHalf == 0 && self.ExtraRep <= TrailingZero)
                 {
                     self.IntValue += Value.IntValue;
                 }
@@ -1178,7 +1206,7 @@ public:
             if (Value.DecimalHalf == -1)
                 return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
 #endif
-            if (Value.ExtraRep > 0.0f)
+            if (Value.ExtraRep > TrailingZero)
             {
                 //Apply small part of value
             }
@@ -4369,6 +4397,12 @@ public:
     };
 
     #pragma region ValueDefine Source
+#if defined(MixedDec_ExtendTrailingDigits)
+    double
+#else
+    float
+#endif
+    MixedDec::TrailingZero = TrailingZeroValue();
     MixedDec MixedDec::PI = PIValue();
     MixedDec MixedDec::One = OneValue();
     MixedDec MixedDec::Two = TwoValue();
