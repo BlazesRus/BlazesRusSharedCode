@@ -1131,32 +1131,78 @@ public:
             if (Value.DecimalHalf == -1)
                 return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
 #endif
+            bool WasNegative = self.IntValue < 0;
             if (Value.ExtraRep > TrailingZero)
             {
                 if (self.ExtraRep == 0)
                 {
-                    if (self.IntValue > 0)
-                        self.ExtraRep = TrailingOne - Value.ExtraRep;
+                    if (WasNegative)
+                    {
+                        if (Value.IntValue < 0)
+                        {//-0.000 000 002 0 + -0.000 000 000 1 = -0.000 000 002 1
+                            self.ExtraRep = Value.ExtraRep;
+                        }
+                        else
+                        {//-0.000 000 002 0 + 0.000 000 000 1 = -0.000 000 001 9
+                            self.ExtraRep = TrailingOne - Value.ExtraRep;
+                            --self.DecimalHalf;
+                        }
+                    }
                     else
-                        self.ExtraRep = Value.ExtraRep;
+                    {
+                        if (Value.IntValue < 0)
+                        {//0.000 000 002 0 + -0.000 000 000 1 = 0.000 000 001 9
+                            self.ExtraRep = TrailingOne - Value.ExtraRep;
+                            --self.DecimalHalf;
+                        }
+                        else
+                        {//0.000 000 002 0 + 0.000 000 000 1 = 0.000 000 002 1
+                            self.ExtraRep = Value.ExtraRep;
+                        }
+                    }
                 }
                 else
                 {
-                    if (self.IntValue > 0)
+                    if (WasNegative)
                     {
-
+                        if (Value.IntValue < 0)
+                            self.ExtraRep += Value.ExtraRep;
+                        else
+                            self.ExtraRep -= Value.ExtraRep;
                     }
                     else
                     {
-                        if (Value.IntValue > 0)
-                        {
-
-                        }
+                        if (Value.IntValue < 0)
+                            self.ExtraRep -= Value.ExtraRep;
                         else
-                        {
-
-                        }
+                            self.ExtraRep += Value.ExtraRep;
                     }
+                    if (self.ExtraRep < TrailingZero)
+                    {
+                        self.ExtraRep += TrailingOne;
+                        --self.DecimalHalf;
+                    }
+                    else if (self.ExtraRep >= TrailingOne)
+                    {
+                        self.ExtraRep -= TrailingOne;
+                        ++self.DecimalHalf;
+                    }
+                }
+                if (self.DecimalHalf < 0)
+                {
+                    if (self.IntValue == 0)
+                        self.IntValue = NegativeRep;
+                    else
+                        --self.IntValue;
+                    self.DecimalHalf += DecimalOverflow;
+                }
+                else if (self.DecimalHalf > DecimalOverflow)
+                {
+                    if (self.IntValue == NegativeRep)
+                        self.IntValue = 0;
+                    else
+                        ++self.IntValue;
+                    self.DecimalHalf -= DecimalOverflow;
                 }
             }
             if (Value.DecimalHalf == 0)
@@ -1169,7 +1215,6 @@ public:
                 }
                 else
                 {
-                    bool WasNegative = self.IntValue < 0;
                     if (WasNegative)
                         self.IntValue = self.IntValue == MediumDec::NegativeRep ? -1 : --self.IntValue;
                     self.IntValue += Value.IntValue;
@@ -1184,7 +1229,6 @@ public:
             }
             else
             {
-                bool WasNegative = self.IntValue < 0;
                 //Deal with Int section first
                 if (WasNegative)
                     self.IntValue = self.IntValue == MediumDec::NegativeRep ? -1 : --self.IntValue;
@@ -1246,9 +1290,79 @@ public:
             if (Value.DecimalHalf == -1)
                 return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
 #endif
+            bool WasNegative = self.IntValue < 0;
             if (Value.ExtraRep > TrailingZero)
             {
-                //Apply small part of value
+                if (self.ExtraRep == 0)
+                {
+                    if (WasNegative)
+                    {
+                        if (Value.IntValue < 0)
+                        {//-0.000 000 002 0 - -0.000 000 000 1 = -0.000 000 001 9
+                            self.ExtraRep = TrailingOne - Value.ExtraRep;
+                            --self.DecimalHalf;
+                        }
+                        else
+                        {//-0.000 000 002 0 - 0.000 000 000 1 = -0.000 000 002 1
+                            self.ExtraRep = Value.ExtraRep;
+                        }
+                    }
+                    else
+                    {
+                        if (Value.IntValue < 0)
+                        {//0.000 000 002 0 - -0.000 000 000 1 = 0.000 000 002 1
+                            self.ExtraRep = Value.ExtraRep;
+                        }
+                        else
+                        {//0.000 000 002 0 - 0.000 000 000 1 = 0.000 000 001 9
+                            self.ExtraRep = TrailingOne - Value.ExtraRep;
+                            --self.DecimalHalf;
+                        }
+                    }
+                }
+                else
+                {
+                    if (WasNegative)
+                    {
+                        if (Value.IntValue < 0)
+                            self.ExtraRep -= Value.ExtraRep;
+                        else
+                            self.ExtraRep += Value.ExtraRep;
+                    }
+                    else
+                    {
+                        if (Value.IntValue < 0)
+                            self.ExtraRep += Value.ExtraRep;
+                        else
+                            self.ExtraRep -= Value.ExtraRep;
+                    }
+                    if (self.ExtraRep < TrailingZero)
+                    {
+                        self.ExtraRep += TrailingOne;
+                        --self.DecimalHalf;
+                    }
+                    else if (self.ExtraRep >= TrailingOne)
+                    {
+                        self.ExtraRep -= TrailingOne;
+                        ++self.DecimalHalf;
+                    }
+                }
+                if (self.DecimalHalf < 0)
+                {
+                    if (self.IntValue == 0)
+                        self.IntValue = NegativeRep;
+                    else
+                        --self.IntValue;
+                    self.DecimalHalf += DecimalOverflow;
+                }
+                else if (self.DecimalHalf > DecimalOverflow)
+                {
+                    if (self.IntValue == NegativeRep)
+                        self.IntValue = 0;
+                    else
+                        ++self.IntValue;
+                    self.DecimalHalf -= DecimalOverflow;
+                }
             }
             if (Value.DecimalHalf == 0)
             {
@@ -1260,7 +1374,6 @@ public:
                 }
                 else
                 {
-                    bool WasNegative = self.IntValue < 0;
                     if (WasNegative)
                         self.IntValue = self.IntValue == MediumDec::NegativeRep ? -1 : --self.IntValue;
                     if (Value.IntValue != 0)
@@ -1276,7 +1389,6 @@ public:
             }
             else
             {
-                bool WasNegative = self.IntValue < 0;
                 //Deal with Int section first
                 if (WasNegative)
                     self.IntValue = self.IntValue == MediumDec::NegativeRep ? -1 : --self.IntValue;
