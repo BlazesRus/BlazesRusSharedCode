@@ -70,18 +70,18 @@ namespace BlazesRusCode
         {
             return
 #if defined(MixedDec_ExtendTrailingDigits)
-                0.0;
+                1.0;
 #else
-                0.0f;
+                1.0f;
 #endif
         }
         static TrailingType TrailingTenthValue()
         {
             return
 #if defined(MixedDec_ExtendTrailingDigits)
-                0.0;
+                0.1;
 #else
-                0.0f;
+                0.1f;
 #endif
         }
         static TrailingType TrailingZero;
