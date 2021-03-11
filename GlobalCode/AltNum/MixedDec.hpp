@@ -75,8 +75,18 @@ namespace BlazesRusCode
                 0.0f;
 #endif
         }
+        static TrailingType TrailingTenthValue()
+        {
+            return
+#if defined(MixedDec_ExtendTrailingDigits)
+                0.0;
+#else
+                0.0f;
+#endif
+        }
         static TrailingType TrailingZero;
         static TrailingType TrailingOne;
+        static TrailingType TrailingTenth;
 #if defined(MixedDec_EnablePIRep)
         static TrailingType PIRepValue()
         {
@@ -4429,6 +4439,7 @@ public:
     #pragma region ValueDefine Source
     MixedDec::TrailingType MixedDec::TrailingZero = TrailingZeroValue();
     MixedDec::TrailingType MixedDec::TrailingOne = TrailingOneValue();
+    MixedDec::TrailingType MixedDec::TrailingTenth = TrailingTenthValue();
 #if defined(MixedDec_EnablePIRep)
     MixedDec::TrailingType MixedDec::PIRep = PIRepValue();
 #endif
@@ -4463,6 +4474,23 @@ public:
     #pragma endregion ValueDefine Source
 
     #pragma region String Function Source
+#if defined(MixedDec_ExtendTrailingDigits)
+    double CharAsFloat(char Temp)
+    {
+        double Value;
+        if (Temp == '0') { Value = 0.0; }
+        else if (Temp == '1') { Value = 1.0; }
+        else if (Temp == '2') { Value = 2.0; }
+        else if (Temp == '3') { Value = 3.0; }
+        else if (Temp == '4') { Value = 4.0; }
+        else if (Temp == '5') { Value = 5.0; }
+        else if (Temp == '6') { Value = 6.0; }
+        else if (Temp == '7') { Value = 7.0; }
+        else if (Temp == '8') { Value = 8.0; }
+        else if (Temp == '9') { Value = 9.0; }
+        return Value;
+    }
+#else
     float CharAsFloat(char Temp)
     {
         float Value;
@@ -4478,6 +4506,7 @@ public:
         else if(Temp == '9') { Value = 9.0f; }
         return Value;
     }
+#endif
     
     /// <summary>
     /// Reads the string.
@@ -4495,9 +4524,9 @@ public:
         bool ReadingExtra = false;
         int TempInt;
         int TempInt02;
-        int TempFloat;
-        float DigitMultiplier = 0.1f;
-        ExtraRep = 0.0f;
+        TrailingType TempFloat;
+        TrailingType DigitMultiplier = TrailingTenth;
+        ExtraRep = TrailingZero;
         for (char const& StringChar : Value)
         {
             if (VariableConversionFunctions::IsDigit(StringChar))
@@ -4506,7 +4535,7 @@ public:
                 {
                     TempFloat = CharAsFloat(StringChar);
                     ExtraRep += TempFloat * DigitMultiplier;
-                    DigitMultiplier *= 0.1f;
+                    DigitMultiplier *= TrailingTenth;
                 }
                 else if (ReadingDecimal)
                 {
