@@ -1126,7 +1126,7 @@ public:
                 if (self.ExtraRep == 0)
                 {
                     if (self.IntValue > 0)
-                        self.ExtraRep = 1.0f - Value.ExtraRep;
+                        self.ExtraRep = TrailingOne - Value.ExtraRep;
                     else
                         self.ExtraRep = Value.ExtraRep;
                 }
