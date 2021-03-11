@@ -33,6 +33,7 @@ MixedDec_EnableENumRep = E*(+- 2147483647.999999999) Representation enabled(Not 
 MixedDec_EnablePIRep = PI*(+- 2147483647.999999999) Representation enabled(Not Fully Implimented)
 MixedDec_EnableInfinityRep = (Not Fully Implimented)
 MixedDec_EnableAltFloat = Possible alternative floating point representation later(Not Implimented)
+MixedDec_ExtendTrailingDigits = Replace ExtraRep usage to double instead of float(16 bytes worth of Variable Storage inside class for each instance)
 */
 
 namespace BlazesRusCode
@@ -47,7 +48,7 @@ namespace BlazesRusCode
     /// Alternative Non-Integer number representation with focus on accuracy and partially speed within certain range
     /// Represents +- 2147483647.999999999(with extra digit representation in floating point)
     /// (Optional support later for PI*(+- 2147483647.999999999), E*(+- 2147483647.999999999), and (+- 2147483647.999999999)i)
-    /// (12 bytes worth of Variable Storage inside class for each instance)
+    /// (12 bytes worth of Variable Storage inside class for each instance + 4 bytes if MixedDec_ExtendTrailingDigits enabled)
     /// </summary>
     class DLL_API MixedDec
     {
@@ -97,7 +98,7 @@ namespace BlazesRusCode
                 -1.0f;
 #endif
         }
-        TrailingType PIRep;
+        static TrailingType PIRep;
 #endif
 #if defined(MixedDec_EnableENumRep)
         static TrailingType ERepValue()
@@ -109,7 +110,7 @@ namespace BlazesRusCode
                 -2.0f;
 #endif
         }
-        TrailingType ERep;
+        static TrailingType ERep;
 #endif
 #if defined(MixedDec_EnableImaginaryNumRep)
         static TrailingType IRepValue()
@@ -121,7 +122,7 @@ namespace BlazesRusCode
                 -3.0f;
 #endif
         }
-        TrailingType IRep;
+        static TrailingType IRep;
 #endif
     public:
         /// <summary>
@@ -292,7 +293,7 @@ namespace BlazesRusCode
         static MixedDec EValue()
         {
 #if defined(MixedDec_EnableENumRep)
-            return MixedDec(1, 0, ERep); 
+            return MixedDec(1, 0, ERep);
 #else
             return MixedDec(2, 718281828, 0); 
 #endif
@@ -1721,7 +1722,7 @@ public:
 #if defined(MixedDec_EnableInfinityRep)
             if (self.DecimalHalf == -1)
             {
-                if(Value.DecimalHalf == -1&&self.IntValue==Value.IntValue&&self.IntValue==-1)
+                if (Value.DecimalHalf == -1 && self.IntValue == Value.IntValue && self.IntValue == -1)
                     self.IntValue = 1;
                 return self;
             }
@@ -1737,8 +1738,51 @@ public:
                 else { Value.IntValue *= -1; }
                 self.SwapNegativeStatus();
             }
-            self.PartialMultOp(Value);
-            if (self == MixedDec::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
+#if defined(MixedDec_EnablePIRep)//Treated similar to MediumDec multiplication except keeping additional PIRep flag
+            if (self.ExtraRep == PIRep)
+            {
+                if (Value.ExtraRep == PIRep)
+                {
+                    self.PartialMultOp(Value);
+                    self.PartialMultOp(PINum);
+                }
+                else
+                    self.PartialMultOp(Value);
+                if (self == MixedDec::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
+                return self;
+            }
+#endif
+#if defined(MixedDec_EnableENumRep)
+            if (self.ExtraRep == ERep)
+            {
+                if (Value.ExtraRep == ERep)
+                {
+                    self.PartialMultOp(Value);
+                    self.PartialMultOp(PINum);
+                }
+                else
+                    self.PartialMultOp(Value);
+                if (self == MixedDec::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
+                return self;
+            }
+#endif
+#if defined(MixedDec_EnableImaginaryNumRep)
+            if (self.ExtraRep == IRep)
+            {
+                if (Value.ExtraRep == IRep)
+                {
+                    self.PartialMultOp(Value);
+                    self.ExtraRep = TrailingZero;
+                }
+                else
+                {
+                    self.PartialMultOp(Value);
+                }
+                if (self == MixedDec::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
+                return self;
+            }
+#endif
+            //Other Multiplication code here(attempting to lose less accuracy from truncation)
             return self;
         }
 
@@ -1881,8 +1925,51 @@ public:
                 else { Value.IntValue *= -1; }
                 self.SwapNegativeStatus();
             }
-            self.PartialDivOp(Value);
-            if (self == MixedDec::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
+#if defined(MixedDec_EnablePIRep)//Treated similar to MediumDec multiplication except keeping additional PIRep flag
+            if (self.ExtraRep == PIRep)
+            {
+                if (Value.ExtraRep == PIRep)
+                {
+                    self.PartialDivOp(Value);
+                    self.PartialDivOp(PINum);
+                }
+                else
+                    self.PartialDivOp(Value);
+                if (self == MixedDec::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
+                return self;
+            }
+#endif
+#if defined(MixedDec_EnableENumRep)
+            if (self.ExtraRep == ERep)
+            {
+                if (Value.ExtraRep == ERep)
+                {
+                    self.PartialDivOp(Value);
+                    self.PartialDivOp(ENum);
+                }
+                else
+                    self.PartialDivOp(Value);
+                if (self == MixedDec::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
+                return self;
+            }
+#endif
+#if defined(MixedDec_EnableImaginaryNumRep)
+            if (self.ExtraRep == IRep)
+            {
+                if (Value.ExtraRep == IRep)
+                {
+                    self.PartialDivOp(Value);
+                    self.ExtraRep = TrailingZero;
+                }
+                else
+                {
+                    self.PartialDivOp(Value);
+                }
+                if (self == MixedDec::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
+                return self;
+            }
+#endif
+            //Other Division code here(attempting to lose less accuracy from truncation)
             return self;
         }
 
@@ -4556,10 +4643,10 @@ public:
     MixedDec::TrailingType MixedDec::PIRep = PIRepValue();
 #endif
 #if defined(MixedDec_EnableENumRep)
-    MixedDec::TrailingType MixedDec::ERep = PIRepValue();
+    MixedDec::TrailingType MixedDec::ERep = ERepValue();
 #endif
 #if defined(MixedDec_EnableImaginaryNumRep)
-    MixedDec::TrailingType MixedDec::IRep = PIRepValue();
+    MixedDec::TrailingType MixedDec::IRep = IRepValue();
 #endif
     MixedDec MixedDec::PI = PIValue();
     MixedDec MixedDec::One = OneValue();
