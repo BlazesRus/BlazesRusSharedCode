@@ -195,7 +195,7 @@ namespace BlazesRusCode
         }
         
 #if defined(MixedDec_EnableInfinityRep)
-        //Ininity operations based on https://www.gnu.org/software/libc/manual/html_node/Infinity-and-NaN.html
+        //Infinity operations based on https://www.gnu.org/software/libc/manual/html_node/Infinity-and-NaN.html
         // and https://tutorial.math.lamar.edu/classes/calcI/typesofinfinity.aspx
         void SetAsInfinity()
         {
@@ -218,7 +218,6 @@ namespace BlazesRusCode
             IntValue = 0; DecimalHalf = -3;//If DecimalHalf==-3, then definited as infinitely approaching IntValue
             ExtraRep = TrailingZero;
         }
-
 #endif
 #if defined(MixedDec_EnableNegativeZero)
         void SetAsNegativeZero()

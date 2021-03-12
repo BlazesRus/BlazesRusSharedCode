@@ -26,6 +26,14 @@
 #include <boost/multiprecision/cpp_int.hpp>
 #include "MediumDec.hpp"
 
+//Preprocessor Switches
+/*
+AltDec_EnablePIPowers = (Not Fully Implimented)
+AltDec_EnableMixedFractional = (Not Fully Implimented)
+AltDec_EnableInfinityRep = Enable support of positive/negative infinity representations and approaching value representations(Not Fully Implimented)
+AltDec_EnableNaN = Enable NaN based representations and operations(Not Implimented)
+*/
+
 namespace BlazesRusCode
 {
     class AltDec;
@@ -47,8 +55,13 @@ namespace BlazesRusCode
     {
     private:
 #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-        signed RevMaxInt = -2147483647;
+        static signed RevMaxInt = -2147483647;
 #endif
+#if defined(AltDec_EnableInfinityRep)
+		static signed int InfinityRep = -2147483648;
+		static signed int ApproachingValRep = -2147483647;
+#endif
+		static signed int PIRep = -2147483648;
     public:
         /// <summary>
         /// The decimal overflow
@@ -76,7 +89,7 @@ namespace BlazesRusCode
         signed int IntValue;
 
         /// <summary>
-        /// Stores decimal section info
+        /// Stores decimal section info and possibly other special info
         /// </summary>
         signed int DecimalHalf;
 
@@ -92,8 +105,8 @@ namespace BlazesRusCode
         /// Initializes a new instance of the <see cref="AltDec"/> class.
         /// </summary>
         /// <param name="intVal">The int value.</param>
-        /// <param name="decVal01">The decimal val01.</param>
-        /// <param name="decVal02">ExtraRep.</param>
+        /// <param name="decVal">The decimal val01.</param>
+        /// <param name="extraVal">ExtraRep.</param>
         AltDec(signed int intVal = 0, signed int decVal = 0, signed int extraVal = 0)
         {
             IntValue = intVal;
@@ -120,13 +133,13 @@ namespace BlazesRusCode
         void SetPiVal(MediumDec Value)
         {
             IntValue = Value.IntValue; DecimalHalf = Value.DecimalHalf;
-            ExtraRep = -2147483648;
+            ExtraRep = PIRep;
         }
         
         void SetPiVal(int Value)
         {
             IntValue = Value; DecimalHalf = 0;
-            ExtraRep = -2147483648;
+            ExtraRep = PIRep;
         }
         
         void SetFractionalVal(MediumDec Value, int Divisor)
@@ -157,34 +170,87 @@ namespace BlazesRusCode
         }
 #endif
 
+//Infinity operations based on https://www.gnu.org/software/libc/manual/html_node/Infinity-and-NaN.html
+// and https://tutorial.math.lamar.edu/classes/calcI/typesofinfinity.aspx
+#if defined(MixedDec_EnableInfinityRep)
+        void SetAsInfinity()
+        {
+            IntValue = 1; DecimalHalf = InfinityRep;
+            ExtraRep = 0;
+        }
+
+        void SetAsNegativeInfinity()
+        {
+            IntValue = -1; DecimalHalf = InfinityRep;
+            ExtraRep = 0;
+        }
+		
+  //      void SetAsNaN()
+  //      {
+  //          IntValue = ?; DecimalHalf = ?;
+  //          ExtraRep = ?;
+  //      }
+  
+        void SetAsApproachingZero()
+        {
+            IntValue = 0; DecimalHalf = ApproachingValRep;
+            ExtraRep = 0;
+        }
+		
+private:
+        static AltDec InfinityValue()
+        {
+            AltDec NewSelf = AltDec(1, InfinityRep);
+            return NewSelf;
+        }
+		
+        static AltDec NegativeInfinityValue()
+        {
+            AltDec NewSelf = AltDec(-1, InfinityRep);
+            return NewSelf;
+        }
+		
+        static AltDec ApproachingZeroValue()
+        {
+            AltDec NewSelf = AltDec(0, ApproachingValRep);
+            return NewSelf;
+        }
+public:
+#endif
         void UpdateValue(MediumDec& UpdateTarget)
         {
             if(ExtraRep==0)
             {
                 UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = DecimalHalf;
             }
-            else if(ExtraRep==-2147483648)
-            {
-#ifdef AltDec_EnableInfinityRep//If Negative Infinity, then convert number into MinimumValue instead
-                if(IntValue==-2147483648&&DecimalHalf==-2147483648)//Negative Infinity
-                {
-                    UpdateTarget.IntValue = -2147483647; UpdateTarget.DecimalHalf = 999999999;
-                }
-                else
-                {
-#endif
-                    if (DecimalHalf == 0 && IntValue == 10)
-                    {
-                        UpdateTarget.IntValue = 31; UpdateTarget.DecimalHalf = 415926536;
-                    }
-                    else
-                    {
-                        UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = DecimalHalf;
-                        UpdateTarget *= MediumDec::PI;
-                    }
 #ifdef AltDec_EnableInfinityRep
-                }
+			else if(DecimalHalf==InfinityRep)
+			{
+				if(IntValue==1)//If Positive Infinity, then convert number into MaximumValue instead
+				{
+					UpdateTarget.IntValue = 2147483647; UpdateTarget.DecimalHalf = 999999999;
+				}
+				else//If Negative Infinity, then convert number into MinimumValue instead
+				{
+					UpdateTarget.IntValue = -2147483647; UpdateTarget.DecimalHalf = 999999999;
+				}
+			}
+			else if(DecimalHalf==ApproachingValRep)
+			{
+				UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = 1;
+			}
 #endif
+            else if(ExtraRep==PIRep)
+            {
+				if (DecimalHalf == 0 && IntValue == 10)
+				{
+					UpdateTarget.IntValue = 31; UpdateTarget.DecimalHalf = 415926536;
+				}
+				else
+				{
+					UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = DecimalHalf;
+					UpdateTarget *= MediumDec::PI;
+				}
             }
 #if AltDec_EnableMixedFractional
 #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
@@ -241,32 +307,37 @@ namespace BlazesRusCode
 
         void ConvertToNumRep()
         {
-            //if(ExtraRep==0)
-            //{
-            //	UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = DecimalHalf;
-            //}
-            if(ExtraRep==-2147483648)
+            if(ExtraRep==PIRep)
             {
-#ifdef AltDec_EnableInfinityRep//If Negative Infinity, then convert number into MinimumValue instead
-                if(IntValue==-2147483648&&DecimalHalf==-2147483648)//Negative Infinity
-                {
-                    IntValue = -2147483647; DecimalHalf = 999999999;
-                }
-                else
-                {
-#endif
-                    if (DecimalHalf == 0 && IntValue == 10)
-                    {
-                        IntValue = 31; DecimalHalf = 415926536;
-                    }
-                    else
-                    {
-                        BasicAddOp(PINum);
-                    }
-#ifdef AltDec_EnableInfinityRep
-                }
-#endif
+				ExtraRep = 0;
+				if (DecimalHalf == 0 && IntValue == 10)
+				{
+					IntValue = 31; DecimalHalf = 415926536; 
+				}
+				else
+				{
+					BasicMultOp(PINum);
+				}
             }
+#ifdef AltDec_EnableInfinityRep
+			else if(DecimalHalf==InfinityRep)
+			{
+				ExtraRep = 0;
+				if(IntValue==1)//If Positive Infinity, then convert number into MaximumValue instead
+				{
+					IntValue = 2147483647; DecimalHalf = 999999999;
+				}
+				else//If Negative Infinity, then convert number into MinimumValue instead
+				{
+					IntValue = -2147483647; DecimalHalf = 999999999;
+				}
+			}
+			else if(DecimalHalf==ApproachingValRep)
+			{
+				ExtraRep = 0;
+				DecimalHalf = 1;
+			}
+#endif
 #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
             else(ExtraRep>0)
 #else
@@ -439,6 +510,12 @@ public:
         /// <returns>MediumDec</returns>
         static AltDec ENum;
         
+#if defined(AltDec_EnableInfinityRep)
+		static AltDec Infinity;
+		static AltDec NegativeInfinity;
+		static AltDec ApproachingZero;
+#endif
+		
         static AltDec PI;
       
         static AltDec E;
@@ -4844,6 +4921,9 @@ public:
             if (Value == Zero) { return AltDec::Zero; }
             else if (Value.IntValue == 90 && Value.DecimalHalf == 0)
             {
+#if defined(AltDec_EnableInfinityRep)
+				return Value.SetAsInfinity();
+#else
                 return AltDec::Maximum;//Positive Infinity
             }
             else if (Value.IntValue == 180 && Value.DecimalHalf == 0)
@@ -4939,6 +5019,9 @@ public:
     AltDec AltDec::Nil = NilValue();
     AltDec AltDec::PINum = PINumValue();
     AltDec AltDec::ENum = ENumValue();
+	AltDec AltDec::Infinity = InfinityValue();
+	AltDec AltDec::NegativeInfinity = NegativeInfinityValue();
+	AltDec AltDec::ApproachingZero = ApproachingZeroValue();
     #pragma endregion ValueDefine Source
 
     #pragma region String Function Source
