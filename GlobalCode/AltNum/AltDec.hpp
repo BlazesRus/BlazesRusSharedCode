@@ -239,6 +239,76 @@ namespace BlazesRusCode
 #endif
         }
 
+        void ConvertToNumRep()
+        {
+            //if(ExtraRep==0)
+            //{
+            //	UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = DecimalHalf;
+            //}
+            if(ExtraRep==-2147483648)
+            {
+#ifdef AltDec_EnableInfinityRep//If Negative Infinity, then convert number into MinimumValue instead
+                if(IntValue==-2147483648&&DecimalHalf==-2147483648)//Negative Infinity
+                {
+                    IntValue = -2147483647; DecimalHalf = 999999999;
+                }
+                else
+                {
+#endif
+                    if (DecimalHalf == 0 && IntValue == 10)
+                    {
+                        IntValue = 31; DecimalHalf = 415926536;
+                    }
+                    else
+                    {
+                        BasicAddOp(PINum);
+                    }
+#ifdef AltDec_EnableInfinityRep
+                }
+#endif
+            }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else(ExtraRep>0)
+#else
+            else
+#endif
+            {
+#if AltDec_EnableMixedFractional
+                if(DecimalHalf<0)//Mixed Fraction
+                {
+                    int TempAdd = IntValue;
+                    IntValue = DecimalHalf*-1; DecimalHalf = 0;
+                    BasicIntDivOp(ExtraRep);
+                    BasicAddOp(TempAdd);
+                }
+                else//Value Divided by ExtraRep
+                {
+#endif
+                    BasicDivOp(ExtraRep);
+#if AltDec_EnableMixedFractional
+                }
+#endif
+            }
+#if defined(AltDec_EnableImaginaryNum) && (!defined(AltDec_EnableENum))
+            else(ExtraRep<0)
+            {
+                IntValue = -2147483648;
+            }
+#elif defined(AltDec_EnableENum) && (!defined(AltDec_EnableImaginaryNum))
+            else(ExtraRep<0)
+            {
+                BasicAddOp(ENum);
+                if(ExtraRep!=-2147483647)
+                {
+                    int TempDiv = ExtraRep*-1;
+                    BasicDivOp(TempDiv);
+                }
+            }
+#elif defined(AltDec_EnableImaginaryNum) && defined(AltDec_EnableENum)
+            //Not decided on representation range if both are enabled
+#endif
+            ExtraRep = 0;
+        }
     #pragma region ValueDefines
 private:
         static AltDec PINumValue()
@@ -795,6 +865,7 @@ public:
         /// <returns>bool</returns>
         friend bool operator==(AltDec self, AltDec Value)
         {
+            self.ConvertToNumRep(); Value.ConvertToNumRep();
             return (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf);
         }
 
@@ -806,6 +877,7 @@ public:
         /// <returns>bool</returns>
         friend bool operator!=(AltDec self, AltDec Value)
         {
+            self.ConvertToNumRep(); Value.ConvertToNumRep();
             return (self.IntValue != Value.IntValue || self.DecimalHalf != Value.DecimalHalf);
         }
 
@@ -817,6 +889,7 @@ public:
         /// <returns>bool</returns>
         friend bool operator<(AltDec self, AltDec Value)
         {
+            self.ConvertToNumRep(); Value.ConvertToNumRep();
             if (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf) { return false; }
             else
             {
@@ -832,7 +905,7 @@ public:
                             return self.IntValue < Value.IntValue;
                         else
                         {
-                            if (self.IntValue == NegativeRep)
+                            if (self.IntValue == NegativeZero)
                             {//-0.5<0
                                 if (Value.IntValue >= 0)
                                     return true;
@@ -843,7 +916,7 @@ public:
                     }
                     else if (self.DecimalHalf == 0)
                     {
-                        if (Value.IntValue == NegativeRep)
+                        if (Value.IntValue == NegativeZero)
                         {
                             if (self.IntValue <= -1)
                                 return true;
@@ -854,9 +927,9 @@ public:
                             return Value.IntValue < 0 ? false : true;//5 < 5.5 vs -5 > -5.5
                     }
                     //Assuming both are non-whole numbers if reach here
-                    if (self.IntValue == NegativeRep)
+                    if (self.IntValue == NegativeZero)
                         self.IntValue = 0;
-                    if (Value.IntValue == NegativeRep)
+                    if (Value.IntValue == NegativeZero)
                         Value.IntValue = 0;
                     if (SelfIsNegative)
                     {//Larger number = farther down into negative
@@ -885,6 +958,7 @@ public:
         /// <returns>bool</returns>
         friend bool operator<=(AltDec self, AltDec Value)
         {
+            self.ConvertToNumRep(); Value.ConvertToNumRep();
             if (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf) { return true; }
             else
             {
@@ -900,7 +974,7 @@ public:
                             return self.IntValue <= Value.IntValue;
                         else
                         {
-                            if (self.IntValue == NegativeRep)
+                            if (self.IntValue == NegativeZero)
                             {//-0.5<0
                                 if (Value >= 0)
                                     return true;
@@ -911,7 +985,7 @@ public:
                     }
                     else if (self.DecimalHalf == 0)
                     {
-                        if (Value.IntValue == NegativeRep && self.IntValue <= 1)
+                        if (Value.IntValue == NegativeZero && self.IntValue <= 1)
                         {//-1<-0.5
                             if (self.IntValue <= -1)
                                 return true;
@@ -922,9 +996,9 @@ public:
                             return Value.IntValue < 0 ? false : true;//5 <= 5.5 vs -5 >= -5.5
                     }
                     //Assuming both are non-whole numbers if reach here
-                    if (self.IntValue == NegativeRep)
+                    if (self.IntValue == NegativeZero)
                         self.IntValue = 0;
-                    if (Value.IntValue == NegativeRep)
+                    if (Value.IntValue == NegativeZero)
                         Value.IntValue = 0;
                     if (SelfIsNegative)//Both are either positive or negative
                     {//Larger number = farther down into negative
@@ -953,6 +1027,7 @@ public:
         /// <returns>bool</returns>
         friend bool operator>(AltDec self, AltDec Value)
         {
+            self.ConvertToNumRep(); Value.ConvertToNumRep();
             if (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf) { return false; }
             else
             {
@@ -967,7 +1042,7 @@ public:
                         return self.IntValue > Value.IntValue;
                     else
                     {
-                        if (self.IntValue == NegativeRep)
+                        if (self.IntValue == NegativeZero)
                         {//-0.5>-1
                             if (Value <= -1)
                                 return true;
@@ -978,7 +1053,7 @@ public:
                 }
                 else if (self.DecimalHalf == 0)
                 {
-                    if (Value.IntValue == NegativeRep)
+                    if (Value.IntValue == NegativeZero)
                     {
                         if (self.IntValue >= 0)
                             return true;
@@ -989,9 +1064,9 @@ public:
                         return Value.IntValue < 0 ? true : false;//5 < 5.5 vs -5 > -5.5
                 }
                 //Assuming both are non-whole numbers if reach here
-                if (self.IntValue == NegativeRep)
+                if (self.IntValue == NegativeZero)
                     self.IntValue = 0;
-                if (Value.IntValue == NegativeRep)
+                if (Value.IntValue == NegativeZero)
                     Value.IntValue = 0;
                 if (SelfIsNegative)//Both are either positive or negative
                 {//Larger number = farther down into negative
@@ -1019,6 +1094,7 @@ public:
         /// <returns>bool</returns>
         friend bool operator>=(AltDec self, AltDec Value)
         {
+            self.ConvertToNumRep(); Value.ConvertToNumRep();
             if (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf) { return true; }
             else
             {
@@ -1032,7 +1108,7 @@ public:
                         return self.IntValue >= Value.IntValue;
                     else
                     {
-                        if (self.IntValue == NegativeRep)
+                        if (self.IntValue == NegativeZero)
                         {
                             if (Value <= -1)
                                 return true;
@@ -1045,7 +1121,7 @@ public:
                 }
                 else if (self.DecimalHalf == 0)//return self.IntValue > Value;
                 {
-                    if (Value.IntValue == NegativeRep)
+                    if (Value.IntValue == NegativeZero)
                     {//0>-0.5
                         if (self.IntValue >= 0)
                             return true;
@@ -1056,9 +1132,9 @@ public:
                         return Value.IntValue < 0 ? true : false;//5 <= 5.5 vs -5 >= -5.5
                 }
                 //Assuming both are non-whole numbers if reach here
-                if (self.IntValue == NegativeRep)
+                if (self.IntValue == NegativeZero)
                     self.IntValue = 0;
-                if (Value.IntValue == NegativeRep)
+                if (Value.IntValue == NegativeZero)
                     Value.IntValue = 0;
                 if (SelfIsNegative)//Both are either positive or negative
                 {//Larger number = farther down into negative
@@ -1077,10 +1153,88 @@ public:
             }
             return false;
         }
-
     #pragma endregion Comparison Operators
+
     #pragma region AltDec-To-AltDec Operators
     public:
+        /// <summary>
+        /// Basic Addition Operation Between AltDecs
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        void BasicAddOp(AltDec& Value)
+        {
+            if (Value.DecimalHalf == 0)
+            {
+                if (Value.IntValue == 0)//(Value == Zero)
+                    return;
+                if (DecimalHalf == 0)
+                {
+                    IntValue += Value.IntValue;
+                }
+                else
+                {
+                    bool WasNegative = IntValue < 0;
+                    if (WasNegative)
+                        IntValue = IntValue == AltDec::NegativeZero ? -1 : --IntValue;
+                    IntValue += Value.IntValue;
+                    if (IntValue == -1)
+                        IntValue = DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+                    else if (IntValue < 0)
+                        ++IntValue;
+                    //If flips to other side of negative, invert the decimals
+                    if ((WasNegative && IntValue >= 0) || (WasNegative == 0 && IntValue < 0))
+                        DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
+                }
+            }
+            else
+            {
+                bool WasNegative = IntValue < 0;
+                //Deal with Int section first
+                if (WasNegative)
+                    IntValue = IntValue == AltDec::NegativeZero ? -1 : --IntValue;
+                if (Value.IntValue != 0 && Value.IntValue != AltDec::NegativeZero)
+                    IntValue += Value.IntValue;
+                //Now deal with the decimal section
+                if (Value.IntValue < 0)
+                {
+                    if (WasNegative)
+                    {
+                        DecimalHalf += Value.DecimalHalf;
+                        if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; ++IntValue; }
+                        else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; --IntValue; }
+                    }
+                    else
+                    {
+                        DecimalHalf -= Value.DecimalHalf;
+                        if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; --IntValue; }
+                        else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; ++IntValue; }
+                    }
+                }
+                else
+                {
+                    if (WasNegative)
+                    {
+                        DecimalHalf -= Value.DecimalHalf;
+                        if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; ++IntValue; }
+                        else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; --IntValue; }
+                    }
+                    else
+                    {
+                        DecimalHalf += Value.DecimalHalf;
+                        if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; --IntValue; }
+                        else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; ++IntValue; }
+                    }
+                }
+                if (IntValue == -1)
+                    IntValue = DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+                else if (IntValue < 0)
+                    ++IntValue;
+                //If flips to other side of negative, invert the decimals
+                if ((WasNegative && IntValue >= 0) || (WasNegative == 0 && IntValue < 0))
+                    DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
+            }
+        }
+    
         /// <summary>
         /// Addition Operation Between AltDecs
         /// </summary>
@@ -1089,77 +1243,134 @@ public:
         /// <returns>AltDec</returns>
         static AltDec& AddOp(AltDec& self, AltDec& Value)
         {
+            if(self.ExtraRep==Value.ExtraRep)
+            {
+                if(self.ExtraRep==0||ExtraRep==NegativeZero)
+                {
+#if AltDec_EnableMixedFractional
+                    if(self.DecimalHalf<0)//MixedFractional
+                    {
+                    
+                    }
+                    else
+                    {
+#endif
+                        self.BasicAddOp(Value);
+#if AltDec_EnableMixedFractional
+                    }
+#endif
+                }
+    #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+                else if(self.ExtraRep==RevMaxInt)
+                {
+                }
+                else if(self.ExtraRep>0)
+    #else
+                else//(Value/ExtraRep) Representation
+    #endif
+                {
+                
+                }
+    #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+                else
+                {
+                
+                }
+    #endif
+            }
+            else
+            {
+                if(self.ExtraRep==0)
+                {
+                
+                }
+                else//Catch-all for other representation combinations
+                {
+                    AltDec ValueCopy = Value;
+                    Value.ConvertToNumRep();
+                    self.BasicAddOp(ValueCopy);
+                }
+            }
+            return self;
+        }
+
+        /// <summary>
+        /// Basic Subtraction Operation Between AltDecs
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        void BasicSubOp(AltDec& Value)
+        {
             if (Value.DecimalHalf == 0)
             {
                 if (Value.IntValue == 0)//(Value == Zero)
-                    return self;
-                if (self.DecimalHalf == 0)
+                    return;
+                if (DecimalHalf == 0)
                 {
-                    self.IntValue += Value.IntValue;
+                    IntValue -= Value.IntValue;
                 }
                 else
                 {
-                    bool WasNegative = self.IntValue < 0;
+                    bool WasNegative = IntValue < 0;
                     if (WasNegative)
-                        self.IntValue = self.IntValue == AltDec::NegativeRep ? -1 : --self.IntValue;
-                    self.IntValue += Value.IntValue;
-                    if (self.IntValue == -1)
-                        self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
-                    else if (self.IntValue < 0)
-                        ++self.IntValue;
+                        IntValue = IntValue == AltDec::NegativeZero ? -1 : --IntValue;
+                    if (Value.IntValue != 0)
+                        IntValue -= Value.IntValue;
+                    if(IntValue==-1)
+                        IntValue = DecimalHalf == 0?0:AltDec::NegativeZero;
+                    else if(IntValue<0)
+                        ++IntValue;
                     //If flips to other side of negative, invert the decimals
-                    if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
-                        self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
+                    if ((WasNegative && IntValue >= 0)||(WasNegative == 0 && IntValue < 0))
+                        DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
                 }
             }
             else
             {
-                bool WasNegative = self.IntValue < 0;
+                bool WasNegative = IntValue < 0;
                 //Deal with Int section first
                 if (WasNegative)
-                    self.IntValue = self.IntValue == AltDec::NegativeRep ? -1 : --self.IntValue;
-                if (Value.IntValue != 0 && Value.IntValue != AltDec::NegativeRep)
-                    self.IntValue += Value.IntValue;
+                    IntValue = IntValue == AltDec::NegativeZero ? -1 : --IntValue;
+                if(Value.IntValue!=0&&Value.IntValue!=AltDec::NegativeZero)
+                    IntValue -= Value.IntValue;
                 //Now deal with the decimal section
                 if (Value.IntValue < 0)
                 {
-                    if (WasNegative)
+                    if (WasNegative)//-4.0 - -0.5 = -3.5
                     {
-                        self.DecimalHalf += Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += AltDec::DecimalOverflow; ++self.IntValue; }
-                        else if (self.DecimalHalf >= AltDec::DecimalOverflow) { self.DecimalHalf -= AltDec::DecimalOverflow; --self.IntValue; }
+                        DecimalHalf -= Value.DecimalHalf;
+                        if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; ++IntValue; }
+                        else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; --IntValue; }
                     }
-                    else
+                    else//4.3 -  - 1.8
                     {
-                        self.DecimalHalf -= Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += AltDec::DecimalOverflow; --self.IntValue; }
-                        else if (self.DecimalHalf >= AltDec::DecimalOverflow) { self.DecimalHalf -= AltDec::DecimalOverflow; ++self.IntValue; }
+                        DecimalHalf += Value.DecimalHalf;
+                        if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; --IntValue; }
+                        else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; ++IntValue; }
                     }
                 }
                 else
                 {
-                    if (WasNegative)
+                    if (WasNegative)//-4.5 - 5.6
                     {
-                        self.DecimalHalf -= Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += AltDec::DecimalOverflow; ++self.IntValue; }
-                        else if (self.DecimalHalf >= AltDec::DecimalOverflow) { self.DecimalHalf -= AltDec::DecimalOverflow; --self.IntValue; }
+                        DecimalHalf += Value.DecimalHalf;
+                        if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; ++IntValue; }
+                        else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; --IntValue; }
                     }
-                    else
+                    else//0.995 - 1 = 
                     {
-                        self.DecimalHalf += Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += AltDec::DecimalOverflow; --self.IntValue; }
-                        else if (self.DecimalHalf >= AltDec::DecimalOverflow) { self.DecimalHalf -= AltDec::DecimalOverflow; ++self.IntValue; }
+                        DecimalHalf -= Value.DecimalHalf;
+                        if (DecimalHalf < 0) { DecimalHalf += AltDec::DecimalOverflow; --IntValue; }
+                        else if (DecimalHalf >= AltDec::DecimalOverflow) { DecimalHalf -= AltDec::DecimalOverflow; ++IntValue; }
                     }
                 }
-                if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
-                else if (self.IntValue < 0)
-                    ++self.IntValue;
+                if (IntValue == -1)
+                    IntValue = DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+                else if (IntValue < 0)
+                    ++IntValue;
                 //If flips to other side of negative, invert the decimals
-                if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
-                    self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
+                if ((WasNegative && IntValue >= 0) || (WasNegative == 0 && IntValue < 0))
+                    DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
             }
-            return self;
         }
 
         /// <summary>
@@ -1170,78 +1381,209 @@ public:
         /// <returns>AltDec&</returns>
         static AltDec& SubOp(AltDec& self, AltDec& Value)
         {
-            if (Value.DecimalHalf == 0)
+            if(self.ExtraRep==Value.ExtraRep)
             {
-                if (Value.IntValue == 0)//(Value == Zero)
-                    return self;
-                if (self.DecimalHalf == 0)
+                if(self.ExtraRep==0||self.ExtraRep==NegativeZero)
                 {
-                    self.IntValue -= Value.IntValue;
+#if AltDec_EnableMixedFractional
+                    if(self.DecimalHalf<0)//MixedFractional
+                    {
+                    
+                    }
+                    else
+                    {
+#endif
+                        self.BasicSubOp(Value);
+#if AltDec_EnableMixedFractional
+                    }
+#endif
+                }
+    #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+                else if(self.ExtraRep==RevMaxInt)
+                {
+                }
+                else if(self.ExtraRep>0)
+    #else
+                else//(Value/ExtraRep) Representation
+    #endif
+                {
+                
+                }
+    #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+                else
+                {
+                
+                }
+    #endif
+                if(self.ExtraRep!=0&&self.IntValue==0&&self.DecimalHalf==0)
+                    self.ExtraRep = 0;
+            }
+            else
+            {
+                if(self.ExtraRep==0)
+                {
+                
+                }
+                else//Catch-all for other representation combinations
+                {
+                    AltDec ValueCopy = Value;
+                    Value.ConvertToNumRep();
+                    self.BasicAddOp(ValueCopy);
+                }
+            }
+            return self;
+        }
+
+        void PartialMultOp(AltDec& Value)
+        {
+            if (Value.IntValue < 0)
+            {
+                if (Value.IntValue == AltDec::NegativeZero) { Value.IntValue = 0; }
+                else { Value.IntValue *= -1; }
+                SwapNegativeStatus();
+            }
+            if (DecimalHalf == 0)
+            {
+                if (IntValue == 1)
+                {
+                    IntValue = Value.IntValue; DecimalHalf = Value.DecimalHalf;
+                    ExtraRep = Value.ExtraRep; return;
+                }
+                else if (Value.DecimalHalf == 0)
+                {
+                    IntValue *= Value.IntValue; return;
                 }
                 else
                 {
-                    bool WasNegative = self.IntValue < 0;
-                    if (WasNegative)
-                        self.IntValue = self.IntValue == AltDec::NegativeRep ? -1 : --self.IntValue;
-                    if (Value.IntValue != 0)
-                        self.IntValue -= Value.IntValue;
-                    if(self.IntValue==-1)
-                        self.IntValue = self.DecimalHalf == 0?0:AltDec::NegativeRep;
-                    else if(self.IntValue<0)
-                        ++self.IntValue;
-                    //If flips to other side of negative, invert the decimals
-                    if ((WasNegative && self.IntValue >= 0)||(WasNegative == 0 && self.IntValue < 0))
-                        self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
+                    Value *= IntValue;
+                    IntValue = Value.IntValue; DecimalHalf = Value.DecimalHalf;
+                    ExtraRep = Value.ExtraRep;
+                }
+            }
+            else if (IntValue == 0)
+            {
+                __int64 SRep = (__int64)DecimalHalf;
+                SRep *= Value.DecimalHalf;
+                SRep /= AltDec::DecimalOverflowX;
+                if (Value.IntValue == 0)
+                {
+                    DecimalHalf = (signed int)SRep;
+                }
+                else
+                {
+                    SRep += (__int64)DecimalHalf * Value.IntValue;
+                    if (SRep >= AltDec::DecimalOverflowX)
+                    {
+                        __int64 OverflowVal = SRep / AltDec::DecimalOverflowX;
+                        SRep -= OverflowVal * AltDec::DecimalOverflowX;
+                        IntValue = OverflowVal;
+                        DecimalHalf = (signed int)SRep;
+                    }
+                    else
+                    {
+                        DecimalHalf = (signed int)SRep;
+                    }
+                }
+            }
+            else if (IntValue == AltDec::NegativeZero)
+            {
+                __int64 SRep = (__int64)DecimalHalf;
+                SRep *= Value.DecimalHalf;
+                SRep /= AltDec::DecimalOverflowX;
+                if (Value.IntValue == 0)
+                {
+                    DecimalHalf = (signed int)SRep;
+                }
+                else
+                {
+                    SRep += (__int64)DecimalHalf * Value.IntValue;
+                    if (SRep >= AltDec::DecimalOverflowX)
+                    {
+                        __int64 OverflowVal = SRep / AltDec::DecimalOverflowX;
+                        SRep -= OverflowVal * AltDec::DecimalOverflowX;
+                        IntValue = -OverflowVal;
+                        DecimalHalf = (signed int)SRep;
+                    }
+                    else
+                    {
+                        DecimalHalf = (signed int)SRep;
+                    }
                 }
             }
             else
             {
-                bool WasNegative = self.IntValue < 0;
-                //Deal with Int section first
-                if (WasNegative)
-                    self.IntValue = self.IntValue == AltDec::NegativeRep ? -1 : --self.IntValue;
-                if(Value.IntValue!=0&&Value.IntValue!=AltDec::NegativeRep)
-                    self.IntValue -= Value.IntValue;
-                //Now deal with the decimal section
-                if (Value.IntValue < 0)
+                bool SelfIsNegative = IntValue < 0;
+                if (SelfIsNegative)
                 {
-                    if (WasNegative)//-4.0 - -0.5 = -3.5
+                    IntValue *= -1;
+                }
+                if (Value.IntValue == 0)
+                {
+                    __int64 SRep = AltDec::DecimalOverflowX * IntValue + DecimalHalf;
+                    SRep *= Value.DecimalHalf;
+                    SRep /= AltDec::DecimalOverflowX;
+                    if (SRep >= AltDec::DecimalOverflowX)
                     {
-                        self.DecimalHalf -= Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += AltDec::DecimalOverflow; ++self.IntValue; }
-                        else if (self.DecimalHalf >= AltDec::DecimalOverflow) { self.DecimalHalf -= AltDec::DecimalOverflow; --self.IntValue; }
+                        __int64 OverflowVal = SRep / AltDec::DecimalOverflowX;
+                        SRep -= OverflowVal * AltDec::DecimalOverflowX;
+                        IntValue = (signed int)(SelfIsNegative ? -OverflowVal : OverflowVal);
+                        DecimalHalf = (signed int)SRep;
                     }
-                    else//4.3 -  - 1.8
+                    else
                     {
-                        self.DecimalHalf += Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += AltDec::DecimalOverflow; --self.IntValue; }
-                        else if (self.DecimalHalf >= AltDec::DecimalOverflow) { self.DecimalHalf -= AltDec::DecimalOverflow; ++self.IntValue; }
+                        IntValue = SelfIsNegative ? AltDec::NegativeZero : 0;
+                        DecimalHalf = (signed int)SRep;
+                    }
+                }
+                else if (Value.DecimalHalf == 0)//Y is integer
+                {
+                    __int64 SRep = AltDec::DecimalOverflowX * IntValue + DecimalHalf;
+                    SRep *= Value.IntValue;
+                    if (SRep >= AltDec::DecimalOverflowX)
+                    {
+                        __int64 OverflowVal = SRep / AltDec::DecimalOverflowX;
+                        SRep -= OverflowVal * AltDec::DecimalOverflowX;
+                        IntValue = (signed int)OverflowVal;
+                        DecimalHalf = (signed int)SRep;
+                    }
+                    else
+                    {
+                        IntValue = 0;
+                        DecimalHalf = (signed int)SRep;
                     }
                 }
                 else
                 {
-                    if (WasNegative)//-4.5 - 5.6
-                    {
-                        self.DecimalHalf += Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += AltDec::DecimalOverflow; ++self.IntValue; }
-                        else if (self.DecimalHalf >= AltDec::DecimalOverflow) { self.DecimalHalf -= AltDec::DecimalOverflow; --self.IntValue; }
-                    }
-                    else//0.995 - 1 = 
-                    {
-                        self.DecimalHalf -= Value.DecimalHalf;
-                        if (self.DecimalHalf < 0) { self.DecimalHalf += AltDec::DecimalOverflow; --self.IntValue; }
-                        else if (self.DecimalHalf >= AltDec::DecimalOverflow) { self.DecimalHalf -= AltDec::DecimalOverflow; ++self.IntValue; }
-                    }
+                    //X.Y * Z.V == ((X * Z) + (X * .V) + (.Y * Z) + (.Y * .V))
+                    __int64 SRep = IntValue == 0 ? DecimalHalf : AltDec::DecimalOverflowX * IntValue + DecimalHalf;
+                    SRep *= Value.IntValue;//SRep holds __int64 version of X.Y * Z
+                    //X.Y *.V
+                    __int64 Temp03 = (__int64)IntValue * Value.DecimalHalf;//Temp03 holds __int64 version of X *.V
+                    __int64 Temp04 = (__int64)DecimalHalf * (__int64)Value.DecimalHalf;
+                    Temp04 /= AltDec::DecimalOverflow;
+                    //Temp04 holds __int64 version of .Y * .V
+                    __int64 IntegerRep = SRep + Temp03 + Temp04;
+                    __int64 IntHalf = IntegerRep / AltDec::DecimalOverflow;
+                    IntegerRep -= IntHalf * (__int64)AltDec::DecimalOverflow;
+                    if (IntHalf == 0) { IntValue = (signed int)SelfIsNegative ? AltDec::NegativeZero : 0; }
+                    else { IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
+                    DecimalHalf = (signed int)IntegerRep;
                 }
-                if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
-                else if (self.IntValue < 0)
-                    ++self.IntValue;
-                //If flips to other side of negative, invert the decimals
-                if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
-                    self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
             }
-            return self;
+        }
+
+        /// <summary>
+        /// Basic Multiplication Operation Between AltDecs
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>AltDec&</returns>
+        void BasicMultOp(AltDec& Value)
+        {
+            if (Value == AltDec::Zero) { SetAsZero(); return; }
+            if ((IntValue==0&&DecimalHalf==0) || Value == AltDec::One)
+                return;
+            PartialMultOp(Value);
+            if (IntValue==0&&DecimalHalf==0) { DecimalHalf = 1; }//Prevent Dividing into nothing
         }
 
         /// <summary>
@@ -1252,141 +1594,182 @@ public:
         /// <returns>AltDec&</returns>
         static AltDec& MultOp(AltDec& self, AltDec& Value)
         {
-            if (Value == AltDec::Zero) { self.IntValue = 0; self.DecimalHalf = 0; return self; }
+            if (Value == AltDec::Zero) { self.SetAsZero(); return self; }
             if (self == AltDec::Zero || Value == AltDec::One)
                 return self;
-            if (Value.IntValue < 0)
+            if(self.ExtraRep==Value.ExtraRep)
             {
-                if (Value.IntValue == AltDec::NegativeRep) { Value.IntValue = 0; }
-                else { Value.IntValue *= -1; }
-                self.SwapNegativeStatus();
-            }
-            if (self.DecimalHalf == 0)
-            {
-                if (self.IntValue == 1) { self = Value; return self; }
-                else if (Value.DecimalHalf == 0)
+                if(self.ExtraRep==0)
                 {
-                    self.IntValue *= Value.IntValue; return self;
+#if AltDec_EnableMixedFractional
+                    if(self.DecimalHalf<0)//MixedFractional
+                    {
+                    
+                    }
+                    else
+                    {
+#endif
+                        self.PartialMultOp(Value);
+#if AltDec_EnableMixedFractional
+                    }
+#endif
                 }
+                else if(self.ExtraRep==NegativeZero)//Value*Pi Representation
+                {
+                
+                }
+    #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+                else if(self.ExtraRep==RevMaxInt)
+                {
+                }
+                else if(self.ExtraRep>0)
+    #else
+                else//(Value/ExtraRep) Representation
+    #endif
+                {
+                
+                }
+    #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
                 else
                 {
-                    Value *= self.IntValue;
-                    self = Value;
+                
                 }
+    #endif
             }
-            else if (self.IntValue == 0)
+            if(self.ExtraRep!=0&&self.IntValue==0&&self.DecimalHalf==0)
+                self.ExtraRep = 0;
+            if (self == AltDec::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
+            return self;
+        }
+
+        void PartialDivOp(AltDec& Value)
+        {
+            if (DecimalHalf == 0)
             {
-                __int64 SRep = (__int64)self.DecimalHalf;
-                SRep *= Value.DecimalHalf;
-                SRep /= AltDec::DecimalOverflowX;
-                if (Value.IntValue == 0)
+                bool SelfIsNegative = IntValue < 0;
+                if (SelfIsNegative)
                 {
-                    self.DecimalHalf = (signed int)SRep;
+                    IntValue *= -1;
                 }
-                else
+                if (Value.DecimalHalf == 0)//Both are integers
                 {
-                    SRep += (__int64)self.DecimalHalf * Value.IntValue;
+                    if (IntValue < 0) { IntValue *= -1; }
+                    __int64 SRep = IntValue * AltDec::DecimalOverflowX;
+                    __int64 YRep = Value.IntValue;
+                    SRep /= Value.IntValue;
                     if (SRep >= AltDec::DecimalOverflowX)
                     {
                         __int64 OverflowVal = SRep / AltDec::DecimalOverflowX;
                         SRep -= OverflowVal * AltDec::DecimalOverflowX;
-                        self.IntValue = OverflowVal;
-                        self.DecimalHalf = (signed int)SRep;
+                        IntValue = IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
                     }
                     else
                     {
-                        self.DecimalHalf = (signed int)SRep;
+                        IntValue = SelfIsNegative ? AltDec::NegativeZero : 0;
                     }
+                    DecimalHalf = (signed int)SRep;
                 }
-            }
-            else if (self.IntValue == AltDec::NegativeRep)
-            {
-                __int64 SRep = (__int64)self.DecimalHalf;
-                SRep *= Value.DecimalHalf;
-                SRep /= AltDec::DecimalOverflowX;
-                if (Value.IntValue == 0)
+                else//Only self is integer while Value has both sides
                 {
-                    self.DecimalHalf = (signed int)SRep;
-                }
-                else
-                {
-                    SRep += (__int64)self.DecimalHalf * Value.IntValue;
+                    boost::multiprecision::uint128_t SRep02 = AltDec::DecimalOverflowX * AltDec::DecimalOverflowX;
+                    SRep02 *= IntValue;
+                    __int64 VRep = AltDec::DecimalOverflowX * Value.IntValue + Value.DecimalHalf;
+                    SRep02 /= VRep;
+                    __int64 SRep = (__int64)SRep02;
                     if (SRep >= AltDec::DecimalOverflowX)
                     {
                         __int64 OverflowVal = SRep / AltDec::DecimalOverflowX;
                         SRep -= OverflowVal * AltDec::DecimalOverflowX;
-                        self.IntValue = -OverflowVal;
-                        self.DecimalHalf = (signed int)SRep;
+                        IntValue = (signed int)SelfIsNegative ? -OverflowVal : OverflowVal;
                     }
                     else
                     {
-                        self.DecimalHalf = (signed int)SRep;
+                        IntValue = 0;
                     }
+                    DecimalHalf = (signed int)SRep;
                 }
+            }
+            else if (IntValue == 0)
+            {
+                __int64 SRep = (__int64)DecimalHalf * AltDec::DecimalOverflowX;
+                SRep /= Value.IntValue == 0 ? Value.DecimalHalf : AltDec::DecimalOverflowX * Value.IntValue + (__int64)Value.DecimalHalf;
+                int IntHalf = SRep / AltDec::DecimalOverflowX;
+                SRep -= IntHalf * AltDec::DecimalOverflowX;
+                IntValue = IntHalf;
+                DecimalHalf = (signed int)SRep;
+            }
+            else if (IntValue == AltDec::NegativeZero)
+            {
+                __int64 SRep = (__int64)DecimalHalf * AltDec::DecimalOverflowX;
+                SRep /= Value.IntValue == 0 ? Value.DecimalHalf : AltDec::DecimalOverflowX * Value.IntValue + (__int64)Value.DecimalHalf;
+                int IntHalf = SRep / AltDec::DecimalOverflowX;
+                SRep -= IntHalf * AltDec::DecimalOverflowX;
+                IntValue = IntHalf == 0 ? AltDec::NegativeZero : -IntHalf;
+                DecimalHalf = (signed int)SRep;
             }
             else
             {
-                bool SelfIsNegative = self.IntValue < 0;
+                bool SelfIsNegative = IntValue < 0;
                 if (SelfIsNegative)
                 {
-                    self.IntValue *= -1;
+                    IntValue *= -1;
                 }
-                if (Value.IntValue == 0)
+                if (Value.DecimalHalf == 0)//Y is integer but self is not
                 {
-                    __int64 SRep = AltDec::DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                    SRep *= Value.DecimalHalf;
-                    SRep /= AltDec::DecimalOverflowX;
+                    __int64 SRep = AltDec::DecimalOverflowX * IntValue + DecimalHalf;
+                    SRep /= Value.IntValue;
                     if (SRep >= AltDec::DecimalOverflowX)
                     {
                         __int64 OverflowVal = SRep / AltDec::DecimalOverflowX;
                         SRep -= OverflowVal * AltDec::DecimalOverflowX;
-                        self.IntValue = (signed int)(SelfIsNegative ? -OverflowVal : OverflowVal);
-                        self.DecimalHalf = (signed int)SRep;
+                        IntValue = (signed int)SelfIsNegative ? -OverflowVal : OverflowVal;
                     }
                     else
                     {
-                        self.IntValue = SelfIsNegative ? AltDec::NegativeRep : 0;
-                        self.DecimalHalf = (signed int)SRep;
+                        IntValue = 0;
                     }
-                }
-                else if (Value.DecimalHalf == 0)//Y is integer
-                {
-                    __int64 SRep = AltDec::DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                    SRep *= Value.IntValue;
-                    if (SRep >= AltDec::DecimalOverflowX)
-                    {
-                        __int64 OverflowVal = SRep / AltDec::DecimalOverflowX;
-                        SRep -= OverflowVal * AltDec::DecimalOverflowX;
-                        self.IntValue = (signed int)OverflowVal;
-                        self.DecimalHalf = (signed int)SRep;
-                    }
-                    else
-                    {
-                        self.IntValue = 0;
-                        self.DecimalHalf = (signed int)SRep;
-                    }
-                    return self;
+                    DecimalHalf = (signed int)SRep;
                 }
                 else
-                {
-                    //X.Y * Z.V == ((X * Z) + (X * .V) + (.Y * Z) + (.Y * .V))
-                    __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : AltDec::DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                    SRep *= Value.IntValue;//SRep holds __int64 version of X.Y * Z
-                    //X.Y *.V
-                    __int64 Temp03 = (__int64)self.IntValue * Value.DecimalHalf;//Temp03 holds __int64 version of X *.V
-                    __int64 Temp04 = (__int64)self.DecimalHalf * (__int64)Value.DecimalHalf;
-                    Temp04 /= AltDec::DecimalOverflow;
-                    //Temp04 holds __int64 version of .Y * .V
-                    __int64 IntegerRep = SRep + Temp03 + Temp04;
-                    __int64 IntHalf = IntegerRep / AltDec::DecimalOverflow;
-                    IntegerRep -= IntHalf * (__int64)AltDec::DecimalOverflow;
-                    if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? AltDec::NegativeRep : 0; }
-                    else { self.IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
-                    self.DecimalHalf = (signed int)IntegerRep;
+                {//Splitting Integer Half and Decimal Half Division
+                    __int64 SRep_DecHalf = (__int64)DecimalHalf * AltDec::DecimalOverflowX;
+                    SRep_DecHalf /= Value.IntValue == 0 ? Value.DecimalHalf : AltDec::DecimalOverflowX * Value.IntValue + (__int64)Value.DecimalHalf;
+                    int IntHalf = SRep_DecHalf / AltDec::DecimalOverflowX;
+                    SRep_DecHalf -= IntHalf * AltDec::DecimalOverflowX;
+
+                    boost::multiprecision::uint128_t SRep02 = AltDec::DecimalOverflowX * AltDec::DecimalOverflowX;
+                    //std::cout << "Multi-precision as String:" << SRep02 << std::endl;
+                    SRep02 *= IntValue;
+                    __int64 VRep = AltDec::DecimalOverflowX * Value.IntValue + Value.DecimalHalf;
+                    SRep02 /= VRep;
+                    __int64 SRep = (__int64)SRep02 + SRep_DecHalf;
+                    if (SRep >= AltDec::DecimalOverflowX)
+                    {
+                        __int64 OverflowVal = SRep / AltDec::DecimalOverflowX;
+                        SRep -= OverflowVal * AltDec::DecimalOverflowX;
+                        IntHalf += OverflowVal;
+                    }
+                    if (IntHalf == 0) { IntValue = (signed int)SelfIsNegative ? AltDec::NegativeZero : 0; }
+                    else { IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
+                    DecimalHalf = (signed int)SRep;
                 }
             }
-            if (self == AltDec::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
-            return self;
+        }
+
+        void BasicDivOp(AltDec& Value)
+        {
+            if (Value == AltDec::Zero)
+                throw "Target value can not be divided by zero";
+            if (IntValue==0&&DecimalHalf==0)
+                return;
+            if (Value.IntValue < 0)
+            {
+                if (Value.IntValue == AltDec::NegativeZero) { Value.IntValue = 0; }
+                else { Value.IntValue *= -1; }
+                SwapNegativeStatus();
+            }
+            PartialDivOp(Value);
+            if (IntValue==0&&DecimalHalf==0) { DecimalHalf = 1; }//Prevent Dividing into nothing
         }
 
         /// <summary>
@@ -1403,130 +1786,55 @@ public:
                 return self;
             if (Value.IntValue < 0)
             {
-                if (Value.IntValue == AltDec::NegativeRep) { Value.IntValue = 0; }
+                if (Value.IntValue == AltDec::NegativeZero) { Value.IntValue = 0; }
                 else { Value.IntValue *= -1; }
                 self.SwapNegativeStatus();
             }
-            if (self.DecimalHalf == 0)
+            if(self.ExtraRep==Value.ExtraRep)
             {
-                bool SelfIsNegative = self.IntValue < 0;
-                if (SelfIsNegative)
+                if(self.ExtraRep==0)
                 {
-                    self.IntValue *= -1;
-                }
-                if (Value.DecimalHalf == 0)//Both are integers
-                {
-                    if (self.IntValue < 0) { self.IntValue *= -1; }
-                    __int64 SRep = self.IntValue * AltDec::DecimalOverflowX;
-                    __int64 YRep = Value.IntValue;
-                    SRep /= Value.IntValue;
-                    if (SRep >= AltDec::DecimalOverflowX)
+#if AltDec_EnableMixedFractional
+                    if(self.DecimalHalf<0)//MixedFractional
                     {
-                        __int64 OverflowVal = SRep / AltDec::DecimalOverflowX;
-                        SRep -= OverflowVal * AltDec::DecimalOverflowX;
-                        self.IntValue = self.IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
+                    
                     }
                     else
                     {
-                        self.IntValue = SelfIsNegative ? AltDec::NegativeRep : 0;
+#endif
+                        self.PartialDivOp(Value);
+#if AltDec_EnableMixedFractional
                     }
-                    self.DecimalHalf = (signed int)SRep;
+#endif
                 }
-                else//Only self is integer while Value has both sides
+                else if(self.ExtraRep==NegativeZero)//Value*Pi Representation
                 {
-                    /* Testing calculation 2.0/2.5 = 0.8
-                    AltDec::DecimalOverflowX * self.IntValue = 2000000000
-                    (AltDec::DecimalOverflowX * Value.IntValue + Value.DecimalHalf) = 2500000000
-
-                    Converting to 2/(5/2) = 4/5
-                    4/5 = 800000000
-                    2000000000/(2500000000/AltDec::DecimalOverflowX)=800000000
-                    */
-                    boost::multiprecision::uint128_t SRep02 = AltDec::DecimalOverflowX * AltDec::DecimalOverflowX;
-                    SRep02 *= self.IntValue;
-                    __int64 VRep = AltDec::DecimalOverflowX * Value.IntValue + Value.DecimalHalf;
-                    SRep02 /= VRep;
-                    __int64 SRep = (__int64)SRep02;
-                    if (SRep >= AltDec::DecimalOverflowX)
-                    {
-                        __int64 OverflowVal = SRep / AltDec::DecimalOverflowX;
-                        SRep -= OverflowVal * AltDec::DecimalOverflowX;
-                        self.IntValue = (signed int)SelfIsNegative ? -OverflowVal : OverflowVal;
-                    }
-                    else
-                    {
-                        self.IntValue = 0;
-                    }
-                    self.DecimalHalf = (signed int)SRep;
+                
                 }
-            }
-            else if (self.IntValue == 0)
-            {
-                __int64 SRep = (__int64)self.DecimalHalf * AltDec::DecimalOverflowX;
-                SRep /= Value.IntValue == 0 ? Value.DecimalHalf : AltDec::DecimalOverflowX * Value.IntValue + (__int64)Value.DecimalHalf;
-                int IntHalf = SRep / AltDec::DecimalOverflowX;
-                SRep -= IntHalf * AltDec::DecimalOverflowX;
-                self.IntValue = IntHalf;
-                self.DecimalHalf = (signed int)SRep;
-            }
-            else if (self.IntValue == AltDec::NegativeRep)
-            {
-                __int64 SRep = (__int64)self.DecimalHalf * AltDec::DecimalOverflowX;
-                SRep /= Value.IntValue == 0 ? Value.DecimalHalf : AltDec::DecimalOverflowX * Value.IntValue + (__int64)Value.DecimalHalf;
-                int IntHalf = SRep / AltDec::DecimalOverflowX;
-                SRep -= IntHalf * AltDec::DecimalOverflowX;
-                self.IntValue = IntHalf == 0 ? AltDec::NegativeRep : -IntHalf;
-                self.DecimalHalf = (signed int)SRep;
-            }
-            else
-            {
-                bool SelfIsNegative = self.IntValue < 0;
-                if (SelfIsNegative)
+    #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+                else if(self.ExtraRep==RevMaxInt)
                 {
-                    self.IntValue *= -1;
                 }
-                if (Value.DecimalHalf == 0)//Y is integer but self is not
+                else if(self.ExtraRep>0)
+    #else
+                else//(Value/ExtraRep) Representation
+    #endif
                 {
-                    __int64 SRep = AltDec::DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                    SRep /= Value.IntValue;
-                    if (SRep >= AltDec::DecimalOverflowX)
-                    {
-                        __int64 OverflowVal = SRep / AltDec::DecimalOverflowX;
-                        SRep -= OverflowVal * AltDec::DecimalOverflowX;
-                        self.IntValue = (signed int)SelfIsNegative ? -OverflowVal : OverflowVal;
-                    }
-                    else
-                    {
-                        self.IntValue = 0;
-                    }
-                    self.DecimalHalf = (signed int)SRep;
+                
                 }
+    #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
                 else
-                {//Splitting Integer Half and Decimal Half Division
-                    __int64 SRep_DecHalf = (__int64)self.DecimalHalf * AltDec::DecimalOverflowX;
-                    SRep_DecHalf /= Value.IntValue == 0 ? Value.DecimalHalf : AltDec::DecimalOverflowX * Value.IntValue + (__int64)Value.DecimalHalf;
-                    int IntHalf = SRep_DecHalf / AltDec::DecimalOverflowX;
-                    SRep_DecHalf -= IntHalf * AltDec::DecimalOverflowX;
-
-                    boost::multiprecision::uint128_t SRep02 = AltDec::DecimalOverflowX * AltDec::DecimalOverflowX;
-                    //std::cout << "Multi-precision as String:" << SRep02 << std::endl;
-                    SRep02 *= self.IntValue;
-                    __int64 VRep = AltDec::DecimalOverflowX * Value.IntValue + Value.DecimalHalf;
-                    SRep02 /= VRep;
-                    __int64 SRep = (__int64)SRep02 + SRep_DecHalf;
-                    if (SRep >= AltDec::DecimalOverflowX)
-                    {
-                        __int64 OverflowVal = SRep / AltDec::DecimalOverflowX;
-                        SRep -= OverflowVal * AltDec::DecimalOverflowX;
-                        IntHalf += OverflowVal;
-                    }
-                    if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? AltDec::NegativeRep : 0; }
-                    else { self.IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
-                    self.DecimalHalf = (signed int)SRep;
+                {
+                
                 }
+    #endif
             }
             if (self == AltDec::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
             return self;
+        }
+
+        void PartialRemOp(AltDec& Value)
+        {
         }
 
         /// <summary>
@@ -1540,41 +1848,68 @@ public:
             bool SelfIsWholeN = self.DecimalHalf == 0;
             bool ValueIsWholeN = Value.DecimalHalf == 0;
             if (Value.IntValue == 0 && ValueIsWholeN) { self.SetAsZero(); return self; }//Return zero instead of N/A
-            if (SelfIsWholeN && ValueIsWholeN)//WholeNumbers
+            if(self.ExtraRep==Value.ExtraRep)
             {
-                self.IntValue %= Value.IntValue;
-            }
-            else if (ValueIsWholeN)
-            {
-                self %= Value.IntValue;
-            }
-            else
-            {
-                //bool ValueIsNegative = Value.IntValue < 0;
-                if (Value.IntValue < 0)
+                if(self.ExtraRep==0)
                 {
-                    self.IntValue *= -1;
-                    if (Value.IntValue == NegativeRep) { Value.IntValue = 0; }
+                    if (SelfIsWholeN && ValueIsWholeN)//WholeNumbers
+                    {
+                        self.IntValue %= Value.IntValue;
+                    }
+                    else if (ValueIsWholeN)
+                    {
+                        self %= Value.IntValue;
+                    }
+                    else
+                    {
+                        //bool ValueIsNegative = Value.IntValue < 0;
+                        if (Value.IntValue < 0)
+                        {
+                            self.IntValue *= -1;
+                            if (Value.IntValue == NegativeZero) { Value.IntValue = 0; }
+                        }
+                        bool SelfIsNegative = self.IntValue < 0;
+                        if (SelfIsNegative)
+                        {
+                            if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                            else { self.IntValue *= -1; }
+                        }
+                        __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
+                        __int64 SRep_DecHalf = SRep;
+                        __int64 VRep = DecimalOverflowX * Value.IntValue + Value.DecimalHalf;;
+                        SRep %= VRep;
+                        __int64 IntResult = SRep;
+                        //Int Half Calculated now get decimal digits that got truncated off
+                        SRep_DecHalf -= IntResult * VRep;
+                        //Gives enough buffer room that doesn't lose the decimal values
+                        SRep_DecHalf *= DecimalOverflowX;
+                        SRep_DecHalf %= VRep;
+                        if (IntResult == 0) { self.IntValue = (signed int)SelfIsNegative ? NegativeZero : 0; }
+                        else { self.IntValue = (signed int)SelfIsNegative ? IntResult * -1 : IntResult; }
+                        self.DecimalHalf = (signed int)SRep;
+                    }
                 }
-                bool SelfIsNegative = self.IntValue < 0;
-                if (SelfIsNegative)
+                else if(self.ExtraRep==NegativeZero)//Value*Pi Representation
                 {
-                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
-                    else { self.IntValue *= -1; }
+                
                 }
-                __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                __int64 SRep_DecHalf = SRep;
-                __int64 VRep = DecimalOverflowX * Value.IntValue + Value.DecimalHalf;;
-                SRep %= VRep;
-                __int64 IntResult = SRep;
-                //Int Half Calculated now get decimal digits that got truncated off
-                SRep_DecHalf -= IntResult * VRep;
-                //Gives enough buffer room that doesn't lose the decimal values
-                SRep_DecHalf *= DecimalOverflowX;
-                SRep_DecHalf %= VRep;
-                if (IntResult == 0) { self.IntValue = (signed int)SelfIsNegative ? NegativeRep : 0; }
-                else { self.IntValue = (signed int)SelfIsNegative ? IntResult * -1 : IntResult; }
-                self.DecimalHalf = (signed int)SRep;
+    #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+                else if(self.ExtraRep==RevMaxInt)
+                {
+                }
+                else if(self.ExtraRep>0)
+    #else
+                else//(Value/ExtraRep) Representation
+    #endif
+                {
+                
+                }
+    #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+                else
+                {
+                
+                }
+    #endif
             }
             return self;
         }
@@ -1912,35 +2247,7 @@ public:
         }
 
     #pragma endregion AltDec-To-AltDec Operators
-    #pragma region Other Comparison Operators
-        //friend bool operator==(AltDec self, float Value) { return self == (AltDec)Value; }
-        //friend bool operator!=(AltDec self, float Value) { return self != (AltDec)Value; }
-        //friend bool operator<(AltDec self, float Value) { return self < (AltDec)Value; }
-        //friend bool operator<=(AltDec self, float Value) { return self <= (AltDec)Value; }
-        //friend bool operator>(AltDec self, float Value) { return self > (AltDec)Value; }
-        //friend bool operator>=(AltDec self, float Value) { return self >= (AltDec)Value; }
 
-        //friend bool operator==(float Value, AltDec self) { return self == (AltDec)Value; }
-        //friend bool operator!=(float Value, AltDec self) { return self != (AltDec)Value; }
-        //friend bool operator<(float Value, AltDec self) { return (AltDec)Value < self; }
-        //friend bool operator<=(float Value, AltDec self) { return self > (AltDec)Value; }
-        //friend bool operator>(float Value, AltDec self) { return (AltDec)Value > self; }
-        //friend bool operator>=(float Value, AltDec self) { return self < (AltDec)Value; }
-
-        //friend bool operator==(AltDec self, double Value) { return self == (AltDec)Value; }
-        //friend bool operator!=(AltDec self, double Value) { return self != (AltDec)Value; }
-        //friend bool operator<(AltDec self, double Value) { return self < (AltDec)Value; }
-        //friend bool operator<=(AltDec self, double Value) { return self <= (AltDec)Value; }
-        //friend bool operator>(AltDec self, double Value) { return self > (AltDec)Value; }
-        //friend bool operator>=(AltDec self, double Value) { return self >= (AltDec)Value; }
-
-        //friend bool operator==(double Value, AltDec self) { return self == (AltDec)Value; }
-        //friend bool operator!=(double Value, AltDec self) { return self != (AltDec)Value; }
-        //friend bool operator<(double Value, AltDec self) { return (AltDec)Value < self; }
-        //friend bool operator<=(double Value, AltDec self) { return self > (AltDec)Value; }
-        //friend bool operator>(double Value, AltDec self) { return (AltDec)Value > self; }
-        //friend bool operator>=(double Value, AltDec self) { return self < (AltDec)Value; }
-    #pragma endregion Other Comparison Operators
     #pragma region AltDec-To-Int Comparison Operators
         /// <summary>
         /// Equality Operation between <see cref="AltDec &"/> and Integer Type.
@@ -1951,6 +2258,7 @@ public:
         template<typename IntType>
         friend bool operator==(AltDec self, IntType Value)
         {
+            self.ConvertToNumRep();
             return (self.IntValue == Value && self.DecimalHalf == 0);
         }
 
@@ -1963,6 +2271,7 @@ public:
         template<typename IntType>
         friend bool operator!=(AltDec self, IntType Value)
         {
+            self.ConvertToNumRep();
             if (self.DecimalHalf > 0) { return true; }
             else if (self.IntValue == Value && self.DecimalHalf == 0) { return false; }
             else { return true; };
@@ -1977,13 +2286,14 @@ public:
         template<typename IntType>
         friend bool operator<(AltDec self, IntType Value)
         {
+            self.ConvertToNumRep();
             if (self.DecimalHalf == 0)
             {
                 return self.IntValue < Value;
             }
             else
             {
-                if (self.IntValue == NegativeRep)
+                if (self.IntValue == NegativeZero)
                 {//-0.5<0
                     if (Value >= 0)
                         return true;
@@ -2002,13 +2312,14 @@ public:
         template<typename IntType>
         friend bool operator<=(AltDec self, IntType Value)
         {
+            self.ConvertToNumRep();
             if (self.DecimalHalf == 0)
             {
                 return self.IntValue <= Value;
             }
             else
             {
-                if (self.IntValue == NegativeRep)
+                if (self.IntValue == NegativeZero)
                 {//-0.5<0
                     if (Value >= 0)
                         return true;
@@ -2027,13 +2338,14 @@ public:
         template<typename IntType>
         friend bool operator>(AltDec self, IntType Value)
         {
+            self.ConvertToNumRep();
             if (self.DecimalHalf == 0)
             {
                 return self.IntValue > Value;
             }
             else
             {
-                if (self.IntValue == NegativeRep)
+                if (self.IntValue == NegativeZero)
                 {//-0.5>-1
                     if (Value <= -1)
                         return true;
@@ -2052,13 +2364,14 @@ public:
         template<typename IntType>
         friend bool operator>=(AltDec self, IntType Value)
         {
+            self.ConvertToNumRep();
             if (self.DecimalHalf == 0)
             {
                 return self.IntValue >= Value;
             }
             else
             {
-                if (self.IntValue == NegativeRep)
+                if (self.IntValue == NegativeZero)
                 {
                     if (Value <= -1)
                         return true;
@@ -2078,6 +2391,7 @@ public:
         template<typename IntType>
         friend bool operator==(IntType Value, AltDec self)
         {
+            self.ConvertToNumRep();
             return (self.IntValue == Value && self.DecimalHalf == 0);
         }
 
@@ -2090,6 +2404,7 @@ public:
         template<typename IntType>
         friend bool operator!=(IntType Value, AltDec self)
         {
+            self.ConvertToNumRep();
             if (self.DecimalHalf > 0) { return true; }
             else if (self.IntValue == Value && self.DecimalHalf == 0) { return false; }
             else { return true; };
@@ -2104,13 +2419,14 @@ public:
         template<typename IntType>
         friend bool operator<(IntType Value, AltDec self)
         {
+            self.ConvertToNumRep();
             if (self.DecimalHalf == 0)
             {
                 return Value < self.IntValue;
             }
             else
             {
-                if (self.IntValue == NegativeRep)
+                if (self.IntValue == NegativeZero)
                 {
                     if (Value <= -1)
                         return true;
@@ -2129,13 +2445,14 @@ public:
         template<typename IntType>
         friend bool operator<=(IntType Value, AltDec self)
         {
+            self.ConvertToNumRep();
             if (self.DecimalHalf == 0)
             {
                 return Value <= self.IntValue;
             }
             else
             {
-                if (self.IntValue == NegativeRep && Value <= 1)
+                if (self.IntValue == NegativeZero && Value <= 1)
                 {//-1<-0.5
                     if (Value <= -1)
                         return true;
@@ -2154,13 +2471,14 @@ public:
         template<typename IntType>
         friend bool operator>(IntType Value, AltDec self)
         {
+            self.ConvertToNumRep();
             if (self.DecimalHalf == 0)
             {
                 return Value > self.IntValue;
             }
             else
             {
-                if (self.IntValue == NegativeRep)
+                if (self.IntValue == NegativeZero)
                 {
                     if (Value >= 0)
                         return true;
@@ -2179,13 +2497,14 @@ public:
         template<typename IntType>
         friend bool operator>=(IntType Value, AltDec self)
         {
+            self.ConvertToNumRep();
             if (self.DecimalHalf == 0)
             {
                 return Value >= self.IntValue;
             }
             else
             {
-                if (self.IntValue == NegativeRep)
+                if (self.IntValue == NegativeZero)
                 {//0>-0.5
                     if (Value >= 0)
                         return true;
@@ -2266,22 +2585,42 @@ public:
         {
             if (value == 0)
                 return self;
-            if (self.DecimalHalf == 0)
-                self.IntValue += value;
-            else
+            if(self.ExtraRep==NegativeZero)//Value*Pi Representation
+                self.ConvertToNumRep();
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else if(self.ExtraRep==RevMaxInt)//Valuei || ValueE Representation
             {
-                bool WasNegative = self.IntValue < 0;
-                if (WasNegative)
-                    self.IntValue = self.IntValue == AltDec::NegativeRep ? -1 : --self.IntValue;
-                self.IntValue += value;
-                if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
-                else if (self.IntValue < 0)
-                    ++self.IntValue;
-                //If flips to other side of negative, invert the decimals
-                if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
-                    self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
             }
+            else if(self.ExtraRep>0)
+#else
+            else//(Value/ExtraRep) Representation
+#endif
+                self.ConvertToNumRep();
+            if(self.ExtraRep==0)
+            {
+                if (self.DecimalHalf == 0)
+                    self.IntValue += value;
+                else
+                {
+                    bool WasNegative = self.IntValue < 0;
+                    if (WasNegative)
+                        self.IntValue = self.IntValue == AltDec::NegativeZero ? -1 : --self.IntValue;
+                    self.IntValue += value;
+                    if (self.IntValue == -1)
+                        self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+                    else if (self.IntValue < 0)
+                        ++self.IntValue;
+                    //If flips to other side of negative, invert the decimals
+                    if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
+                        self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
+                }
+            }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else//(Valuei/ExtraRep) || (ValueE/ExtraRep) Representation
+            {
+            
+            }
+#endif
             return self;
         }
 
@@ -2296,23 +2635,75 @@ public:
         {
             if (value == 0)
                 return self;
-            if (self.DecimalHalf == 0)
-                self.IntValue -= value;
+            if(self.ExtraRep==NegativeZero)//Value*Pi Representation
+                self.ConvertToNumRep();
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else if(self.ExtraRep==RevMaxInt)
+            {
+            }
+            else if(self.ExtraRep>0)
+#else
+            else//(Value/ExtraRep) Representation
+#endif
+                self.ConvertToNumRep();
+            if(self.ExtraRep==0)//Normal Representation
+            {
+                if (self.DecimalHalf == 0)
+                    self.IntValue -= value;
+                else
+                {
+                    bool WasNegative = self.IntValue < 0;
+                    if (WasNegative)
+                        self.IntValue = self.IntValue==AltDec::NegativeZero ? -1 : --self.IntValue;
+                    self.IntValue -= value;
+                    if (self.IntValue == -1)
+                        self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+                    else if (self.IntValue < 0)
+                        ++self.IntValue;
+                    //If flips to other side of negative, invert the decimals
+                    if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
+                        self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
+                }
+            }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
             else
             {
-                bool WasNegative = self.IntValue < 0;
-                if (WasNegative)
-                    self.IntValue = self.IntValue==AltDec::NegativeRep ? -1 : --self.IntValue;
-                self.IntValue -= value;
-                if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
-                else if (self.IntValue < 0)
-                    ++self.IntValue;
-                //If flips to other side of negative, invert the decimals
-                if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
-                    self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
+            
             }
+#endif
             return self;
+        }
+
+        template<typename IntType>
+        void PartialIntMultOp(IntType& Value)
+        {
+            if (DecimalHalf == 0)
+            {
+                IntValue *= Value;
+            }
+            else
+            {
+                bool SelfIsNegative = IntValue < 0;
+                if (SelfIsNegative)
+                {
+                    if (IntValue == NegativeZero) { IntValue = 0; }
+                    else { IntValue *= -1; }
+                }
+                __int64 SRep = IntValue == 0 ? DecimalHalf : DecimalOverflowX * IntValue + DecimalHalf;
+                SRep *= Value;
+                if (SRep >= DecimalOverflowX)
+                {
+                    __int64 OverflowVal = SRep / DecimalOverflowX;
+                    SRep -= OverflowVal * DecimalOverflowX;
+                    IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
+                    DecimalHalf = (signed int)SRep;
+                }
+                else
+                {
+                    IntValue = SelfIsNegative?NegativeZero:0;
+                    DecimalHalf = (signed int)SRep;
+                }
+            }
         }
 
         /// <summary>
@@ -2326,40 +2717,103 @@ public:
         {
             if (Value < 0)
             {
-                if (Value == NegativeRep) { Value = 0; }
+                if (Value == NegativeZero) { Value = 0; }
                 else { Value *= -1; }
                 self.SwapNegativeStatus();
             }
-            if (self == Zero) {}
-            else if (Value == 0) { self.IntValue = 0; self.DecimalHalf = 0; }
-            else if (self.DecimalHalf == 0)
+            if (self == Zero)
+                return self;
+            if(value==0)
             {
-                self.IntValue *= Value;
+                self.SetAsZero(); return self;
             }
+            if(self.ExtraRep==0)
+            {
+                self.PartialIntMultOp(Value);
+            }
+            else if(ExtraRep==NegativeZero)//Value*Pi Representation
+            {
+                self.PartialIntMultOp(Value);
+            }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else if(ExtraRep==RevMaxInt)
+            {
+                if(Value==ExtraRep)
+                    self.ExtraRep = -1;
+                else
+                    self.PartialIntMultOp(Value);
+            }
+            else if(ExtraRep>0)
+#else
+            else//(Value/ExtraRep) Representation
+#endif
+            {
+                if(Value==ExtraRep)
+                    self.ExtraRep = 0;
+                else
+                    self.PartialIntMultOp(Value);
+            }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
             else
             {
-                bool SelfIsNegative = self.IntValue < 0;
+            
+            }
+#endif
+            return self;
+        }
+
+        /// <summary>
+/// Multiplication Operation Between AltDec and Integer Value
+/// </summary>
+/// <param name="self">The self.</param>
+/// <param name="Value">The value.</param>
+/// <returns>AltDec</returns>
+        template<typename IntType>
+        static AltDec& PartialIntDivOp(IntType& Value)
+        {
+            if (DecimalHalf == 0)
+            {
+                bool SelfIsNegative = IntValue < 0;
                 if (SelfIsNegative)
-                {
-                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
-                    else { self.IntValue *= -1; }
-                }
-                __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                SRep *= Value;
+                    IntValue *= -1;
+                __int64 SRep = DecimalOverflowX * IntValue;
+                SRep /= Value;
                 if (SRep >= DecimalOverflowX)
                 {
-                    __int64 OverflowVal = SRep / DecimalOverflowX;
-                    SRep -= OverflowVal * DecimalOverflowX;
-                    self.IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
-                    self.DecimalHalf = (signed int)SRep;
+                    __int64 OverflowVal = SRep / DecimalOverflow;
+                    SRep -= OverflowVal * DecimalOverflow;
+                    IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
+                    DecimalHalf = (signed int)SRep;
                 }
                 else
                 {
-                    self.IntValue = SelfIsNegative?NegativeRep:0;
-                    self.DecimalHalf = (signed int)SRep;
+                    IntValue = SelfIsNegative ? NegativeZero : 0;
+                    DecimalHalf = (signed int)SRep;
                 }
             }
-            return self;
+            else
+            {
+                bool SelfIsNegative = IntValue < 0;
+                if (SelfIsNegative)
+                {
+                    if (IntValue == NegativeZero) { IntValue = 0; }
+                    else { IntValue *= -1; }
+                }
+                __int64 SRep = IntValue == 0 ? DecimalHalf : DecimalOverflowX * IntValue + DecimalHalf;
+                SRep /= Value;
+                if (SRep >= DecimalOverflowX)
+                {
+                    __int64 OverflowVal = SRep / DecimalOverflowX;
+                    SRep -= DecimalOverflowX * OverflowVal;
+                    IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
+                    DecimalHalf = (signed int)SRep;
+                }
+                else
+                {
+                    IntValue = 0;
+                    DecimalHalf = (signed int)SRep;
+                }
+            }
         }
 
         /// <summary>
@@ -2372,56 +2826,39 @@ public:
         static AltDec& DivOp(AltDec& self, IntType& Value)
         {
             if (Value == 0) { throw "Target value can not be divided by zero"; }
-            else if (self == Zero) { return self; }
+            else if (self == Zero)
+                return self;
             if (Value < 0)
             {
-                if (Value == NegativeRep) { Value = 0; }
+                if (Value == NegativeZero) { Value = 0; }
                 else { Value *= -1; }
                 self.SwapNegativeStatus();
             }
-            if (self.DecimalHalf == 0)
+            if(self.ExtraRep==0)
             {
-                bool SelfIsNegative = self.IntValue < 0;
-                if (SelfIsNegative)
-                    self.IntValue *= -1;
-                __int64 SRep = DecimalOverflowX * self.IntValue;
-                SRep /= Value;
-                if (SRep >= DecimalOverflowX)
-                {
-                    __int64 OverflowVal = SRep / DecimalOverflow;
-                    SRep -= OverflowVal * DecimalOverflow;
-                    self.IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
-                    self.DecimalHalf = (signed int)SRep;
-                }
-                else
-                {
-                    self.IntValue = SelfIsNegative?NegativeRep:0;
-                    self.DecimalHalf = (signed int)SRep;
-                }
+                ExtraRep = Value;
             }
+            else if(ExtraRep==NegativeZero)//Value*Pi Representation
+            {
+                PartialIntDivOp(Value);
+            }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else if(ExtraRep==RevMaxInt)
+            {
+            }
+            else if(ExtraRep>0)
+#else
+            else//(Value/ExtraRep) Representation
+#endif
+            {
+                ExtraRep *= Value;
+            }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
             else
             {
-                bool SelfIsNegative = self.IntValue < 0;
-                if (SelfIsNegative)
-                {
-                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
-                    else { self.IntValue *= -1; }
-                }
-                __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                SRep /= Value;
-                if (SRep >= DecimalOverflowX)
-                {
-                    __int64 OverflowVal = SRep / DecimalOverflowX;
-                    SRep -= DecimalOverflowX * OverflowVal;
-                    self.IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
-                    self.DecimalHalf = (signed int)SRep;
-                }
-                else
-                {
-                    self.IntValue = 0;
-                    self.DecimalHalf = (signed int)SRep;
-                }
+            
             }
+#endif
             if (self == Zero) { return JustAboveZero; }//Prevent dividing into nothing
             return self;
         }
@@ -2435,41 +2872,69 @@ public:
         template<typename IntType>
         static AltDec& RemOp(AltDec& self, IntType& Value)
         {
-            if (Value == 0 || self == AltDec::Zero) { self.SetAsZero(); return self; }
-            if (self.DecimalHalf == 0)
+            if (Value == 0 || self == AltDec::Zero)
             {
-                if (self.IntValue < 0)//https://www.quora.com/How-does-the-modulo-operation-work-with-negative-numbers-and-why
+                self.SetAsZero();
+                return self;
+            }
+            if(self.ExtraRep==0)
+            {
+                if (self.DecimalHalf == 0)
                 {
-                    self.IntValue %= Value;
-                    self.IntValue = (signed int)(Value - self.IntValue);
+                    if (self.IntValue < 0)//https://www.quora.com/How-does-the-modulo-operation-work-with-negative-numbers-and-why
+                    {
+                        self.IntValue %= Value;
+                        self.IntValue = (signed int)(Value - self.IntValue);
+                    }
+                    else
+                    {
+                        self.IntValue %= Value; return self;
+                    }
                 }
-                else
+                else//leftValue is non-whole number
                 {
-                    self.IntValue %= Value; return self;
+                    if (Value < 0) { self.SwapNegativeStatus(); Value *= -1; }
+                    bool SelfIsNegative = self.IntValue < 0;
+                    if (SelfIsNegative)
+                    {
+                        if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                        else { self.IntValue *= -1; }
+                    }
+                    __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
+                    SRep %= Value;
+                    __int64 VRep = DecimalOverflowX * Value;
+                    SRep /= VRep;
+                    __int64 IntResult = SRep;
+                    SRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalHalf;
+                    SRep -= IntResult * VRep;
+                    __int64 IntHalf = SRep / DecimalOverflow;
+                    SRep -= IntHalf * (__int64)DecimalOverflow;
+                    if (IntHalf == 0) { self.IntValue = SelfIsNegative ? (signed int)NegativeZero : 0; }
+                    else { self.IntValue = (signed int)(SelfIsNegative ? IntHalf * -1 : IntHalf); }
+                    self.DecimalHalf = (signed int)SRep;
                 }
             }
-            else//leftValue is non-whole number
+            else if(self.ExtraRep==NegativeZero)//Value*Pi Representation
             {
-                if (Value < 0) { self.SwapNegativeStatus(); Value *= -1; }
-                bool SelfIsNegative = self.IntValue < 0;
-                if (SelfIsNegative)
-                {
-                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
-                    else { self.IntValue *= -1; }
-                }
-                __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                SRep %= Value;
-                __int64 VRep = DecimalOverflowX * Value;
-                SRep /= VRep;
-                __int64 IntResult = SRep;
-                SRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalHalf;
-                SRep -= IntResult * VRep;
-                __int64 IntHalf = SRep / DecimalOverflow;
-                SRep -= IntHalf * (__int64)DecimalOverflow;
-                if (IntHalf == 0) { self.IntValue = SelfIsNegative ? (signed int)NegativeRep : 0; }
-                else { self.IntValue = (signed int)(SelfIsNegative ? IntHalf * -1 : IntHalf); }
-                self.DecimalHalf = (signed int)SRep;
+            
             }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else if(self.ExtraRep==RevMaxInt)
+            {
+            }
+            else if(self.ExtraRep>0)
+#else
+            else//(Value/ExtraRep) Representation
+#endif
+            {
+            
+            }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else
+            {
+            
+            }
+#endif
             return self;
         }
 
@@ -2482,23 +2947,44 @@ public:
         template<typename IntType>
         static AltDec& UnsignedAddOp(AltDec& self, IntType& value)
         {
-            if(value==0){ return self; }
-            else if(self.DecimalHalf==0|| self.IntValue > 0)
-                self.IntValue += value;
+            if(value==0)
+                return self;
+            if(self.ExtraRep==NegativeZero)//Value*Pi Representation
+                self.ConvertToNumRep();
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else if(self.ExtraRep==RevMaxInt)
+            {
+            }
+            else if(self.ExtraRep>0)
+#else
+            else//(Value/ExtraRep) Representation
+#endif
+                self.ConvertToNumRep();
+            if(self.ExtraRep==0)
+            {
+                if(self.DecimalHalf==0|| self.IntValue > 0)
+                    self.IntValue += value;
+                else
+                {
+                    bool WasNegative = self.IntValue < 0;
+                    if (WasNegative)
+                        self.IntValue = self.IntValue == AltDec::NegativeZero ? -1 : --self.IntValue;
+                    self.IntValue += value;
+                    if (self.IntValue == -1)
+                        self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+                    else if (self.IntValue < 0)
+                        ++self.IntValue;
+                    //If flips to other side of negative, invert the decimals
+                    if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
+                        self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
+                }
+            }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
             else
             {
-                bool WasNegative = self.IntValue < 0;
-                if (WasNegative)
-                    self.IntValue = self.IntValue == AltDec::NegativeRep ? -1 : --self.IntValue;
-                self.IntValue += value;
-                if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
-                else if (self.IntValue < 0)
-                    ++self.IntValue;
-                //If flips to other side of negative, invert the decimals
-                if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
-                    self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
+            
             }
+#endif
             return self;
         }
 
@@ -2511,27 +2997,48 @@ public:
         template<typename IntType>
         static AltDec& UnsignedSubOp(AltDec& self, IntType& value)
         {
-            if (value == 0) { return self; }
-            else if (self.DecimalHalf == 0)
-                self.IntValue -= value;
-            else if (self.IntValue == NegativeRep)
-                self.IntValue = (signed int)value * -1;
-            else if(self.IntValue < 0)
-                self.IntValue -= value;
+            if (value == 0)
+                return self;
+            if(self.ExtraRep==NegativeZero)//Value*Pi Representation
+                self.ConvertToNumRep();
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else if(self.ExtraRep==RevMaxInt)
+            {
+            }
+            else if(self.ExtraRep>0)
+#else
+            else//(Value/ExtraRep) Representation
+#endif
+                self.ConvertToNumRep();
+            if(self.ExtraRep==0)
+            {
+                if (self.DecimalHalf == 0)
+                    self.IntValue -= value;
+                else if (self.IntValue == NegativeZero)
+                    self.IntValue = (signed int)value * -1;
+                else if(self.IntValue < 0)
+                    self.IntValue -= value;
+                else
+                {
+                    bool WasNegative = self.IntValue < 0;
+                    if (WasNegative)
+                        self.IntValue = self.IntValue == AltDec::NegativeZero ? -1 : --self.IntValue;
+                    self.IntValue -= value;
+                    if (self.IntValue == -1)
+                        self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeZero;
+                    else if (self.IntValue < 0)
+                        ++self.IntValue;
+                    //If flips to other side of negative, invert the decimals
+                    if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
+                        self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
+                }
+            }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
             else
             {
-                bool WasNegative = self.IntValue < 0;
-                if (WasNegative)
-                    self.IntValue = self.IntValue == AltDec::NegativeRep ? -1 : --self.IntValue;
-                self.IntValue -= value;
-                if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
-                else if (self.IntValue < 0)
-                    ++self.IntValue;
-                //If flips to other side of negative, invert the decimals
-                if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
-                    self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
+            
             }
+#endif
             return self;
         }
 
@@ -2544,37 +3051,48 @@ public:
         template<typename IntType>
         static AltDec& UnsignedMultOp(AltDec& self, IntType& Value)
         {
-            if (self == Zero) {}
-            else if (Value == 0) { self.IntValue = 0; self.DecimalHalf = 0; }
-            else if (self.DecimalHalf == 0)
+            if (self == Zero)
+                return self;
+            if(value==0)
             {
-                self.IntValue *= Value;
+                self.SetAsZero(); return self;
             }
+            if(self.ExtraRep==0)
+            {
+                self.PartialMultOp(Value);
+            }
+            else if(ExtraRep==NegativeZero)//Value*Pi Representation
+            {
+                self.PartialMultOp(Value);
+            }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else if(ExtraRep==RevMaxInt)
+            {
+                if(Value==ExtraRep)
+                    self.ExtraRep = -1;
+                else
+                    self.PartialMultOp(Value);
+            }
+            else if(ExtraRep>0)
+#else
+            else//(Value/ExtraRep) Representation
+#endif
+            {
+                if(Value==ExtraRep)
+                    self.ExtraRep = 0;
+                else
+                    self.PartialMultOp(Value);
+            }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
             else
             {
-                bool SelfIsNegative = self.IntValue < 0;
-                if (SelfIsNegative)
-                {
-                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
-                    else { self.IntValue *= -1; }
-                }
-                __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                SRep *= Value;
-                if (SRep >= DecimalOverflowX)
-                {
-                    __int64 OverflowVal = SRep / DecimalOverflowX;
-                    SRep -= OverflowVal * DecimalOverflowX;
-                    self.IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
-                    self.DecimalHalf = (signed int)SRep;
-                }
-                else
-                {
-                    self.IntValue = SelfIsNegative?NegativeRep:0;
-                    self.DecimalHalf = (signed int)SRep;
-                }
+            
             }
+#endif
             return self;
         }
+
+
 
         /// <summary>
         /// Division Operation Between AltDec and Integer Value
@@ -2586,51 +3104,86 @@ public:
         static AltDec& UnsignedDivOp(AltDec& self, IntType& Value)
         {
             if (Value == 0) { throw "Target value can not be divided by zero"; }
-            else if (self == Zero) { return self; }
-            if (self.DecimalHalf == 0)
+            if(self.ExtraRep==0)
             {
-                bool SelfIsNegative = self.IntValue < 0;
-                if (SelfIsNegative)
-                    self.IntValue *= -1;
-                __int64 SRep = DecimalOverflowX * self.IntValue;
-                SRep /= Value;
-                if (SRep >= DecimalOverflowX)
+                ExtraRep = Value;
+            }
+            else if(ExtraRep==NegativeZero)//Value*Pi Representation
+            {
+                if (self.DecimalHalf == 0)
                 {
-                    __int64 OverflowVal = SRep / DecimalOverflow;
-                    SRep -= OverflowVal * DecimalOverflow;
-                    self.IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
-                    self.DecimalHalf = (signed int)SRep;
+                    bool SelfIsNegative = self.IntValue < 0;
+                    if (SelfIsNegative)
+                        self.IntValue *= -1;
+                    __int64 SRep = DecimalOverflowX * self.IntValue;
+                    SRep /= Value;
+                    if (SRep >= DecimalOverflowX)
+                    {
+                        __int64 OverflowVal = SRep / DecimalOverflow;
+                        SRep -= OverflowVal * DecimalOverflow;
+                        self.IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
+                        self.DecimalHalf = (signed int)SRep;
+                    }
+                    else
+                    {
+                        self.IntValue = SelfIsNegative?NegativeZero:0;
+                        self.DecimalHalf = (signed int)SRep;
+                    }
                 }
                 else
                 {
-                    self.IntValue = SelfIsNegative?NegativeRep:0;
-                    self.DecimalHalf = (signed int)SRep;
+                    bool SelfIsNegative = self.IntValue < 0;
+                    if (SelfIsNegative)
+                    {
+                        if (self.IntValue == NegativeZero) { self.IntValue = 0; }
+                        else { self.IntValue *= -1; }
+                    }
+                    __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
+                    SRep /= Value;
+                    if (SRep >= DecimalOverflowX)
+                    {
+                        __int64 OverflowVal = SRep / DecimalOverflowX;
+                        SRep -= DecimalOverflowX * OverflowVal;
+                        self.IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
+                        self.DecimalHalf = (signed int)SRep;
+                    }
+                    else
+                    {
+                        self.IntValue = 0;
+                        self.DecimalHalf = (signed int)SRep;
+                    }
                 }
             }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else if(ExtraRep==RevMaxInt)
+            {
+            }
+            else if(ExtraRep>0)
+#else
+            else//(Value/ExtraRep) Representation
+#endif
+            {
+                ExtraRep *= Value;
+            }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
             else
             {
-                bool SelfIsNegative = self.IntValue < 0;
-                if (SelfIsNegative)
-                {
-                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
-                    else { self.IntValue *= -1; }
-                }
-                __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
-                SRep /= Value;
-                if (SRep >= DecimalOverflowX)
-                {
-                    __int64 OverflowVal = SRep / DecimalOverflowX;
-                    SRep -= DecimalOverflowX * OverflowVal;
-                    self.IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
-                    self.DecimalHalf = (signed int)SRep;
-                }
-                else
-                {
-                    self.IntValue = 0;
-                    self.DecimalHalf = (signed int)SRep;
-                }
+            
             }
+#endif
             return self;
+        }
+        
+        /// <summary>
+        /// Division Operation Between AltDec and Integer Value
+        /// </summary>
+        /// <param name="self">The self.</param>
+        /// <param name="Value">The value.</param>
+        /// <returns>AltDec&</returns>
+        template<typename IntType>
+        static AltDec& UnsignedDivOpV2(AltDec& self, IntType Value)
+        {
+            return UnsignedDivOp(self, Value);
         }
         
         /// <summary>
@@ -2642,39 +3195,60 @@ public:
         template<typename IntType>
         static AltDec& UnsignedRemOp(AltDec& self, IntType& Value)
         {
-            if(self == AltDec::Zero) { return self; }
-            if (Value == 0){ self.IntValue=0; self.DecimalHalf = 0; return self; }
-            if (self.DecimalHalf == 0)
+            if(self == AltDec::Zero)
+                return self;
+            if (Value == 0){ self.SetAsZero(); return self; }
+            if(ExtraRep==0)
             {
-                self.IntValue %= Value; return self;
+                if (self.DecimalHalf == 0)
+                {
+                    self.IntValue %= Value; return self;
+                }
+                else//leftValue is non-whole number
+                {
+                    __int64 SRep;
+                    if (self.IntValue == NegativeZero) { SRep = (__int64)self.DecimalHalf * -1; }
+                    else if (self.IntValue < 0) { SRep = DecimalOverflowX * self.IntValue - self.DecimalHalf; }
+                    else { SRep = DecimalOverflowX * self.IntValue + self.DecimalHalf; }
+                    bool SelfIsNegative = SRep < 0;
+                    if (SelfIsNegative) { SRep *= -1; }
+                    SRep %= Value;
+                    __int64 VRep = DecimalOverflowX * Value;
+                    SRep /= VRep;
+                    __int64 IntResult = SRep;
+                    SRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalHalf;
+                    SRep -= IntResult * VRep;
+                    __int64 IntHalf = SRep / DecimalOverflow;
+                    SRep -= IntHalf * (__int64)DecimalOverflow;
+                    if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? NegativeZero : 0; }
+                    else { self.IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
+                    self.DecimalHalf = (signed int)SRep;
+                }
             }
-            else//leftValue is non-whole number
+            else if(ExtraRep==NegativeZero)//Value*Pi Representation
             {
-                __int64 SRep;
-                if (self.IntValue == NegativeRep) { SRep = (__int64)self.DecimalHalf * -1; }
-                else if (self.IntValue < 0) { SRep = DecimalOverflowX * self.IntValue - self.DecimalHalf; }
-                else { SRep = DecimalOverflowX * self.IntValue + self.DecimalHalf; }
-                bool SelfIsNegative = SRep < 0;
-                if (SelfIsNegative) { SRep *= -1; }
-                SRep %= Value;
-                __int64 VRep = DecimalOverflowX * Value;
-                SRep /= VRep;
-                __int64 IntResult = SRep;
-                SRep = ((__int64)self.IntValue * DecimalOverflow) + self.DecimalHalf;
-                SRep -= IntResult * VRep;
-                __int64 IntHalf = SRep / DecimalOverflow;
-                SRep -= IntHalf * (__int64)DecimalOverflow;
-                if (IntHalf == 0) { self.IntValue = (signed int)SelfIsNegative ? NegativeRep : 0; }
-                else { self.IntValue = (signed int)SelfIsNegative ? IntHalf * -1 : IntHalf; }
-                self.DecimalHalf = (signed int)SRep;
+            
             }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else if(ExtraRep==RevMaxInt)
+            {
+            }
+            else if(ExtraRep>0)
+#else
+            else//(Value/ExtraRep) Representation
+#endif
+            {
+            
+            }
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
+            else
+            {
+            
+            }
+#endif
             return self;
         }
 
-     //   template<typename IntType>
-     //   static AltDec& SignedModulusOp(AltDec& self, IntType& Value)
-     //   {
-        //}
     public:
         friend AltDec operator+(AltDec self, unsigned char Value){ return UnsignedAddOp(self, Value); }
         friend AltDec operator-(AltDec self, unsigned char Value){ return UnsignedSubOp(self, Value); }
