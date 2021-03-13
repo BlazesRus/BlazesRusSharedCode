@@ -30,10 +30,12 @@
 /*
 MixedDec_EnableImaginaryNumRep = (+- 2147483647.999999999)i Representation enabled(Not Fully Implimented)
 MixedDec_EnableENumRep = E*(+- 2147483647.999999999) Representation enabled(Not Fully Implimented)
-MixedDec_EnablePIRep = PI*(+- 2147483647.999999999) Representation enabled(Not Fully Implimented)
-MixedDec_EnableInfinityRep = (Not Fully Implimented)
+MixedDec_EnablePIRep = PI*(+- 2147483647.999999999) Representation enabled(Needed for some more accurate calculas operations when using radians instead of angle)(Not Fully Implimented)
+MixedDec_EnableInfinityRep = Enable to allow operations to result in Infinity or Negative Infinity(Needed for some more accurate calculas operations)(Not Fully Implimented)
 MixedDec_EnableAltFloat = Possible alternative floating point representation later(Not Implimented)
 MixedDec_ExtendTrailingDigits = Replace ExtraRep usage to double instead of float(16 bytes worth of Variable Storage inside class for each instance)
+MixedDec_EnableNaN = Enable NaN based representations and operations(Not Fully Implimented)
+MixedDec_EnableNegativeZero = (Not Fully Implimented)
 */
 
 namespace BlazesRusCode
@@ -194,9 +196,9 @@ namespace BlazesRusCode
             DecimalHalf = Value.DecimalHalf;
         }
         
+ //Infinity operations based on https://www.gnu.org/software/libc/manual/html_node/Infinity-and-NaN.html
+ // and https://tutorial.math.lamar.edu/classes/calcI/typesofinfinity.aspx
 #if defined(MixedDec_EnableInfinityRep)
-        //Infinity operations based on https://www.gnu.org/software/libc/manual/html_node/Infinity-and-NaN.html
-        // and https://tutorial.math.lamar.edu/classes/calcI/typesofinfinity.aspx
         void SetAsInfinity()
         {
             IntValue = 1; DecimalHalf = -1;
@@ -208,14 +210,17 @@ namespace BlazesRusCode
             IntValue = -1; DecimalHalf = -1;
             ExtraRep = TrailingZero;
         }
-        void SetAsNaN()
-        {
-            IntValue = 0; DecimalHalf = -2;
-            ExtraRep = TrailingZero;
-        }
+
         void SetAsApproachingZero()
         {
             IntValue = 0; DecimalHalf = -3;//If DecimalHalf==-3, then definited as infinitely approaching IntValue
+            ExtraRep = TrailingZero;
+        }
+#endif
+#if defined(MixedDec_EnableNaN)
+        void SetAsNaN()
+        {
+            IntValue = 0; DecimalHalf = -2;
             ExtraRep = TrailingZero;
         }
 #endif
@@ -395,6 +400,15 @@ public:
         /// <returns>MixedDec</returns>
         static MixedDec ENum;
         
+#if defined(AltDec_EnableInfinityRep)
+		static MixedDec Infinity;
+		static MixedDec NegativeInfinity;
+		static MixedDec ApproachingZero;
+#endif
+#if defined(AltDec_EnableInfinityRep)
+		static MixedDec Infinity;
+#endif
+
         /// <summary>
         /// Returns PI Representation(3.1415926535897932384626433) with tenth digit rounded up(3.141592654)
         /// </summary>
@@ -4968,6 +4982,15 @@ public:
     MixedDec MixedDec::Nil = NilValue();
     MixedDec MixedDec::PINum = PINumValue();
     MixedDec MixedDec::ENum = ENumValue();
+	
+#if defined(MixedDec_EnableInfinityRep)
+	MixedDec MixedDec::Infinity = InfinityValue();
+	MixedDec MixedDec::NegativeInfinity = NegativeInfinityValue();
+	MixedDec MixedDec::ApproachingZero = ApproachingZeroValue();
+#endif
+#if defined(MixedDec_EnableNaN)
+	MixedDec MixedDec::NaN = NaNValue();
+#endif
     #pragma endregion ValueDefine Source
 
     #pragma region String Function Source
