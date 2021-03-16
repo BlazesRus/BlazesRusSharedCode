@@ -4,7 +4,7 @@ namespace BlazesRusCode
 {
     /// <summary>
     /// (AltNum based Version)Performs remainder/Mod operation then saves division result
-    /// C = A – B * (A / B)
+    /// C = A - B * (A / B)
     /// </summary>
     template<typename VarType>
     class AltNumModChecker
