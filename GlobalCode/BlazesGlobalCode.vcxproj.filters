@@ -132,10 +132,7 @@
     <ClInclude Include="AltNum\MediumDec.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
-    <ClInclude Include="AltNum\ModCheckerX.hpp">
-      <Filter>Header Files\AltNum</Filter>
-    </ClInclude>
-    <ClInclude Include="AltNum\ModCheckerXX.hpp">
+    <ClInclude Include="AltNum\AltNumModChecker.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
     <ClInclude Include="AltNum\MediumDec_OtherMath.hpp">
@@ -162,22 +159,19 @@
     <ClInclude Include="AltNum\MixedDec.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
-    <ClInclude Include="Databases\ExprFormula.h">
+    <ClInclude Include="Formulas\BuiltinFormula.hpp">
       <Filter>Header Files\Formulas</Filter>
     </ClInclude>
-    <ClInclude Include="Databases\BuiltinFormula.hpp">
+    <ClInclude Include="Formulas\DoubleFormula.hpp">
       <Filter>Header Files\Formulas</Filter>
     </ClInclude>
-    <ClInclude Include="Databases\IntFormula.hpp">
+    <ClInclude Include="Formulas\IntFormula.hpp">
       <Filter>Header Files\Formulas</Filter>
     </ClInclude>
-    <ClInclude Include="Databases\MediumDecFormula.hpp">
+    <ClInclude Include="Formulas\MediumDecFormula.hpp">
       <Filter>Header Files\Formulas</Filter>
     </ClInclude>
-    <ClInclude Include="Databases\VariableFormula.hpp">
-      <Filter>Header Files\Formulas</Filter>
-    </ClInclude>
-    <ClInclude Include="Databases\DoubleFormula.hpp">
+    <ClInclude Include="Formulas\VariableFormula.hpp">
       <Filter>Header Files\Formulas</Filter>
     </ClInclude>
   </ItemGroup>
