@@ -4,13 +4,13 @@
 // ***********************************************************************
 
 #include <iostream>
-#include "AltNum\MediumDec.hpp"
+#include "MediumDec.hpp"
 
 using MediumDec = BlazesRusCode::MediumDec;
 using VariableConversionFunctions = BlazesRusCode::VariableConversionFunctions;
 
 #include <cmath>
-#include "AltNum\FloatingOperations.hpp"
+#include "FloatingOperations.hpp"
 
 #include <iostream>
 #include <vector>

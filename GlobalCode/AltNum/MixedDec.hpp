@@ -25,6 +25,7 @@
 #include <boost/rational.hpp>
 #include <boost/multiprecision/cpp_int.hpp>
 #include "MediumDec.hpp"
+#include "AltNumModChecker.hpp"
 
 //Preprocessor Switches
 /*
@@ -401,12 +402,12 @@ public:
         static MixedDec ENum;
         
 #if defined(AltDec_EnableInfinityRep)
-		static MixedDec Infinity;
-		static MixedDec NegativeInfinity;
-		static MixedDec ApproachingZero;
+        static MixedDec Infinity;
+        static MixedDec NegativeInfinity;
+        static MixedDec ApproachingZero;
 #endif
 #if defined(AltDec_EnableInfinityRep)
-		static MixedDec Infinity;
+        static MixedDec Infinity;
 #endif
 
         /// <summary>
@@ -4982,14 +4983,14 @@ public:
     MixedDec MixedDec::Nil = NilValue();
     MixedDec MixedDec::PINum = PINumValue();
     MixedDec MixedDec::ENum = ENumValue();
-	
+    
 #if defined(MixedDec_EnableInfinityRep)
-	MixedDec MixedDec::Infinity = InfinityValue();
-	MixedDec MixedDec::NegativeInfinity = NegativeInfinityValue();
-	MixedDec MixedDec::ApproachingZero = ApproachingZeroValue();
+    MixedDec MixedDec::Infinity = InfinityValue();
+    MixedDec MixedDec::NegativeInfinity = NegativeInfinityValue();
+    MixedDec MixedDec::ApproachingZero = ApproachingZeroValue();
 #endif
 #if defined(MixedDec_EnableNaN)
-	MixedDec MixedDec::NaN = NaNValue();
+    MixedDec MixedDec::NaN = NaNValue();
 #endif
     #pragma endregion ValueDefine Source
 
@@ -5207,4 +5208,12 @@ public:
         return Value;
     }
     #pragma endregion String Function Source
+
+    /// <summary>
+    /// (MixedDec Version)Performs remainder operation then saves division result
+    /// C = A – B * (A / B)
+    /// </summary>
+    class DLL_API MixedModChecker : public AltNumModChecker<MixedDec>
+    {
+    };
 }
