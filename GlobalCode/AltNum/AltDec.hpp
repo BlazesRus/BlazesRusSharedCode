@@ -101,8 +101,8 @@ namespace BlazesRusCode
 //#if defined(AltDec_EnableMixedFractional)
 //#endif
 //#if defined(MixedDec_EnableInfinityRep)
-			ApproachingVal,
-			ApproachingFromRightVal,
+			ApproachingVal,//Defaults to approaching from right exact in case of NegativeRep(NegativeRep = -0.000...1;Approaching Zero is equal to 0.000...1)
+			ApproachingFromLeftVal,
 			ApproachingPI,
 			ApproachingE,
 			ApproachingI,
@@ -284,12 +284,30 @@ namespace BlazesRusCode
             ExtraRep = 0;
         }
   
+		//Approaching Zero from Right
         void SetAsApproachingZero()
         {
             IntValue = 0; DecimalHalf = ApproachingValRep;
             ExtraRep = 0;
         }
+		
+        void SetAsApproachingZeroFromLeft()
+        {
+            IntValue = 0; DecimalHalf = ApproachingValRep;
+            ExtraRep = NegativeRep;
+        }
         
+		void SetAsApproachingValueFromRight(int value)
+		{
+            IntValue = value; DecimalHalf = ApproachingValRep;
+            ExtraRep = 0;
+		}
+		
+		void SetAsApproachingValueFromLeft(int value)
+		{
+            IntValue = value; DecimalHalf = ApproachingValRep;
+            ExtraRep = NegativeRep;
+		}
 private:
         static AltDec InfinityValue()
         {
