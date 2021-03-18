@@ -84,6 +84,83 @@ namespace BlazesRusCode
         //Is NaN when DecimalHalf==2147483647
         static signed int NaNRep = 2147483647;
 #endif
+		enum class RepType: int
+		{
+			NormalType = 0,,
+			NumByDiv,
+			PIRep,
+			PIPower,
+			ENum,
+			ENumByDiv,
+			INum,
+			INumByDiv,
+			ComplexIRep,
+			MixedFrac,
+			MixedE,
+			MixedI;
+//#if defined(AltDec_EnableMixedFractional)
+//#endif
+//#if defined(MixedDec_EnableInfinityRep)
+			ApproachingVal,
+			ApproachingFromRightVal,
+			ApproachingPI,
+			ApproachingE,
+			ApproachingI,
+			//InfinityRep
+//#endif
+			NaN,
+			UnknownType
+		};
+		RepType GetRepType()
+		{
+			if(ExtraRep==0)
+				return RepType::NormalType;
+#ifdef AltDec_EnableInfinityRep
+//            else if(DecimalHalf==InfinityRep)
+//            {
+//                if(IntValue==1)//If Positive Infinity, then convert number into MaximumValue instead
+//                {
+//                    UpdateTarget.IntValue = 2147483647; UpdateTarget.DecimalHalf = 999999999;
+//                }
+//                else//If Negative Infinity, then convert number into MinimumValue instead
+//                {
+//                    UpdateTarget.IntValue = -2147483647; UpdateTarget.DecimalHalf = 999999999;
+//                }
+//            }
+            else if(DecimalHalf==ApproachingValRep)
+				return RepType::ApproachingVal;//Approaching from left to Value
+#endif
+			else if(ExtraRep==PIRep)
+				return RepType::PIRep;
+			else if(ExtraRep>0)
+				return RepType::NumByDiv;
+#if defined(AltDec_EnableNaN)
+			else if(DecimalHalf==NaNRep)
+				return RepType::NaN;
+#endif
+			//(ExtraRep<0)
+#if defined(AltDec_EnableImaginaryNum)
+#if AltDec_EnableMixedFractional
+			else if(DecimalHalf<0)
+				return RepType::MixedI;
+#endif
+			else if(ExtraRep==IERep)
+				return RepType::INum;
+			else
+				return RepType::INumByDiv;
+#elif defined(AltDec_EnableENum)
+#if AltDec_EnableMixedFractional
+			else if(DecimalHalf<0)
+				return RepType::MixedE;
+#endif
+			else if(ExtraRep==IERep)
+				return RepType::ENum;
+			else
+				return RepType::ENumByDiv;
+#endif
+			throw "Unknown or non-enabled representation type detected from AltDec";
+			return RepType::UnknownType;//Catch-All Value;
+		}
     public:
         /// <summary>
         /// The decimal overflow
