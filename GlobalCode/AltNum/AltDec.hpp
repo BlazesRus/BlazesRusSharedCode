@@ -1073,8 +1073,48 @@ public:
         /// <returns>bool</returns>
         friend bool operator==(AltDec self, AltDec Value)
         {
-            self.ConvertToNumRep(); Value.ConvertToNumRep();
-            return (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf);
+#if defined(MixedDec_EnableInfinityRep)
+	#if defined(AltDec_EnableImaginaryNum)
+				if(self.DecimalHalf!=InfinityRep&&(self.ExtraRep>=0||self.ExtraRep==PIRep))
+	#else
+				if(self.DecimalHalf!=InfinityRep)
+	#endif
+				{
+					self.ConvertToNumRep();
+				}
+
+	#if defined(AltDec_EnableImaginaryNum)
+				if(Value.DecimalHalf!=InfinityRep&&(Value.ExtraRep>=0||Value.ExtraRep==PIRep))
+	#else
+				if(Value.DecimalHalf!=InfinityRep)
+	#endif
+				{
+					Value.ConvertToNumRep();
+				}
+#else
+	#if defined(AltDec_EnableImaginaryNum)
+				if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+				{
+					self.ConvertToNumRep();
+				}
+	#else
+				self.ConvertToNumRep();
+	#endif
+
+	#if defined(AltDec_EnableImaginaryNum)
+				if(Value.ExtraRep>=0||Value.ExtraRep==PIRep)
+				{
+					Value.ConvertToNumRep();
+				}
+	#else
+				Value.ConvertToNumRep();
+	#endif
+#endif
+#if defined(AltDec_EnableImaginaryNum)
+			return (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf && self.ExtraRep == Value.ExtraRep);
+#else
+			return (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf);
+#endif
         }
 
         /// <summary>
@@ -1085,8 +1125,48 @@ public:
         /// <returns>bool</returns>
         friend bool operator!=(AltDec self, AltDec Value)
         {
-            self.ConvertToNumRep(); Value.ConvertToNumRep();
+#if defined(MixedDec_EnableInfinityRep)
+	#if defined(AltDec_EnableImaginaryNum)
+				if(self.DecimalHalf!=InfinityRep&&(self.ExtraRep>=0||self.ExtraRep==PIRep))
+	#else
+				if(self.DecimalHalf!=InfinityRep)
+	#endif
+				{
+					self.ConvertToNumRep();
+				}
+
+	#if defined(AltDec_EnableImaginaryNum)
+				if(Value.DecimalHalf!=InfinityRep&&(Value.ExtraRep>=0||Value.ExtraRep==PIRep))
+	#else
+				if(Value.DecimalHalf!=InfinityRep)
+	#endif
+				{
+					Value.ConvertToNumRep();
+				}
+#else
+	#if defined(AltDec_EnableImaginaryNum)
+				if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+				{
+					self.ConvertToNumRep();
+				}
+	#else
+				self.ConvertToNumRep();
+	#endif
+
+	#if defined(AltDec_EnableImaginaryNum)
+				if(Value.ExtraRep>=0||Value.ExtraRep==PIRep)
+				{
+					Value.ConvertToNumRep();
+				}
+	#else
+				Value.ConvertToNumRep();
+	#endif
+#endif
+#if defined(AltDec_EnableImaginaryNum)
+            return (self.IntValue != Value.IntValue || self.DecimalHalf != Value.DecimalHalf || self.ExtraRep != Value.ExtraRep);
+#else
             return (self.IntValue != Value.IntValue || self.DecimalHalf != Value.DecimalHalf);
+#endif
         }
 
         /// <summary>
@@ -1097,6 +1177,7 @@ public:
         /// <returns>bool</returns>
         friend bool operator<(AltDec self, AltDec Value)
         {
+			if(self.ExtraRep
             self.ConvertToNumRep(); Value.ConvertToNumRep();
             if (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf) { return false; }
             else
