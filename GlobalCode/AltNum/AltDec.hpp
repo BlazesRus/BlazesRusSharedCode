@@ -88,7 +88,7 @@ namespace BlazesRusCode
 		{
 			NormalType = 0,,
 			NumByDiv,
-			PIRep,
+			PINum,
 			PIPower,
 			ENum,
 			ENumByDiv,
@@ -131,7 +131,7 @@ namespace BlazesRusCode
 				return RepType::ApproachingVal;//Approaching from left to Value
 #endif
 			else if(ExtraRep==PIRep)
-				return RepType::PIRep;
+				return RepType::PINum;
 			else if(ExtraRep>0)
 				return RepType::NumByDiv;
 #if defined(AltDec_EnableNaN)
@@ -1587,13 +1587,20 @@ public:
         /// <returns>AltDec</returns>
         static AltDec& AddOp(AltDec& self, AltDec& Value)
         {
+			if(self==Zero)
+			{
+				self.IntValue = Value.IntValue; self.DecimalHalf = Value.DecimalHalf;
+				self.ExtraRep = Value.ExtraRep; return self;
+			}
 #if defined(AltDec_EnableInfinityRep)
             if (self.DecimalHalf==InfinityRep)
                 return self;
             if (Value.DecimalHalf == InfinityRep)
                 return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
 #endif
-            if(self.ExtraRep==Value.ExtraRep)
+			RepType LRep = self.GetRepType();
+			RepType RRep = Value.GetRepType();
+            if(LRep==RRep)
             {
                 if(self.ExtraRep==0||ExtraRep==NegativeRep)
                 {
@@ -1635,16 +1642,40 @@ public:
             }
             else
             {
-                if(self.ExtraRep==0)
-                {
-                
-                }
-                else//Catch-all for other representation combinations
-                {
-                    AltDec ValueCopy = Value;
-                    Value.ConvertToNumRep();
-                    self.BasicAddOp(ValueCopy);
-                }
+				switch(LRep)
+				{
+					case RepType::NormalType:
+					{
+						switch(RRep)
+						{
+							case RepType::PINum:
+							{
+								break;
+							}
+							default:
+								break;
+						}
+						break;
+					}
+					case RepType::PINum:
+					{
+						switch(RRep)
+						{
+							case RepType::NormalType:
+							{
+								break;
+							}
+							default:
+						}
+						break;
+					}
+					default://Catch-all for other representation combinations
+					{
+						AltDec ValueCopy = Value;
+						Value.ConvertToNumRep();
+						self.BasicAddOp(ValueCopy);
+					}
+				}
             }
             return self;
         }
@@ -1736,6 +1767,24 @@ public:
         /// <returns>AltDec&</returns>
         static AltDec& SubOp(AltDec& self, AltDec& Value)
         {
+			//if(self==Zero)
+			//{
+			//	if (Value.DecimalHalf == InfinityRep)
+			//	{
+			//		self.IntValue = Value.IntValue == 1?-1:1; self.ExtraRep = InfinityRep;
+			//		return self;
+			//	}
+   //             else
+			//	{
+			//		if(Value.IntValue==0)
+			//			self.IntValue = Value.IntValue;
+			//		//else if(Value.IntValue==NegativeRep)
+			//		//	self.IntValue = 0;
+			//		else if(Value.IntValue!=NegativeRep)
+			//			self.IntValue = Value.IntValue *-1;
+			//		self.ExtraRep = Value.ExtraRep; return self;
+			//	}
+			//}
 #if defined(AltDec_EnableInfinityRep)
             if (self.DecimalHalf == InfinityRep)
                 return self;
