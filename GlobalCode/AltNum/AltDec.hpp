@@ -100,7 +100,7 @@ namespace BlazesRusCode
 			MixedI;
 //#if defined(AltDec_EnableMixedFractional)
 //#endif
-//#if defined(MixedDec_EnableInfinityRep)
+//#if defined(AltDec_EnableInfinityRep)
 			ApproachingVal,//Defaults to approaching from right exact in case of NegativeRep(NegativeRep = -0.000...1;Approaching Zero is equal to 0.000...1)
 			ApproachingFromLeftVal,
 			ApproachingPI,
@@ -271,7 +271,7 @@ namespace BlazesRusCode
 
 //Infinity operations based on https://www.gnu.org/software/libc/manual/html_node/Infinity-and-NaN.html
 // and https://tutorial.math.lamar.edu/classes/calcI/typesofinfinity.aspx
-#if defined(MixedDec_EnableInfinityRep)
+#if defined(AltDec_EnableInfinityRep)
         void SetAsInfinity()
         {
             IntValue = 1; DecimalHalf = InfinityRep;
@@ -1073,7 +1073,7 @@ public:
         /// <returns>bool</returns>
         friend bool operator==(AltDec self, AltDec Value)
         {
-#if defined(MixedDec_EnableInfinityRep)
+#if defined(AltDec_EnableInfinityRep)
 	#if defined(AltDec_EnableImaginaryNum)
 				if(self.DecimalHalf!=InfinityRep&&(self.ExtraRep>=0||self.ExtraRep==PIRep))
 	#else
@@ -1125,7 +1125,7 @@ public:
         /// <returns>bool</returns>
         friend bool operator!=(AltDec self, AltDec Value)
         {
-#if defined(MixedDec_EnableInfinityRep)
+#if defined(AltDec_EnableInfinityRep)
 	#if defined(AltDec_EnableImaginaryNum)
 				if(self.DecimalHalf!=InfinityRep&&(self.ExtraRep>=0||self.ExtraRep==PIRep))
 	#else
@@ -1177,7 +1177,19 @@ public:
         /// <returns>bool</returns>
         friend bool operator<(AltDec self, AltDec Value)
         {
-			if(self.ExtraRep
+#if defined(AltDec_EnableInfinityRep)
+			if(self.ExtraRep==InfinityRep)
+			{
+				if(Value.ExtraRep==InfinityRep)
+				{
+					return self.IntValue<Value.IntValue;
+				}
+			}
+			else if(Value.ExtraRep==InfinityRep)
+			{
+			
+			}
+#endif
             self.ConvertToNumRep(); Value.ConvertToNumRep();
             if (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf) { return false; }
             else
@@ -1247,6 +1259,19 @@ public:
         /// <returns>bool</returns>
         friend bool operator<=(AltDec self, AltDec Value)
         {
+#if defined(AltDec_EnableInfinityRep)
+			if(self.ExtraRep==InfinityRep)
+			{
+				if(Value.ExtraRep==InfinityRep)
+				{
+					return self.IntValue<=Value.IntValue;
+				}
+			}
+			else if(Value.ExtraRep==InfinityRep)
+			{
+			
+			}
+#endif
             self.ConvertToNumRep(); Value.ConvertToNumRep();
             if (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf) { return true; }
             else
@@ -1316,6 +1341,19 @@ public:
         /// <returns>bool</returns>
         friend bool operator>(AltDec self, AltDec Value)
         {
+#if defined(AltDec_EnableInfinityRep)
+			if(self.ExtraRep==InfinityRep)
+			{
+				if(Value.ExtraRep==InfinityRep)
+				{
+					return self.IntValue>Value.IntValue;
+				}
+			}
+			else if(Value.ExtraRep==InfinityRep)
+			{
+			
+			}
+#endif
             self.ConvertToNumRep(); Value.ConvertToNumRep();
             if (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf) { return false; }
             else
@@ -1383,6 +1421,23 @@ public:
         /// <returns>bool</returns>
         friend bool operator>=(AltDec self, AltDec Value)
         {
+#if defined(AltDec_EnableInfinityRep)
+			if(self.ExtraRep==InfinityRep)
+			{
+				if(Value.ExtraRep==InfinityRep)
+				{
+					return self.IntValue>=Value.IntValue;
+				}
+				else
+				{
+				
+				}
+			}
+			else if(Value.ExtraRep==InfinityRep)
+			{
+			
+			}
+#endif
             self.ConvertToNumRep(); Value.ConvertToNumRep();
             if (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf) { return true; }
             else
@@ -3200,7 +3255,7 @@ public:
         template<typename IntType>
         friend bool operator==(AltDec self, IntType Value)
         {
-            return (self.IntValue == Value && self.DecimalHalf == 0);
+            return (self.IntValue == Value && self.DecimalHalf == 0 && self.ExtraRep==0);
         }
 
         /// <summary>
@@ -3212,9 +3267,12 @@ public:
         template<typename IntType>
         friend bool operator!=(AltDec self, IntType Value)
         {
-            if (self.DecimalHalf > 0) { return true; }
-            else if (self.IntValue == Value && self.DecimalHalf == 0) { return false; }
-            else { return true; };
+            if (self.DecimalHalf!=0||self.ExtraRep!=0)
+				return true;
+            else if (self.IntValue == Value)
+				return false;
+            else
+				return true;
         }
 
         /// <summary>
@@ -3353,6 +3411,25 @@ public:
         template<typename IntType>
         friend bool operator<(IntType Value, AltDec self)
         {
+#if defined(AltDec_EnableInfinityRep)
+			if(self.ExtraRep==InfinityRep)
+			{
+				if(self.IntValue==1)
+					return true;
+				else
+					return false;
+			}
+#endif
+#if defined(AltDec_EnableImaginaryNum)
+			if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+			{
+				self.ConvertToNumRep();
+			}
+			else
+				throw "Can't compare real values against imaginary.";
+#else
+			self.ConvertToNumRep();
+#endif
             if (self.DecimalHalf == 0)
             {
                 return Value < self.IntValue;
@@ -3378,6 +3455,25 @@ public:
         template<typename IntType>
         friend bool operator<=(IntType Value, AltDec self)
         {
+#if defined(AltDec_EnableInfinityRep)
+			if(self.ExtraRep==InfinityRep)
+			{
+				if(self.IntValue==1)
+					return true;
+				else
+					return false;
+			}
+#endif
+#if defined(AltDec_EnableImaginaryNum)
+			if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+			{
+				self.ConvertToNumRep();
+			}
+			else
+				throw "Can't compare real values against imaginary.";
+#else
+			self.ConvertToNumRep();
+#endif
             if (self.DecimalHalf == 0)
             {
                 return Value <= self.IntValue;
@@ -3403,6 +3499,25 @@ public:
         template<typename IntType>
         friend bool operator>(IntType Value, AltDec self)
         {
+#if defined(AltDec_EnableInfinityRep)
+			if(self.ExtraRep==InfinityRep)
+			{
+				if(self.IntValue==1)
+					return false;
+				else
+					return true;
+			}
+#endif
+#if defined(AltDec_EnableImaginaryNum)
+			if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+			{
+				self.ConvertToNumRep();
+			}
+			else
+				throw "Can't compare real values against imaginary.";
+#else
+			self.ConvertToNumRep();
+#endif
             if (self.DecimalHalf == 0)
             {
                 return Value > self.IntValue;
@@ -3428,6 +3543,25 @@ public:
         template<typename IntType>
         friend bool operator>=(IntType Value, AltDec self)
         {
+#if defined(AltDec_EnableInfinityRep)
+			if(self.ExtraRep==InfinityRep)
+			{
+				if(self.IntValue==1)
+					return false;
+				else
+					return true;
+			}
+#endif
+#if defined(AltDec_EnableImaginaryNum)
+			if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+			{
+				self.ConvertToNumRep();
+			}
+			else
+				throw "Can't compare real values against imaginary.";
+#else
+			self.ConvertToNumRep();
+#endif
             if (self.DecimalHalf == 0)
             {
                 return Value >= self.IntValue;
