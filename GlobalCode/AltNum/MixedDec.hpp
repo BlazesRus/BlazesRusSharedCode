@@ -44,7 +44,9 @@ namespace BlazesRusCode
     class MixedDec;
 
 /*---Accuracy Tests:
-
+    -Aiming for accuracy greater than double when MixedDec_ExtendTrailingDigits not enabled(with speed similar or better than double)
+    and accuracy greater than decimal when MixedDec_ExtendTrailingDigits is enabled(with speed similar or better than decimal)
+    -Aiming to at least have same or better accuracy vs MediumDec (with less accuracy lost from truncation from digits getting too small)
 */
 
     /// <summary>
