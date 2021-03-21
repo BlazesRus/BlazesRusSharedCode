@@ -1274,10 +1274,10 @@ public:
 #if defined(AltDec_EnableInfinityRep)
 			if(self.ExtraRep==InfinityRep)
 			{
-				if(Value.ExtraRep==InfinityRep)
-				{
-					return self.IntValue<=Value.IntValue;
-				}
+				if(self.IntValue==Value.IntValue||Value.IntValue==1)
+					return true;
+				else
+					return false;
 			}
 			else if(Value.ExtraRep==InfinityRep)
 			{
@@ -1358,7 +1358,12 @@ public:
 			{
 				if(Value.ExtraRep==InfinityRep)
 				{
-					return self.IntValue>Value.IntValue;
+					if(self.IntValue==Value.IntValue)
+						return false;
+					else if(Value.IntValue==1)
+						return false;
+					else
+						return true;
 				}
 			}
 			else if(Value.ExtraRep==InfinityRep)
@@ -1438,7 +1443,10 @@ public:
 			{
 				if(Value.ExtraRep==InfinityRep)
 				{
-					return self.IntValue>=Value.IntValue;
+					if(self.IntValue==Value.IntValue||Value.IntValue==-1)
+						return true;
+					else
+						return false;
 				}
 				else
 				{
@@ -1614,7 +1622,7 @@ public:
 			RepType RRep = Value.GetRepType();
             if(LRep==RRep)
             {
-                if(self.ExtraRep==0||ExtraRep==NegativeRep)
+                if(self.ExtraRep==0||ExtraRep==PIRep)
                 {
 #if AltDec_EnableMixedFractional
                     if(self.DecimalHalf<0)//MixedFractional
@@ -1803,9 +1811,11 @@ public:
             if (Value.DecimalHalf == InfinityRep)
                 return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
 #endif
-            if(self.ExtraRep==Value.ExtraRep)
+			RepType LRep = self.GetRepType();
+			RepType RRep = Value.GetRepType();
+            if(LRep==RRep)
             {
-                if(self.ExtraRep==0||self.ExtraRep==NegativeRep)
+                if(self.ExtraRep==0||ExtraRep==PIRep)
                 {
 #if AltDec_EnableMixedFractional
                     if(self.DecimalHalf<0)//MixedFractional
@@ -2333,7 +2343,9 @@ public:
             if (Value == AltDec::Zero) { self.SetAsZero(); return self; }
             if (self == AltDec::Zero || Value == AltDec::One)
                 return self;
-            if(self.ExtraRep==Value.ExtraRep)
+			RepType LRep = self.GetRepType();
+			RepType RRep = Value.GetRepType();
+            if(LRep==RRep)
             {
                 if(self.ExtraRep==0)
                 {
@@ -2586,7 +2598,9 @@ public:
                 else { Value.IntValue *= -1; }
                 self.SwapNegativeStatus();
             }
-            if(self.ExtraRep==Value.ExtraRep)
+			RepType LRep = self.GetRepType();
+			RepType RRep = Value.GetRepType();
+            if(LRep==RRep)
             {
                 if(self.ExtraRep==0)
                 {
@@ -2814,7 +2828,9 @@ public:
             bool SelfIsWholeN = self.DecimalHalf == 0;
             bool ValueIsWholeN = Value.DecimalHalf == 0;
             if (Value.IntValue == 0 && ValueIsWholeN) { self.SetAsZero(); return self; }//Return zero instead of N/A
-            if(self.ExtraRep==Value.ExtraRep)
+			RepType LRep = self.GetRepType();
+			RepType RRep = Value.GetRepType();
+            if(LRep==RRep)
             {
                 if(self.ExtraRep==0)
                 {
