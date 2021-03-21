@@ -39,6 +39,7 @@ AltDec_EnableMixedFractional = If DecimalHalf is negative and ExtraRep is Positi
 AltDec_EnableInfinityRep = Enable support of positive/negative infinity representations and approaching value representations(Not Fully Implimented)
 AltDec_EnableNaN = Enable NaN based representations and operations(Not Fully Implimented)
 AltDec_EnableComplexNum = Enable Representation of complex numbers with Imaginary number operations(Requires AltDec_EnableImaginaryNum, Not Implimented Yet)
+AltDec_EnableNegativeZero = (Not Fully Implimented)
 
 Only one of below can be active at once:
 AltDec_EnableENum = If DecimalHalf is positive and ExtraRep is -2147483647, then AltDec represents +- 2147483647.999999999 * e (Not Fully Implimented)
@@ -109,6 +110,7 @@ namespace BlazesRusCode
             //InfinityRep
 //#endif
             NaN,
+			NegativeZero,
             UnknownType
         };
         RepType GetRepType()
@@ -178,7 +180,7 @@ namespace BlazesRusCode
         using ldouble = long double;
     public:
         /// <summary>
-        /// Value when IntValue is at negative zero (when has decimal part)
+        /// Value when IntValue is at -0.XXXXXXXXXX (when has decimal part)
         /// </summary>
         static signed int const NegativeRep = -2147483648;
 

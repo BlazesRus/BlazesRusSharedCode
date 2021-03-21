@@ -91,6 +91,12 @@ namespace BlazesRusCode
         static TrailingType TrailingZero;
         static TrailingType TrailingOne;
         static TrailingType TrailingTenth;
+#if defined(MixedDec_EnableInfinityRep)
+        //Is Infinity Representation when DecimalHalf==-2147483648 (IntValue==1 for positive infinity;IntValue==-1 for negative Infinity)
+        static signed int InfinityRep = -2147483648;
+        //Is Approaching IntValue when DecimalHalf==-2147483647
+        static signed int ApproachingValRep = -2147483647;
+#endif
 #if defined(MixedDec_EnablePIRep)
         static TrailingType PIRepValue()
         {
@@ -127,6 +133,18 @@ namespace BlazesRusCode
         }
         static TrailingType IRep;
 #endif
+#if defined(MixedDec_EnableImaginaryNumRep)
+        static TrailingType NegativeZeroRepValue()
+        {
+            return
+#if defined(MixedDec_ExtendTrailingDigits)
+                -4.0;
+#else
+                -4.0f;
+#endif
+        }
+        static TrailingType NegativeZeroRep;
+#endif
     public:
         /// <summary>
         /// The decimal overflow
@@ -159,10 +177,12 @@ namespace BlazesRusCode
         signed int DecimalHalf;
 
         // <summary>
-        /// If ExtraRep is -4 and MixedDec_EnableInfinityRep is enabled, then MixedDec represents either negative or positive infinity
-        /// If ExtraRep is -3 and MixedDec_EnablePIRep is enabled, then MixedDec represents +- 2147483647.999999999 * PI
-        /// If ExtraRep is -2 and MixedDec_EnablePIRep is enabled, then MixedDec represents +- 2147483647.999999999 * PI
-        /// If ExtraRep is -1 and MixedDec_EnablePIRep is enabled, then MixedDec represents +- 2147483647.999999999 * PI
+		/// If ExtraRep is -1, DecimalHalf==-2147483647, and MixedDec_EnableInfinityRep is enabled, then MixedDec represents Approaching IntValue from Left to Right side (?.999....infinitely)
+		/// If ExtraRep is 0.0f, DecimalHalf==-2147483647, and MixedDec_EnableInfinityRep is enabled, then MixedDec represents Approaching IntValue from Right to Left side (?.000....1)
+        /// If ExtraRep is -4 and MixedDec_EnableNegativeZero is enabled, then MixedDec represents negative zero
+        /// If ExtraRep is -3 and MixedDec_EnableImaginaryNumRep is enabled, then MixedDec represents +- 2147483647.999999999i
+        /// If ExtraRep is -2 and MixedDec_EnableENumRep is enabled, then MixedDec represents +- 2147483647.999999999 * e
+        /// If ExtraRep is -1, DecimalHalf>-2147483647, and MixedDec_EnablePIRep is enabled, then MixedDec represents +- 2147483647.999999999 * PI
         /// If ExtraRep is zero, then MixedDec represents +- 2147483647.999999999
         /// If ExtraRep is greater than zero, then MixedDec represents +- 2147483647.999999999...+trailing digits
         /// </summary>
@@ -180,7 +200,6 @@ namespace BlazesRusCode
 #else
         0.0f)
 #endif
-
         {
             IntValue = intVal;
             DecimalHalf = decVal;
@@ -202,21 +221,59 @@ namespace BlazesRusCode
 #if defined(MixedDec_EnableInfinityRep)
         void SetAsInfinity()
         {
-            IntValue = 1; DecimalHalf = -1;
+            IntValue = 1; DecimalHalf = InfinityRep;
             ExtraRep = TrailingZero;
         }
 
         void SetAsNegativeInfinity()
         {
-            IntValue = -1; DecimalHalf = -1;
+            IntValue = -1; DecimalHalf = InfinityRep;
             ExtraRep = TrailingZero;
         }
-
+  
+        //Approaching Zero from Right
         void SetAsApproachingZero()
         {
-            IntValue = 0; DecimalHalf = -3;//If DecimalHalf==-3, then definited as infinitely approaching IntValue
+            IntValue = 0; DecimalHalf = ApproachingValRep;
             ExtraRep = TrailingZero;
         }
+        
+        void SetAsApproachingZeroFromLeft()
+        {
+            IntValue = 0; DecimalHalf = ApproachingValRep;
+            ExtraRep = ApproachingRightRep;
+        }
+        
+        void SetAsApproachingValueFromRight(int value)
+        {
+            IntValue = value; DecimalHalf = ApproachingValRep;
+            ExtraRep = TrailingZero;
+        }
+        
+        void SetAsApproachingValueFromLeft(int value)
+        {
+            IntValue = value; DecimalHalf = ApproachingValRep;
+            ExtraRep = ApproachingRightRep;
+        }
+private:
+        static AltDec InfinityValue()
+        {
+            AltDec NewSelf = AltDec(1, InfinityRep);
+            return NewSelf;
+        }
+        
+        static AltDec NegativeInfinityValue()
+        {
+            AltDec NewSelf = AltDec(-1, InfinityRep);
+            return NewSelf;
+        }
+        
+        static AltDec ApproachingZeroValue()
+        {
+            AltDec NewSelf = AltDec(0, ApproachingValRep);
+            return NewSelf;
+        }
+public:
 #endif
 #if defined(MixedDec_EnableNaN)
         void SetAsNaN()
@@ -225,19 +282,26 @@ namespace BlazesRusCode
             ExtraRep = TrailingZero;
         }
 #endif
-#if defined(MixedDec_EnableNegativeZero)
-        void SetAsNegativeZero()
-        {
-            IntValue = 0; DecimalHalf = -4;
-            ExtraRep = TrailingZero;
-        }
-#endif
-
         void SetAsZero()
         {
             IntValue = 0; DecimalHalf = 0;
             ExtraRep = TrailingZero;
         }
+		
+#if defined(MixedDec_EnableNegativeZero)
+        void SetAsNegativeZero()
+        {
+            IntValue = 0; DecimalHalf = 0;
+            ExtraRep = TrailingZero;
+        }
+private:
+        static MixedDec NegativeZeroValue()
+        {
+            return MixedDec(0, 0, -4.0f);
+        }
+public:
+		static MixedDec NegativeZero;
+#endif
         
         /// <summary>
         /// Sets the value.
@@ -4991,6 +5055,10 @@ public:
 #endif
 #if defined(MixedDec_EnableNaN)
     MixedDec MixedDec::NaN = NaNValue();
+#endif
+#if defined(MixedDec_EnableNegativeZero)
+	MixedDec::TrailingType MixedDec::NegativeZeroRep = NegativeZeroRepValue();
+	MixedDec MixedDec::NegativeZero = NegativeZeroValue();
 #endif
     #pragma endregion ValueDefine Source
 
