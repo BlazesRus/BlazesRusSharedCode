@@ -453,7 +453,7 @@ public:
             if(ExtraRep!=-2147483647)
             {
                 int TempDiv = ExtraRep*-1;
-                BasicDivOp(TempDiv);
+                BasicDivIntOp(TempDiv);
             }
             ExtraRep = 0;
         }
@@ -517,7 +517,7 @@ public:
                 else//Value Divided by ExtraRep
                 {
 #endif
-                    BasicDivOp(ExtraRep);
+                    BasicDivIntOp(ExtraRep);
 #if AltDec_EnableMixedFractional
                 }
 #endif
@@ -1598,7 +1598,17 @@ public:
                     DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
             }
         }
-    
+
+private:
+        void CatchAllAddition(AltDec& Value)
+        {
+            ConvertToNumRep();
+            AltDec ValueCopy = Value;
+            Value.ConvertToNumRep();
+            BasicAddOp(ValueCopy);
+        }
+public:
+
         /// <summary>
         /// Addition Operation Between AltDecs
         /// </summary>
@@ -1622,7 +1632,7 @@ public:
             RepType RRep = Value.GetRepType();
             if(LRep==RRep)
             {
-                if(self.ExtraRep==0||ExtraRep==PIRep)
+                if(self.ExtraRep==0||Value.ExtraRep==PIRep)
                 {
 #if AltDec_EnableMixedFractional
                     if(self.DecimalHalf<0)//MixedFractional
@@ -1672,10 +1682,10 @@ public:
                             {
                                 break;
                             }
-                            default:
+                            default://Catch-all for other representation combinations
+                                self.CatchAllAddition(Value);
                                 break;
                         }
-                        break;
                     }
                     case RepType::PINum:
                     {
@@ -1685,16 +1695,14 @@ public:
                             {
                                 break;
                             }
-                            default:
+                            default://Catch-all for other representation combinations
+                                self.CatchAllAddition(Value);
+                                break;
                         }
-                        break;
                     }
                     default://Catch-all for other representation combinations
-                    {
-                        AltDec ValueCopy = Value;
-                        Value.ConvertToNumRep();
-                        self.BasicAddOp(ValueCopy);
-                    }
+                        self.CatchAllAddition(Value);
+                        break;
                 }
             }
             return self;
@@ -1815,7 +1823,7 @@ public:
             RepType RRep = Value.GetRepType();
             if(LRep==RRep)
             {
-                if(self.ExtraRep==0||ExtraRep==PIRep)
+                if(self.ExtraRep==0||Value.ExtraRep==PIRep)
                 {
 #if AltDec_EnableMixedFractional
                     if(self.DecimalHalf<0)//MixedFractional
@@ -2191,7 +2199,8 @@ public:
                 }
                 else
                 {
-                    Value *= IntValue;
+                    //Value *= IntValue;
+                    Value.PartialMultOp(*this);
                     IntValue = Value.IntValue; DecimalHalf = Value.DecimalHalf;
                     ExtraRep = Value.ExtraRep;
                 }
@@ -2371,7 +2380,7 @@ public:
                 {
                 }
                 else if(self.ExtraRep>0)
-    #if defined(AltDec_EnableENum)
+    #elif defined(AltDec_EnableENum)
                 else if(self.ExtraRep==IERep)
                 {
                 }
@@ -2389,6 +2398,7 @@ public:
                 }
     #endif
             }
+
             if(self.ExtraRep!=0&&self.IntValue==0&&self.DecimalHalf==0)
                 self.ExtraRep = 0;
             if (self == AltDec::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
@@ -2559,8 +2569,15 @@ public:
 
         void BasicDivOp(AltDec& Value)
         {
+#if defined(AltDec_EnableInfinityRep)
+            if (value.DecimalHalf == InfinityRep)
+                return self.SetAsZero();
+            if (Value == AltDec::Zero)
+                return self.IntValue < 0 ? self.SetAsNegativeInfinity : self.SetAsInfinity();
+#else
             if (Value == AltDec::Zero)
                 throw "Target value can not be divided by zero";
+#endif
             if (IntValue==0&&DecimalHalf==0)
                 return;
             if (Value.IntValue < 0)
@@ -2648,6 +2665,75 @@ public:
             return self;
         }
 
+        template<typename IntType>
+        void PartialDivIntOp(AltDec& Value)
+        {
+            if (DecimalHalf == 0)
+            {
+                bool SelfIsNegative = IntValue < 0;
+                if (SelfIsNegative)
+                    IntValue *= -1;
+                __int64 SRep = DecimalOverflowX * IntValue;
+                SRep /= Value;
+                if (SRep >= DecimalOverflowX)
+                {
+                    __int64 OverflowVal = SRep / DecimalOverflow;
+                    SRep -= OverflowVal * DecimalOverflow;
+                    IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
+                    DecimalHalf = (signed int)SRep;
+                }
+                else
+                {
+                    IntValue = SelfIsNegative ? NegativeRep : 0;
+                    DecimalHalf = (signed int)SRep;
+                }
+            }
+            else
+            {
+                bool SelfIsNegative = IntValue < 0;
+                if (SelfIsNegative)
+                {
+                    if (IntValue == NegativeRep) { IntValue = 0; }
+                    else { IntValue *= -1; }
+                }
+                __int64 SRep = IntValue == 0 ? DecimalHalf : DecimalOverflowX * IntValue + DecimalHalf;
+                SRep /= Value;
+                if (SRep >= DecimalOverflowX)
+                {
+                    __int64 OverflowVal = SRep / DecimalOverflowX;
+                    SRep -= DecimalOverflowX * OverflowVal;
+                    IntValue = (signed int)(SelfIsNegative ? OverflowVal * -1 : OverflowVal);
+                    DecimalHalf = (signed int)SRep;
+                }
+                else
+                {
+                    IntValue = 0;
+                    DecimalHalf = (signed int)SRep;
+                }
+            }
+        }
+
+        template<typename IntType>
+        void BasicDivIntOp(IntType& Value)
+        {
+            if (Value == 0)
+#if defined(AltDec_EnableInfinityRep)
+                return self.IntValue < 0 ? self.SetAsNegativeInfinity : self.SetAsInfinity();
+#else
+                throw "Target value can not be divided by zero";
+#endif
+            else if (IntValue == 0 && DecimalHalf == 0)
+                return self;
+            if (Value.IntValue < 0)
+            {
+                if (Value.IntValue == AltDec::NegativeRep) { Value.IntValue = 0; }
+                else { Value.IntValue *= -1; }
+                SwapNegativeStatus();
+            }
+            PartialDivIntOp(Value);
+            if (IntValue == 0 && DecimalHalf == 0) { DecimalHalf = 1; }//Prevent Dividing into nothing
+        }
+
         /// <summary>
         /// Division Operation Between AltDec and Integer Value
         /// </summary>
@@ -2663,7 +2749,8 @@ public:
 #else
                 throw "Target value can not be divided by zero";
 #endif
-            else if (self == Zero) { return self; }
+            else if(IntValue == 0 && DecimalHalf == 0)//(self == Zero)
+                return self;
             if (Value < 0)
             {
                 if (Value == NegativeRep) { Value = 0; }
