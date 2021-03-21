@@ -433,22 +433,26 @@ public:
 //#endif
 //        }
 
+		private:
+		void ConvertPIToNum()
+		{
+			if (DecimalHalf == 0 && IntValue == 10)
+			{
+				IntValue = 31; DecimalHalf = 415926536; 
+			}
+			else
+			{
+				BasicMultOp(PINum);
+			}
+			ExtraRep = 0;
+		}
+		
+		public:
         void ConvertToNumRep()
         {
-            if(ExtraRep==PIRep)
-            {
-                ExtraRep = 0;
-                if (DecimalHalf == 0 && IntValue == 10)
-                {
-                    IntValue = 31; DecimalHalf = 415926536; 
-                }
-                else
-                {
-                    BasicMultOp(PINum);
-                }
-            }
+			//Check for Non-ExtraRep focused special states first
 #ifdef AltDec_EnableInfinityRep
-            else if(DecimalHalf==InfinityRep)
+            if(DecimalHalf==InfinityRep)
             {
                 ExtraRep = 0;
                 if(IntValue==1)//If Positive Infinity, then convert number into MaximumValue instead
@@ -459,40 +463,25 @@ public:
                 {
                     IntValue = -2147483647; DecimalHalf = 999999999;
                 }
+				return;
             }
             else if(DecimalHalf==ApproachingValRep)
             {
-                ExtraRep = 0;
-                DecimalHalf = 1;
+                DecimalHalf = 1; ExtraRep = 0;
+				return;
             }
 #endif
-#ifdef AltDec_EnableNaN
-            else if(DecimalHalf==NaNRep)//Set as Zero instead of NaN
+#if defined(AltDec_EnableNaN) && defined(AltDec_EnableNaNConversionCheck)//Disable conversion check for NaN by default(unless AltDec_EnableNaNConversionCheck preprocessor added)
+            if(DecimalHalf==NaNRep)//Set as Zero instead of NaN
             {
-                IntValue = 0; DecimalHalf = 0;
+                SetAsZero(); return;
             }
 #endif
-#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-            else(ExtraRep>0)
-#else
-            else
-#endif
+			if(ExtraRep==0)//Skip converting if already normal number state(Equal to default MediumDec format)
+				return;
+            if(ExtraRep==PIRep)
             {
-#if AltDec_EnableMixedFractional
-                if(DecimalHalf<0)//Mixed Fraction
-                {
-                    int TempAdd = IntValue;
-                    IntValue = DecimalHalf*-1; DecimalHalf = 0;
-                    BasicIntDivOp(ExtraRep);
-                    BasicAddOp(TempAdd);
-                }
-                else//Value Divided by ExtraRep
-                {
-#endif
-                    BasicDivOp(ExtraRep);
-#if AltDec_EnableMixedFractional
-                }
-#endif
+				ConvertPIToNum(); return;
             }
 #if defined(AltDec_EnableImaginaryNum)
             else(ExtraRep<0)
@@ -510,6 +499,24 @@ public:
                 }
             }
 #endif
+            else
+            {
+#if AltDec_EnableMixedFractional
+                if(DecimalHalf<0)//Mixed Fraction
+                {
+                    int TempAdd = IntValue;
+                    IntValue = DecimalHalf*-1; DecimalHalf = 0;
+                    BasicIntDivOp(ExtraRep);
+                    BasicAddOp(TempAdd);
+                }
+                else//Value Divided by ExtraRep
+                {
+#endif
+                    BasicDivOp(ExtraRep);
+#if AltDec_EnableMixedFractional
+                }
+#endif
+            }
             ExtraRep = 0;
         }
 		
