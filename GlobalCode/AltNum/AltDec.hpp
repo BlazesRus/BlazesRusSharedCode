@@ -447,6 +447,16 @@ public:
 			ExtraRep = 0;
 		}
 		
+		void ConvertEToNum()
+		{
+			BasicAddOp(ENum);
+			if(ExtraRep!=-2147483647)
+			{
+				int TempDiv = ExtraRep*-1;
+				BasicDivOp(TempDiv);
+			}
+			ExtraRep = 0;
+		}
 		public:
         void ConvertToNumRep()
         {
@@ -491,12 +501,7 @@ public:
 #elif defined(AltDec_EnableENum)
             else(ExtraRep<0)
             {
-                BasicAddOp(ENum);
-                if(ExtraRep!=-2147483647)
-                {
-                    int TempDiv = ExtraRep*-1;
-                    BasicDivOp(TempDiv);
-                }
+				ConvertEToNum(); return;
             }
 #endif
             else
