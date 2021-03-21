@@ -84,37 +84,37 @@ namespace BlazesRusCode
         //Is NaN when DecimalHalf==2147483647
         static signed int NaNRep = 2147483647;
 #endif
-		enum class RepType: int
-		{
-			NormalType = 0,,
-			NumByDiv,
-			PINum,
-			PIPower,
-			ENum,
-			ENumByDiv,
-			INum,
-			INumByDiv,
-			ComplexIRep,
-			MixedFrac,
-			MixedE,
-			MixedI;
+        enum class RepType: int
+        {
+            NormalType = 0,
+            NumByDiv,
+            PINum,
+            PIPower,
+            ENum,
+            ENumByDiv,
+            INum,
+            INumByDiv,
+            ComplexIRep,
+            MixedFrac,
+            MixedE,
+            MixedI,
 //#if defined(AltDec_EnableMixedFractional)
 //#endif
 //#if defined(AltDec_EnableInfinityRep)
-			ApproachingVal,//Defaults to approaching from right exact in case of NegativeRep(NegativeRep = -0.000...1;Approaching Zero is equal to 0.000...1)
-			ApproachingFromLeftVal,
-			ApproachingPI,
-			ApproachingE,
-			ApproachingI,
-			//InfinityRep
+            ApproachingVal,//Defaults to approaching from right exact in case of NegativeRep(NegativeRep = -0.000...1;Approaching Zero is equal to 0.000...1)
+            ApproachingFromLeftVal,
+            ApproachingPI,
+            ApproachingE,
+            ApproachingI,
+            //InfinityRep
 //#endif
-			NaN,
-			UnknownType
-		};
-		RepType GetRepType()
-		{
-			if(ExtraRep==0)
-				return RepType::NormalType;
+            NaN,
+            UnknownType
+        };
+        RepType GetRepType()
+        {
+            if(ExtraRep==0)
+                return RepType::NormalType;
 #ifdef AltDec_EnableInfinityRep
 //            else if(DecimalHalf==InfinityRep)
 //            {
@@ -128,39 +128,39 @@ namespace BlazesRusCode
 //                }
 //            }
             else if(DecimalHalf==ApproachingValRep)
-				return RepType::ApproachingVal;//Approaching from left to Value
+                return RepType::ApproachingVal;//Approaching from left to Value
 #endif
-			else if(ExtraRep==PIRep)
-				return RepType::PINum;
-			else if(ExtraRep>0)
-				return RepType::NumByDiv;
+            else if(ExtraRep==PIRep)
+                return RepType::PINum;
+            else if(ExtraRep>0)
+                return RepType::NumByDiv;
 #if defined(AltDec_EnableNaN)
-			else if(DecimalHalf==NaNRep)
-				return RepType::NaN;
+            else if(DecimalHalf==NaNRep)
+                return RepType::NaN;
 #endif
-			//(ExtraRep<0)
+            //(ExtraRep<0)
 #if defined(AltDec_EnableImaginaryNum)
 #if AltDec_EnableMixedFractional
-			else if(DecimalHalf<0)
-				return RepType::MixedI;
+            else if(DecimalHalf<0)
+                return RepType::MixedI;
 #endif
-			else if(ExtraRep==IERep)
-				return RepType::INum;
-			else
-				return RepType::INumByDiv;
+            else if(ExtraRep==IERep)
+                return RepType::INum;
+            else
+                return RepType::INumByDiv;
 #elif defined(AltDec_EnableENum)
 #if AltDec_EnableMixedFractional
-			else if(DecimalHalf<0)
-				return RepType::MixedE;
+            else if(DecimalHalf<0)
+                return RepType::MixedE;
 #endif
-			else if(ExtraRep==IERep)
-				return RepType::ENum;
-			else
-				return RepType::ENumByDiv;
+            else if(ExtraRep==IERep)
+                return RepType::ENum;
+            else
+                return RepType::ENumByDiv;
 #endif
-			throw "Unknown or non-enabled representation type detected from AltDec";
-			return RepType::UnknownType;//Catch-All Value;
-		}
+            throw "Unknown or non-enabled representation type detected from AltDec";
+            return RepType::UnknownType;//Catch-All Value;
+        }
     public:
         /// <summary>
         /// The decimal overflow
@@ -284,30 +284,30 @@ namespace BlazesRusCode
             ExtraRep = 0;
         }
   
-		//Approaching Zero from Right
+        //Approaching Zero from Right
         void SetAsApproachingZero()
         {
             IntValue = 0; DecimalHalf = ApproachingValRep;
             ExtraRep = 0;
         }
-		
+        
         void SetAsApproachingZeroFromLeft()
         {
             IntValue = 0; DecimalHalf = ApproachingValRep;
             ExtraRep = NegativeRep;
         }
         
-		void SetAsApproachingValueFromRight(int value)
-		{
+        void SetAsApproachingValueFromRight(int value)
+        {
             IntValue = value; DecimalHalf = ApproachingValRep;
             ExtraRep = 0;
-		}
-		
-		void SetAsApproachingValueFromLeft(int value)
-		{
+        }
+        
+        void SetAsApproachingValueFromLeft(int value)
+        {
             IntValue = value; DecimalHalf = ApproachingValRep;
             ExtraRep = NegativeRep;
-		}
+        }
 private:
         static AltDec InfinityValue()
         {
@@ -433,34 +433,34 @@ public:
 //#endif
 //        }
 
-		private:
-		void ConvertPIToNum()
-		{
-			if (DecimalHalf == 0 && IntValue == 10)
-			{
-				IntValue = 31; DecimalHalf = 415926536; 
-			}
-			else
-			{
-				BasicMultOp(PINum);
-			}
-			ExtraRep = 0;
-		}
-		
-		void ConvertEToNum()
-		{
-			BasicAddOp(ENum);
-			if(ExtraRep!=-2147483647)
-			{
-				int TempDiv = ExtraRep*-1;
-				BasicDivOp(TempDiv);
-			}
-			ExtraRep = 0;
-		}
-		public:
+        private:
+        void ConvertPIToNum()
+        {
+            if (DecimalHalf == 0 && IntValue == 10)
+            {
+                IntValue = 31; DecimalHalf = 415926536; 
+            }
+            else
+            {
+                BasicMultOp(PINum);
+            }
+            ExtraRep = 0;
+        }
+        
+        void ConvertEToNum()
+        {
+            BasicAddOp(ENum);
+            if(ExtraRep!=-2147483647)
+            {
+                int TempDiv = ExtraRep*-1;
+                BasicDivOp(TempDiv);
+            }
+            ExtraRep = 0;
+        }
+        public:
         void ConvertToNumRep()
         {
-			//Check for Non-ExtraRep focused special states first
+            //Check for Non-ExtraRep focused special states first
 #ifdef AltDec_EnableInfinityRep
             if(DecimalHalf==InfinityRep)
             {
@@ -473,12 +473,12 @@ public:
                 {
                     IntValue = -2147483647; DecimalHalf = 999999999;
                 }
-				return;
+                return;
             }
             else if(DecimalHalf==ApproachingValRep)
             {
                 DecimalHalf = 1; ExtraRep = 0;
-				return;
+                return;
             }
 #endif
 #if defined(AltDec_EnableNaN) && defined(AltDec_EnableNaNConversionCheck)//Disable conversion check for NaN by default(unless AltDec_EnableNaNConversionCheck preprocessor added)
@@ -487,11 +487,11 @@ public:
                 SetAsZero(); return;
             }
 #endif
-			if(ExtraRep==0)//Skip converting if already normal number state(Equal to default MediumDec format)
-				return;
+            if(ExtraRep==0)//Skip converting if already normal number state(Equal to default MediumDec format)
+                return;
             if(ExtraRep==PIRep)
             {
-				ConvertPIToNum(); return;
+                ConvertPIToNum(); return;
             }
 #if defined(AltDec_EnableImaginaryNum)
             else(ExtraRep<0)
@@ -501,7 +501,7 @@ public:
 #elif defined(AltDec_EnableENum)
             else(ExtraRep<0)
             {
-				ConvertEToNum(); return;
+                ConvertEToNum(); return;
             }
 #endif
             else
@@ -524,7 +524,7 @@ public:
             }
             ExtraRep = 0;
         }
-		
+        
     #pragma region ValueDefines
 private:
         static AltDec PINumValue()
@@ -1086,46 +1086,46 @@ public:
         friend bool operator==(AltDec self, AltDec Value)
         {
 #if defined(AltDec_EnableInfinityRep)
-	#if defined(AltDec_EnableImaginaryNum)
-				if(self.DecimalHalf!=InfinityRep&&(self.ExtraRep>=0||self.ExtraRep==PIRep))
-	#else
-				if(self.DecimalHalf!=InfinityRep)
-	#endif
-				{
-					self.ConvertToNumRep();
-				}
+    #if defined(AltDec_EnableImaginaryNum)
+                if(self.DecimalHalf!=InfinityRep&&(self.ExtraRep>=0||self.ExtraRep==PIRep))
+    #else
+                if(self.DecimalHalf!=InfinityRep)
+    #endif
+                {
+                    self.ConvertToNumRep();
+                }
 
-	#if defined(AltDec_EnableImaginaryNum)
-				if(Value.DecimalHalf!=InfinityRep&&(Value.ExtraRep>=0||Value.ExtraRep==PIRep))
-	#else
-				if(Value.DecimalHalf!=InfinityRep)
-	#endif
-				{
-					Value.ConvertToNumRep();
-				}
+    #if defined(AltDec_EnableImaginaryNum)
+                if(Value.DecimalHalf!=InfinityRep&&(Value.ExtraRep>=0||Value.ExtraRep==PIRep))
+    #else
+                if(Value.DecimalHalf!=InfinityRep)
+    #endif
+                {
+                    Value.ConvertToNumRep();
+                }
 #else
-	#if defined(AltDec_EnableImaginaryNum)
-				if(self.ExtraRep>=0||self.ExtraRep==PIRep)
-				{
-					self.ConvertToNumRep();
-				}
-	#else
-				self.ConvertToNumRep();
-	#endif
+    #if defined(AltDec_EnableImaginaryNum)
+                if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+                {
+                    self.ConvertToNumRep();
+                }
+    #else
+                self.ConvertToNumRep();
+    #endif
 
-	#if defined(AltDec_EnableImaginaryNum)
-				if(Value.ExtraRep>=0||Value.ExtraRep==PIRep)
-				{
-					Value.ConvertToNumRep();
-				}
-	#else
-				Value.ConvertToNumRep();
-	#endif
+    #if defined(AltDec_EnableImaginaryNum)
+                if(Value.ExtraRep>=0||Value.ExtraRep==PIRep)
+                {
+                    Value.ConvertToNumRep();
+                }
+    #else
+                Value.ConvertToNumRep();
+    #endif
 #endif
 #if defined(AltDec_EnableImaginaryNum)
-			return (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf && self.ExtraRep == Value.ExtraRep);
+            return (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf && self.ExtraRep == Value.ExtraRep);
 #else
-			return (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf);
+            return (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf);
 #endif
         }
 
@@ -1138,41 +1138,41 @@ public:
         friend bool operator!=(AltDec self, AltDec Value)
         {
 #if defined(AltDec_EnableInfinityRep)
-	#if defined(AltDec_EnableImaginaryNum)
-				if(self.DecimalHalf!=InfinityRep&&(self.ExtraRep>=0||self.ExtraRep==PIRep))
-	#else
-				if(self.DecimalHalf!=InfinityRep)
-	#endif
-				{
-					self.ConvertToNumRep();
-				}
+    #if defined(AltDec_EnableImaginaryNum)
+                if(self.DecimalHalf!=InfinityRep&&(self.ExtraRep>=0||self.ExtraRep==PIRep))
+    #else
+                if(self.DecimalHalf!=InfinityRep)
+    #endif
+                {
+                    self.ConvertToNumRep();
+                }
 
-	#if defined(AltDec_EnableImaginaryNum)
-				if(Value.DecimalHalf!=InfinityRep&&(Value.ExtraRep>=0||Value.ExtraRep==PIRep))
-	#else
-				if(Value.DecimalHalf!=InfinityRep)
-	#endif
-				{
-					Value.ConvertToNumRep();
-				}
+    #if defined(AltDec_EnableImaginaryNum)
+                if(Value.DecimalHalf!=InfinityRep&&(Value.ExtraRep>=0||Value.ExtraRep==PIRep))
+    #else
+                if(Value.DecimalHalf!=InfinityRep)
+    #endif
+                {
+                    Value.ConvertToNumRep();
+                }
 #else
-	#if defined(AltDec_EnableImaginaryNum)
-				if(self.ExtraRep>=0||self.ExtraRep==PIRep)
-				{
-					self.ConvertToNumRep();
-				}
-	#else
-				self.ConvertToNumRep();
-	#endif
+    #if defined(AltDec_EnableImaginaryNum)
+                if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+                {
+                    self.ConvertToNumRep();
+                }
+    #else
+                self.ConvertToNumRep();
+    #endif
 
-	#if defined(AltDec_EnableImaginaryNum)
-				if(Value.ExtraRep>=0||Value.ExtraRep==PIRep)
-				{
-					Value.ConvertToNumRep();
-				}
-	#else
-				Value.ConvertToNumRep();
-	#endif
+    #if defined(AltDec_EnableImaginaryNum)
+                if(Value.ExtraRep>=0||Value.ExtraRep==PIRep)
+                {
+                    Value.ConvertToNumRep();
+                }
+    #else
+                Value.ConvertToNumRep();
+    #endif
 #endif
 #if defined(AltDec_EnableImaginaryNum)
             return (self.IntValue != Value.IntValue || self.DecimalHalf != Value.DecimalHalf || self.ExtraRep != Value.ExtraRep);
@@ -1190,17 +1190,17 @@ public:
         friend bool operator<(AltDec self, AltDec Value)
         {
 #if defined(AltDec_EnableInfinityRep)
-			if(self.ExtraRep==InfinityRep)
-			{
-				if(Value.ExtraRep==InfinityRep)
-				{
-					return self.IntValue<Value.IntValue;
-				}
-			}
-			else if(Value.ExtraRep==InfinityRep)
-			{
-			
-			}
+            if(self.ExtraRep==InfinityRep)
+            {
+                if(Value.ExtraRep==InfinityRep)
+                {
+                    return self.IntValue<Value.IntValue;
+                }
+            }
+            else if(Value.ExtraRep==InfinityRep)
+            {
+            
+            }
 #endif
             self.ConvertToNumRep(); Value.ConvertToNumRep();
             if (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf) { return false; }
@@ -1272,17 +1272,17 @@ public:
         friend bool operator<=(AltDec self, AltDec Value)
         {
 #if defined(AltDec_EnableInfinityRep)
-			if(self.ExtraRep==InfinityRep)
-			{
-				if(self.IntValue==Value.IntValue||Value.IntValue==1)
-					return true;
-				else
-					return false;
-			}
-			else if(Value.ExtraRep==InfinityRep)
-			{
-			
-			}
+            if(self.ExtraRep==InfinityRep)
+            {
+                if(self.IntValue==Value.IntValue||Value.IntValue==1)
+                    return true;
+                else
+                    return false;
+            }
+            else if(Value.ExtraRep==InfinityRep)
+            {
+            
+            }
 #endif
             self.ConvertToNumRep(); Value.ConvertToNumRep();
             if (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf) { return true; }
@@ -1354,22 +1354,22 @@ public:
         friend bool operator>(AltDec self, AltDec Value)
         {
 #if defined(AltDec_EnableInfinityRep)
-			if(self.ExtraRep==InfinityRep)
-			{
-				if(Value.ExtraRep==InfinityRep)
-				{
-					if(self.IntValue==Value.IntValue)
-						return false;
-					else if(Value.IntValue==1)
-						return false;
-					else
-						return true;
-				}
-			}
-			else if(Value.ExtraRep==InfinityRep)
-			{
-			
-			}
+            if(self.ExtraRep==InfinityRep)
+            {
+                if(Value.ExtraRep==InfinityRep)
+                {
+                    if(self.IntValue==Value.IntValue)
+                        return false;
+                    else if(Value.IntValue==1)
+                        return false;
+                    else
+                        return true;
+                }
+            }
+            else if(Value.ExtraRep==InfinityRep)
+            {
+            
+            }
 #endif
             self.ConvertToNumRep(); Value.ConvertToNumRep();
             if (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf) { return false; }
@@ -1439,24 +1439,24 @@ public:
         friend bool operator>=(AltDec self, AltDec Value)
         {
 #if defined(AltDec_EnableInfinityRep)
-			if(self.ExtraRep==InfinityRep)
-			{
-				if(Value.ExtraRep==InfinityRep)
-				{
-					if(self.IntValue==Value.IntValue||Value.IntValue==-1)
-						return true;
-					else
-						return false;
-				}
-				else
-				{
-				
-				}
-			}
-			else if(Value.ExtraRep==InfinityRep)
-			{
-			
-			}
+            if(self.ExtraRep==InfinityRep)
+            {
+                if(Value.ExtraRep==InfinityRep)
+                {
+                    if(self.IntValue==Value.IntValue||Value.IntValue==-1)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                {
+                
+                }
+            }
+            else if(Value.ExtraRep==InfinityRep)
+            {
+            
+            }
 #endif
             self.ConvertToNumRep(); Value.ConvertToNumRep();
             if (self.IntValue == Value.IntValue && self.DecimalHalf == Value.DecimalHalf) { return true; }
@@ -1607,19 +1607,19 @@ public:
         /// <returns>AltDec</returns>
         static AltDec& AddOp(AltDec& self, AltDec& Value)
         {
-			if(self==Zero)
-			{
-				self.IntValue = Value.IntValue; self.DecimalHalf = Value.DecimalHalf;
-				self.ExtraRep = Value.ExtraRep; return self;
-			}
+            if(self==Zero)
+            {
+                self.IntValue = Value.IntValue; self.DecimalHalf = Value.DecimalHalf;
+                self.ExtraRep = Value.ExtraRep; return self;
+            }
 #if defined(AltDec_EnableInfinityRep)
             if (self.DecimalHalf==InfinityRep)
                 return self;
             if (Value.DecimalHalf == InfinityRep)
                 return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
 #endif
-			RepType LRep = self.GetRepType();
-			RepType RRep = Value.GetRepType();
+            RepType LRep = self.GetRepType();
+            RepType RRep = Value.GetRepType();
             if(LRep==RRep)
             {
                 if(self.ExtraRep==0||ExtraRep==PIRep)
@@ -1662,40 +1662,40 @@ public:
             }
             else
             {
-				switch(LRep)
-				{
-					case RepType::NormalType:
-					{
-						switch(RRep)
-						{
-							case RepType::PINum:
-							{
-								break;
-							}
-							default:
-								break;
-						}
-						break;
-					}
-					case RepType::PINum:
-					{
-						switch(RRep)
-						{
-							case RepType::NormalType:
-							{
-								break;
-							}
-							default:
-						}
-						break;
-					}
-					default://Catch-all for other representation combinations
-					{
-						AltDec ValueCopy = Value;
-						Value.ConvertToNumRep();
-						self.BasicAddOp(ValueCopy);
-					}
-				}
+                switch(LRep)
+                {
+                    case RepType::NormalType:
+                    {
+                        switch(RRep)
+                        {
+                            case RepType::PINum:
+                            {
+                                break;
+                            }
+                            default:
+                                break;
+                        }
+                        break;
+                    }
+                    case RepType::PINum:
+                    {
+                        switch(RRep)
+                        {
+                            case RepType::NormalType:
+                            {
+                                break;
+                            }
+                            default:
+                        }
+                        break;
+                    }
+                    default://Catch-all for other representation combinations
+                    {
+                        AltDec ValueCopy = Value;
+                        Value.ConvertToNumRep();
+                        self.BasicAddOp(ValueCopy);
+                    }
+                }
             }
             return self;
         }
@@ -1787,32 +1787,32 @@ public:
         /// <returns>AltDec&</returns>
         static AltDec& SubOp(AltDec& self, AltDec& Value)
         {
-			//if(self==Zero)
-			//{
-			//	if (Value.DecimalHalf == InfinityRep)
-			//	{
-			//		self.IntValue = Value.IntValue == 1?-1:1; self.ExtraRep = InfinityRep;
-			//		return self;
-			//	}
+            //if(self==Zero)
+            //{
+            //	if (Value.DecimalHalf == InfinityRep)
+            //	{
+            //		self.IntValue = Value.IntValue == 1?-1:1; self.ExtraRep = InfinityRep;
+            //		return self;
+            //	}
    //             else
-			//	{
-			//		if(Value.IntValue==0)
-			//			self.IntValue = Value.IntValue;
-			//		//else if(Value.IntValue==NegativeRep)
-			//		//	self.IntValue = 0;
-			//		else if(Value.IntValue!=NegativeRep)
-			//			self.IntValue = Value.IntValue *-1;
-			//		self.ExtraRep = Value.ExtraRep; return self;
-			//	}
-			//}
+            //	{
+            //		if(Value.IntValue==0)
+            //			self.IntValue = Value.IntValue;
+            //		//else if(Value.IntValue==NegativeRep)
+            //		//	self.IntValue = 0;
+            //		else if(Value.IntValue!=NegativeRep)
+            //			self.IntValue = Value.IntValue *-1;
+            //		self.ExtraRep = Value.ExtraRep; return self;
+            //	}
+            //}
 #if defined(AltDec_EnableInfinityRep)
             if (self.DecimalHalf == InfinityRep)
                 return self;
             if (Value.DecimalHalf == InfinityRep)
                 return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
 #endif
-			RepType LRep = self.GetRepType();
-			RepType RRep = Value.GetRepType();
+            RepType LRep = self.GetRepType();
+            RepType RRep = Value.GetRepType();
             if(LRep==RRep)
             {
                 if(self.ExtraRep==0||ExtraRep==PIRep)
@@ -1875,26 +1875,26 @@ public:
         /// Partial Addition Operation Between AltDec and Integer value
         /// </summary>
         /// <param name="value">The value.</param>
-		template<typename IntType>
+        template<typename IntType>
         void PartialIntAddition(IntType& value)
         {
             if (DecimalHalf == 0)
                 IntValue += value;
             else
             {
-				bool WasNegative = IntValue < 0;
-				if (WasNegative)
-					IntValue = IntValue == AltDec::NegativeRep ? -1 : --IntValue;
-				IntValue += value;
-				if (IntValue == -1)
-					IntValue = DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
-				else if (IntValue < 0)
-					++IntValue;
-				//If flips to other side of negative, invert the decimals
-				if ((WasNegative && IntValue >= 0) || (WasNegative == 0 && IntValue < 0))
-					DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
-			}
-		}
+                bool WasNegative = IntValue < 0;
+                if (WasNegative)
+                    IntValue = IntValue == AltDec::NegativeRep ? -1 : --IntValue;
+                IntValue += value;
+                if (IntValue == -1)
+                    IntValue = DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
+                else if (IntValue < 0)
+                    ++IntValue;
+                //If flips to other side of negative, invert the decimals
+                if ((WasNegative && IntValue >= 0) || (WasNegative == 0 && IntValue < 0))
+                    DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
+            }
+        }
 
         /// <summary>
         /// Addition Operation Between AltDec and Integer value
@@ -1912,14 +1912,14 @@ public:
                 return self;
 #endif
             if(self.ExtraRep==PIRep)//Value*Pi Representation
-			{
+            {
                 self.ConvertToNumRep();
-				self.PartialIntAddition(value);
-			}
+                self.PartialIntAddition(value);
+            }
 #if defined(AltDec_EnableImaginaryNum)
             else if(self.ExtraRep==IERep)
             {
-				throw "Can't convert AltDec into complex number at moment";
+                throw "Can't convert AltDec into complex number at moment";
             }
             else if(self.ExtraRep>0)
 #elif defined(AltDec_EnableENum)
@@ -1933,7 +1933,7 @@ public:
                 self.ConvertToNumRep();
             if(self.ExtraRep==0)
             {
-				self.PartialIntAddition(value);
+                self.PartialIntAddition(value);
             }
             return self;
         }
@@ -1942,7 +1942,7 @@ public:
         /// Partial Subtraction Operation Between AltDec and Integer value
         /// </summary>
         /// <param name="value">The value.</param>
-		template<typename IntType>
+        template<typename IntType>
         void PartialIntSubtraction(IntType& value)
         {
             if (DecimalHalf == 0)
@@ -1960,9 +1960,9 @@ public:
                 //If flips to other side of negative, invert the decimals
                 if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
                     self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
-			}
-		}
-		
+            }
+        }
+        
         /// <summary>
         /// Subtraction Operation Between AltDec and Integer value
         /// </summary>
@@ -1979,14 +1979,14 @@ public:
                 return self;
 #endif
             if(self.ExtraRep==PIRep)//Value*Pi Representation
-			{
+            {
                 self.ConvertToNumRep();
-				self.PartialIntSubtraction(value);
-			}
+                self.PartialIntSubtraction(value);
+            }
 #if defined(AltDec_EnableImaginaryNum)
             else if(self.ExtraRep==IERep)
             {
-				throw "Can't convert AltDec into complex number at moment";
+                throw "Can't convert AltDec into complex number at moment";
             }
             else if(self.ExtraRep>0)
 #elif defined(AltDec_EnableENum)
@@ -2000,7 +2000,7 @@ public:
                 self.ConvertToNumRep();
             if(self.ExtraRep==0)
             {
-				self.PartialIntSubtraction(value);
+                self.PartialIntSubtraction(value);
             }
             return self;
         }
@@ -2013,30 +2013,30 @@ public:
         /// <returns>AltDec&</returns>
         template<typename IntType>
         void PartialUnsignedAddition(IntType& value)
-		{
+        {
             if (DecimalHalf == 0 || IntValue > 0)
                 IntValue += value;
             else
             {
                 bool WasNegative = IntValue < 0;
                 if (WasNegative)
-				{
+                {
                     IntValue = IntValue == AltDec::NegativeRep ? -1 : --IntValue;
-					IntValue += value;
-					if (IntValue == -1)
-						IntValue = DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
-					else if (IntValue < 0)
-						++IntValue;
-					//If flips to other side of negative, invert the decimals
-					if ((WasNegative && IntValue >= 0) || (WasNegative == 0 && IntValue < 0))
-						DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
-				}
-				else//Don't need to check if flipping to other sign if adding positive to positive
-				{
-					IntValue += value;
-				}
+                    IntValue += value;
+                    if (IntValue == -1)
+                        IntValue = DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
+                    else if (IntValue < 0)
+                        ++IntValue;
+                    //If flips to other side of negative, invert the decimals
+                    if ((WasNegative && IntValue >= 0) || (WasNegative == 0 && IntValue < 0))
+                        DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
+                }
+                else//Don't need to check if flipping to other sign if adding positive to positive
+                {
+                    IntValue += value;
+                }
             }
-		}
+        }
 
         /// <summary>
         /// Addition Operation Between AltDec and Integer value
@@ -2054,14 +2054,14 @@ public:
                 return self;
 #endif
             if(self.ExtraRep==PIRep)//Value*Pi Representation
-			{
+            {
                 self.ConvertToNumRep();
-				self.PartialUnsignedAddition(value);
-			}
+                self.PartialUnsignedAddition(value);
+            }
 #if defined(AltDec_EnableImaginaryNum)
             else if(self.ExtraRep==IERep)
             {
-				throw "Can't convert AltDec into complex number at moment";
+                throw "Can't convert AltDec into complex number at moment";
             }
             else if(self.ExtraRep>0)
 #elif defined(AltDec_EnableENum)
@@ -2075,7 +2075,7 @@ public:
                 self.ConvertToNumRep();
             if(self.ExtraRep==0)
             {
-				self.PartialUnsignedAddition(value);
+                self.PartialUnsignedAddition(value);
             }
             return self;
         }
@@ -2088,7 +2088,7 @@ public:
         /// <returns>AltDec&</returns>
         template<typename IntType>
         void PartialUnsignedSubtraction(IntType& value)
-		{
+        {
             if (DecimalHalf == 0)
                 IntValue -= value;
             else if (IntValue == NegativeRep)
@@ -2099,32 +2099,32 @@ public:
             {
                 bool WasNegative = IntValue < 0;
                 if (WasNegative)//Don't need to check if negative value if going farther negative
-				{
-					if(IntValue == AltDec::NegativeRep)
-					{
-						if(value==1)
-							IntValue = 0;
-						else
-							IntValue = ((signed int) value)*-1;
-					}
-					else
-					{
-						IntValue -= value;
-					}
-				}
-				else
-				{
-					IntValue -= value;
-					if (IntValue == -1)
-						IntValue = DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
-					else if (IntValue < 0)
-						++IntValue;
-					//If flips to other side of negative, invert the decimals
-					if ((WasNegative && IntValue >= 0) || (WasNegative == 0 && IntValue < 0))
-						DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
-				}
+                {
+                    if(IntValue == AltDec::NegativeRep)
+                    {
+                        if(value==1)
+                            IntValue = 0;
+                        else
+                            IntValue = ((signed int) value)*-1;
+                    }
+                    else
+                    {
+                        IntValue -= value;
+                    }
+                }
+                else
+                {
+                    IntValue -= value;
+                    if (IntValue == -1)
+                        IntValue = DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
+                    else if (IntValue < 0)
+                        ++IntValue;
+                    //If flips to other side of negative, invert the decimals
+                    if ((WasNegative && IntValue >= 0) || (WasNegative == 0 && IntValue < 0))
+                        DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
+                }
             }
-		}
+        }
 
         /// <summary>
         /// Subtraction Operation Between AltDec and Integer value
@@ -2142,14 +2142,14 @@ public:
                 return self;
 #endif
             if(self.ExtraRep==PIRep)//Value*Pi Representation
-			{
+            {
                 self.ConvertToNumRep();
-				self.PartialUnsignedSubtraction(value);
-			}
+                self.PartialUnsignedSubtraction(value);
+            }
 #if defined(AltDec_EnableImaginaryNum)
             else if(self.ExtraRep==IERep)
             {
-				throw "Can't convert AltDec into complex number at moment";
+                throw "Can't convert AltDec into complex number at moment";
             }
             else if(self.ExtraRep>0)
 #elif defined(AltDec_EnableENum)
@@ -2163,7 +2163,7 @@ public:
                 self.ConvertToNumRep();
             if(self.ExtraRep==0)
             {
-				self.PartialUnsignedSubtraction(value);
+                self.PartialUnsignedSubtraction(value);
             }
             return self;
         }
@@ -2343,8 +2343,8 @@ public:
             if (Value == AltDec::Zero) { self.SetAsZero(); return self; }
             if (self == AltDec::Zero || Value == AltDec::One)
                 return self;
-			RepType LRep = self.GetRepType();
-			RepType RRep = Value.GetRepType();
+            RepType LRep = self.GetRepType();
+            RepType RRep = Value.GetRepType();
             if(LRep==RRep)
             {
                 if(self.ExtraRep==0)
@@ -2598,8 +2598,8 @@ public:
                 else { Value.IntValue *= -1; }
                 self.SwapNegativeStatus();
             }
-			RepType LRep = self.GetRepType();
-			RepType RRep = Value.GetRepType();
+            RepType LRep = self.GetRepType();
+            RepType RRep = Value.GetRepType();
             if(LRep==RRep)
             {
                 if(self.ExtraRep==0)
@@ -2657,7 +2657,7 @@ public:
         template<typename IntType>
         static AltDec& DivIntOp(AltDec& self, IntType& Value)
         {
-			if (Value == 0)
+            if (Value == 0)
 #if defined(AltDec_EnableInfinityRep)
                 return self.IntValue<0?self.SetAsNegativeInfinity:self.SetAsInfinity();
 #else
@@ -2828,8 +2828,8 @@ public:
             bool SelfIsWholeN = self.DecimalHalf == 0;
             bool ValueIsWholeN = Value.DecimalHalf == 0;
             if (Value.IntValue == 0 && ValueIsWholeN) { self.SetAsZero(); return self; }//Return zero instead of N/A
-			RepType LRep = self.GetRepType();
-			RepType RRep = Value.GetRepType();
+            RepType LRep = self.GetRepType();
+            RepType RRep = Value.GetRepType();
             if(LRep==RRep)
             {
                 if(self.ExtraRep==0)
@@ -3345,11 +3345,11 @@ public:
         friend bool operator!=(AltDec self, IntType Value)
         {
             if (self.DecimalHalf!=0||self.ExtraRep!=0)
-				return true;
+                return true;
             else if (self.IntValue == Value)
-				return false;
+                return false;
             else
-				return true;
+                return true;
         }
 
         /// <summary>
@@ -3362,23 +3362,23 @@ public:
         friend bool operator<(AltDec self, IntType Value)
         {
 #if defined(AltDec_EnableInfinityRep)
-			if(self.ExtraRep==InfinityRep)
-			{
-				if(self.IntValue==-1)
-					return true;
-				else
-					return false;
-			}
+            if(self.ExtraRep==InfinityRep)
+            {
+                if(self.IntValue==-1)
+                    return true;
+                else
+                    return false;
+            }
 #endif
 #if defined(AltDec_EnableImaginaryNum)
-			if(self.ExtraRep>=0||self.ExtraRep==PIRep)
-			{
-				self.ConvertToNumRep();
-			}
-			else
-				throw "Can't compare real values against imaginary.";
+            if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+            {
+                self.ConvertToNumRep();
+            }
+            else
+                throw "Can't compare real values against imaginary.";
 #else
-			self.ConvertToNumRep();
+            self.ConvertToNumRep();
 #endif
             if (self.DecimalHalf == 0)
             {
@@ -3406,23 +3406,23 @@ public:
         friend bool operator<=(AltDec self, IntType Value)
         {
 #if defined(AltDec_EnableInfinityRep)
-			if(self.ExtraRep==InfinityRep)
-			{
-				if(self.IntValue==-1)
-					return true;
-				else
-					return false;
-			}
+            if(self.ExtraRep==InfinityRep)
+            {
+                if(self.IntValue==-1)
+                    return true;
+                else
+                    return false;
+            }
 #endif
 #if defined(AltDec_EnableImaginaryNum)
-			if(self.ExtraRep>=0||self.ExtraRep==PIRep)
-			{
-				self.ConvertToNumRep();
-			}
-			else
-				throw "Can't compare real values against imaginary.";
+            if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+            {
+                self.ConvertToNumRep();
+            }
+            else
+                throw "Can't compare real values against imaginary.";
 #else
-			self.ConvertToNumRep();
+            self.ConvertToNumRep();
 #endif
             if (self.DecimalHalf == 0)
             {
@@ -3450,23 +3450,23 @@ public:
         friend bool operator>(AltDec self, IntType Value)
         {
 #if defined(AltDec_EnableInfinityRep)
-			if(self.ExtraRep==InfinityRep)
-			{
-				if(self.IntValue==1)
-					return true;
-				else
-					return false;
-			}
+            if(self.ExtraRep==InfinityRep)
+            {
+                if(self.IntValue==1)
+                    return true;
+                else
+                    return false;
+            }
 #endif
 #if defined(AltDec_EnableImaginaryNum)
-			if(self.ExtraRep>=0||self.ExtraRep==PIRep)
-			{
-				self.ConvertToNumRep();
-			}
-			else
-				throw "Can't compare real values against imaginary.";
+            if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+            {
+                self.ConvertToNumRep();
+            }
+            else
+                throw "Can't compare real values against imaginary.";
 #else
-			self.ConvertToNumRep();
+            self.ConvertToNumRep();
 #endif
             if (self.DecimalHalf == 0)
             {
@@ -3494,23 +3494,23 @@ public:
         friend bool operator>=(AltDec self, IntType Value)
         {
 #if defined(AltDec_EnableInfinityRep)
-			if(self.ExtraRep==InfinityRep)
-			{
-				if(self.IntValue==1)
-					return true;
-				else
-					return false;
-			}
+            if(self.ExtraRep==InfinityRep)
+            {
+                if(self.IntValue==1)
+                    return true;
+                else
+                    return false;
+            }
 #endif
 #if defined(AltDec_EnableImaginaryNum)
-			if(self.ExtraRep>=0||self.ExtraRep==PIRep)
-			{
-				self.ConvertToNumRep();
-			}
-			else
-				throw "Can't compare real values against imaginary.";
+            if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+            {
+                self.ConvertToNumRep();
+            }
+            else
+                throw "Can't compare real values against imaginary.";
 #else
-			self.ConvertToNumRep();
+            self.ConvertToNumRep();
 #endif
             if (self.DecimalHalf == 0)
             {
@@ -3551,11 +3551,11 @@ public:
         friend bool operator!=(IntType Value, AltDec self)
         {
             if (self.DecimalHalf!=0||self.ExtraRep!=0)
-				return true;
+                return true;
             else if (self.IntValue == Value)
-				return false;
+                return false;
             else
-				return true;
+                return true;
         }
 
         /// <summary>
@@ -3568,23 +3568,23 @@ public:
         friend bool operator<(IntType Value, AltDec self)
         {
 #if defined(AltDec_EnableInfinityRep)
-			if(self.ExtraRep==InfinityRep)
-			{
-				if(self.IntValue==1)
-					return true;
-				else
-					return false;
-			}
+            if(self.ExtraRep==InfinityRep)
+            {
+                if(self.IntValue==1)
+                    return true;
+                else
+                    return false;
+            }
 #endif
 #if defined(AltDec_EnableImaginaryNum)
-			if(self.ExtraRep>=0||self.ExtraRep==PIRep)
-			{
-				self.ConvertToNumRep();
-			}
-			else
-				throw "Can't compare real values against imaginary.";
+            if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+            {
+                self.ConvertToNumRep();
+            }
+            else
+                throw "Can't compare real values against imaginary.";
 #else
-			self.ConvertToNumRep();
+            self.ConvertToNumRep();
 #endif
             if (self.DecimalHalf == 0)
             {
@@ -3612,23 +3612,23 @@ public:
         friend bool operator<=(IntType Value, AltDec self)
         {
 #if defined(AltDec_EnableInfinityRep)
-			if(self.ExtraRep==InfinityRep)
-			{
-				if(self.IntValue==1)
-					return true;
-				else
-					return false;
-			}
+            if(self.ExtraRep==InfinityRep)
+            {
+                if(self.IntValue==1)
+                    return true;
+                else
+                    return false;
+            }
 #endif
 #if defined(AltDec_EnableImaginaryNum)
-			if(self.ExtraRep>=0||self.ExtraRep==PIRep)
-			{
-				self.ConvertToNumRep();
-			}
-			else
-				throw "Can't compare real values against imaginary.";
+            if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+            {
+                self.ConvertToNumRep();
+            }
+            else
+                throw "Can't compare real values against imaginary.";
 #else
-			self.ConvertToNumRep();
+            self.ConvertToNumRep();
 #endif
             if (self.DecimalHalf == 0)
             {
@@ -3656,23 +3656,23 @@ public:
         friend bool operator>(IntType Value, AltDec self)
         {
 #if defined(AltDec_EnableInfinityRep)
-			if(self.ExtraRep==InfinityRep)
-			{
-				if(self.IntValue==1)
-					return false;
-				else
-					return true;
-			}
+            if(self.ExtraRep==InfinityRep)
+            {
+                if(self.IntValue==1)
+                    return false;
+                else
+                    return true;
+            }
 #endif
 #if defined(AltDec_EnableImaginaryNum)
-			if(self.ExtraRep>=0||self.ExtraRep==PIRep)
-			{
-				self.ConvertToNumRep();
-			}
-			else
-				throw "Can't compare real values against imaginary.";
+            if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+            {
+                self.ConvertToNumRep();
+            }
+            else
+                throw "Can't compare real values against imaginary.";
 #else
-			self.ConvertToNumRep();
+            self.ConvertToNumRep();
 #endif
             if (self.DecimalHalf == 0)
             {
@@ -3700,23 +3700,23 @@ public:
         friend bool operator>=(IntType Value, AltDec self)
         {
 #if defined(AltDec_EnableInfinityRep)
-			if(self.ExtraRep==InfinityRep)
-			{
-				if(self.IntValue==1)
-					return false;
-				else
-					return true;
-			}
+            if(self.ExtraRep==InfinityRep)
+            {
+                if(self.IntValue==1)
+                    return false;
+                else
+                    return true;
+            }
 #endif
 #if defined(AltDec_EnableImaginaryNum)
-			if(self.ExtraRep>=0||self.ExtraRep==PIRep)
-			{
-				self.ConvertToNumRep();
-			}
-			else
-				throw "Can't compare real values against imaginary.";
+            if(self.ExtraRep>=0||self.ExtraRep==PIRep)
+            {
+                self.ConvertToNumRep();
+            }
+            else
+                throw "Can't compare real values against imaginary.";
 #else
-			self.ConvertToNumRep();
+            self.ConvertToNumRep();
 #endif
             if (self.DecimalHalf == 0)
             {
