@@ -177,8 +177,8 @@ namespace BlazesRusCode
         signed int DecimalHalf;
 
         // <summary>
-		/// If ExtraRep is -1, DecimalHalf==-2147483647, and MixedDec_EnableInfinityRep is enabled, then MixedDec represents Approaching IntValue from Left to Right side (?.999....infinitely)
-		/// If ExtraRep is 0.0f, DecimalHalf==-2147483647, and MixedDec_EnableInfinityRep is enabled, then MixedDec represents Approaching IntValue from Right to Left side (?.000....1)
+        /// If ExtraRep is -1, DecimalHalf==-2147483647, and MixedDec_EnableInfinityRep is enabled, then MixedDec represents Approaching IntValue from Left to Right side (?.999....infinitely)
+        /// If ExtraRep is 0.0f, DecimalHalf==-2147483647, and MixedDec_EnableInfinityRep is enabled, then MixedDec represents Approaching IntValue from Right to Left side (?.000....1)
         /// If ExtraRep is -4 and MixedDec_EnableNegativeZero is enabled, then MixedDec represents negative zero
         /// If ExtraRep is -3 and MixedDec_EnableImaginaryNumRep is enabled, then MixedDec represents +- 2147483647.999999999i
         /// If ExtraRep is -2 and MixedDec_EnableENumRep is enabled, then MixedDec represents +- 2147483647.999999999 * e
@@ -287,7 +287,7 @@ public:
             IntValue = 0; DecimalHalf = 0;
             ExtraRep = TrailingZero;
         }
-		
+        
 #if defined(MixedDec_EnableNegativeZero)
         void SetAsNegativeZero()
         {
@@ -300,7 +300,7 @@ private:
             return MixedDec(0, 0, -4.0f);
         }
 public:
-		static MixedDec NegativeZero;
+        static MixedDec NegativeZero;
 #endif
         
         /// <summary>
@@ -5057,8 +5057,8 @@ public:
     MixedDec MixedDec::NaN = NaNValue();
 #endif
 #if defined(MixedDec_EnableNegativeZero)
-	MixedDec::TrailingType MixedDec::NegativeZeroRep = NegativeZeroRepValue();
-	MixedDec MixedDec::NegativeZero = NegativeZeroValue();
+    MixedDec::TrailingType MixedDec::NegativeZeroRep = NegativeZeroRepValue();
+    MixedDec MixedDec::NegativeZero = NegativeZeroValue();
 #endif
     #pragma endregion ValueDefine Source
 

@@ -110,7 +110,7 @@ namespace BlazesRusCode
             //InfinityRep
 //#endif
             NaN,
-			NegativeZero,
+            NegativeZero,
             UnknownType
         };
         RepType GetRepType()
