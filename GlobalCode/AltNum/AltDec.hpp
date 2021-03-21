@@ -2200,7 +2200,7 @@ public:
                 else
                 {
                     //Value *= IntValue;
-                    Value.PartialMultOp(*this);
+                    Value.PartialMultIntOp(IntValue);
                     IntValue = Value.IntValue; DecimalHalf = Value.DecimalHalf;
                     ExtraRep = Value.ExtraRep;
                 }
@@ -2405,25 +2405,15 @@ public:
             return self;
         }
 
-
         /// <summary>
-        /// Multiplication Operation Between AltDec and Integer Value
+        /// Partial Multiplication Operation Between AltDec and Integer Value
         /// </summary>
-        /// <param name="self">The self.</param>
         /// <param name="Value">The value.</param>
         /// <returns>AltDec</returns>
         template<typename IntType>
-        static AltDec& MultIntOp(AltDec& self, IntType& Value)
+        void PartialMultIntOp(IntType& Value)
         {
-            if (Value < 0)
-            {
-                if (Value == NegativeRep) { Value = 0; }
-                else { Value *= -1; }
-                self.SwapNegativeStatus();
-            }
-            if (self == Zero) {}
-            else if (Value == 0) { self.IntValue = 0; self.DecimalHalf = 0; }
-            else if (self.DecimalHalf == 0)
+            if (self.DecimalHalf == 0)
             {
                 self.IntValue *= Value;
             }
@@ -2450,6 +2440,49 @@ public:
                     self.DecimalHalf = (signed int)SRep;
                 }
             }
+        }
+
+        /// <summary>
+        /// Multiplication Operation Between AltDec and Integer Value
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>AltDec</returns>
+        template<typename IntType>
+        void BasicMultIntOp(IntType& Value)
+        {
+            if (Value < 0)
+            {
+                if (Value == NegativeRep) { Value = 0; }
+                else { Value *= -1; }
+                SwapNegativeStatus();
+            }
+            if (IntValue == 0 && DecimalHalf == 0)
+                return;
+            if (Value == 0)
+                SetAsZero();
+            else
+                PartialMultIntOp(Value);
+        }
+
+        /// <summary>
+        /// Multiplication Operation Between AltDec and Integer Value
+        /// </summary>
+        /// <param name="self">The self.</param>
+        /// <param name="Value">The value.</param>
+        /// <returns>AltDec</returns>
+        template<typename IntType>
+        static AltDec& MultIntOp(AltDec& self, IntType& Value)
+        {
+            if (Value < 0)
+            {
+                if (Value == NegativeRep) { Value = 0; }
+                else { Value *= -1; }
+                self.SwapNegativeStatus();
+            }
+            if (self == Zero) {}
+            else if (Value == 0) { self.IntValue = 0; self.DecimalHalf = 0; }
+            else
+                PartialMultIntOp(Value);
             return self;
         }
 
