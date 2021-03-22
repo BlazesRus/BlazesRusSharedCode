@@ -40,6 +40,7 @@ AltDec_EnableNaN = Enable NaN based representations and operations(Not Fully Imp
 AltDec_EnableComplexNum = Enable Representation of complex numbers with Imaginary number operations(Requires AltDec_EnableImaginaryNum, Not Implimented Yet)
 AltDec_EnableNegativeZero = (Not Fully Implimented)
 AltDec_EnableHigherPrecisionPIConversion = (Not Implimented)
+AltDec_EnableInfinityPowers = Allows powers of infinity for operations where infinity is somehow more infinite then normal(Not Implimented)
 
 Only one of below can be active at once:
 AltDec_EnableENum = If DecimalHalf is positive and ExtraRep is -2147483647, then AltDec represents +- 2147483647.999999999 * e (Not Fully Implimented)
@@ -5804,6 +5805,16 @@ public:
 
     std::string AltDec::ToString()
     {
+#if defined(AltDec_EnableInfinityRep)
+        if (DecimalHalf == InfinityRep)
+        {
+            if (IntValue == 1)
+                return "Infinity";
+            else
+                return "-Infinity";
+        }
+#endif
+        ConvertToNumRep();
         std::string Value = "";
         int CurrentSection = IntValue;
         unsigned __int8 CurrentDigit;
@@ -5848,6 +5859,16 @@ public:
 
     std::string AltDec::ToFullString()
     {
+#if defined(AltDec_EnableInfinityRep)
+        if (DecimalHalf == InfinityRep)
+        {
+            if (IntValue == 1)
+                return "Infinity";
+            else
+                return "-Infinity";
+        }
+#endif
+        ConvertToNumRep();
         std::string Value = "";
         int CurrentSection = IntValue;
         unsigned __int8 CurrentDigit;

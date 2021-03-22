@@ -5199,6 +5199,16 @@ public:
 
     std::string MixedDec::ToString()
     {
+#if defined(AltDec_EnableInfinityRep) 
+        if (DecimalHalf == InfinityRep) 
+        { 
+            if (IntValue == 1) 
+                return "Infinity"; 
+            else 
+                return "-Infinity"; 
+        } 
+#endif 
+        ConvertToNumRep(); 
         std::string Value = "";
         int CurrentSection = IntValue;
         unsigned __int8 CurrentDigit;
@@ -5238,11 +5248,25 @@ public:
                 }
             }
         }
+		if(ExtraRep!=TrailingZero)//Output Trailing Floating Point based Digits
+		{
+		
+		}
         return Value;
     }
 
     std::string MixedDec::ToFullString()
     {
+#if defined(AltDec_EnableInfinityRep) 
+        if (DecimalHalf == InfinityRep) 
+        { 
+            if (IntValue == 1) 
+                return "Infinity"; 
+            else 
+                return "-Infinity"; 
+        } 
+#endif 
+        ConvertToNumRep(); 
         std::string Value = "";
         int CurrentSection = IntValue;
         unsigned __int8 CurrentDigit;
@@ -5279,6 +5303,10 @@ public:
         {
             Value += ".000000000";
         }
+		if(ExtraRep!=TrailingZero)//Output Trailing Floating Point based Digits
+		{
+		
+		}
         return Value;
     }
     #pragma endregion String Function Source
