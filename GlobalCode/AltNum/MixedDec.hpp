@@ -95,9 +95,9 @@ namespace BlazesRusCode
         static TrailingType TrailingTenth;
 #if defined(MixedDec_EnableInfinityRep)
         //Is Infinity Representation when DecimalHalf==-2147483648 (IntValue==1 for positive infinity;IntValue==-1 for negative Infinity)
-        const signed int InfinityRep = -2147483648;
+        static const signed int InfinityRep = -2147483648;
         //Is Approaching IntValue when DecimalHalf==-2147483647
-        const signed int ApproachingValRep = -2147483647;
+        static const signed int ApproachingValRep = -2147483647;
 #endif
 #if defined(MixedDec_EnablePIRep)
         static TrailingType PIRepValue()
@@ -109,7 +109,7 @@ namespace BlazesRusCode
                 -1.0f;
 #endif
         }
-        static TrailingType PIRep;
+        static const TrailingType PIRep;
 #endif
 #if defined(MixedDec_EnableENumRep)
         static TrailingType ERepValue()
@@ -121,7 +121,7 @@ namespace BlazesRusCode
                 -2.0f;
 #endif
         }
-        static TrailingType ERep;
+        static const TrailingType ERep;
 #endif
 #if defined(MixedDec_EnableImaginaryNumRep)
         static TrailingType IRepValue()
@@ -133,7 +133,7 @@ namespace BlazesRusCode
                 -3.0f;
 #endif
         }
-        static TrailingType IRep;
+        static const TrailingType IRep;
 #endif
 #if defined(MixedDec_EnableImaginaryNumRep)
         static TrailingType NegativeZeroRepValue()
@@ -145,7 +145,7 @@ namespace BlazesRusCode
                 -4.0f;
 #endif
         }
-        static TrailingType NegativeZeroRep;
+        static const TrailingType NegativeZeroRep;
 #endif
     public:
         /// <summary>

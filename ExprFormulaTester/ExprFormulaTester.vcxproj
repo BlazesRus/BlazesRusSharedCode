@@ -70,7 +70,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <BoostDir>C:/UserFiles/ProgrammingTools/Libraries/C++Code/BoostLib/</BoostDir>
+    <BoostDir>C:/UserFiles/ProgrammingLibraries/BoostLib/</BoostDir>
     <GlobalCode>C:/UserFiles/GitHub/MultiPlatformGlobalCode/GlobalCode/</GlobalCode>
     <ParallelMap>C:/UserFiles/GitHub/Parallel-Hashmap/</ParallelMap>
   </PropertyGroup>

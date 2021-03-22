@@ -71,19 +71,19 @@ namespace BlazesRusCode
     private:
 #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
         //(If AltDec_EnableImaginaryNum is enabled, then represents Value*i )||(If AltDec_EnableENum is enabled, then represents Value*e) when ExtraRep==-2147483647
-        static signed IERep = -2147483647;
+        static const signed int IERep = -2147483647;
 #endif
 #if defined(AltDec_EnableInfinityRep)
         //Is Infinity Representation when DecimalHalf==-2147483648 (IntValue==1 for positive infinity;IntValue==-1 for negative Infinity)
-        static signed int InfinityRep = -2147483648;
+        static const signed int InfinityRep = -2147483648;
         //Is Approaching IntValue when DecimalHalf==-2147483647
-        static signed int ApproachingValRep = -2147483647;
+        static const signed int ApproachingValRep = -2147483647;
 #endif
         //Is PI*Value representation when ExtraRep==-2147483648
-        static signed int const PIRep = -2147483648;
+        static const signed int PIRep = -2147483648;
 #if defined(AltDec_EnableInfinityRep)
         //Is NaN when DecimalHalf==2147483647
-        static signed int NaNRep = 2147483647;
+        static const signed int NaNRep = 2147483647;
 #endif
         enum class RepType: int
         {
@@ -438,6 +438,17 @@ public:
         private:
         void ConvertPIToNum()
         {
+            ExtraRep = 0;
+/*
+#ifndef AltDec_UseLowerPrecisionPI
+            if (IntValue > 10)
+            {
+                AltDec ValLeft = IntValue;
+                ValLeft.DecimalHalf = DecimalHalf;
+            }
+            else
+#endif
+*/
             if (DecimalHalf == 0 && IntValue == 10)
             {
                 IntValue = 31; DecimalHalf = 415926536; 
@@ -446,7 +457,6 @@ public:
             {
                 BasicMultOp(PINum);
             }
-            ExtraRep = 0;
         }
         
         void ConvertEToNum()
