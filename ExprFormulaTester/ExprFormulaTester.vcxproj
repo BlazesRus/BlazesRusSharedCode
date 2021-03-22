@@ -98,9 +98,10 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions);AltDec_EnableInfinityRep;MixedDec_EnableInfinityRep;MixedDec_EnablePIRep</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(BoostDir);$(GlobalCode);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -113,9 +114,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions);AltDec_EnableInfinityRep;MixedDec_EnableInfinityRep;MixedDec_EnablePIRep</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(BoostDir);$(GlobalCode);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,9 +130,10 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions);AltDec_EnableInfinityRep;MixedDec_EnableInfinityRep;MixedDec_EnablePIRep</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(BoostDir);$(GlobalCode);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,10 +146,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions);AltDec_EnableInfinityRep;MixedDec_EnableInfinityRep;MixedDec_EnablePIRep</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(BoostRoot);$(GlobalCode);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

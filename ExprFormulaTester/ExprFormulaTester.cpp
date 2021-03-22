@@ -17,10 +17,13 @@ using MediumDecFormula = BlazesRusCode::MediumDecFormula;
 //using IntFormula = BlazesRusCode::IntFormula;
 //#include "Databases\DoubleFormula.hpp"
 //using DoubleFormula = BlazesRusCode::DoubleFormula;
+
+
 #include "AltNum\AltDec.hpp"
 #include "AltNum\MixedDec.hpp"
 using AltDec = BlazesRusCode::AltDec;
 using MixedDec = BlazesRusCode::MixedDec;
+//#include <boost/math/constants/constants.hpp>
 
 
 int main()
@@ -304,4 +307,17 @@ int main()
         std::cout << "Unknown exception" << std::endl;
     }
 #endif
+    //double LFloatingP = boost::math::constants::pi<double>();
+    //LFloatingP *= 2;
+    AltDec LAlt;
+    LAlt.SetPiVal(2);
+    LAlt *= 3;
+    //AltDec RAlt;
+
+    MixedDec LMixed;
+    LMixed.SetPiVal(2);
+    LMixed *= 3;
+    //MixedDec RMixed;
+
+
 }

@@ -95,9 +95,9 @@ namespace BlazesRusCode
         static TrailingType TrailingTenth;
 #if defined(MixedDec_EnableInfinityRep)
         //Is Infinity Representation when DecimalHalf==-2147483648 (IntValue==1 for positive infinity;IntValue==-1 for negative Infinity)
-        static signed int InfinityRep = -2147483648;
+        const signed int InfinityRep = -2147483648;
         //Is Approaching IntValue when DecimalHalf==-2147483647
-        static signed int ApproachingValRep = -2147483647;
+        const signed int ApproachingValRep = -2147483647;
 #endif
 #if defined(MixedDec_EnablePIRep)
         static TrailingType PIRepValue()
@@ -3691,7 +3691,7 @@ public:
         friend MixedDec operator%(IntType Value, MixedDec self)
         {
             MixedDec Result = Value;
-            return RemOp(Result, self);
+            return IntRemOp(Result, self);
         }
 
         /// <summary>
