@@ -343,22 +343,26 @@ public:
     private:
         static MixedDec PINumValue()
         {
-            return MixedDec(3, 141592654, 0);
+            return MixedDec(3, 141592654);
         }
         
         static MixedDec ENumValue()
         {
-            return MixedDec(2, 718281828, 0);
+            return MixedDec(2, 718281828);
         }
     
         static MixedDec PIValue()
         {
-            return MixedDec(1, 0, -2147483648);
+#if defined(MixedDec_EnablePIRep)
+            return MixedDec(3, 141592654);
+#else
+            return MixedDec(1, 0, PIRep);
+#endif
         }
         
         static MixedDec ZeroValue()
         {
-            return MixedDec(0, 0, 0);
+            return MixedDec(0, 0);
         }
         
         static MixedDec EValue()
