@@ -7,14 +7,21 @@
 //#include <boost/timer/timer.hpp>
 using MediumDec = BlazesRusCode::MediumDec;
 
+#ifdef BlazesRus_PerformMediumFormulaTests
 #include "AltNum\AltNumDebug.hpp"
-#include "AltNum\FloatingOperations.hpp"
 #include "Formulas\MediumDecFormula.hpp"
 using MediumDecFormula = BlazesRusCode::MediumDecFormula;
+#endif
+#include "AltNum\FloatingOperations.hpp"
 //#include "Databases\IntFormula.hpp"
 //using IntFormula = BlazesRusCode::IntFormula;
 //#include "Databases\DoubleFormula.hpp"
 //using DoubleFormula = BlazesRusCode::DoubleFormula;
+#include "AltNum\AltDec.hpp"
+#include "AltNum\MixedDec.hpp"
+using AltDec = BlazesRusCode::AltDec;
+using MixedDec = BlazesRusCode::MixedDec;
+
 
 int main()
 {
