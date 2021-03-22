@@ -2359,7 +2359,7 @@ public:
         /// <param name="Value">The value.</param>
         /// <returns>MixedDec</returns>
         template<typename IntType>
-        static MixedDec& MultIntOp(MixedDec& self, IntType& Value)
+        static MixedDec& IntMultOp(MixedDec& self, IntType& Value)
         {
             if (Value < 0)
             {
@@ -2406,7 +2406,7 @@ public:
         /// <param name="Value">The value.</param>
         /// <returns>MixedDec&</returns>
         template<typename IntType>
-        static MixedDec& DivIntOp(MixedDec& self, IntType& Value)
+        static MixedDec& IntDivOp(MixedDec& self, IntType& Value)
         {
             if (Value == 0) { throw "Target value can not be divided by zero"; }
             else if (self == Zero) { return self; }
@@ -3471,7 +3471,7 @@ public:
         template<typename IntType>
         friend MixedDec operator*(MixedDec self, IntType Value)
         {
-            return MultIntOp(self, Value);
+            return IntMultOp(self, Value);
         }
 
         /// <summary>
@@ -3483,7 +3483,7 @@ public:
         template<typename IntType>
         friend MixedDec operator*=(MixedDec& self, IntType Value)
         {
-            return MultIntOp(self, Value);
+            return IntMultOp(self, Value);
         }
 
         /// <summary>
@@ -3493,7 +3493,7 @@ public:
         /// <param name="Value">The value.</param>
         /// <returns>MixedDec</returns>
         template<typename IntType>
-        friend MixedDec operator*=(MixedDec* self, IntType Value){ return MultIntOp(**self, Value); }
+        friend MixedDec operator*=(MixedDec* self, IntType Value){ return IntMultOp(**self, Value); }
 
         /// <summary>
         /// Division Operation Between MixedDec and Integer Value
@@ -3504,7 +3504,7 @@ public:
         template<typename IntType>
         friend MixedDec operator/(MixedDec self, IntType Value)
         {
-            return DivIntOp(self, Value);
+            return IntDivOp(self, Value);
         }
 
         /// <summary>
@@ -3516,11 +3516,11 @@ public:
         template<typename IntType>
         friend MixedDec operator/=(MixedDec& self, IntType Value)
         {
-            return DivIntOp(self, Value);
+            return IntDivOp(self, Value);
         }
 
         template<typename IntType>
-        friend MixedDec operator/=(MixedDec* self, IntType Value){ return DivIntOp(**self, Value); }
+        friend MixedDec operator/=(MixedDec* self, IntType Value){ return IntDivOp(**self, Value); }
         
         /// <summary>
         /// Modulus Operation Between MixedDec and Integer Value
@@ -3665,7 +3665,7 @@ public:
         template<typename IntType>
         friend MixedDec operator*(IntType Value, MixedDec self)
         {
-            return MultIntOp(self, Value);
+            return IntMultOp(self, Value);
         }
 
         /// <summary>

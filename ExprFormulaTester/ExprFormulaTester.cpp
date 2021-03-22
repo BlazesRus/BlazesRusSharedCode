@@ -9,7 +9,7 @@ using MediumDec = BlazesRusCode::MediumDec;
 
 #include "AltNum\AltNumDebug.hpp"
 #include "AltNum\FloatingOperations.hpp"
-#include "Databases\MediumDecFormula.hpp"
+#include "Formulas\MediumDecFormula.hpp"
 using MediumDecFormula = BlazesRusCode::MediumDecFormula;
 //#include "Databases\IntFormula.hpp"
 //using IntFormula = BlazesRusCode::IntFormula;
@@ -18,7 +18,7 @@ using MediumDecFormula = BlazesRusCode::MediumDecFormula;
 
 int main()
 {
-
+#ifdef BlazesRus_PerformMediumFormulaTests
     MediumDec targetVal;// = "5.5";
     MediumDec rightVal;// = "1.25";
     MediumDec altResult; //= targetVal - rightVal;
@@ -296,4 +296,5 @@ int main()
     {
         std::cout << "Unknown exception" << std::endl;
     }
+#endif
 }
