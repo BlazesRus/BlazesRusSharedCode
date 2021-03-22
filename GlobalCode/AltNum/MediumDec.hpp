@@ -2334,7 +2334,7 @@ namespace BlazesRusCode
         /// <param name="Value">The value.</param>
         /// <returns>MediumDec&</returns>
         template<typename IntType>
-        static MediumDec& RemOp(MediumDec& self, IntType& Value)
+        static MediumDec& IntRemOp(MediumDec& self, IntType& Value)
         {
             if (Value == 0 || self == MediumDec::Zero) { self.SetAsZero(); return self; }
             if (self.DecimalHalf == 0)
@@ -2760,7 +2760,7 @@ namespace BlazesRusCode
         template<typename IntType>
         friend MediumDec operator%(MediumDec self, IntType Value)
         {
-            return RemOp(self, Value);
+            return IntRemOp(self, Value);
         }
 
         /// <summary>
@@ -2772,11 +2772,11 @@ namespace BlazesRusCode
         template<typename IntType>
         friend MediumDec operator%=(MediumDec& self, IntType Value)
         {
-            return RemOp(self, Value);
+            return IntRemOp(self, Value);
         }
 
         template<typename IntType>
-        friend MediumDec operator%=(MediumDec* self, IntType Value){ return RemOp(**self, Value); }
+        friend MediumDec operator%=(MediumDec* self, IntType Value){ return IntRemOp(**self, Value); }
 
         /// <summary>
         /// Bitwise XOR Operation Between MediumDec and Integer Value

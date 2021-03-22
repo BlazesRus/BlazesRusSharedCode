@@ -1524,7 +1524,7 @@ public:
         /// <param name="value">The value.</param>
         /// <returns>MixedDec&</returns>
         template<typename IntType>
-        static MixedDec& AddIntOp(MixedDec& self, IntType& value)
+        static MixedDec& IntAddOp(MixedDec& self, IntType& value)
         {
 #if defined(MixedDec_EnableInfinityRep)
             if (self.DecimalHalf == -1)
@@ -1558,7 +1558,7 @@ public:
         /// <param name="value">The value.</param>
         /// <returns>MixedDec</returns>
         template<typename IntType>
-        static MixedDec& SubIntOp(MixedDec& self, IntType& value)
+        static MixedDec& IntSubOp(MixedDec& self, IntType& value)
         {
 #if defined(MixedDec_EnableInfinityRep)
             if (self.DecimalHalf == -1)
@@ -2620,7 +2620,7 @@ public:
         /// <param name="Value">The value.</param>
         /// <returns>MixedDec&</returns>
         template<typename IntType>
-        static MixedDec& RemOp(MixedDec& self, IntType& Value)
+        static MixedDec& IntRemOp(MixedDec& self, IntType& Value)
         {
             if (Value == 0 || self == MixedDec::Zero) { self.SetAsZero(); return self; }
             if (self.DecimalHalf == 0)
@@ -3417,7 +3417,7 @@ public:
         template<typename IntType>
         friend MixedDec operator+(MixedDec self, IntType Value)
         {
-            return AddIntOp(self, Value);
+            return IntAddOp(self, Value);
         }
 
         ///// <summary>
@@ -3429,11 +3429,11 @@ public:
         template<typename IntType>
         friend MixedDec operator+=(MixedDec& self, IntType Value)
         {
-            return AddIntOp(self, Value);
+            return IntAddOp(self, Value);
         }
 
         template<typename IntType>
-        friend MixedDec operator+=(MixedDec* self, IntType Value){ return AddIntOp(**self, Value); }
+        friend MixedDec operator+=(MixedDec* self, IntType Value){ return IntAddOp(**self, Value); }
 
         /// <summary>
         /// Subtraction Operation Between MixedDec and Integer Value
@@ -3444,7 +3444,7 @@ public:
         template<typename IntType>
         friend MixedDec operator-(MixedDec self, IntType Value)
         {
-            return SubIntOp(self, Value);
+            return IntSubOp(self, Value);
         }
 
         /// <summary>
@@ -3456,11 +3456,11 @@ public:
         template<typename IntType>
         friend MixedDec operator-=(MixedDec& self, IntType Value)
         {
-            return SubIntOp(self, Value);
+            return IntSubOp(self, Value);
         }
 
         template<typename IntType>
-        friend MixedDec operator-=(MixedDec* self, IntType Value){ return SubIntOp(**self, Value); }
+        friend MixedDec operator-=(MixedDec* self, IntType Value){ return IntSubOp(**self, Value); }
 
         /// <summary>
         /// Multiplication Operation Between MixedDec and Integer Value
@@ -3531,7 +3531,7 @@ public:
         template<typename IntType>
         friend MixedDec operator%(MixedDec self, IntType Value)
         {
-            return RemOp(self, Value);
+            return IntRemOp(self, Value);
         }
 
         /// <summary>
@@ -3543,11 +3543,11 @@ public:
         template<typename IntType>
         friend MixedDec operator%=(MixedDec& self, IntType Value)
         {
-            return RemOp(self, Value);
+            return IntRemOp(self, Value);
         }
 
         template<typename IntType>
-        friend MixedDec operator%=(MixedDec* self, IntType Value){ return RemOp(**self, Value); }
+        friend MixedDec operator%=(MixedDec* self, IntType Value){ return IntRemOp(**self, Value); }
 
         /// <summary>
         /// Bitwise XOR Operation Between MixedDec and Integer Value
@@ -3640,7 +3640,7 @@ public:
         template<typename IntType>
         friend MixedDec operator+(IntType Value, MixedDec self)
         {
-            return AddIntOp(self, Value);
+            return IntAddOp(self, Value);
         }
 
         /// <summary>

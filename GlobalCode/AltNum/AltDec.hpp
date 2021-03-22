@@ -3046,7 +3046,7 @@ public:
         /// <param name="Value">The value.</param>
         /// <returns>AltDec&</returns>
         template<typename IntType>
-        static AltDec& RemOp(AltDec& self, IntType& Value)
+        static AltDec& IntRemOp(AltDec& self, IntType& Value)
         {
             if (Value == 0 || self == AltDec::Zero) { self.SetAsZero(); return self; }
             if (self.DecimalHalf == 0)
@@ -4001,7 +4001,7 @@ public:
         template<typename IntType>
         friend AltDec operator+(AltDec self, IntType Value)
         {
-            return AddIntOp(self, Value);
+            return IntAddOp(self, Value);
         }
 
         ///// <summary>
@@ -4013,11 +4013,11 @@ public:
         template<typename IntType>
         friend AltDec operator+=(AltDec& self, IntType Value)
         {
-            return AddIntOp(self, Value);
+            return IntAddOp(self, Value);
         }
 
         template<typename IntType>
-        friend AltDec operator+=(AltDec* self, IntType Value){ return AddIntOp(**self, Value); }
+        friend AltDec operator+=(AltDec* self, IntType Value){ return IntAddOp(**self, Value); }
 
         /// <summary>
         /// Subtraction Operation Between AltDec and Integer Value
@@ -4028,7 +4028,7 @@ public:
         template<typename IntType>
         friend AltDec operator-(AltDec self, IntType Value)
         {
-            return SubIntOp(self, Value);
+            return IntSubOp(self, Value);
         }
 
         /// <summary>
@@ -4040,11 +4040,11 @@ public:
         template<typename IntType>
         friend AltDec operator-=(AltDec& self, IntType Value)
         {
-            return SubIntOp(self, Value);
+            return IntSubOp(self, Value);
         }
 
         template<typename IntType>
-        friend AltDec operator-=(AltDec* self, IntType Value){ return SubIntOp(**self, Value); }
+        friend AltDec operator-=(AltDec* self, IntType Value){ return IntSubOp(**self, Value); }
 
         /// <summary>
         /// Multiplication Operation Between AltDec and Integer Value
@@ -4115,7 +4115,7 @@ public:
         template<typename IntType>
         friend AltDec operator%(AltDec self, IntType Value)
         {
-            return RemOp(self, Value);
+            return IntRemOp(self, Value);
         }
 
         /// <summary>
@@ -4127,11 +4127,11 @@ public:
         template<typename IntType>
         friend AltDec operator%=(AltDec& self, IntType Value)
         {
-            return RemOp(self, Value);
+            return IntRemOp(self, Value);
         }
 
         template<typename IntType>
-        friend AltDec operator%=(AltDec* self, IntType Value){ return RemOp(**self, Value); }
+        friend AltDec operator%=(AltDec* self, IntType Value){ return IntRemOp(**self, Value); }
 
         /// <summary>
         /// Bitwise XOR Operation Between AltDec and Integer Value
@@ -4224,7 +4224,7 @@ public:
         template<typename IntType>
         friend AltDec operator+(IntType Value, AltDec self)
         {
-            return AddIntOp(self, Value);
+            return IntAddOp(self, Value);
         }
 
         /// <summary>
