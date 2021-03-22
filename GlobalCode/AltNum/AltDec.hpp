@@ -543,6 +543,30 @@ private:
         {
             return AltDec(3, 141592654, 0);
         }
+
+        //100,000,000xPI(Rounded to 9th decimal digit)
+        static AltDec HundredMilPINumVal()
+        {
+            return AltDec(314159265, 358979324, 0);
+        }
+
+        //10,000,000xPI(Rounded to 9th decimal digit)
+        static AltDec TenMilPINumVal()
+        {
+            return AltDec(31415926, 535897932, 0);
+        }
+
+        //1,000,000xPI(Rounded to 9th decimal digit)
+        static AltDec OneMilPINumVal()
+        {
+            return AltDec(3141592, 653589793, 0);
+        }
+
+        //10xPI(Rounded to 9th decimal digit)
+        static AltDec TenPINumVal()
+        {
+            return AltDec(31, 415926536, 0);
+        }
         
         static AltDec ENumValue()
         {
