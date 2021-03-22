@@ -34,18 +34,19 @@ AltDec_EnableNegativeZero = (Not Fully Implimented)
 
 //Preprocessor Switches
 /*
-AltDec_EnablePIPowers = (Not Fully Implimented)
 AltDec_EnableMixedFractional = If DecimalHalf is negative and ExtraRep is Positive, then AltDec represents mixed fraction of -2147483648 to 2147483647 + (DecimalHalf*-1)/ExtraRep(Not Fully Implimented)
 AltDec_EnableInfinityRep = Enable support of positive/negative infinity representations and approaching value representations(Not Fully Implimented)
 AltDec_EnableNaN = Enable NaN based representations and operations(Not Fully Implimented)
 AltDec_EnableComplexNum = Enable Representation of complex numbers with Imaginary number operations(Requires AltDec_EnableImaginaryNum, Not Implimented Yet)
 AltDec_EnableNegativeZero = (Not Fully Implimented)
+AltDec_EnableHigherPrecisionPIConversion = (Not Implimented)
 
 Only one of below can be active at once:
 AltDec_EnableENum = If DecimalHalf is positive and ExtraRep is -2147483647, then AltDec represents +- 2147483647.999999999 * e (Not Fully Implimented)
                     If DecimalHalf is positive and ExtraRep is negative number greator than -2147483647, then AltDec represents (+- 2147483647.999999999 * e)/(ExtraRep*-1)
 AltDec_EnableImaginaryNum = If DecimalHalf is positive and ExtraRep is -2147483647, then AltDec represents +- 2147483647.999999999i(Not Fully Implimented)
                             If DecimalHalf is positive and ExtraRep is negative number greator than -2147483647, then AltDec represents (+- 2147483647.999999999i)/(ExtraRep*-1)
+AltDec_EnablePIPowers = (Not Fully Implimented)(Might automatically enable if neither AltDec_EnableENum or AltDec_EnableImaginaryNum are on)
 */
 
 //Only one of the 2 can be enabled at once(AltDec_EnableImaginaryNum given preference in case that both used)
@@ -440,38 +441,37 @@ public:
         {
 
             ExtraRep = 0;
-			// Can only convert to up 683565275.1688666254437963172038917047964296646843381624484789109135725652864987887127902610635528943x PIRepresentation
-			//Can Represent up ? before hitting Maximum AltDec value on reconversion when AltDec_UseLowerPrecisionPI is enabled
-			//otherwise can represent up to ???(when adding up value from each decimal place of IntValue + (PINum*DecimalHalf/1000000000))
-/*
-#ifndef AltDec_UseLowerPrecisionPI
+            // Can only convert to up 683565275.1688666254437963172038917047964296646843381624484789109135725652864987887127902610635528943x PIRepresentation
+            //Can Represent up ? before hitting Maximum AltDec value on reconversion when AltDec_UseLowerPrecisionPI is enabled
+            //otherwise can represent up to ???(when adding up value from each decimal place of IntValue + (PINum*DecimalHalf/1000000000))
+#if defined(AltDec_EnableHigherPrecisionPIConversion)
             if (IntValue > 10)
             {
                 AltDec ValLeft = IntValue;
                 ValLeft.DecimalHalf = DecimalHalf;
             }
-			//else if(IntValue==0)//0.XXX... * PI
-			//{
-			//	BasicMultOp(PINum);
-			//}
-			//else if(IntValue==NegativeRep)//-0.XXX... * PI
-			//{
-			//	BasicMultOp(PINum);
-			//}
+            //else if(IntValue==0)//0.XXX... * PI
+            //{
+            //	BasicMultOp(PINum);
+            //}
+            //else if(IntValue==NegativeRep)//-0.XXX... * PI
+            //{
+            //	BasicMultOp(PINum);
+            //}
 #else
-			if(IntValue==NegativeRep)//-0.XXX... * PI
-			{
-				BasicMultOp(PINum);
-			}
-			//683565275.168866625 x 3.141592654 = 2147483646.99999999860577275
-			//683565275.168866626 x 3.141592654 = 2147483647.000000001747365404
-			else if(IntValue>=683565275&&DecimalHalf>=168866626)//Exceeding Storage limit of NormalRep
-			{
-				//Display error/warning
-				IntValue = 2147483647; DecimalHalf = 999999999;//set value as maximum value(since not truely infinite just bit above storage range)
-			}
+            if(IntValue==NegativeRep)//-0.XXX... * PI
+            {
+                BasicMultOp(PINum);
+            }
+            //Calculations from HiPer Calc
+            //683565275.168866625 x 3.141592654 = 2147483646.99999999860577275
+            //683565275.168866626 x 3.141592654 = 2147483647.000000001747365404
+            else if(IntValue>=683565275&&DecimalHalf>=168866626)//Exceeding Storage limit of NormalRep
+            {
+                //Display error/warning
+                IntValue = 2147483647; DecimalHalf = 999999999;//set value as maximum value(since not truely infinite just bit above storage range)
+            }
 #endif
-*/
             else if (DecimalHalf == 0 && IntValue == 10)
             {
                 IntValue = 31; DecimalHalf = 415926536; 
@@ -565,13 +565,13 @@ public:
         /// Sets value to the highest non-infinite/Special Decimal State Value that it store
         /// </summary>
         void SetAsMaximum()
-		{
-			IntValue = 2147483647; DecimalHalf = 999999999; ExtraRep = 0;
-		}
+        {
+            IntValue = 2147483647; DecimalHalf = 999999999; ExtraRep = 0;
+        }
 private:
         /// <summary>
         /// Returns PI(3.1415926535897932384626433) with tenth digit rounded up
-		/// (Stored as 3.141592654)
+        /// (Stored as 3.141592654)
         /// </summary>
         /// <returns>AltDec</returns>
         static AltDec PINumValue()
@@ -811,13 +811,13 @@ public:
         
         /// <summary>
         /// Returns value of lowest non-infinite/Special Decimal State Value that can store
-		/// (-2147483647.999999999)
+        /// (-2147483647.999999999)
         /// </summary>
         static AltDec Minimum;
         
         /// <summary>
         /// Returns value of highest non-infinite/Special Decimal State Value that can store
-		/// (2147483647.999999999)
+        /// (2147483647.999999999)
         /// </summary>
         static AltDec Maximum;
         
@@ -964,10 +964,10 @@ public:
             {
                 signed __int64 WholeValue = (signed __int64)std::floor(Value);
                 Value -= (float)WholeValue;
-				if(IsNegative&&WholeValue==0)
-					IntValue = NegativeRep;
-				else
-					IntValue = IsNegative ? WholeValue * -1 : WholeValue;
+                if(IsNegative&&WholeValue==0)
+                    IntValue = NegativeRep;
+                else
+                    IntValue = IsNegative ? WholeValue * -1 : WholeValue;
                 DecimalHalf = (signed int)Value * 10000000000;
             }
         }
@@ -994,10 +994,10 @@ public:
             {
                 signed __int64 WholeValue = (signed __int64)std::floor(Value);
                 Value -= (double)WholeValue;
-				if(IsNegative&&WholeValue==0)
-					IntValue = NegativeRep;
-				else
-					IntValue = IsNegative ? WholeValue * -1 : WholeValue;
+                if(IsNegative&&WholeValue==0)
+                    IntValue = NegativeRep;
+                else
+                    IntValue = IsNegative ? WholeValue * -1 : WholeValue;
                 DecimalHalf = (signed int)Value * 10000000000;
             }
         }
