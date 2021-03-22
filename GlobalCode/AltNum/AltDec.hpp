@@ -438,7 +438,11 @@ public:
         private:
         void ConvertPIToNum()
         {
+
             ExtraRep = 0;
+			// Can only convert to up 683565275.1688666254437963172038917047964296646843381624484789109135725652864987887127902610635528943x PIRepresentation
+			//Can Represent up ? before hitting Maximum AltDec value on reconversion when AltDec_UseLowerPrecisionPI is enabled
+			//otherwise can represent up to ???(when adding up value from each decimal place of IntValue + (PINum*DecimalHalf/1000000000))
 /*
 #ifndef AltDec_UseLowerPrecisionPI
             if (IntValue > 10)
@@ -446,10 +450,29 @@ public:
                 AltDec ValLeft = IntValue;
                 ValLeft.DecimalHalf = DecimalHalf;
             }
-            else
+			//else if(IntValue==0)//0.XXX... * PI
+			//{
+			//	BasicMultOp(PINum);
+			//}
+			//else if(IntValue==NegativeRep)//-0.XXX... * PI
+			//{
+			//	BasicMultOp(PINum);
+			//}
+#else
+			if(IntValue==NegativeRep)//-0.XXX... * PI
+			{
+				BasicMultOp(PINum);
+			}
+			//683565275.168866625 x 3.141592654 = 2147483646.99999999860577275
+			//683565275.168866626 x 3.141592654 = 2147483647.000000001747365404
+			else if(IntValue>=683565275&&DecimalHalf>=168866626)//Exceeding Storage limit of NormalRep
+			{
+				//Display error/warning
+				IntValue = 2147483647; DecimalHalf = 999999999;//set value as maximum value(since not truely infinite just bit above storage range)
+			}
 #endif
 */
-            if (DecimalHalf == 0 && IntValue == 10)
+            else if (DecimalHalf == 0 && IntValue == 10)
             {
                 IntValue = 31; DecimalHalf = 415926536; 
             }
@@ -538,7 +561,19 @@ public:
         }
         
     #pragma region ValueDefines
+        /// <summary>
+        /// Sets value to the highest non-infinite/Special Decimal State Value that it store
+        /// </summary>
+        void SetAsMaximum()
+		{
+			IntValue = 2147483647; DecimalHalf = 999999999; ExtraRep = 0;
+		}
 private:
+        /// <summary>
+        /// Returns PI(3.1415926535897932384626433) with tenth digit rounded up
+		/// (Stored as 3.141592654)
+        /// </summary>
+        /// <returns>AltDec</returns>
         static AltDec PINumValue()
         {
             return AltDec(3, 141592654, 0);
@@ -674,6 +709,17 @@ private:
             return NewSelf;
         }
         
+        static AltDec MinimumValue()
+        {
+            AltDec NewSelf = AltDec(2147483647, 999999999);
+            return NewSelf;
+        }
+
+        static AltDec MaximumValue()
+        {
+            AltDec NewSelf = AltDec(2147483647, 999999999);
+            return NewSelf;
+        }
 public:
         /// <summary>
         /// Returns PI(3.1415926535897932384626433) with tenth digit rounded up(3.141592654)
@@ -765,11 +811,13 @@ public:
         
         /// <summary>
         /// Returns value of lowest non-infinite/Special Decimal State Value that can store
+		/// (-2147483647.999999999)
         /// </summary>
         static AltDec Minimum;
         
         /// <summary>
         /// Returns value of highest non-infinite/Special Decimal State Value that can store
+		/// (2147483647.999999999)
         /// </summary>
         static AltDec Maximum;
         
@@ -903,7 +951,7 @@ public:
             bool IsNegative = Value < 0.0f;
             if (IsNegative) { Value *= -1.0f; }
             //Cap value if too big on initialize (preventing overflow on conversion)
-            if (Value >= 2147483648.0f)
+            if (Value >= 2147483647.0f)
             {
                 IntValue = 2147483647;
                 if (IsNegative)
@@ -916,7 +964,10 @@ public:
             {
                 signed __int64 WholeValue = (signed __int64)std::floor(Value);
                 Value -= (float)WholeValue;
-                IntValue = IsNegative ? WholeValue * -1 : WholeValue;
+				if(IsNegative&&WholeValue==0)
+					IntValue = NegativeRep;
+				else
+					IntValue = IsNegative ? WholeValue * -1 : WholeValue;
                 DecimalHalf = (signed int)Value * 10000000000;
             }
         }
@@ -930,7 +981,7 @@ public:
             bool IsNegative = Value < 0.0;
             if (IsNegative) { Value *= -1.0; }
             //Cap value if too big on initialize (preventing overflow on conversion)
-            if (Value >= 2147483648.0)
+            if (Value >= 2147483647.0)
             {
                 IntValue = 2147483647;
                 if (IsNegative)
@@ -943,7 +994,10 @@ public:
             {
                 signed __int64 WholeValue = (signed __int64)std::floor(Value);
                 Value -= (double)WholeValue;
-                IntValue = IsNegative ? WholeValue * -1 : WholeValue;
+				if(IsNegative&&WholeValue==0)
+					IntValue = NegativeRep;
+				else
+					IntValue = IsNegative ? WholeValue * -1 : WholeValue;
                 DecimalHalf = (signed int)Value * 10000000000;
             }
         }
