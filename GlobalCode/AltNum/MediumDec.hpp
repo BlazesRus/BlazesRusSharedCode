@@ -24,6 +24,12 @@
 
 #include <boost/rational.hpp>
 #include <boost/multiprecision/cpp_int.hpp>
+//Preprocessor options
+/*
+MediumDec_EnableNegativeZero = (Not Implimented)
+MediumDec_EnableInfinityRep = Enable support of positive/negative infinity representations and approaching value representations(Not Implimented)
+MediumDec_EnablePIRep = PI*(+- 2147483647.999999999) Representation enabled
+*/
 
 namespace BlazesRusCode
 {
