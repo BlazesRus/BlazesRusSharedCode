@@ -471,6 +471,11 @@ public:
                 //Display error/warning
                 IntValue = 2147483647; DecimalHalf = 999999999;//set value as maximum value(since not truely infinite just bit above storage range)
             }
+            else if(IntValue<=-683565275&&DecimalHalf>=168866626)//Exceeding Storage limit of NormalRep
+            {
+                //Display error/warning
+                IntValue = -2147483647; DecimalHalf = 999999999;//set value as minimum value(since not truely infinite just bit above storage range)
+            }
 #endif
             else if (DecimalHalf == 0 && IntValue == 10)
             {
