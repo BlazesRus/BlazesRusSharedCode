@@ -488,16 +488,18 @@ public:
             }
         }
         
+#if defined(AltDec_EnableENum)
         void ConvertEToNum()
         {
             BasicAddOp(ENum);
-            if(ExtraRep!=-2147483647)
+            if(ExtraRep!=IERep)
             {
                 int TempDiv = ExtraRep*-1;
                 BasicIntDivOp(TempDiv);
             }
             ExtraRep = 0;
         }
+#endif
         public:
         void ConvertToNumRep()
         {
@@ -714,17 +716,35 @@ private:
             AltDec NewSelf = AltDec(0, 5);
             return NewSelf;
         }
+
+        static AltDec LN10Value()
+        {
+            return AltDec(2, 302585093);
+        }
+
+        static AltDec LN10MultValue()
+        {
+            return AltDec(0, 434294482);
+        }
+
+        static AltDec HalfLN10MultValue()
+        {
+            return AltDec(0, 868588964);
+        }
+
+        static AltDec NilValue()
+        {
+            return AltDec(-2147483648, -2147483648);
+        }
         
         static AltDec MinimumValue()
         {
-            AltDec NewSelf = AltDec(2147483647, 999999999);
-            return NewSelf;
+            return AltDec(2147483647, 999999999);
         }
 
         static AltDec MaximumValue()
         {
-            AltDec NewSelf = AltDec(2147483647, 999999999);
-            return NewSelf;
+            return AltDec(2147483647, 999999999);
         }
 public:
         /// <summary>
@@ -1722,7 +1742,10 @@ public:
             if (self.DecimalHalf==InfinityRep)
                 return self;
             if (Value.DecimalHalf == InfinityRep)
-                return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
+            {
+                Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
+                return self;
+            }
 #endif
             RepType LRep = self.GetRepType();
             RepType RRep = Value.GetRepType();
@@ -1913,7 +1936,10 @@ public:
             if (self.DecimalHalf == InfinityRep)
                 return self;
             if (Value.DecimalHalf == InfinityRep)
-                return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
+            {
+                Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
+                return self;
+            }
 #endif
             RepType LRep = self.GetRepType();
             RepType RRep = Value.GetRepType();
@@ -2733,10 +2759,16 @@ public:
         void BasicDivOp(AltDec& Value)
         {
 #if defined(AltDec_EnableInfinityRep)
-            if (value.DecimalHalf == InfinityRep)
-                return self.SetAsZero();
+            if (Value.DecimalHalf == InfinityRep)
+            {
+                SetAsZero();
+                return;
+            }
             if (Value == AltDec::Zero)
-                return self.IntValue < 0 ? self.SetAsNegativeInfinity : self.SetAsInfinity();
+            {
+                IntValue < 0 ? SetAsNegativeInfinity():SetAsInfinity();
+                return;
+            }
 #else
             if (Value == AltDec::Zero)
                 throw "Target value can not be divided by zero";
@@ -2762,10 +2794,14 @@ public:
         static AltDec& DivOp(AltDec& self, AltDec& Value)
         {
 #if defined(AltDec_EnableInfinityRep)
-            if (value.DecimalHalf == InfinityRep)
-                return self.SetAsZero();
+            if (Value.DecimalHalf == InfinityRep)
+            {
+                self.SetAsZero(); return self;
+            }
             if (Value == AltDec::Zero)
-                return self.IntValue<0?self.SetAsNegativeInfinity:self.SetAsInfinity();
+            {
+                self.IntValue < 0 ? self.SetAsNegativeInfinity() : self.SetAsInfinity(); return self;
+            }
 #else
             if (Value == AltDec::Zero)
                 throw "Target value can not be divided by zero";

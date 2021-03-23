@@ -93,6 +93,16 @@ namespace BlazesRusCode
         static TrailingType TrailingZero;
         static TrailingType TrailingOne;
         static TrailingType TrailingTenth;
+        static TrailingType TrailingNegOneValue()
+        {
+            return
+#if defined(MixedDec_ExtendTrailingDigits)
+                -1.0;
+#else
+                - 1.0f;
+#endif
+        }
+        static TrailingType TrailingNegOne;
 #if defined(MixedDec_EnableInfinityRep)
         //Is Infinity Representation when DecimalHalf==-2147483648 (IntValue==1 for positive infinity;IntValue==-1 for negative Infinity)
         static const signed int InfinityRep = -2147483648;
@@ -100,16 +110,7 @@ namespace BlazesRusCode
         static const signed int ApproachingValRep = -2147483647;
 #endif
 #if defined(MixedDec_EnablePIRep)
-        static TrailingType PIRepValue()
-        {
-            return
-#if defined(MixedDec_ExtendTrailingDigits)
-                -1.0;
-#else
-                -1.0f;
-#endif
-        }
-        static const TrailingType PIRep;
+        static TrailingType PIRep;
 #endif
 #if defined(MixedDec_EnableENumRep)
         static TrailingType ERepValue()
@@ -243,7 +244,7 @@ namespace BlazesRusCode
         void SetAsApproachingZeroFromLeft()
         {
             IntValue = 0; DecimalHalf = ApproachingValRep;
-            ExtraRep = ApproachingRightRep;
+            ExtraRep = TrailingNegOne;
         }
         
         void SetAsApproachingValueFromRight(int value)
@@ -255,24 +256,24 @@ namespace BlazesRusCode
         void SetAsApproachingValueFromLeft(int value)
         {
             IntValue = value; DecimalHalf = ApproachingValRep;
-            ExtraRep = ApproachingRightRep;
+            ExtraRep = TrailingNegOne;
         }
 private:
-        static AltDec InfinityValue()
+        static MixedDec InfinityValue()
         {
-            AltDec NewSelf = AltDec(1, InfinityRep);
+            MixedDec NewSelf = MixedDec(1, InfinityRep);
             return NewSelf;
         }
         
-        static AltDec NegativeInfinityValue()
+        static MixedDec NegativeInfinityValue()
         {
-            AltDec NewSelf = AltDec(-1, InfinityRep);
+            MixedDec NewSelf = MixedDec(-1, InfinityRep);
             return NewSelf;
         }
         
-        static AltDec ApproachingZeroValue()
+        static MixedDec ApproachingZeroValue()
         {
-            AltDec NewSelf = AltDec(0, ApproachingValRep);
+            MixedDec NewSelf = MixedDec(0, ApproachingValRep);
             return NewSelf;
         }
 public:
@@ -338,6 +339,144 @@ public:
             ExtraRep = PIRep;
         }
 #endif
+
+        private:
+
+            void ConvertPIToNum()
+            {
+
+                ExtraRep = TrailingZero;
+                // Can only convert to up 683565275.1688666254437963172038917047964296646843381624484789109135725652864987887127902610635528943x PIRepresentation
+                //Can Represent up ? before hitting Maximum MixedDec value on reconversion when MixedDec_UseLowerPrecisionPI is enabled
+                //otherwise can represent up to ???(when adding up value from each decimal place of IntValue + (PINum*DecimalHalf/1000000000))
+#if defined(MixedDec_EnableHigherPrecisionPIConversion)
+                if (IntValue > 10)
+                {
+                    MixedDec ValLeft = IntValue;
+                    ValLeft.DecimalHalf = DecimalHalf;
+                }
+                //else if(IntValue==0)//0.XXX... * PI
+                //{
+                //	BasicMultOp(PINum);
+                //}
+                //else if(IntValue==NegativeRep)//-0.XXX... * PI
+                //{
+                //	BasicMultOp(PINum);
+                //}
+#else
+                if (IntValue == NegativeRep)//-0.XXX... * PI
+                {
+                    BasicMultOp(PINum);
+                }
+                //Calculations from HiPer Calc
+                //683565275.168866625 x 3.141592654 = 2147483646.99999999860577275
+                //683565275.168866626 x 3.141592654 = 2147483647.000000001747365404
+                else if (IntValue >= 683565275 && DecimalHalf >= 168866626)//Exceeding Storage limit of NormalRep
+                {
+                    //Display error/warning
+                    IntValue = 2147483647; DecimalHalf = 999999999;//set value as maximum value(since not truely infinite just bit above storage range)
+                }
+                else if (IntValue <= -683565275 && DecimalHalf >= 168866626)//Exceeding Storage limit of NormalRep
+                {
+                    //Display error/warning
+                    IntValue = -2147483647; DecimalHalf = 999999999;//set value as minimum value(since not truely infinite just bit above storage range)
+                }
+#endif
+                else if (DecimalHalf == 0 && IntValue == 10)
+                {
+                    IntValue = 31; DecimalHalf = 415926536;
+                }
+                else
+                {
+                    BasicMultOp(PINum);
+                }
+            }
+
+#if defined(MixedDec_EnableENum)
+            void ConvertEToNum()
+            {
+/*
+                BasicAddOp(ENum);
+                if (ExtraRep != IERep)
+                {
+                    int TempDiv = ExtraRep * -1;
+                    BasicIntDivOp(TempDiv);
+                }
+                ExtraRep = 0;
+*/
+            }
+#endif
+
+        public:
+            void ConvertToNumRep()
+            {
+                //Check for Non-ExtraRep focused special states first
+#ifdef MixedDec_EnableInfinityRep
+                if (DecimalHalf == InfinityRep)
+                {
+                    ExtraRep = TrailingZero;
+                    if (IntValue == 1)//If Positive Infinity, then convert number into MaximumValue instead
+                    {
+                        IntValue = 2147483647; DecimalHalf = 999999999;
+                    }
+                    else//If Negative Infinity, then convert number into MinimumValue instead
+                    {
+                        IntValue = -2147483647; DecimalHalf = 999999999;
+                    }
+                    return;
+                }
+                else if (DecimalHalf == ApproachingValRep)
+                {
+                    DecimalHalf = 1; ExtraRep = TrailingZero;
+                    return;
+                }
+#endif
+#if defined(MixedDec_EnableNaN) && defined(MixedDec_EnableNaNConversionCheck)//Disable conversion check for NaN by default(unless MixedDec_EnableNaNConversionCheck preprocessor added)
+                if (DecimalHalf == NaNRep)//Set as Zero instead of NaN
+                {
+                    SetAsZero(); return;
+                }
+#endif
+                if (ExtraRep == 0)//Skip converting if already normal number state(Equal to default MediumDec format)
+                    return;
+                /*
+
+                                if (ExtraRep == PIRep)
+                                {
+                                    ConvertPIToNum(); return;
+                                }
+                #if defined(MixedDec_EnableImaginaryNum)
+                                else(ExtraRep < 0)
+                                {
+                                    IntValue = -2147483648;
+                                }
+                #elif defined(MixedDec_EnableENum)
+                                else(ExtraRep < 0)
+                                {
+                                    ConvertEToNum(); return;
+                                }
+                #endif
+                                else
+                                {
+                #if MixedDec_EnableMixedFractional
+                                    if (DecimalHalf < 0)//Mixed Fraction
+                                    {
+                                        int TempAdd = IntValue;
+                                        IntValue = DecimalHalf * -1; DecimalHalf = 0;
+                                        BasicIntDivOp(ExtraRep);
+                                        BasicAddOp(TempAdd);
+                                    }
+                                    else//Value Divided by ExtraRep
+                                    {
+                #endif
+                                        BasicIntDivOp(ExtraRep);
+                #if MixedDec_EnableMixedFractional
+                                    }
+                #endif
+                                }
+                                ExtraRep = 0;
+                */
+            }
 
     #pragma region ValueDefines
     private:
@@ -455,7 +594,36 @@ public:
             MixedDec NewSelf = MixedDec(0, 5);
             return NewSelf;
         }
-        
+
+        static MixedDec LN10Value()
+        {
+            return MixedDec(2, 302585093);
+        }
+
+        static MixedDec LN10MultValue()
+        {
+            return MixedDec(0, 434294482);
+        }
+
+        static MixedDec HalfLN10MultValue()
+        {
+            return MixedDec(0, 868588964);
+        }
+
+        static MixedDec NilValue()
+        {
+            return MixedDec(-2147483648, -2147483648);
+        }
+
+        static MixedDec MinimumValue()
+        {
+            return MixedDec(2147483647, 999999999);
+        }
+
+        static MixedDec MaximumValue()
+        {
+            return MixedDec(2147483647, 999999999);
+        }
 public:
         /// <summary>
         /// Returns PI(3.1415926535897932384626433) with tenth digit rounded up(3.141592654)
@@ -1214,7 +1382,9 @@ public:
             if (self.DecimalHalf==-1)
                 return self;
             if (Value.DecimalHalf == -1)
-                return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
+            {
+                Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity(); return self;
+            }
 #endif
             bool WasNegative = self.IntValue < 0;
             if (Value.ExtraRep > TrailingZero)
@@ -1373,7 +1543,9 @@ public:
             if (self.DecimalHalf == -1)
                 return self;
             if (Value.DecimalHalf == -1)
-                return Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity();
+            {
+                Value.IntValue == 1 ? self.SetAsInfinity() : self.SetAsNegativeInfinity(); return self;
+            }
 #endif
             bool WasNegative = self.IntValue < 0;
             if (Value.ExtraRep > TrailingZero)
@@ -1979,6 +2151,20 @@ private:
         }
 
 public:
+    /// <summary>
+    /// Basic Multiplication Operation Between AltDecs
+    /// </summary>
+    /// <param name="Value">The value.</param>
+    /// <returns>AltDec&</returns>
+    void BasicMultOp(MixedDec& Value)
+    {
+        if (Value == MixedDec::Zero) { SetAsZero(); return; }
+        if ((IntValue == 0 && DecimalHalf == 0) || Value == MixedDec::One)
+            return;
+        PartialMultOp(Value);
+        if (IntValue == 0 && DecimalHalf == 0) { DecimalHalf = 1; }//Prevent Dividing into nothing
+    }
+
         /// <summary>
         /// Multiplication Operation Between MixedDecs
         /// </summary>
@@ -2292,10 +2478,14 @@ public:
         static MixedDec& DivOp(MixedDec& self, MixedDec& Value)
         {
 #if defined(MixedDec_EnableInfinityRep)
-            if (value.DecimalHalf == -1)
-                return self.SetAsZero();
+            if (Value.DecimalHalf == -1)
+            {
+                self.SetAsZero(); return self;
+            }
             if (Value == MixedDec::Zero)
-                return self.IntValue<0?self.SetAsNegativeInfinity:self.SetAsInfinity();
+            {
+                self.IntValue < 0 ? self.SetAsNegativeInfinity() : self.SetAsInfinity(); return self;
+            }
 #else
             if (Value == MixedDec::Zero)
                 throw "Target value can not be divided by zero";
@@ -5022,8 +5212,9 @@ public:
     MixedDec::TrailingType MixedDec::TrailingZero = TrailingZeroValue();
     MixedDec::TrailingType MixedDec::TrailingOne = TrailingOneValue();
     MixedDec::TrailingType MixedDec::TrailingTenth = TrailingTenthValue();
+    MixedDec::TrailingType MixedDec::TrailingNegOne = TrailingNegOneValue();
 #if defined(MixedDec_EnablePIRep)
-    MixedDec::TrailingType MixedDec::PIRep = PIRepValue();
+    MixedDec::TrailingType MixedDec::PIRep = TrailingNegOneValue();
 #endif
 #if defined(MixedDec_EnableENumRep)
     MixedDec::TrailingType MixedDec::ERep = ERepValue();
@@ -5208,7 +5399,7 @@ public:
                 return "-Infinity"; 
         } 
 #endif 
-        ConvertToNumRep(); 
+        ConvertToNumRep();
         std::string Value = "";
         int CurrentSection = IntValue;
         unsigned __int8 CurrentDigit;
@@ -5248,10 +5439,10 @@ public:
                 }
             }
         }
-		if(ExtraRep!=TrailingZero)//Output Trailing Floating Point based Digits
-		{
-		
-		}
+        if(ExtraRep!=TrailingZero)//Output Trailing Floating Point based Digits
+        {
+        
+        }
         return Value;
     }
 
@@ -5303,10 +5494,10 @@ public:
         {
             Value += ".000000000";
         }
-		if(ExtraRep!=TrailingZero)//Output Trailing Floating Point based Digits
-		{
-		
-		}
+        if(ExtraRep!=TrailingZero)//Output Trailing Floating Point based Digits
+        {
+        
+        }
         return Value;
     }
     #pragma endregion String Function Source
