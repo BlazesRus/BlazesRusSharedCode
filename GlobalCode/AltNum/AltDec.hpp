@@ -41,6 +41,9 @@ AltDec_EnableComplexNum = Enable Representation of complex numbers with Imaginar
 AltDec_EnableNegativeZero = (Not Fully Implimented)
 AltDec_EnableHigherPrecisionPIConversion = (Not Implimented)
 AltDec_EnableInfinityPowers = Allows powers of infinity for operations where infinity is somehow more infinite then normal(Not Implimented)
+AltDec_EnableNearPI
+AltDec_EnableNearE
+AltDec_EnavleNearI
 
 Only one of below can be active at once:
 AltDec_EnableENum = If DecimalHalf is positive and ExtraRep is -2147483647, then AltDec represents +- 2147483647.999999999 * e (Not Fully Implimented)
@@ -101,18 +104,16 @@ namespace BlazesRusCode
             MixedFrac,
             MixedE,
             MixedI,
-//#if defined(AltDec_EnableMixedFractional)
-//#endif
-//#if defined(AltDec_EnableInfinityRep)
             ApproachingTowards,//(Approaching Towards Zero is equal to 0.000...1)
             ApproachingAwayFrom,//(Approaching Away from Zero is equal to 0.9999...)
             ApproachingPI,
             ApproachingE,
             ApproachingI,
-            //InfinityRep
-//#endif
             NaN,
             NegativeZero,
+            NearPI,//(Approaching Away from Zero is equal to 0.9999...PI)
+            NearE,//(Approaching Away from Zero is equal to 0.9999...e)
+            NearI,//(Approaching Away from Zero is equal to 0.9999...i)
             UnknownType
         };
         RepType GetRepType()
@@ -124,11 +125,11 @@ namespace BlazesRusCode
 //            {
 //                if(IntValue==1)//If Positive Infinity, then convert number into MaximumValue instead
 //                {
-//                    UpdateTarget.IntValue = 2147483647; UpdateTarget.DecimalHalf = 999999999;
+//                    return RepType::PositiveInfinity;
 //                }
 //                else//If Negative Infinity, then convert number into MinimumValue instead
 //                {
-//                    UpdateTarget.IntValue = -2147483647; UpdateTarget.DecimalHalf = 999999999;
+//                    return RepType::NegativeInfinity;
 //                }
 //            }
             else if (DecimalHalf == ApproachingValRep)
