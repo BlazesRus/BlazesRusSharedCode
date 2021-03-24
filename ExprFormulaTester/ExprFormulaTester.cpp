@@ -27,6 +27,7 @@ using MixedDec = BlazesRusCode::MixedDec;
 #include <sstream>
 #include <iomanip>
 
+#include <Windows.h>
 
 int main()
 {
@@ -309,10 +310,25 @@ int main()
         std::cout << "Unknown exception" << std::endl;
     }
 #endif
+    std::ostringstream streamObj;
+    streamObj << std::fixed << std::setprecision(99);
+    streamObj << "HiperCalc result:18.84955592153875943077586029967701730518301639625063492584966755384689843771725399176820895205270241" << std::endl;
+
     double LAsDouble = boost::math::constants::pi<double>()*2.0;
     LAsDouble *= 3.0;
-    double LAsFloat = boost::math::constants::pi<float>()*2.0f;
-    LAsDouble *= 3.0f;
+    float LAsFloat = boost::math::constants::pi<float>()*2.0f;
+    LAsFloat *= 3.0f;
+    /*streamObj << "-------Boost PI based Tests------" << std::endl;*/
+    streamObj << "Double Result:" << LAsDouble << std::endl;
+    streamObj << "Float Result:" << LAsFloat << std::endl;
+    //streamObj << "---------------HiperCalc display based FloatingPoint Tests------------------" << std::endl;
+    //LAsDouble = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117068 * 2.0;
+    //LAsFloat = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117068f * 2.0f;
+    //LAsDouble *= 3.0;
+    //LAsFloat *= 3.0f;
+    //streamObj << "Double Result:" << LAsDouble << std::endl;
+    //streamObj << "Float Result:" << LAsFloat << std::endl;
+    streamObj << "-------AltNum Tests------" << std::endl;
     AltDec LAlt;
     LAlt.SetPiVal(2);
     LAlt *= 3;
@@ -320,10 +336,7 @@ int main()
     LMixed.SetPiVal(2);
     LMixed *= 3;
 
-    std::ostringstream streamObj;
-    streamObj << std::fixed << std::setprecision(99);
-    streamObj << "HiperCalc result:18.84955592153875943077586029967701730518301639625063492584966755384689843771725399176820895205270241" << std::endl;
-    streamObj << "Double Result:" << LAsDouble<<std::endl;
-    streamObj << "Float Result:" << LAsDouble << std::endl;
+    std::cout << streamObj.str().c_str();
+    ::OutputDebugStringA(streamObj.str().c_str());//Outputing to debug output based on https://www.codeproject.com/Articles/1053/Using-an-Output-Stream-for-Debugging
 
 }
