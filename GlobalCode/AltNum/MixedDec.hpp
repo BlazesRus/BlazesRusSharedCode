@@ -43,11 +43,11 @@ namespace BlazesRusCode
 {
     class MixedDec;
 
-/*---Accuracy Tests:
-    -Aiming for accuracy greater than double when MixedDec_ExtendTrailingDigits not enabled(with speed similar or better than double)
-    and accuracy greater than decimal when MixedDec_ExtendTrailingDigits is enabled(with speed similar or better than decimal)
-    -Aiming to at least have same or better accuracy vs MediumDec (with less accuracy lost from truncation from digits getting too small)
-*/
+    /*---Accuracy Tests:
+        -Aiming for accuracy greater than double when MixedDec_ExtendTrailingDigits not enabled(with speed similar or better than double)
+        and accuracy greater than decimal when MixedDec_ExtendTrailingDigits is enabled(with speed similar or better than decimal)
+        -Aiming to at least have same or better accuracy vs MediumDec (with less accuracy lost from truncation from digits getting too small)
+    */
 
     /// <summary>
     /// Alternative Non-Integer number representation with focus on accuracy and partially speed within certain range
@@ -99,7 +99,7 @@ namespace BlazesRusCode
 #if defined(MixedDec_ExtendTrailingDigits)
                 -1.0;
 #else
-                - 1.0f;
+                -1.0f;
 #endif
         }
         static TrailingType TrailingNegOne;
@@ -199,9 +199,9 @@ namespace BlazesRusCode
         /// <param name="decVal02">ExtraRep.</param>
         MixedDec(signed int intVal = 0, signed int decVal = 0, TrailingType extraVal =
 #if defined(MixedDec_ExtendTrailingDigits)
-        0.0)
+            0.0)
 #else
-        0.0f)
+            0.0f)
 #endif
         {
             IntValue = intVal;
@@ -218,9 +218,9 @@ namespace BlazesRusCode
             IntValue = Value.IntValue;
             DecimalHalf = Value.DecimalHalf;
         }
-        
- //Infinity operations based on https://www.gnu.org/software/libc/manual/html_node/Infinity-and-NaN.html
- // and https://tutorial.math.lamar.edu/classes/calcI/typesofinfinity.aspx
+
+        //Infinity operations based on https://www.gnu.org/software/libc/manual/html_node/Infinity-and-NaN.html
+        // and https://tutorial.math.lamar.edu/classes/calcI/typesofinfinity.aspx
 #if defined(MixedDec_EnableInfinityRep)
         void SetAsInfinity()
         {
@@ -233,50 +233,50 @@ namespace BlazesRusCode
             IntValue = -1; DecimalHalf = InfinityRep;
             ExtraRep = TrailingZero;
         }
-  
+
         //Approaching Zero from Right
         void SetAsApproachingZero()
         {
             IntValue = 0; DecimalHalf = ApproachingValRep;
             ExtraRep = TrailingZero;
         }
-        
+
         void SetAsApproachingZeroFromLeft()
         {
             IntValue = 0; DecimalHalf = ApproachingValRep;
             ExtraRep = TrailingNegOne;
         }
-        
+
         void SetAsApproachingValueFromRight(int value)
         {
             IntValue = value; DecimalHalf = ApproachingValRep;
             ExtraRep = TrailingZero;
         }
-        
+
         void SetAsApproachingValueFromLeft(int value)
         {
             IntValue = value; DecimalHalf = ApproachingValRep;
             ExtraRep = TrailingNegOne;
         }
-private:
+    private:
         static MixedDec InfinityValue()
         {
             MixedDec NewSelf = MixedDec(1, InfinityRep);
             return NewSelf;
         }
-        
+
         static MixedDec NegativeInfinityValue()
         {
             MixedDec NewSelf = MixedDec(-1, InfinityRep);
             return NewSelf;
         }
-        
+
         static MixedDec ApproachingZeroValue()
         {
             MixedDec NewSelf = MixedDec(0, ApproachingValRep);
             return NewSelf;
         }
-public:
+    public:
 #endif
 #if defined(MixedDec_EnableNaN)
         void SetAsNaN()
@@ -290,32 +290,22 @@ public:
             IntValue = 0; DecimalHalf = 0;
             ExtraRep = TrailingZero;
         }
-        
+
 #if defined(MixedDec_EnableNegativeZero)
         void SetAsNegativeZero()
         {
             IntValue = 0; DecimalHalf = 0;
             ExtraRep = TrailingZero;
         }
-private:
+    private:
         static MixedDec NegativeZeroValue()
         {
             return MixedDec(0, 0, -4.0f);
         }
-public:
+    public:
         static MixedDec NegativeZero;
 #endif
-        
-        /// <summary>
-        /// Sets the value.
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        void SetVal(MixedDec Value)
-        {
-            IntValue = Value.IntValue;
-            DecimalHalf = Value.DecimalHalf; ExtraRep = Value.ExtraRep;
-        }
-        
+
         /// <summary>
         /// Sets the value.
         /// </summary>
@@ -325,14 +315,14 @@ public:
             IntValue = Value.IntValue;
             DecimalHalf = Value.DecimalHalf; ExtraRep = TrailingZero;
         }
-        
+
 #if defined(MixedDec_EnablePIRep)
         void SetPiVal(MediumDec Value)
         {
             IntValue = Value.IntValue; DecimalHalf = Value.DecimalHalf;
             ExtraRep = PIRep;
         }
-        
+
         void SetPiVal(int Value)
         {
             IntValue = Value; DecimalHalf = 0;
@@ -340,156 +330,156 @@ public:
         }
 #endif
 
-        private:
+    private:
 
-            void ConvertPIToNum()
-            {
+        void ConvertPIToNum()
+        {
 
-                ExtraRep = TrailingZero;
-                // Can only convert to up 683565275.1688666254437963172038917047964296646843381624484789109135725652864987887127902610635528943x PIRepresentation
-                //Can Represent up ? before hitting Maximum MixedDec value on reconversion when MixedDec_UseLowerPrecisionPI is enabled
-                //otherwise can represent up to ???(when adding up value from each decimal place of IntValue + (PINum*DecimalHalf/1000000000))
+            ExtraRep = TrailingZero;
+            // Can only convert to up 683565275.1688666254437963172038917047964296646843381624484789109135725652864987887127902610635528943x PIRepresentation
+            //Can Represent up ? before hitting Maximum MixedDec value on reconversion when MixedDec_UseLowerPrecisionPI is enabled
+            //otherwise can represent up to ???(when adding up value from each decimal place of IntValue + (PINum*DecimalHalf/1000000000))
 #if defined(MixedDec_EnableHigherPrecisionPIConversion)
-                if (IntValue > 10)
-                {
-                    MixedDec ValLeft = IntValue;
-                    ValLeft.DecimalHalf = DecimalHalf;
-                }
-                //else if(IntValue==0)//0.XXX... * PI
-                //{
-                //	BasicMultOp(PINum);
-                //}
-                //else if(IntValue==NegativeRep)//-0.XXX... * PI
-                //{
-                //	BasicMultOp(PINum);
-                //}
-#else
-                if (IntValue == NegativeRep)//-0.XXX... * PI
-                {
-                    BasicMultOp(PINum);
-                }
-                //Calculations from HiPer Calc
-                //683565275.168866625 x 3.141592654 = 2147483646.99999999860577275
-                //683565275.168866626 x 3.141592654 = 2147483647.000000001747365404
-                else if (IntValue >= 683565275 && DecimalHalf >= 168866626)//Exceeding Storage limit of NormalRep
-                {
-                    //Display error/warning
-                    IntValue = 2147483647; DecimalHalf = 999999999;//set value as maximum value(since not truely infinite just bit above storage range)
-                }
-                else if (IntValue <= -683565275 && DecimalHalf >= 168866626)//Exceeding Storage limit of NormalRep
-                {
-                    //Display error/warning
-                    IntValue = -2147483647; DecimalHalf = 999999999;//set value as minimum value(since not truely infinite just bit above storage range)
-                }
-#endif
-                else if (DecimalHalf == 0 && IntValue == 10)
-                {
-                    IntValue = 31; DecimalHalf = 415926536;
-                }
-                else
-                {
-                    BasicMultOp(PINum);
-                }
+            if (IntValue > 10)
+            {
+                MixedDec ValLeft = IntValue;
+                ValLeft.DecimalHalf = DecimalHalf;
             }
+            //else if(IntValue==0)//0.XXX... * PI
+            //{
+            //	BasicMultOp(PINum);
+            //}
+            //else if(IntValue==NegativeRep)//-0.XXX... * PI
+            //{
+            //	BasicMultOp(PINum);
+            //}
+#else
+            if (IntValue == NegativeRep)//-0.XXX... * PI
+            {
+                BasicMultOp(PINum);
+            }
+            //Calculations from HiPer Calc
+            //683565275.168866625 x 3.141592654 = 2147483646.99999999860577275
+            //683565275.168866626 x 3.141592654 = 2147483647.000000001747365404
+            else if (IntValue >= 683565275 && DecimalHalf >= 168866626)//Exceeding Storage limit of NormalRep
+            {
+                //Display error/warning
+                IntValue = 2147483647; DecimalHalf = 999999999;//set value as maximum value(since not truely infinite just bit above storage range)
+            }
+            else if (IntValue <= -683565275 && DecimalHalf >= 168866626)//Exceeding Storage limit of NormalRep
+            {
+                //Display error/warning
+                IntValue = -2147483647; DecimalHalf = 999999999;//set value as minimum value(since not truely infinite just bit above storage range)
+            }
+#endif
+            else if (DecimalHalf == 0 && IntValue == 10)
+            {
+                IntValue = 31; DecimalHalf = 415926536;
+            }
+            else
+            {
+                BasicMultOp(PINum);
+            }
+        }
 
 #if defined(MixedDec_EnableENum)
-            void ConvertEToNum()
-            {
-/*
-                BasicAddOp(ENum);
-                if (ExtraRep != IERep)
-                {
-                    int TempDiv = ExtraRep * -1;
-                    BasicIntDivOp(TempDiv);
-                }
-                ExtraRep = 0;
-*/
-            }
+        void ConvertEToNum()
+        {
+            /*
+                            BasicAddOp(ENum);
+                            if (ExtraRep != IERep)
+                            {
+                                int TempDiv = ExtraRep * -1;
+                                BasicIntDivOp(TempDiv);
+                            }
+                            ExtraRep = 0;
+            */
+        }
 #endif
 
-        public:
-            void ConvertToNumRep()
-            {
-                //Check for Non-ExtraRep focused special states first
+    public:
+        void ConvertToNumRep()
+        {
+            //Check for Non-ExtraRep focused special states first
 #ifdef MixedDec_EnableInfinityRep
-                if (DecimalHalf == InfinityRep)
+            if (DecimalHalf == InfinityRep)
+            {
+                ExtraRep = TrailingZero;
+                if (IntValue == 1)//If Positive Infinity, then convert number into MaximumValue instead
                 {
-                    ExtraRep = TrailingZero;
-                    if (IntValue == 1)//If Positive Infinity, then convert number into MaximumValue instead
-                    {
-                        IntValue = 2147483647; DecimalHalf = 999999999;
-                    }
-                    else//If Negative Infinity, then convert number into MinimumValue instead
-                    {
-                        IntValue = -2147483647; DecimalHalf = 999999999;
-                    }
-                    return;
+                    IntValue = 2147483647; DecimalHalf = 999999999;
                 }
-                else if (DecimalHalf == ApproachingValRep)
+                else//If Negative Infinity, then convert number into MinimumValue instead
                 {
-                    DecimalHalf = 1; ExtraRep = TrailingZero;
-                    return;
+                    IntValue = -2147483647; DecimalHalf = 999999999;
                 }
+                return;
+            }
+            else if (DecimalHalf == ApproachingValRep)
+            {
+                DecimalHalf = 1; ExtraRep = TrailingZero;
+                return;
+            }
 #endif
 #if defined(MixedDec_EnableNaN) && defined(MixedDec_EnableNaNConversionCheck)//Disable conversion check for NaN by default(unless MixedDec_EnableNaNConversionCheck preprocessor added)
-                if (DecimalHalf == NaNRep)//Set as Zero instead of NaN
-                {
-                    SetAsZero(); return;
-                }
-#endif
-                if (ExtraRep == 0)//Skip converting if already normal number state(Equal to default MediumDec format)
-                    return;
-                /*
-
-                                if (ExtraRep == PIRep)
-                                {
-                                    ConvertPIToNum(); return;
-                                }
-                #if defined(MixedDec_EnableImaginaryNum)
-                                else(ExtraRep < 0)
-                                {
-                                    IntValue = -2147483648;
-                                }
-                #elif defined(MixedDec_EnableENum)
-                                else(ExtraRep < 0)
-                                {
-                                    ConvertEToNum(); return;
-                                }
-                #endif
-                                else
-                                {
-                #if MixedDec_EnableMixedFractional
-                                    if (DecimalHalf < 0)//Mixed Fraction
-                                    {
-                                        int TempAdd = IntValue;
-                                        IntValue = DecimalHalf * -1; DecimalHalf = 0;
-                                        BasicIntDivOp(ExtraRep);
-                                        BasicAddOp(TempAdd);
-                                    }
-                                    else//Value Divided by ExtraRep
-                                    {
-                #endif
-                                        BasicIntDivOp(ExtraRep);
-                #if MixedDec_EnableMixedFractional
-                                    }
-                #endif
-                                }
-                                ExtraRep = 0;
-                */
+            if (DecimalHalf == NaNRep)//Set as Zero instead of NaN
+            {
+                SetAsZero(); return;
             }
+#endif
+            if (ExtraRep == 0)//Skip converting if already normal number state(Equal to default MediumDec format)
+                return;
+            /*
 
-    #pragma region ValueDefines
+                            if (ExtraRep == PIRep)
+                            {
+                                ConvertPIToNum(); return;
+                            }
+            #if defined(MixedDec_EnableImaginaryNum)
+                            else(ExtraRep < 0)
+                            {
+                                IntValue = -2147483648;
+                            }
+            #elif defined(MixedDec_EnableENum)
+                            else(ExtraRep < 0)
+                            {
+                                ConvertEToNum(); return;
+                            }
+            #endif
+                            else
+                            {
+            #if MixedDec_EnableMixedFractional
+                                if (DecimalHalf < 0)//Mixed Fraction
+                                {
+                                    int TempAdd = IntValue;
+                                    IntValue = DecimalHalf * -1; DecimalHalf = 0;
+                                    BasicIntDivOp(ExtraRep);
+                                    BasicAddOp(TempAdd);
+                                }
+                                else//Value Divided by ExtraRep
+                                {
+            #endif
+                                    BasicIntDivOp(ExtraRep);
+            #if MixedDec_EnableMixedFractional
+                                }
+            #endif
+                            }
+                            ExtraRep = 0;
+            */
+        }
+
+#pragma region ValueDefines
     private:
         static MixedDec PINumValue()
         {
             return MixedDec(3, 141592654);
         }
-        
+
         static MixedDec ENumValue()
         {
             return MixedDec(2, 718281828);
         }
-    
+
         static MixedDec PIValue()
         {
 #if defined(MixedDec_EnablePIRep)
@@ -498,21 +488,21 @@ public:
             return MixedDec(1, 0, PIRep);
 #endif
         }
-        
+
         static MixedDec ZeroValue()
         {
             return MixedDec(0, 0);
         }
-        
+
         static MixedDec EValue()
         {
 #if defined(MixedDec_EnableENumRep)
             return MixedDec(1, 0, ERep);
 #else
-            return MixedDec(2, 718281828, 0); 
+            return MixedDec(2, 718281828, 0);
 #endif
         }
-        
+
         /// <summary>
         /// Returns the value at one
         /// </summary>
@@ -624,13 +614,13 @@ public:
         {
             return MixedDec(2147483647, 999999999);
         }
-public:
+    public:
         /// <summary>
         /// Returns PI(3.1415926535897932384626433) with tenth digit rounded up(3.141592654)
         /// </summary>
         /// <returns>MixedDec</returns>
         static MixedDec PINum;
-        
+
         /// <summary>
         /// Euler's number (Non-Alternative Representation)
         /// Irrational number equal to about (1 + 1/n)^n
@@ -638,14 +628,11 @@ public:
         /// </summary>
         /// <returns>MixedDec</returns>
         static MixedDec ENum;
-        
+
 #if defined(AltDec_EnableInfinityRep)
         static MixedDec Infinity;
         static MixedDec NegativeInfinity;
         static MixedDec ApproachingZero;
-#endif
-#if defined(AltDec_EnableInfinityRep)
-        static MixedDec Infinity;
 #endif
 
         /// <summary>
@@ -653,7 +640,7 @@ public:
         /// </summary>
         /// <returns>MixedDec</returns>
         static MixedDec PI;
-        
+
         /// <summary>
         /// Euler's number Representation
         /// Irrational number equal to about (1 + 1/n)^n
@@ -661,9 +648,9 @@ public:
         /// </summary>
         /// <returns>MixedDec</returns>
         static MixedDec E;
-        
+
         static MixedDec Zero;
-        
+
         /// <summary>
         /// Returns the value at one
         /// </summary>
@@ -725,17 +712,17 @@ public:
         /// </summary>
         /// <returns>MixedDec</returns>
         static MixedDec NegativeOne;
-        
+
         /// <summary>
         /// Returns value of lowest non-infinite/Special Decimal State Value that can store
         /// </summary>
         static MixedDec Minimum;
-        
+
         /// <summary>
         /// Returns value of highest non-infinite/Special Decimal State Value that can store
         /// </summary>
         static MixedDec Maximum;
-        
+
         /// <summary>
         /// 2.3025850929940456840179914546844
         /// (Based on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having)
@@ -756,7 +743,7 @@ public:
         /// Nil Value as proposed by https://docs.google.com/document/d/19n-E8Mu-0MWCcNt0pQnFi2Osq-qdMDW6aCBweMKiEb4/edit
         /// </summary>
         static MixedDec Nil;
-    #pragma endregion ValueDefines
+#pragma endregion ValueDefines
         /// <summary>
         /// Swaps the negative status.
         /// </summary>
@@ -775,7 +762,7 @@ public:
                 IntValue *= -1;
             }
         }
-    #pragma region String Commands
+#pragma region String Commands
         /// <summary>
         /// Reads the string.
         /// </summary>
@@ -854,13 +841,13 @@ public:
         ///// <param name="Value">The right side value</param>
         ///// <returns>string</returns>
         //friend std::string operator+=(std::string targetString, MixedDec self) { return targetString + self.ToString(); }
-    #pragma endregion String Commands
+#pragma endregion String Commands
 
-    #pragma region From Standard types to this type
-        /// <summary>
-        /// Sets the value.
-        /// </summary>
-        /// <param name="Value">The value.</param>
+#pragma region From Standard types to this type
+    /// <summary>
+    /// Sets the value.
+    /// </summary>
+    /// <param name="Value">The value.</param>
         void SetVal(float Value)
         {
             bool IsNegative = Value < 0.0f;
@@ -944,7 +931,7 @@ public:
         /// <param name="Value">The value.</param>
         void SetVal(bool Value)
         {
-            IntValue = Value==false ? 0 : 1;
+            IntValue = Value == false ? 0 : 1;
             DecimalHalf = 0;
         }
 
@@ -997,9 +984,9 @@ public:
         {
             this->SetVal(Value);
         }
-    #pragma endregion From Standard types to this type
+#pragma endregion From Standard types to this type
 
-    #pragma region From this type to Standard types
+#pragma region From this type to Standard types
         /// <summary>
         /// MixedDec to float explicit conversion
         /// </summary>
@@ -1073,9 +1060,9 @@ public:
         /// <returns>The result of the operator.</returns>
         template<typename IntType>
         explicit operator IntType() { return IntValue; }
-    #pragma endregion From this type to Standard types
+#pragma endregion From this type to Standard types
 
-    #pragma region Comparison Operators
+#pragma region Comparison Operators
         /// <summary>
         /// Equal to Operation Between MixedDecs
         /// </summary>
@@ -1367,7 +1354,7 @@ public:
             return false;
         }
 
-    #pragma endregion Comparison Operators
+#pragma endregion Comparison Operators
 
 #pragma region Addition/Subtraction Operations
         /// <summary>
@@ -1379,7 +1366,7 @@ public:
         static MixedDec& AddOp(MixedDec& self, MixedDec& Value)
         {
 #if defined(MixedDec_EnableInfinityRep)
-            if (self.DecimalHalf==-1)
+            if (self.DecimalHalf == -1)
                 return self;
             if (Value.DecimalHalf == -1)
             {
@@ -1841,7 +1828,7 @@ public:
                 {
                     IntValue = Value.IntValue; DecimalHalf = Value.DecimalHalf;
                     ExtraRep = Value.ExtraRep;
-                    return; 
+                    return;
                 }
                 else if (Value.DecimalHalf == 0)
                 {
@@ -1967,7 +1954,7 @@ public:
             }
         }
 
-private:
+    private:
         void MultOpExtension(MixedDec& Value)
         {
             if (DecimalHalf == 0)
@@ -2150,20 +2137,20 @@ private:
             }
         }
 
-public:
-    /// <summary>
-    /// Basic Multiplication Operation Between AltDecs
-    /// </summary>
-    /// <param name="Value">The value.</param>
-    /// <returns>AltDec&</returns>
-    void BasicMultOp(MixedDec& Value)
-    {
-        if (Value == MixedDec::Zero) { SetAsZero(); return; }
-        if ((IntValue == 0 && DecimalHalf == 0) || Value == MixedDec::One)
-            return;
-        PartialMultOp(Value);
-        if (IntValue == 0 && DecimalHalf == 0) { DecimalHalf = 1; }//Prevent Dividing into nothing
-    }
+    public:
+        /// <summary>
+        /// Basic Multiplication Operation Between AltDecs
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>AltDec&</returns>
+        void BasicMultOp(MixedDec& Value)
+        {
+            if (Value == MixedDec::Zero) { SetAsZero(); return; }
+            if ((IntValue == 0 && DecimalHalf == 0) || Value == MixedDec::One)
+                return;
+            PartialMultOp(Value);
+            if (IntValue == 0 && DecimalHalf == 0) { DecimalHalf = 1; }//Prevent Dividing into nothing
+        }
 
         /// <summary>
         /// Multiplication Operation Between MixedDecs
@@ -2353,7 +2340,7 @@ public:
                 }
             }
         }
-private:
+    private:
         void DivOpExtension(MixedDec& Value)
         {
             if (DecimalHalf == 0)
@@ -2468,7 +2455,7 @@ private:
             }
         }
 
-public:
+    public:
         /// <summary>
         /// Division Operation Between MixedDecs
         /// </summary>
@@ -2916,14 +2903,14 @@ public:
         {
             return AddOp(self, Value);
         }
-        
+
         /// <summary>
         /// += Operation Between MixedDecs(from pointer)
         /// </summary>
         /// <param name="self">The self.</param>
         /// <param name="Value">The value.</param>
         /// <returns>MixedDec</returns>
-        friend MixedDec& operator+=(MixedDec* self, MixedDec Value){ return AddOp(**self, Value); }
+        friend MixedDec& operator+=(MixedDec* self, MixedDec Value) { return AddOp(**self, Value); }
 
         /// <summary>
         /// Subtraction Operation Between MixedDecs
@@ -2946,14 +2933,14 @@ public:
         {
             return SubOp(self, Value);
         }
-        
+
         /// <summary>
         /// -= Operation Between MixedDecs(from pointer)
         /// </summary>
         /// <param name="self">The self.</param>
         /// <param name="Value">The value.</param>
         /// <returns>MixedDec</returns>
-        friend MixedDec& operator-=(MixedDec* self, MixedDec Value){ return SubOp(**self, Value); }
+        friend MixedDec& operator-=(MixedDec* self, MixedDec Value) { return SubOp(**self, Value); }
 
         /// <summary>
         /// Multiplication Operation Between MixedDecs
@@ -2983,7 +2970,7 @@ public:
         ///// <param name="self">The self.</param>
         ///// <param name="Value">The value.</param>
         ///// <returns>MixedDec</returns>
-        friend MixedDec& operator*=(MixedDec* self, MixedDec Value){ return MultOp(**self, Value); }
+        friend MixedDec& operator*=(MixedDec* self, MixedDec Value) { return MultOp(**self, Value); }
 
 
         /// <summary>
@@ -3007,14 +2994,14 @@ public:
         {
             return DivOp(self, Value);
         }
-        
+
         /// <summary>
         /// /= Operation Between MixedDecs (from pointer)
         /// </summary>
         /// <param name="self">The self.</param>
         /// <param name="Value">The value.</param>
         /// <returns>MixedDec</returns>
-        friend MixedDec& operator/=(MixedDec* self, MixedDec Value){ return DivOp(**self, Value); }
+        friend MixedDec& operator/=(MixedDec* self, MixedDec Value) { return DivOp(**self, Value); }
 
         /// <summary>
         /// Remainder Operation Between MixedDecs
@@ -3037,7 +3024,7 @@ public:
         {
             return RemOp(self, Value);
         }
-        
+
         /// <summary>
         /// %= Operation Between MixedDecs (from pointer)
         /// </summary>
@@ -3226,9 +3213,9 @@ public:
             return *this;
         }
 
-    #pragma endregion MixedDec-To-MixedDec Operators
+#pragma endregion MixedDec-To-MixedDec Operators
 
-    #pragma region MixedDec-To-Int Comparison Operators
+#pragma region MixedDec-To-Int Comparison Operators
         /// <summary>
         /// Equality Operation between <see cref="MixedDec &"/> and Integer Type.
         /// </summary>
@@ -3483,8 +3470,8 @@ public:
             return false;
         }
 
-    #pragma endregion MixedDec-To-Int Comparison Operators
-    #pragma region Other Operations
+#pragma endregion MixedDec-To-Int Comparison Operators
+#pragma region Other Operations
         friend MixedDec operator+(MixedDec self, float Value) { return self + (MixedDec)Value; }
         friend MixedDec operator-(MixedDec self, float Value) { return self - (MixedDec)Value; }
         friend MixedDec operator*(MixedDec self, float Value) { return self * (MixedDec)Value; }
@@ -3539,75 +3526,75 @@ public:
         friend MixedDec operator|(ldouble Value, MixedDec self) { return (MixedDec)Value | self; }
         friend MixedDec operator&(ldouble Value, MixedDec self) { return (MixedDec)Value & self; }
 
-    #pragma endregion Other Operations
-    #pragma region MixedDec-To-Integer Operations
+#pragma endregion Other Operations
+#pragma region MixedDec-To-Integer Operations
     public:
-        friend MixedDec operator+(MixedDec self, unsigned char Value){ return UnsignedAddOp(self, Value); }
-        friend MixedDec operator-(MixedDec self, unsigned char Value){ return UnsignedSubOp(self, Value); }
-        friend MixedDec operator*(MixedDec self, unsigned char Value){ return UnsignedMultOp(self, Value); }
-        friend MixedDec operator/(MixedDec self, unsigned char Value){ return UnsignedDivOp(self, Value); }
-        friend MixedDec operator%(MixedDec self, unsigned char Value){ return UnsignedRemOp(self, Value); }
-        
-        friend MixedDec operator+=(MixedDec& self, unsigned char Value){ return UnsignedAddOp(self, Value); }
-        friend MixedDec operator-=(MixedDec& self, unsigned char Value){ return UnsignedSubOp(self, Value); }
-        friend MixedDec operator*=(MixedDec& self, unsigned char Value){ return UnsignedMultOp(self, Value); }
-        friend MixedDec operator/=(MixedDec& self, unsigned char Value){ return UnsignedDivOp(self, Value); }
-        friend MixedDec operator%=(MixedDec& self, unsigned char Value){ return UnsignedRemOp(self, Value); }
+        friend MixedDec operator+(MixedDec self, unsigned char Value) { return UnsignedAddOp(self, Value); }
+        friend MixedDec operator-(MixedDec self, unsigned char Value) { return UnsignedSubOp(self, Value); }
+        friend MixedDec operator*(MixedDec self, unsigned char Value) { return UnsignedMultOp(self, Value); }
+        friend MixedDec operator/(MixedDec self, unsigned char Value) { return UnsignedDivOp(self, Value); }
+        friend MixedDec operator%(MixedDec self, unsigned char Value) { return UnsignedRemOp(self, Value); }
 
-        friend MixedDec operator+(MixedDec self, unsigned short Value){ return UnsignedAddOp(self, Value); }
-        friend MixedDec operator-(MixedDec self, unsigned short Value){ return UnsignedSubOp(self, Value); }
-        friend MixedDec operator*(MixedDec self, unsigned short Value){ return UnsignedMultOp(self, Value); }
-        friend MixedDec operator/(MixedDec self, unsigned short Value){ return UnsignedDivOp(self, Value); }
-        friend MixedDec operator%(MixedDec self, unsigned short Value){ return UnsignedRemOp(self, Value); }
-        
-        friend MixedDec operator+=(MixedDec& self, unsigned short Value){ return UnsignedAddOp(self, Value); }
-        friend MixedDec operator-=(MixedDec& self, unsigned short Value){ return UnsignedSubOp(self, Value); }
-        friend MixedDec operator*=(MixedDec& self, unsigned short Value){ return UnsignedMultOp(self, Value); }
-        friend MixedDec operator/=(MixedDec& self, unsigned short Value){ return UnsignedDivOp(self, Value); }
-        friend MixedDec operator%=(MixedDec& self, unsigned short Value){ return UnsignedRemOp(self, Value); }
+        friend MixedDec operator+=(MixedDec& self, unsigned char Value) { return UnsignedAddOp(self, Value); }
+        friend MixedDec operator-=(MixedDec& self, unsigned char Value) { return UnsignedSubOp(self, Value); }
+        friend MixedDec operator*=(MixedDec& self, unsigned char Value) { return UnsignedMultOp(self, Value); }
+        friend MixedDec operator/=(MixedDec& self, unsigned char Value) { return UnsignedDivOp(self, Value); }
+        friend MixedDec operator%=(MixedDec& self, unsigned char Value) { return UnsignedRemOp(self, Value); }
 
-        friend MixedDec operator+(MixedDec self, unsigned int Value){ return UnsignedAddOp(self, Value); }
-        friend MixedDec operator-(MixedDec self, unsigned int Value){ return UnsignedSubOp(self, Value); }
-        friend MixedDec operator*(MixedDec self, unsigned int Value){ return UnsignedMultOp(self, Value); }
-        friend MixedDec operator/(MixedDec self, unsigned int Value){ return UnsignedDivOp(self, Value); }
-        friend MixedDec operator%(MixedDec self, unsigned int Value){ return UnsignedRemOp(self, Value); }
-        
-        friend MixedDec operator+=(MixedDec& self, unsigned int Value){ return UnsignedAddOp(self, Value); }
-        friend MixedDec operator-=(MixedDec& self, unsigned int Value){ return UnsignedSubOp(self, Value); }
-        friend MixedDec operator*=(MixedDec& self, unsigned int Value){ return UnsignedMultOp(self, Value); }
-        friend MixedDec operator/=(MixedDec& self, unsigned int Value){ return UnsignedDivOp(self, Value); }
-        friend MixedDec operator%=(MixedDec& self, unsigned int Value){ return UnsignedRemOp(self, Value); }
-        
+        friend MixedDec operator+(MixedDec self, unsigned short Value) { return UnsignedAddOp(self, Value); }
+        friend MixedDec operator-(MixedDec self, unsigned short Value) { return UnsignedSubOp(self, Value); }
+        friend MixedDec operator*(MixedDec self, unsigned short Value) { return UnsignedMultOp(self, Value); }
+        friend MixedDec operator/(MixedDec self, unsigned short Value) { return UnsignedDivOp(self, Value); }
+        friend MixedDec operator%(MixedDec self, unsigned short Value) { return UnsignedRemOp(self, Value); }
+
+        friend MixedDec operator+=(MixedDec& self, unsigned short Value) { return UnsignedAddOp(self, Value); }
+        friend MixedDec operator-=(MixedDec& self, unsigned short Value) { return UnsignedSubOp(self, Value); }
+        friend MixedDec operator*=(MixedDec& self, unsigned short Value) { return UnsignedMultOp(self, Value); }
+        friend MixedDec operator/=(MixedDec& self, unsigned short Value) { return UnsignedDivOp(self, Value); }
+        friend MixedDec operator%=(MixedDec& self, unsigned short Value) { return UnsignedRemOp(self, Value); }
+
+        friend MixedDec operator+(MixedDec self, unsigned int Value) { return UnsignedAddOp(self, Value); }
+        friend MixedDec operator-(MixedDec self, unsigned int Value) { return UnsignedSubOp(self, Value); }
+        friend MixedDec operator*(MixedDec self, unsigned int Value) { return UnsignedMultOp(self, Value); }
+        friend MixedDec operator/(MixedDec self, unsigned int Value) { return UnsignedDivOp(self, Value); }
+        friend MixedDec operator%(MixedDec self, unsigned int Value) { return UnsignedRemOp(self, Value); }
+
+        friend MixedDec operator+=(MixedDec& self, unsigned int Value) { return UnsignedAddOp(self, Value); }
+        friend MixedDec operator-=(MixedDec& self, unsigned int Value) { return UnsignedSubOp(self, Value); }
+        friend MixedDec operator*=(MixedDec& self, unsigned int Value) { return UnsignedMultOp(self, Value); }
+        friend MixedDec operator/=(MixedDec& self, unsigned int Value) { return UnsignedDivOp(self, Value); }
+        friend MixedDec operator%=(MixedDec& self, unsigned int Value) { return UnsignedRemOp(self, Value); }
+
         //friend MixedDec operator+=(MixedDec* self, unsigned int Value) { return UnsignedAddOp(**self, Value); }
         //friend MixedDec operator-=(MixedDec* self, unsigned int Value) { return UnsignedSubOp(**self, Value); }
         //friend MixedDec operator*=(MixedDec* self, unsigned int Value) { return UnsignedMultOp(**self, Value); }
         //friend MixedDec operator/=(MixedDec* self, unsigned int Value) { return UnsignedDivOp(**self, Value); }
         //friend MixedDec operator%=(MixedDec* self, unsigned int Value) { return UnsignedRemOp(**self, Value); }
 
-        friend MixedDec operator+(MixedDec self, unsigned __int64 Value){ return UnsignedAddOp(self, Value); }
-        friend MixedDec operator-(MixedDec self, unsigned __int64 Value){ return UnsignedSubOp(self, Value); }
-        friend MixedDec operator*(MixedDec self, unsigned __int64 Value){ return UnsignedMultOp(self, Value); }
-        friend MixedDec operator/(MixedDec self, unsigned __int64 Value){ return UnsignedDivOp(self, Value); }
-        friend MixedDec operator%(MixedDec self, unsigned __int64 Value){ return UnsignedRemOp(self, Value); }
-        
-        friend MixedDec operator+=(MixedDec& self, unsigned __int64 Value){ return UnsignedAddOp(self, Value); }
-        friend MixedDec operator-=(MixedDec& self, unsigned __int64 Value){ return UnsignedSubOp(self, Value); }
-        friend MixedDec operator*=(MixedDec& self, unsigned __int64 Value){ return UnsignedMultOp(self, Value); }
-        friend MixedDec operator/=(MixedDec& self, unsigned __int64 Value){ return UnsignedDivOp(self, Value); }
-        friend MixedDec operator%=(MixedDec& self, unsigned __int64 Value){ return UnsignedRemOp(self, Value); }
+        friend MixedDec operator+(MixedDec self, unsigned __int64 Value) { return UnsignedAddOp(self, Value); }
+        friend MixedDec operator-(MixedDec self, unsigned __int64 Value) { return UnsignedSubOp(self, Value); }
+        friend MixedDec operator*(MixedDec self, unsigned __int64 Value) { return UnsignedMultOp(self, Value); }
+        friend MixedDec operator/(MixedDec self, unsigned __int64 Value) { return UnsignedDivOp(self, Value); }
+        friend MixedDec operator%(MixedDec self, unsigned __int64 Value) { return UnsignedRemOp(self, Value); }
 
-     //   friend MixedDec operator+=(MixedDec* self, unsigned __int64 Value){ return UnsignedAddOp(**self, Value); }
-        //friend MixedDec operator-=(MixedDec* self, unsigned __int64 Value){ return UnsignedSubOp(**self, Value); }
-     //   friend MixedDec operator*=(MixedDec* self, unsigned __int64 Value){ return UnsignedMultOp(**self, Value); }
-        //friend MixedDec operator/=(MixedDec* self, unsigned __int64 Value){ return UnsignedDivOp(**self, Value); }
-     //   friend MixedDec operator%=(MixedDec* self, unsigned __int64 Value){ return UnsignedRemOp(**self, Value); }
+        friend MixedDec operator+=(MixedDec& self, unsigned __int64 Value) { return UnsignedAddOp(self, Value); }
+        friend MixedDec operator-=(MixedDec& self, unsigned __int64 Value) { return UnsignedSubOp(self, Value); }
+        friend MixedDec operator*=(MixedDec& self, unsigned __int64 Value) { return UnsignedMultOp(self, Value); }
+        friend MixedDec operator/=(MixedDec& self, unsigned __int64 Value) { return UnsignedDivOp(self, Value); }
+        friend MixedDec operator%=(MixedDec& self, unsigned __int64 Value) { return UnsignedRemOp(self, Value); }
 
-        /// <summary>
-        /// Addition Operation Between MixedDec and Integer Value
-        /// </summary>
-        /// <param name="self">The self.</param>
-        /// <param name="Value">The value.</param>
-        /// <returns>MixedDec</returns>
+        //   friend MixedDec operator+=(MixedDec* self, unsigned __int64 Value){ return UnsignedAddOp(**self, Value); }
+           //friend MixedDec operator-=(MixedDec* self, unsigned __int64 Value){ return UnsignedSubOp(**self, Value); }
+        //   friend MixedDec operator*=(MixedDec* self, unsigned __int64 Value){ return UnsignedMultOp(**self, Value); }
+           //friend MixedDec operator/=(MixedDec* self, unsigned __int64 Value){ return UnsignedDivOp(**self, Value); }
+        //   friend MixedDec operator%=(MixedDec* self, unsigned __int64 Value){ return UnsignedRemOp(**self, Value); }
+
+           /// <summary>
+           /// Addition Operation Between MixedDec and Integer Value
+           /// </summary>
+           /// <param name="self">The self.</param>
+           /// <param name="Value">The value.</param>
+           /// <returns>MixedDec</returns>
         template<typename IntType>
         friend MixedDec operator+(MixedDec self, IntType Value)
         {
@@ -3627,7 +3614,7 @@ public:
         }
 
         template<typename IntType>
-        friend MixedDec operator+=(MixedDec* self, IntType Value){ return IntAddOp(**self, Value); }
+        friend MixedDec operator+=(MixedDec* self, IntType Value) { return IntAddOp(**self, Value); }
 
         /// <summary>
         /// Subtraction Operation Between MixedDec and Integer Value
@@ -3654,7 +3641,7 @@ public:
         }
 
         template<typename IntType>
-        friend MixedDec operator-=(MixedDec* self, IntType Value){ return IntSubOp(**self, Value); }
+        friend MixedDec operator-=(MixedDec* self, IntType Value) { return IntSubOp(**self, Value); }
 
         /// <summary>
         /// Multiplication Operation Between MixedDec and Integer Value
@@ -3687,7 +3674,7 @@ public:
         /// <param name="Value">The value.</param>
         /// <returns>MixedDec</returns>
         template<typename IntType>
-        friend MixedDec operator*=(MixedDec* self, IntType Value){ return IntMultOp(**self, Value); }
+        friend MixedDec operator*=(MixedDec* self, IntType Value) { return IntMultOp(**self, Value); }
 
         /// <summary>
         /// Division Operation Between MixedDec and Integer Value
@@ -3714,8 +3701,8 @@ public:
         }
 
         template<typename IntType>
-        friend MixedDec operator/=(MixedDec* self, IntType Value){ return IntDivOp(**self, Value); }
-        
+        friend MixedDec operator/=(MixedDec* self, IntType Value) { return IntDivOp(**self, Value); }
+
         /// <summary>
         /// Modulus Operation Between MixedDec and Integer Value
         /// </summary>
@@ -3741,7 +3728,7 @@ public:
         }
 
         template<typename IntType>
-        friend MixedDec operator%=(MixedDec* self, IntType Value){ return IntRemOp(**self, Value); }
+        friend MixedDec operator%=(MixedDec* self, IntType Value) { return IntRemOp(**self, Value); }
 
         /// <summary>
         /// Bitwise XOR Operation Between MixedDec and Integer Value
@@ -3823,8 +3810,8 @@ public:
             }
             return self;
         }
-    #pragma endregion MixedDec-To-Integer Operations
-    #pragma region Integer-To-MixedDec Operations
+#pragma endregion MixedDec-To-Integer Operations
+#pragma region Integer-To-MixedDec Operations
         /// <summary>
         /// Addition Operation Between MixedDec and Integer Value
         /// </summary>
@@ -3921,8 +3908,8 @@ public:
         {
             return (MixedDec)Value & self;
         }
-    #pragma endregion Integer-To-MixedDec Operations
-    #pragma region Math/Trigonomic Etc Functions
+#pragma endregion Integer-To-MixedDec Operations
+#pragma region Math/Trigonomic Etc Functions
         /// <summary>
         /// Returns the largest integer that is smaller than or equal to Value (Rounds downs to integer value).
         /// </summary>
@@ -3951,7 +3938,7 @@ public:
         {
             return Value.Floor();
         }
-        
+
         /// <summary>
         /// Returns floored value with all fractional digits after specified precision cut off.
         /// </summary>
@@ -3975,7 +3962,7 @@ public:
             if (Value.IntValue == NegativeRep && Value.DecimalHalf == 0) { Value.DecimalHalf = 0; }
             return Value;
         }
-        
+
         /// <summary>
         /// Returns the smallest integer that is greater than or equal to Value (Rounds up to integer value).
         /// </summary>
@@ -4025,10 +4012,10 @@ public:
             if (Value.IntValue == NegativeRep) { return 0; }
             else
             {
-                return Value.IntValue+1;
+                return Value.IntValue + 1;
             }
         }
-        
+
         /// <summary>
         /// Returns the largest integer that is smaller than or equal to Value (Rounds downs the nearest integer).
         /// </summary>
@@ -4038,7 +4025,7 @@ public:
         {
             return Value.Ceil();
         }
-        
+
         /// <summary>
         /// Cuts off the decimal point from number
         /// </summary>
@@ -4049,7 +4036,7 @@ public:
             if (IntValue == NegativeRep) { IntValue = 0; }
             return *this;
         }
-        
+
         /// <summary>
         /// Cuts off the decimal point from number
         /// </summary>
@@ -4059,7 +4046,7 @@ public:
         {
             return Value.Trunc();
         }
-        
+
         /// <summary>
         /// Forces Number into non-negative
         /// </summary>
@@ -4070,7 +4057,7 @@ public:
             else if (IntValue < 0) { IntValue *= -1; }
             return *this;
         }
-        
+
         /// <summary>
         /// Forces Number into non-negative
         /// </summary>
@@ -4090,7 +4077,7 @@ public:
         {
             if (expValue == 1) { return *this; }//Return self
             else if (expValue == 0)
-            { 
+            {
                 IntValue = 1; DecimalHalf = 0;
             }
             else if (expValue < 0)//Negative Pow
@@ -4219,7 +4206,7 @@ public:
         {
             return targetValue.PowOp(expValue);
         }
-        
+
         /// <summary>
         /// Applies Power of operation(for integer exponents)
         /// </summary>
@@ -4348,7 +4335,7 @@ public:
         /// <summary>
         /// Perform square root on this instance.(Code other than switch statement from https://www.geeksforgeeks.org/find-square-root-number-upto-given-precision-using-binary-search/)
         /// </summary>
-        static MixedDec Sqrt(MixedDec value, int precision=7)
+        static MixedDec Sqrt(MixedDec value, int precision = 7)
         {
             if (value.DecimalHalf == 0)
             {
@@ -4379,7 +4366,7 @@ public:
                     AutoSetValue = false;
                     break;
                 }
-                if(AutoSetValue)
+                if (AutoSetValue)
                 {
                     return value;
                 }
@@ -4438,7 +4425,7 @@ public:
         /// <returns>MixedDec</returns>
         static MixedDec NthRoot(MixedDec value, int n, MixedDec precision = MixedDec::JustAboveZero)
         {
-            MixedDec xPre = 1+(value-1)/n;//Estimating initial guess based on https://math.stackexchange.com/questions/787019/what-initial-guess-is-used-for-finding-n-th-root-using-newton-raphson-method
+            MixedDec xPre = 1 + (value - 1) / n;//Estimating initial guess based on https://math.stackexchange.com/questions/787019/what-initial-guess-is-used-for-finding-n-th-root-using-newton-raphson-method
             int nMinus1 = n - 1;
 
             // initializing difference between two 
@@ -4581,28 +4568,28 @@ public:
                 boost::rational<int> Frac = boost::rational<int>(expValue.DecimalHalf, MixedDec::DecimalOverflow);
                 switch (expValue.IntValue)
                 {
-                    case 0:
-                        return FractionalPow(value, Frac);
-                        break;
-                    case MixedDec::NegativeRep:
-                        return 1 / FractionalPow(value, Frac);
-                        break;
-                    default:
+                case 0:
+                    return FractionalPow(value, Frac);
+                    break;
+                case MixedDec::NegativeRep:
+                    return 1 / FractionalPow(value, Frac);
+                    break;
+                default:
+                {
+                    if (expValue.IntValue < 0)//Negative Exponent 
                     {
-                        if (expValue.IntValue < 0)//Negative Exponent 
-                        {
-                            MixedDec CalcVal = 1 / value.Pow(expValue.IntValue * -1);
-                            CalcVal /= FractionalPow(value, Frac);
-                            return CalcVal;
-                        }
-                        else
-                        {
-                            MixedDec CalcVal = value.Pow(expValue.IntValue);
-                            CalcVal *= FractionalPow(value, Frac);
-                            return CalcVal;
-                        }
-                        break;
+                        MixedDec CalcVal = 1 / value.Pow(expValue.IntValue * -1);
+                        CalcVal /= FractionalPow(value, Frac);
+                        return CalcVal;
                     }
+                    else
+                    {
+                        MixedDec CalcVal = value.Pow(expValue.IntValue);
+                        CalcVal *= FractionalPow(value, Frac);
+                        return CalcVal;
+                    }
+                    break;
+                }
                 }
             }
         }
@@ -4627,7 +4614,7 @@ public:
             //if (value <= 0) {}else//Error if equal or less than 0
             if (value == MixedDec::One)
                 return MixedDec::Zero;
-            if (value.IntValue<2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+            if (value.IntValue < 2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
             {//This section gives accurate answer(for values between 1 and 2)
                 MixedDec threshold = MixedDec::FiveMillionth;
                 MixedDec base = value - 1;        // Base of the numerator; exponent will be explicit
@@ -4678,9 +4665,9 @@ public:
             //if (value <= 0) {}else//Error if equal or less than 0
             if (value == MixedDec::One)
                 return MixedDec::Zero;
-            if(value.IntValue==0)//Returns a negative number derived from (http://www.netlib.org/cephes/qlibdoc.html#qlog)
+            if (value.IntValue == 0)//Returns a negative number derived from (http://www.netlib.org/cephes/qlibdoc.html#qlog)
             {
-                MixedDec W = (value - 1)/ (value + 1);
+                MixedDec W = (value - 1) / (value + 1);
                 MixedDec TotalRes = W;
                 W.SwapNegativeStatus();
                 MixedDec LastPow = W;
@@ -4697,7 +4684,7 @@ public:
                 } while (AddRes > MixedDec::JustAboveZero);
                 return TotalRes * 2;
             }
-            else if (value.IntValue==1)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+            else if (value.IntValue == 1)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
             {//This section gives accurate answer(for values between 1 and 2)
                 MixedDec threshold = MixedDec::FiveMillionth;
                 MixedDec base = value - 1;        // Base of the numerator; exponent will be explicit
@@ -4765,7 +4752,7 @@ public:
                 }
                 return MixedDec(9, 0);
             }
-            if (value.IntValue<2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+            if (value.IntValue < 2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
             {//This section gives accurate answer for values between 1 & 2
                 MixedDec threshold = MixedDec::FiveBillionth;
                 MixedDec base = value - 1;        // Base of the numerator; exponent will be explicit
@@ -4785,7 +4772,7 @@ public:
                     else
                         result -= term / den;
                 }
-                return result*MixedDec::LN10Mult;// result/MixedDec::LN10;//Using Multiplication instead of division for speed improvement
+                return result * MixedDec::LN10Mult;// result/MixedDec::LN10;//Using Multiplication instead of division for speed improvement
             }
             else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
             {
@@ -4902,9 +4889,9 @@ public:
                 for (int index = 1; index < 9; ++index)
                 {
                     if (value == BlazesRusCode::VariableConversionFunctions::PowerOfTens[index])
-                        return lnMultLog ? MixedDec(index, 0) / (baseTotalRes * MixedDec::HalfLN10Mult): MixedDec(index, 0)/ baseTotalRes;
+                        return lnMultLog ? MixedDec(index, 0) / (baseTotalRes * MixedDec::HalfLN10Mult) : MixedDec(index, 0) / baseTotalRes;
                 }
-                return lnMultLog? MixedDec(9, 0) / (baseTotalRes*MixedDec::HalfLN10Mult):MixedDec(9, 0)/baseTotalRes;
+                return lnMultLog ? MixedDec(9, 0) / (baseTotalRes * MixedDec::HalfLN10Mult) : MixedDec(9, 0) / baseTotalRes;
             }
             if (value.IntValue < 2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
             {//This section gives accurate answer for values between 1 & 2
@@ -4926,7 +4913,7 @@ public:
                     else
                         result -= term / den;
                 }
-                return lnMultLog? result/baseTotalRes:(result*2)/ baseTotalRes;
+                return lnMultLog ? result / baseTotalRes : (result * 2) / baseTotalRes;
             }
             else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
             {
@@ -4939,13 +4926,13 @@ public:
                     AddRes = MixedDec::PowRef(W, WPow) / WPow;
                     TotalRes += AddRes; WPow += 2;
                 } while (AddRes > MixedDec::JustAboveZero);
-                return lnMultLog? TotalRes/baseTotalRes:(TotalRes * MixedDec::HalfLN10Mult)/ baseTotalRes;
+                return lnMultLog ? TotalRes / baseTotalRes : (TotalRes * MixedDec::HalfLN10Mult) / baseTotalRes;
             }
             //return Log10(Value) / Log10(BaseVal);
         }
 
-    #pragma endregion Math Etc Functions
-    #pragma region Trigonomic Etc Functions
+#pragma endregion Math Etc Functions
+#pragma region Trigonomic Etc Functions
         /// <summary>
         /// Get Sin from Value of angle.
         /// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
@@ -5205,10 +5192,10 @@ public:
             else
                 return angle;
         }
-    #pragma endregion Math/Trigonomic Etc Functions
+#pragma endregion Math/Trigonomic Etc Functions
     };
 
-    #pragma region ValueDefine Source
+#pragma region ValueDefine Source
     MixedDec::TrailingType MixedDec::TrailingZero = TrailingZeroValue();
     MixedDec::TrailingType MixedDec::TrailingOne = TrailingOneValue();
     MixedDec::TrailingType MixedDec::TrailingTenth = TrailingTenthValue();
@@ -5244,7 +5231,7 @@ public:
     MixedDec MixedDec::Nil = NilValue();
     MixedDec MixedDec::PINum = PINumValue();
     MixedDec MixedDec::ENum = ENumValue();
-    
+
 #if defined(MixedDec_EnableInfinityRep)
     MixedDec MixedDec::Infinity = InfinityValue();
     MixedDec MixedDec::NegativeInfinity = NegativeInfinityValue();
@@ -5257,9 +5244,9 @@ public:
     MixedDec::TrailingType MixedDec::NegativeZeroRep = NegativeZeroRepValue();
     MixedDec MixedDec::NegativeZero = NegativeZeroValue();
 #endif
-    #pragma endregion ValueDefine Source
+#pragma endregion ValueDefine Source
 
-    #pragma region String Function Source
+#pragma region String Function Source
 #if defined(MixedDec_ExtendTrailingDigits)
     double CharAsFloat(char Temp)
     {
@@ -5280,20 +5267,20 @@ public:
     float CharAsFloat(char Temp)
     {
         float Value;
-        if(Temp == '0') { Value = 0.0f; }
-        else if(Temp == '1') { Value = 1.0f; }
-        else if(Temp == '2') { Value = 2.0f; }
-        else if(Temp == '3') { Value = 3.0f; }
-        else if(Temp == '4') { Value = 4.0f; }
-        else if(Temp == '5') { Value = 5.0f; }
-        else if(Temp == '6') { Value = 6.0f; }
-        else if(Temp == '7') { Value = 7.0f; }
-        else if(Temp == '8') { Value = 8.0f; }
-        else if(Temp == '9') { Value = 9.0f; }
+        if (Temp == '0') { Value = 0.0f; }
+        else if (Temp == '1') { Value = 1.0f; }
+        else if (Temp == '2') { Value = 2.0f; }
+        else if (Temp == '3') { Value = 3.0f; }
+        else if (Temp == '4') { Value = 4.0f; }
+        else if (Temp == '5') { Value = 5.0f; }
+        else if (Temp == '6') { Value = 6.0f; }
+        else if (Temp == '7') { Value = 7.0f; }
+        else if (Temp == '8') { Value = 8.0f; }
+        else if (Temp == '9') { Value = 9.0f; }
         return Value;
     }
 #endif
-    
+
     /// <summary>
     /// Reads the string.
     /// </summary>
@@ -5317,7 +5304,7 @@ public:
         {
             if (VariableConversionFunctions::IsDigit(StringChar))
             {
-                if(ReadingExtra)//Extra Floating Point based digits
+                if (ReadingExtra)//Extra Floating Point based digits
                 {
                     TempFloat = CharAsFloat(StringChar);
                     ExtraRep += TempFloat * DigitMultiplier;
@@ -5326,7 +5313,7 @@ public:
                 else if (ReadingDecimal)
                 {
                     DecimalBuffer += StringChar;
-                    if(++PlaceNumber==9)//Only 9 decimal digits are stored as fixed point
+                    if (++PlaceNumber == 9)//Only 9 decimal digits are stored as fixed point
                     {
                         ReadingExtra = true;
                     }
@@ -5391,13 +5378,13 @@ public:
     std::string MixedDec::ToString()
     {
 #if defined(AltDec_EnableInfinityRep) 
-        if (DecimalHalf == InfinityRep) 
-        { 
-            if (IntValue == 1) 
-                return "Infinity"; 
-            else 
-                return "-Infinity"; 
-        } 
+        if (DecimalHalf == InfinityRep)
+        {
+            if (IntValue == 1)
+                return "Infinity";
+            else
+                return "-Infinity";
+        }
 #endif 
         ConvertToNumRep();
         std::string Value = "";
@@ -5426,7 +5413,7 @@ public:
                 CurrentSection -= (signed int)(CurrentDigit * VariableConversionFunctions::PowerOfTens[Index]);
                 if (CurrentDigit != 0)
                 {
-                    if(!DecBuffer.empty())
+                    if (!DecBuffer.empty())
                     {
                         Value += DecBuffer;
                         DecBuffer.clear();
@@ -5439,9 +5426,9 @@ public:
                 }
             }
         }
-        if(ExtraRep!=TrailingZero)//Output Trailing Floating Point based Digits
+        if (ExtraRep != TrailingZero)//Output Trailing Floating Point based Digits
         {
-        
+
         }
         return Value;
     }
@@ -5449,15 +5436,15 @@ public:
     std::string MixedDec::ToFullString()
     {
 #if defined(AltDec_EnableInfinityRep) 
-        if (DecimalHalf == InfinityRep) 
-        { 
-            if (IntValue == 1) 
-                return "Infinity"; 
-            else 
-                return "-Infinity"; 
-        } 
+        if (DecimalHalf == InfinityRep)
+        {
+            if (IntValue == 1)
+                return "Infinity";
+            else
+                return "-Infinity";
+        }
 #endif 
-        ConvertToNumRep(); 
+        ConvertToNumRep();
         std::string Value = "";
         int CurrentSection = IntValue;
         unsigned __int8 CurrentDigit;
@@ -5494,13 +5481,13 @@ public:
         {
             Value += ".000000000";
         }
-        if(ExtraRep!=TrailingZero)//Output Trailing Floating Point based Digits
+        if (ExtraRep != TrailingZero)//Output Trailing Floating Point based Digits
         {
-        
+
         }
         return Value;
     }
-    #pragma endregion String Function Source
+#pragma endregion String Function Source
 
     /// <summary>
     /// (MixedDec Version)Performs remainder operation then saves division result

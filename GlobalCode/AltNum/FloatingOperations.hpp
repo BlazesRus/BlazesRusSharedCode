@@ -22,6 +22,8 @@
 
 #include <cmath>
 #include <cfloat>
+#include "..\OtherFunctions\VariableConversionFunctions.h"
+using VariableConversionFunctions = BlazesRusCode::VariableConversionFunctions;
 
 namespace BlazesFloatingCode
 {

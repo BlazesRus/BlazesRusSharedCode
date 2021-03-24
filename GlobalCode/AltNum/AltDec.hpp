@@ -2023,7 +2023,7 @@ public:
         /// <param name="value">The value.</param>
         /// <returns>AltDec&</returns>
         template<typename IntType>
-        static AltDec& AddOp(AltDec& self, IntType& value)
+        static AltDec& IntAddOp(AltDec& self, IntType& value)
         {
             if (value == 0)
                 return self;
@@ -2069,17 +2069,17 @@ public:
                 IntValue -= value;
             else
             {
-                bool WasNegative = self.IntValue < 0;
+                bool WasNegative = IntValue < 0;
                 if (WasNegative)
-                    self.IntValue = self.IntValue == AltDec::NegativeRep ? -1 : --self.IntValue;
-                self.IntValue -= value;
-                if (self.IntValue == -1)
-                    self.IntValue = self.DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
-                else if (self.IntValue < 0)
-                    ++self.IntValue;
+                    IntValue = IntValue == AltDec::NegativeRep ? -1 : --IntValue;
+                IntValue -= value;
+                if (IntValue == -1)
+                    IntValue = DecimalHalf == 0 ? 0 : AltDec::NegativeRep;
+                else if (IntValue < 0)
+                    ++IntValue;
                 //If flips to other side of negative, invert the decimals
-                if ((WasNegative && self.IntValue >= 0) || (WasNegative == 0 && self.IntValue < 0))
-                    self.DecimalHalf = AltDec::DecimalOverflow - self.DecimalHalf;
+                if ((WasNegative && IntValue >= 0) || (WasNegative == 0 && IntValue < 0))
+                    DecimalHalf = AltDec::DecimalOverflow - DecimalHalf;
             }
         }
         
@@ -2090,7 +2090,7 @@ public:
         /// <param name="value">The value.</param>
         /// <returns>AltDec</returns>
         template<typename IntType>
-        static AltDec& SubOp(AltDec& self, IntType& value)
+        static AltDec& IntSubOp(AltDec& self, IntType& value)
         {
             if (value == 0)
                 return self;
@@ -2533,31 +2533,31 @@ public:
         template<typename IntType>
         void PartialIntMultOp(IntType& Value)
         {
-            if (self.DecimalHalf == 0)
+            if (DecimalHalf == 0)
             {
-                self.IntValue *= Value;
+                IntValue *= Value;
             }
             else
             {
-                bool SelfIsNegative = self.IntValue < 0;
+                bool SelfIsNegative = IntValue < 0;
                 if (SelfIsNegative)
                 {
-                    if (self.IntValue == NegativeRep) { self.IntValue = 0; }
-                    else { self.IntValue *= -1; }
+                    if (IntValue == NegativeRep) { IntValue = 0; }
+                    else { IntValue *= -1; }
                 }
-                __int64 SRep = self.IntValue == 0 ? self.DecimalHalf : DecimalOverflowX * self.IntValue + self.DecimalHalf;
+                __int64 SRep = IntValue == 0 ? DecimalHalf : DecimalOverflowX * IntValue + DecimalHalf;
                 SRep *= Value;
                 if (SRep >= DecimalOverflowX)
                 {
                     __int64 OverflowVal = SRep / DecimalOverflowX;
                     SRep -= OverflowVal * DecimalOverflowX;
-                    self.IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
-                    self.DecimalHalf = (signed int)SRep;
+                    IntValue = (signed int)SelfIsNegative ? OverflowVal * -1 : OverflowVal;
+                    DecimalHalf = (signed int)SRep;
                 }
                 else
                 {
-                    self.IntValue = SelfIsNegative ? NegativeRep : 0;
-                    self.DecimalHalf = (signed int)SRep;
+                    IntValue = SelfIsNegative ? NegativeRep : 0;
+                    DecimalHalf = (signed int)SRep;
                 }
             }
         }
@@ -2601,7 +2601,7 @@ public:
             }
             if (self == Zero)
                 return self;
-            if (value == 0)
+            if (Value == 0)
             {
                 self.SetAsZero(); return self;
             }
@@ -2609,34 +2609,28 @@ public:
             {
                 self.PartialIntMultOp(Value);
             }
-            else if (ExtraRep == NegativeRep)//Value*Pi Representation
+            else if (self.ExtraRep == NegativeRep)//Value*Pi Representation
             {
                 self.PartialIntMultOp(Value);
             }
 #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-            else if (ExtraRep == IERep)
+            else if (self.ExtraRep == IERep)
             {
-                if (Value == ExtraRep)
+                if (Value == self.ExtraRep)
                     self.ExtraRep = -1;
                 else
                     self.PartialIntMultOp(Value);
             }
-            else if (ExtraRep > 0)
+            else if (self.ExtraRep > 0)
 #else
             else//(Value/ExtraRep) Representation
 #endif
             {
-                if (Value == ExtraRep)
+                if (Value == self.ExtraRep)
                     self.ExtraRep = 0;
                 else
                     self.PartialIntMultOp(Value);
             }
-#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-            else
-            {
-
-            }
-#endif
             return self;
         }
 
@@ -2871,7 +2865,7 @@ public:
         }
 
         template<typename IntType>
-        void PartialIntDivOp(AltDec& Value)
+        void PartialIntDivOp(IntType& Value)
         {
             if (DecimalHalf == 0)
             {
@@ -2922,17 +2916,18 @@ public:
         void BasicIntDivOp(IntType& Value)
         {
             if (Value == 0)
+            {
 #if defined(AltDec_EnableInfinityRep)
-                return self.IntValue < 0 ? self.SetAsNegativeInfinity : self.SetAsInfinity();
+                IntValue < 0 ? SetAsNegativeInfinity() : SetAsInfinity(); return;
 #else
                 throw "Target value can not be divided by zero";
 #endif
+            }
             else if (IntValue == 0 && DecimalHalf == 0)
-                return self;
-            if (Value.IntValue < 0)
+                return;
+            if (IntValue < 0)
             {
-                if (Value.IntValue == AltDec::NegativeRep) { Value.IntValue = 0; }
-                else { Value.IntValue *= -1; }
+                Value *= -1;
                 SwapNegativeStatus();
             }
             PartialIntDivOp(Value);
@@ -2949,11 +2944,13 @@ public:
         static AltDec& IntDivOp(AltDec& self, IntType& Value)
         {
             if (Value == 0)
+            {
 #if defined(AltDec_EnableInfinityRep)
-                return self.IntValue<0?self.SetAsNegativeInfinity:self.SetAsInfinity();
+                self.IntValue < 0 ? self.SetAsNegativeInfinity() : self.SetAsInfinity(); return self;
 #else
                 throw "Target value can not be divided by zero";
 #endif
+            }
             else if (self == Zero)
                 return self;
             if (Value < 0)
@@ -2964,22 +2961,22 @@ public:
             }
             if (self.ExtraRep == 0)
             {
-                ExtraRep = Value;
+                self.ExtraRep = Value;
             }
-            else if (ExtraRep == NegativeRep)//Value*Pi Representation
+            else if (self.ExtraRep == NegativeRep)//Value*Pi Representation
             {
-                PartialIntDivOp(Value);
+                self.PartialIntDivOp(Value);
             }
 #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-            else if (ExtraRep == IERep)
+            else if (self.ExtraRep == IERep)
             {
             }
-            else if (ExtraRep > 0)
+            else if (self.ExtraRep > 0)
 #else
             else//(Value/ExtraRep) Representation
 #endif
             {
-                ExtraRep *= Value;
+                self.ExtraRep *= Value;
             }
 #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
             else

@@ -2169,7 +2169,7 @@ namespace BlazesRusCode
         /// <param name="value">The value.</param>
         /// <returns>MediumDec&</returns>
         template<typename IntType>
-        static MediumDec& AddOp(MediumDec& self, IntType& value)
+        static MediumDec& IntAddOp(MediumDec& self, IntType& value)
         {
             if (value == 0)
                 return self;
@@ -2199,7 +2199,7 @@ namespace BlazesRusCode
         /// <param name="value">The value.</param>
         /// <returns>MediumDec</returns>
         template<typename IntType>
-        static MediumDec& SubOp(MediumDec& self, IntType& value)
+        static MediumDec& IntSubOp(MediumDec& self, IntType& value)
         {
             if (value == 0)
                 return self;
@@ -2652,7 +2652,7 @@ namespace BlazesRusCode
         template<typename IntType>
         friend MediumDec operator+(MediumDec self, IntType Value)
         {
-            return AddOp(self, Value);
+            return IntAddOp(self, Value);
         }
 
         ///// <summary>
@@ -2664,11 +2664,11 @@ namespace BlazesRusCode
         template<typename IntType>
         friend MediumDec operator+=(MediumDec& self, IntType Value)
         {
-            return AddOp(self, Value);
+            return IntAddOp(self, Value);
         }
 
         template<typename IntType>
-        friend MediumDec operator+=(MediumDec* self, IntType Value){ return AddOp(**self, Value); }
+        friend MediumDec operator+=(MediumDec* self, IntType Value){ return IntAddOp(**self, Value); }
 
         /// <summary>
         /// Subtraction Operation Between MediumDec and Integer Value
@@ -2679,7 +2679,7 @@ namespace BlazesRusCode
         template<typename IntType>
         friend MediumDec operator-(MediumDec self, IntType Value)
         {
-            return SubOp(self, Value);
+            return IntSubOp(self, Value);
         }
 
         /// <summary>
@@ -2691,11 +2691,11 @@ namespace BlazesRusCode
         template<typename IntType>
         friend MediumDec operator-=(MediumDec& self, IntType Value)
         {
-            return SubOp(self, Value);
+            return IntSubOp(self, Value);
         }
 
         template<typename IntType>
-        friend MediumDec operator-=(MediumDec* self, IntType Value){ return SubOp(**self, Value); }
+        friend MediumDec operator-=(MediumDec* self, IntType Value){ return IntSubOp(**self, Value); }
 
         /// <summary>
         /// Multiplication Operation Between MediumDec and Integer Value
@@ -2875,7 +2875,7 @@ namespace BlazesRusCode
         template<typename IntType>
         friend MediumDec operator+(IntType Value, MediumDec self)
         {
-            return AddOp(self, Value);
+            return IntAddOp(self, Value);
         }
 
         /// <summary>

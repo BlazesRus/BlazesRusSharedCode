@@ -23,7 +23,9 @@ using MediumDecFormula = BlazesRusCode::MediumDecFormula;
 #include "AltNum\MixedDec.hpp"
 using AltDec = BlazesRusCode::AltDec;
 using MixedDec = BlazesRusCode::MixedDec;
-//#include <boost/math/constants/constants.hpp>
+#include <boost/math/constants/constants.hpp>
+#include <sstream>
+#include <iomanip>
 
 
 int main()
@@ -307,17 +309,21 @@ int main()
         std::cout << "Unknown exception" << std::endl;
     }
 #endif
-    //double LFloatingP = boost::math::constants::pi<double>();
-    //LFloatingP *= 2;
+    double LAsDouble = boost::math::constants::pi<double>()*2.0;
+    LAsDouble *= 3.0;
+    double LAsFloat = boost::math::constants::pi<float>()*2.0f;
+    LAsDouble *= 3.0f;
     AltDec LAlt;
     LAlt.SetPiVal(2);
     LAlt *= 3;
-    //AltDec RAlt;
-
     MixedDec LMixed;
     LMixed.SetPiVal(2);
     LMixed *= 3;
-    //MixedDec RMixed;
 
+    std::ostringstream streamObj;
+    streamObj << std::fixed << std::setprecision(99);
+    streamObj << "HiperCalc result:18.84955592153875943077586029967701730518301639625063492584966755384689843771725399176820895205270241" << std::endl;
+    streamObj << "Double Result:" << LAsDouble<<std::endl;
+    streamObj << "Float Result:" << LAsDouble << std::endl;
 
 }
