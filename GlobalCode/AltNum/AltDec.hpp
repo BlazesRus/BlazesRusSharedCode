@@ -1719,9 +1719,8 @@ private:
         void CatchAllAddition(AltDec& Value)
         {
             ConvertToNumRep();
-            AltDec ValueCopy = Value;
             Value.ConvertToNumRep();
-            BasicAddOp(ValueCopy);
+            BasicAddOp(Value);
         }
 public:
 
@@ -1906,6 +1905,15 @@ public:
             }
         }
 
+private:
+    void CatchAllSubtraction(AltDec& Value)
+    {
+        ConvertToNumRep();
+        Value.ConvertToNumRep();
+        BasicSubOp(Value);
+    }
+public:
+
         /// <summary>
         /// Subtraction Operation Between AltDecs
         /// </summary>
@@ -1914,24 +1922,6 @@ public:
         /// <returns>AltDec&</returns>
         static AltDec& SubOp(AltDec& self, AltDec& Value)
         {
-            //if(self==Zero)
-            //{
-            //	if (Value.DecimalHalf == InfinityRep)
-            //	{
-            //		self.IntValue = Value.IntValue == 1?-1:1; self.ExtraRep = InfinityRep;
-            //		return self;
-            //	}
-   //             else
-            //	{
-            //		if(Value.IntValue==0)
-            //			self.IntValue = Value.IntValue;
-            //		//else if(Value.IntValue==NegativeRep)
-            //		//	self.IntValue = 0;
-            //		else if(Value.IntValue!=NegativeRep)
-            //			self.IntValue = Value.IntValue *-1;
-            //		self.ExtraRep = Value.ExtraRep; return self;
-            //	}
-            //}
 #if defined(AltDec_EnableInfinityRep)
             if (self.DecimalHalf == InfinityRep)
                 return self;
@@ -2453,6 +2443,14 @@ public:
             if (IntValue==0&&DecimalHalf==0) { DecimalHalf = 1; }//Prevent Dividing into nothing
         }
 
+private:
+    void CatchAllMultiplication(AltDec& Value)
+    {
+        ConvertToNumRep();
+        Value.ConvertToNumRep();
+        BasicMultOp(Value);
+    }
+public:
         /// <summary>
         /// Multiplication Operation Between AltDecs
         /// </summary>
@@ -2785,6 +2783,14 @@ public:
             if (IntValue==0&&DecimalHalf==0) { DecimalHalf = 1; }//Prevent Dividing into nothing
         }
 
+private:
+    void CatchAllDivision(AltDec& Value)
+    {
+        ConvertToNumRep();
+        Value.ConvertToNumRep();
+        BasicDivOp(Value);
+    }
+public:
         /// <summary>
         /// Division Operation Between AltDecs
         /// </summary>
