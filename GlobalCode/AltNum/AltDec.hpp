@@ -104,8 +104,8 @@ namespace BlazesRusCode
 //#if defined(AltDec_EnableMixedFractional)
 //#endif
 //#if defined(AltDec_EnableInfinityRep)
-            ApproachingVal,//Defaults to approaching from right exact in case of NegativeRep(NegativeRep = -0.000...1;Approaching Zero is equal to 0.000...1)
-            ApproachingFromLeftVal,
+            ApproachingTowards,//(Approaching Towards Zero is equal to 0.000...1)
+            ApproachingAwayFrom,//(Approaching Away from Zero is equal to 0.9999...)
             ApproachingPI,
             ApproachingE,
             ApproachingI,
@@ -131,8 +131,13 @@ namespace BlazesRusCode
 //                    UpdateTarget.IntValue = -2147483647; UpdateTarget.DecimalHalf = 999999999;
 //                }
 //            }
-            else if(DecimalHalf==ApproachingValRep)
-                return RepType::ApproachingVal;//Approaching from left to Value
+            else if (DecimalHalf == ApproachingValRep)
+            {
+                if(ExtraRep==0)
+                    return RepType::ApproachingTowards;//Approaching from right to IntValue
+                else
+                    return RepType::ApproachingAwayFrom;//Approaching from left to (IntValue-1)
+            }
 #endif
             else if(ExtraRep==PIRep)
                 return RepType::PINum;
@@ -301,13 +306,15 @@ namespace BlazesRusCode
             ExtraRep = NegativeRep;
         }
         
+        //Approaching Towards values from right to left side(IntValue.000...1)
         void SetAsApproachingValueFromRight(int value)
         {
             IntValue = value; DecimalHalf = ApproachingValRep;
             ExtraRep = 0;
         }
         
-        void SetAsApproachingValueFromLeft(int value)
+        //Approaching Towards (IntValue-1) from Left to right side(IntValue.999...9)
+        void SetAsApproachingAwayFromValue(int value)
         {
             IntValue = value; DecimalHalf = ApproachingValRep;
             ExtraRep = NegativeRep;
@@ -5853,7 +5860,19 @@ public:
                 return "-Infinity";
         }
 #endif
-        ConvertToNumRep();
+        RepType repType = GetRepType();
+        switch (repType)
+        {
+        case RepType::ApproachingAwayFrom:
+            return IntValue==NegativeRep?"-0.9999999999": VariableConversionFunctions::IntToStringConversion(IntValue)+".9999999999";
+            break;
+        case RepType::ApproachingTowards:
+            return IntValue == NegativeRep ? "-0.000000001" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".000000001";
+            break;
+        default:
+            ConvertToNumRep();
+            break;
+        }
         std::string Value = "";
         int CurrentSection = IntValue;
         unsigned __int8 CurrentDigit;
@@ -5907,7 +5926,19 @@ public:
                 return "-Infinity";
         }
 #endif
-        ConvertToNumRep();
+        RepType repType = GetRepType();
+        switch (repType)
+        {
+        case RepType::ApproachingAwayFrom:
+            return IntValue == NegativeRep ? "-0.9999999999" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".9999999999";
+            break;
+        case RepType::ApproachingTowards:
+            return IntValue == NegativeRep ? "-0.000000001" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".000000001";
+            break;
+        default:
+            ConvertToNumRep();
+            break;
+        }
         std::string Value = "";
         int CurrentSection = IntValue;
         unsigned __int8 CurrentDigit;

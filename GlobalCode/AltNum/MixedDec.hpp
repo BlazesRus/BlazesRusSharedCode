@@ -253,7 +253,7 @@ namespace BlazesRusCode
             ExtraRep = TrailingZero;
         }
 
-        void SetAsApproachingValueFromLeft(int value)
+        void SetAsApproachingAwayFromValue(int value)
         {
             IntValue = value; DecimalHalf = ApproachingValRep;
             ExtraRep = TrailingNegOne;
