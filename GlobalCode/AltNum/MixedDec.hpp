@@ -173,7 +173,7 @@ namespace BlazesRusCode
         {
             if(ExtraRep==TrailingZero)
                 return RepType::NormalType;
-            else if((ExtraRep>TrailingZero)
+            else if(ExtraRep>TrailingZero)
                 return RepType::ExtendedNormalType;
 #ifdef MixedDec_EnableInfinityRep
             else if (DecimalHalf == ApproachingValRep)
