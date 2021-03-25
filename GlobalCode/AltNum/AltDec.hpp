@@ -106,9 +106,6 @@ namespace BlazesRusCode
             MixedI,
             ApproachingTowards,//(Approaching Towards Zero is equal to 0.000...1)
             ApproachingAwayFrom,//(Approaching Away from Zero is equal to 0.9999...)
-            ApproachingPI,
-            ApproachingE,
-            ApproachingI,
             NaN,
             NegativeZero,
             NearPI,//(Approaching Away from Zero is equal to 0.9999...PI)
@@ -136,6 +133,17 @@ namespace BlazesRusCode
             {
                 if(ExtraRep==0)
                     return RepType::ApproachingTowards;//Approaching from right to IntValue
+#if defined(AltDec_EnableNearPI)
+                else if (ExtraRep == PIRep)
+                    return RepType::NearPI;
+#endif
+#if defined(AltDec_EnableNearE)
+                else if (ExtraRep == IERep)
+                    return RepType::NearE;
+#elif defined(AltDec_EnavleNearI)
+                else if (ExtraRep == IERep)
+                    return RepType::NearI;
+#endif
                 else
                     return RepType::ApproachingAwayFrom;//Approaching from left to (IntValue-1)
             }
