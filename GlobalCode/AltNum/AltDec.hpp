@@ -140,7 +140,7 @@ namespace BlazesRusCode
 #if defined(AltDec_EnableNearE)
                 else if (ExtraRep == IERep)
                     return RepType::NearE;
-#elif defined(AltDec_EnavleNearI)
+#elif defined(AltDec_EnableNearI)
                 else if (ExtraRep == IERep)
                     return RepType::NearI;
 #endif

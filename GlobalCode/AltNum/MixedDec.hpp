@@ -37,6 +37,9 @@ MixedDec_EnableAltFloat = Possible alternative floating point representation lat
 MixedDec_ExtendTrailingDigits = Replace ExtraRep usage to double instead of float(16 bytes worth of Variable Storage inside class for each instance)
 MixedDec_EnableNaN = Enable NaN based representations and operations(Not Fully Implimented)
 MixedDec_EnableNegativeZero = (Not Fully Implimented)
+MixedDec_EnableNearPI
+MixedDec_EnableNearE
+MixedDec_EnableNearI
 */
 
 namespace BlazesRusCode
@@ -52,7 +55,7 @@ namespace BlazesRusCode
     /// <summary>
     /// Alternative Non-Integer number representation with focus on accuracy and partially speed within certain range
     /// Represents +- 2147483647.999999999(with extra digit representation in floating point)
-    /// (Optional support later for PI*(+- 2147483647.999999999), E*(+- 2147483647.999999999), and (+- 2147483647.999999999)i)
+    /// (Optional support for PI*(+- 2147483647.999999999), E*(+- 2147483647.999999999), and (+- 2147483647.999999999)i)
     /// (12 bytes worth of Variable Storage inside class for each instance + 4 bytes if MixedDec_ExtendTrailingDigits enabled)
     /// </summary>
     class DLL_API MixedDec
@@ -148,6 +151,68 @@ namespace BlazesRusCode
         }
         static const TrailingType NegativeZeroRep;
 #endif
+        enum class RepType: int
+        {
+            NormalType = 0,//Normal Representation with no extra trailing digits
+            ExtendedNormalType = 0,//Normal Representation with extra trailing digits
+            PINum,
+            PIPower,
+            ENum,
+            INum,
+            ComplexIRep,
+            ApproachingTowards,//(Approaching Towards Zero is equal to 0.000...1)
+            ApproachingAwayFrom,//(Approaching Away from Zero is equal to 0.9999...)
+            NaN,
+            NegativeZero,
+            NearPI,//(Approaching Away from Zero is equal to 0.9999...PI)
+            NearE,//(Approaching Away from Zero is equal to 0.9999...e)
+            NearI,//(Approaching Away from Zero is equal to 0.9999...i)
+            UnknownType
+        };
+        RepType GetRepType()
+        {
+            if(ExtraRep==TrailingZero)
+                return RepType::NormalType;
+            else if((ExtraRep>TrailingZero)
+                return RepType::ExtendedNormalType;
+#ifdef MixedDec_EnableInfinityRep
+            else if (DecimalHalf == ApproachingValRep)
+            {
+                if(ExtraRep==TrailingZero)
+                    return RepType::ApproachingTowards;//Approaching from right to IntValue
+#if defined(MixedDec_EnableNearPI)
+                else if (ExtraRep == PIRep)
+                    return RepType::NearPI;
+#endif
+#if defined(MixedDec_EnableNearE)
+                else if (ExtraRep == ERep)
+                    return RepType::NearE;
+#endif
+#if defined(MixedDec_EnableNearI)
+                else if (ExtraRep == IRep)
+                    return RepType::NearI;
+#endif
+                else
+                    return RepType::ApproachingAwayFrom;//Approaching from left to (IntValue-1)
+            }
+#endif
+            else if(ExtraRep==PIRep)
+                return RepType::PINum;
+#if defined(MixedDec_EnableNaN)
+            else if(DecimalHalf==NaNRep)
+                return RepType::NaN;
+#endif
+#if defined(MixedDec_EnableImaginaryNum)
+            else if(ExtraRep==ERep)
+                return RepType::INum;
+#endif
+#if defined(MixedDec_EnableENum)
+            else if(ExtraRep==IRep)
+                return RepType::ENum;
+#endif
+            throw "Unknown or non-enabled representation type detected from MixedDec";
+            return RepType::UnknownType;//Catch-All Value;
+        }
     public:
         /// <summary>
         /// The decimal overflow
