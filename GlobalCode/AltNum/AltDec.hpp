@@ -593,7 +593,7 @@ public:
         }
         
         //Switch based version of ConvertToNumRep
-        void ConvertToNormType(RepType repType)
+        void ConvertToNormType(RepType& repType)
         {
             if (DecimalHalf == InfinityRep)
             {
@@ -1796,10 +1796,10 @@ public:
         }
 
 private:
-        void CatchAllAddition(AltDec& Value)
+        void CatchAllAddition(AltDec& Value, RepType& LRep, RepType& RRep)
         {
-            ConvertToNumRep();
-            Value.ConvertToNumRep();
+            ConvertToNormType(LRep);
+            Value.ConvertToNormType(RRep);
             BasicAddOp(Value);
         }
 public:
@@ -1854,25 +1854,25 @@ public:
                         if(self.ExtraRep==Value.ExtraRep)
                             self.BasicAddOp(Value);
                         else
-                            self.CatchAllAddition(Value);
+                            self.CatchAllAddition(Value, LRep, RRep);
                         break;
 #if defined(AltDec_EnableENum)
                     case RepType::ENumByDiv:
                         if (self.ExtraRep == Value.ExtraRep)
                             self.BasicAddOp(Value);
                         else
-                            self.CatchAllAddition(Value);
+                            self.CatchAllAddition(Value, LRep, RRep);
                         break;
 #elif defined(AltDec_EnableImaginaryNum)
                     case RepType::INumByDiv:
                         if (self.ExtraRep == Value.ExtraRep)
                             self.BasicAddOp(Value);
                         else
-                            self.CatchAllAddition(Value);
+                            self.CatchAllAddition(Value, LRep, RRep);
                         break;
 #endif
                     default:
-                        self.CatchAllAddition(Value);
+                        self.CatchAllAddition(Value, LRep, RRep);
                         break;
                 }
             }
@@ -1895,7 +1895,7 @@ public:
                                 break;
 #endif
                             default:
-                                self.CatchAllAddition(Value);
+                                self.CatchAllAddition(Value, LRep, RRep);
                                 break;
                         }
                         break;
@@ -1907,7 +1907,7 @@ public:
                                 self.BasicAddOp(Value);
                                 break;
                             default://ENum,ENumByDiv Included
-                                self.CatchAllAddition(Value);
+                                self.CatchAllAddition(Value, LRep, RRep);
                                 break;
                         }
                         break;
@@ -1915,7 +1915,7 @@ public:
                         switch (RRep)
                         {
                             default:
-                                self.CatchAllAddition(Value);
+                                self.CatchAllAddition(Value, LRep, RRep);
                                 break;
                         }
                         break;
@@ -1923,11 +1923,16 @@ public:
                         switch (RRep)
                         {
                             case RepType::ApproachingAwayFrom:
-                                self.IntValue++;
-                                self.ExtraRep = 0;
+                                if ((self.IntValue >= 0 && Value.IntValue >= 0) || (self.IntValue < 0 && Value.IntValue < 0))
+                                {
+                                    self.IntValue++;
+                                    self.ExtraRep = 0;
+                                }
+                                if (Value.IntValue != NegativeRep)
+                                    self.IntValue += Value.IntValue;
                                 break;
                             default:
-                                self.CatchAllAddition(Value);
+                                self.CatchAllAddition(Value, LRep, RRep);
                                 break;
                         }
                         break;
@@ -1935,11 +1940,16 @@ public:
                         switch (RRep)
                         {
                             case RepType::ApproachingTowards:
-                                self.IntValue++;
-                                self.ExtraRep = 0;
+                                if ((self.IntValue >= 0 && Value.IntValue >= 0) || (self.IntValue < 0 && Value.IntValue < 0))
+                                {
+                                    self.IntValue++;
+                                    self.ExtraRep = 0;
+                                }
+                                if (Value.IntValue != NegativeRep)
+                                    self.IntValue += Value.IntValue;
                                 break;
                             default:
-                                self.CatchAllAddition(Value);
+                                self.CatchAllAddition(Value, LRep, RRep);
                                 break;
                         }
                         break;
@@ -1952,7 +1962,7 @@ public:
                                 self.BasicAddOp(Value);
                                 break;
                             default:
-                                self.CatchAllAddition(Value);
+                                self.CatchAllAddition(Value, LRep, RRep);
                                 break;
                         }
                         break;
@@ -1963,7 +1973,7 @@ public:
                         break;
 #endif
                     default:
-                        self.CatchAllAddition(Value);
+                        self.CatchAllAddition(Value, LRep, RRep);
                         break;
                     
                 }
@@ -2051,10 +2061,10 @@ public:
         }
 
 private:
-    void CatchAllSubtraction(AltDec& Value)
+    void CatchAllSubtraction(AltDec& Value, RepType& LRep, RepType& RRep)
     {
-        ConvertToNumRep();
-        Value.ConvertToNumRep();
+        ConvertToNormType(LRep);
+        Value.ConvertToNormType(RRep);
         BasicSubOp(Value);
     }
 public:
