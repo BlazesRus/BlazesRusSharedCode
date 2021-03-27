@@ -4534,1289 +4534,1290 @@ public:
             return (AltDec)Value & self;
         }
     #pragma endregion Integer-To-AltDec Operations
+
     #pragma region Math/Trigonomic Etc Functions
-        /// <summary>
-        /// Returns the largest integer that is smaller than or equal to Value (Rounds downs to integer value).
-        /// </summary>
-        /// <returns>AltDec&</returns>
-        AltDec& Floor()
-        {
-            if (DecimalHalf == 0)
-            {
-                return *this;
-            }
-            DecimalHalf = 0;
-            if (IntValue == NegativeRep) { IntValue = -1; }
-            else
-            {
-                --IntValue;
-            }
-            return *this;
-        }
+        ///// <summary>
+        ///// Returns the largest integer that is smaller than or equal to Value (Rounds downs to integer value).
+        ///// </summary>
+        ///// <returns>AltDec&</returns>
+        //AltDec& Floor()
+        //{
+        //    if (DecimalHalf == 0)
+        //    {
+        //        return *this;
+        //    }
+        //    DecimalHalf = 0;
+        //    if (IntValue == NegativeRep) { IntValue = -1; }
+        //    else
+        //    {
+        //        --IntValue;
+        //    }
+        //    return *this;
+        //}
 
-        /// <summary>
-        /// Returns the largest integer that is smaller than or equal to Value (Rounds downs to integer value).
-        /// </summary>
-        /// <param name="Value">The target value to apply on.</param>
-        /// <returns>AltDec&</returns>
-        static AltDec Floor(AltDec Value)
-        {
-            return Value.Floor();
-        }
-        
-        /// <summary>
-        /// Returns floored value with all fractional digits after specified precision cut off.
-        /// </summary>
-        /// <param name="Value">The target value to apply on.</param>
-        /// <param name="precision">The precision.</param>
-        static AltDec Floor(AltDec Value, int precision)
-        {
-            switch (precision)
-            {
-            case 9: break;
-            case 8: Value.DecimalHalf /= 10; Value.DecimalHalf *= 10; break;
-            case 7: Value.DecimalHalf /= 100; Value.DecimalHalf *= 100; break;
-            case 6: Value.DecimalHalf /= 1000; Value.DecimalHalf *= 1000; break;
-            case 5: Value.DecimalHalf /= 10000; Value.DecimalHalf *= 10000; break;
-            case 4: Value.DecimalHalf /= 100000; Value.DecimalHalf *= 100000; break;
-            case 3: Value.DecimalHalf /= 1000000; Value.DecimalHalf *= 1000000; break;
-            case 2: Value.DecimalHalf /= 10000000; Value.DecimalHalf *= 10000000; break;
-            case 1: Value.DecimalHalf /= 100000000; Value.DecimalHalf *= 100000000; break;
-            default: Value.DecimalHalf = 0; break;
-            }
-            if (Value.IntValue == NegativeRep && Value.DecimalHalf == 0) { Value.DecimalHalf = 0; }
-            return Value;
-        }
-        
-        /// <summary>
-        /// Returns the smallest integer that is greater than or equal to Value (Rounds up to integer value).
-        /// </summary>
-        /// <returns>AltDec&</returns>
-        AltDec& Ceil()
-        {
-            if (DecimalHalf == 0)
-            {
-                return *this;
-            }
-            DecimalHalf = 0;
-            if (IntValue == NegativeRep) { IntValue = 0; }
-            else
-            {
-                ++IntValue;
-            }
-            return *this;
-        }
+        ///// <summary>
+        ///// Returns the largest integer that is smaller than or equal to Value (Rounds downs to integer value).
+        ///// </summary>
+        ///// <param name="Value">The target value to apply on.</param>
+        ///// <returns>AltDec&</returns>
+        //static AltDec Floor(AltDec Value)
+        //{
+        //    return Value.Floor();
+        //}
+        //
+        ///// <summary>
+        ///// Returns floored value with all fractional digits after specified precision cut off.
+        ///// </summary>
+        ///// <param name="Value">The target value to apply on.</param>
+        ///// <param name="precision">The precision.</param>
+        //static AltDec Floor(AltDec Value, int precision)
+        //{
+        //    switch (precision)
+        //    {
+        //    case 9: break;
+        //    case 8: Value.DecimalHalf /= 10; Value.DecimalHalf *= 10; break;
+        //    case 7: Value.DecimalHalf /= 100; Value.DecimalHalf *= 100; break;
+        //    case 6: Value.DecimalHalf /= 1000; Value.DecimalHalf *= 1000; break;
+        //    case 5: Value.DecimalHalf /= 10000; Value.DecimalHalf *= 10000; break;
+        //    case 4: Value.DecimalHalf /= 100000; Value.DecimalHalf *= 100000; break;
+        //    case 3: Value.DecimalHalf /= 1000000; Value.DecimalHalf *= 1000000; break;
+        //    case 2: Value.DecimalHalf /= 10000000; Value.DecimalHalf *= 10000000; break;
+        //    case 1: Value.DecimalHalf /= 100000000; Value.DecimalHalf *= 100000000; break;
+        //    default: Value.DecimalHalf = 0; break;
+        //    }
+        //    if (Value.IntValue == NegativeRep && Value.DecimalHalf == 0) { Value.DecimalHalf = 0; }
+        //    return Value;
+        //}
+        //
+        ///// <summary>
+        ///// Returns the smallest integer that is greater than or equal to Value (Rounds up to integer value).
+        ///// </summary>
+        ///// <returns>AltDec&</returns>
+        //AltDec& Ceil()
+        //{
+        //    if (DecimalHalf == 0)
+        //    {
+        //        return *this;
+        //    }
+        //    DecimalHalf = 0;
+        //    if (IntValue == NegativeRep) { IntValue = 0; }
+        //    else
+        //    {
+        //        ++IntValue;
+        //    }
+        //    return *this;
+        //}
 
-        /// <summary>
-        /// Returns the largest integer that is smaller than or equal to Value (Rounds downs to integer value).
-        /// </summary>
-        /// <returns>AltDec&</returns>
-        static int FloorInt(AltDec Value)
-        {
-            if (Value.DecimalHalf == 0)
-            {
-                return Value.IntValue;
-            }
-            if (Value.IntValue == NegativeRep) { return -1; }
-            else
-            {
-                return Value.IntValue - 1;
-            }
-        }
+        ///// <summary>
+        ///// Returns the largest integer that is smaller than or equal to Value (Rounds downs to integer value).
+        ///// </summary>
+        ///// <returns>AltDec&</returns>
+        //static int FloorInt(AltDec Value)
+        //{
+        //    if (Value.DecimalHalf == 0)
+        //    {
+        //        return Value.IntValue;
+        //    }
+        //    if (Value.IntValue == NegativeRep) { return -1; }
+        //    else
+        //    {
+        //        return Value.IntValue - 1;
+        //    }
+        //}
 
-        /// <summary>
-        /// Returns the smallest integer that is greater than or equal to Value (Rounds up to integer value).
-        /// </summary>
-        /// <returns>AltDec&</returns>
-        static int CeilInt(AltDec Value)
-        {
-            if (Value.DecimalHalf == 0)
-            {
-                return Value.IntValue;
-            }
-            if (Value.IntValue == NegativeRep) { return 0; }
-            else
-            {
-                return Value.IntValue+1;
-            }
-        }
-        
-        /// <summary>
-        /// Returns the largest integer that is smaller than or equal to Value (Rounds downs the nearest integer).
-        /// </summary>
-        /// <param name="Value">The target value to apply on.</param>
-        /// <returns>AltDec</returns>
-        static AltDec Ceil(AltDec Value)
-        {
-            return Value.Ceil();
-        }
-        
-        /// <summary>
-        /// Cuts off the decimal point from number
-        /// </summary>
-        /// <returns>AltDec &</returns>
-        AltDec& Trunc()
-        {
-            DecimalHalf = 0;
-            if (IntValue == NegativeRep) { IntValue = 0; }
-            return *this;
-        }
-        
-        /// <summary>
-        /// Cuts off the decimal point from number
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <returns>AltDec</returns>
-        static AltDec Trunc(AltDec Value)
-        {
-            return Value.Trunc();
-        }
-        
-        /// <summary>
-        /// Forces Number into non-negative
-        /// </summary>
-        /// <returns>AltDec&</returns>
-        AltDec& Abs()
-        {
-            if (IntValue == NegativeRep) { IntValue = 0; }
-            else if (IntValue < 0) { IntValue *= -1; }
-            return *this;
-        }
-        
-        /// <summary>
-        /// Forces Number into non-negative
-        /// </summary>
-        /// <param name="Value">The target value to apply on.</param>
-        /// <returns>AltDec</returns>
-        static AltDec Abs(AltDec Value)
-        {
-            return Value.Abs();
-        }
+        ///// <summary>
+        ///// Returns the smallest integer that is greater than or equal to Value (Rounds up to integer value).
+        ///// </summary>
+        ///// <returns>AltDec&</returns>
+        //static int CeilInt(AltDec Value)
+        //{
+        //    if (Value.DecimalHalf == 0)
+        //    {
+        //        return Value.IntValue;
+        //    }
+        //    if (Value.IntValue == NegativeRep) { return 0; }
+        //    else
+        //    {
+        //        return Value.IntValue+1;
+        //    }
+        //}
+        //
+        ///// <summary>
+        ///// Returns the largest integer that is smaller than or equal to Value (Rounds downs the nearest integer).
+        ///// </summary>
+        ///// <param name="Value">The target value to apply on.</param>
+        ///// <returns>AltDec</returns>
+        //static AltDec Ceil(AltDec Value)
+        //{
+        //    return Value.Ceil();
+        //}
+        //
+        ///// <summary>
+        ///// Cuts off the decimal point from number
+        ///// </summary>
+        ///// <returns>AltDec &</returns>
+        //AltDec& Trunc()
+        //{
+        //    DecimalHalf = 0;
+        //    if (IntValue == NegativeRep) { IntValue = 0; }
+        //    return *this;
+        //}
+        //
+        ///// <summary>
+        ///// Cuts off the decimal point from number
+        ///// </summary>
+        ///// <param name="Value">The value.</param>
+        ///// <returns>AltDec</returns>
+        //static AltDec Trunc(AltDec Value)
+        //{
+        //    return Value.Trunc();
+        //}
+        //
+        ///// <summary>
+        ///// Forces Number into non-negative
+        ///// </summary>
+        ///// <returns>AltDec&</returns>
+        //AltDec& Abs()
+        //{
+        //    if (IntValue == NegativeRep) { IntValue = 0; }
+        //    else if (IntValue < 0) { IntValue *= -1; }
+        //    return *this;
+        //}
+        //
+        ///// <summary>
+        ///// Forces Number into non-negative
+        ///// </summary>
+        ///// <param name="Value">The target value to apply on.</param>
+        ///// <returns>AltDec</returns>
+        //static AltDec Abs(AltDec Value)
+        //{
+        //    return Value.Abs();
+        //}
 
-        /// <summary>
-        /// Applies Power of operation on references(for integer exponents)
-        /// </summary>
-        /// <param name="expValue">The exponent value.</param>
-        template<typename ValueType>
-        AltDec PowOp(ValueType& expValue)
-        {
-            if (expValue == 1) { return *this; }//Return self
-            else if (expValue == 0)
-            { 
-                IntValue = 1; DecimalHalf = 0;
-            }
-            else if (expValue < 0)//Negative Pow
-            {
-                if (DecimalHalf == 0 && IntValue == 10 && expValue >= -9)
-                {
-                    IntValue = 0; DecimalHalf = DecimalOverflow / VariableConversionFunctions::PowerOfTens[expValue * -1];
-                }
-                else
-                {
-                    //Code(Reversed in application) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
-                    expValue *= -1;
-                    AltDec self = *this;
-                    IntValue = 1; DecimalHalf = 0;// Initialize result
-                    while (expValue > 0)
-                    {
-                        // If expValue is odd, multiply self with result
-                        if (expValue % 2 == 1)
-                            *this /= self;
-                        // n must be even now
-                        expValue = expValue >> 1; // y = y/2
-                        self = self / self; // Change x to x^-1
-                    }
-                    return this;
-                }
-            }
-            else if (DecimalHalf == 0 && IntValue == 10)
-                IntValue = VariableConversionFunctions::PowerOfTens[expValue];
-            else if (DecimalHalf == 0 && IntValue == -10)
-                IntValue = expValue % 2 ? VariableConversionFunctions::PowerOfTens[expValue] : VariableConversionFunctions::PowerOfTens[expValue] * -1;
-            else
-            {
-                //Code based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
-                AltDec self = *this;
-                IntValue = 1; DecimalHalf = 0;// Initialize result
-                while (expValue > 0)
-                {
-                    // If expValue is odd, multiply self with result
-                    if (expValue % 2 == 1)
-                        this *= self;
-                    // n must be even now
-                    expValue = expValue >> 1; // y = y/2
-                    self = self * self; // Change x to x^2
-                }
-            }
-            return *this;
-        }
+        ///// <summary>
+        ///// Applies Power of operation on references(for integer exponents)
+        ///// </summary>
+        ///// <param name="expValue">The exponent value.</param>
+        //template<typename ValueType>
+        //AltDec PowOp(ValueType& expValue)
+        //{
+        //    if (expValue == 1) { return *this; }//Return self
+        //    else if (expValue == 0)
+        //    { 
+        //        IntValue = 1; DecimalHalf = 0;
+        //    }
+        //    else if (expValue < 0)//Negative Pow
+        //    {
+        //        if (DecimalHalf == 0 && IntValue == 10 && expValue >= -9)
+        //        {
+        //            IntValue = 0; DecimalHalf = DecimalOverflow / VariableConversionFunctions::PowerOfTens[expValue * -1];
+        //        }
+        //        else
+        //        {
+        //            //Code(Reversed in application) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+        //            expValue *= -1;
+        //            AltDec self = *this;
+        //            IntValue = 1; DecimalHalf = 0;// Initialize result
+        //            while (expValue > 0)
+        //            {
+        //                // If expValue is odd, multiply self with result
+        //                if (expValue % 2 == 1)
+        //                    *this /= self;
+        //                // n must be even now
+        //                expValue = expValue >> 1; // y = y/2
+        //                self = self / self; // Change x to x^-1
+        //            }
+        //            return this;
+        //        }
+        //    }
+        //    else if (DecimalHalf == 0 && IntValue == 10)
+        //        IntValue = VariableConversionFunctions::PowerOfTens[expValue];
+        //    else if (DecimalHalf == 0 && IntValue == -10)
+        //        IntValue = expValue % 2 ? VariableConversionFunctions::PowerOfTens[expValue] : VariableConversionFunctions::PowerOfTens[expValue] * -1;
+        //    else
+        //    {
+        //        //Code based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+        //        AltDec self = *this;
+        //        IntValue = 1; DecimalHalf = 0;// Initialize result
+        //        while (expValue > 0)
+        //        {
+        //            // If expValue is odd, multiply self with result
+        //            if (expValue % 2 == 1)
+        //                this *= self;
+        //            // n must be even now
+        //            expValue = expValue >> 1; // y = y/2
+        //            self = self * self; // Change x to x^2
+        //        }
+        //    }
+        //    return *this;
+        //}
 
-        /// <summary>
-        /// Applies Power of operation on references with const expValue(for integer exponents)(C3892 fix)
-        /// </summary>
-        /// <param name="expValue">The exponent value.</param>
-        template<typename ValueType>
-        AltDec PowConstOp(const ValueType& expValue)
-        {
-            if (expValue == 1) { return *this; }//Return self
-            else if (expValue == 0)
-            {
-                IntValue = 1; DecimalHalf = 0;
-            }
-            else if (expValue < 0)//Negative Pow
-            {
-                if (DecimalHalf == 0 && IntValue == 10 && expValue >= -9)
-                {
-                    int expVal = expValue * -1;
-                    IntValue = 0; DecimalHalf = DecimalOverflow / VariableConversionFunctions::PowerOfTens[expVal];
-                }
-                else
-                {
-                    int expVal = expValue;
-                    //Code(Reversed in application) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
-                    expVal *= -1;
-                    AltDec self = *this;
-                    IntValue = 1; DecimalHalf = 0;// Initialize result
-                    while (expVal > 0)
-                    {
-                        // If expValue is odd, multiply self with result
-                        if (expVal % 2 == 1)
-                            *this /= self;
-                        // n must be even now
-                        expVal = expVal >> 1; // y = y/2
-                        self = self / self; // Change x to x^-1
-                    }
-                    return this;
-                }
-            }
-            else if (DecimalHalf == 0 && IntValue == 10)
-            {
-                IntValue = VariableConversionFunctions::PowerOfTens[expValue];
-            }
-            else
-            {
-                int expVal = expValue;
-                //Code based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
-                AltDec self = *this;
-                IntValue = 1; DecimalHalf = 0;// Initialize result
-                while (expVal > 0)
-                {
-                    // If expValue is odd, multiply self with result
-                    if (expVal % 2 == 1)
-                        this *= self;
-                    // n must be even now
-                    expVal = expVal >> 1; // y = y/2
-                    self = self * self; // Change x to x^2
-                }
-            }
-            return *this;
-        }
+        ///// <summary>
+        ///// Applies Power of operation on references with const expValue(for integer exponents)(C3892 fix)
+        ///// </summary>
+        ///// <param name="expValue">The exponent value.</param>
+        //template<typename ValueType>
+        //AltDec PowConstOp(const ValueType& expValue)
+        //{
+        //    if (expValue == 1) { return *this; }//Return self
+        //    else if (expValue == 0)
+        //    {
+        //        IntValue = 1; DecimalHalf = 0;
+        //    }
+        //    else if (expValue < 0)//Negative Pow
+        //    {
+        //        if (DecimalHalf == 0 && IntValue == 10 && expValue >= -9)
+        //        {
+        //            int expVal = expValue * -1;
+        //            IntValue = 0; DecimalHalf = DecimalOverflow / VariableConversionFunctions::PowerOfTens[expVal];
+        //        }
+        //        else
+        //        {
+        //            int expVal = expValue;
+        //            //Code(Reversed in application) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+        //            expVal *= -1;
+        //            AltDec self = *this;
+        //            IntValue = 1; DecimalHalf = 0;// Initialize result
+        //            while (expVal > 0)
+        //            {
+        //                // If expValue is odd, multiply self with result
+        //                if (expVal % 2 == 1)
+        //                    *this /= self;
+        //                // n must be even now
+        //                expVal = expVal >> 1; // y = y/2
+        //                self = self / self; // Change x to x^-1
+        //            }
+        //            return this;
+        //        }
+        //    }
+        //    else if (DecimalHalf == 0 && IntValue == 10)
+        //    {
+        //        IntValue = VariableConversionFunctions::PowerOfTens[expValue];
+        //    }
+        //    else
+        //    {
+        //        int expVal = expValue;
+        //        //Code based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+        //        AltDec self = *this;
+        //        IntValue = 1; DecimalHalf = 0;// Initialize result
+        //        while (expVal > 0)
+        //        {
+        //            // If expValue is odd, multiply self with result
+        //            if (expVal % 2 == 1)
+        //                this *= self;
+        //            // n must be even now
+        //            expVal = expVal >> 1; // y = y/2
+        //            self = self * self; // Change x to x^2
+        //        }
+        //    }
+        //    return *this;
+        //}
 
-        /// <summary>
-        /// Applies Power of operation on references with const expValue(for integer exponents)(C3892 fix)
-        /// </summary>
-        /// <param name="expValue">The exponent value.</param>
-        template<typename ValueType>
-        static AltDec PowConstOp(AltDec& targetValue, const ValueType& expValue)
-        {
-            return targetValue.PowConstOp(expValue);
-        }
+        ///// <summary>
+        ///// Applies Power of operation on references with const expValue(for integer exponents)(C3892 fix)
+        ///// </summary>
+        ///// <param name="expValue">The exponent value.</param>
+        //template<typename ValueType>
+        //static AltDec PowConstOp(AltDec& targetValue, const ValueType& expValue)
+        //{
+        //    return targetValue.PowConstOp(expValue);
+        //}
 
-        /// <summary>
-        /// Applies Power of operation on references(for integer exponents)
-        /// </summary>
-        /// <param name="expValue">The exponent value.</param>
-        template<typename ValueType>
-        static AltDec PowOp(AltDec& targetValue, ValueType& expValue)
-        {
-            return targetValue.PowOp(expValue);
-        }
-        
-        /// <summary>
-        /// Applies Power of operation(for integer exponents)
-        /// </summary>
-        /// <param name="expValue">The exponent value.</param>
-        template<typename ValueType>
-        AltDec Pow(ValueType expValue)
-        {
-            return this->PowOp(expValue);
-        }
+        ///// <summary>
+        ///// Applies Power of operation on references(for integer exponents)
+        ///// </summary>
+        ///// <param name="expValue">The exponent value.</param>
+        //template<typename ValueType>
+        //static AltDec PowOp(AltDec& targetValue, ValueType& expValue)
+        //{
+        //    return targetValue.PowOp(expValue);
+        //}
+        //
+        ///// <summary>
+        ///// Applies Power of operation(for integer exponents)
+        ///// </summary>
+        ///// <param name="expValue">The exponent value.</param>
+        //template<typename ValueType>
+        //AltDec Pow(ValueType expValue)
+        //{
+        //    return this->PowOp(expValue);
+        //}
 
-        /// <summary>
-        /// Applies Power of operation (for integer exponents)
-        /// </summary>
-        /// <param name="expValue">The exponent value.</param>
-        template<typename ValueType>
-        static AltDec Pow(AltDec targetValue, ValueType expValue)
-        {
-            if (expValue == 1) { return targetValue; }//Return self
-            else if (expValue == 0)
-            {
-                targetValue.IntValue = 1; targetValue.DecimalHalf = 0;
-                return targetValue;
-            }
-            else if (expValue < 0)//Negative Pow
-            {
-                if (targetValue.DecimalHalf == 0 && targetValue.IntValue == 10 && expValue >= -9)
-                {
-                    targetValue.IntValue = 0; targetValue.DecimalHalf = AltDec::DecimalOverflow / VariableConversionFunctions::PowerOfTens[expValue * -1];
-                }
-                else
-                {
-                    //Code(Reversed in application) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
-                    expValue *= -1;
-                    AltDec self = targetValue;
-                    targetValue.IntValue = 1; targetValue.DecimalHalf = 0;// Initialize result
-                    while (expValue > 0)
-                    {
-                        // If expValue is odd, multiply self with result
-                        if (expValue % 2 == 1)
-                            targetValue /= self;
-                        // n must be even now
-                        expValue = expValue >> 1; // y = y/2
-                        self = self / self; // Change x to x^-1
-                    }
-                    return targetValue;
-                }
-            }
-            else if (targetValue.DecimalHalf == 0 && targetValue.IntValue == 10)
-            {
-                targetValue.IntValue = VariableConversionFunctions::PowerOfTens[expValue];
-            }
-            else
-            {
-                //Code based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
-                AltDec self = targetValue;
-                targetValue.IntValue = 1; targetValue.DecimalHalf = 0;// Initialize result
-                while (expValue > 0)
-                {
-                    // If expValue is odd, multiply self with result
-                    if (expValue % 2 == 1)
-                        targetValue *= self;
-                    // n must be even now
-                    expValue = expValue >> 1; // y = y/2
-                    self = self * self; // Change x to x^2
-                }
-            }
-            return targetValue;
-        }
+        ///// <summary>
+        ///// Applies Power of operation (for integer exponents)
+        ///// </summary>
+        ///// <param name="expValue">The exponent value.</param>
+        //template<typename ValueType>
+        //static AltDec Pow(AltDec targetValue, ValueType expValue)
+        //{
+        //    if (expValue == 1) { return targetValue; }//Return self
+        //    else if (expValue == 0)
+        //    {
+        //        targetValue.IntValue = 1; targetValue.DecimalHalf = 0;
+        //        return targetValue;
+        //    }
+        //    else if (expValue < 0)//Negative Pow
+        //    {
+        //        if (targetValue.DecimalHalf == 0 && targetValue.IntValue == 10 && expValue >= -9)
+        //        {
+        //            targetValue.IntValue = 0; targetValue.DecimalHalf = AltDec::DecimalOverflow / VariableConversionFunctions::PowerOfTens[expValue * -1];
+        //        }
+        //        else
+        //        {
+        //            //Code(Reversed in application) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+        //            expValue *= -1;
+        //            AltDec self = targetValue;
+        //            targetValue.IntValue = 1; targetValue.DecimalHalf = 0;// Initialize result
+        //            while (expValue > 0)
+        //            {
+        //                // If expValue is odd, multiply self with result
+        //                if (expValue % 2 == 1)
+        //                    targetValue /= self;
+        //                // n must be even now
+        //                expValue = expValue >> 1; // y = y/2
+        //                self = self / self; // Change x to x^-1
+        //            }
+        //            return targetValue;
+        //        }
+        //    }
+        //    else if (targetValue.DecimalHalf == 0 && targetValue.IntValue == 10)
+        //    {
+        //        targetValue.IntValue = VariableConversionFunctions::PowerOfTens[expValue];
+        //    }
+        //    else
+        //    {
+        //        //Code based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+        //        AltDec self = targetValue;
+        //        targetValue.IntValue = 1; targetValue.DecimalHalf = 0;// Initialize result
+        //        while (expValue > 0)
+        //        {
+        //            // If expValue is odd, multiply self with result
+        //            if (expValue % 2 == 1)
+        //                targetValue *= self;
+        //            // n must be even now
+        //            expValue = expValue >> 1; // y = y/2
+        //            self = self * self; // Change x to x^2
+        //        }
+        //    }
+        //    return targetValue;
+        //}
 
-        /// <summary>
-        /// Applies Power of operation (for integer exponents)
-        /// </summary>
-        /// <param name="expValue">The exponent value.</param>
-        template<typename ValueType>
-        static AltDec PowRef(AltDec& targetValue, ValueType expValue)
-        {
-            if (expValue == 1)
-                return targetValue;//Return self
-            else if (expValue == 0)
-                return AltDec::One;
-            else if (expValue < 0)//Negative Pow
-            {
-                if (targetValue.DecimalHalf == 0 && targetValue.IntValue == 10 && expValue >= -9)
-                {
-                    return AltDec(0, AltDec::DecimalOverflow / VariableConversionFunctions::PowerOfTens[expValue * -1]);
-                }
-                else
-                {
-                    //Code(Reversed in application) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
-                    expValue *= -1;
-                    AltDec self = targetValue;
-                    AltDec Result = AltDec::One;
-                    while (expValue > 0)
-                    {
-                        // If expValue is odd, divide self with result
-                        if (expValue % 2 == 1)
-                            Result /= self;
-                        // n must be even now
-                        expValue = expValue >> 1; // y = y/2
-                        self = self / self; // Change x to x^-1
-                    }
-                    return Result;
-                }
-            }
-            else if (targetValue.DecimalHalf == 0 && targetValue.IntValue == 10)
-                return AltDec(VariableConversionFunctions::PowerOfTens[expValue], 0);
-            else
-            {
-                //Code based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
-                AltDec self = targetValue;
-                AltDec Result = AltDec::One;
-                while (expValue > 0)
-                {
-                    // If expValue is odd, multiply self with result
-                    if (expValue % 2 == 1)
-                        Result *= self;
-                    // n must be even now
-                    expValue = expValue >> 1; // y = y/2
-                    self = self * self; // Change x to x^2
-                }
-                return Result;
-            }
-            return targetValue;
-        }
+        ///// <summary>
+        ///// Applies Power of operation (for integer exponents)
+        ///// </summary>
+        ///// <param name="expValue">The exponent value.</param>
+        //template<typename ValueType>
+        //static AltDec PowRef(AltDec& targetValue, ValueType expValue)
+        //{
+        //    if (expValue == 1)
+        //        return targetValue;//Return self
+        //    else if (expValue == 0)
+        //        return AltDec::One;
+        //    else if (expValue < 0)//Negative Pow
+        //    {
+        //        if (targetValue.DecimalHalf == 0 && targetValue.IntValue == 10 && expValue >= -9)
+        //        {
+        //            return AltDec(0, AltDec::DecimalOverflow / VariableConversionFunctions::PowerOfTens[expValue * -1]);
+        //        }
+        //        else
+        //        {
+        //            //Code(Reversed in application) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+        //            expValue *= -1;
+        //            AltDec self = targetValue;
+        //            AltDec Result = AltDec::One;
+        //            while (expValue > 0)
+        //            {
+        //                // If expValue is odd, divide self with result
+        //                if (expValue % 2 == 1)
+        //                    Result /= self;
+        //                // n must be even now
+        //                expValue = expValue >> 1; // y = y/2
+        //                self = self / self; // Change x to x^-1
+        //            }
+        //            return Result;
+        //        }
+        //    }
+        //    else if (targetValue.DecimalHalf == 0 && targetValue.IntValue == 10)
+        //        return AltDec(VariableConversionFunctions::PowerOfTens[expValue], 0);
+        //    else
+        //    {
+        //        //Code based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
+        //        AltDec self = targetValue;
+        //        AltDec Result = AltDec::One;
+        //        while (expValue > 0)
+        //        {
+        //            // If expValue is odd, multiply self with result
+        //            if (expValue % 2 == 1)
+        //                Result *= self;
+        //            // n must be even now
+        //            expValue = expValue >> 1; // y = y/2
+        //            self = self * self; // Change x to x^2
+        //        }
+        //        return Result;
+        //    }
+        //    return targetValue;
+        //}
 
-        /// <summary>
-        /// Perform square root on this instance.(Code other than switch statement from https://www.geeksforgeeks.org/find-square-root-number-upto-given-precision-using-binary-search/)
-        /// </summary>
-        static AltDec Sqrt(AltDec value, int precision=7)
-        {
-            if (value.DecimalHalf == 0)
-            {
-                bool AutoSetValue = true;
-                switch (value.IntValue)
-                {
-                case 1: value.IntValue = 1; break;
-                case 4: value.IntValue = 2; break;
-                case 9: value.IntValue = 3; break;
-                case 16: value.IntValue = 4; break;
-                case 25: value.IntValue = 5; break;
-                case 36: value.IntValue = 6; break;
-                case 49: value.IntValue = 7; break;
-                case 64: value.IntValue = 8; break;
-                case 81: value.IntValue = 9; break;
-                case 100: value.IntValue = 10; break;
-                case 121: value.IntValue = 11; break;
-                case 144: value.IntValue = 12; break;
-                case 169: value.IntValue = 13; break;
-                case 196: value.IntValue = 14; break;
-                case 225: value.IntValue = 15; break;
-                case 256: value.IntValue = 16; break;
-                case 289: value.IntValue = 17; break;
-                case 324: value.IntValue = 18; break;
-                case 361: value.IntValue = 19; break;
-                case 400: value.IntValue = 20; break;
-                default:
-                    AutoSetValue = false;
-                    break;
-                }
-                if(AutoSetValue)
-                {
-                    return value;
-                }
-            }
-            AltDec number = value;
-            AltDec start = 0, end = number;
-            AltDec mid;
+        ///// <summary>
+        ///// Perform square root on this instance.(Code other than switch statement from https://www.geeksforgeeks.org/find-square-root-number-upto-given-precision-using-binary-search/)
+        ///// </summary>
+        //static AltDec Sqrt(AltDec value, int precision=7)
+        //{
+        //    if (value.DecimalHalf == 0)
+        //    {
+        //        bool AutoSetValue = true;
+        //        switch (value.IntValue)
+        //        {
+        //        case 1: value.IntValue = 1; break;
+        //        case 4: value.IntValue = 2; break;
+        //        case 9: value.IntValue = 3; break;
+        //        case 16: value.IntValue = 4; break;
+        //        case 25: value.IntValue = 5; break;
+        //        case 36: value.IntValue = 6; break;
+        //        case 49: value.IntValue = 7; break;
+        //        case 64: value.IntValue = 8; break;
+        //        case 81: value.IntValue = 9; break;
+        //        case 100: value.IntValue = 10; break;
+        //        case 121: value.IntValue = 11; break;
+        //        case 144: value.IntValue = 12; break;
+        //        case 169: value.IntValue = 13; break;
+        //        case 196: value.IntValue = 14; break;
+        //        case 225: value.IntValue = 15; break;
+        //        case 256: value.IntValue = 16; break;
+        //        case 289: value.IntValue = 17; break;
+        //        case 324: value.IntValue = 18; break;
+        //        case 361: value.IntValue = 19; break;
+        //        case 400: value.IntValue = 20; break;
+        //        default:
+        //            AutoSetValue = false;
+        //            break;
+        //        }
+        //        if(AutoSetValue)
+        //        {
+        //            return value;
+        //        }
+        //    }
+        //    AltDec number = value;
+        //    AltDec start = 0, end = number;
+        //    AltDec mid;
 
-            // variable to store the answer 
-            AltDec ans;
+        //    // variable to store the answer 
+        //    AltDec ans;
 
-            // for computing integral part 
-            // of square root of number 
-            while (start <= end) {
-                mid = (start + end) / 2;
-                if (mid * mid == number) {
-                    ans = mid;
-                    break;
-                }
+        //    // for computing integral part 
+        //    // of square root of number 
+        //    while (start <= end) {
+        //        mid = (start + end) / 2;
+        //        if (mid * mid == number) {
+        //            ans = mid;
+        //            break;
+        //        }
 
-                // incrementing start if integral 
-                // part lies on right side of the mid 
-                if (mid * mid < number) {
-                    start = mid + 1;
-                    ans = mid;
-                }
+        //        // incrementing start if integral 
+        //        // part lies on right side of the mid 
+        //        if (mid * mid < number) {
+        //            start = mid + 1;
+        //            ans = mid;
+        //        }
 
-                // decrementing end if integral part 
-                // lies on the left side of the mid 
-                else {
-                    end = mid - 1;
-                }
-            }
+        //        // decrementing end if integral part 
+        //        // lies on the left side of the mid 
+        //        else {
+        //            end = mid - 1;
+        //        }
+        //    }
 
-            // For computing the fractional part 
-            // of square root up to given precision 
-            AltDec increment = "0.1";
-            for (int i = 0; i < precision; i++) {
-                while (ans * ans <= number) {
-                    ans += increment;
-                }
+        //    // For computing the fractional part 
+        //    // of square root up to given precision 
+        //    AltDec increment = "0.1";
+        //    for (int i = 0; i < precision; i++) {
+        //        while (ans * ans <= number) {
+        //            ans += increment;
+        //        }
 
-                // loop terminates when ans * ans > number 
-                ans = ans - increment;
-                increment = increment / 10;
-            }
-            return ans;
-        }
+        //        // loop terminates when ans * ans > number 
+        //        ans = ans - increment;
+        //        increment = increment / 10;
+        //    }
+        //    return ans;
+        //}
 
-        /// <summary>
-        /// Finds nTh Root of value based on https://www.geeksforgeeks.org/n-th-root-number/ code
-        /// </summary>
-        /// <param name="value">The target value.</param>
-        /// <param name="nValue">The nth value.</param>
-        /// <param name="precision">Precision level (smaller = more precise)</param>
-        /// <returns>AltDec</returns>
-        static AltDec NthRoot(AltDec value, int n, AltDec precision = AltDec::JustAboveZero)
-        {
-            AltDec xPre = 1+(value-1)/n;//Estimating initial guess based on https://math.stackexchange.com/questions/787019/what-initial-guess-is-used-for-finding-n-th-root-using-newton-raphson-method
-            int nMinus1 = n - 1;
+        ///// <summary>
+        ///// Finds nTh Root of value based on https://www.geeksforgeeks.org/n-th-root-number/ code
+        ///// </summary>
+        ///// <param name="value">The target value.</param>
+        ///// <param name="nValue">The nth value.</param>
+        ///// <param name="precision">Precision level (smaller = more precise)</param>
+        ///// <returns>AltDec</returns>
+        //static AltDec NthRoot(AltDec value, int n, AltDec precision = AltDec::JustAboveZero)
+        //{
+        //    AltDec xPre = 1+(value-1)/n;//Estimating initial guess based on https://math.stackexchange.com/questions/787019/what-initial-guess-is-used-for-finding-n-th-root-using-newton-raphson-method
+        //    int nMinus1 = n - 1;
 
-            // initializing difference between two 
-            // roots by INT_MAX 
-            AltDec delX = AltDec(2147483647, 0);
+        //    // initializing difference between two 
+        //    // roots by INT_MAX 
+        //    AltDec delX = AltDec(2147483647, 0);
 
-            //  xK denotes current value of x 
-            AltDec xK;
+        //    //  xK denotes current value of x 
+        //    AltDec xK;
 
-            //  loop until we reach desired accuracy
-            do
-            {
-                //  calculating current value from previous
-                // value by newton's method
-                xK = (nMinus1 * xPre +
-                    value / AltDec::Pow(xPre, nMinus1)) / n;
-                delX = AltDec::Abs(xK - xPre);
-                xPre = xK;
-            } while (delX > precision);
-            return xK;
-        }
+        //    //  loop until we reach desired accuracy
+        //    do
+        //    {
+        //        //  calculating current value from previous
+        //        // value by newton's method
+        //        xK = (nMinus1 * xPre +
+        //            value / AltDec::Pow(xPre, nMinus1)) / n;
+        //        delX = AltDec::Abs(xK - xPre);
+        //        xPre = xK;
+        //    } while (delX > precision);
+        //    return xK;
+        //}
 
-        /// <summary>
-        /// Get the (n)th Root
-        /// Code based mostly from https://rosettacode.org/wiki/Nth_root#C.23
-        /// </summary>
-        /// <param name="n">The n value to apply with root.</param>
-        /// <returns></returns>
-        static AltDec NthRootV2(AltDec targetValue, int n, AltDec& Precision = AltDec::FiveBillionth)
-        {
-            int nMinus1 = n - 1;
-            AltDec x[2] = { (AltDec::One / n) * ((nMinus1 * targetValue) + (targetValue / AltDec::Pow(targetValue, nMinus1))), targetValue };
-            while (AltDec::Abs(x[0] - x[1]) > Precision)
-            {
-                x[1] = x[0];
-                x[0] = (AltDec::One / n) * ((nMinus1 * x[1]) + (targetValue / AltDec::Pow(x[1], nMinus1)));
-            }
-            return x[0];
-        }
+        ///// <summary>
+        ///// Get the (n)th Root
+        ///// Code based mostly from https://rosettacode.org/wiki/Nth_root#C.23
+        ///// </summary>
+        ///// <param name="n">The n value to apply with root.</param>
+        ///// <returns></returns>
+        //static AltDec NthRootV2(AltDec targetValue, int n, AltDec& Precision = AltDec::FiveBillionth)
+        //{
+        //    int nMinus1 = n - 1;
+        //    AltDec x[2] = { (AltDec::One / n) * ((nMinus1 * targetValue) + (targetValue / AltDec::Pow(targetValue, nMinus1))), targetValue };
+        //    while (AltDec::Abs(x[0] - x[1]) > Precision)
+        //    {
+        //        x[1] = x[0];
+        //        x[0] = (AltDec::One / n) * ((nMinus1 * x[1]) + (targetValue / AltDec::Pow(x[1], nMinus1)));
+        //    }
+        //    return x[0];
+        //}
 
-        /// <summary>
-        /// Taylor Series Exponential function derived from https://www.pseudorandom.com/implementing-exp
-        /// </summary>
-        /// <param name="x">The value to apply the exponential function to.</param>
-        /// <returns>AltDec</returns>
-        static AltDec Exp(AltDec x)
-        {
-            /*
-             * Evaluates f(x) = e^x for any x in the interval [-709, 709].
-             * If x < -709 or x > 709, raises an assertion error. Implemented
-             * using the truncated Taylor series of e^x with ceil(|x| * e) * 12
-             * terms. Achieves at least 14 and at most 16 digits of precision
-             * over the entire interval.
-             * Performance - There are exactly 36 * ceil(|x| * e) + 5
-             * operations; 69,413 in the worst case (x = 709 or -709):
-             * - (12 * ceil(|x| * e)) + 2 multiplications
-             * - (12 * ceil(|x| * e)) + 1 divisions
-             * - (12 * ceil(|x| * e)) additions
-             * - 1 rounding
-             * - 1 absolute value
-             * Accuracy - Over a sample of 10,000 linearly spaced points in
-             * [-709, 709] we have the following error statistics:
-             * - Max relative error = 8.39803e-15
-             * - Min relative error = 0.0
-             * - Avg relative error = 0.0
-             * - Med relative error = 1.90746e-15
-             * - Var relative error = 0.0
-             * - 0.88 percent of the values have less than 15 digits of precision
-             * Args:
-             *      - x: (AltDec float) power of e to evaluate
-             * Returns:
-             *      - (AltDec float) approximation of e^x in AltDec precision
-             */
-             // Check that x is a valid input.
-            assert(-709 <= x.IntValue && x.IntValue <= 709);
-            // When x = 0 we already know e^x = 1.
-            if (x == AltDec::Zero) {
-                return AltDec::One;
-            }
-            // Normalize x to a non-negative value to take advantage of
-            // reciprocal symmetry. But keep track of the original sign
-            // in case we need to return the reciprocal of e^x later.
-            AltDec x0 = AltDec::Abs(x);
-            // First term of Taylor expansion of e^x at a = 0 is 1.
-            // tn is the variable we we will return for e^x, and its
-            // value at any time is the sum of all currently evaluated
-            // Taylor terms thus far.
-            AltDec tn = AltDec::One;
-            // Chose a truncation point for the Taylor series using the
-            // heuristic bound 12 * ceil(|x| e), then work down from there
-            // using Horner's method.
-            int n = AltDec::CeilInt(x0 * AltDec::E) * 12;
-            for (int i = n; i > 0; --i) {
-                tn = tn * (x0 / i) + AltDec::One;
-            }
-            // If the original input x is less than 0, we want the reciprocal
-            // of the e^x we calculated.
-            if (x < 0) {
-                tn = AltDec::One / tn;
-            }
-            return tn;
-        }
+        ///// <summary>
+        ///// Taylor Series Exponential function derived from https://www.pseudorandom.com/implementing-exp
+        ///// </summary>
+        ///// <param name="x">The value to apply the exponential function to.</param>
+        ///// <returns>AltDec</returns>
+        //static AltDec Exp(AltDec x)
+        //{
+        //    /*
+        //     * Evaluates f(x) = e^x for any x in the interval [-709, 709].
+        //     * If x < -709 or x > 709, raises an assertion error. Implemented
+        //     * using the truncated Taylor series of e^x with ceil(|x| * e) * 12
+        //     * terms. Achieves at least 14 and at most 16 digits of precision
+        //     * over the entire interval.
+        //     * Performance - There are exactly 36 * ceil(|x| * e) + 5
+        //     * operations; 69,413 in the worst case (x = 709 or -709):
+        //     * - (12 * ceil(|x| * e)) + 2 multiplications
+        //     * - (12 * ceil(|x| * e)) + 1 divisions
+        //     * - (12 * ceil(|x| * e)) additions
+        //     * - 1 rounding
+        //     * - 1 absolute value
+        //     * Accuracy - Over a sample of 10,000 linearly spaced points in
+        //     * [-709, 709] we have the following error statistics:
+        //     * - Max relative error = 8.39803e-15
+        //     * - Min relative error = 0.0
+        //     * - Avg relative error = 0.0
+        //     * - Med relative error = 1.90746e-15
+        //     * - Var relative error = 0.0
+        //     * - 0.88 percent of the values have less than 15 digits of precision
+        //     * Args:
+        //     *      - x: (AltDec float) power of e to evaluate
+        //     * Returns:
+        //     *      - (AltDec float) approximation of e^x in AltDec precision
+        //     */
+        //     // Check that x is a valid input.
+        //    assert(-709 <= x.IntValue && x.IntValue <= 709);
+        //    // When x = 0 we already know e^x = 1.
+        //    if (x == AltDec::Zero) {
+        //        return AltDec::One;
+        //    }
+        //    // Normalize x to a non-negative value to take advantage of
+        //    // reciprocal symmetry. But keep track of the original sign
+        //    // in case we need to return the reciprocal of e^x later.
+        //    AltDec x0 = AltDec::Abs(x);
+        //    // First term of Taylor expansion of e^x at a = 0 is 1.
+        //    // tn is the variable we we will return for e^x, and its
+        //    // value at any time is the sum of all currently evaluated
+        //    // Taylor terms thus far.
+        //    AltDec tn = AltDec::One;
+        //    // Chose a truncation point for the Taylor series using the
+        //    // heuristic bound 12 * ceil(|x| e), then work down from there
+        //    // using Horner's method.
+        //    int n = AltDec::CeilInt(x0 * AltDec::E) * 12;
+        //    for (int i = n; i > 0; --i) {
+        //        tn = tn * (x0 / i) + AltDec::One;
+        //    }
+        //    // If the original input x is less than 0, we want the reciprocal
+        //    // of the e^x we calculated.
+        //    if (x < 0) {
+        //        tn = AltDec::One / tn;
+        //    }
+        //    return tn;
+        //}
 
-        /// <summary>
-        /// Calculate value to a fractional power based on https://study.com/academy/lesson/how-to-convert-roots-to-fractional-exponents.html
-        /// </summary>
-        /// <param name="value">The target value.</param>
-        /// <param name="expNum">The numerator of the exponent value.</param>
-        /// <param name="expDenom">The denominator of the exponent value.</param>
-        static AltDec FractionalPow(AltDec value, int expNum, int expDenom)
-        {
-            AltDec CalcVal = AltDec::NthRoot(AltDec::Pow(value, expNum), expDenom);
-            return CalcVal;
-        }
+        ///// <summary>
+        ///// Calculate value to a fractional power based on https://study.com/academy/lesson/how-to-convert-roots-to-fractional-exponents.html
+        ///// </summary>
+        ///// <param name="value">The target value.</param>
+        ///// <param name="expNum">The numerator of the exponent value.</param>
+        ///// <param name="expDenom">The denominator of the exponent value.</param>
+        //static AltDec FractionalPow(AltDec value, int expNum, int expDenom)
+        //{
+        //    AltDec CalcVal = AltDec::NthRoot(AltDec::Pow(value, expNum), expDenom);
+        //    return CalcVal;
+        //}
 
-        /// <summary>
-        /// Calculate value to a fractional power based on https://study.com/academy/lesson/how-to-convert-roots-to-fractional-exponents.html
-        /// </summary>
-        /// <param name="value">The target value.</param>
-        /// <param name="Frac">The exponent value to raise the value to power of.</param>
-        static AltDec FractionalPow(AltDec& value, boost::rational<int>& Frac)
-        {
-            AltDec CalcVal = AltDec::NthRoot(AltDec::Pow(value, Frac.numerator()), Frac.denominator());
-            return CalcVal;
-        }
+        ///// <summary>
+        ///// Calculate value to a fractional power based on https://study.com/academy/lesson/how-to-convert-roots-to-fractional-exponents.html
+        ///// </summary>
+        ///// <param name="value">The target value.</param>
+        ///// <param name="Frac">The exponent value to raise the value to power of.</param>
+        //static AltDec FractionalPow(AltDec& value, boost::rational<int>& Frac)
+        //{
+        //    AltDec CalcVal = AltDec::NthRoot(AltDec::Pow(value, Frac.numerator()), Frac.denominator());
+        //    return CalcVal;
+        //}
 
-        /// <summary>
-        /// Applies Power of operation
-        /// </summary>
-        /// <param name="value">The target value.</param>
-        /// <param name="expValue">The exponent value.</param>
-        static AltDec PowOp(AltDec& value, AltDec& expValue)
-        {
-            if (expValue.DecimalHalf == 0)
-            {
-                return value.Pow(expValue.IntValue);
-            }
-            else
-            {
-                boost::rational<int> Frac = boost::rational<int>(expValue.DecimalHalf, AltDec::DecimalOverflow);
-                switch (expValue.IntValue)
-                {
-                    case 0:
-                        return FractionalPow(value, Frac);
-                        break;
-                    case AltDec::NegativeRep:
-                        return 1 / FractionalPow(value, Frac);
-                        break;
-                    default:
-                    {
-                        if (expValue.IntValue < 0)//Negative Exponent 
-                        {
-                            AltDec CalcVal = 1 / value.Pow(expValue.IntValue * -1);
-                            CalcVal /= FractionalPow(value, Frac);
-                            return CalcVal;
-                        }
-                        else
-                        {
-                            AltDec CalcVal = value.Pow(expValue.IntValue);
-                            CalcVal *= FractionalPow(value, Frac);
-                            return CalcVal;
-                        }
-                        break;
-                    }
-                }
-            }
-        }
+        ///// <summary>
+        ///// Applies Power of operation
+        ///// </summary>
+        ///// <param name="value">The target value.</param>
+        ///// <param name="expValue">The exponent value.</param>
+        //static AltDec PowOp(AltDec& value, AltDec& expValue)
+        //{
+        //    if (expValue.DecimalHalf == 0)
+        //    {
+        //        return value.Pow(expValue.IntValue);
+        //    }
+        //    else
+        //    {
+        //        boost::rational<int> Frac = boost::rational<int>(expValue.DecimalHalf, AltDec::DecimalOverflow);
+        //        switch (expValue.IntValue)
+        //        {
+        //            case 0:
+        //                return FractionalPow(value, Frac);
+        //                break;
+        //            case AltDec::NegativeRep:
+        //                return 1 / FractionalPow(value, Frac);
+        //                break;
+        //            default:
+        //            {
+        //                if (expValue.IntValue < 0)//Negative Exponent 
+        //                {
+        //                    AltDec CalcVal = 1 / value.Pow(expValue.IntValue * -1);
+        //                    CalcVal /= FractionalPow(value, Frac);
+        //                    return CalcVal;
+        //                }
+        //                else
+        //                {
+        //                    AltDec CalcVal = value.Pow(expValue.IntValue);
+        //                    CalcVal *= FractionalPow(value, Frac);
+        //                    return CalcVal;
+        //                }
+        //                break;
+        //            }
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// Applies Power of operation
-        /// </summary>
-        /// <param name="value">The target value.</param>
-        /// <param name="expValue">The exponent value.</param>
-        static AltDec Pow(AltDec value, AltDec expValue)
-        {
-            return PowOp(value, expValue);
-        }
+        ///// <summary>
+        ///// Applies Power of operation
+        ///// </summary>
+        ///// <param name="value">The target value.</param>
+        ///// <param name="expValue">The exponent value.</param>
+        //static AltDec Pow(AltDec value, AltDec expValue)
+        //{
+        //    return PowOp(value, expValue);
+        //}
 
-        /// <summary>
-        /// Natural log (Equivalent to Log_E(value))
-        /// </summary>
-        /// <param name="value">The target value.</param>
-        /// <returns>BlazesRusCode::AltDec</returns>
-        static AltDec LnRef(AltDec& value)
-        {
-            //if (value <= 0) {}else//Error if equal or less than 0
-            if (value == AltDec::One)
-                return AltDec::Zero;
-            if (value.IntValue<2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
-            {//This section gives accurate answer(for values between 1 and 2)
-                AltDec threshold = AltDec::FiveMillionth;
-                AltDec base = value - 1;        // Base of the numerator; exponent will be explicit
-                int den = 2;              // Denominator of the nth term
-                bool posSign = true;             // Used to swap the sign of each term
-                AltDec term = base;       // First term
-                AltDec prev;          // Previous sum
-                AltDec result = term;     // Kick it off
+        ///// <summary>
+        ///// Natural log (Equivalent to Log_E(value))
+        ///// </summary>
+        ///// <param name="value">The target value.</param>
+        ///// <returns>BlazesRusCode::AltDec</returns>
+        //static AltDec LnRef(AltDec& value)
+        //{
+        //    //if (value <= 0) {}else//Error if equal or less than 0
+        //    if (value == AltDec::One)
+        //        return AltDec::Zero;
+        //    if (value.IntValue<2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+        //    {//This section gives accurate answer(for values between 1 and 2)
+        //        AltDec threshold = AltDec::FiveMillionth;
+        //        AltDec base = value - 1;        // Base of the numerator; exponent will be explicit
+        //        int den = 2;              // Denominator of the nth term
+        //        bool posSign = true;             // Used to swap the sign of each term
+        //        AltDec term = base;       // First term
+        //        AltDec prev;          // Previous sum
+        //        AltDec result = term;     // Kick it off
 
-                do
-                {
-                    posSign = !posSign;
-                    term *= base;
-                    prev = result;
-                    if (posSign)
-                        result += term / den;
-                    else
-                        result -= term / den;
-                    ++den;
-                } while (AltDec::Abs(prev - result) > threshold);
+        //        do
+        //        {
+        //            posSign = !posSign;
+        //            term *= base;
+        //            prev = result;
+        //            if (posSign)
+        //                result += term / den;
+        //            else
+        //                result -= term / den;
+        //            ++den;
+        //        } while (AltDec::Abs(prev - result) > threshold);
 
-                return result;
-            }
-            else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
-            {//Increasing iterations brings closer to accurate result(Larger numbers need more iterations to get accurate level of result)
-                AltDec TotalRes = (value - 1) / (value + 1);
-                AltDec LastPow = TotalRes;
-                AltDec WSquared = TotalRes * TotalRes;
-                AltDec AddRes;
-                int WPow = 3;
-                do
-                {
-                    LastPow *= WSquared;
-                    AddRes = LastPow / WPow;
-                    TotalRes += AddRes; WPow += 2;
-                } while (AddRes > AltDec::JustAboveZero);
-                return TotalRes * 2;
-            }
-        }
+        //        return result;
+        //    }
+        //    else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+        //    {//Increasing iterations brings closer to accurate result(Larger numbers need more iterations to get accurate level of result)
+        //        AltDec TotalRes = (value - 1) / (value + 1);
+        //        AltDec LastPow = TotalRes;
+        //        AltDec WSquared = TotalRes * TotalRes;
+        //        AltDec AddRes;
+        //        int WPow = 3;
+        //        do
+        //        {
+        //            LastPow *= WSquared;
+        //            AddRes = LastPow / WPow;
+        //            TotalRes += AddRes; WPow += 2;
+        //        } while (AddRes > AltDec::JustAboveZero);
+        //        return TotalRes * 2;
+        //    }
+        //}
 
-        /// <summary>
-        /// Natural log (Equivalent to Log_E(value))
-        /// </summary>
-        /// <param name="value">The target value.</param>
-        /// <returns>BlazesRusCode::AltDec</returns>
-        static AltDec LnRefV2(AltDec& value)
-        {
-            //if (value <= 0) {}else//Error if equal or less than 0
-            if (value == AltDec::One)
-                return AltDec::Zero;
-            if(value.IntValue==0)//Returns a negative number derived from (http://www.netlib.org/cephes/qlibdoc.html#qlog)
-            {
-                AltDec W = (value - 1)/ (value + 1);
-                AltDec TotalRes = W;
-                W.SwapNegativeStatus();
-                AltDec LastPow = W;
-                AltDec WSquared = W * W;
-                int WPow = 3;
-                AltDec AddRes;
+        ///// <summary>
+        ///// Natural log (Equivalent to Log_E(value))
+        ///// </summary>
+        ///// <param name="value">The target value.</param>
+        ///// <returns>BlazesRusCode::AltDec</returns>
+        //static AltDec LnRefV2(AltDec& value)
+        //{
+        //    //if (value <= 0) {}else//Error if equal or less than 0
+        //    if (value == AltDec::One)
+        //        return AltDec::Zero;
+        //    if(value.IntValue==0)//Returns a negative number derived from (http://www.netlib.org/cephes/qlibdoc.html#qlog)
+        //    {
+        //        AltDec W = (value - 1)/ (value + 1);
+        //        AltDec TotalRes = W;
+        //        W.SwapNegativeStatus();
+        //        AltDec LastPow = W;
+        //        AltDec WSquared = W * W;
+        //        int WPow = 3;
+        //        AltDec AddRes;
 
-                do
-                {
-                    LastPow *= WSquared;
-                    AddRes = LastPow / WPow;
-                    TotalRes -= AddRes;
-                    WPow += 2;
-                } while (AddRes > AltDec::JustAboveZero);
-                return TotalRes * 2;
-            }
-            else if (value.IntValue==1)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
-            {//This section gives accurate answer(for values between 1 and 2)
-                AltDec threshold = AltDec::FiveMillionth;
-                AltDec base = value - 1;        // Base of the numerator; exponent will be explicit
-                int den = 2;              // Denominator of the nth term
-                bool posSign = true;             // Used to swap the sign of each term
-                AltDec term = base;       // First term
-                AltDec prev;          // Previous sum
-                AltDec result = term;     // Kick it off
+        //        do
+        //        {
+        //            LastPow *= WSquared;
+        //            AddRes = LastPow / WPow;
+        //            TotalRes -= AddRes;
+        //            WPow += 2;
+        //        } while (AddRes > AltDec::JustAboveZero);
+        //        return TotalRes * 2;
+        //    }
+        //    else if (value.IntValue==1)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+        //    {//This section gives accurate answer(for values between 1 and 2)
+        //        AltDec threshold = AltDec::FiveMillionth;
+        //        AltDec base = value - 1;        // Base of the numerator; exponent will be explicit
+        //        int den = 2;              // Denominator of the nth term
+        //        bool posSign = true;             // Used to swap the sign of each term
+        //        AltDec term = base;       // First term
+        //        AltDec prev;          // Previous sum
+        //        AltDec result = term;     // Kick it off
 
-                do
-                {
-                    posSign = !posSign;
-                    term *= base;
-                    prev = result;
-                    if (posSign)
-                        result += term / den;
-                    else
-                        result -= term / den;
-                    ++den;
-                } while (AltDec::Abs(prev - result) > threshold);
+        //        do
+        //        {
+        //            posSign = !posSign;
+        //            term *= base;
+        //            prev = result;
+        //            if (posSign)
+        //                result += term / den;
+        //            else
+        //                result -= term / den;
+        //            ++den;
+        //        } while (AltDec::Abs(prev - result) > threshold);
 
-                return result;
-            }
-            else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
-            {//Increasing iterations brings closer to accurate result(Larger numbers need more iterations to get accurate level of result)
-                AltDec TotalRes = (value - 1) / (value + 1);
-                AltDec LastPow = TotalRes;
-                AltDec WSquared = TotalRes * TotalRes;
-                AltDec AddRes;
-                int WPow = 3;
-                do
-                {
-                    LastPow *= WSquared;
-                    AddRes = LastPow / WPow;
-                    TotalRes += AddRes; WPow += 2;
-                } while (AddRes > AltDec::JustAboveZero);
-                return TotalRes * 2;
-            }
-        }
+        //        return result;
+        //    }
+        //    else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+        //    {//Increasing iterations brings closer to accurate result(Larger numbers need more iterations to get accurate level of result)
+        //        AltDec TotalRes = (value - 1) / (value + 1);
+        //        AltDec LastPow = TotalRes;
+        //        AltDec WSquared = TotalRes * TotalRes;
+        //        AltDec AddRes;
+        //        int WPow = 3;
+        //        do
+        //        {
+        //            LastPow *= WSquared;
+        //            AddRes = LastPow / WPow;
+        //            TotalRes += AddRes; WPow += 2;
+        //        } while (AddRes > AltDec::JustAboveZero);
+        //        return TotalRes * 2;
+        //    }
+        //}
 
-        /// <summary>
-        /// Natural log (Equivalent to Log_E(value))
-        /// </summary>
-        /// <param name="value">The target value.</param>
-        static AltDec Ln(AltDec value)
-        {
-            return LnRef(value);
-        }
+        ///// <summary>
+        ///// Natural log (Equivalent to Log_E(value))
+        ///// </summary>
+        ///// <param name="value">The target value.</param>
+        //static AltDec Ln(AltDec value)
+        //{
+        //    return LnRef(value);
+        //}
 
-        /// <summary>
-        /// Log Base 10 of Value
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <returns>AltDec</returns>
-        static AltDec Log10(AltDec value)
-        {
-            if (value == AltDec::One)
-                return AltDec::Zero;
-            if (value.DecimalHalf == 0 && value.IntValue % 10 == 0)
-            {
-                for (int index = 1; index < 9; ++index)
-                {
-                    if (value == BlazesRusCode::VariableConversionFunctions::PowerOfTens[index])
-                        return AltDec(index, 0);
-                }
-                return AltDec(9, 0);
-            }
-            if (value.IntValue<2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
-            {//This section gives accurate answer for values between 1 & 2
-                AltDec threshold = AltDec::FiveBillionth;
-                AltDec base = value - 1;        // Base of the numerator; exponent will be explicit
-                int den = 1;              // Denominator of the nth term
-                bool posSign = true;             // Used to swap the sign of each term
-                AltDec term = base;       // First term
-                AltDec prev = 0;          // Previous sum
-                AltDec result = term;     // Kick it off
+        ///// <summary>
+        ///// Log Base 10 of Value
+        ///// </summary>
+        ///// <param name="Value">The value.</param>
+        ///// <returns>AltDec</returns>
+        //static AltDec Log10(AltDec value)
+        //{
+        //    if (value == AltDec::One)
+        //        return AltDec::Zero;
+        //    if (value.DecimalHalf == 0 && value.IntValue % 10 == 0)
+        //    {
+        //        for (int index = 1; index < 9; ++index)
+        //        {
+        //            if (value == BlazesRusCode::VariableConversionFunctions::PowerOfTens[index])
+        //                return AltDec(index, 0);
+        //        }
+        //        return AltDec(9, 0);
+        //    }
+        //    if (value.IntValue<2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+        //    {//This section gives accurate answer for values between 1 & 2
+        //        AltDec threshold = AltDec::FiveBillionth;
+        //        AltDec base = value - 1;        // Base of the numerator; exponent will be explicit
+        //        int den = 1;              // Denominator of the nth term
+        //        bool posSign = true;             // Used to swap the sign of each term
+        //        AltDec term = base;       // First term
+        //        AltDec prev = 0;          // Previous sum
+        //        AltDec result = term;     // Kick it off
 
-                while (AltDec::Abs(prev - result) > threshold) {
-                    den++;
-                    posSign = !posSign;
-                    term *= base;
-                    prev = result;
-                    if (posSign)
-                        result += term / den;
-                    else
-                        result -= term / den;
-                }
-                return result*AltDec::LN10Mult;// result/AltDec::LN10;//Using Multiplication instead of division for speed improvement
-            }
-            else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
-            {
-                AltDec TotalRes = (value - 1) / (value + 1);
-                AltDec LastPow = TotalRes;
-                AltDec WSquared = TotalRes * TotalRes;
-                AltDec AddRes;
-                int WPow = 3;
-                do
-                {
-                    LastPow *= WSquared;
-                    AddRes = LastPow / WPow;
-                    TotalRes += AddRes; WPow += 2;
-                } while (AddRes > AltDec::JustAboveZero);
-                return TotalRes * AltDec::HalfLN10Mult;//Gives more accurate answer than attempting to divide by Ln10
-            }
-            //return AltDec::Ln(value) / AltDec::HaLN10;//Slightly off because of truncation etc
-        }
+        //        while (AltDec::Abs(prev - result) > threshold) {
+        //            den++;
+        //            posSign = !posSign;
+        //            term *= base;
+        //            prev = result;
+        //            if (posSign)
+        //                result += term / den;
+        //            else
+        //                result -= term / den;
+        //        }
+        //        return result*AltDec::LN10Mult;// result/AltDec::LN10;//Using Multiplication instead of division for speed improvement
+        //    }
+        //    else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+        //    {
+        //        AltDec TotalRes = (value - 1) / (value + 1);
+        //        AltDec LastPow = TotalRes;
+        //        AltDec WSquared = TotalRes * TotalRes;
+        //        AltDec AddRes;
+        //        int WPow = 3;
+        //        do
+        //        {
+        //            LastPow *= WSquared;
+        //            AddRes = LastPow / WPow;
+        //            TotalRes += AddRes; WPow += 2;
+        //        } while (AddRes > AltDec::JustAboveZero);
+        //        return TotalRes * AltDec::HalfLN10Mult;//Gives more accurate answer than attempting to divide by Ln10
+        //    }
+        //    //return AltDec::Ln(value) / AltDec::HaLN10;//Slightly off because of truncation etc
+        //}
 
-        /// <summary>
-        /// Log Base 10 of Value(integer value variant)
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <returns>AltDec</returns>
-        template<typename ValueType>
-        static AltDec Log10(ValueType value)
-        {
-            if (value == 1)
-                return AltDec::Zero;
-            else if (value % 10 == 0)
-            {
-                for (int index = 1; index < 9; ++index)
-                {
-                    if (value == BlazesRusCode::VariableConversionFunctions::PowerOfTens[index])
-                        return AltDec(index, 0);
-                }
-                return AltDec(9, 0);
-            }
-            else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
-            {
-                AltDec TotalRes = AltDec((value - 1), 0) / AltDec((value + 1), 0);
-                AltDec LastPow = TotalRes;
-                AltDec WSquared = TotalRes * TotalRes;
-                AltDec AddRes;
-                int WPow = 3;
-                do
-                {
-                    LastPow *= WSquared;
-                    AddRes = LastPow / WPow;
-                    TotalRes += AddRes; WPow += 2;
-                } while (AddRes > AltDec::JustAboveZero);
-                return TotalRes * AltDec::HalfLN10Mult;//Gives more accurate answer than attempting to divide by Ln10
-            }
-        }
+        ///// <summary>
+        ///// Log Base 10 of Value(integer value variant)
+        ///// </summary>
+        ///// <param name="Value">The value.</param>
+        ///// <returns>AltDec</returns>
+        //template<typename ValueType>
+        //static AltDec Log10(ValueType value)
+        //{
+        //    if (value == 1)
+        //        return AltDec::Zero;
+        //    else if (value % 10 == 0)
+        //    {
+        //        for (int index = 1; index < 9; ++index)
+        //        {
+        //            if (value == BlazesRusCode::VariableConversionFunctions::PowerOfTens[index])
+        //                return AltDec(index, 0);
+        //        }
+        //        return AltDec(9, 0);
+        //    }
+        //    else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+        //    {
+        //        AltDec TotalRes = AltDec((value - 1), 0) / AltDec((value + 1), 0);
+        //        AltDec LastPow = TotalRes;
+        //        AltDec WSquared = TotalRes * TotalRes;
+        //        AltDec AddRes;
+        //        int WPow = 3;
+        //        do
+        //        {
+        //            LastPow *= WSquared;
+        //            AddRes = LastPow / WPow;
+        //            TotalRes += AddRes; WPow += 2;
+        //        } while (AddRes > AltDec::JustAboveZero);
+        //        return TotalRes * AltDec::HalfLN10Mult;//Gives more accurate answer than attempting to divide by Ln10
+        //    }
+        //}
 
-        /// <summary>
-        /// Log with Base of BaseVal of Value
-        /// Based on http://home.windstream.net/okrebs/page57.html
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="baseVal">The base of Log</param>
-        /// <returns>AltDec</returns>
-        static AltDec Log(AltDec value, AltDec baseVal)
-        {
-            if (value == AltDec::One)
-                return AltDec::Zero;
-            return Log10(value) / Log10(baseVal);
-        }
+        ///// <summary>
+        ///// Log with Base of BaseVal of Value
+        ///// Based on http://home.windstream.net/okrebs/page57.html
+        ///// </summary>
+        ///// <param name="value">The value.</param>
+        ///// <param name="baseVal">The base of Log</param>
+        ///// <returns>AltDec</returns>
+        //static AltDec Log(AltDec value, AltDec baseVal)
+        //{
+        //    if (value == AltDec::One)
+        //        return AltDec::Zero;
+        //    return Log10(value) / Log10(baseVal);
+        //}
 
-        /// <summary>
-        /// Log with Base of BaseVal of Value
-        /// Based on http://home.windstream.net/okrebs/page57.html
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <param name="BaseVal">The base of Log</param>
-        /// <returns>AltDec</returns>
-        static AltDec Log(AltDec value, int baseVal)
-        {
-            if (value == AltDec::One)
-                return AltDec::Zero;
-            //Calculate Base log first
-            AltDec baseTotalRes;
-            bool lnMultLog = true;
-            if (baseVal % 10 == 0)
-            {
-                for (int index = 1; index < 9; ++index)
-                {
-                    if (baseVal == BlazesRusCode::VariableConversionFunctions::PowerOfTens[index])
-                    {
-                        baseTotalRes = AltDec(index, 0);
-                        break;
-                    }
-                }
-                baseTotalRes = AltDec(9, 0); lnMultLog = false;
-            }
-            else//Returns a positive baseVal(http://www.netlib.org/cephes/qlibdoc.html#qlog)
-            {
-                baseTotalRes = AltDec((baseVal - 1), 0) / AltDec((baseVal + 1), 0);
-                AltDec baseLastPow = baseTotalRes;
-                AltDec baseWSquared = baseTotalRes * baseTotalRes;
-                AltDec baseAddRes;
-                int baseWPow = 3;
-                do
-                {
-                    baseLastPow *= baseWSquared;
-                    baseAddRes = baseLastPow / baseWPow;
-                    baseTotalRes += baseAddRes; baseWPow += 2;
-                } while (baseAddRes > AltDec::JustAboveZero);
-            }
+        ///// <summary>
+        ///// Log with Base of BaseVal of Value
+        ///// Based on http://home.windstream.net/okrebs/page57.html
+        ///// </summary>
+        ///// <param name="Value">The value.</param>
+        ///// <param name="BaseVal">The base of Log</param>
+        ///// <returns>AltDec</returns>
+        //static AltDec Log(AltDec value, int baseVal)
+        //{
+        //    if (value == AltDec::One)
+        //        return AltDec::Zero;
+        //    //Calculate Base log first
+        //    AltDec baseTotalRes;
+        //    bool lnMultLog = true;
+        //    if (baseVal % 10 == 0)
+        //    {
+        //        for (int index = 1; index < 9; ++index)
+        //        {
+        //            if (baseVal == BlazesRusCode::VariableConversionFunctions::PowerOfTens[index])
+        //            {
+        //                baseTotalRes = AltDec(index, 0);
+        //                break;
+        //            }
+        //        }
+        //        baseTotalRes = AltDec(9, 0); lnMultLog = false;
+        //    }
+        //    else//Returns a positive baseVal(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+        //    {
+        //        baseTotalRes = AltDec((baseVal - 1), 0) / AltDec((baseVal + 1), 0);
+        //        AltDec baseLastPow = baseTotalRes;
+        //        AltDec baseWSquared = baseTotalRes * baseTotalRes;
+        //        AltDec baseAddRes;
+        //        int baseWPow = 3;
+        //        do
+        //        {
+        //            baseLastPow *= baseWSquared;
+        //            baseAddRes = baseLastPow / baseWPow;
+        //            baseTotalRes += baseAddRes; baseWPow += 2;
+        //        } while (baseAddRes > AltDec::JustAboveZero);
+        //    }
 
-            //Now calculate other log
-            if (value.DecimalHalf == 0 && value.IntValue % 10 == 0)
-            {
-                for (int index = 1; index < 9; ++index)
-                {
-                    if (value == BlazesRusCode::VariableConversionFunctions::PowerOfTens[index])
-                        return lnMultLog ? AltDec(index, 0) / (baseTotalRes * AltDec::HalfLN10Mult): AltDec(index, 0)/ baseTotalRes;
-                }
-                return lnMultLog? AltDec(9, 0) / (baseTotalRes*AltDec::HalfLN10Mult):AltDec(9, 0)/baseTotalRes;
-            }
-            if (value.IntValue < 2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
-            {//This section gives accurate answer for values between 1 & 2
-                AltDec threshold = AltDec::FiveBillionth;
-                AltDec base = value - 1;        // Base of the numerator; exponent will be explicit
-                int den = 1;              // Denominator of the nth term
-                bool posSign = true;             // Used to swap the sign of each term
-                AltDec term = base;       // First term
-                AltDec prev = 0;          // Previous sum
-                AltDec result = term;     // Kick it off
+        //    //Now calculate other log
+        //    if (value.DecimalHalf == 0 && value.IntValue % 10 == 0)
+        //    {
+        //        for (int index = 1; index < 9; ++index)
+        //        {
+        //            if (value == BlazesRusCode::VariableConversionFunctions::PowerOfTens[index])
+        //                return lnMultLog ? AltDec(index, 0) / (baseTotalRes * AltDec::HalfLN10Mult): AltDec(index, 0)/ baseTotalRes;
+        //        }
+        //        return lnMultLog? AltDec(9, 0) / (baseTotalRes*AltDec::HalfLN10Mult):AltDec(9, 0)/baseTotalRes;
+        //    }
+        //    if (value.IntValue < 2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+        //    {//This section gives accurate answer for values between 1 & 2
+        //        AltDec threshold = AltDec::FiveBillionth;
+        //        AltDec base = value - 1;        // Base of the numerator; exponent will be explicit
+        //        int den = 1;              // Denominator of the nth term
+        //        bool posSign = true;             // Used to swap the sign of each term
+        //        AltDec term = base;       // First term
+        //        AltDec prev = 0;          // Previous sum
+        //        AltDec result = term;     // Kick it off
 
-                while (AltDec::Abs(prev - result) > threshold) {
-                    den++;
-                    posSign = !posSign;
-                    term *= base;
-                    prev = result;
-                    if (posSign)
-                        result += term / den;
-                    else
-                        result -= term / den;
-                }
-                return lnMultLog? result/baseTotalRes:(result*2)/ baseTotalRes;
-            }
-            else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
-            {
-                AltDec W = (value - 1) / (value + 1);
-                AltDec TotalRes = W;
-                AltDec AddRes;
-                int WPow = 3;
-                do
-                {
-                    AddRes = AltDec::PowRef(W, WPow) / WPow;
-                    TotalRes += AddRes; WPow += 2;
-                } while (AddRes > AltDec::JustAboveZero);
-                return lnMultLog? TotalRes/baseTotalRes:(TotalRes * AltDec::HalfLN10Mult)/ baseTotalRes;
-            }
-            //return Log10(Value) / Log10(BaseVal);
-        }
+        //        while (AltDec::Abs(prev - result) > threshold) {
+        //            den++;
+        //            posSign = !posSign;
+        //            term *= base;
+        //            prev = result;
+        //            if (posSign)
+        //                result += term / den;
+        //            else
+        //                result -= term / den;
+        //        }
+        //        return lnMultLog? result/baseTotalRes:(result*2)/ baseTotalRes;
+        //    }
+        //    else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+        //    {
+        //        AltDec W = (value - 1) / (value + 1);
+        //        AltDec TotalRes = W;
+        //        AltDec AddRes;
+        //        int WPow = 3;
+        //        do
+        //        {
+        //            AddRes = AltDec::PowRef(W, WPow) / WPow;
+        //            TotalRes += AddRes; WPow += 2;
+        //        } while (AddRes > AltDec::JustAboveZero);
+        //        return lnMultLog? TotalRes/baseTotalRes:(TotalRes * AltDec::HalfLN10Mult)/ baseTotalRes;
+        //    }
+        //    //return Log10(Value) / Log10(BaseVal);
+        //}
 
     #pragma endregion Math Etc Functions
     #pragma region Trigonomic Etc Functions
-        /// <summary>
-        /// Get Sin from Value of angle.
-        /// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <returns>AltDec</returns>
-        static AltDec SinFromAngle(AltDec Value)
-        {
-            if (Value.IntValue < 0)
-            {
-                if (Value.IntValue == NegativeRep)
-                {
-                    Value.IntValue = 359; Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf;
-                }
-                else
-                {
-                    Value.IntValue *= -1;
-                    Value.IntValue %= 360;
-                    Value.IntValue = 360 - Value.IntValue;
-                    if (Value.DecimalHalf != 0) { Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf; }
-                }
-            }
-            else
-            {
-                Value.IntValue %= 360;
-            }
-            if (Value == Zero) { return AltDec::Zero; }
-            else if (Value.IntValue == 30 && Value.DecimalHalf == 0)
-            {
-                return PointFive;
-            }
-            else if (Value.IntValue == 90 && Value.DecimalHalf == 0)
-            {
-                return One;
-            }
-            else if (Value.IntValue == 180 && Value.DecimalHalf == 0)
-            {
-                return AltDec::Zero;
-            }
-            else if (Value.IntValue == 270 && Value.DecimalHalf == 0)
-            {
-                return NegativeOne;
-            }
-            else
-            {
-                AltDec NewValue = Zero;
-                //Angle as Radian
-                AltDec Radius = PI * Value / 180;
-                for (int i = 0; i < 7; ++i)
-                { // That's Taylor series!!
-                    NewValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Radius, 2 * i + 1) / VariableConversionFunctions::Fact(2 * i + 1);
-                }
-                return NewValue;
-            }
-        }
+        ///// <summary>
+        ///// Get Sin from Value of angle.
+        ///// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
+        ///// </summary>
+        ///// <param name="Value">The value.</param>
+        ///// <returns>AltDec</returns>
+        //static AltDec SinFromAngle(AltDec Value)
+        //{
+        //    if (Value.IntValue < 0)
+        //    {
+        //        if (Value.IntValue == NegativeRep)
+        //        {
+        //            Value.IntValue = 359; Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf;
+        //        }
+        //        else
+        //        {
+        //            Value.IntValue *= -1;
+        //            Value.IntValue %= 360;
+        //            Value.IntValue = 360 - Value.IntValue;
+        //            if (Value.DecimalHalf != 0) { Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf; }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Value.IntValue %= 360;
+        //    }
+        //    if (Value == Zero) { return AltDec::Zero; }
+        //    else if (Value.IntValue == 30 && Value.DecimalHalf == 0)
+        //    {
+        //        return PointFive;
+        //    }
+        //    else if (Value.IntValue == 90 && Value.DecimalHalf == 0)
+        //    {
+        //        return One;
+        //    }
+        //    else if (Value.IntValue == 180 && Value.DecimalHalf == 0)
+        //    {
+        //        return AltDec::Zero;
+        //    }
+        //    else if (Value.IntValue == 270 && Value.DecimalHalf == 0)
+        //    {
+        //        return NegativeOne;
+        //    }
+        //    else
+        //    {
+        //        AltDec NewValue = Zero;
+        //        //Angle as Radian
+        //        AltDec Radius = PI * Value / 180;
+        //        for (int i = 0; i < 7; ++i)
+        //        { // That's Taylor series!!
+        //            NewValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Radius, 2 * i + 1) / VariableConversionFunctions::Fact(2 * i + 1);
+        //        }
+        //        return NewValue;
+        //    }
+        //}
 
-        /// <summary>
-        /// Get Cos() from Value of Angle
-        /// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <returns></returns>
-        static AltDec CosFromAngle(AltDec Value)
-        {
-            if (Value.IntValue < 0)
-            {
-                if (Value.IntValue == NegativeRep)
-                {
-                    Value.IntValue = 359; Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf;
-                }
-                else
-                {
-                    Value.IntValue *= -1;
-                    Value.IntValue %= 360;
-                    Value.IntValue = 360 - Value.IntValue;
-                    if (Value.DecimalHalf != 0) { Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf; }
-                }
-            }
-            else
-            {
-                Value.IntValue %= 360;
-            }
-            if (Value == Zero) { return One; }
-            else if (Value.IntValue == 90 && Value.DecimalHalf == 0)
-            {
-                return AltDec::Zero;
-            }
-            else if (Value.IntValue == 180 && Value.DecimalHalf == 0)
-            {
-                return NegativeOne;
-            }
-            else if (Value.IntValue == 270 && Value.DecimalHalf == 0)
-            {
-                return AltDec::Zero;
-            }
-            else
-            {
-                AltDec NewValue = Zero;
-                //Angle as Radian
-                AltDec Radius = PI * Value / 180;
-                for (int i = 0; i < 7; ++i)
-                { // That's also Taylor series!!
-                    NewValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Radius, 2 * i) / VariableConversionFunctions::Fact(2 * i);
-                }
-                return NewValue;
-            }
-        }
+        ///// <summary>
+        ///// Get Cos() from Value of Angle
+        ///// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
+        ///// </summary>
+        ///// <param name="Value">The value.</param>
+        ///// <returns></returns>
+        //static AltDec CosFromAngle(AltDec Value)
+        //{
+        //    if (Value.IntValue < 0)
+        //    {
+        //        if (Value.IntValue == NegativeRep)
+        //        {
+        //            Value.IntValue = 359; Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf;
+        //        }
+        //        else
+        //        {
+        //            Value.IntValue *= -1;
+        //            Value.IntValue %= 360;
+        //            Value.IntValue = 360 - Value.IntValue;
+        //            if (Value.DecimalHalf != 0) { Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf; }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Value.IntValue %= 360;
+        //    }
+        //    if (Value == Zero) { return One; }
+        //    else if (Value.IntValue == 90 && Value.DecimalHalf == 0)
+        //    {
+        //        return AltDec::Zero;
+        //    }
+        //    else if (Value.IntValue == 180 && Value.DecimalHalf == 0)
+        //    {
+        //        return NegativeOne;
+        //    }
+        //    else if (Value.IntValue == 270 && Value.DecimalHalf == 0)
+        //    {
+        //        return AltDec::Zero;
+        //    }
+        //    else
+        //    {
+        //        AltDec NewValue = Zero;
+        //        //Angle as Radian
+        //        AltDec Radius = PI * Value / 180;
+        //        for (int i = 0; i < 7; ++i)
+        //        { // That's also Taylor series!!
+        //            NewValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Radius, 2 * i) / VariableConversionFunctions::Fact(2 * i);
+        //        }
+        //        return NewValue;
+        //    }
+        //}
 
-        /// <summary>
-        /// Get Sin from Value in Radians
-        /// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
-        /// </summary>
-        /// <param name="Value">The value in Radians.</param>
-        /// <returns>AltDec</returns>
-        static AltDec Sin(AltDec Value)
-        {
-            AltDec SinValue = Zero;
-            for (int i = 0; i < 7; ++i)
-            {
-                SinValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Value, 2 * i + 1) / VariableConversionFunctions::Fact(2 * i + 1);
-            }
-            return SinValue;
-        }
+        ///// <summary>
+        ///// Get Sin from Value in Radians
+        ///// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
+        ///// </summary>
+        ///// <param name="Value">The value in Radians.</param>
+        ///// <returns>AltDec</returns>
+        //static AltDec Sin(AltDec Value)
+        //{
+        //    AltDec SinValue = Zero;
+        //    for (int i = 0; i < 7; ++i)
+        //    {
+        //        SinValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Value, 2 * i + 1) / VariableConversionFunctions::Fact(2 * i + 1);
+        //    }
+        //    return SinValue;
+        //}
 
-        /// <summary>
-        /// Get Sin from Value in Radians
-        /// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
-        /// </summary>
-        /// <param name="Value">The value in Radians.</param>
-        /// <returns>AltDec</returns>
-        static AltDec Cos(AltDec Value)
-        {
-            AltDec CosValue = Zero;
-            for (int i = 0; i < 7; ++i)
-            {
-                CosValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Value, 2 * i) / VariableConversionFunctions::Fact(2 * i);
-            }
-            return CosValue;
-        }
+        ///// <summary>
+        ///// Get Sin from Value in Radians
+        ///// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
+        ///// </summary>
+        ///// <param name="Value">The value in Radians.</param>
+        ///// <returns>AltDec</returns>
+        //static AltDec Cos(AltDec Value)
+        //{
+        //    AltDec CosValue = Zero;
+        //    for (int i = 0; i < 7; ++i)
+        //    {
+        //        CosValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Value, 2 * i) / VariableConversionFunctions::Fact(2 * i);
+        //    }
+        //    return CosValue;
+        //}
 
-        /// <summary>
-        /// Get Tan from Value in Radians
-        /// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
-        /// </summary>
-        /// <param name="Value">The value in Radians.</param>
-        /// <returns>AltDec</returns>
-        static AltDec Tan(AltDec Value)
-        {
-            AltDec SinValue = Zero;
-            AltDec CosValue = Zero;
-            for (int i = 0; i < 7; ++i)
-            {
-                SinValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Value, 2 * i + 1) / VariableConversionFunctions::Fact(2 * i + 1);
-            }
-            for (int i = 0; i < 7; ++i)
-            {
-                CosValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Value, 2 * i) / VariableConversionFunctions::Fact(2 * i);
-            }
-            return SinValue / CosValue;
-        }
+        ///// <summary>
+        ///// Get Tan from Value in Radians
+        ///// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
+        ///// </summary>
+        ///// <param name="Value">The value in Radians.</param>
+        ///// <returns>AltDec</returns>
+        //static AltDec Tan(AltDec Value)
+        //{
+        //    AltDec SinValue = Zero;
+        //    AltDec CosValue = Zero;
+        //    for (int i = 0; i < 7; ++i)
+        //    {
+        //        SinValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Value, 2 * i + 1) / VariableConversionFunctions::Fact(2 * i + 1);
+        //    }
+        //    for (int i = 0; i < 7; ++i)
+        //    {
+        //        CosValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Value, 2 * i) / VariableConversionFunctions::Fact(2 * i);
+        //    }
+        //    return SinValue / CosValue;
+        //}
 
-        /// <summary>
-        /// Get Tangent from Value in Degrees (SlopeInPercent:http://communityviz.city-explained.com/communityviz/s360webhelp4-2/formulas/function_library/atan_function.htm)
-        /// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <returns>AltDec</returns>
-        static AltDec TanFromAngle(AltDec Value)
-        {
-            if (Value.IntValue < 0)
-            {
-                if (Value.IntValue == NegativeRep)
-                {
-                    Value.IntValue = 359; Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf;
-                }
-                else
-                {
-                    Value.IntValue *= -1;
-                    Value.IntValue %= 360;
-                    Value.IntValue = 360 - Value.IntValue;
-                    if (Value.DecimalHalf != 0) { Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf; }
-                }
-            }
-            else
-            {
-                Value.IntValue %= 360;
-            }
-            if (Value == Zero) { return AltDec::Zero; }
-            else if (Value.IntValue == 90 && Value.DecimalHalf == 0)
-            {
-                return AltDec::Maximum;//Positive Infinity
-            }
-            else if (Value.IntValue == 180 && Value.DecimalHalf == 0)
-            {
-                return AltDec::Zero;
-            }
-            else if (Value.IntValue == 270 && Value.DecimalHalf == 0)
-            {
-                return AltDec::Minimum;//Negative Infinity
-            }
-            else
-            {
-                return Tan(PI * Value / 180);
-            }
-        }
+        ///// <summary>
+        ///// Get Tangent from Value in Degrees (SlopeInPercent:http://communityviz.city-explained.com/communityviz/s360webhelp4-2/formulas/function_library/atan_function.htm)
+        ///// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
+        ///// </summary>
+        ///// <param name="Value">The value.</param>
+        ///// <returns>AltDec</returns>
+        //static AltDec TanFromAngle(AltDec Value)
+        //{
+        //    if (Value.IntValue < 0)
+        //    {
+        //        if (Value.IntValue == NegativeRep)
+        //        {
+        //            Value.IntValue = 359; Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf;
+        //        }
+        //        else
+        //        {
+        //            Value.IntValue *= -1;
+        //            Value.IntValue %= 360;
+        //            Value.IntValue = 360 - Value.IntValue;
+        //            if (Value.DecimalHalf != 0) { Value.DecimalHalf = DecimalOverflow - Value.DecimalHalf; }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Value.IntValue %= 360;
+        //    }
+        //    if (Value == Zero) { return AltDec::Zero; }
+        //    else if (Value.IntValue == 90 && Value.DecimalHalf == 0)
+        //    {
+        //        return AltDec::Maximum;//Positive Infinity
+        //    }
+        //    else if (Value.IntValue == 180 && Value.DecimalHalf == 0)
+        //    {
+        //        return AltDec::Zero;
+        //    }
+        //    else if (Value.IntValue == 270 && Value.DecimalHalf == 0)
+        //    {
+        //        return AltDec::Minimum;//Negative Infinity
+        //    }
+        //    else
+        //    {
+        //        return Tan(PI * Value / 180);
+        //    }
+        //}
 
-        /// <summary>
-        /// Gets Inverse Tangent from Value in Radians
-        /// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
-        /// </summary>
-        /// <param name="Value">The value.</param>
-        /// <returns>AltDec</returns>
-        static AltDec ATan(AltDec Value)
-        {
-            AltDec SinValue = Zero;
-            AltDec CosValue = Zero;
-            //Angle as Radian
-            for (int i = 0; i < 7; ++i)
-            { // That's Taylor series!!
-                SinValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Value, 2 * i + 1) / VariableConversionFunctions::Fact(2 * i + 1);
-            }
-            for (int i = 0; i < 7; ++i)
-            { // That's also Taylor series!!
-                CosValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Value, 2 * i) / VariableConversionFunctions::Fact(2 * i);
-            }
-            return CosValue / SinValue;
-        }
+        ///// <summary>
+        ///// Gets Inverse Tangent from Value in Radians
+        ///// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
+        ///// </summary>
+        ///// <param name="Value">The value.</param>
+        ///// <returns>AltDec</returns>
+        //static AltDec ATan(AltDec Value)
+        //{
+        //    AltDec SinValue = Zero;
+        //    AltDec CosValue = Zero;
+        //    //Angle as Radian
+        //    for (int i = 0; i < 7; ++i)
+        //    { // That's Taylor series!!
+        //        SinValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Value, 2 * i + 1) / VariableConversionFunctions::Fact(2 * i + 1);
+        //    }
+        //    for (int i = 0; i < 7; ++i)
+        //    { // That's also Taylor series!!
+        //        CosValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Value, 2 * i) / VariableConversionFunctions::Fact(2 * i);
+        //    }
+        //    return CosValue / SinValue;
+        //}
 
-        /// <summary>
-        /// atan2 calculation with self normalization
-        /// Application: Used when one wants to compute the 4-quadrant arctangent of a complex number (or any number with x-y coordinates) with a self-normalizing function.
-        /// Example Applications: digital FM demodulation, phase angle computations
-        /// Code from http://dspguru.com/dsp/tricks/fixed-point-atan2-with-self-normalization/ with some slight edit to get working
-        /// </summary>
-        /// <param name="y">The y.</param>
-        /// <param name="X">The x.</param>
-        /// <returns>AltDec</returns>
-        static AltDec ArcTan2(AltDec y, AltDec x)
-        {
-            AltDec coeff_1 = PI / 4;
-            AltDec coeff_2 = 3 * coeff_1;
-            AltDec abs_y = AltDec::Abs(y) + JustAboveZero;// kludge to prevent 0/0 condition
-            AltDec r;
-            AltDec angle;
-            if (x >= 0)
-            {
-                r = (x - abs_y) / (x + abs_y);
-                angle = coeff_1 - coeff_1 * r;
-            }
-            else
-            {
-                r = (x + abs_y) / (abs_y - x);
-                angle = coeff_2 - coeff_1 * r;
-            }
-            if (y < 0)
-                return -angle;// negate if in quad III or IV
-            else
-                return angle;
-        }
+        ///// <summary>
+        ///// atan2 calculation with self normalization
+        ///// Application: Used when one wants to compute the 4-quadrant arctangent of a complex number (or any number with x-y coordinates) with a self-normalizing function.
+        ///// Example Applications: digital FM demodulation, phase angle computations
+        ///// Code from http://dspguru.com/dsp/tricks/fixed-point-atan2-with-self-normalization/ with some slight edit to get working
+        ///// </summary>
+        ///// <param name="y">The y.</param>
+        ///// <param name="X">The x.</param>
+        ///// <returns>AltDec</returns>
+        //static AltDec ArcTan2(AltDec y, AltDec x)
+        //{
+        //    AltDec coeff_1 = PI / 4;
+        //    AltDec coeff_2 = 3 * coeff_1;
+        //    AltDec abs_y = AltDec::Abs(y) + JustAboveZero;// kludge to prevent 0/0 condition
+        //    AltDec r;
+        //    AltDec angle;
+        //    if (x >= 0)
+        //    {
+        //        r = (x - abs_y) / (x + abs_y);
+        //        angle = coeff_1 - coeff_1 * r;
+        //    }
+        //    else
+        //    {
+        //        r = (x + abs_y) / (abs_y - x);
+        //        angle = coeff_2 - coeff_1 * r;
+        //    }
+        //    if (y < 0)
+        //        return -angle;// negate if in quad III or IV
+        //    else
+        //        return angle;
+        //}
     #pragma endregion Math/Trigonomic Etc Functions
     };
 
