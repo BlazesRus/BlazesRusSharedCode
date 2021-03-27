@@ -90,6 +90,9 @@ namespace BlazesRusCode
         //Is NaN when DecimalHalf==2147483647
         static const signed int NaNRep = 2147483647;
 #endif
+#if defined(AltDec_EnablePublicRepType)
+    public:
+#endif
         enum class RepType: int
         {
             NormalType = 0,
@@ -210,12 +213,10 @@ namespace BlazesRusCode
         /// </summary>
         signed int DecimalHalf;
 
-        // <summary>
-        /// If both DecimalHalf&ExtraRep are Positive with ExtraRep as non-zero, then ExtraRep acts as denominator
-        /// If DecimalHalf is positive and ExtraRep is -2147483648, then AltDec represents +- 2147483647.999999999 * PI
-        /// If DecimalHalf is negative and ExtraRep is Positive, then AltDec represents mixed fraction of -2147483648 to 2147483647 + (DecimalHalf*-1)/ExtraRep
-        /// If ExtraRep is zero and DecimalHalf is positive, then AltDec represents +- 2147483647.999999999
-        /// </summary>
+        // If both DecimalHalf&ExtraRep are Positive with ExtraRep as non-zero, then ExtraRep acts as denominator
+        // If DecimalHalf is positive and ExtraRep is -2147483648, then AltDec represents +- 2147483647.999999999 * PI
+        // If DecimalHalf is negative and ExtraRep is Positive, then AltDec represents mixed fraction of -2147483648 to 2147483647 + (DecimalHalf*-1)/ExtraRep
+        // If ExtraRep is zero and DecimalHalf is positive, then AltDec represents +- 2147483647.999999999
         signed int ExtraRep;
 
         /// <summary>
@@ -507,7 +508,7 @@ public:
 #if defined(AltDec_EnableENum)
         void ConvertEToNum()
         {
-            BasicAddOp(ENum);
+            BasicMultOp(ENum);
             if(ExtraRep!=IERep)
             {
                 int TempDiv = ExtraRep*-1;
@@ -593,6 +594,11 @@ public:
             IntValue = 2147483647; DecimalHalf = 999999999; ExtraRep = 0;
         }
 private:
+        static AltDec AlmostOneValue()
+        {
+            return AltDec(0, 999999999);
+        }
+
         /// <summary>
         /// Returns PI(3.1415926535897932384626433) with tenth digit rounded up
         /// (Stored as 3.141592654)
@@ -763,6 +769,8 @@ private:
             return AltDec(2147483647, 999999999);
         }
 public:
+        static AltDec AlmostOne;
+
         /// <summary>
         /// Returns PI(3.1415926535897932384626433) with tenth digit rounded up(3.141592654)
         /// </summary>
@@ -1748,11 +1756,13 @@ public:
         /// <returns>AltDec</returns>
         static AltDec& AddOp(AltDec& self, AltDec& Value)
         {
-            if(self==Zero)
+            if (self == Zero)
             {
                 self.IntValue = Value.IntValue; self.DecimalHalf = Value.DecimalHalf;
                 self.ExtraRep = Value.ExtraRep; return self;
             }
+            else if (Value == Zero)
+                return self;
 #if defined(AltDec_EnableInfinityRep)
             if (self.DecimalHalf==InfinityRep)
                 return self;
@@ -1766,77 +1776,140 @@ public:
             RepType RRep = Value.GetRepType();
             if(LRep==RRep)
             {
-                if(self.ExtraRep==0||Value.ExtraRep==PIRep)
+                switch (LRep)
                 {
-#if AltDec_EnableMixedFractional
-                    if(self.DecimalHalf<0)//MixedFractional
-                    {
-                    
-                    }
-                    else
-                    {
+                    case RepType::NormalType:
+                    case RepType::PINum:
+#if defined(AltDec_EnableENum)
+                    case RepType::ENum:
+#elif defined(AltDec_EnableImaginaryNum)
+                    case RepType::INum:
 #endif
                         self.BasicAddOp(Value);
+                        break;
+
 #if AltDec_EnableMixedFractional
-                    }
 #endif
+                    case RepType::ApproachingTowards:
+                    case RepType::ApproachingAwayFrom:
+                        self.IntValue += Value.IntValue;
+                        break;
+                    case RepType::NumByDiv:
+                        if(self.ExtraRep==Value.ExtraRep)
+                            self.BasicAddOp(Value);
+                        else
+                            self.CatchAllAddition(Value);
+                        break;
+#if defined(AltDec_EnableENum)
+                    case RepType::ENumByDiv:
+                        if (self.ExtraRep == Value.ExtraRep)
+                            self.BasicAddOp(Value);
+                        else
+                            self.CatchAllAddition(Value);
+                        break;
+#elif defined(AltDec_EnableImaginaryNum)
+                    case RepType::INumByDiv:
+                        if (self.ExtraRep == Value.ExtraRep)
+                            self.BasicAddOp(Value);
+                        else
+                            self.CatchAllAddition(Value);
+                        break;
+#endif
+                    default:
+                        self.CatchAllAddition(Value);
+                        break;
                 }
-    #if defined(AltDec_EnableImaginaryNum)
-                else if(self.ExtraRep==IERep)
-                {
-                }
-                else if(self.ExtraRep>0)
-    #elif defined(AltDec_EnableENum)
-                else if(self.ExtraRep==IERep)
-                {
-                }
-                else if(self.ExtraRep>0)
-    #else
-                else//(Value/ExtraRep) Representation
-    #endif
-                {
-                
-                }
-    #if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-                else
-                {
-                
-                }
-    #endif
             }
             else
             {
-                switch(LRep)
+                switch (LRep)
                 {
                     case RepType::NormalType:
-                    {
-                        switch(RRep)
+                        switch (RRep)
                         {
                             case RepType::PINum:
-                            {
+                                Value.ConvertPIToNum();
+                                self.BasicAddOp(Value);
                                 break;
-                            }
-                            default://Catch-all for other representation combinations
+#if defined(AltDec_EnableENum)
+                            case RepType::ENum:
+                            case RepType::ENumByDiv:
+                                Value.ConvertEToNum();
+                                self.BasicAddOp(Value);
+                                break;
+#endif
+                            default:
                                 self.CatchAllAddition(Value);
                                 break;
                         }
-                    }
+                        break;
                     case RepType::PINum:
-                    {
-                        switch(RRep)
+                        switch (RRep)
                         {
                             case RepType::NormalType:
-                            {
+                                self.ConvertPIToNum();
+                                self.BasicAddOp(Value);
                                 break;
-                            }
-                            default://Catch-all for other representation combinations
+                            default://ENum,ENumByDiv Included
                                 self.CatchAllAddition(Value);
                                 break;
                         }
-                    }
-                    default://Catch-all for other representation combinations
+                        break;
+                    case RepType::NumByDiv:
+                        switch (RRep)
+                        {
+                            default:
+                                self.CatchAllAddition(Value);
+                                break;
+                        }
+                        break;
+                    case RepType::ApproachingTowards://IntValue.000...1
+                        switch (RRep)
+                        {
+                            case RepType::ApproachingAwayFrom:
+                                self.IntValue++;
+                                self.ExtraRep = 0;
+                                break;
+                            default:
+                                self.CatchAllAddition(Value);
+                                break;
+                        }
+                        break;
+                    case RepType::ApproachingAwayFrom://IntValue.9999...
+                        switch (RRep)
+                        {
+                            case RepType::ApproachingTowards:
+                                self.IntValue++;
+                                self.ExtraRep = 0;
+                                break;
+                            default:
+                                self.CatchAllAddition(Value);
+                                break;
+                        }
+                        break;
+#if defined(AltDec_EnableENum)
+                    case RepType::ENum:
+                        switch (RRep)
+                        {
+                            case RepType::NormalType:
+                                self.ConvertEToNum();
+                                self.BasicAddOp(Value);
+                                break;
+                            default:
+                                self.CatchAllAddition(Value);
+                                break;
+                        }
+                        break;
+#endif
+#if defined(AltDec_EnableImaginaryNum)
+                    case RepType::INum:
+                        throw "Can't add imaginary numbers to real numbers unless complex representation enabled.";
+                        break;
+#endif
+                    default:
                         self.CatchAllAddition(Value);
                         break;
+                    
                 }
             }
             return self;
@@ -5748,6 +5821,7 @@ public:
     };
 
     #pragma region ValueDefine Source
+    AltDec AltDec::AlmostOne = AlmostOneValue();
     AltDec AltDec::PI = PIValue();
     AltDec AltDec::One = OneValue();
     AltDec AltDec::Two = TwoValue();

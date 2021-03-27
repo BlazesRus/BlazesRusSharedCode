@@ -151,6 +151,9 @@ namespace BlazesRusCode
         }
         static const TrailingType NegativeZeroRep;
 #endif
+#if defined(MixedDec_EnablePublicRepType)
+    public:
+#endif
         enum class RepType: int
         {
             NormalType = 0,//Normal Representation with no extra trailing digits
