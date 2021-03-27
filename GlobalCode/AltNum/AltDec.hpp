@@ -618,6 +618,24 @@ public:
             case RepType::ApproachingAwayFrom:
                 DecimalHalf = 999999999; ExtraRep = 0;
                 break;
+            case RepType::PINum:
+                BasicMultOp(PINum);
+                ExtraRep = 0;
+                break;
+            case RepType::NumByDiv:
+                BasicIntDivOp(ExtraRep);
+                ExtraRep = 0;
+                break;
+            case RepType::ENum:
+                BasicMultOp(ENum);
+                ExtraRep = 0;
+                break;
+            case RepType::ENumByDiv:
+                BasicMultOp(ENum);
+                ExtraRep *= -1;
+                BasicIntDivOp(ExtraRep);
+                ExtraRep = 0;
+                break;
             default:
                 ConvertToNumRep();
                 break;
