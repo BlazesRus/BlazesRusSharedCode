@@ -4536,121 +4536,194 @@ public:
     #pragma endregion Integer-To-AltDec Operations
 
     #pragma region Math/Trigonomic Etc Functions
-        ///// <summary>
-        ///// Returns the largest integer that is smaller than or equal to Value (Rounds downs to integer value).
-        ///// </summary>
-        ///// <returns>AltDec&</returns>
-        //AltDec& Floor()
-        //{
-        //    if (DecimalHalf == 0)
-        //    {
-        //        return *this;
-        //    }
-        //    DecimalHalf = 0;
-        //    if (IntValue == NegativeRep) { IntValue = -1; }
-        //    else
-        //    {
-        //        --IntValue;
-        //    }
-        //    return *this;
-        //}
+        /// <summary>
+        /// Returns the largest integer that is smaller than or equal to Value (Rounds downs to integer value).
+        /// </summary>
+        /// <returns>AltDec&</returns>
+        AltDec& Floor()
+        {
+            RepType repType = GetRepType();
+            switch (repType)
+            {
+            case RepType::NormalType:
+                break;
+            case RepType::PINum:
+                ConvertPIToNum();
+                break;
+            case RepType::ApproachingTowards:
+            case RepType::ApproachingAwayFrom:
+                if (IntValue == NegativeRep)
+                    IntValue = 0;
+                ExtraRep = 0;
+                return *this;
+                break;
+            default:
+                ConvertToNumRep();
+                break;
+            }
+            if (DecimalHalf == 0)
+            {
+                return *this;
+            }
+            DecimalHalf = 0;
+            if (IntValue == NegativeRep) { IntValue = -1; }
+            else
+            {
+                --IntValue;
+            }
+            return *this;
+        }
 
-        ///// <summary>
-        ///// Returns the largest integer that is smaller than or equal to Value (Rounds downs to integer value).
-        ///// </summary>
-        ///// <param name="Value">The target value to apply on.</param>
-        ///// <returns>AltDec&</returns>
-        //static AltDec Floor(AltDec Value)
-        //{
-        //    return Value.Floor();
-        //}
-        //
-        ///// <summary>
-        ///// Returns floored value with all fractional digits after specified precision cut off.
-        ///// </summary>
-        ///// <param name="Value">The target value to apply on.</param>
-        ///// <param name="precision">The precision.</param>
-        //static AltDec Floor(AltDec Value, int precision)
-        //{
-        //    switch (precision)
-        //    {
-        //    case 9: break;
-        //    case 8: Value.DecimalHalf /= 10; Value.DecimalHalf *= 10; break;
-        //    case 7: Value.DecimalHalf /= 100; Value.DecimalHalf *= 100; break;
-        //    case 6: Value.DecimalHalf /= 1000; Value.DecimalHalf *= 1000; break;
-        //    case 5: Value.DecimalHalf /= 10000; Value.DecimalHalf *= 10000; break;
-        //    case 4: Value.DecimalHalf /= 100000; Value.DecimalHalf *= 100000; break;
-        //    case 3: Value.DecimalHalf /= 1000000; Value.DecimalHalf *= 1000000; break;
-        //    case 2: Value.DecimalHalf /= 10000000; Value.DecimalHalf *= 10000000; break;
-        //    case 1: Value.DecimalHalf /= 100000000; Value.DecimalHalf *= 100000000; break;
-        //    default: Value.DecimalHalf = 0; break;
-        //    }
-        //    if (Value.IntValue == NegativeRep && Value.DecimalHalf == 0) { Value.DecimalHalf = 0; }
-        //    return Value;
-        //}
-        //
-        ///// <summary>
-        ///// Returns the smallest integer that is greater than or equal to Value (Rounds up to integer value).
-        ///// </summary>
-        ///// <returns>AltDec&</returns>
-        //AltDec& Ceil()
-        //{
-        //    if (DecimalHalf == 0)
-        //    {
-        //        return *this;
-        //    }
-        //    DecimalHalf = 0;
-        //    if (IntValue == NegativeRep) { IntValue = 0; }
-        //    else
-        //    {
-        //        ++IntValue;
-        //    }
-        //    return *this;
-        //}
+        /// <summary>
+        /// Returns the largest integer that is smaller than or equal to Value (Rounds downs to integer value).
+        /// </summary>
+        /// <param name="Value">The target value to apply on.</param>
+        /// <returns>AltDec&</returns>
+        static AltDec Floor(AltDec Value)
+        {
+            return Value.Floor();
+        }
 
-        ///// <summary>
-        ///// Returns the largest integer that is smaller than or equal to Value (Rounds downs to integer value).
-        ///// </summary>
-        ///// <returns>AltDec&</returns>
-        //static int FloorInt(AltDec Value)
-        //{
-        //    if (Value.DecimalHalf == 0)
-        //    {
-        //        return Value.IntValue;
-        //    }
-        //    if (Value.IntValue == NegativeRep) { return -1; }
-        //    else
-        //    {
-        //        return Value.IntValue - 1;
-        //    }
-        //}
+        /// <summary>
+        /// Returns floored value with all fractional digits after specified precision cut off.
+        /// </summary>
+        /// <param name="Value">The target value to apply on.</param>
+        /// <param name="precision">The precision.</param>
+        static AltDec Floor(AltDec Value, int precision)
+        {
+            Value.ConvertToNumRep();
+            switch (precision)
+            {
+            case 9: break;
+            case 8: Value.DecimalHalf /= 10; Value.DecimalHalf *= 10; break;
+            case 7: Value.DecimalHalf /= 100; Value.DecimalHalf *= 100; break;
+            case 6: Value.DecimalHalf /= 1000; Value.DecimalHalf *= 1000; break;
+            case 5: Value.DecimalHalf /= 10000; Value.DecimalHalf *= 10000; break;
+            case 4: Value.DecimalHalf /= 100000; Value.DecimalHalf *= 100000; break;
+            case 3: Value.DecimalHalf /= 1000000; Value.DecimalHalf *= 1000000; break;
+            case 2: Value.DecimalHalf /= 10000000; Value.DecimalHalf *= 10000000; break;
+            case 1: Value.DecimalHalf /= 100000000; Value.DecimalHalf *= 100000000; break;
+            default: Value.DecimalHalf = 0; break;
+            }
+            if (Value.IntValue == NegativeRep && Value.DecimalHalf == 0) { Value.DecimalHalf = 0; }
+            return Value;
+        }
+        
+        /// <summary>
+        /// Returns the smallest integer that is greater than or equal to Value (Rounds up to integer value).
+        /// </summary>
+        /// <returns>AltDec&</returns>
+        AltDec& Ceil()
+        {
+            RepType repType = GetRepType();
+            switch (repType)
+            {
+            case RepType::NormalType:
+                break;
+            case RepType::PINum:
+                ConvertPIToNum();
+                break;
+            case RepType::ApproachingTowards:
+            case RepType::ApproachingAwayFrom:
+                if (IntValue == NegativeRep)
+                    IntValue = 0;
+                else
+                    ++IntValue;
+                ExtraRep = 0;
+                return *this;
+                break;
+            default:
+                ConvertToNumRep();
+                break;
+            }
+            if (DecimalHalf == 0)
+            {
+                return *this;
+            }
+            DecimalHalf = 0;
+            if (IntValue == NegativeRep) { IntValue = 0; }
+            else
+            {
+                ++IntValue;
+            }
+            return *this;
+        }
 
-        ///// <summary>
-        ///// Returns the smallest integer that is greater than or equal to Value (Rounds up to integer value).
-        ///// </summary>
-        ///// <returns>AltDec&</returns>
-        //static int CeilInt(AltDec Value)
-        //{
-        //    if (Value.DecimalHalf == 0)
-        //    {
-        //        return Value.IntValue;
-        //    }
-        //    if (Value.IntValue == NegativeRep) { return 0; }
-        //    else
-        //    {
-        //        return Value.IntValue+1;
-        //    }
-        //}
-        //
-        ///// <summary>
-        ///// Returns the largest integer that is smaller than or equal to Value (Rounds downs the nearest integer).
-        ///// </summary>
-        ///// <param name="Value">The target value to apply on.</param>
-        ///// <returns>AltDec</returns>
-        //static AltDec Ceil(AltDec Value)
-        //{
-        //    return Value.Ceil();
-        //}
+        /// <summary>
+        /// Returns the largest integer that is smaller than or equal to Value (Rounds downs to integer value).
+        /// </summary>
+        /// <returns>AltDec&</returns>
+        static int FloorInt(AltDec Value)
+        {
+            RepType repType = Value.GetRepType();
+            switch (repType)
+            {
+            case RepType::NormalType:
+                break;
+            case RepType::PINum:
+                Value.ConvertPIToNum();
+                break;
+            //case RepType::ApproachingTowards:
+            //case RepType::ApproachingAwayFrom:
+            //    return Value.IntValue;
+            //    break;
+            default:
+                Value.ConvertToNumRep();
+                break;
+            }
+            if (Value.DecimalHalf == 0)
+            {
+                return Value.IntValue;
+            }
+            if (Value.IntValue == NegativeRep) { return -1; }
+            else
+            {
+                return Value.IntValue - 1;
+            }
+        }
+
+        /// <summary>
+        /// Returns the smallest integer that is greater than or equal to Value (Rounds up to integer value).
+        /// </summary>
+        /// <returns>AltDec&</returns>
+        static int CeilInt(AltDec Value)
+        {
+            RepType repType = Value.GetRepType();
+            switch (repType)
+            {
+            case RepType::NormalType:
+                break;
+            case RepType::PINum:
+                Value.ConvertPIToNum();
+                break;
+            //case RepType::ApproachingTowards:
+            //case RepType::ApproachingAwayFrom:
+            //    return Value.IntValue+1;
+            //    break;
+            default:
+                Value.ConvertToNumRep();
+                break;
+            }
+            if (Value.DecimalHalf == 0)
+            {
+                return Value.IntValue;
+            }
+            if (Value.IntValue == NegativeRep) { return 0; }
+            else
+            {
+                return Value.IntValue+1;
+            }
+        }
+        
+        /// <summary>
+        /// Returns the largest integer that is smaller than or equal to Value (Rounds downs the nearest integer).
+        /// </summary>
+        /// <param name="Value">The target value to apply on.</param>
+        /// <returns>AltDec</returns>
+        static AltDec Ceil(AltDec Value)
+        {
+            return Value.Ceil();
+        }
         //
         ///// <summary>
         ///// Cuts off the decimal point from number
@@ -5668,7 +5741,7 @@ public:
         //}
 
         ///// <summary>
-        ///// Get Sin from Value in Radians
+        ///// Calculate Sine from Value in Radians
         ///// Formula code based on answer from https://stackoverflow.com/questions/38917692/sin-cos-funcs-without-math-h
         ///// </summary>
         ///// <param name="Value">The value in Radians.</param>
