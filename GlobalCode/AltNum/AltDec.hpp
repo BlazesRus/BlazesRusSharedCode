@@ -1883,6 +1883,10 @@ public:
                     case RepType::NormalType:
                         switch (RRep)
                         {
+                            case RepType::NumByDiv:
+                                Value.ConvertToNormType(RRep);
+                                self.BasicAddOp(Value);
+                                break;
                             case RepType::PINum:
                                 Value.ConvertPIToNum();
                                 self.BasicAddOp(Value);
@@ -1906,7 +1910,7 @@ public:
                                 self.ConvertPIToNum();
                                 self.BasicAddOp(Value);
                                 break;
-                            default://ENum,ENumByDiv Included
+                            default://ENum,ENumByDiv,ApproachingTowards,ApproachingAwayFrom  Included
                                 self.CatchAllAddition(Value, LRep, RRep);
                                 break;
                         }
@@ -1914,6 +1918,18 @@ public:
                     case RepType::NumByDiv:
                         switch (RRep)
                         {
+                            case RepType::NormalType:
+                                self.ConvertToNormType(LRep);
+                                self.BasicAddOp(Value);
+                                break;
+                            case RepType::ApproachingAwayFrom:
+                                self.ConvertToNormType(LRep);
+                                self.BasicAddOp(AlmostOne);
+                                break;
+                            case RepType::ApproachingTowards:
+                                self.ConvertToNormType(LRep);
+                                self.BasicAddOp(JustAboveZero);
+                                break;
                             default:
                                 self.CatchAllAddition(Value, LRep, RRep);
                                 break;
@@ -1923,13 +1939,35 @@ public:
                         switch (RRep)
                         {
                             case RepType::ApproachingAwayFrom:
-                                if ((self.IntValue >= 0 && Value.IntValue >= 0) || (self.IntValue < 0 && Value.IntValue < 0))
+                                if (self.IntValue == NegativeRep)
                                 {
-                                    self.IntValue++;
-                                    self.ExtraRep = 0;
+                                    if (Value.IntValue == NegativeRep)//-0.0.......1 + -0.9.......9
+                                    {
+                                        self.IntValue = -1; self.DecimalHalf = 0;
+                                        self.ExtraRep = 0; return self;
+                                    }
                                 }
-                                if (Value.IntValue != NegativeRep)
+                                else if (Value.IntValue == NegativeRep)
+                                {
+                                }
+                                else if (self.IntValue < 0)
+                                {
+                                    if (Value.IntValue < 0)
+                                    {
+                                        self.IntValue++;
+                                        self.ExtraRep = 0;
+                                    }
                                     self.IntValue += Value.IntValue;
+                                }
+                                else
+                                {
+                                    if (Value.IntValue>= 0)
+                                    {
+                                        self.IntValue++;
+                                        self.ExtraRep = 0;
+                                    }
+                                    self.IntValue += Value.IntValue;
+                                }
                                 break;
                             default:
                                 self.CatchAllAddition(Value, LRep, RRep);
@@ -1940,13 +1978,35 @@ public:
                         switch (RRep)
                         {
                             case RepType::ApproachingTowards:
-                                if ((self.IntValue >= 0 && Value.IntValue >= 0) || (self.IntValue < 0 && Value.IntValue < 0))
+                                if (self.IntValue == NegativeRep)
                                 {
-                                    self.IntValue++;
-                                    self.ExtraRep = 0;
+                                    if (Value.IntValue == NegativeRep)//-0.0.......1 + -0.9.......9
+                                    {
+                                        self.IntValue = -1; self.DecimalHalf = 0;
+                                        self.ExtraRep = 0; return self;
+                                    }
                                 }
-                                if (Value.IntValue != NegativeRep)
+                                else if (Value.IntValue == NegativeRep)
+                                {
+                                }
+                                else if (self.IntValue < 0)
+                                {
+                                    if (Value.IntValue < 0)
+                                    {
+                                        self.IntValue++;
+                                        self.ExtraRep = 0;
+                                    }
                                     self.IntValue += Value.IntValue;
+                                }
+                                else
+                                {
+                                    if (Value.IntValue >= 0)
+                                    {
+                                        self.IntValue++;
+                                        self.ExtraRep = 0;
+                                    }
+                                    self.IntValue += Value.IntValue;
+                                }
                                 break;
                             default:
                                 self.CatchAllAddition(Value, LRep, RRep);
