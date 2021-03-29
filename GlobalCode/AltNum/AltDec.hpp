@@ -1802,8 +1802,49 @@ private:
             Value.ConvertToNormType(RRep);
             BasicAddOp(Value);
         }
+        void IntValueAddition(AltDec& Value)
+        {
+            if (IntValue == NegativeRep)
+            {
+                if (Value.IntValue == 0)//0.9-0.9
+                    SetAsZero();
+                else if (Value.IntValue == NegativeRep)//-0.9 - 0.9
+                    IntValue = -1;
+                else
+                {
+                }
+            }
+            else if (Value.IntValue == NegativeRep)
+            {
+                if (IntValue == 0)//0.9-0.9
+                    SetAsZero();
+                else
+                {
+                }
+            }
+            else if (IntValue < 0)
+            {
+                if (Value.IntValue < 0)
+                {
+                    IntValue += Value.IntValue;
+                }
+                else
+                {
+                }
+            }
+            else
+            {
+                if (Value.IntValue < 0)
+                {
+                }
+                else
+                {
+                    IntValue += Value.IntValue;
+                }
+                //PartialIntAddition(Value.IntValue);
+            }
+        }
 public:
-
         /// <summary>
         /// Addition Operation Between AltDecs
         /// </summary>
@@ -1848,7 +1889,7 @@ public:
 #endif
                     case RepType::ApproachingTowards:
                     case RepType::ApproachingAwayFrom:
-                        self.IntValue += Value.IntValue;
+                        IntValueAddition(Value);
                         break;
                     case RepType::NumByDiv:
                         if(self.ExtraRep==Value.ExtraRep)
