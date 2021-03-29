@@ -41,10 +41,12 @@ AltDec_EnableComplexNum = Enable Representation of complex numbers with Imaginar
 AltDec_EnableNegativeZero = (Not Fully Implimented)
 AltDec_EnableHigherPrecisionPIConversion = (Not Implimented)
 AltDec_EnableInfinityPowers = Allows powers of infinity for operations where infinity is somehow more infinite then normal(Not Implimented)
-AltDec_EnableNearPI
-AltDec_EnableNearE
-AltDec_EnavleNearI
+AltDec_EnableNearPI = (Not Implimented)
+AltDec_EnableNearE = (Not Implimented)
+AltDec_EnavleNearI = (Not Implimented)
 AltDec_DisplayApproachingAsReal = Display approaching value as real number with 20 digits in decimal section
+AltDec_EnableApproachingDivided = (Can't be Enabled if any EnableNear Options enabled)(Not Implimented)
+AltDec_EnableApproachingPointFive = Enables Approaching IntValue.49_infinitely_9 and .50_infinitely_1 as ExtraRep values -1 and 1(Can't be Enabled if any EnableNear Options enabled)(Not Implimented)
 
 Only one of below can be active at once:
 AltDec_EnableENum = If DecimalHalf is positive and ExtraRep is -2147483647, then AltDec represents +- 2147483647.999999999 * e (Not Fully Implimented)
@@ -137,6 +139,9 @@ namespace BlazesRusCode
             {
                 if(ExtraRep==0)
                     return RepType::ApproachingTowards;//Approaching from right to IntValue
+#if defined(AltDec_EnableApproachingDivided)
+
+#else
 #if defined(AltDec_EnableNearPI)
                 else if (ExtraRep == PIRep)
                     return RepType::NearPI;
@@ -147,6 +152,7 @@ namespace BlazesRusCode
 #elif defined(AltDec_EnableNearI)
                 else if (ExtraRep == IERep)
                     return RepType::NearI;
+#endif
 #endif
                 else
                     return RepType::ApproachingAwayFrom;//Approaching from left to (IntValue-1)
@@ -651,9 +657,24 @@ public:
             IntValue = 2147483647; DecimalHalf = 999999999; ExtraRep = 0;
         }
 private:
-        static AltDec AlmostOneValue()
+        static AltDec ApproachingRightRealValue(int IntValue=0)
         {
-            return AltDec(0, 999999999);
+            return AltDec(IntValue, 999999999);
+        }
+
+        static AltDec ApproachingLeftRealValue(int IntValue=0)
+        {
+            return AltDec(IntValue, 1);
+        }
+
+        static AltDec LeftAlmostPointFiveValue(int IntValue=0)
+        {
+            return AltDec(IntValue, 499999999);
+        }
+
+        static AltDec RightAlmostPointFiveValue(int IntValue=0)
+        {
+            return AltDec(IntValue, 500000001);
         }
 
         /// <summary>
@@ -6218,7 +6239,7 @@ public:
     };
 
     #pragma region ValueDefine Source
-    AltDec AltDec::AlmostOne = AlmostOneValue();
+    AltDec AltDec::AlmostOne = ApproachingRightRealValue();
     AltDec AltDec::PI = PIValue();
     AltDec AltDec::One = OneValue();
     AltDec AltDec::Two = TwoValue();
