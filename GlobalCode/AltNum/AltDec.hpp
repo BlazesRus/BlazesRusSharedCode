@@ -45,8 +45,11 @@ AltDec_EnableNearPI = (Not Implimented)
 AltDec_EnableNearE = (Not Implimented)
 AltDec_EnavleNearI = (Not Implimented)
 AltDec_DisplayApproachingAsReal = Display approaching value as real number with 20 digits in decimal section
-AltDec_EnableApproachingDivided = (Can't be Enabled if any EnableNear Options enabled)(Not Implimented)
-AltDec_EnableApproachingPointFive = Enables Approaching IntValue.49_infinitely_9 and .50_infinitely_1 as ExtraRep values -1 and 1(Can't be Enabled if any EnableNear Options enabled)(Not Implimented)
+
+Can't be Enabled if any EnableNear Options enabled:
+AltDec_EnableApproachingDivided = (Not Implimented)
+AltDec_EnableApproachingPointFive = Enables Approaching IntValue.49_infinitely_9 and .50_infinitely_1 as ExtraRep values -1 and 1(Not Implimented)
+
 
 Only one of below can be active at once:
 AltDec_EnableENum = If DecimalHalf is positive and ExtraRep is -2147483647, then AltDec represents +- 2147483647.999999999 * e (Not Fully Implimented)
