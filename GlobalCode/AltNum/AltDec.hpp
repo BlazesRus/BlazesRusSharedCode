@@ -44,6 +44,7 @@ AltDec_EnableInfinityPowers = Allows powers of infinity for operations where inf
 AltDec_EnableNearPI
 AltDec_EnableNearE
 AltDec_EnavleNearI
+AltDec_DisplayApproachingAsReal = Display approaching value as real number with 20 digits in decimal section
 
 Only one of below can be active at once:
 AltDec_EnableENum = If DecimalHalf is positive and ExtraRep is -2147483647, then AltDec represents +- 2147483647.999999999 * e (Not Fully Implimented)
@@ -6343,10 +6344,18 @@ public:
         switch (repType)
         {
         case RepType::ApproachingAwayFrom:
-            return IntValue==NegativeRep?"-0.9999999999": VariableConversionFunctions::IntToStringConversion(IntValue)+".9999999999";
+#ifdef AltDec_DisplayApproachingAsReal
+            return IntValue == NegativeRep ? "-0.99999999999999999999" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".99999999999999999999";
+#else
+            return IntValue == NegativeRep ? "-0.9___9" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".9___9";
+#endif
             break;
         case RepType::ApproachingTowards:
-            return IntValue == NegativeRep ? "-0.000000001" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".000000001";
+#ifdef AltDec_DisplayApproachingAsReal
+            return IntValue == NegativeRep ? "-0.00000000000000000001" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".00000000000000000001";
+#else
+            return IntValue == NegativeRep ? "-0.0___1" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".0___1";
+#endif
             break;
         default:
             ConvertToNumRep();
@@ -6409,10 +6418,18 @@ public:
         switch (repType)
         {
         case RepType::ApproachingAwayFrom:
+#ifdef AltDec_DisplayApproachingAsReal
             return IntValue == NegativeRep ? "-0.99999999999999999999" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".99999999999999999999";
+#else
+            return IntValue == NegativeRep ? "-0.9___9" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".9___9";
+#endif
             break;
         case RepType::ApproachingTowards:
-            return IntValue == NegativeRep ? "-0.000000000000000001" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".000000000000000001";
+#ifdef AltDec_DisplayApproachingAsReal
+            return IntValue == NegativeRep ? "-0.00000000000000000001" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".00000000000000000001";
+#else
+            return IntValue == NegativeRep ? "-0.0___1" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".0___1";
+#endif
             break;
         default:
             ConvertToNumRep();
