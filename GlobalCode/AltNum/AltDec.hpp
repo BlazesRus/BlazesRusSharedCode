@@ -1802,48 +1802,6 @@ private:
             Value.ConvertToNormType(RRep);
             BasicAddOp(Value);
         }
-        void IntValueAddition(AltDec& Value)
-        {
-            if (IntValue == NegativeRep)
-            {
-                if (Value.IntValue == 0)//0.9-0.9
-                    SetAsZero();
-                else if (Value.IntValue == NegativeRep)//-0.9 - 0.9
-                    IntValue = -1;
-                else
-                {
-                }
-            }
-            else if (Value.IntValue == NegativeRep)
-            {
-                if (IntValue == 0)//0.9-0.9
-                    SetAsZero();
-                else
-                {
-                }
-            }
-            else if (IntValue < 0)
-            {
-                if (Value.IntValue < 0)
-                {
-                    IntValue += Value.IntValue;
-                }
-                else
-                {
-                }
-            }
-            else
-            {
-                if (Value.IntValue < 0)
-                {
-                }
-                else
-                {
-                    IntValue += Value.IntValue;
-                }
-                //PartialIntAddition(Value.IntValue);
-            }
-        }
 public:
         /// <summary>
         /// Addition Operation Between AltDecs
@@ -1888,8 +1846,98 @@ public:
 #if AltDec_EnableMixedFractional
 #endif
                     case RepType::ApproachingTowards:
+                        if (self.IntValue == NegativeRep)
+                        {
+                            if (Value.IntValue == 0)//0.01-0.01
+                                self.SetAsZero();
+                            else if (Value.IntValue == NegativeRep)//-0.01 - 0.01
+                            {/*Do Nothing*/}
+                            else if (Value.IntValue < 0)//-0.01 - 1.01
+                            {
+                                self.IntValue = Value.IntValue;
+                            }
+                            else
+                            {
+                            }
+                        }
+                        else if (Value.IntValue == NegativeRep)
+                        {
+                            if (self.IntValue == 0)//0.01-0.01
+                                self.SetAsZero();
+                            else if (self.IntValue < 0)//-1.01 - 0.01
+                            {/*Do Nothing*/}
+                            else
+                            {
+                            }
+                        }
+                        else if (self.IntValue < 0)
+                        {
+                            if (Value.IntValue < 0)//-1.01 - 1.01
+                            {
+                                self.IntValue += Value.IntValue;
+                            }
+                            else
+                            {
+                            }
+                        }
+                        else
+                        {
+                            if (Value.IntValue < 0)
+                            {
+                            }
+                            else//1.01+1.01
+                            {
+                                self.IntValue += Value.IntValue;
+                            }
+                        }
+                        break;
                     case RepType::ApproachingAwayFrom:
-                        IntValueAddition(Value);
+                        if (self.IntValue == NegativeRep)
+                        {
+                            if (Value.IntValue == 0)//0.9-0.9
+                                self.SetAsZero();
+                            else if (Value.IntValue == NegativeRep)//-0.9 - 0.9
+                                self.IntValue = -1;
+                            else if (Value.IntValue < 0)//-0.9 - 1.9
+                            {
+                                self.IntValue = Value.IntValue - 1;
+                            }
+                            else
+                            {
+                            }
+                        }
+                        else if (Value.IntValue == NegativeRep)
+                        {
+                            if (self.IntValue == 0)//0.9-0.9
+                                self.SetAsZero();
+                            else if (self.IntValue < 0)//-1.9 - 0.9
+                            {
+                                --self.IntValue;
+                            }
+                            else
+                            {
+                            }
+                        }
+                        else if (self.IntValue < 0)
+                        {
+                            if (Value.IntValue < 0)//-1.9 - 1.9
+                            {
+                                self.IntValue += Value.IntValue - 1;
+                            }
+                            else
+                            {
+                            }
+                        }
+                        else
+                        {
+                            if (Value.IntValue < 0)
+                            {
+                            }
+                            else
+                            {
+                                self.IntValue += Value.IntValue;
+                            }
+                        }
                         break;
                     case RepType::NumByDiv:
                         if(self.ExtraRep==Value.ExtraRep)
