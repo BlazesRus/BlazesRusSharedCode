@@ -309,9 +309,10 @@ int main()
     {
         std::cout << "Unknown exception" << std::endl;
     }
-#endif
+#else
     std::ostringstream streamObj;
     streamObj << std::fixed << std::setprecision(99);
+#ifdef BlazesRus_PITests
     streamObj << "HiperCalc result:18.84955592153875943077586029967701730518301639625063492584966755384689843771725399176820895205270241" << std::endl;
 
     double LAsDouble = boost::math::constants::pi<double>()*2.0;
@@ -332,11 +333,19 @@ int main()
     AltDec LAlt;
     LAlt.SetPiVal(2);
     LAlt *= 3;
+    streamObj << "AltDec Result:" << LAlt.ToString() << std::endl;
     MixedDec LMixed;
     LMixed.SetPiVal(2);
     LMixed *= 3;
-
-    std::cout << streamObj.str().c_str();
+    streamObj << "MixedDec Result:" << LMixed.ToString() << std::endl;
+#else
+    AltDec LAlt;
+    LAlt.SetAsApproachingAwayFromValue(1);
+    AltDec RAlt;
+    LAlt.SetAsApproachingValueFromRight(-5);
+    AltDec AltResult = LAlt+RAlt;
+    streamObj << LAlt.ToString() <<" + "<< RAlt.ToString() << " = " << AltResult.ToString()<< std::endl;
+#endif
     ::OutputDebugStringA(streamObj.str().c_str());//Outputing to debug output based on https://www.codeproject.com/Articles/1053/Using-an-Output-Stream-for-Debugging
-
+#endif
 }

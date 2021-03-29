@@ -6409,10 +6409,10 @@ public:
         switch (repType)
         {
         case RepType::ApproachingAwayFrom:
-            return IntValue == NegativeRep ? "-0.9999999999" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".9999999999";
+            return IntValue == NegativeRep ? "-0.99999999999999999999" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".99999999999999999999";
             break;
         case RepType::ApproachingTowards:
-            return IntValue == NegativeRep ? "-0.000000001" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".000000001";
+            return IntValue == NegativeRep ? "-0.000000000000000001" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".000000000000000001";
             break;
         default:
             ConvertToNumRep();
