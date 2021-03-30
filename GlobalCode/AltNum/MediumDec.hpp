@@ -27,9 +27,21 @@
 //Preprocessor options
 /*
 MediumDec_EnableNegativeZero = (Not Implimented)
-MediumDec_EnableInfinityRep = Enable support of positive/negative infinity representations and approaching value representations(Not Implimented)
-MediumDec_EnablePIRep = PI*(+- 2147483647.999999999) Representation enabled
+MediumDec_EnableInfinityRep = -Enable support of positive/negative infinity representations and approaching value representations
+-When DecimalHalf is -2147483648, it represents negative infinity(if IntValue is -1) or positive infinity(if IntValue is 1)
+-When DecimalHalf is -2147483647, it represents Approaching IntValue+1 from left towards right (IntValue.9__9)
+-When DecimalHalf is -2147483646, it represents Approaching IntValue from right towards left (IntValue.0__1)
+(Not Fully Implimented)
+MediumDec_EnableApproachingMidDec = -When DecimalHalf is -2147483645, it represents Approaching Half way point of {IntValue,IntValue+1} from left towards right (IntValue.49__9)
+-When DecimalHalf is -2147483644, it represents Approaching Half way point of {IntValue,IntValue+1} from right towards left (IntValue.50__1)
+-Assumes MediumDec_EnableInfinityRep is enabled
+(Not Implimented)
+MediumDec_EnablePIRep = PI*(+- 2147483647.999999999) Representation enabled (When DecimalHalf is between -1 and -1000000000 (when DecimalHalf is -1000000000 is Equal to IntValue*PI))
+MediumDec_SpecialStatusEnabled = Automatically set if MediumDec_EnableInfinityRep or MediumDec_EnablePIRep
 */
+#if defined(MediumDec_EnablePIRep) || defined(MediumDec_EnableInfinityRep)
+#define MediumDec_SpecialStatusEnabled
+#endif
 
 namespace BlazesRusCode
 {
@@ -55,6 +67,8 @@ namespace BlazesRusCode
     /// </summary>
     class DLL_API MediumDec
     {
+    private:
+        static signed int const IntPiRep = -1000000000;
     public:
         /// <summary>
         /// The decimal overflow
