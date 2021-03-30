@@ -37,9 +37,10 @@ MediumDec_EnableApproachingMidDec = -When DecimalHalf is -2147483645, it represe
 -Assumes MediumDec_EnableInfinityRep is enabled
 (Not Implimented)
 MediumDec_EnablePIRep = PI*(+- 2147483647.999999999) Representation enabled (When DecimalHalf is between -1 and -1000000000 (when DecimalHalf is -1000000000 is Equal to IntValue*PI))
+MediumDec_EnableERep = e*(+- 2147483647.999999999) Representation enabled (When DecimalHalf is between -1000000001 and -2000000000 (when DecimalHalf is -2000000000 is Equal to IntValue*e))
 MediumDec_SpecialStatusEnabled = Automatically set if MediumDec_EnableInfinityRep or MediumDec_EnablePIRep
 */
-#if defined(MediumDec_EnablePIRep) || defined(MediumDec_EnableInfinityRep)
+#if defined(MediumDec_EnablePIRep) || defined(MediumDec_EnableInfinityRep) || defined(MediumDec_EnableERep)
 #define MediumDec_SpecialStatusEnabled
 #endif
 
@@ -68,7 +69,24 @@ namespace BlazesRusCode
     class DLL_API MediumDec
     {
     private:
+#if defined(MediumDec_EnableInfinityRep)
+        //Is Infinity Representation when DecimalHalf==-2147483648 (IntValue==1 for positive infinity;IntValue==-1 for negative Infinity)
+        static const signed int InfinityRep = -2147483648;
+        //When DecimalHalf == -2147483647, it represents Approaching IntValue+1 from left towards right (IntValue.9__9)
+        static signed int const ApproachingTopRep = -2147483647;
+        //When DecimalHalf == -2147483646, it represents Approaching IntValue from right towards left (IntValue.0__1)
+        static signed int const ApproachingBottomRep = -2147483646;
+#endif
+#if defined(MediumDec_EnableApproachingMidDec)
+        static signed int const MidFromTopRep = -2147483644;
+        static signed int const MidFromBottomRep = --2147483645;
+#endif
+#if defined(MediumDec_EnablePIRep)
         static signed int const IntPiRep = -1000000000;
+#endif
+#if defined(MediumDec_SpecialStatusEnabled)
+
+#endif
     public:
         /// <summary>
         /// The decimal overflow

@@ -163,8 +163,8 @@ namespace BlazesRusCode
             ENum,
             INum,
             ComplexIRep,
-            ApproachingTowards,//(Approaching Towards Zero is equal to 0.000...1)
-            ApproachingAwayFrom,//(Approaching Away from Zero is equal to 0.9999...)
+            ApproachingBottom,//(Approaching Towards Zero is equal to 0.000...1)
+            ApproachingTop,//(Approaching Away from Zero is equal to 0.9999...)
             NaN,
             NegativeZero,
             NearPI,//(Approaching Away from Zero is equal to 0.9999...PI)
@@ -182,7 +182,7 @@ namespace BlazesRusCode
             else if (DecimalHalf == ApproachingValRep)
             {
                 if(ExtraRep==TrailingZero)
-                    return RepType::ApproachingTowards;//Approaching from right to IntValue
+                    return RepType::ApproachingBottom;//Approaching from right to IntValue
 #if defined(MixedDec_EnableNearPI)
                 else if (ExtraRep == PIRep)
                     return RepType::NearPI;
@@ -196,7 +196,7 @@ namespace BlazesRusCode
                     return RepType::NearI;
 #endif
                 else
-                    return RepType::ApproachingAwayFrom;//Approaching from left to (IntValue-1)
+                    return RepType::ApproachingTop;//Approaching from left to (IntValue-1)
             }
 #endif
             else if(ExtraRep==PIRep)

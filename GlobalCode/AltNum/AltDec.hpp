@@ -113,8 +113,8 @@ namespace BlazesRusCode
             MixedFrac,
             MixedE,
             MixedI,
-            ApproachingTowards,//(Approaching Towards Zero is equal to 0.000...1)
-            ApproachingAwayFrom,//(Approaching Away from Zero is equal to 0.9999...)
+            ApproachingBottom,//(Approaching Towards Zero is equal to 0.000...1)
+            ApproachingTop,//(Approaching Away from Zero is equal to 0.9999...)
             NaN,
             NegativeZero,
             NearPI,//(Approaching Away from Zero is equal to 0.9999...PI)
@@ -141,7 +141,7 @@ namespace BlazesRusCode
             else if (DecimalHalf == ApproachingValRep)
             {
                 if(ExtraRep==0)
-                    return RepType::ApproachingTowards;//Approaching from right to IntValue
+                    return RepType::ApproachingBottom;//Approaching from right to IntValue
 #if defined(AltDec_EnableApproachingDivided)
 
 #else
@@ -158,7 +158,7 @@ namespace BlazesRusCode
 #endif
 #endif
                 else
-                    return RepType::ApproachingAwayFrom;//Approaching from left to (IntValue-1)
+                    return RepType::ApproachingTop;//Approaching from left to (IntValue-1)
             }
 #endif
             else if(ExtraRep==PIRep)
@@ -622,10 +622,10 @@ public:
             {
             case RepType::NormalType:
                 break;
-            case RepType::ApproachingTowards:
+            case RepType::ApproachingBottom:
                 DecimalHalf = 1; ExtraRep = 0;
                 break;
-            case RepType::ApproachingAwayFrom:
+            case RepType::ApproachingTop:
                 DecimalHalf = 999999999; ExtraRep = 0;
                 break;
             case RepType::PINum:
@@ -1870,7 +1870,7 @@ public:
 
 #if AltDec_EnableMixedFractional
 #endif
-                    case RepType::ApproachingTowards:
+                    case RepType::ApproachingBottom:
                         if (self.IntValue == NegativeRep)
                         {
                             if (Value.IntValue == 0)//0.01-0.01
@@ -1916,7 +1916,7 @@ public:
                             }
                         }
                         break;
-                    case RepType::ApproachingAwayFrom:
+                    case RepType::ApproachingTop:
                         if (self.IntValue == NegativeRep)
                         {
                             if (Value.IntValue == 0)//0.9-0.9
@@ -2036,11 +2036,11 @@ public:
                                 self.ConvertToNormType(LRep);
                                 self.BasicAddOp(Value);
                                 break;
-                            case RepType::ApproachingAwayFrom:
+                            case RepType::ApproachingTop:
                                 self.ConvertToNormType(LRep);
                                 self.BasicAddOp(AlmostOne);
                                 break;
-                            case RepType::ApproachingTowards:
+                            case RepType::ApproachingBottom:
                                 self.ConvertToNormType(LRep);
                                 self.BasicAddOp(JustAboveZero);
                                 break;
@@ -2049,10 +2049,10 @@ public:
                                 break;
                         }
                         break;
-                    case RepType::ApproachingTowards://IntValue.000...1
+                    case RepType::ApproachingBottom://IntValue.000...1
                         switch (RRep)
                         {
-                            case RepType::ApproachingAwayFrom:
+                            case RepType::ApproachingTop:
                                 if (self.IntValue == NegativeRep)
                                 {
                                     if (Value.IntValue == NegativeRep)//-0.0.......1 + -0.9.......9
@@ -2088,10 +2088,10 @@ public:
                                 break;
                         }
                         break;
-                    case RepType::ApproachingAwayFrom://IntValue.9999...
+                    case RepType::ApproachingTop://IntValue.9999...
                         switch (RRep)
                         {
-                            case RepType::ApproachingTowards:
+                            case RepType::ApproachingBottom:
                                 if (self.IntValue == NegativeRep)
                                 {
                                     if (Value.IntValue == NegativeRep)//-0.0.......1 + -0.9.......9
@@ -4790,8 +4790,8 @@ public:
             case RepType::PINum:
                 ConvertPIToNum();
                 break;
-            case RepType::ApproachingTowards:
-            case RepType::ApproachingAwayFrom:
+            case RepType::ApproachingBottom:
+            case RepType::ApproachingTop:
                 if (IntValue == NegativeRep)
                     IntValue = 0;
                 ExtraRep = 0;
@@ -4863,8 +4863,8 @@ public:
             case RepType::PINum:
                 ConvertPIToNum();
                 break;
-            case RepType::ApproachingTowards:
-            case RepType::ApproachingAwayFrom:
+            case RepType::ApproachingBottom:
+            case RepType::ApproachingTop:
                 if (IntValue == NegativeRep)
                     IntValue = 0;
                 else
@@ -6367,14 +6367,14 @@ public:
         RepType repType = GetRepType();
         switch (repType)
         {
-        case RepType::ApproachingAwayFrom:
+        case RepType::ApproachingTop:
 #ifdef AltDec_DisplayApproachingAsReal
             return IntValue == NegativeRep ? "-0.99999999999999999999" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".99999999999999999999";
 #else
             return IntValue == NegativeRep ? "-0.9___9" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".9___9";
 #endif
             break;
-        case RepType::ApproachingTowards:
+        case RepType::ApproachingBottom:
 #ifdef AltDec_DisplayApproachingAsReal
             return IntValue == NegativeRep ? "-0.00000000000000000001" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".00000000000000000001";
 #else
@@ -6441,14 +6441,14 @@ public:
         RepType repType = GetRepType();
         switch (repType)
         {
-        case RepType::ApproachingAwayFrom:
+        case RepType::ApproachingTop:
 #ifdef AltDec_DisplayApproachingAsReal
             return IntValue == NegativeRep ? "-0.99999999999999999999" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".99999999999999999999";
 #else
             return IntValue == NegativeRep ? "-0.9___9" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".9___9";
 #endif
             break;
-        case RepType::ApproachingTowards:
+        case RepType::ApproachingBottom:
 #ifdef AltDec_DisplayApproachingAsReal
             return IntValue == NegativeRep ? "-0.00000000000000000001" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".00000000000000000001";
 #else
