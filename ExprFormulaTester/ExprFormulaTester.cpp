@@ -29,6 +29,24 @@ using MixedDec = BlazesRusCode::MixedDec;
 
 #include <Windows.h>
 
+namespace BlazesRusCode
+{
+    class DLL_API AltFormula// : public VariableFormula<AltDec>
+    {
+    public:
+    };
+    template<typename VarType, typename FormulaType>
+    class DLL_API DualFormula// : public VariableFormula<MediumDec>
+    {
+    public:
+    };
+    template<typename VarType, typename FormulaType>
+    class DLL_API DualAltFormula : public DualFormula<AltDec, AltFormula>
+    {
+    public:
+    };
+}
+
 int main()
 {
 #ifdef BlazesRus_PerformMediumFormulaTests
@@ -338,6 +356,8 @@ int main()
     LMixed.SetPiVal(2);
     LMixed *= 3;
     streamObj << "MixedDec Result:" << LMixed.ToString() << std::endl;
+#elif defined(BlazesRus_PerformDualAltFormulaTests)
+
 #else
     AltDec LAlt;
     LAlt.SetAsApproachingAwayFromValue(1);
