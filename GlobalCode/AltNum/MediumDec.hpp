@@ -83,9 +83,56 @@ namespace BlazesRusCode
 #endif
 #if defined(MediumDec_EnablePIRep)
         static signed int const IntPiRep = -1000000000;
+        static signed int const PiTopRep = -999999999;
+        //static signed int const PiBottomRep = -1;
+#endif
+#if defined(MediumDec_EnableERep)
+        static signed int const IntERep = -2000000000;
+        static signed int const ETopRep = -1999999999;
+        //static signed int const EBottomRep = -1000000001;
 #endif
 #if defined(MediumDec_SpecialStatusEnabled)
-
+        enum class RepType : int
+        {
+            NormalType = 0,
+            PIIntNum,
+            PINum,
+            EIntNum,
+            ENum,
+            ApproachingBottom,//(Approaching Towards Zero is equal to 0.000...1)
+            ApproachingTop,//(Approaching Away from Zero is equal to 0.9999...)
+            Infinity,
+            NaN,
+            NegativeZero,
+            UnknownType
+        };
+        RepType GetRepType()
+        {
+            if (DecimalHalf >= 0)
+                return RepType::NormalType;
+#ifdef MediumDec_EnableInfinityRep
+            else if (DecimalHalf == InfinityRep)
+                return RepType::Infinity;//Either negative or positive infinity
+            else if (DecimalHalf == ApproachingBottomRep)
+                return RepType::ApproachingBottom;//Approaching from right to IntValue
+            else if (DecimalHalf == ApproachingTopRep)
+                return RepType::ApproachingTop;//Approaching from left to IntValue+1
+#endif
+#ifdef MediumDec_EnablePIRep
+            else if (DecimalHalf == IntPiRep)
+                return RepType::PIIntNum;
+            else if (DecimalHalf > PiTopRep)
+                return RepType::PINum,
+#endif
+#ifdef MediumDec_EnableERep
+            else if (DecimalHalf == IntERep)
+                return RepType::EIntNum;
+            else if (DecimalHalf > ETopRep)
+                return RepType::ENum,
+#endif
+                throw "Unknown or non-enabled representation type detected from MediumDec";
+            return RepType::UnknownType;//Catch-All Value;
+        }
 #endif
     public:
         /// <summary>
