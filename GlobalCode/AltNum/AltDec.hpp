@@ -27,11 +27,6 @@
 #include "MediumDec.hpp"
 #include "AltNumModChecker.hpp"
 
-/* Other MixedDec based Switches(that may or may not be implimented in AltDec)
-AltDec_EnablePIRep = PI*(+- 2147483647.999999999) Representation enabled(Needed for some more accurate calculas operations when using radians instead of angle)(Not Fully Implimented)
-AltDec_EnableNegativeZero = (Not Fully Implimented)
-*/
-
 //Preprocessor Switches
 /*
 AltDec_EnableMixedFractional = If DecimalHalf is negative and ExtraRep is Positive, then AltDec represents mixed fraction of -2147483648 to 2147483647 + (DecimalHalf*-1)/ExtraRep(Not Fully Implimented)
