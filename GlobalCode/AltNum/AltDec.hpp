@@ -467,29 +467,10 @@ public:
             // Can only convert to up 683565275.1688666254437963172038917047964296646843381624484789109135725652864987887127902610635528943x PIRepresentation
             //Can Represent up ? before hitting Maximum AltDec value on reconversion when AltDec_UseLowerPrecisionPI is enabled
             //otherwise can represent up to ???(when adding up value from each decimal place of IntValue + (PINum*DecimalHalf/1000000000))
-#if defined(AltDec_EnableHigherPrecisionPIConversion)
-            if (IntValue > 10)
-            {
-                AltDec ValLeft = IntValue;
-                ValLeft.DecimalHalf = DecimalHalf;
-            }
-            //else if(IntValue==0)//0.XXX... * PI
-            //{
-            //	BasicMultOp(PINum);
-            //}
-            //else if(IntValue==NegativeRep)//-0.XXX... * PI
-            //{
-            //	BasicMultOp(PINum);
-            //}
-#else
-            if(IntValue==NegativeRep)//-0.XXX... * PI
-            {
-                BasicMultOp(PINum);
-            }
             //Calculations from HiPer Calc
             //683565275.168866625 x 3.141592654 = 2147483646.99999999860577275
             //683565275.168866626 x 3.141592654 = 2147483647.000000001747365404
-            else if(IntValue>=683565275&&DecimalHalf>=168866626)//Exceeding Storage limit of NormalRep
+            if(IntValue>=683565275&&DecimalHalf>=168866626)//Exceeding Storage limit of NormalRep
             {
                 //Display error/warning
                 IntValue = 2147483647; DecimalHalf = 999999999;//set value as maximum value(since not truely infinite just bit above storage range)
@@ -499,7 +480,11 @@ public:
                 //Display error/warning
                 IntValue = -2147483647; DecimalHalf = 999999999;//set value as minimum value(since not truely infinite just bit above storage range)
             }
-#endif
+#if defined(AltDec_DisableSwitchBasedConversion)
+            else if (IntValue == NegativeRep)//-0.XXX... * PI
+            {
+                BasicMultOp(PINum);
+            }
             else if (DecimalHalf == 0 && IntValue == 10)
             {
                 IntValue = 31; DecimalHalf = 415926536; 
@@ -508,6 +493,61 @@ public:
             {
                 BasicMultOp(PINum);
             }
+#else
+            else
+            {
+                switch (IntValue)
+                {
+                case NegativeRep:
+                    BasicMultOp(PINum);
+                    break;
+                case 5:
+                    if (DecimalHalf == 0)
+                    {
+                        IntValue = 15; DecimalHalf = 707963268;
+                    }
+                    else
+                        BasicMultOp(PINum);
+                    break;
+                case 10:
+                    if (DecimalHalf == 0)
+                    {
+                        IntValue = 31; DecimalHalf = 415926536;
+                    }
+                    else
+                        BasicMultOp(PINum);
+                    break;
+                //3.1415926535897932384626433
+                case 100:
+                    if (DecimalHalf == 0)
+                    {
+                        IntValue = 314; DecimalHalf = 159265359;
+                    }
+                    else
+                        BasicMultOp(PINum);
+                    break;
+                case 1000:
+                    if (DecimalHalf == 0)
+                    {
+                        IntValue = 3141; DecimalHalf = 592653590;
+                    }
+                    else
+                        BasicMultOp(PINum);
+                    break;
+                case -10:
+                    if (DecimalHalf == 0)
+                    {
+                        IntValue = -31; DecimalHalf = 415926536;
+                    }
+                    else
+                        BasicMultOp(PINum);
+                    break;
+                default:
+                    BasicMultOp(PINum);
+                    break;
+                }
+            }
+#endif
         }
         
 #if defined(AltDec_EnableENum)
@@ -867,6 +907,10 @@ public:
         static AltDec ApproachingZero;
 #endif
         
+        /// <summary>
+        /// Returns PI(3.1415926535897932384626433) Representation
+        /// </summary>
+        /// <returns>AltDec</returns>
         static AltDec PI;
       
         static AltDec E;
