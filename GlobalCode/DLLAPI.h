@@ -45,4 +45,12 @@
 #endif
 
 #endif
+
+//--Shortcut defines--
+#if defined(Blazes_EnableCalculusExtras)
+#define AltDec_EnableInfinityRep
+#define MixedDec_EnableInfinityRep
+#define MixedDec_EnablePIRep
+#endif
+
 #endif

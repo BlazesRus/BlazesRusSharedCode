@@ -150,9 +150,6 @@
     <ClInclude Include="OtherFunctions\StringFunctions.h">
       <Filter>Header Files\OtherFunctions</Filter>
     </ClInclude>
-    <ClInclude Include="Databases\ElementType.hpp">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
     <ClInclude Include="tsl\ordered_map.h">
       <Filter>Header Files\tsl</Filter>
     </ClInclude>
@@ -172,6 +169,18 @@
       <Filter>Header Files\Formulas</Filter>
     </ClInclude>
     <ClInclude Include="Formulas\VariableFormula.hpp">
+      <Filter>Header Files\Formulas</Filter>
+    </ClInclude>
+    <ClInclude Include="Formulas\DualFormula.hpp">
+      <Filter>Header Files\Formulas</Filter>
+    </ClInclude>
+    <ClInclude Include="Formulas\AltFormula.hpp">
+      <Filter>Header Files\Formulas</Filter>
+    </ClInclude>
+    <ClInclude Include="Formulas\DualAltFormula.hpp">
+      <Filter>Header Files\Formulas</Filter>
+    </ClInclude>
+    <ClInclude Include="Formulas\ElementType.hpp">
       <Filter>Header Files\Formulas</Filter>
     </ClInclude>
   </ItemGroup>

@@ -223,13 +223,16 @@
     <ClInclude Include="Databases\CustomDictionary.h" />
     <ClInclude Include="Databases\CustomOrderedDictionary.h" />
     <ClInclude Include="Databases\DataDictionary.h" />
-    <ClInclude Include="Databases\ElementType.hpp" />
     <ClInclude Include="Databases\IndexedDictionary.h" />
     <ClInclude Include="Databases\IndexedIniData.h" />
     <ClInclude Include="Databases\IniDataV2.h" />
     <ClInclude Include="Databases\OrderedIndexDictionary.h" />
+    <ClInclude Include="Formulas\AltFormula.hpp" />
     <ClInclude Include="Formulas\BuiltinFormula.hpp" />
     <ClInclude Include="Formulas\DoubleFormula.hpp" />
+    <ClInclude Include="Formulas\DualAltFormula.hpp" />
+    <ClInclude Include="Formulas\DualFormula.hpp" />
+    <ClInclude Include="Formulas\ElementType.hpp" />
     <ClInclude Include="Formulas\IntFormula.hpp" />
     <ClInclude Include="Formulas\MediumDecFormula.hpp" />
     <ClInclude Include="Formulas\VariableFormula.hpp" />

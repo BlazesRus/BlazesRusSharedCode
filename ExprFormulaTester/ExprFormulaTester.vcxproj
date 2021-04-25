@@ -114,7 +114,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions);AltDec_EnableInfinityRep;MixedDec_EnableInfinityRep;MixedDec_EnablePIRep</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions);Blazes_EnableCalculusExtras</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(BoostDir);$(GlobalCode);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -130,7 +130,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions);AltDec_EnableInfinityRep;MixedDec_EnableInfinityRep;MixedDec_EnablePIRep</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions);Blazes_EnableCalculusExtras</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(BoostDir);$(GlobalCode);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -146,7 +146,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions);AltDec_EnableInfinityRep;MixedDec_EnableInfinityRep;MixedDec_EnablePIRep</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;IndexedIniData_AddAltDecSupport;%(PreprocessorDefinitions);Blazes_EnableCalculusExtras</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(BoostRoot);$(GlobalCode);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
