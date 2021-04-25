@@ -640,6 +640,7 @@ public:
         //Switch based version of ConvertToNumRep
         void ConvertToNormType(RepType& repType)
         {
+#if defined(AltDec_EnableInfinityRep)
             if (DecimalHalf == InfinityRep)
             {
                 ExtraRep = 0;
@@ -653,6 +654,7 @@ public:
                 }
                 return;
             }
+#endif
             switch (repType)
             {
             case RepType::NormalType:
@@ -5010,16 +5012,20 @@ public:
         /// <returns>AltDec &</returns>
         AltDec& Trunc()
         {
+#if defined(AltDec_EnableInfinityRep)
             if (DecimalHalf == ApproachingValRep)
             {
                 DecimalHalf = 0; ExtraRep = 0;
             }
             else
             {
+#endif
                 ConvertToNumRep();
                 DecimalHalf = 0;
                 if (IntValue == NegativeRep) { IntValue = 0; }
+#if defined(AltDec_EnableInfinityRep)
             }
+#endif
             return *this;
         }
         
