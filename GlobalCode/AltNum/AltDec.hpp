@@ -609,12 +609,12 @@ public:
                 ConvertPIToNum(); return;
             }
 #if defined(AltDec_EnableImaginaryNum)
-            else(ExtraRep<0)
+            else if(ExtraRep<0)
             {
                 IntValue = -2147483648;
             }
 #elif defined(AltDec_EnableENum)
-            else(ExtraRep<0)
+            else if(ExtraRep<0)
             {
                 ConvertEToNum(); return;
             }
