@@ -60,6 +60,10 @@ AltDec_EnablePIPowers = (Not Fully Implimented)(Might automatically enable if ne
     #undef AltDec_EnableENum
 #endif
 
+#if defined(AltDec_EnableENum) || defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnablePIPowers)
+#define AltDec_OtherNegativeExtraRepsDefined
+#endif
+
 namespace BlazesRusCode
 {
     class AltDec;
@@ -622,7 +626,7 @@ public:
                 ConvertEToNum(); return;
             }
 #endif
-#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum) || !defined(AltDec_DisablePIRep)
+#if defined(AltDec_OtherNegativeExtraRepsDefined) || !defined(AltDec_DisablePIRep)
             else
             {
 #endif
@@ -641,7 +645,7 @@ public:
 #if AltDec_EnableMixedFractional
                 }
 #endif
-#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum) || !defined(AltDec_DisablePIRep)
+#if defined(AltDec_OtherNegativeExtraRepsDefined) || !defined(AltDec_DisablePIRep)
             }
 #endif
             ExtraRep = 0;
