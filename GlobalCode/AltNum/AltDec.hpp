@@ -604,23 +604,28 @@ public:
 #endif
             if(ExtraRep==0)//Skip converting if already normal number state(Equal to default MediumDec format)
                 return;
+#ifndef AltDec_DisablePIRep
             if(ExtraRep==PIRep)
             {
                 ConvertPIToNum(); return;
             }
+            else
+#endif
 #if defined(AltDec_EnableImaginaryNum)
-            else if(ExtraRep<0)
+            if(ExtraRep<0)
             {
                 IntValue = -2147483648;
             }
 #elif defined(AltDec_EnableENum)
-            else if(ExtraRep<0)
+            if(ExtraRep<0)
             {
                 ConvertEToNum(); return;
             }
 #endif
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum) || !defined(AltDec_DisablePIRep)
             else
             {
+#endif
 #if AltDec_EnableMixedFractional
                 if(DecimalHalf<0)//Mixed Fraction
                 {
@@ -636,7 +641,9 @@ public:
 #if AltDec_EnableMixedFractional
                 }
 #endif
+#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum) || !defined(AltDec_DisablePIRep)
             }
+#endif
             ExtraRep = 0;
         }
         
