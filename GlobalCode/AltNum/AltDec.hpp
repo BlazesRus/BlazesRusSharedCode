@@ -36,6 +36,7 @@ AltDec_EnableComplexNum = Enable Representation of complex numbers with Imaginar
 AltDec_EnableNegativeZero = (Not Fully Implimented)
 AltDec_EnableHigherPrecisionPIConversion = (Not Implimented)
 AltDec_EnableInfinityPowers = Allows powers of infinity for operations where infinity is somehow more infinite then normal(Not Implimented)
+AltDec_DisablePIRep = Disables usage of PI Representation(Not Fully Implimented)
 AltDec_EnableNearPI = (Not Implimented)
 AltDec_EnableNearE = (Not Implimented)
 AltDec_EnavleNearI = (Not Implimented)
@@ -156,8 +157,10 @@ namespace BlazesRusCode
                     return RepType::ApproachingTop;//Approaching from left to (IntValue-1)
             }
 #endif
+#ifndef AltDec_DisablePIRep
             else if(ExtraRep==PIRep)
                 return RepType::PINum;
+#endif
             else if(ExtraRep>0)
                 return RepType::NumByDiv;
 #if defined(AltDec_EnableNaN)

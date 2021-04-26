@@ -183,6 +183,9 @@
     <ClInclude Include="Formulas\ElementType.hpp">
       <Filter>Header Files\Formulas</Filter>
     </ClInclude>
+    <ClInclude Include="DLLAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NodeTrees\TagNodeTreeTemplate.cpp">
