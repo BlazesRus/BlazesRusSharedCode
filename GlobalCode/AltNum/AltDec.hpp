@@ -56,7 +56,7 @@ AltDec_EnablePIPowers = (Not Fully Implimented)(Might automatically enable if ne
 */
 
 //Only one of the 2 can be enabled at once(AltDec_EnableImaginaryNum given preference in case that both used)
-#if defined(AltDec_EnableENum) && defined(AltDec_EnableImaginaryNum)
+#if defined(AltDec_EnableENum) && (defined(AltDec_EnableImaginaryNum)||defined(AltDec_EnablePIPowers))
     #undef AltDec_EnableENum
 #endif
 
@@ -104,17 +104,25 @@ namespace BlazesRusCode
             NormalType = 0,
             NumByDiv,
             PINum,
+#if defined(AltDec_EnablePIPowers)
             PIPower,
+#endif
+#if defined(AltDec_EnableENum)
             ENum,
             ENumByDiv,
+#endif
+#if defined(AltDec_EnableImaginaryNum)
             INum,
             INumByDiv,
+#endif
             ComplexIRep,
             MixedFrac,
             MixedE,
             MixedI,
+#if defined(AltDec_EnableInfinityRep)
             ApproachingBottom,//(Approaching Towards Zero is equal to 0.000...1)
             ApproachingTop,//(Approaching Away from Zero is equal to 0.9999...)
+#endif
             NaN,
             NegativeZero,
             NearPI,//(Approaching Away from Zero is equal to 0.9999...PI)
