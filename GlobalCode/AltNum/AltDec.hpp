@@ -90,8 +90,10 @@ namespace BlazesRusCode
         //Is Approaching IntValue when DecimalHalf==-2147483647
         static const signed int ApproachingValRep = -2147483647;
 #endif
+#if !defined(AltDec_DisablePIRep)
         //Is PI*Value representation when ExtraRep==-2147483648
         static const signed int PIRep = -2147483648;
+#endif
 #if defined(AltDec_EnableInfinityRep)
         //Is NaN when DecimalHalf==2147483647
         static const signed int NaNRep = 2147483647;
@@ -475,6 +477,7 @@ public:
 //        }
 
         private:
+#if !defined(AltDec_DisablePIRep)
         void ConvertPIToNum()
         {
 
@@ -564,7 +567,8 @@ public:
             }
 #endif
         }
-        
+#endif
+
 #if defined(AltDec_EnableENum)
         void ConvertEToNum()
         {
@@ -681,20 +685,25 @@ public:
             {
             case RepType::NormalType:
                 break;
+#if defined(AltDec_EnableInfinityRep)
             case RepType::ApproachingBottom:
                 DecimalHalf = 1; ExtraRep = 0;
                 break;
             case RepType::ApproachingTop:
                 DecimalHalf = 999999999; ExtraRep = 0;
                 break;
+#endif
+#if !defined(AltDec_DisablePIRep)
             case RepType::PINum:
                 BasicMultOp(PINum);
                 ExtraRep = 0;
                 break;
+#endif
             case RepType::NumByDiv:
                 BasicIntDivOp(ExtraRep);
                 ExtraRep = 0;
                 break;
+#if defined(AltDec_EnableENum)
             case RepType::ENum:
                 BasicMultOp(ENum);
                 ExtraRep = 0;
@@ -705,6 +714,7 @@ public:
                 BasicIntDivOp(ExtraRep);
                 ExtraRep = 0;
                 break;
+#endif
             default:
                 ConvertToNumRep();
                 break;
@@ -718,7 +728,16 @@ public:
         {
             IntValue = 2147483647; DecimalHalf = 999999999; ExtraRep = 0;
         }
+
+        /// <summary>
+        /// Sets value to the lowest non-infinite/Special Decimal State Value that it store
+        /// </summary>
+        void SetAsMinimum()
+        {
+            IntValue = -2147483647; DecimalHalf = 999999999; ExtraRep = 0;
+        }
 private:
+#if defined(AltDec_EnableInfinityRep)
         static AltDec ApproachingRightRealValue(int IntValue=0)
         {
             return AltDec(IntValue, 999999999);
@@ -738,6 +757,7 @@ private:
         {
             return AltDec(IntValue, 500000001);
         }
+#endif
 
         /// <summary>
         /// Returns PI(3.1415926535897932384626433) with tenth digit rounded up
@@ -6309,7 +6329,9 @@ public:
     };
 
     #pragma region ValueDefine Source
+#if defined(AltDec_EnableInfinityRep)
     AltDec AltDec::AlmostOne = ApproachingRightRealValue();
+#endif
     AltDec AltDec::PI = PIValue();
     AltDec AltDec::One = OneValue();
     AltDec AltDec::Two = TwoValue();
