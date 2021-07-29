@@ -105,9 +105,11 @@ namespace BlazesRusCode
         {
             NormalType = 0,
             NumByDiv,
+#if !defined(AltDec_DisablePIRep)
             PINum,
 #if defined(AltDec_EnablePIPowers)
             PIPower,
+#endif
 #endif
 #if defined(AltDec_EnableENum)
             ENum,
@@ -117,17 +119,21 @@ namespace BlazesRusCode
             INum,
             INumByDiv,
 #endif
+#if defined(AltDec_EnableMixedFractional)
             ComplexIRep,
             MixedFrac,
             MixedE,
             MixedI,
+#endif
 #if defined(AltDec_EnableInfinityRep)
             ApproachingBottom,//(Approaching Towards Zero is equal to 0.000...1)
             ApproachingTop,//(Approaching Away from Zero is equal to 0.9999...)
 #endif
             NaN,
             NegativeZero,
+#if !defined(AltDec_DisablePIRep)
             NearPI,//(Approaching Away from Zero is equal to 0.9999...PI)
+#endif
             NearE,//(Approaching Away from Zero is equal to 0.9999...e)
             NearI,//(Approaching Away from Zero is equal to 0.9999...i)
             UnknownType
@@ -155,9 +161,11 @@ namespace BlazesRusCode
 #if defined(AltDec_EnableApproachingDivided)
 
 #else
+#if !defined(AltDec_DisablePIRep)
 #if defined(AltDec_EnableNearPI)
                 else if (ExtraRep == PIRep)
                     return RepType::NearPI;
+#endif
 #endif
 #if defined(AltDec_EnableNearE)
                 else if (ExtraRep == IERep)
@@ -270,6 +278,7 @@ namespace BlazesRusCode
             DecimalHalf = Value.DecimalHalf; ExtraRep = Value.ExtraRep;
         }
         
+#if !defined(AltDec_DisablePIRep)
         void SetPiVal(MediumDec Value)
         {
             IntValue = Value.IntValue; DecimalHalf = Value.DecimalHalf;
@@ -281,6 +290,7 @@ namespace BlazesRusCode
             IntValue = Value; DecimalHalf = 0;
             ExtraRep = PIRep;
         }
+#endif
         
         void SetFractionalVal(MediumDec Value, int Divisor)
         {
@@ -325,13 +335,14 @@ namespace BlazesRusCode
             ExtraRep = 0;
         }
   
-        //Approaching Zero from Right
+        //Approaching Zero from Right(0.000...1)
         void SetAsApproachingZero()
         {
             IntValue = 0; DecimalHalf = ApproachingValRep;
             ExtraRep = 0;
         }
         
+		//(0.99...9)
         void SetAsApproachingZeroFromLeft()
         {
             IntValue = 0; DecimalHalf = ApproachingValRep;
@@ -346,7 +357,7 @@ namespace BlazesRusCode
         }
         
         //Approaching Towards (IntValue-1) from Left to right side(IntValue.999...9)
-        void SetAsApproachingAwayFromValue(int value)
+        void SetAsApproachingBottomValue(int value)
         {
             IntValue = value; DecimalHalf = ApproachingValRep;
             ExtraRep = NegativeRep;
@@ -748,12 +759,12 @@ private:
             return AltDec(IntValue, 1);
         }
 
-        static AltDec LeftAlmostPointFiveValue(int IntValue=0)
+        static AltDec LeftAlmostPointFiveRealValue(int IntValue=0)
         {
             return AltDec(IntValue, 499999999);
         }
 
-        static AltDec RightAlmostPointFiveValue(int IntValue=0)
+        static AltDec RightAlmostPointFiveRealValue(int IntValue=0)
         {
             return AltDec(IntValue, 500000001);
         }
@@ -1824,32 +1835,367 @@ public:
 
     #pragma endregion Comparison Operators
 
-#pragma region RepToRepCode
-	private:
+#pragma region RepToRepCode_AdditionSubtraction
+    private:
         void RepToRepAddOp(RepType& LRep, RepType& RRep, AltDec& self, AltDec& Value)
         {
-			switch (LRep)
-			{
+            switch (LRep)
+            {
+				//X.?? + ???
+                case RepType::NormalType:
+                    switch (RRep)
+                    {
+                        case RepType::NumByDiv:
+                            Value.ConvertToNormType(RRep);
+                            self.BasicAddOp(Value);
+                            break;
+                        case RepType::PINum:
+                            Value.ConvertPIToNum();
+                            self.BasicAddOp(Value);
+                            break;
+#if defined(AltDec_EnableENum)
+                        case RepType::ENum:
+                        case RepType::ENumByDiv:
+                            Value.ConvertEToNum();
+                            self.BasicAddOp(Value);
+                            break;
+#endif
+                        default:
+                            self.CatchAllAddition(Value, LRep, RRep);
+                            break;
+                    }
+                    break;
+				//(X.??*PI) + ???
+                case RepType::PINum:
+                    switch (RRep)
+                    {
+                        case RepType::NormalType:
+                            self.ConvertPIToNum();
+                            self.BasicAddOp(Value);
+                            break;
+                        default:
+						//case RepType::ENum: //(X.??*PI) + (Y.??*e)
+						//case RepType::ENumByDiv: //(X.??*PI) + ((Y.??*e)/(Y_ExtraRep*-1))
+						//case RepType::ApproachingTop: //(X.??*PI) + Y.9...9
+						//case RepType::ApproachingBottom: //(X.??*PI) + Y.0...1
+                            self.CatchAllAddition(Value, LRep, RRep);
+                            break;
+                    }
+                    break;
+				//(X.??/X_ExtraRep) + ???
+                case RepType::NumByDiv:
+                    switch (RRep)
+                    {
+                        case RepType::NormalType:
+                            self.ConvertToNormType(LRep);
+                            self.BasicAddOp(Value);
+                            break;
+                        case RepType::ApproachingTop:
+                            self.ConvertToNormType(LRep);
+                            self.BasicAddOp(AlmostOne);
+                            break;
+                        case RepType::ApproachingBottom:
+                            self.ConvertToNormType(LRep);
+                            self.BasicAddOp(JustAboveZero);
+                            break;
+                        default:
+                            self.CatchAllAddition(Value, LRep, RRep);
+                            break;
+                    }
+                    break;
+                case RepType::ApproachingBottom://IntValue.000...1 + ???
+                    switch (RRep)
+                    {
+                        case RepType::ApproachingTop:
+							if(self.IntValue<0)
+							{
+                                if (self.IntValue == NegativeRep)
+                                {
+									if(Value.IntValue == NegativeRep)//-0.0.......1 + -0.9.......9
+									{
+										self.IntValue = -1; self.DecimalHalf = 0;
+										self.ExtraRep = 0; return self;
+									}
+									else if(Value.IntValue<0)//-0.0.......1 + -?.9.......9
+									{
+										self.IntValue--;
+										self.ExtraRep = 0; self.DecimalHalf = 0;
+										self.IntValue += Value.IntValue;
+									}
+									else
+									{
+										self.CatchAllAddition(Value, LRep, RRep);
+									}
+                                }
+								else
+								{
+									if(Value.IntValue == NegativeRep)//-?.9.......9 + -0.0.......1
+									{
+										self.IntValue--;
+										self.ExtraRep = 0; self.DecimalHalf = 0;
+									}
+									else if(Value.IntValue<0)//-?.9.......9 + -?.0.......1
+									{
+										self.IntValue--;
+										self.ExtraRep = 0; self.DecimalHalf = 0;
+										self.IntValue += Value.IntValue;
+									}
+									else
+									{
+										self.CatchAllAddition(Value, LRep, RRep);
+									}
+								}
+							}
+							else
+							{
+								if(Value.IntValue<0)
+								{
+									self.CatchAllAddition(Value, LRep, RRep);
+								}
+								else if(self.IntValue==0)//0.99...9 + Y.00...1
+								{
+									self.IntValue = Value.IntValue+1;
+									self.ExtraRep = 0; self.DecimalHalf = 0;
+								}
+								else//X.99...9 + Y.00...1
+								{
+									self.IntValue++;
+									self.ExtraRep = 0; self.DecimalHalf = 0;
+									self.IntValue += Value.IntValue;
+								}
+							}
+       //                     if (self.IntValue == NegativeRep)
+       //                     {
+       //                         if (Value.IntValue == NegativeRep)//-0.0.......1 + -0.9.......9
+       //                         {
+       //                             self.IntValue = -1; self.DecimalHalf = 0;
+       //                             self.ExtraRep = 0; return self;
+       //                         }
+       //                     }
+       //                     else if (Value.IntValue == NegativeRep)
+       //                     {
+	   //					  	self.CatchAllAddition(Value, LRep, RRep);
+       //                     }
+       //                     else if (self.IntValue < 0)
+       //                     {
+       //                         if (Value.IntValue < 0)
+       //                         {
+       //                             self.IntValue++;
+       //                             self.ExtraRep = 0;
+       //                         }
+       //                         self.IntValue += Value.IntValue;
+       //                     }
+       //                     else
+       //                     {
+       //                         if (Value.IntValue>= 0)
+       //                         {
+       //                             self.IntValue++;
+       //                             self.ExtraRep = 0;
+       //                         }
+       //                         self.IntValue += Value.IntValue;
+       //                     }
+                            break;
+                        default:
+                            self.CatchAllAddition(Value, LRep, RRep);
+                            break;
+                    }
+                    break;
+                case RepType::ApproachingTop://IntValue.9999... + ???
+                    switch (RRep)
+                    {
+                        case RepType::ApproachingBottom:
+							if(self.IntValue<0)
+							{
+                                if (self.IntValue == NegativeRep)
+                                {
+									if(Value.IntValue == NegativeRep)//-0.9.......9 + -0.0.......1
+									{
+										self.IntValue = -1; self.DecimalHalf = 0;
+										self.ExtraRep = 0; return self;
+									}
+									else if(Value.IntValue<0)//-0.9.......9 + -?.0.......1
+									{
+										self.IntValue = Value.IntValue - 1;
+										self.ExtraRep = 0; self.DecimalHalf = 0;
+									}
+									else
+									{
+										self.CatchAllAddition(Value, LRep, RRep);
+									}
+                                }
+								else
+								{
+									if(Value.IntValue == NegativeRep)//-?.9.......9 + -0.0.......1
+									{
+										self.IntValue--;
+										self.ExtraRep = 0; self.DecimalHalf = 0;
+									}
+									else if(Value.IntValue<0)//-?.9.......9 + -?.0.......1
+									{
+										self.IntValue--; self.DecimalHalf = 0;
+										self.ExtraRep = 0;
+										self.IntValue += Value.IntValue;
+									}
+									else
+									{
+										self.CatchAllAddition(Value, LRep, RRep);
+									}
+								}
+							}
+							else
+							{
+								if(Value.IntValue<0)
+								{
+									self.CatchAllAddition(Value, LRep, RRep);
+								}
+								else if(self.IntValue==0)//0.99...9 + Y.00...1
+								{
+									self.IntValue = Value.IntValue+1;
+									self.ExtraRep = 0; self.DecimalHalf = 0;
+								}
+								else//X.99...9 + Y.00...1
+								{
+									self.IntValue++;
+									self.ExtraRep = 0; self.DecimalHalf = 0;
+									self.IntValue += Value.IntValue;
+								}
+							}
+                            break;
+                        default:
+                            self.CatchAllAddition(Value, LRep, RRep);
+                            break;
+                    }
+                    break;
+#if defined(AltDec_EnableENum)
+                case RepType::ENum:
+                    switch (RRep)
+                    {
+                        case RepType::NormalType:
+                            self.ConvertEToNum();
+                            self.BasicAddOp(Value);
+                            break;
+      //                  case RepType::ENumByDiv:
+                        default:
+                            self.CatchAllAddition(Value, LRep, RRep);
+                            break;
+                    }
+                    break;
+                case RepType::ENumByDiv:
+                    switch (RRep)
+                    {
+                        case RepType::NormalType:
+                            self.ConvertEToNum();
+                            self.BasicAddOp(Value);
+                            break;
+      //                  case RepType::ENum:
+                        default:
+                            self.CatchAllAddition(Value, LRep, RRep);
+                            break;
+                    }
+                    break;
+#elif defined(AltDec_EnableImaginaryNum)
+                case RepType::INum:
+					//if(RRep==RepType::INumByDiv)
+					//{
+					//}
+					//else
+					//{
+						throw "Can't add imaginary numbers to real numbers unless complex representation enabled.";
+					//}
+                    break;
+#elif defined(AltDec_EnablePIPowers)
+                case RepType::PIPower:
+                    switch (RRep)
+                    {
+                        default:
+                            self.CatchAllAddition(Value, LRep, RRep);
+                            break;
+					}
+					break;
+#endif
+#if defined(AltDec_EnableMixedFractional)
+                case RepType::MixedFrac:
+                    switch (RRep)
+                    {
+                        default:
+                            self.CatchAllAddition(Value, LRep, RRep);
+                            break;
+					}
+					break;
+#if defined(AltDec_EnableENum)
+                case RepType::MixedE:
+                    switch (RRep)
+                    {
+                        default:
+                            self.CatchAllAddition(Value, LRep, RRep);
+                            break;
+					}
+					break;
+#elif defined(AltDec_EnableImaginaryNum)
+                case RepType::MixedE:
+#if defined(AltDec_EnableComplexNum)
+     //               switch (RRep)
+     //               {
+     //                   default:
+     //                       self.CatchAllAddition(Value, LRep, RRep);
+     //                       break;
+					//}
+					//break;
+//                case RepType::ComplexIRep:
+//                    switch (RRep)
+//                    {
+////                        case RepType::NormalType:
+////                            break;
+//                        default:
+//                            self.CatchAllAddition(Value, LRep, RRep);
+//                            break;
+//					}
+//					break;
+#else
+                    switch (RRep)
+                    {
+						//case RepType::INum:
+						//	break;
+						//case RepType::INumByDiv:
+						//	break;
+                        default:
+                            throw "Can't add imaginary numbers to real numbers unless complex representation enabled.";
+                            break;
+					}
+					break;
+#endif
+#endif
+                default:
+                    self.CatchAllAddition(Value, LRep, RRep);
+                    break;
+                
+            }
+        }
+        
+        void RepToRepSubOp(RepType& LRep, RepType& RRep, AltDec& self, AltDec& Value)
+        {
+            switch (LRep)
+            {
 				case RepType::NormalType:
 					switch (RRep)
 					{
 						case RepType::NumByDiv:
 							Value.ConvertToNormType(RRep);
-							self.BasicAddOp(Value);
+							self.BasicSubOp(Value);
 							break;
 						case RepType::PINum:
 							Value.ConvertPIToNum();
-							self.BasicAddOp(Value);
+							self.BasicSubOp(Value);
 							break;
 #if defined(AltDec_EnableENum)
 						case RepType::ENum:
 						case RepType::ENumByDiv:
 							Value.ConvertEToNum();
-							self.BasicAddOp(Value);
+							self.BasicSubOp(Value);
 							break;
 #endif
 						default:
-							self.CatchAllAddition(Value, LRep, RRep);
+							self.CatchAllSubtraction(Value, LRep, RRep);
 							break;
 					}
 					break;
@@ -1858,10 +2204,10 @@ public:
 					{
 						case RepType::NormalType:
 							self.ConvertPIToNum();
-							self.BasicAddOp(Value);
+							self.BasicSubOp(Value);
 							break;
-						default://ENum,ENumByDiv,ApproachingTowards,ApproachingAwayFrom  Included
-							self.CatchAllAddition(Value, LRep, RRep);
+						default://ENum,ENumByDiv,ApproachingTop,ApproachingBottom  Included
+							self.CatchAllSubtraction(Value, LRep, RRep);
 							break;
 					}
 					break;
@@ -1870,18 +2216,18 @@ public:
 					{
 						case RepType::NormalType:
 							self.ConvertToNormType(LRep);
-							self.BasicAddOp(Value);
+							self.BasicSubOp(Value);
 							break;
 						case RepType::ApproachingTop:
 							self.ConvertToNormType(LRep);
-							self.BasicAddOp(AlmostOne);
+							self.BasicSubOp(AlmostOne);
 							break;
 						case RepType::ApproachingBottom:
 							self.ConvertToNormType(LRep);
-							self.BasicAddOp(JustAboveZero);
+							self.BasicSubOp(JustAboveZero);
 							break;
 						default:
-							self.CatchAllAddition(Value, LRep, RRep);
+							self.CatchAllSubtraction(Value, LRep, RRep);
 							break;
 					}
 					break;
@@ -1889,38 +2235,51 @@ public:
 					switch (RRep)
 					{
 						case RepType::ApproachingTop:
-							if (self.IntValue == NegativeRep)
+							if(self.IntValue<0)
 							{
-								if (Value.IntValue == NegativeRep)//-0.0.......1 + -0.9.......9
+								if(Value.IntValue<0)//If not positive, maybe normalize both to NormalRep
 								{
-									self.IntValue = -1; self.DecimalHalf = 0;
-									self.ExtraRep = 0; return self;
+									self.CatchAllSubtraction(Value, LRep, RRep);
 								}
-							}
-							else if (Value.IntValue == NegativeRep)
-							{
-							}
-							else if (self.IntValue < 0)
-							{
-								if (Value.IntValue < 0)
+								else//-X.000...1 - Y.99...9 = (X - Y)-1
 								{
-									self.IntValue++;
-									self.ExtraRep = 0;
+									if (self.IntValue==NegativeRep&&Value.IntValue == 0)//-0.0.......1 - 0.9.......9
+									{
+										self.IntValue = -1; self.DecimalHalf = 0;
+										return self;
+									}
+									else
+									{
+										self.IntValue--;
+										self.DecimalHalf = 0;
+										self.IntValue -= Value.IntValue;
+									}
 								}
-								self.IntValue += Value.IntValue;
 							}
 							else
 							{
-								if (Value.IntValue>= 0)
+								if(Value.IntValue<0)//X.000...1 - -Y.99...9 = (X + Y)+1
 								{
-									self.IntValue++;
-									self.ExtraRep = 0;
+									if (self.IntValue==0&&Value.IntValue == NegativeRep)//0.0.......1 + 0.9.......9
+									{
+										self.IntValue = 1; self.DecimalHalf = 0;
+										return self;
+									}
+									else
+									{
+										self.IntValue++;
+										self.DecimalHalf = 0;
+										self.IntValue -= Value.IntValue;
+									}
 								}
-								self.IntValue += Value.IntValue;
+								else//Otherwise maybe normalize both to NormalRep
+								{
+									self.CatchAllSubtraction(Value, LRep, RRep);
+								}
 							}
 							break;
 						default:
-							self.CatchAllAddition(Value, LRep, RRep);
+							self.CatchAllSubtraction(Value, LRep, RRep);
 							break;
 					}
 					break;
@@ -1928,38 +2287,174 @@ public:
 					switch (RRep)
 					{
 						case RepType::ApproachingBottom:
-							if (self.IntValue == NegativeRep)
+\
+							break;
+						default:
+							self.CatchAllSubtraction(Value, LRep, RRep);
+							break;
+					}
+					break;
+#if defined(AltDec_EnableENum)
+				case RepType::ENum:
+					switch (RRep)
+					{
+//						case RepType::NormalType:
+//							self.ConvertEToNum();
+//							self.BasicSubOp(Value);
+//							break;
+						default:
+							self.CatchAllSubtraction(Value, LRep, RRep);
+							break;
+					}
+					break;
+#endif
+#if defined(AltDec_EnableImaginaryNum)
+				case RepType::INum:
+					throw "Can't subtract imaginary numbers from real numbers unless complex representation enabled.";
+					break;
+#endif
+                default:
+                    self.CatchAllSubtraction(Value, LRep, RRep);
+                    break;
+                
+            }
+        }
+#pragma endregion RepToRepCode_AdditionSubtraction
+#pragma region RepToRepCode_MultiplicationDivision
+        void RepToRepMultOp(RepType& LRep, RepType& RRep, AltDec& self, AltDec& Value)
+        {
+            switch (LRep)
+            {
+				case RepType::NormalType:
+					switch (RRep)
+					{
+						case RepType::NumByDiv://X * Y/Z
+							self.BasicMultOp(Value);
+							self.ExtraRep = Value.ExtraRep;
+							break;
+						case RepType::PINum://X * (Y*Pi)
+							self.BasicMultOp(Value);
+							self.ExtraRep = PIRep;
+							break;
+#if defined(AltDec_EnableENum)
+						case RepType::ENum://X * (Y*e)
+							self.BasicMultOp(Value);
+							self.ExtraRep = IERep;
+							break;
+						case RepType::ENumByDiv://X * (Y*e)/Z
+							self.BasicMultOp(Value);
+							self.ExtraRep = Value.ExtraRep;
+							break;
+#endif
+						default:
+							self.CatchAllMultiplication(Value, LRep, RRep);
+							break;
+					}
+					break;
+				case RepType::PINum:
+					switch (RRep)
+					{
+						case RepType::NormalType://X*Pi * Y
+							self.BasicMultOp(Value);
+							break;
+						case RepType::NumByDiv://X*Pi * Y/Z
+							self.BasicMultOp(Value);
+							self.BasicDivIntOp(Value.ExtraRep);
+							break;
+#if defined(AltDec_EnableENum)
+						case RepType::ENum://X * (Y*e)
+							self.BasicMultOp(Value);
+							self.ExtraRep = IERep;
+							break;
+						case RepType::ENumByDiv://X * (Y*e)/Z
+							self.BasicMultOp(Value);
+							self /= Value.ExtraRep;
+							break;
+#endif
+						case RepType::ApproachingTop://Normalize Value to normalRep before multiplying
+								Value.DecimalHalf = 999999999;
+								Value.ExtraRep = 0;
+								self.BasicMultOp(Value);
+							break;
+						case RepType::ApproachingBottom:
+							if(Value.IntValue==0)//Infinitely approaching zero so make result approaching zero
 							{
-								if (Value.IntValue == NegativeRep)//-0.0.......1 + -0.9.......9
-								{
-									self.IntValue = -1; self.DecimalHalf = 0;
-									self.ExtraRep = 0; return self;
-								}
+								self.IntValue = self.IntValue<0?NegativeZero:0;
+								self.DecimalHalf = ApproachingValRep;
+								self.ExtraRep = 0;
 							}
-							else if (Value.IntValue == NegativeRep)
+							else//Normalize Value instead in most other cases
 							{
-							}
-							else if (self.IntValue < 0)
-							{
-								if (Value.IntValue < 0)
-								{
-									self.IntValue++;
-									self.ExtraRep = 0;
-								}
-								self.IntValue += Value.IntValue;
-							}
-							else
-							{
-								if (Value.IntValue >= 0)
-								{
-									self.IntValue++;
-									self.ExtraRep = 0;
-								}
-								self.IntValue += Value.IntValue;
+								Value.DecimalHalf = 1;
+								self.BasicMultOp(Value);
 							}
 							break;
 						default:
-							self.CatchAllAddition(Value, LRep, RRep);
+							self.CatchAllMultiplication(Value, LRep, RRep);
+							break;
+					}
+					break;
+				case RepType::NumByDiv:
+					switch (RRep)
+					{
+						case RepType::NormalType:
+							self.BasicMultOp(Value);
+							break;
+//						case RepType::ApproachingTop:
+//							self.ConvertToNormType(LRep);
+//							self.BasicMultOp(AlmostOne);
+//							break;
+						case RepType::ApproachingBottom:
+							if(Value.IntValue==0)//Infinitely approaching zero so make result approaching zero
+							{
+								self.IntValue = self.IntValue<0?NegativeZero:0;
+								self.DecimalHalf = ApproachingValRep;
+								self.ExtraRep = 0;
+							}
+							else//Normalize Value instead in most other cases
+							{
+								Value.DecimalHalf = 1;
+								self.BasicMultOp(Value);
+							}
+							break;
+						default:
+							self.CatchAllMultiplication(Value, LRep, RRep);
+							break;
+					}
+					break;
+				case RepType::ApproachingBottom://IntValue.000...1
+					switch (RRep)
+					{
+						default:
+							if(self.IntValue==0)
+							{
+								self.IntValue = Value.IntValue<0?NegativeRep:0;
+							}
+							else if(self.IntValue==NegativeRep)
+							{
+								self.IntValue = Value.IntValue<0?0:NegativeRep;
+							}
+							else
+								self.CatchAllMultiplication(Value, LRep, RRep);
+							break;
+					}
+					break;
+				case RepType::ApproachingTop://IntValue.9999...
+					switch (RRep)
+					{
+						case RepType::ApproachingBottom:
+							if(Value.IntValue==0)
+							{
+								self.IntValue = self.IntValue<0?NegativeRep:0; self.ExtraRep = 0;
+							}
+							else if(Value.IntValue==NegativeRep)
+							{
+								self.IntValue = self.IntValue<0?0:NegativeRep; self.ExtraRep = 0;
+							}
+							else
+								self.CatchAllMultiplication(Value, LRep, RRep);
+						default:
+							self.CatchAllMultiplication(Value, LRep, RRep);
 							break;
 					}
 					break;
@@ -1968,519 +2463,162 @@ public:
 					switch (RRep)
 					{
 						case RepType::NormalType:
-							self.ConvertEToNum();
-							self.BasicAddOp(Value);
+							self.BasicMultOp(Value);
+							break;
+						case RepType::NumByDiv://X*e * Y/Z
+							self.BasicMultOp(Value);
+							self.BasicDivIntOp(Value.ExtraRep);
+							break;
+						case RepType::ApproachingBottom:
+						case RepType::ApproachingTop:
+							Value.ConvertToNormalType(RRep);
+							self.BasicMultOp(Value);
 							break;
 						default:
-							self.CatchAllAddition(Value, LRep, RRep);
+							self.CatchAllMultiplication(Value, LRep, RRep);
 							break;
 					}
 					break;
-#endif
-#if defined(AltDec_EnableImaginaryNum)
+#elif defined(AltDec_EnableImaginaryNum)
 				case RepType::INum:
-					throw "Can't add imaginary numbers to real numbers unless complex representation enabled.";
+					switch (RRep)
+					{
+						case RepType::NormalType:
+							self.BasicMultOp(Value);
+							break;
+						case RepType::NumByDiv://X*i * Y/Z
+							self.BasicMultOp(Value);
+							self.BasicDivIntOp(Value.ExtraRep);
+							break;
+						case RepType::ApproachingBottom:
+						case RepType::ApproachingTop:
+							Value.ConvertToNormalType(RRep);
+							self.BasicMultOp(Value);
+							break;
+						default:
+							throw "Imaginary numbers multiplication by other RepType not coded yet.";
+					}
+
 					break;
 #endif
-				default:
-					self.CatchAllAddition(Value, LRep, RRep);
-					break;
-				
-			}
-		}
+                default:
+                    self.CatchAllMultiplication(Value, LRep, RRep);
+                    break;
+            }
+        }
 		
-
-        void RepToRepSubOp(RepType& LRep, RepType& RRep, AltDec& self, AltDec& Value)
-        {
-			switch (LRep)
-			{
-//				case RepType::NormalType:
-//					switch (RRep)
-//					{
-//						case RepType::NumByDiv:
-//							Value.ConvertToNormType(RRep);
-//							self.BasicAddOp(Value);
-//							break;
-//						case RepType::PINum:
-//							Value.ConvertPIToNum();
-//							self.BasicAddOp(Value);
-//							break;
-//#if defined(AltDec_EnableENum)
-//						case RepType::ENum:
-//						case RepType::ENumByDiv:
-//							Value.ConvertEToNum();
-//							self.BasicAddOp(Value);
-//							break;
-//#endif
-//						default:
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//				case RepType::PINum:
-//					switch (RRep)
-//					{
-//						case RepType::NormalType:
-//							self.ConvertPIToNum();
-//							self.BasicAddOp(Value);
-//							break;
-//						default://ENum,ENumByDiv,ApproachingTowards,ApproachingAwayFrom  Included
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//				case RepType::NumByDiv:
-//					switch (RRep)
-//					{
-//						case RepType::NormalType:
-//							self.ConvertToNormType(LRep);
-//							self.BasicAddOp(Value);
-//							break;
-//						case RepType::ApproachingTop:
-//							self.ConvertToNormType(LRep);
-//							self.BasicAddOp(AlmostOne);
-//							break;
-//						case RepType::ApproachingBottom:
-//							self.ConvertToNormType(LRep);
-//							self.BasicAddOp(JustAboveZero);
-//							break;
-//						default:
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//				case RepType::ApproachingBottom://IntValue.000...1
-//					switch (RRep)
-//					{
-//						case RepType::ApproachingTop:
-//							if (self.IntValue == NegativeRep)
-//							{
-//								if (Value.IntValue == NegativeRep)//-0.0.......1 + -0.9.......9
-//								{
-//									self.IntValue = -1; self.DecimalHalf = 0;
-//									self.ExtraRep = 0; return self;
-//								}
-//							}
-//							else if (Value.IntValue == NegativeRep)
-//							{
-//							}
-//							else if (self.IntValue < 0)
-//							{
-//								if (Value.IntValue < 0)
-//								{
-//									self.IntValue++;
-//									self.ExtraRep = 0;
-//								}
-//								self.IntValue += Value.IntValue;
-//							}
-//							else
-//							{
-//								if (Value.IntValue>= 0)
-//								{
-//									self.IntValue++;
-//									self.ExtraRep = 0;
-//								}
-//								self.IntValue += Value.IntValue;
-//							}
-//							break;
-//						default:
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//				case RepType::ApproachingTop://IntValue.9999...
-//					switch (RRep)
-//					{
-//						case RepType::ApproachingBottom:
-//							if (self.IntValue == NegativeRep)
-//							{
-//								if (Value.IntValue == NegativeRep)//-0.0.......1 + -0.9.......9
-//								{
-//									self.IntValue = -1; self.DecimalHalf = 0;
-//									self.ExtraRep = 0; return self;
-//								}
-//							}
-//							else if (Value.IntValue == NegativeRep)
-//							{
-//							}
-//							else if (self.IntValue < 0)
-//							{
-//								if (Value.IntValue < 0)
-//								{
-//									self.IntValue++;
-//									self.ExtraRep = 0;
-//								}
-//								self.IntValue += Value.IntValue;
-//							}
-//							else
-//							{
-//								if (Value.IntValue >= 0)
-//								{
-//									self.IntValue++;
-//									self.ExtraRep = 0;
-//								}
-//								self.IntValue += Value.IntValue;
-//							}
-//							break;
-//						default:
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//#if defined(AltDec_EnableENum)
-//				case RepType::ENum:
-//					switch (RRep)
-//					{
-//						case RepType::NormalType:
-//							self.ConvertEToNum();
-//							self.BasicAddOp(Value);
-//							break;
-//						default:
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//#endif
-//#if defined(AltDec_EnableImaginaryNum)
-//				case RepType::INum:
-//					throw "Can't add imaginary numbers to real numbers unless complex representation enabled.";
-//					break;
-//#endif
-				default:
-					self.CatchAllSubtraction(Value, LRep, RRep);
-					break;
-				
-			}
-		}
-
-        void RepToRepMultOp(RepType& LRep, RepType& RRep, AltDec& self, AltDec& Value)
-        {
-			switch (LRep)
-			{
-//				case RepType::NormalType:
-//					switch (RRep)
-//					{
-//						case RepType::NumByDiv:
-//							Value.ConvertToNormType(RRep);
-//							self.BasicAddOp(Value);
-//							break;
-//						case RepType::PINum:
-//							Value.ConvertPIToNum();
-//							self.BasicAddOp(Value);
-//							break;
-//#if defined(AltDec_EnableENum)
-//						case RepType::ENum:
-//						case RepType::ENumByDiv:
-//							Value.ConvertEToNum();
-//							self.BasicAddOp(Value);
-//							break;
-//#endif
-//						default:
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//				case RepType::PINum:
-//					switch (RRep)
-//					{
-//						case RepType::NormalType:
-//							self.ConvertPIToNum();
-//							self.BasicAddOp(Value);
-//							break;
-//						default://ENum,ENumByDiv,ApproachingTowards,ApproachingAwayFrom  Included
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//				case RepType::NumByDiv:
-//					switch (RRep)
-//					{
-//						case RepType::NormalType:
-//							self.ConvertToNormType(LRep);
-//							self.BasicAddOp(Value);
-//							break;
-//						case RepType::ApproachingTop:
-//							self.ConvertToNormType(LRep);
-//							self.BasicAddOp(AlmostOne);
-//							break;
-//						case RepType::ApproachingBottom:
-//							self.ConvertToNormType(LRep);
-//							self.BasicAddOp(JustAboveZero);
-//							break;
-//						default:
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//				case RepType::ApproachingBottom://IntValue.000...1
-//					switch (RRep)
-//					{
-//						case RepType::ApproachingTop:
-//							if (self.IntValue == NegativeRep)
-//							{
-//								if (Value.IntValue == NegativeRep)//-0.0.......1 + -0.9.......9
-//								{
-//									self.IntValue = -1; self.DecimalHalf = 0;
-//									self.ExtraRep = 0; return self;
-//								}
-//							}
-//							else if (Value.IntValue == NegativeRep)
-//							{
-//							}
-//							else if (self.IntValue < 0)
-//							{
-//								if (Value.IntValue < 0)
-//								{
-//									self.IntValue++;
-//									self.ExtraRep = 0;
-//								}
-//								self.IntValue += Value.IntValue;
-//							}
-//							else
-//							{
-//								if (Value.IntValue>= 0)
-//								{
-//									self.IntValue++;
-//									self.ExtraRep = 0;
-//								}
-//								self.IntValue += Value.IntValue;
-//							}
-//							break;
-//						default:
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//				case RepType::ApproachingTop://IntValue.9999...
-//					switch (RRep)
-//					{
-//						case RepType::ApproachingBottom:
-//							if (self.IntValue == NegativeRep)
-//							{
-//								if (Value.IntValue == NegativeRep)//-0.0.......1 + -0.9.......9
-//								{
-//									self.IntValue = -1; self.DecimalHalf = 0;
-//									self.ExtraRep = 0; return self;
-//								}
-//							}
-//							else if (Value.IntValue == NegativeRep)
-//							{
-//							}
-//							else if (self.IntValue < 0)
-//							{
-//								if (Value.IntValue < 0)
-//								{
-//									self.IntValue++;
-//									self.ExtraRep = 0;
-//								}
-//								self.IntValue += Value.IntValue;
-//							}
-//							else
-//							{
-//								if (Value.IntValue >= 0)
-//								{
-//									self.IntValue++;
-//									self.ExtraRep = 0;
-//								}
-//								self.IntValue += Value.IntValue;
-//							}
-//							break;
-//						default:
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//#if defined(AltDec_EnableENum)
-//				case RepType::ENum:
-//					switch (RRep)
-//					{
-//						case RepType::NormalType:
-//							self.ConvertEToNum();
-//							self.BasicAddOp(Value);
-//							break;
-//						default:
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//#endif
-//#if defined(AltDec_EnableImaginaryNum)
-//				case RepType::INum:
-//					throw "Can't add imaginary numbers to real numbers unless complex representation enabled.";
-//					break;
-//#endif
-				default:
-					self.CatchAllMultiplication(Value, LRep, RRep);
-					break;
-				
-			}
-		}
-
         void RepToRepDivOp(RepType& LRep, RepType& RRep, AltDec& self, AltDec& Value)
         {
-			switch (LRep)
-			{
-//				case RepType::NormalType:
-//					switch (RRep)
-//					{
-//						case RepType::NumByDiv:
-//							Value.ConvertToNormType(RRep);
-//							self.BasicAddOp(Value);
-//							break;
-//						case RepType::PINum:
-//							Value.ConvertPIToNum();
-//							self.BasicAddOp(Value);
-//							break;
-//#if defined(AltDec_EnableENum)
-//						case RepType::ENum:
-//						case RepType::ENumByDiv:
-//							Value.ConvertEToNum();
-//							self.BasicAddOp(Value);
-//							break;
-//#endif
-//						default:
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//				case RepType::PINum:
-//					switch (RRep)
-//					{
+            switch (LRep)
+            {
+				case RepType::NormalType:
+					switch (RRep)
+					{
+						//case RepType::NumByDiv:
+						//	Value.ConvertToNormType(RRep);
+						//	self.BasicDivOp(Value);
+						//	break;
+						//case RepType::PINum:
+						//	Value.ConvertPIToNum();
+						//	self.BasicDivOp(Value);
+						//	break;
+#if defined(AltDec_EnableENum)
+						//case RepType::ENum:
+						//case RepType::ENumByDiv:
+						//	Value.ConvertEToNum();
+						//	self.BasicDivisionOp(Value);
+						//	break;
+#endif
+						default:
+							self.CatchAllDivision(Value, LRep, RRep);
+							break;
+					}
+					break;
+				case RepType::PINum:
+					switch (RRep)
+					{
 //						case RepType::NormalType:
 //							self.ConvertPIToNum();
-//							self.BasicAddOp(Value);
+//							self.BasicDivOp(Value);
 //							break;
-//						default://ENum,ENumByDiv,ApproachingTowards,ApproachingAwayFrom  Included
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//				case RepType::NumByDiv:
-//					switch (RRep)
-//					{
+						default://ENum,ENumByDiv,ApproachingTop,ApproachingBottom  Included
+							self.CatchAllDivision(Value, LRep, RRep);
+							break;
+					}
+					break;
+				case RepType::NumByDiv:
+					switch (RRep)
+					{
 //						case RepType::NormalType:
 //							self.ConvertToNormType(LRep);
-//							self.BasicAddOp(Value);
+//							self.BasicDivOp(Value);
 //							break;
 //						case RepType::ApproachingTop:
 //							self.ConvertToNormType(LRep);
-//							self.BasicAddOp(AlmostOne);
+//							self.BasicDivOp(AlmostOne);
 //							break;
 //						case RepType::ApproachingBottom:
 //							self.ConvertToNormType(LRep);
-//							self.BasicAddOp(JustAboveZero);
+//							self.BasicDivOp(JustAboveZero);
 //							break;
-//						default:
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//				case RepType::ApproachingBottom://IntValue.000...1
-//					switch (RRep)
-//					{
+						default:
+							self.CatchAllDivision(Value, LRep, RRep);
+							break;
+					}
+					break;
+				case RepType::ApproachingBottom://IntValue.000...1
+					switch (RRep)
+					{
 //						case RepType::ApproachingTop:
-//							if (self.IntValue == NegativeRep)
-//							{
-//								if (Value.IntValue == NegativeRep)//-0.0.......1 + -0.9.......9
-//								{
-//									self.IntValue = -1; self.DecimalHalf = 0;
-//									self.ExtraRep = 0; return self;
-//								}
-//							}
-//							else if (Value.IntValue == NegativeRep)
-//							{
-//							}
-//							else if (self.IntValue < 0)
-//							{
-//								if (Value.IntValue < 0)
-//								{
-//									self.IntValue++;
-//									self.ExtraRep = 0;
-//								}
-//								self.IntValue += Value.IntValue;
-//							}
-//							else
-//							{
-//								if (Value.IntValue>= 0)
-//								{
-//									self.IntValue++;
-//									self.ExtraRep = 0;
-//								}
-//								self.IntValue += Value.IntValue;
-//							}
-//							break;
-//						default:
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//				case RepType::ApproachingTop://IntValue.9999...
-//					switch (RRep)
-//					{
+						default:
+							self.CatchAllDivision(Value, LRep, RRep);
+							break;
+					}
+					break;
+				case RepType::ApproachingTop://IntValue.9999...
+					switch (RRep)
+					{
 //						case RepType::ApproachingBottom:
-//							if (self.IntValue == NegativeRep)
-//							{
-//								if (Value.IntValue == NegativeRep)//-0.0.......1 + -0.9.......9
-//								{
-//									self.IntValue = -1; self.DecimalHalf = 0;
-//									self.ExtraRep = 0; return self;
-//								}
-//							}
-//							else if (Value.IntValue == NegativeRep)
-//							{
-//							}
-//							else if (self.IntValue < 0)
-//							{
-//								if (Value.IntValue < 0)
-//								{
-//									self.IntValue++;
-//									self.ExtraRep = 0;
-//								}
-//								self.IntValue += Value.IntValue;
-//							}
-//							else
-//							{
-//								if (Value.IntValue >= 0)
-//								{
-//									self.IntValue++;
-//									self.ExtraRep = 0;
-//								}
-//								self.IntValue += Value.IntValue;
-//							}
-//							break;
-//						default:
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//#if defined(AltDec_EnableENum)
-//				case RepType::ENum:
-//					switch (RRep)
-//					{
+						default:
+							self.CatchAllDivision(Value, LRep, RRep);
+							break;
+					}
+					break;
+#if defined(AltDec_EnableENum)
+				case RepType::ENum:
+					switch (RRep)
+					{
 //						case RepType::NormalType:
 //							self.ConvertEToNum();
 //							self.BasicAddOp(Value);
 //							break;
-//						default:
-//							self.CatchAllAddition(Value, LRep, RRep);
-//							break;
-//					}
-//					break;
-//#endif
-//#if defined(AltDec_EnableImaginaryNum)
-//				case RepType::INum:
-//					throw "Can't add imaginary numbers to real numbers unless complex representation enabled.";
-//					break;
-//#endif
-				default:
-					self.CatchAllDivision(Value, LRep, RRep);
+						default:
+							self.CatchAllDivision(Value, LRep, RRep);
+							break;
+					}
 					break;
-				
-			}
-		}
+#elif defined(AltDec_EnableImaginaryNum)
+				case RepType::INum:
+					switch (RRep)
+					{
+						//case RepType::NormalType:
+						//self.BasicDivisionOp(Value);
+						default:
+							throw "Imaginary numbers division by other RepType not coded yet.";
+					}
 
-	public:
-#pragma endregion RepToRepCode
+					break;
+#endif
+                default:
+                    self.CatchAllDivision(Value, LRep, RRep);
+                    break;
+                
+            }
+        }
+    public:
+#pragma endregion RepToRepCode_MultiplicationDivision
+#pragma region Other_RepToRepCode
+#pragma endregion Other_RepToRepCode
 
 #pragma region Addition/Subtraction Operations
         /// <summary>
@@ -2733,7 +2871,7 @@ public:
             }
             else
             {
-				RepToRepAddOp(LRep, RRep, self, Value);
+                RepToRepAddOp(LRep, RRep, self, Value);
             }
             return self;
         }
@@ -2889,7 +3027,7 @@ public:
             }
             else
             {
-				RepToRepSubOp(LRep, RRep, self, Value);
+                RepToRepSubOp(LRep, RRep, self, Value);
             }
             return self;
         }
@@ -5477,8 +5615,8 @@ public:
             case RepType::PINum:
                 Value.ConvertPIToNum();
                 break;
-            //case RepType::ApproachingTowards:
-            //case RepType::ApproachingAwayFrom:
+            //case RepType::ApproachingTop:
+            //case RepType::ApproachingBottom:
             //    return Value.IntValue;
             //    break;
             default:
@@ -5510,8 +5648,8 @@ public:
             case RepType::PINum:
                 Value.ConvertPIToNum();
                 break;
-            //case RepType::ApproachingTowards:
-            //case RepType::ApproachingAwayFrom:
+            //case RepType::ApproachingTop:
+            //case RepType::ApproachingBottom:
             //    return Value.IntValue+1;
             //    break;
             default:
@@ -5588,8 +5726,8 @@ public:
             case RepType::PINum:
             case RepType::ENum:
             case RepType::INum:
-            case RepType::ApproachingAwayFrom:
-            case RepType::ApproachingTowards:
+            case RepType::ApproachingBottom:
+            case RepType::ApproachingTop:
             */
             if (IntValue == NegativeRep) { IntValue = 0; }
             else if (IntValue < 0) { IntValue *= -1; }
@@ -6114,10 +6252,21 @@ public:
                 case RepType::PINum:
                     value.ConvertPIToNum();
                     break;
-/*
-                case RepType::NumByDiv:
-                    return FractionalPow(value, value.ExtraRep);
+                default:
+                    value.ConvertToNumRep();
                     break;
+                }
+                RepType expType = expValue.GetRepType();
+                switch (expType)
+                {
+                case RepType::NormalType:
+                    break;
+                case RepType::NumByDiv:
+                    return FractionalPow(value, AltDec(expValue.IntValue, expValue.DecimalHalf), expValue.ExtraRep);
+    //            case RepType::PINum:
+    //                expValue.ConvertPIToNum();
+    //                break;
+/*
                 case RepType::ENumByDiv:
                     return FractionalPow(value, value.ExtraRep*-1);
                     break;
@@ -6126,7 +6275,7 @@ public:
                     break;
 */
                 default:
-                    value.ConvertToNumRep();
+                    expValue.ConvertToNumRep();
                     break;
                 }
                 boost::rational<int> Frac = boost::rational<int>(expValue.DecimalHalf, AltDec::DecimalOverflow);
@@ -6168,6 +6317,24 @@ public:
             return PowOp(value, expValue);
         }
 
+private:
+	static AltDec LnRef_Part02(AltDec& value)
+	{	//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+		//Increasing iterations brings closer to accurate result(Larger numbers need more iterations to get accurate level of result)
+		AltDec TotalRes = (value - 1) / (value + 1);
+		AltDec LastPow = TotalRes;
+		AltDec WSquared = TotalRes * TotalRes;
+		AltDec AddRes;
+		int WPow = 3;
+		do
+		{
+			LastPow *= WSquared;
+			AddRes = LastPow / WPow;
+			TotalRes += AddRes; WPow += 2;
+		} while (AddRes > AltDec::JustAboveZero);
+		return TotalRes * 2;
+	}
+public:
         /// <summary>
         /// Natural log (Equivalent to Log_E(value))
         /// </summary>
@@ -6178,7 +6345,7 @@ public:
             //if (value <= 0) {}else//Error if equal or less than 0
             if (value == AltDec::One)
                 return AltDec::Zero;
-            if (value.IntValue<2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+            if (value.ExtraRep==0&&value.IntValue<2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
             {//This section gives accurate answer(for values between 1 and 2)
                 AltDec threshold = AltDec::FiveMillionth;
                 AltDec base = value - 1;        // Base of the numerator; exponent will be explicit
@@ -6204,18 +6371,7 @@ public:
             }
             else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
             {//Increasing iterations brings closer to accurate result(Larger numbers need more iterations to get accurate level of result)
-                AltDec TotalRes = (value - 1) / (value + 1);
-                AltDec LastPow = TotalRes;
-                AltDec WSquared = TotalRes * TotalRes;
-                AltDec AddRes;
-                int WPow = 3;
-                do
-                {
-                    LastPow *= WSquared;
-                    AddRes = LastPow / WPow;
-                    TotalRes += AddRes; WPow += 2;
-                } while (AddRes > AltDec::JustAboveZero);
-                return TotalRes * 2;
+                return LnRef_Part02(value);
             }
         }
 
@@ -6229,6 +6385,8 @@ public:
             //if (value <= 0) {}else//Error if equal or less than 0
             if (value == AltDec::One)
                 return AltDec::Zero;
+			if(value.ExtraRep!=0)
+				return LnRef_Part02(value);
             if(value.IntValue==0)//Returns a negative number derived from (http://www.netlib.org/cephes/qlibdoc.html#qlog)
             {
                 AltDec W = (value - 1)/ (value + 1);
@@ -6272,20 +6430,9 @@ public:
 
                 return result;
             }
-            else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
-            {//Increasing iterations brings closer to accurate result(Larger numbers need more iterations to get accurate level of result)
-                AltDec TotalRes = (value - 1) / (value + 1);
-                AltDec LastPow = TotalRes;
-                AltDec WSquared = TotalRes * TotalRes;
-                AltDec AddRes;
-                int WPow = 3;
-                do
-                {
-                    LastPow *= WSquared;
-                    AddRes = LastPow / WPow;
-                    TotalRes += AddRes; WPow += 2;
-                } while (AddRes > AltDec::JustAboveZero);
-                return TotalRes * 2;
+            else
+            {
+				return LnRef_Part02(value);
             }
         }
 
@@ -6298,6 +6445,24 @@ public:
             return LnRef(value);
         }
 
+private:
+	static AltDec Log10_Part02(AltDec& value)
+	{	//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+		AltDec TotalRes = (value - 1) / (value + 1);
+		AltDec LastPow = TotalRes;
+		AltDec WSquared = TotalRes * TotalRes;
+		AltDec AddRes;
+		int WPow = 3;
+		do
+		{
+			LastPow *= WSquared;
+			AddRes = LastPow / WPow;
+			TotalRes += AddRes; WPow += 2;
+		} while (AddRes > AltDec::JustAboveZero);
+		return TotalRes * AltDec::HalfLN10Mult;//Gives more accurate answer than attempting to divide by Ln10
+	}
+public:
+
         /// <summary>
         /// Log Base 10 of Value
         /// </summary>
@@ -6307,6 +6472,8 @@ public:
         {
             if (value == AltDec::One)
                 return AltDec::Zero;
+			if(value.ExtraRep!=0)
+				return Log10_Part02(value);
             if (value.DecimalHalf == 0 && value.IntValue % 10 == 0)
             {
                 for (int index = 1; index < 9; ++index)
@@ -6340,21 +6507,28 @@ public:
             }
             else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
             {
-                AltDec TotalRes = (value - 1) / (value + 1);
-                AltDec LastPow = TotalRes;
-                AltDec WSquared = TotalRes * TotalRes;
-                AltDec AddRes;
-                int WPow = 3;
-                do
-                {
-                    LastPow *= WSquared;
-                    AddRes = LastPow / WPow;
-                    TotalRes += AddRes; WPow += 2;
-                } while (AddRes > AltDec::JustAboveZero);
-                return TotalRes * AltDec::HalfLN10Mult;//Gives more accurate answer than attempting to divide by Ln10
+				return Log10_Part02(value);
             }
-            //return AltDec::Ln(value) / AltDec::HaLN10;//Slightly off because of truncation etc
         }
+
+private:
+    template<typename ValueType>
+	static AltDec Log10_IntPart02(ValueType& value)
+	{	//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
+		AltDec TotalRes = AltDec((value - 1), 0) / AltDec((value + 1), 0);
+		AltDec LastPow = TotalRes;
+		AltDec WSquared = TotalRes * TotalRes;
+		AltDec AddRes;
+		int WPow = 3;
+		do
+		{
+			LastPow *= WSquared;
+			AddRes = LastPow / WPow;
+			TotalRes += AddRes; WPow += 2;
+		} while (AddRes > AltDec::JustAboveZero);
+		return TotalRes * AltDec::HalfLN10Mult;//Gives more accurate answer than attempting to divide by Ln10
+	}
+public:
 
         /// <summary>
         /// Log Base 10 of Value(integer value variant)
@@ -6366,7 +6540,9 @@ public:
         {
             if (value == 1)
                 return AltDec::Zero;
-            else if (value % 10 == 0)
+			if(value.ExtraRep!=0)
+				return Log10_IntPart02(value);
+            if (value % 10 == 0)
             {
                 for (int index = 1; index < 9; ++index)
                 {
@@ -6377,18 +6553,7 @@ public:
             }
             else//Returns a positive value(http://www.netlib.org/cephes/qlibdoc.html#qlog)
             {
-                AltDec TotalRes = AltDec((value - 1), 0) / AltDec((value + 1), 0);
-                AltDec LastPow = TotalRes;
-                AltDec WSquared = TotalRes * TotalRes;
-                AltDec AddRes;
-                int WPow = 3;
-                do
-                {
-                    LastPow *= WSquared;
-                    AddRes = LastPow / WPow;
-                    TotalRes += AddRes; WPow += 2;
-                } while (AddRes > AltDec::JustAboveZero);
-                return TotalRes * AltDec::HalfLN10Mult;//Gives more accurate answer than attempting to divide by Ln10
+				return Log10_IntPart02(value);
             }
         }
 
@@ -6448,7 +6613,7 @@ public:
             }
 
             //Now calculate other log
-            if (value.DecimalHalf == 0 && value.IntValue % 10 == 0)
+            if (value.ExtraRep==0&&value.DecimalHalf == 0 && value.IntValue % 10 == 0)
             {
                 for (int index = 1; index < 9; ++index)
                 {
@@ -6457,7 +6622,7 @@ public:
                 }
                 return lnMultLog? AltDec(9, 0) / (baseTotalRes*AltDec::HalfLN10Mult):AltDec(9, 0)/baseTotalRes;
             }
-            if (value.IntValue < 2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+            if (value.ExtraRep==0&&value.IntValue < 2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
             {//This section gives accurate answer for values between 1 & 2
                 AltDec threshold = AltDec::FiveBillionth;
                 AltDec base = value - 1;        // Base of the numerator; exponent will be explicit
