@@ -280,7 +280,7 @@
     <ClCompile Include="$(BlazesGlobalCode)\AltNum\MediumDec.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClInclude Include="$(BlazesGlobalCode)\AltNum\MediumDec.h" />
+    <ClInclude Include="$(BlazesGlobalCode)\AltNum\MediumDec.hpp" />
     <ClInclude Include="$(BlazesGlobalCode)\NodeTrees\VariableData.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>

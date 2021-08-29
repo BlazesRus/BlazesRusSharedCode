@@ -31,7 +31,7 @@
     #include "..\VariableLists\StringVectorList.h"
     #include "..\OtherFunctions\VariableConversionFunctions.h"
     #ifdef IniDataV2_EnableAltDec
-        #include "..\AltNum\MediumDec.h"
+        #include "..\AltNum\MediumDec.hpp"
     #endif
 #endif
 

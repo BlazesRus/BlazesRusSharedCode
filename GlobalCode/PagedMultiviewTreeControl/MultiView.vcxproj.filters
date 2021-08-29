@@ -176,7 +176,7 @@
     <ClInclude Include="$(BlazesGlobalCode)\Databases\CustomDictionary.h">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesGlobalCode)\AltNum\MediumDec.h">
+    <ClInclude Include="$(BlazesGlobalCode)\AltNum\MediumDec.hpp">
       <Filter>Header Files\GlobalCode</Filter>
     </ClInclude>
     <ClInclude Include="$(BlazesGlobalCode)\PagedMultiviewTreeControl\WP_APPDefines.h">

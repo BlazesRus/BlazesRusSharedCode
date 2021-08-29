@@ -32,7 +32,7 @@
 #include "..\VariableLists\StringVectorList.h"
 #include "..\VariableLists\VariableList.h"
 #if defined(IncludeAltDec)
-#include "..\AltNum\MediumDec.h"
+#include "..\AltNum\MediumDec.hpp"
 #endif
 #endif
 
