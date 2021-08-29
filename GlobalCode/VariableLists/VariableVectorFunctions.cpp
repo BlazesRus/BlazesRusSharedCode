@@ -13,6 +13,7 @@
 #endif
 
 using std::string;
+using VariableConversionFunctions = BlazesRusCode::VariableConversionFunctions;
 
 StringVectorList VariableVectorFunctions::ReadStringParamFromStringList(StringVectorList TempStringList)
 {

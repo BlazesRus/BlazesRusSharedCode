@@ -4,11 +4,11 @@
 #include "VariableTypeLists.h"
 #include <iostream>
 #include <fstream>
-//#include "VariableConversionFunctions.h"
-#include "../VariableConversionFunctions/VariableConversionFunctions.h"
+#include "../OtherFunctions/VariableConversionFunctions.h"
 
 using std::cout;
 using std::string;
+using VariableConversionFunctions = BlazesRusCode::VariableConversionFunctions;
 
 void DoubleList::SaveDataToFile(std::string Path)
 {
