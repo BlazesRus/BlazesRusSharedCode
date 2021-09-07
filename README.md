@@ -1,4 +1,4 @@
-# MultiPlatformGlobalCode
+# MultiPlatformSharedCode
 Needed files:
 https://github.com/greg7mdp/parallel-hashmap.git
 download/install in C:\UserFiles\GitHub
