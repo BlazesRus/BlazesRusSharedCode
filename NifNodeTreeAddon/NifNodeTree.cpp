@@ -1,6 +1,6 @@
 #include "NifNodeTree.h"
 #include "..\niflib\include\ObjectRegistry.h"
-#include "..\GlobalCode\GlobalCode_StringFunctions\StringFunctions.h"
+#include "..\SharedCode\SharedCode_StringFunctions\StringFunctions.h"
 #include <typeinfo>
 
 void NifNodeTreeData::NifNodeTree::AddNodeToTree(std::string TargetNodeType, std::string TargetMenuMaster, std::string SpecialModifier/* = ""*/, std::string ItemName/* = ""*/, std::string InternalName/* = ""*/)

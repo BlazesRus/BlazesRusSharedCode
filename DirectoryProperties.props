@@ -5,8 +5,8 @@
     <PythonInclude>$(PythonFolder)\include</PythonInclude>
     <ProjectsDirectory>$(SolutionDir)..</ProjectsDirectory>
 	<ProjectLibrary>$(ProjectsDirectory)\CompiledLibraries</ProjectLibrary>
-	<CPPSource>$(SolutionDir)\GlobalCode</CPPSource>
-	<CSharpSource>$(SolutionDir)\BlazesCSharpGlobalCode</CSharpSource>
+	<CPPSource>$(SolutionDir)\SharedCode</CPPSource>
+	<CSharpSource>$(SolutionDir)\BlazesCSharpSharedCode</CSharpSource>
     <WTLFolder>$(ProjectDirectory)\WTL</WTLFolder>
     <BoostFolder>$(ProjectDirectory)\boost_1_66_0</BoostFolder>
     <BoostLib>$(BoostFolder)\lib</BoostLib>

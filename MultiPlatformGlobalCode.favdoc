@@ -8,7 +8,7 @@
         <Favorite>
           <name>MainWindow.xaml</name>
           <path>BlazesMultiTool.WPF\MainWindow.xaml</path>
-          <absolutePath>C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\BlazesMultiTool.WPF\MainWindow.xaml</absolutePath>
+          <absolutePath>C:\Users\BlazesRus\Documents\GitHub\BlazesRusSharedCode\BlazesMultiTool.WPF\MainWindow.xaml</absolutePath>
           <position>
             <line>5</line>
             <column>70</column>
@@ -18,7 +18,7 @@
         <Favorite>
           <name>MainPage.xaml</name>
           <path>BlazesRusMultiTool\BlazesRusMultiTool.UWP\MainPage.xaml</path>
-          <absolutePath>C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\BlazesRusMultiTool\BlazesRusMultiTool.UWP\MainPage.xaml</absolutePath>
+          <absolutePath>C:\Users\BlazesRus\Documents\GitHub\BlazesRusSharedCode\BlazesRusMultiTool\BlazesRusMultiTool.UWP\MainPage.xaml</absolutePath>
           <position>
             <line>8</line>
             <column>75</column>
@@ -28,7 +28,7 @@
         <Favorite>
           <name>App.xaml</name>
           <path>BlazesRusMultiTool\BlazesRusMultiTool.UWP\App.xaml</path>
-          <absolutePath>C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\BlazesRusMultiTool\BlazesRusMultiTool.UWP\App.xaml</absolutePath>
+          <absolutePath>C:\Users\BlazesRus\Documents\GitHub\BlazesRusSharedCode\BlazesRusMultiTool\BlazesRusMultiTool.UWP\App.xaml</absolutePath>
           <position>
             <line>5</line>
             <column>47</column>
@@ -38,7 +38,7 @@
         <Favorite>
           <name>App.xaml.cs</name>
           <path>BlazesRusMultiTool\BlazesRusMultiTool.UWP\App.xaml.cs</path>
-          <absolutePath>C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\BlazesRusMultiTool\BlazesRusMultiTool.UWP\App.xaml.cs</absolutePath>
+          <absolutePath>C:\Users\BlazesRus\Documents\GitHub\BlazesRusSharedCode\BlazesRusMultiTool\BlazesRusMultiTool.UWP\App.xaml.cs</absolutePath>
           <position>
             <line>18</line>
             <column>33</column>
@@ -48,7 +48,7 @@
         <Favorite>
           <name>MainPage.xaml.cs</name>
           <path>BlazesRusMultiTool\BlazesRusMultiTool.UWP\MainPage.xaml.cs</path>
-          <absolutePath>C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\BlazesRusMultiTool\BlazesRusMultiTool.UWP\MainPage.xaml.cs</absolutePath>
+          <absolutePath>C:\Users\BlazesRus\Documents\GitHub\BlazesRusSharedCode\BlazesRusMultiTool\BlazesRusMultiTool.UWP\MainPage.xaml.cs</absolutePath>
           <position>
             <line>21</line>
             <column>10</column>
@@ -58,12 +58,12 @@
         <Favorite>
           <name>Package.appxmanifest</name>
           <path>BlazesRusMultiTool\BlazesRusMultiTool.UWP\Package.appxmanifest</path>
-          <absolutePath>C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\BlazesRusMultiTool\BlazesRusMultiTool.UWP\Package.appxmanifest</absolutePath>
+          <absolutePath>C:\Users\BlazesRus\Documents\GitHub\BlazesRusSharedCode\BlazesRusMultiTool\BlazesRusMultiTool.UWP\Package.appxmanifest</absolutePath>
         </Favorite>
         <Favorite>
           <name>AssemblyInfo.cs</name>
           <path>BlazesRusMultiTool\BlazesRusMultiTool.UWP\Properties\AssemblyInfo.cs</path>
-          <absolutePath>C:\Users\BlazesRus\Documents\GitHub\MultiPlatformGlobalCode\BlazesRusMultiTool\BlazesRusMultiTool.UWP\Properties\AssemblyInfo.cs</absolutePath>
+          <absolutePath>C:\Users\BlazesRus\Documents\GitHub\BlazesRusSharedCode\BlazesRusMultiTool\BlazesRusMultiTool.UWP\Properties\AssemblyInfo.cs</absolutePath>
           <position>
             <line>11</line>
             <column>32</column>

@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="AndroidOnlyFiles">
+      <UniqueIdentifier>{5b4da1f7-2107-48ab-8e9a-56e577f054a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BlazesRusSharedCode">
+      <UniqueIdentifier>{bfdd3849-a8b9-40a8-a8d5-7120a8cda092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TSL">
+      <UniqueIdentifier>{a7bf7f0a-5f52-47ab-ad5a-6d01d3a3c9a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BlazesRusSharedCode\Unused">
+      <UniqueIdentifier>{9af4692a-2caa-427d-85e8-7dc43ab35ca9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ViewFiles">
+      <UniqueIdentifier>{2a69c0b5-4589-4d75-b6c6-9bbc42bc0584}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_set.h">
+      <Filter>TSL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_map.h">
+      <Filter>TSL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_hash.h">
+      <Filter>TSL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\Databases\DataDictionary.h">
+      <Filter>BlazesRusSharedCode\Unused</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\Databases\DataNode.h">
+      <Filter>BlazesRusSharedCode\Unused</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\Databases\UIntDic.h">
+      <Filter>BlazesRusSharedCode\Unused</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\Databases\IniRegistry.h">
+      <Filter>BlazesRusSharedCode\Unused</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\StringFunctions.h">
+      <Filter>BlazesRusSharedCode\Unused</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\VariableConversionFunctions.h">
+      <Filter>BlazesRusSharedCode\Unused</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableList.h">
+      <Filter>BlazesRusSharedCode\Unused</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableTypeLists.h">
+      <Filter>BlazesRusSharedCode\Unused</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableVectorFunctions.h">
+      <Filter>BlazesRusSharedCode\Unused</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\AltNum\MediumDec.h">
+      <Filter>BlazesRusSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\Databases\ArgList.h">
+      <Filter>BlazesRusSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\Databases\ArgStringList.h">
+      <Filter>BlazesRusSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\Databases\CustomOrderedDictionary.h">
+      <Filter>BlazesRusSharedCode\Unused</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MFCApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCFramework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCRes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OutputWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCpch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="android_native_app_glue.h">
+      <Filter>AndroidOnlyFiles</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MFCApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OutputWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCpch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="android_native_app_glue.c">
+      <Filter>AndroidOnlyFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BlazesSharedCode)\OtherFunctions\StringFunctions.cpp">
+      <Filter>BlazesRusSharedCode</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BlazesSharedCode)\VariableLists\StringVectorList.cpp">
+      <Filter>BlazesRusSharedCode</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BlazesSharedCode)\OtherFunctions\VariableConversionFunctions.cpp">
+      <Filter>BlazesRusSharedCode</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BlazesSharedCode)\VariableLists\VariableTypeLists.cpp">
+      <Filter>BlazesRusSharedCode</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BlazesSharedCode)\VariableLists\VariableVectorFunctions.cpp">
+      <Filter>BlazesRusSharedCode</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MFCApp.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\output_wnd.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\output_wnd.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MFCDoc.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\App.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\MFCApp.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

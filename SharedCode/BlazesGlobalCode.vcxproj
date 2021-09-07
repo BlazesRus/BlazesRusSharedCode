@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_DLL|Win32">
+      <Configuration>Debug_DLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_DLL|Win32">
+      <Configuration>Release_DLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_DLL|x64">
+      <Configuration>Debug_DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_DLL|x64">
+      <Configuration>Release_DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4EB28D56-F4EE-4139-AE46-074B01E7FDE3}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>BlazesSharedCode</RootNamespace>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug_DLL'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CLRSupport>true</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)'=='Release_DLL' " Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CLRSupport>true</CLRSupport>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros">
+    <BoostDir>C:/UserFiles/ProgrammingLibraries/BoostLib/</BoostDir>
+    <ParallelMap>C:/UserFiles/GitHub/parallel-hashmap/</ParallelMap>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(BoostDir)/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <IncludePath>$(BoostDir);$(ParallelMap);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>$(BoostDir)/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <IncludePath>$(BoostDir);$(ParallelMap);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64' ">
+    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(BoostDir)/lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>$(BoostDir);$(ParallelMap);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64' ">
+    <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>$(BoostDir)/lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>$(BoostDir);$(ParallelMap);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DLL|Win32' ">
+    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(BoostDir)/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <IncludePath>$(BoostDir);$(ParallelMap);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DLL|x64' ">
+    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(BoostDir)/lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>$(BoostDir);$(ParallelMap);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_DLL|Win32' ">
+    <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>$(BoostDir)/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <IncludePath>$(BoostDir);$(ParallelMap);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_DLL|x64' ">
+    <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>$(BoostDir)/lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>$(BoostDir);$(ParallelMap);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>IndexedIniData_AddAltDecSupport;Blazes_EnableCalculusExtras;AltDec_EnableENum;WIN32;_DEBUG;_LIB;BLAZESSharedCode_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(BoostDir);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>IndexedIniData_AddAltDecSupport;Blazes_EnableCalculusExtras;AltDec_EnableENum;WIN32;NDEBUG;_LIB;BLAZESSharedCode_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(BoostDir);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(BoostRoot)/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>IndexedIniData_AddAltDecSupport;Blazes_EnableCalculusExtras;AltDec_EnableENum;_DEBUG;_LIB;BLAZESSharedCode_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(BoostDir);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>IndexedIniData_AddAltDecSupport;Blazes_EnableCalculusExtras;AltDec_EnableENum;NDEBUG;_LIB;BLAZESSharedCode_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(BoostRoot);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(BoostRoot)/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug_DLL'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>IndexedIniData_AddAltDecSupport;Blazes_EnableCalculusExtras;AltDec_EnableENum;WIN32;_DEBUG;BLAZESSharedCode_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies />
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release_DLL'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>IndexedIniData_AddAltDecSupport;Blazes_EnableCalculusExtras;AltDec_EnableENum;WIN32;NDEBUG;%(PreprocessorDefinitions);BLAZESSharedCode_LIBRARY</PreprocessorDefinitions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies />
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="AltNum\AltDec.hpp" />
+    <ClInclude Include="AltNum\AltNumDebug.hpp" />
+    <ClInclude Include="AltNum\FloatingOperations.hpp" />
+    <ClInclude Include="AltNum\MediumDec.hpp" />
+    <ClInclude Include="AltNum\MediumDec_OtherMath.hpp" />
+    <ClInclude Include="AltNum\MixedDec.hpp" />
+    <ClInclude Include="AltNum\AltNumModChecker.hpp" />
+    <ClInclude Include="Databases\CustomDictionary.h" />
+    <ClInclude Include="Databases\CustomOrderedDictionary.h" />
+    <ClInclude Include="Databases\DataDictionary.h" />
+    <ClInclude Include="Databases\IndexedDictionary.h" />
+    <ClInclude Include="Databases\IndexedIniData.h" />
+    <ClInclude Include="Databases\IniDataV2.h" />
+    <ClInclude Include="Databases\OrderedIndexDictionary.h" />
+    <ClInclude Include="DLLAPI.h" />
+    <ClInclude Include="Formulas\AltFormula.hpp" />
+    <ClInclude Include="Formulas\BuiltinFormula.hpp" />
+    <ClInclude Include="Formulas\DoubleFormula.hpp" />
+    <ClInclude Include="Formulas\DualAltFormula.hpp" />
+    <ClInclude Include="Formulas\DualFormula.hpp" />
+    <ClInclude Include="Formulas\ElementType.hpp" />
+    <ClInclude Include="Formulas\IntFormula.hpp" />
+    <ClInclude Include="Formulas\MediumDecFormula.hpp" />
+    <ClInclude Include="Formulas\VariableFormula.hpp" />
+    <ClInclude Include="OtherFunctions\MiscFunctions.h" />
+    <ClInclude Include="NodeTrees\LooseNodeTreeTemplate.h" />
+    <ClInclude Include="NodeTrees\TagNodeTreeTemplate.h" />
+    <ClInclude Include="NodeTrees\TagPosition.h" />
+    <ClInclude Include="NodeTrees\VariableData.h" />
+    <ClInclude Include="NodeTrees\XMLOption.h" />
+    <ClInclude Include="NodeTrees\XMLTagTree.h" />
+    <ClInclude Include="QuadVector\QuadVector.h" />
+    <ClInclude Include="QuadVector\QuadVectorFunctions.h" />
+    <ClInclude Include="OtherFunctions\StringFunctions.h" />
+    <ClInclude Include="OtherFunctions\VariableConversionFunctions.h" />
+    <ClInclude Include="tsl\ordered_map.h" />
+    <ClInclude Include="VariableLists\StringVectorList.h" />
+    <ClInclude Include="VariableLists\VariableList.h" />
+    <ClInclude Include="VariableLists\VariableTypeLists.h" />
+    <ClInclude Include="VariableLists\VariableVectorFunctions.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Databases\IniData.cpp" />
+    <ClCompile Include="Databases\IniDataV2.cpp" />
+    <ClCompile Include="OtherFunctions\MiscFunctions.cpp" />
+    <ClCompile Include="NodeTrees\TagNodeTreeTemplate.cpp" />
+    <ClCompile Include="NodeTrees\TagPosition.cpp" />
+    <ClCompile Include="NodeTrees\VariableData.cpp" />
+    <ClCompile Include="NodeTrees\XMLOption.cpp" />
+    <ClCompile Include="QuadVector\QuadVector.cpp" />
+    <ClCompile Include="QuadVector\QuadVectorFunctions.cpp" />
+    <ClCompile Include="OtherFunctions\StringFunctions.cpp" />
+    <ClCompile Include="OtherFunctions\VariableConversionFunctions.cpp" />
+    <ClCompile Include="VariableLists\StringVectorList.cpp" />
+    <ClCompile Include="VariableLists\VariableTypeLists.cpp" />
+    <ClCompile Include="VariableLists\VariableVectorFunctions.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="PreprocessorVariables.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SubfolderDescriptions" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

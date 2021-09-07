@@ -2,7 +2,7 @@
 #ifndef NifTreeObjectRegistryClasses_IncludeGuard
 #define NifTreeObjectRegistryClasses_IncludeGuard
 
-#include "..\..\GlobalCode\GlobalCode_NodeTrees\LooseNodeTreeTemplate.h"
+#include "..\..\SharedCode\SharedCode_NodeTrees\LooseNodeTreeTemplate.h"
 #include <typeinfo>
 
 #include "obj\NiObject.h"
@@ -461,7 +461,7 @@
 #include "obj\BSConnectPoint__Parents.h"
 #include "obj\BSConnectPoint__Children.h"
 #include "obj\BSEyeCenterExtraData.h"
-#include "..\..\GlobalCode\GlobalCode_VariableLists\VariableList.h"
+#include "..\..\SharedCode\SharedCode_VariableLists\VariableList.h"
 #include "DLLAPI.h"
 #include <iostream>
 #include "..\niflib\include\RefObject.h"

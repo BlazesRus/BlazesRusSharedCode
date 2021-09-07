@@ -1,0 +1,23 @@
+﻿<local:SmallDecGUIElement
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:CSharpSharedCode.ExperimentalCode"
+             x:Class="CSharpSharedCode.ExperimentalCode.SmallDecUpdown"
+             mc:Ignorable="d" 
+             d:DesignHeight="26" d:DesignWidth="100">
+	<UserControl.Resources>
+		<local:SmallDec_TypeConverter x:Key="SmallDec_TypeConverter"/>
+	</UserControl.Resources>
+	<DockPanel d:LayoutOverrides="Width">
+     <Button x:Name="DecreaseButton"  DockPanel.Dock="Right"  Content="-" 
+     Width="{Binding ActualHeight/2,  ElementName=DecreaseButton, Mode=Default}"   Height="{Binding ActualHeight,  ElementName=ValueDisplay, Mode=Default}"/>
+     <Button x:Name="IncreaseButton"  DockPanel.Dock="Right" Content="+" 
+    Width="{Binding ActualHeight/2,  ElementName=DecreaseButton, Mode=Default}"  Height="{Binding ActualHeight,  ElementName=ValueDisplay, Mode=Default}"/>
+		<TextBox  x:Name="ValueDisplay"  Margin="2,0"   Text="{Binding Value,Converter={StaticResource SmallDec_TypeConverter},  Mode=TwoWay,
+	RelativeSource={RelativeSource FindAncestor, AncestorLevel=1,  AncestorType={x:Type local:SmallDecUpdown}}, UpdateSourceTrigger=PropertyChanged,
+	NotifyOnValidationError=True}"
+	HorizontalAlignment="Stretch"   HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+	</DockPanel>
+</local:SmallDecGUIElement>

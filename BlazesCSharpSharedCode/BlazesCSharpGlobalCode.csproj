@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|AnyCPU">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|AnyCPU">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{25767689-5C49-4AA6-952A-262BE9C2D682}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CSharpSharedCode</RootNamespace>
+    <AssemblyName>BlazesCSharpSharedCode</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\DirectoryProperties.props" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;BlazesSharedCode_Disable128BitFeatures</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;BlazesSharedCode_Disable128BitFeatures</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;BlazesSharedCode_Disable128BitFeatures</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;BlazesSharedCode_Disable128BitFeatures</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseWithBigInt|AnyCPU'">
+    <OutputPath>bin\ReleaseWithBigInt\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseWithBigInt|x64'">
+    <OutputPath>bin\x64\ReleaseWithBigInt\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ExperimentalCode\CustomDec.cs" />
+    <Compile Include="ExperimentalCode\CustomOrderedDictionary.cs" />
+    <Compile Include="ExperimentalCode\CustomListSet.cs" />
+    <Compile Include="ExperimentalCode\Formula.cs" />
+    <Compile Include="ExperimentalCode\MediumDecPoint.cs" />
+    <Compile Include="ExperimentalCode\MediumDecVector.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_IEquatable.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_MathBasedFunctions.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_MultiplicativeOperations.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_OtherFormulas.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_StandardConversions.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_TypeDescriptors.cs" />
+    <Compile Include="ExperimentalCode\PrivateFieldAccessor.cs" />
+    <Compile Include="ExperimentalCode\SmallDecCollection.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_IEquatable.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_MathBasedFunctions.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_MultiplicativeOperations.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_OtherFormulas.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_StandardConversions.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_TypeDescriptors.cs" />
+    <Compile Include="ExperimentalCode\SuperDecSharedCode.cs" />
+    <Compile Include="ExperimentalCode\SuperDec_ExtraDec64_19Decimal.cs" />
+    <Compile Include="ExperimentalCode\SmallDec.cs" />
+    <Compile Include="ExperimentalCode\MediumDec.cs" />
+    <Compile Include="ExperimentalCode\SuperDec_LargeDec_OperatorFunctions.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_OperatorFunctions.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_OtherConversions.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_Rounding.cs" />
+    <Compile Include="ExperimentalCode\MediumDec_TrigometricFunctions.cs" />
+    <Compile Include="ExperimentalCode\SuperDec_ModerateDec_OperatorFunctions.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_OperatorFunctions.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_OtherConversions.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_Rounding.cs" />
+    <Compile Include="ExperimentalCode\SmallDec_TrigometricFunctions.cs" />
+    <Compile Include="ExperimentalCode\ValidationOverride.cs" />
+    <Compile Include="ExperimentalCode\VariableData.cs" />
+    <Compile Include="Databases\IniData.cs" />
+    <Compile Include="Databases\IniDataV2.cs" />
+    <Compile Include="SharedCode_NodeTrees\HavokActionTree.cs" />
+    <Compile Include="SharedCode_NodeTrees\NifNodeTree.cs" />
+    <Compile Include="SharedCode_NodeTrees\NodeTreeGlobals.cs" />
+    <Compile Include="SharedCode_NodeTrees\StringTree.cs" />
+    <Compile Include="SharedCode_NodeTrees\TagPosition.cs" />
+    <Compile Include="SharedCode_NodeTrees\VariableData.cs" />
+    <Compile Include="SharedCode_NodeTrees\NodeTreeV2.cs" />
+    <Compile Include="SharedCode_NodeTrees\XMLOption.cs" />
+    <Compile Include="SharedCode_NodeTrees\XMLTagTree.cs" />
+    <Compile Include="StringFunctions\StringFunctions.cs" />
+    <Compile Include="VariableConversionFunctions\TypeDataInfo.cs" />
+    <Compile Include="VariableConversionFunctions\VariableConversionFunctions.cs" />
+    <Compile Include="VariableLists\IntegerList.cs" />
+    <Compile Include="VariableLists\MediumDecList.cs" />
+    <Compile Include="VariableLists\QuadVector.cs" />
+    <Compile Include="VariableLists\StringList.cs" />
+    <Compile Include="VariableLists\XIntegerList.cs" />
+    <Compile Include="GlobalMiscCode\FileAccessCommands.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <!--   <ItemGroup Label="GUIElements">
+    <Compile Include="ExperimentalCode\SmallDecGUIElement.xaml.cs">
+      <DependentUpon>SmallDecGUIElement.xaml</DependentUpon>
+      <Link>ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Compile Include="ExperimentalCode\SmallDecSlider.xaml.cs">
+      <DependentUpon>SmallDecSlider.xaml</DependentUpon>
+      <Link>ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Compile Include="ExperimentalCode\SmallDecUpdown.xaml.cs">
+      <DependentUpon>SmallDecGUIElement.xaml.cs</DependentUpon>
+      <DependentUpon>SmallDecUpdown.xaml</DependentUpon>
+      <Link>ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Compile Include="ExperimentalCode\SmallDecUpdownSlider.xaml.cs">
+      <DependentUpon>SmallDecUpdownSlider.xaml</DependentUpon>
+      <Link>ExperimentalCode\%(FileName)</Link>
+    </Compile>
+    <Page Include="ExperimentalCode\SmallDecUpdown.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>ExperimentalCode\%(FileName)</Link>
+    </Page>
+    <Page Include="ExperimentalCode\SmallDecUpdownSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>ExperimentalCode\%(FileName)</Link>
+    </Page>
+    <Page Include="ExperimentalCode\SmallDecSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>ExperimentalCode\%(FileName)</Link>
+    </Page>
+  </ItemGroup> -->
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,8 @@
+MFC base app code from Visual Studio Template:MFC App
+with Options:
+--[
+-Single Document
+-MFC used in DLL(<UseOfMfc>Dynamic</UseOfMfc>)
+-Classic menu with docked toolbar
+]--
+-Experimental Android support from both parts of Native Android C++ Template(AndroidNativeRelease Configuration) & Universal Windows

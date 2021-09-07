@@ -39,48 +39,48 @@
     <ClCompile Include="ExprFormulaTester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\GlobalCode\OtherFunctions\VariableConversionFunctions.cpp">
+    <ClCompile Include="..\SharedCode\OtherFunctions\VariableConversionFunctions.cpp">
       <Filter>Source Files\OtherFunctions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\GlobalCode\Databases\CustomDictionary.h">
+    <ClInclude Include="..\SharedCode\Databases\CustomDictionary.h">
       <Filter>Header Files\Databases</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\Databases\CustomOrderedDictionary.h">
+    <ClInclude Include="..\SharedCode\Databases\CustomOrderedDictionary.h">
       <Filter>Header Files\Databases</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\Databases\DataDictionary.h">
+    <ClInclude Include="..\SharedCode\Databases\DataDictionary.h">
       <Filter>Header Files\Databases</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\Databases\IndexedDictionary.h">
+    <ClInclude Include="..\SharedCode\Databases\IndexedDictionary.h">
       <Filter>Header Files\Databases</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\DLLAPI.h">
+    <ClInclude Include="..\SharedCode\DLLAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\tsl\ordered_map.h">
+    <ClInclude Include="..\SharedCode\tsl\ordered_map.h">
       <Filter>Header Files\tsl</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\AltNum\MediumDec.hpp">
+    <ClInclude Include="..\SharedCode\AltNum\MediumDec.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\AltNum\AltNumDebug.hpp">
+    <ClInclude Include="..\SharedCode\AltNum\AltNumDebug.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\AltNum\FloatingOperations.hpp">
+    <ClInclude Include="..\SharedCode\AltNum\FloatingOperations.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\AltNum\ModCheckerXX.hpp">
+    <ClInclude Include="..\SharedCode\AltNum\ModCheckerXX.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\OtherFunctions\VariableConversionFunctions.h">
+    <ClInclude Include="..\SharedCode\OtherFunctions\VariableConversionFunctions.h">
       <Filter>Header Files\OtherFunctions</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\Databases\ElementType.hpp">
+    <ClInclude Include="..\SharedCode\Databases\ElementType.hpp">
       <Filter>Header Files\Databases</Filter>
     </ClInclude>
-    <ClInclude Include="..\GlobalCode\Databases\MediumDecFormula.hpp">
+    <ClInclude Include="..\SharedCode\Databases\MediumDecFormula.hpp">
       <Filter>Header Files\Databases</Filter>
     </ClInclude>
   </ItemGroup>

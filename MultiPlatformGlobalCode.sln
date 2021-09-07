@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28917.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazesCSharpGlobalCode", "BlazesCSharpGlobalCode\BlazesCSharpGlobalCode.csproj", "{25767689-5C49-4AA6-952A-262BE9C2D682}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazesCSharpSharedCode", "BlazesCSharpSharedCode\BlazesCSharpSharedCode.csproj", "{25767689-5C49-4AA6-952A-262BE9C2D682}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GlobalCodeInfo", "GlobalCodeInfo", "{5DC1EAFD-58F9-484C-9AD1-2EF660782C36}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedCodeInfo", "SharedCodeInfo", "{5DC1EAFD-58F9-484C-9AD1-2EF660782C36}"
 	ProjectSection(SolutionItems) = preProject
-		GlobalCodeInfo\PreprocessorVariables.txt = GlobalCodeInfo\PreprocessorVariables.txt
-		GlobalCodeInfo\SuperDec_SpecialDecimalStatus.txt = GlobalCodeInfo\SuperDec_SpecialDecimalStatus.txt
+		SharedCodeInfo\PreprocessorVariables.txt = SharedCodeInfo\PreprocessorVariables.txt
+		SharedCodeInfo\SuperDec_SpecialDecimalStatus.txt = SharedCodeInfo\SuperDec_SpecialDecimalStatus.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpGlobalCodeTester", "CSharpGlobalCodeTester\CSharpGlobalCodeTester.csproj", "{94AEDC9C-2D26-4573-8E86-43C49DF83A56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSharedCodeTester", "CSharpSharedCodeTester\CSharpSharedCodeTester.csproj", "{94AEDC9C-2D26-4573-8E86-43C49DF83A56}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultiView", "GlobalCode\PagedMultiviewTreeControl\MultiView.vcxproj", "{A4C2142C-4C7A-4BE2-8020-0A2E3C59D409}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultiView", "SharedCode\PagedMultiviewTreeControl\MultiView.vcxproj", "{A4C2142C-4C7A-4BE2-8020-0A2E3C59D409}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlazesGlobalCode", "GlobalCode\BlazesGlobalCode.vcxproj", "{4EB28D56-F4EE-4139-AE46-074B01E7FDE3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlazesSharedCode", "SharedCode\BlazesSharedCode.vcxproj", "{4EB28D56-F4EE-4139-AE46-074B01E7FDE3}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExprFormulaTester", "ExprFormulaTester\ExprFormulaTester.vcxproj", "{47E09DFF-3B14-4C29-AD54-C0E68DA31D37}"
 EndProject
