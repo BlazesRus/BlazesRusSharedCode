@@ -1,4 +1,4 @@
-# BlazesRusMultiplatformSharedCode
+# BlazesRusSharedCode
 Bunch of Reusable code that I'm working on to be reused on multiple applications.
 
 Needed files:
