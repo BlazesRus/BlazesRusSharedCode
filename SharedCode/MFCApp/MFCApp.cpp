@@ -10,7 +10,7 @@
 #include "MFCFrame.h"
 
 #include "MFCDoc.h"
-#include "MFCView.h"
+#include "XMLTreeView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -36,7 +36,7 @@ MFCApp::MFCApp() noexcept
 
     // TODO: replace application ID string below with unique ID string; recommended
     // format for string is CompanyName.ProductName.SubProduct.VersionInformation
-    SetAppID(_T("MFCApp.AppID.NoVersion"));
+    SetAppID(_T("BlazesRus.MFCViewApp.1"));
 
     // TODO: add construction code here,
     // Place all significant initialization in InitInstance
@@ -74,7 +74,7 @@ BOOL MFCApp::InitInstance()
     // the specific initialization routines you do not need
 #ifdef MFCApp_UseRegistryStorage
     // Change the registry key under which our settings are stored
-    SetRegistryKey(_T("MFCApp"));// TODO: You should modify this string to be something appropriate(such as the name of your company or organization)
+    SetRegistryKey(_T("BlazesRus_MFCApp"));// TODO: You should modify this string to be something appropriate(such as the name of your company or organization)
     LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
 #else//Portable non-registry storage variant(localOnly Profile settings including last file storage)
     //Place localOnly Profile settings here instead
@@ -87,7 +87,7 @@ BOOL MFCApp::InitInstance()
         IDR_MAINFRAME,
         RUNTIME_CLASS(MFCDoc),
         RUNTIME_CLASS(MFCFrame),       // main SDI frame window
-        RUNTIME_CLASS(MFCView));//Replace MFCView with custom view derived from MFCView/CView
+        RUNTIME_CLASS(XMLTreeView));//Replace MFCView with custom view derived from MFCView/CView
     if (!pDocTemplate)
         return FALSE;
     AddDocTemplate(pDocTemplate);
