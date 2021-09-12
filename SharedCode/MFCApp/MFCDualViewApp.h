@@ -1,6 +1,3 @@
-
-// MFCApp.h : main header file for the MFCApp application
-//
 #pragma once
 
 #ifndef __AFXWIN_H__
@@ -9,15 +6,14 @@
 
 #include "MFCRes.h"       // main symbols
 
-
-// MFCApp:
-// See MFCApp.cpp for the implementation of this class
-//
-
-class MFCApp : public CWinApp
+/// <summary>
+/// MFC based template for generating applications with 2 different View types to switch between (Include MFCDualViewProcesser.h to generate Application with default generic view type)
+/// </summary>
+template <typename ViewType, typename ViewType02>
+class MFCDualViewApp : public CWinApp
 {
 public:
-    MFCApp() noexcept;
+    MFCDualViewApp() noexcept;
 
 
 // Overrides
@@ -31,5 +27,3 @@ public:
     afx_msg void OnAppAbout();
     DECLARE_MESSAGE_MAP()
 };
-
-extern MFCApp theApp;

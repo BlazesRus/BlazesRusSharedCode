@@ -1,6 +1,3 @@
-
-// MFCApp.h : main header file for the MFCApp application
-//
 #pragma once
 
 #ifndef __AFXWIN_H__
@@ -13,7 +10,10 @@
 // MFCApp:
 // See MFCApp.cpp for the implementation of this class
 //
-
+/// <summary>
+/// MFC based template for generating applications with a single view (Include MFCAppProcesser to generate Application with default generic view type)
+/// </summary>
+template <typename ViewType>
 class MFCApp : public CWinApp
 {
 public:
@@ -31,5 +31,3 @@ public:
     afx_msg void OnAppAbout();
     DECLARE_MESSAGE_MAP()
 };
-
-extern MFCApp theApp;
