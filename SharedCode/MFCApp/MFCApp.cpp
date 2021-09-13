@@ -16,6 +16,7 @@
 #define new DEBUG_NEW
 #endif
 
+#include "MFCAboutDialog.hpp"
 
 // MFCApp
 
@@ -31,7 +32,7 @@ END_MESSAGE_MAP()
 
 MFCApp::MFCApp() noexcept
 {
-    m_bHiColorIcons = TRUE;
+    //m_bHiColorIcons = TRUE;
 
 
     // TODO: replace application ID string below with unique ID string; recommended
@@ -76,7 +77,7 @@ BOOL MFCApp::InitInstance()
     // Change the registry key under which our settings are stored
     SetRegistryKey(_T("MFCApp"));// TODO: You should modify this string to be something appropriate(such as the name of your company or organization)
     LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
-#else//Portable non-registry storage variant(localOnly Profile settings including last file storage)
+#else//Portable non-registry storage variant(localOnly Profile settings including last file storage)(Default Setting when MFCApp_UseRegistryStorage is not defined as preprocessor)
     //Place localOnly Profile settings here instead
 #endif
 
@@ -87,7 +88,7 @@ BOOL MFCApp::InitInstance()
         IDR_MAINFRAME,
         RUNTIME_CLASS(MFCDoc),
         RUNTIME_CLASS(MFCFrame),       // main SDI frame window
-        RUNTIME_CLASS(MFCView));//Replace MFCView with custom view derived from MFCView/CView
+        RUNTIME_CLASS(ViewType));//Replace MFCView with custom view derived from MFCView/CView
     if (!pDocTemplate)
         return FALSE;
     AddDocTemplate(pDocTemplate);
@@ -109,43 +110,10 @@ BOOL MFCApp::InitInstance()
 
 // MFCApp message handlers
 
-
-// CAboutDlg dialog used for App About
-
-class CAboutDlg : public CDialogEx
-{
-public:
-    CAboutDlg() noexcept;
-
-// Dialog Data
-#ifdef AFX_DESIGN_TIME
-    enum { IDD = IDD_ABOUTBOX };
-#endif
-
-protected:
-    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-
-// Implementation
-protected:
-    DECLARE_MESSAGE_MAP()
-};
-
-CAboutDlg::CAboutDlg() noexcept : CDialogEx(IDD_ABOUTBOX)
-{
-}
-
-void CAboutDlg::DoDataExchange(CDataExchange* pDX)
-{
-    CDialogEx::DoDataExchange(pDX);
-}
-
-BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
-END_MESSAGE_MAP()
-
 // App command to run the dialog
 void MFCApp::OnAppAbout()
 {
-    CAboutDlg aboutDlg;
+    MFCAboutDialog aboutDlg;
     aboutDlg.DoModal();
 }
 

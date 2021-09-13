@@ -4,7 +4,6 @@
 
 /*============================================================================*/
 // Helper macros for declaring CRuntimeClass compatible classes with Template arguments added
-
 //(based off https://stackoverflow.com/questions/1491971/mfc-implement-dyncreate-with-template)
 #define _RUNTIME_CLASS01(class_name, template_class) ((CRuntimeClass*)(&class_name<template_class>::class##class_name##_##template_class))
 #ifdef _AFXDLL
