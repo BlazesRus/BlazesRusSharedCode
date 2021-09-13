@@ -10,7 +10,7 @@
 #ifndef __AFXWIN_H__
 #error "include 'MultiviewPrecompile.h' before including this file for PCH"
 #endif
-#include "TemplateMacros.h"
+#include "OtherFunctions/MFCMacros.h"
 
 #if !defined(ID_APP_ABOUT)
     #define ID_APP_ABOUT 0xE140

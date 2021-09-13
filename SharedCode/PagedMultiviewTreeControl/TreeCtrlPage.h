@@ -2,7 +2,7 @@
 #define TreeCtrlPage_IncludeGuard
 
 #include "MultiviewPrecompile.h"
-#include "TemplateMacros.h"
+#include "OtherFunctions/MFCMacros.h"
 #include "CustomTreeNode.h"
 #include "CustomTreeCtrl.h"
 //#include "ExperimentalCode/VirtualType.h"

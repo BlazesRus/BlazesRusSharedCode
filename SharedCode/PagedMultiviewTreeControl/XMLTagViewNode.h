@@ -6,7 +6,7 @@
 #define XMLTagViewNode_IncludeGuard
 
 #include "MultiviewPrecompile.h"
-#include "TemplateMacros.h"
+#include "OtherFunctions/MFCMacros.h"
 #include "CustomTreeNode.h"
 #include "IniData/IniDataV2.h"
 

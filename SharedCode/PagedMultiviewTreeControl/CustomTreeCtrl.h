@@ -15,7 +15,7 @@
 #include "ContextMenu.h"
 #include "DLG_TreeNodeText.h"
 //#include "CustomTreeNode.h"
-//#include "TemplateMacros.h"
+//#include "OtherFunctions/MFCMacros.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

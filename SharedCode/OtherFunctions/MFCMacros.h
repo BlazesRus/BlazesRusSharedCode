@@ -1,9 +1,9 @@
-#ifndef TemplateMacros_IncludeGuard
-#define TemplateMacros_IncludeGuard
+#ifndef MFCMacros_IncludeGuard
+#define MFCMacros_IncludeGuard
 #pragma once
 
 /*============================================================================*/
-// Helper macros for declaring CRuntimeClass compatible classes with Template arguments added(adding 01 suffix to prevent conflicts with default AFX macros)
+// Helper macros for declaring CRuntimeClass compatible classes with Template arguments added
 
 //(based off https://stackoverflow.com/questions/1491971/mfc-implement-dyncreate-with-template)
 #define _RUNTIME_CLASS01(class_name, template_class) ((CRuntimeClass*)(&class_name<template_class>::class##class_name##_##template_class))
@@ -360,4 +360,4 @@ inline AFX_COMDAT const CRuntimeClass class_name::DEFINERTCNAME(class_name) = { 
 		static const AFX_MSGMAP_ENTRY _messageEntries[] =  \
 		{
 
-#endif // TemplateMacros_IncludeGuard
+#endif // MFCMacros_IncludeGuard

@@ -3,7 +3,7 @@
 
 #include "MultiviewPrecompile.h"
 #include "CustomTreeView.h"
-#include "TemplateMacros.h"
+#include "OtherFunctions/MFCMacros.h"
 #include "TreePageNode.h"
 #include <typeinfo>
 

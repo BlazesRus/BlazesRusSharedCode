@@ -10,7 +10,7 @@
 #ifndef __AFXWIN_H__
 #error "include 'MultiviewPrecompile.h' before including this file for PCH"
 #endif
-#include "TemplateMacros.h"
+#include "OtherFunctions/MFCMacros.h"
 
 #include "resource.h"       // main symbols
 

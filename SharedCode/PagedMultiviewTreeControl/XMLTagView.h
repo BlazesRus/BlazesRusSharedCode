@@ -7,7 +7,7 @@
 
 #include "MultiviewPrecompile.h"
 #include "CustomTreeView.h"
-#include "TemplateMacros.h"
+#include "OtherFunctions/MFCMacros.h"
 #include "XMLTagViewNode.h"
 #include <typeinfo>
 #include <string>

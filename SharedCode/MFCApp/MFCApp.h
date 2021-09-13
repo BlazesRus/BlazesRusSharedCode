@@ -11,7 +11,7 @@
 // See MFCApp.cpp for the implementation of this class
 //
 /// <summary>
-/// MFC based template for generating applications with a single view (Include MFCAppProcesser to generate Application with default generic view type)
+/// MFC based template for generating applications with a single view (Include MFCAppProcesser.h to generate Application with default generic view type)
 /// </summary>
 template <typename ViewType>
 class MFCApp : public CWinApp

@@ -134,7 +134,7 @@
     <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\CustomTreeCtrl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\TemplateMacros.h">
+    <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\MFCMacros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\TreeCtrlPage.h">

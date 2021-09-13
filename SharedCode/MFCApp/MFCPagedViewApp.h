@@ -5,13 +5,11 @@
 #endif
 
 #include "MFCRes.h"       // main symbols
-#include "MFCView.h"//Default view type
 
-// MFCApp:
-// See MFCApp.cpp for the implementation of this class
-//
-
-template <typename ViewType=MFCView>
+/// <summary>
+/// MFC based template for generating applications with a single view (Include MFCAppProcesser.h to generate Application with default generic view type)
+/// </summary>
+template <typename ViewType>
 class MFCApp : public CWinApp
 {
 public:
@@ -29,5 +27,3 @@ public:
     afx_msg void OnAppAbout();
     DECLARE_MESSAGE_MAP()
 };
-
-//extern MFCApp theApp;

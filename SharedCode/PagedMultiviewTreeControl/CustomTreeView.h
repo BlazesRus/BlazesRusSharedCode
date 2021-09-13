@@ -14,7 +14,7 @@
 #include "MultiviewPrecompile.h"
 #include "ContextMenu.h"
 #include "DLG_TreeNodeText.h"
-#include "TemplateMacros.h"
+#include "OtherFunctions/MFCMacros.h"
 #include <string>
 #include <typeinfo>
 #include "IniData/IndexedDictionary.h"

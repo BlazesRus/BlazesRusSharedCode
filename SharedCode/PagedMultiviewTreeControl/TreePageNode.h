@@ -6,7 +6,7 @@
 #define TreePageNode_IncludeGuard
 
 #include "MultiviewPrecompile.h"
-#include "TemplateMacros.h"
+#include "OtherFunctions/MFCMacros.h"
 #include "CustomTreeNode.h"
 
 /// <summary>

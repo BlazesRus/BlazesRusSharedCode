@@ -289,7 +289,7 @@
     <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\CustomTreeCtrl.h" />
     <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\CustomTreeView.h" />
     <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\DLG_TreeNodeText.h" />
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\TemplateMacros.h" />
+    <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\MFCMacros.h" />
     <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\TreeCtrlPage.h" />
     <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\TreePage.h" />
     <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\TreePageNode.h" />
