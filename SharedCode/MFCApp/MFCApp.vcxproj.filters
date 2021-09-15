@@ -28,6 +28,15 @@
     <Filter Include="ViewFiles">
       <UniqueIdentifier>{2a69c0b5-4589-4d75-b6c6-9bbc42bc0584}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OtherOptionalAppTypes">
+      <UniqueIdentifier>{8016c8a4-9a96-45a0-8787-da4013e6499f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TemporaryMainFiles">
+      <UniqueIdentifier>{3d7ffc40-306a-47ee-9c60-11818867a0b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NonWorkingFiles">
+      <UniqueIdentifier>{65eee5e6-6345-40f7-90f8-c81a5fc4161c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_set.h">
@@ -78,11 +87,41 @@
     <ClInclude Include="$(BlazesSharedCode)\Databases\CustomOrderedDictionary.h">
       <Filter>BlazesRusSharedCode\Unused</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="MFCApp.h">
+    <ClInclude Include="MFCView.h">
+      <Filter>ViewFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OtherFunctions\MFCMacros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\OtherFunctions\MFCMacrosV2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCDualViewApp.h">
+      <Filter>OtherOptionalAppTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCDualViewProcesser.h">
+      <Filter>OtherOptionalAppTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCPagedViewApp.h">
+      <Filter>OtherOptionalAppTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCPaggedViewProcesser.h">
+      <Filter>OtherOptionalAppTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="AboutDialog.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCAppWithoutTemplate.h">
+      <Filter>TemporaryMainFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCApp.h">
+      <Filter>NonWorkingFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCAppProcesser.h">
+      <Filter>NonWorkingFiles</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="MFCFramework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -93,9 +132,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MFCDoc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MFCView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MFCRes.h">
@@ -147,6 +183,24 @@
     </ClCompile>
     <ClCompile Include="$(BlazesSharedCode)\VariableLists\VariableVectorFunctions.cpp">
       <Filter>BlazesRusSharedCode</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCDualViewApp.cpp">
+      <Filter>OtherOptionalAppTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCDualViewProcesser.cpp">
+      <Filter>OtherOptionalAppTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCPagedViewApp.cpp">
+      <Filter>OtherOptionalAppTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCPaggedViewProcesser.cpp">
+      <Filter>OtherOptionalAppTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCAppWithoutTemplate.cpp">
+      <Filter>TemporaryMainFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCAppProcesser.cpp">
+      <Filter>NonWorkingFiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

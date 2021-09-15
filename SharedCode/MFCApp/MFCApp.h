@@ -1,11 +1,23 @@
 #pragma once
 
+//#include "MFCpch.h"
 #ifndef __AFXWIN_H__
     #error "include 'MFCpch.h' before including this file for PCH"
 #endif
 
 #include "MFCRes.h"       // main symbols
 #include "OtherFunctions/MFCMacros.h"
+#include "AboutDialog.hpp"
+
+#include "MFCFramework.h"
+#include "afxwinappex.h"
+#include "afxdialogex.h"
+#include "MFCApp.h"
+#include "MFCFrame.h"
+
+#include "MFCDoc.h"
+#include "MFCView.h"
+
 
 // MFCApp:
 // See MFCApp.cpp for the implementation of this class
@@ -17,7 +29,16 @@ template <typename ViewType>
 class MFCApp : public CWinApp
 {
 public:
-    MFCApp() noexcept;
+    MFCApp() noexcept
+    {
+        // TODO: add construction code here,
+        // Place all significant initialization in InitInstance
+        //m_bHiColorIcons = TRUE;
+
+        // TODO: replace application ID string below with unique ID string; recommended
+        // format for string is CompanyName.ProductName.SubProduct.VersionInformation
+        SetAppID(_T("MFCApp.AppID.NoVersion"));
+    }
 
 // Overrides
 public:
@@ -27,52 +48,103 @@ public:
     //UINT  m_nAppLook;//Removed since only going to use one app look type
     //BOOL  m_bHiColorIcons;//Not sure if needed?
 
-    afx_msg void OnAppAbout();
-    DECLARE_MESSAGE_MAP()
-//protected:
-//	/// <summary>
-//	/// Gets this message map.
-//	/// </summary>
-//	/// <returns>const AFX_MSGMAP *.</returns>
-//	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
-//	{
-//		__pragma(warning(push))
-//		__pragma(warning(disable: 4640))
-//		static const AFX_MSGMAP_ENTRY _messageEntries[] =
-//		{
-//			//ON_WM_PAINT()
-//			//ON_WM_SIZE()
-//			//ON_WM_VSCROLL()
-//			//ON_WM_LBUTTONUP()
-//			//ON_WM_MOUSEWHEEL()
-//			//ON_WM_CONTEXTMENU()
-//			//ON_COMMAND(CM_INSERTCHILD, &OnCM_InsertChild)
-//			//ON_COMMAND(CM_INSERTSIBLING, &OnCM_InsertSibling)
-//			//ON_COMMAND(CM_DELETENODE, &OnCM_DeleteNode)
-//			//ON_COMMAND(CM_MODIFYNODETEXT, &OnCM_ModifyNodeText)
-//			//ON_COMMAND(CM_CHANGENODECOLOR, &OnCM_ChangeNodeColor)
-//			//ON_COMMAND(CM_TOGGLECONNECTINGLINES, &OnCM_ToggleConnectingLines)
-//			//ON_COMMAND(CM_SETCONNECTINGLINESCOLOR, &OnCM_SetConnectingLinesColor)
-//			//ON_COMMAND(CM_SETFONT, &OnCM_SetFont)
-//			//ON_COMMAND(CM_SETDEFAULTCOLOR, &OnCM_SetDefaultColor)
-//			//ON_COMMAND(CM_SETBACKGROUNDBITMAP, &OnCM_SetBackgroundBitmap)
-//			{
-// 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0
-//			}
-//		};
-//		__pragma(warning(pop))
-//		/// <summary>
-//		/// The message map
-//		/// </summary>
-//		static const AFX_MSGMAP messageMap =
-//		{ &CWinApp::GetThisMessageMap, &_messageEntries[0] };
-//		return &messageMap;
-//	}
-//public:
-//	virtual const AFX_MSGMAP* GetMessageMap() const
-//	{
-//		return GetThisMessageMap();
-//	}
+    afx_msg void OnAppAbout()
+    {
+        MFCAboutDialog aboutDlg;
+        aboutDlg.DoModal();
+    }
+    //DECLARE_MESSAGE_MAP()
+protected:
+    /// <summary>
+    /// Gets this message map.
+    /// </summary>
+    /// <returns>const AFX_MSGMAP *.</returns>
+    static const AFX_MSGMAP* PASCAL GetThisMessageMap()
+    {
+        __pragma(warning(push))
+        __pragma(warning(disable: 4640))
+        static const AFX_MSGMAP_ENTRY _messageEntries[] =
+        {
+            ON_COMMAND(ID_APP_ABOUT, &MFCApp<ViewType>::OnAppAbout)
+            // Standard file based document commands
+            ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
+            ON_COMMAND(ID_FILE_OPEN, &CWinApp::OnFileOpen)
+            { 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }
+        };
+        __pragma(warning(pop))
+        /// <summary>
+        /// The message map
+        /// </summary>
+        static const AFX_MSGMAP messageMap = { &CWinApp::GetThisMessageMap, &_messageEntries[0] }
+        return &messageMap;
+    }
+public:
+    virtual const AFX_MSGMAP* GetMessageMap() const
+    {
+        return GetThisMessageMap();
+    }
 };
+
+//template <typename ViewType>
+//extern MFCApp<ViewType> theApp;
+
+template <typename ViewType>
+BOOL MFCApp<ViewType>::InitInstance()
+{
+    // InitCommonControlsEx() is required on Windows XP if an application
+    // manifest specifies use of ComCtl32.dll version 6 or later to enable
+    // visual styles.  Otherwise, any window creation will fail.
+    INITCOMMONCONTROLSEX InitCtrls;
+    InitCtrls.dwSize = sizeof(InitCtrls);
+    // Set this to include all the common control classes you want to use
+    // in your application.
+    InitCtrls.dwICC = ICC_WIN95_CLASSES;
+    InitCommonControlsEx(&InitCtrls);
+    
+    CWinApp::InitInstance();
+    
+    EnableTaskbarInteraction(FALSE);
+    
+    // AfxInitRichEdit2() is required to use RichEdit control
+    // AfxInitRichEdit2();
+    
+    // Standard initialization
+    // If you are not using these features and wish to reduce the size
+    // of your final executable, you should remove from the following
+    // the specific initialization routines you do not need
+#ifdef MFCApp_UseRegistryStorage
+    // Change the registry key under which our settings are stored
+    SetRegistryKey(_T("MFCApp"));// TODO: You should modify this string to be something appropriate(such as the name of your company or organization)
+    LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
+#else//Portable non-registry storage variant(localOnly Profile settings including last file storage)(Default Setting when MFCApp_UseRegistryStorage is not defined as preprocessor)
+    //Place localOnly Profile settings here instead
+#endif
+    
+    // Register the application's document templates.  Document templates
+    //  serve as the connection between documents, frame windows and views
+    CSingleDocTemplate* pDocTemplate;
+    pDocTemplate = new CSingleDocTemplate(
+        IDR_MAINFRAME,
+        RUNTIME_CLASS(MFCDoc),
+        RUNTIME_CLASS(MFCFrame),       // main SDI frame window
+        RUNTIME_CLASS(ViewType));//Replace MFCView with custom view derived from MFCView/CView
+    if (!pDocTemplate)
+        return FALSE;
+    AddDocTemplate(pDocTemplate);
+    
+    // Parse command line for standard shell commands, DDE, file open
+    CCommandLineInfo cmdInfo;
+    ParseCommandLine(cmdInfo);
+    
+    // Dispatch commands specified on the command line.  Will return FALSE if
+    // app was launched with /RegServer, /Register, /Unregserver or /Unregister.
+    if (!ProcessShellCommand(cmdInfo))
+        return FALSE;
+    
+    // The one and only window has been initialized, so show and update it
+    m_pMainWnd->ShowWindow(SW_SHOW);
+    m_pMainWnd->UpdateWindow();
+    return TRUE;
+}
 
 //inline AFX_COMDAT const CRuntimeClass MFCApp::classMFCApp = { "MFCApp", sizeof(MFCApp), 0xFFFF, NULL,&MFCApp::_GetBaseClass, NULL, NULL };

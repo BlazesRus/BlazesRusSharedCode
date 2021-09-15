@@ -19,7 +19,6 @@ IMPLEMENT_DYNCREATE(MFCFrame, CFrameWnd)
 BEGIN_MESSAGE_MAP(MFCFrame, CFrameWnd)
     ON_WM_CREATE()
     ON_COMMAND_RANGE(ID_VIEW_APPLOOK_WINDOWS_7, ID_VIEW_APPLOOK_WINDOWS_7, &MFCFrame::OnApplicationLook)
-    ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_WINDOWS_7, ID_VIEW_APPLOOK_WINDOWS_7, &MFCFrame::OnUpdateApplicationLook)
     ON_WM_SETTINGCHANGE()
 END_MESSAGE_MAP()
 
@@ -94,7 +93,7 @@ BOOL MFCFrame::CreateDockingWindows()
         return FALSE; // failed to create
     }
 
-    SetDockingWindowIcons(theApp.m_bHiColorIcons);
+    SetDockingWindowIcons(true);
     return TRUE;
 }
 
@@ -126,20 +125,13 @@ void MFCFrame::OnApplicationLook(UINT id)
 {
     CWaitCursor wait;
 
-    theApp.m_nAppLook = id;
-
-	//Only Supporting ID_VIEW_APPLOOK_WINDOWS_7 or greater app look visuals
+    //Only Supporting ID_VIEW_APPLOOK_WINDOWS_7 or greater app look visuals
     CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerWindows7));
     CDockingManager::SetDockingMode(DT_SMART);
 
     m_wndOutput.UpdateFonts();
     RedrawWindow(nullptr, nullptr, RDW_ALLCHILDREN | RDW_INVALIDATE | RDW_UPDATENOW | RDW_FRAME | RDW_ERASE);
 
-}
-
-void MFCFrame::OnUpdateApplicationLook(CCmdUI* pCmdUI)
-{
-    pCmdUI->SetRadio(theApp.m_nAppLook == pCmdUI->m_nID);
 }
 
 
