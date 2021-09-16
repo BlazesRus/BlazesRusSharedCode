@@ -1,17 +1,17 @@
 #pragma once
 
-//#include "MFCpch.h"
+#include "MFCpch.h"
 #ifndef __AFXWIN_H__
     #error "include 'MFCpch.h' before including this file for PCH"
 #endif
 
 #include "MFCRes.h"       // main symbols
 #include "OtherFunctions/MFCMacros.h"
-#include "AboutDialog.hpp"
+#include "AboutDlg.hpp"
 
 #include "MFCFramework.h"
 #include "afxwinappex.h"
-#include "afxdialogex.h"
+//#include "afxdialogex.h"
 #include "MFCApp.h"
 #include "MFCFrame.h"
 
@@ -50,34 +50,30 @@ public:
 
     afx_msg void OnAppAbout()
     {
-        MFCAboutDialog aboutDlg;
+        AboutDlg aboutDlg;
         aboutDlg.DoModal();
     }
-    //DECLARE_MESSAGE_MAP()
-protected:
-    /// <summary>
-    /// Gets this message map.
-    /// </summary>
-    /// <returns>const AFX_MSGMAP *.</returns>
+protected://DECLARE_MESSAGE_MAP()
     static const AFX_MSGMAP* PASCAL GetThisMessageMap()
     {
         __pragma(warning(push))
-        __pragma(warning(disable: 4640))
+        __pragma(warning(disable: 4640)) /* message maps can only be called by single threaded message pump */
         static const AFX_MSGMAP_ENTRY _messageEntries[] =
         {
+            //	//{{AFX_MSG_MAP(CAboutDlg)
             ON_COMMAND(ID_APP_ABOUT, &MFCApp<ViewType>::OnAppAbout)
             // Standard file based document commands
             ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
             ON_COMMAND(ID_FILE_OPEN, &CWinApp::OnFileOpen)
-            { 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }
+            //	//}}AFX_MSG_MAP
+            {	0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }
         };
         __pragma(warning(pop))
-        /// <summary>
-        /// The message map
-        /// </summary>
-        static const AFX_MSGMAP messageMap = { &CWinApp::GetThisMessageMap, &_messageEntries[0] }
+            static const AFX_MSGMAP messageMap =
+        { &CDialog::GetThisMessageMap, &_messageEntries[0] };
         return &messageMap;
     }
+
 public:
     virtual const AFX_MSGMAP* GetMessageMap() const
     {

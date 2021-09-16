@@ -108,7 +108,7 @@
     <ClInclude Include="MFCPaggedViewProcesser.h">
       <Filter>OtherOptionalAppTypes</Filter>
     </ClInclude>
-    <ClInclude Include="AboutDialog.hpp">
+    <ClInclude Include="AboutDlg.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MFCAppWithoutTemplate.h">
@@ -148,9 +148,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MFCApp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MFCFrame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -200,6 +197,9 @@
       <Filter>TemporaryMainFiles</Filter>
     </ClCompile>
     <ClCompile Include="MFCAppProcesser.cpp">
+      <Filter>NonWorkingFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCApp.cpp">
       <Filter>NonWorkingFiles</Filter>
     </ClCompile>
   </ItemGroup>
