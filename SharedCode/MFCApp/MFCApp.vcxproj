@@ -58,8 +58,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
 	<WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'!='AndroidNativeRelease' And '$(Configuration)'=='Release'" Label="Android Configuration">
-    <!--Univeral Windows Template Version-->
+  <PropertyGroup Condition="'$(Platform)'=='ARM64' And '$(Configuration)'!='AndroidNativeRelease'"  Label="Android Configuration(Univeral Windows Template Version)">
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='AndroidNativeRelease'" Label="Android Native Configuration">
@@ -76,12 +75,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
     <BlazesSharedCode>C:\UserFiles\GitHub\BlazesRusSharedCode\SharedCode</BlazesSharedCode>
+	<!--<MFCAppDir>$(BlazesSharedCode)\MFCApp</BlazesSharedCode>-->
+	<MFCCompile>C:\UserFiles\GitHub\MFC</MFCCompile>
     <BoostDir>C:/UserFiles/ProgrammingLibraries/BoostLib/</BoostDir>
     <ParallelMap>C:/UserFiles/GitHub/Parallel-Hashmap/</ParallelMap>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
@@ -95,118 +92,101 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='AndroidNativeRelease|ARM64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(BlazesSharedCode);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(BlazesSharedCode);</IncludePath>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug' And '$(Platform)'!='ARM64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='AndroidNativeRelease|ARM64'">
+    <IncludePath>$(VC_IncludePath);$(BlazesSharedCode);</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'!='ARM64'">
     <ClCompile>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <SDLCheck>true</SDLCheck>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking Condition="'$(Configuration)'=='Release'">true</FunctionLevelLinking>
+      <IntrinsicFunctions Condition="'$(Configuration)'=='Release'">true</IntrinsicFunctions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">NDEBUG;WIN32;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode Condition="'$(Configuration)'=='Release'">true</ConformanceMode>
+      <RuntimeLibrary Condition="'$(Configuration)'=='Debug'">MultiThreadedDebugDLL</RuntimeLibrary>
+      <DebugInformationFormat  Condition="'$(Configuration)'=='Debug'">ProgramDatabase</DebugInformationFormat>
+      <Optimization Condition="'$(Configuration)'=='Debug'">Disabled</Optimization>
+      <Optimization Condition="'$(Configuration)'=='Release'">Enabled</Optimization>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>MFCpch.h</PrecompiledHeaderFile>
-      <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdc17</LanguageStandard_C>
-      <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdc17</LanguageStandard_C>
-      <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdc17</LanguageStandard_C>
-      <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdc17</LanguageStandard_C>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
-      <SubSystem Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MachineX86</SubSystem>
-      <SubSystem Condition="'$(Configuration)|$(Platform)'!='Release|Win32'">Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem Condition="'$(Platform)'=='Win32'">MachineX86</SubSystem>
+      <SubSystem Condition="'$(Platform)'!='Win32'">Windows</SubSystem>
+      <GenerateDebugInformation Condition="'$(Configuration)'=='Debug'">true</GenerateDebugInformation>
+      <GenerateDebugInformation Condition="'$(Configuration)'=='Release'">false</GenerateDebugInformation>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <ValidateAllParameters>true</ValidateAllParameters>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ResourceCompile>
       <Culture>0x0409</Culture>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release' And '$(Platform)'!='ARM64'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>IncludeAltDec;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>MFCpch.h</PrecompiledHeaderFile>
-      <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdc17</LanguageStandard_C>
-      <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdc17</LanguageStandard_C>
-    </ClCompile>
-    <Link>
-      <SubSystem Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MachineX86</SubSystem>
-      <SubSystem Condition="'$(Configuration)|$(Platform)'!='Release|Win32'">Windows</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
-    </Link>
-    <Midl>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <ValidateAllParameters>true</ValidateAllParameters>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </Midl>
-    <ResourceCompile>
-      <Culture>0x0409</Culture>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='AndroidNativeRelease|ARM64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='AndroidNativeRelease'">
     <ClCompile>
       <PreprocessorDefinitions>USING_ANDROID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>MFCpch.h</PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <LibraryDependencies>%(LibraryDependencies);GLESv1_CM;EGL;USING_ANDROID;</LibraryDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='ARM64' And '$(Configuration)'!='AndroidNativeRelease'">
     <ClCompile>
-      <PreprocessorDefinitions>USING_ANDROID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking Condition="'$(Configuration)'=='Release'">true</FunctionLevelLinking>
+      <IntrinsicFunctions Condition="'$(Configuration)'=='Release'">true</IntrinsicFunctions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">_DEBUG;USING_ANDROID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">NDEBUG;USING_ANDROID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode Condition="'$(Configuration)'=='Release'">true</ConformanceMode>
+      <RuntimeLibrary Condition="'$(Configuration)'=='Debug'">MultiThreadedDebugDLL</RuntimeLibrary>
+      <DebugInformationFormat  Condition="'$(Configuration)'=='Debug'">ProgramDatabase</DebugInformationFormat>
+      <Optimization Condition="'$(Configuration)'=='Debug'">Disabled</Optimization>
+      <Optimization Condition="'$(Configuration)'=='Release'">Enabled</Optimization>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>MFCpch.h</PrecompiledHeaderFile>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <LibraryDependencies>%(LibraryDependencies);USING_ANDROID;</LibraryDependencies>
+      <GenerateDebugInformation Condition="'$(Configuration)'=='Debug'">true</GenerateDebugInformation>
+      <GenerateDebugInformation Condition="'$(Configuration)'=='Release'">false</GenerateDebugInformation>
+      <LibraryDependencies>USING_ANDROID;%(LibraryDependencies)</LibraryDependencies>
     </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <ClCompile>
-      <PreprocessorDefinitions>USING_ANDROID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>MFCpch.h</PrecompiledHeaderFile>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
-    </ClCompile>
-    <Link>
-      <LibraryDependencies>%(LibraryDependencies);USING_ANDROID;</LibraryDependencies>
-    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">USING_ANDROID;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">USING_ANDROID;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">USING_ANDROID;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">USING_ANDROID;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup Label="AndroidIncludes">
-    <ClInclude Include="..\OtherFunctions\MFCMacros.h" />
-    <ClInclude Include="..\OtherFunctions\MFCMacrosV2.h" />
     <ClInclude Include="android_native_app_glue.h">
       <ExcludedFromBuild Condition="'$(Configuration)'!='AndroidNativeRelease'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)'=='AndroidNativeRelease'">false</ExcludedFromBuild>
@@ -217,12 +197,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup Label="SharedCodeIncludes">
-    <!--     <ClCompile Include="$(BlazesSharedCode)\QuadVector\QuadVector.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\QuadVector\QuadVectorFunctions.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile> -->
     <ClCompile Include="$(BlazesSharedCode)\OtherFunctions\StringFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -248,10 +222,6 @@
     <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableList.h" />
     <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableTypeLists.h" />
     <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableVectorFunctions.h" />
-    <!--
-    <ClInclude Include="$(BlazesSharedCode)\QuadVector\QuadVector.h" />
-    <ClInclude Include="$(BlazesSharedCode)\QuadVector\QuadVectorFunctions.h" />
--->
     <!-- End of String Features and List Functions-->
     <ClInclude Include="$(BlazesSharedCode)\Databases\DataDictionary.h">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -264,7 +234,21 @@
     <ClInclude Include="$(BlazesSharedCode)\Databases\ArgList.h" />
     <ClInclude Include="$(BlazesSharedCode)\Databases\UIntDic.h" />
     <ClInclude Include="$(BlazesSharedCode)\Databases\IniRegistry.h" />
+	<ClInclude Include="$(BlazesSharedCode)\OtherFunctions\MFCMacros.h" />
+    <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\MFCMacrosV2.h" />
   </ItemGroup>
+  <!-- 
+  <ItemGroup>
+    <ClInclude Include="$(BlazesSharedCode)\QuadVector\QuadVector.h" />
+    <ClInclude Include="$(BlazesSharedCode)\QuadVector\QuadVectorFunctions.h" />
+	<ClCompile Include="$(BlazesSharedCode)\QuadVector\QuadVector.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(BlazesSharedCode)\QuadVector\QuadVectorFunctions.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+-->
   <ItemGroup>
     <ClInclude Include="AboutDlg.hpp" />
     <ClInclude Include="MFCFramework.h" />
@@ -312,12 +296,37 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>
+  <!--
+  <ItemGroup Label="Universal Windows varient of app">
+	<ClInclude Include="MFCUniversalApp.xaml.h">
+        <DependentUpon>MFCUniversalApp.xaml</DependentUpon>
+    </ClInclude>
+    <ApplicationDefinition Include="MFCUniversalApp.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <ClInclude Include="MainPage.xaml.h">
+        <DependentUpon>MainPage.xaml</DependentUpon>
+    </ClInclude>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+	<ClCompile Include="MFCUniversalApp.xaml.cpp">
+        <DependentUpon>MFCUniversalApp.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="MainPage.xaml.cpp">
+        <DependentUpon>MainPage.xaml</DependentUpon>
+    </ClCompile>
+  </ItemGroup>
+  -->
   <ItemGroup>
     <ClInclude Include="MFCApp.h">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
+      <ExcludedFromBuild>false</ExcludedFromBuild>
     </ClInclude>
     <ClCompile Include="MFCApp.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
+      <ExcludedFromBuild>false</ExcludedFromBuild>
     </ClCompile>
     <ClInclude Include="MFCAppProcesser.h">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -326,10 +335,10 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
 	<ClInclude Include="MFCAppWithoutTemplate.h">
-      <ExcludedFromBuild>false</ExcludedFromBuild>
+      <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClInclude>
     <ClCompile Include="MFCAppWithoutTemplate.cpp">
-      <ExcludedFromBuild>false</ExcludedFromBuild>
+      <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
