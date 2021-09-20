@@ -17,6 +17,15 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+	<!--ARM/ARM64 Android configurations not working in current set up(Need to fix later to get it compiling the C++ into Android app-->
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|ARM64">
       <Configuration>Release</Configuration>
       <Platform>ARM64</Platform>
@@ -25,8 +34,36 @@
       <Configuration>Release</Configuration>
       <Platform>ARM64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="AndroidNativeRelease|ARM64">
-      <Configuration>AndroidNativeRelease</Configuration>
+    <ProjectConfiguration Include="VS2022Debug|Win32">
+      <Configuration>VS2022Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2022Release|Win32">
+      <Configuration>VS2022Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2022Debug|x64">
+      <Configuration>VS2022Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2022Release|x64">
+      <Configuration>VS2022Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2022Debug|ARM">
+      <Configuration>VS2022Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2022Release|ARM">
+      <Configuration>VS2022Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2022Debug|ARM64">
+      <Configuration>VS2022Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2022Release|ARM64">
+      <Configuration>VS2022Release</Configuration>
       <Platform>ARM64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -46,24 +83,23 @@
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'!='AndroidNativeRelease'" Label="Configuration">
-    <!-- 142 for VS2019;143 for VS2022(Default)-->
+  <!-- 142 for VS2019(Default);143 for VS2022-->
+  <PropertyGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'" Label="Configuration">
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)'=='VS2022Debug' Or '$(Configuration)'=='VS2022Release'" Label="Configuration">
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
 	<WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'" Label="Release Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
 	<WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Platform)'=='ARM64' And '$(Configuration)'!='AndroidNativeRelease'"  Label="Android Configuration(Univeral Windows Template Version)">
+  <PropertyGroup Condition="'$(Platform)'=='ARM64' Or '$(Platform)'=='ARM'"  Label="Android Configuration">
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='AndroidNativeRelease'" Label="Android Native Configuration">
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>Clang_5_0</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -76,7 +112,7 @@
   <PropertyGroup Label="UserMacros">
     <BlazesSharedCode>C:\UserFiles\GitHub\BlazesRusSharedCode\SharedCode</BlazesSharedCode>
 	<!--<MFCAppDir>$(BlazesSharedCode)\MFCApp</BlazesSharedCode>-->
-	<MFCCompile>C:\UserFiles\GitHub\MFC</MFCCompile>
+	<MFC>C:\UserFiles\GitHub\MFC</MFC>
     <BoostDir>C:/UserFiles/ProgrammingLibraries/BoostLib/</BoostDir>
     <ParallelMap>C:/UserFiles/GitHub/Parallel-Hashmap/</ParallelMap>
   </PropertyGroup>
@@ -98,105 +134,112 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <IncludePath>$(VC_IncludePath);$(BlazesSharedCode);</IncludePath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='AndroidNativeRelease|ARM64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2022Debug|Win32'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2022Release|Win32'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2022Debug|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2022Release|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2022Debug|ARM64'">
     <IncludePath>$(VC_IncludePath);$(BlazesSharedCode);</IncludePath>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'!='ARM64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2022Release|ARM64'">
+    <IncludePath>$(VC_IncludePath);$(BlazesSharedCode);</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Win32' Or '$(Platform)'=='x64'" Label="Windows Item Definition Group">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <FunctionLevelLinking Condition="'$(Configuration)'=='Release'">true</FunctionLevelLinking>
-      <IntrinsicFunctions Condition="'$(Configuration)'=='Release'">true</IntrinsicFunctions>
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">NDEBUG;WIN32;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FunctionLevelLinking Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">true</FunctionLevelLinking>
+      <IntrinsicFunctions Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">true</IntrinsicFunctions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">NDEBUG;WIN32;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <ConformanceMode Condition="'$(Configuration)'=='Release'">true</ConformanceMode>
-      <RuntimeLibrary Condition="'$(Configuration)'=='Debug'">MultiThreadedDebugDLL</RuntimeLibrary>
-      <DebugInformationFormat  Condition="'$(Configuration)'=='Debug'">ProgramDatabase</DebugInformationFormat>
-      <Optimization Condition="'$(Configuration)'=='Debug'">Disabled</Optimization>
-      <Optimization Condition="'$(Configuration)'=='Release'">Enabled</Optimization>
+      <ConformanceMode Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">true</ConformanceMode>
+      <RuntimeLibrary Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">MultiThreadedDebugDLL</RuntimeLibrary>
+      <DebugInformationFormat  Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">ProgramDatabase</DebugInformationFormat>
+      <Optimization Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">Disabled</Optimization>
+      <Optimization Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">Enabled</Optimization>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>MFCpch.h</PrecompiledHeaderFile>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem Condition="'$(Platform)'=='Win32'">MachineX86</SubSystem>
-      <SubSystem Condition="'$(Platform)'!='Win32'">Windows</SubSystem>
-      <GenerateDebugInformation Condition="'$(Configuration)'=='Debug'">true</GenerateDebugInformation>
-      <GenerateDebugInformation Condition="'$(Configuration)'=='Release'">false</GenerateDebugInformation>
+      <SubSystem Condition="'$(Platform)'=='x64'">Windows</SubSystem>
+      <GenerateDebugInformation Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">true</GenerateDebugInformation>
+      <GenerateDebugInformation Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">false</GenerateDebugInformation>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <ValidateAllParameters>true</ValidateAllParameters>
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ResourceCompile>
       <Culture>0x0409</Culture>
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)'=='AndroidNativeRelease'">
-    <ClCompile>
-      <PreprocessorDefinitions>USING_ANDROID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>MFCpch.h</PrecompiledHeaderFile>
-      <CompileAs>CompileAsCpp</CompileAs>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
-    </ClCompile>
-    <Link>
-      <LibraryDependencies>%(LibraryDependencies);GLESv1_CM;EGL;USING_ANDROID;</LibraryDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='ARM64' And '$(Configuration)'!='AndroidNativeRelease'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='ARM64' Or '$(Platform)'=='ARM'"  Label="Android Item Definition Group">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <FunctionLevelLinking Condition="'$(Configuration)'=='Release'">true</FunctionLevelLinking>
-      <IntrinsicFunctions Condition="'$(Configuration)'=='Release'">true</IntrinsicFunctions>
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">_DEBUG;USING_ANDROID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">NDEBUG;USING_ANDROID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FunctionLevelLinking Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">true</FunctionLevelLinking>
+      <IntrinsicFunctions Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">true</IntrinsicFunctions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">_DEBUG;USING_ANDROID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">NDEBUG;USING_ANDROID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <ConformanceMode Condition="'$(Configuration)'=='Release'">true</ConformanceMode>
-      <RuntimeLibrary Condition="'$(Configuration)'=='Debug'">MultiThreadedDebugDLL</RuntimeLibrary>
-      <DebugInformationFormat  Condition="'$(Configuration)'=='Debug'">ProgramDatabase</DebugInformationFormat>
-      <Optimization Condition="'$(Configuration)'=='Debug'">Disabled</Optimization>
-      <Optimization Condition="'$(Configuration)'=='Release'">Enabled</Optimization>
+      <ConformanceMode Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">true</ConformanceMode>
+      <RuntimeLibrary Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">MultiThreadedDebugDLL</RuntimeLibrary>
+      <DebugInformationFormat  Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">ProgramDatabase</DebugInformationFormat>
+      <Optimization Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">Disabled</Optimization>
+      <Optimization Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">Enabled</Optimization>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>MFCpch.h</PrecompiledHeaderFile>
+	  <CompileAs>CompileAsCpp</CompileAs>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation Condition="'$(Configuration)'=='Debug'">true</GenerateDebugInformation>
-      <GenerateDebugInformation Condition="'$(Configuration)'=='Release'">false</GenerateDebugInformation>
+      <GenerateDebugInformation Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">true</GenerateDebugInformation>
+      <GenerateDebugInformation Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">false</GenerateDebugInformation>
       <LibraryDependencies>USING_ANDROID;%(LibraryDependencies)</LibraryDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <ValidateAllParameters>true</ValidateAllParameters>
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">USING_ANDROID;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">USING_ANDROID;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">USING_ANDROID;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">USING_ANDROID;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ResourceCompile>
       <Culture>0x0409</Culture>
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">USING_ANDROID;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">USING_ANDROID;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">USING_ANDROID;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">USING_ANDROID;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup Label="AndroidIncludes">
     <ClInclude Include="android_native_app_glue.h">
-      <ExcludedFromBuild Condition="'$(Configuration)'!='AndroidNativeRelease'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)'=='AndroidNativeRelease'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32' Or '$(Platform)'=='x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='ARM64' Or '$(Platform)'=='ARM'">false</ExcludedFromBuild>
     </ClInclude>
     <ClCompile Include="android_native_app_glue.c">
-      <ExcludedFromBuild Condition="'$(Configuration)'!='AndroidNativeRelease'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)'=='AndroidNativeRelease'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='Win32' Or '$(Platform)'=='x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='ARM64' Or '$(Platform)'=='ARM'">false</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>
   <ItemGroup Label="SharedCodeIncludes">
+    <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_hash.h" />
+    <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_map.h" />
+    <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_set.h" />
     <ClCompile Include="$(BlazesSharedCode)\OtherFunctions\StringFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -212,9 +255,6 @@
     <ClCompile Include="$(BlazesSharedCode)\VariableLists\VariableVectorFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_hash.h" />
-    <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_map.h" />
-    <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_set.h" />
     <ClInclude Include="$(BlazesSharedCode)\AltNum\MediumDec.h" />
     <!-- String Features and List Functions-->
     <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\StringFunctions.h" />
@@ -270,7 +310,7 @@
       <PrecompiledHeaderFile>MFCpch.h</PrecompiledHeaderFile>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
+<!--   <ItemGroup>
     <ClInclude Include="MFCDualViewApp.h">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClInclude>
@@ -295,32 +335,7 @@
     <ClCompile Include="MFCPaggedViewProcesser.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-  </ItemGroup>
-  <!--
-  <ItemGroup Label="Universal Windows varient of app">
-	<ClInclude Include="MFCUniversalApp.xaml.h">
-        <DependentUpon>MFCUniversalApp.xaml</DependentUpon>
-    </ClInclude>
-    <ApplicationDefinition Include="MFCUniversalApp.xaml">
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="MainPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <ClInclude Include="MainPage.xaml.h">
-        <DependentUpon>MainPage.xaml</DependentUpon>
-    </ClInclude>
-    <AppxManifest Include="Package.appxmanifest">
-      <SubType>Designer</SubType>
-    </AppxManifest>
-	<ClCompile Include="MFCUniversalApp.xaml.cpp">
-        <DependentUpon>MFCUniversalApp.xaml</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="MainPage.xaml.cpp">
-        <DependentUpon>MainPage.xaml</DependentUpon>
-    </ClCompile>
-  </ItemGroup>
-  -->
+  </ItemGroup> -->
   <ItemGroup>
     <ClInclude Include="MFCApp.h">
       <ExcludedFromBuild>false</ExcludedFromBuild>
