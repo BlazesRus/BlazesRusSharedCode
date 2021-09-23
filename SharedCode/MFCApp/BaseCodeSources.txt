@@ -5,6 +5,5 @@ with Options:
 -MFC used in DLL(<UseOfMfc>Dynamic</UseOfMfc>)
 -Classic menu with docked toolbar
 ]--
--Experimental Android support from both parts of Native Android C++ Template(AndroidNativeRelease Configuration) & Universal Windows
 
 Multiview (https://www.codeproject.com/Articles/7686/Using-Multiview) derived code used for the MFCDualViewApp code and MFCPaggedApp code
