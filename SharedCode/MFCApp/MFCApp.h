@@ -18,10 +18,24 @@
 #include "MFCDoc.h"
 #include "MFCView.h"
 
+
+#ifdef BlazesMFCApp_UseAppAsWithStackedViews
 /// <summary>
-/// MFC based template for generating applications with a single view (Include MFCAppProcesser.h to generate Application with default generic view type)
+/// MFC based template for generating applications with Multiple possible Views of same view type
 /// </summary>
+#else
+/// <summary>
+/// MFC based template for generating applications with Single ViewType
+/// </summary>
+#endif
+#ifdef BlazesMFCApp_UseAppAsDualView
+/// <summary>
+/// MFC based template for generating applications with 2 view types
+/// </summary>
+template <typename ViewType, typename SecondaryViewType>
+#else
 template <typename ViewType>
+#endif
 class MFCApp : public CWinApp
 {
 public:
