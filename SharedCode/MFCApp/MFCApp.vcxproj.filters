@@ -37,6 +37,9 @@
     <Filter Include="NonWorkingFiles">
       <UniqueIdentifier>{65eee5e6-6345-40f7-90f8-c81a5fc4161c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ProcessingThread">
+      <UniqueIdentifier>{d0fd85fa-874b-43ea-8e50-7bc3ddbe10d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_set.h">
@@ -90,35 +93,29 @@
     <ClInclude Include="MFCView.h">
       <Filter>ViewFiles</Filter>
     </ClInclude>
-    <ClInclude Include="..\OtherFunctions\MFCMacros.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\OtherFunctions\MFCMacrosV2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MFCDualViewApp.h">
-      <Filter>OtherOptionalAppTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="MFCDualViewProcesser.h">
-      <Filter>OtherOptionalAppTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="MFCPagedViewApp.h">
-      <Filter>OtherOptionalAppTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="MFCPaggedViewProcesser.h">
-      <Filter>OtherOptionalAppTypes</Filter>
-    </ClInclude>
     <ClInclude Include="AboutDlg.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MFCAppWithoutTemplate.h">
       <Filter>TemporaryMainFiles</Filter>
     </ClInclude>
-    <ClInclude Include="MFCApp.h">
+    <ClInclude Include="MFCAppOld.h">
       <Filter>NonWorkingFiles</Filter>
     </ClInclude>
     <ClInclude Include="MFCAppProcesser.h">
       <Filter>NonWorkingFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\MFCMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\MFCMacrosV2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AppProcessing.h">
+      <Filter>ProcessingThread</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCApp.h">
+      <Filter>ProcessingThread</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -143,9 +140,6 @@
     <ClInclude Include="MFCpch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="android_native_app_glue.h">
-      <Filter>AndroidOnlyFiles</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFCFrame.cpp">
@@ -163,9 +157,6 @@
     <ClCompile Include="MFCpch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="android_native_app_glue.c">
-      <Filter>AndroidOnlyFiles</Filter>
-    </ClCompile>
     <ClCompile Include="$(BlazesSharedCode)\OtherFunctions\StringFunctions.cpp">
       <Filter>BlazesRusSharedCode</Filter>
     </ClCompile>
@@ -181,26 +172,20 @@
     <ClCompile Include="$(BlazesSharedCode)\VariableLists\VariableVectorFunctions.cpp">
       <Filter>BlazesRusSharedCode</Filter>
     </ClCompile>
-    <ClCompile Include="MFCDualViewApp.cpp">
-      <Filter>OtherOptionalAppTypes</Filter>
-    </ClCompile>
-    <ClCompile Include="MFCDualViewProcesser.cpp">
-      <Filter>OtherOptionalAppTypes</Filter>
-    </ClCompile>
-    <ClCompile Include="MFCPagedViewApp.cpp">
-      <Filter>OtherOptionalAppTypes</Filter>
-    </ClCompile>
-    <ClCompile Include="MFCPaggedViewProcesser.cpp">
-      <Filter>OtherOptionalAppTypes</Filter>
-    </ClCompile>
     <ClCompile Include="MFCAppWithoutTemplate.cpp">
       <Filter>TemporaryMainFiles</Filter>
     </ClCompile>
     <ClCompile Include="MFCAppProcesser.cpp">
       <Filter>NonWorkingFiles</Filter>
     </ClCompile>
-    <ClCompile Include="MFCApp.cpp">
+    <ClCompile Include="MFCAppOld.cpp">
       <Filter>NonWorkingFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCApp.cpp">
+      <Filter>ProcessingThread</Filter>
+    </ClCompile>
+    <ClCompile Include="AppProcessing.cpp">
+      <Filter>ProcessingThread</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -20,8 +20,8 @@ public:
     virtual BOOL InitInstance();
 
 // Implementation
-    UINT  m_nAppLook;
-    BOOL  m_bHiColorIcons;
+    //UINT  m_nAppLook;
+    //BOOL  m_bHiColorIcons;
 
     afx_msg void OnAppAbout();
     DECLARE_MESSAGE_MAP()

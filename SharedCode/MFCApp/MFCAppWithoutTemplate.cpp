@@ -33,7 +33,7 @@ END_MESSAGE_MAP()
 
 MFCApp::MFCApp() noexcept
 {
-    m_bHiColorIcons = TRUE;
+    //m_bHiColorIcons = TRUE;
 
 
     // TODO: replace application ID string below with unique ID string; recommended

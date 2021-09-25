@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "MFCDoc.h"
 
 class MFCView : public CView
 {
