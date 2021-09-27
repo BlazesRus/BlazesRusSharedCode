@@ -1,9 +1,19 @@
-MFC base app code from Visual Studio Template:MFC App
+MFC base app code from Visual Studio Template:MFC App(Multiple configurations of MFC application added through use of preprocessor switches with Default features matching Tabbed Multiple documents with printer support)
 with Options:
 --[
--Single Document
+-Multiple Document(Tabbed Documents)(Default)
+Or Single Document (if BlazesMFCApp_UseSDI preprocessor enabled)
 -MFC used in DLL(<UseOfMfc>Dynamic</UseOfMfc>)
--Classic menu with docked toolbar
+-ProjectStyle MFC Standard (Native)
+-Classic menu+Browser Toolbar
+-Document/View Support
+-Printer Support(Disabled if BlazesMFCApp_DisablePrinterFeatures preprocessor enabled)
+-Common Control Manifest
 ]--
+Other Features Toggled by Preprocessor(Added by me):
+-Uses Local File to store filelist and saved settings instead of registry unless BlazesMFCApp_EnableRegistry preprocessor is enabled(BlazesMFCApp_UseRegistryStorage runs the default code that stores data in registry)
+-Enable Output Window Features (from previous MFC project) if BlazesMFCApp_EnableOutputWindow
+-Disable Tooltips by defining BlazesMFCApp_DisableTooltips
 
-Multiview (https://www.codeproject.com/Articles/7686/Using-Multiview) derived code used for the MFCDualViewApp code and MFCPaggedApp code
+StaticTreeControl (https://www.codeproject.com/Articles/9887/CViewTreeCtrl-A-CView-derived-custom-Tree-cont) derived code (derived from my BhvTreeEditor project)
+used for some extra View code such as for TextView (View code is heavily changed from StaticTreeControl implimentation)

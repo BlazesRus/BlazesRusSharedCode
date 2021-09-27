@@ -6,13 +6,8 @@
 #include <iosfwd>
 #include <sys/stat.h>
 
-#ifdef BlazesSharedCode_LocalLayout//(Local version style layout)
-#include "StringVectorList.h"
-#include "StringFunctions.h"
-#else
 #include "..\VariableLists\StringVectorList.h"
 #include "..\OtherFunctions\StringFunctions.h"
-#endif
 
 using std::cout;
 using std::string;

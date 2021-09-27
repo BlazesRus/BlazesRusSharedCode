@@ -17,14 +17,6 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="VS2022Debug|Win32">
-      <Configuration>VS2022Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="VS2022Release|Win32">
-      <Configuration>VS2022Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="VS2022Debug|x64">
       <Configuration>VS2022Debug</Configuration>
       <Platform>x64</Platform>
@@ -33,10 +25,61 @@
       <Configuration>VS2022Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2022Debug|Win32">
+      <Configuration>VS2022Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2022Release|Win32">
+      <Configuration>VS2022Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <!-- Android Project Configs for later project varient
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2022Debug|ARM64">
+      <Configuration>VS2022Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2022Release|ARM64">
+      <Configuration>VS2022Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2022Debug|ARM">
+      <Configuration>VS2022Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2022Release|ARM">
+      <Configuration>VS2022Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+-->
+    <!-- Feature Testing Configurations here-->
+    <ProjectConfiguration Include="SDIDebug|x64">
+      <Configuration>SDIDebug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MDIDebug_TextView|x64">
+      <Configuration>MDIDebug_TextView</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
-    <ProjectGuid>{8E3BD05D-4F34-4FFE-A576-4CC92B0EE2D3}</ProjectGuid>
+    <ProjectGuid>{C9A3F0B8-4E38-4F62-9D6C-186053FCCE6A}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
     <RootNamespace>MFCApp</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
@@ -49,15 +92,17 @@
     <CodeAnalysisRuleAssemblies />
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
   </PropertyGroup>
   <!-- 142 for VS2019(Default);143 for VS2022-->
-  <PropertyGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)'!='VS2022Debug' And '$(Configuration)'!='VS2022Release'" Label="Configuration">
+    <!-- And '$(Platform)'!='Release|ARM64' And '$(Platform)'!='Release|ARM'-->
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='VS2022Debug' Or '$(Configuration)'=='VS2022Release'" Label="Configuration">
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug' Or '$(Configuration)'=='SDIDebug' Or '$(Configuration)'=='MDIDebug_TextView'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
     <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
@@ -80,72 +125,88 @@
     <BoostDir>C:/UserFiles/ProgrammingLibraries/BoostLib/</BoostDir>
     <ParallelMap>C:/UserFiles/GitHub/Parallel-Hashmap/</ParallelMap>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug' Or '$(Configuration)'=='SDIDebug' Or '$(Configuration)'=='MDIDebug_TextView'">
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
+  <PropertyGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='SDIDebug' Or '$(Configuration)'=='MDIDebug_TextView'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <!--
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2022Debug|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2022Release|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2022Debug|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2022Release|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(BlazesSharedCode);</IncludePath>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <OmitFramePointers>true</OmitFramePointers>
-    </ClCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='Win32' Or '$(Platform)'=='x64'" Label="Windows Item Definition Group">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='SDIDebug|x64' Or '$(Configuration)|$(Platform)'=='MDIDebug_TextView|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  -->
+  <ItemDefinitionGroup Label="Windows Item Definition Group">
+    <!-- Condition="'$(Platform)'=='Win32' Or '$(Platform)'=='x64'"-->
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">true</FunctionLevelLinking>
       <IntrinsicFunctions Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">true</IntrinsicFunctions>
       <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">NDEBUG;WIN32;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='SDIDebug'">BlazesMFCApp_UseSDI;WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='MDIDebug_TextView'">BlazesMFCApp_EnableOutputWindow;WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">true</ConformanceMode>
-      <RuntimeLibrary Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">MultiThreadedDebugDLL</RuntimeLibrary>
-      <DebugInformationFormat Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">ProgramDatabase</DebugInformationFormat>
-      <Optimization Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">Disabled</Optimization>
+      <RuntimeLibrary Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug' Or '$(Configuration)'=='SDIDebug' Or '$(Configuration)'=='MDIDebug_TextView'">MultiThreadedDebugDLL</RuntimeLibrary>
+      <DebugInformationFormat Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug' Or '$(Configuration)'=='SDIDebug' Or '$(Configuration)'=='MDIDebug_TextView'">ProgramDatabase</DebugInformationFormat>
+      <Optimization Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug' Or '$(Configuration)'=='SDIDebug' Or '$(Configuration)'=='MDIDebug_TextView'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">MaxSpeed</Optimization>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>MFCpch.h</PrecompiledHeaderFile>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <OmitFramePointers Condition="'$(Platform)'=='Win32'">true</OmitFramePointers>
     </ClCompile>
     <Link>
       <SubSystem Condition="'$(Platform)'=='Win32'">MachineX86</SubSystem>
       <SubSystem Condition="'$(Platform)'=='x64'">Windows</SubSystem>
-      <GenerateDebugInformation Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">true</GenerateDebugInformation>
+      <EnableCOMDATFolding Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">true</EnableCOMDATFolding>
+      <OptimizeReferences Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">true</OptimizeReferences>
+      <GenerateDebugInformation Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug' Or '$(Configuration)'=='SDIDebug' Or '$(Configuration)'=='MDIDebug_TextView'">true</GenerateDebugInformation>
       <GenerateDebugInformation Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">false</GenerateDebugInformation>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <ValidateAllParameters>true</ValidateAllParameters>
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug' Or '$(Configuration)'=='SDIDebug' Or '$(Configuration)'=='MDIDebug_TextView'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ResourceCompile>
       <Culture>0x0409</Culture>
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug' Or '$(Configuration)'=='SDIDebug' Or '$(Configuration)'=='MDIDebug_TextView'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup Label="SharedCodeIncludes">
+    <!--
     <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_hash.h" />
     <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_map.h" />
     <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_set.h" />
@@ -155,9 +216,6 @@
     <ClCompile Include="$(BlazesSharedCode)\OtherFunctions\VariableConversionFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\VariableLists\StringVectorList.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="$(BlazesSharedCode)\VariableLists\VariableTypeLists.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -165,13 +223,12 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClInclude Include="$(BlazesSharedCode)\AltNum\MediumDec.h" />
-    <!-- String Features and List Functions-->
+
     <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\StringFunctions.h" />
     <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\VariableConversionFunctions.h" />
-    <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableList.h" />
-    <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableTypeLists.h" />
+
     <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableVectorFunctions.h" />
-    <!-- End of String Features and List Functions-->
+
     <ClInclude Include="$(BlazesSharedCode)\Databases\DataDictionary.h">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClInclude>
@@ -185,125 +242,89 @@
     <ClInclude Include="$(BlazesSharedCode)\Databases\IniRegistry.h" />
     <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\MFCMacros.h" />
     <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\MFCMacrosV2.h" />
-  </ItemGroup>
-  <!-- 
-  <ItemGroup>
-    <ClInclude Include="$(BlazesSharedCode)\QuadVector\QuadVector.h" />
-    <ClInclude Include="$(BlazesSharedCode)\QuadVector\QuadVectorFunctions.h" />
-	<ClCompile Include="$(BlazesSharedCode)\QuadVector\QuadVector.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\QuadVector\QuadVectorFunctions.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-  </ItemGroup>
+
+    <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableList.h" />
+    <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableTypeLists.h" />
 -->
+    <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableList.h" />
+    <ClCompile Include="$(BlazesSharedCode)\VariableLists\StringVectorList.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClInclude Include="$(BlazesSharedCode)\VariableLists\StringVectorList.h" />
+  </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\OtherFunctions\StringFunctions.h" />
     <ClInclude Include="AboutDlg.hpp" />
-    <ClInclude Include="AppProcessing.h" />
-    <ClInclude Include="MFCApp.h" />
     <ClInclude Include="MFCFramework.h" />
     <ClInclude Include="MFCDoc.h" />
     <ClInclude Include="MFCFrame.h" />
+    <ClInclude Include="MFCSubFrame.h">
+      <ExcludedFromBuild Condition="'$(Configuration)'=='SDIDebug'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="MFCView.h" />
-    <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="MFCpch.h" />
     <ClInclude Include="MFCRes.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AppProcessing.cpp" />
-    <ClCompile Include="MFCApp.cpp" />
+    <ClCompile Include="..\OtherFunctions\StringFunctions.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="MFCDoc.cpp" />
     <ClCompile Include="MFCFrame.cpp" />
+    <ClCompile Include="MFCSubFrame.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)'=='SDIDebug'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="MFCView.cpp" />
-    <ClCompile Include="OutputWnd.cpp" />
     <ClCompile Include="MFCpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>MFCpch.h</PrecompiledHeaderFile>
     </ClCompile>
   </ItemGroup>
-  <!--   <ItemGroup>
-    <ClInclude Include="MFCDualViewApp.h">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="MFCDualViewProcesser.h">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="MFCPagedViewApp.h">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="MFCPaggedViewProcesser.h">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClInclude>
-    <ClCompile Include="MFCDualViewApp.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="MFCDualViewProcesser.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="MFCPagedViewApp.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="MFCPaggedViewProcesser.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-  </ItemGroup> -->
   <ItemGroup>
-    <ClInclude Include="MFCAppOld.h">
-      <ExcludedFromBuild>false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VS2022Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VS2022Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VS2022Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VS2022Release|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VS2022Release|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VS2022Release|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    <ClInclude Include="MFCApp.h" />
+    <ClCompile Include="MFCApp.cpp" />
+    <ClInclude Include="AppProcessing.h">
+      <ExcludedFromBuild Condition="'$(Configuration)'=='MDIDebug_TextView'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClCompile Include="MFCAppOld.cpp">
-      <ExcludedFromBuild>false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VS2022Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VS2022Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VS2022Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VS2022Release|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VS2022Release|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VS2022Release|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    <ClCompile Include="AppProcessing.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)'=='MDIDebug_TextView'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClInclude Include="MFCAppProcesser.h">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
+    <ClInclude Include="OutputWnd.h">
+      <ExcludedFromBuild Condition="'$(Configuration)'!='MDIDebug_TextView'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClCompile Include="MFCAppProcesser.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
+    <ClCompile Include="OutputWnd.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)'!='MDIDebug_TextView'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClInclude Include="MFCAppWithoutTemplate.h">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TextViewProcessing.h">
+      <ExcludedFromBuild Condition="'$(Configuration)'=='MDIDebug_TextView'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)'!='MDIDebug_TextView'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClCompile Include="MFCAppWithoutTemplate.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
+    <ClCompile Include="TextViewProcessing.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)'=='MDIDebug_TextView'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)'!='MDIDebug_TextView'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="ContextMenu.cpp" />
+    <ClInclude Include="ContextMenu.h" />
+    <ClCompile Include="TextView.h" />
+    <ClCompile Include="TextView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MFCApp.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\App.ico" />
-    <Image Include="res\MFCDoc.ico" />
-    <Image Include="res\output_wnd.ico" />
-    <Image Include="res\Toolbar.bmp" />
+    <None Include="res\MFCApp.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\MFCApp.rc2" />
+    <Image Include="res\App.ico" />
+    <Image Include="res\MFCDoc.ico" />
+    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\output_wnd.ico">
+      <ExcludedFromBuild Condition="'$(Configuration)'!='MDIDebug_TextView'">true</ExcludedFromBuild>
+    </Image>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

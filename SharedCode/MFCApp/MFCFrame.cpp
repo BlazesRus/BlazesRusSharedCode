@@ -13,28 +13,33 @@
 #endif
 
 // MFCFrame
-
+#ifdef BlazesMFCApp_UseSDI
 IMPLEMENT_DYNCREATE(MFCFrame, CFrameWnd)
+#else
+IMPLEMENT_DYNAMIC(MFCFrame, CMDIFrameWndEx)
+#endif
 
+#ifdef BlazesMFCApp_UseSDI
 BEGIN_MESSAGE_MAP(MFCFrame, CFrameWnd)
-    ON_WM_CREATE()
-    ON_COMMAND_RANGE(ID_VIEW_APPLOOK_WINDOWS_7, ID_VIEW_APPLOOK_WINDOWS_7, &MFCFrame::OnApplicationLook)
-    ON_WM_SETTINGCHANGE()
+#else
+BEGIN_MESSAGE_MAP(MFCFrame, CMDIFrameWndEx)
+#endif
+	ON_WM_CREATE()
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
 {
-    ID_SEPARATOR,           // status line indicator
-    ID_INDICATOR_CAPS,
-    ID_INDICATOR_NUM,
-    ID_INDICATOR_SCRL,
+	ID_SEPARATOR,           // status line indicator
+	ID_INDICATOR_CAPS,
+	ID_INDICATOR_NUM,
+	ID_INDICATOR_SCRL,
 };
 
 // MFCFrame construction/destruction
 
 MFCFrame::MFCFrame() noexcept
 {
-    // TODO: add member initialization code here
+	// TODO: add member initialization code here
 }
 
 MFCFrame::~MFCFrame()
@@ -43,43 +48,76 @@ MFCFrame::~MFCFrame()
 
 int MFCFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-    if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
-        return -1;
+#ifdef BlazesMFCApp_UseSDI
+	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
+#else
+	if (CMDIFrameWndEx::OnCreate(lpCreateStruct) == -1)
+#endif
+		return -1;
 
-    if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
-        !m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
-    {
-        TRACE0("Failed to create toolbar\n");
-        return -1;      // fail to create
-    }
-
-    if (!m_wndStatusBar.Create(this))
-    {
-        TRACE0("Failed to create status bar\n");
-        return -1;      // fail to create
-    }
-    m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));
-
-    // Define MFCApp_DisableDockableToolbar in preprocessor settings if you don't want the toolbar to be dockable
-#ifndef MFCApp_DisableDockableToolbar
-    m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
-    EnableDocking(CBRS_ALIGN_ANY);
-    DockControlBar(&m_wndToolBar);
+#ifndef BlazesMFCApp_UseSDI
+	CMDITabInfo mdiTabParams;
+	mdiTabParams.m_style = CMFCTabCtrl::STYLE_3D_ONENOTE; // other styles available...
+	mdiTabParams.m_bActiveTabCloseButton = TRUE;      // set to FALSE to place close button at right of tab area
+	mdiTabParams.m_bTabIcons = FALSE;    // set to TRUE to enable document icons on MDI taba
+	mdiTabParams.m_bAutoColor = TRUE;    // set to FALSE to disable auto-coloring of MDI tabs
+	mdiTabParams.m_bDocumentMenu = TRUE; // enable the document menu at the right edge of the tab area
+	EnableMDITabbedGroups(TRUE, mdiTabParams);
 #endif
 
-    return 0;
+	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT | TBSTYLE_TRANSPARENT) ||
+		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
+	{
+		TRACE0("Failed to create toolbar\n");
+		return -1;      // fail to create
+	}
+	if (!m_wndDlgBar.Create(this, IDR_MAINFRAME, CBRS_ALIGN_TOP, AFX_IDW_DIALOGBAR))
+	{
+		TRACE0("Failed to create dialogbar\n");
+		return -1;		// fail to create
+	}
+
+	if (!m_wndReBar.Create(this) || !m_wndReBar.AddBar(&m_wndToolBar) || !m_wndReBar.AddBar(&m_wndDlgBar))
+	{
+		TRACE0("Failed to create rebar\n");
+		return -1;      // fail to create
+	}
+
+	if (!m_wndStatusBar.Create(this))
+	{
+		TRACE0("Failed to create status bar\n");
+		return -1;      // fail to create
+	}
+	m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));
+
+#ifndef BlazesMFCApp_DisableTooltips
+	m_wndToolBar.SetBarStyle(m_wndToolBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_FLYBY);
+#endif
+
+#ifndef BlazesMFCApp_UseSDI
+	// Switch the order of document name and application name on the window title bar. This
+	// improves the usability of the taskbar because the document name is visible with the thumbnail.
+	ModifyStyle(0, FWS_PREFIXTITLE);
+#endif
+
+	return 0;
 }
 
 BOOL MFCFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-    if( !CFrameWnd::PreCreateWindow(cs) )
-        return FALSE;
-    // TODO: Modify the Window class or styles here by modifying
-    //  the CREATESTRUCT cs
+#ifdef BlazesMFCApp_UseSDI
+	if( !CFrameWnd::PreCreateWindow(cs) )
+#else
+	if( !CMDIFrameWndEx::PreCreateWindow(cs) )
+#endif
+		return FALSE;
+	// TODO: Modify the Window class or styles here by modifying
+	//  the CREATESTRUCT cs
 
-    return TRUE;
+	return TRUE;
 }
 
+#ifdef BlazesMFCApp_EnableOutputWindow
 BOOL MFCFrame::CreateDockingWindows()
 {
     BOOL bNameValid;
@@ -97,46 +135,36 @@ BOOL MFCFrame::CreateDockingWindows()
     return TRUE;
 }
 
-void MFCFrame::SetDockingWindowIcons(BOOL bHiColorIcons)
+void MFCFrame::SetDockingWindowIcons()
 {
-    HICON hOutputBarIcon = (HICON) ::LoadImage(::AfxGetResourceHandle(), MAKEINTRESOURCE(bHiColorIcons ? IDI_OUTPUT_WND_HC : IDI_OUTPUT_WND), IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
+    HICON hOutputBarIcon = (HICON) ::LoadImage(::AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_OUTPUT_WND_HC), IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
     m_wndOutput.SetIcon(hOutputBarIcon, FALSE);
 
 }
+#endif
 
 // MFCFrame diagnostics
 
 #ifdef _DEBUG
 void MFCFrame::AssertValid() const
 {
-    CFrameWnd::AssertValid();
+#ifdef BlazesMFCApp_UseSDI
+	CFrameWnd::AssertValid();
+#else
+	CMDIFrameWndEx::AssertValid();
+#endif
 }
 
 void MFCFrame::Dump(CDumpContext& dc) const
 {
-    CFrameWnd::Dump(dc);
+#ifdef BlazesMFCApp_UseSDI
+	CFrameWnd::Dump(dc);
+#else
+	CMDIFrameWndEx::Dump(dc);
+#endif
 }
 #endif //_DEBUG
 
 
 // MFCFrame message handlers
 
-void MFCFrame::OnApplicationLook(UINT id)
-{
-    CWaitCursor wait;
-
-    //Only Supporting ID_VIEW_APPLOOK_WINDOWS_7 or greater app look visuals
-    CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerWindows7));
-    CDockingManager::SetDockingMode(DT_SMART);
-
-    m_wndOutput.UpdateFonts();
-    RedrawWindow(nullptr, nullptr, RDW_ALLCHILDREN | RDW_INVALIDATE | RDW_UPDATENOW | RDW_FRAME | RDW_ERASE);
-
-}
-
-
-void MFCFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
-{
-    CFrameWnd::OnSettingChange(uFlags, lpszSection);
-    m_wndOutput.UpdateFonts();
-}

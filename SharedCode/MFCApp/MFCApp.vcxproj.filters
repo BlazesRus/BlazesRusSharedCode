@@ -13,109 +13,55 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="AndroidOnlyFiles">
-      <UniqueIdentifier>{5b4da1f7-2107-48ab-8e9a-56e577f054a6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BlazesRusSharedCode">
-      <UniqueIdentifier>{bfdd3849-a8b9-40a8-a8d5-7120a8cda092}</UniqueIdentifier>
+    <Filter Include="ProcessingThread">
+      <UniqueIdentifier>{d0fd85fa-874b-43ea-8e50-7bc3ddbe10d0}</UniqueIdentifier>
     </Filter>
     <Filter Include="TSL">
       <UniqueIdentifier>{a7bf7f0a-5f52-47ab-ad5a-6d01d3a3c9a9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BlazesRusSharedCode\Unused">
-      <UniqueIdentifier>{9af4692a-2caa-427d-85e8-7dc43ab35ca9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ViewFiles">
       <UniqueIdentifier>{2a69c0b5-4589-4d75-b6c6-9bbc42bc0584}</UniqueIdentifier>
     </Filter>
-    <Filter Include="OtherOptionalAppTypes">
-      <UniqueIdentifier>{8016c8a4-9a96-45a0-8787-da4013e6499f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="TemporaryMainFiles">
-      <UniqueIdentifier>{3d7ffc40-306a-47ee-9c60-11818867a0b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NonWorkingFiles">
-      <UniqueIdentifier>{65eee5e6-6345-40f7-90f8-c81a5fc4161c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ProcessingThread">
-      <UniqueIdentifier>{d0fd85fa-874b-43ea-8e50-7bc3ddbe10d0}</UniqueIdentifier>
+    <Filter Include="BlazesRusSharedCode">
+      <UniqueIdentifier>{bfdd3849-a8b9-40a8-a8d5-7120a8cda092}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_set.h">
-      <Filter>TSL</Filter>
+    <ClInclude Include="MFCApp.h">
+      <Filter>ProcessingThread</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_map.h">
-      <Filter>TSL</Filter>
+    <ClCompile Include="MFCApp.cpp">
+      <Filter>ProcessingThread</Filter>
+    </ClCompile>
+    <ClInclude Include="AppProcessing.h">
+      <Filter>ProcessingThread</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_hash.h">
-      <Filter>TSL</Filter>
+    <ClCompile Include="AppProcessing.cpp">
+      <Filter>ProcessingThread</Filter>
+    </ClCompile>
+    <ClInclude Include="TextViewProcessing.h">
+      <Filter>ProcessingThread</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\Databases\DataDictionary.h">
-      <Filter>BlazesRusSharedCode\Unused</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\Databases\DataNode.h">
-      <Filter>BlazesRusSharedCode\Unused</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\Databases\UIntDic.h">
-      <Filter>BlazesRusSharedCode\Unused</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\Databases\IniRegistry.h">
-      <Filter>BlazesRusSharedCode\Unused</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\StringFunctions.h">
-      <Filter>BlazesRusSharedCode\Unused</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\VariableConversionFunctions.h">
-      <Filter>BlazesRusSharedCode\Unused</Filter>
-    </ClInclude>
+    <ClCompile Include="TextViewProcessing.cpp">
+      <Filter>ProcessingThread</Filter>
+    </ClCompile>
     <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableList.h">
-      <Filter>BlazesRusSharedCode\Unused</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableTypeLists.h">
-      <Filter>BlazesRusSharedCode\Unused</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableVectorFunctions.h">
-      <Filter>BlazesRusSharedCode\Unused</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\AltNum\MediumDec.h">
-      <Filter>BlazesRusSharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\Databases\ArgList.h">
-      <Filter>BlazesRusSharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\Databases\ArgStringList.h">
-      <Filter>BlazesRusSharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\Databases\CustomOrderedDictionary.h">
-      <Filter>BlazesRusSharedCode\Unused</Filter>
-    </ClInclude>
-    <ClInclude Include="MFCView.h">
-      <Filter>ViewFiles</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AboutDlg.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MFCAppWithoutTemplate.h">
-      <Filter>TemporaryMainFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="MFCAppOld.h">
-      <Filter>NonWorkingFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="MFCAppProcesser.h">
-      <Filter>NonWorkingFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\MFCMacros.h">
+    <ClInclude Include="OutputWnd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\MFCMacrosV2.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="ContextMenu.h">
+      <Filter>ViewFiles</Filter>
     </ClInclude>
-    <ClInclude Include="AppProcessing.h">
-      <Filter>ProcessingThread</Filter>
+    <ClInclude Include="$(BlazesSharedCode)\VariableLists\StringVectorList.h">
+      <Filter>BlazesRusSharedCode</Filter>
     </ClInclude>
-    <ClInclude Include="MFCApp.h">
-      <Filter>ProcessingThread</Filter>
+    <ClInclude Include="..\OtherFunctions\StringFunctions.h">
+      <Filter>BlazesRusSharedCode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -128,13 +74,16 @@
     <ClInclude Include="MFCFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MFCSubFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="MFCDoc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MFCRes.h">
+    <ClInclude Include="MFCView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OutputWnd.h">
+    <ClInclude Include="MFCRes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MFCpch.h">
@@ -145,47 +94,43 @@
     <ClCompile Include="MFCFrame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MFCSubFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="MFCDoc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MFCView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OutputWnd.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MFCpch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\OtherFunctions\StringFunctions.cpp">
-      <Filter>BlazesRusSharedCode</Filter>
+    <ClCompile Include="OutputWnd.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(BlazesSharedCode)\VariableLists\StringVectorList.cpp">
       <Filter>BlazesRusSharedCode</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\OtherFunctions\VariableConversionFunctions.cpp">
+    <ClCompile Include="ContextMenu.cpp">
+      <Filter>ViewFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="TextView.cpp">
+      <Filter>ViewFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="TextView.h">
+      <Filter>ViewFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OtherFunctions\StringFunctions.cpp">
       <Filter>BlazesRusSharedCode</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\VariableLists\VariableTypeLists.cpp">
-      <Filter>BlazesRusSharedCode</Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MFCView.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\VariableLists\VariableVectorFunctions.cpp">
-      <Filter>BlazesRusSharedCode</Filter>
-    </ClCompile>
-    <ClCompile Include="MFCAppWithoutTemplate.cpp">
-      <Filter>TemporaryMainFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="MFCAppProcesser.cpp">
-      <Filter>NonWorkingFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="MFCAppOld.cpp">
-      <Filter>NonWorkingFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="MFCApp.cpp">
-      <Filter>ProcessingThread</Filter>
-    </ClCompile>
-    <ClCompile Include="AppProcessing.cpp">
-      <Filter>ProcessingThread</Filter>
+    <ClCompile Include="MFCpch.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,12 +139,11 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\output_wnd.ico">
+    <None Include="res\MFCApp.rc2">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\output_wnd.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <Image Include="res\MFCDoc.ico">
       <Filter>Resource Files</Filter>
     </Image>
@@ -209,10 +153,8 @@
     <Image Include="res\Toolbar.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res\MFCApp.rc2">
+    <Image Include="res\output_wnd.ico">
       <Filter>Resource Files</Filter>
-    </None>
+    </Image>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-// pch.cpp: source file corresponding to the pre-compiled header
+// MFCpch.cpp: source file corresponding to the pre-compiled header
 
 #include "MFCpch.h"
 
