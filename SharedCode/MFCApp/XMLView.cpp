@@ -1,16 +1,16 @@
-// TextView.cpp : implementation of the TextView class
+// XMLView.cpp : implementation of the XMLView class
 //
 #include "MFCpch.h"
-#include "TextView.h"
+#include "XMLView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-// TextView
-IMPLEMENT_DYNCREATE(TextView, MFCView)
+// XMLView
+IMPLEMENT_DYNCREATE(XMLView, MFCView)
 
-BEGIN_MESSAGE_MAP(TextView, MFCView)
+BEGIN_MESSAGE_MAP(XMLView, MFCView)
 #ifndef BlazesMFCApp_DisablePrinterFeatures
 	// Standard printing commands
 	ON_COMMAND(ID_FILE_PRINT, &MFCView::OnFilePrint)
@@ -19,9 +19,9 @@ BEGIN_MESSAGE_MAP(TextView, MFCView)
 #endif
 END_MESSAGE_MAP()
 
-// TextView construction/destruction
+// XMLView construction/destruction
 
-TextView::TextView() noexcept
+XMLView::XMLView() noexcept
 {
 	m_iIndent = 16;				// Indentation for tree branches
 	m_iPadding = 4;				// Padding between tree and the control border
@@ -40,31 +40,25 @@ TextView::TextView() noexcept
 	//contextMenuPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), pDC);
 }
 
-TextView::~TextView()
+XMLView::~XMLView()
 {
 }
 
-BOOL TextView::PreCreateWindow(CREATESTRUCT& cs)
+BOOL XMLView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: Modify the Window class or styles here by modifying
 	//  the CREATESTRUCT cs
 	return MFCView::PreCreateWindow(cs);
 }
 
-#pragma region File Loading And Saving
-bool TextView::LoadDataFromFile(std::string FilePath)
+bool XMLView::LoadDataFromFile(std::string FilePath)
 {
 
 }
 
-void TextView::SaveDataToFile(std::string FilePath)
+void XMLView::SaveDataToFile(std::string FilePath)
 {
-
-}
-
-void TextView::SaveDataToFile(std::string FilePath)
-{
-	if (FilePath.back() == '/' || FilePath.back() == '\\') { FilePath += "TextFile.txt"; }
+	if (FilePath.back() == '/' || FilePath.back() == '\\') { FilePath += "TextFile.xml"; }
 	size_t StringLength;
 	char StringChar;
 	std::string LineString;
@@ -76,10 +70,7 @@ void TextView::SaveDataToFile(std::string FilePath)
 	{
 		if (LoadedFileStream.good())
 		{//Saving to file now
-			//for (ContentList::iterator ArgElement = ContentList.begin(), EndElement = ContentList.end(); ArgElement != EndElement; ++ArgElement)
-			//{
-			//	LoadedFileStream << ArgElement << "\n";
-			//}
+
 		}
 		else
 		{
@@ -95,11 +86,10 @@ void TextView::SaveDataToFile(std::string FilePath)
 		std::cout << "Failed to open " << FilePath << ".\n";
 	}
 }
-#pragma endregion File Loading And Saving
 
-// TextView drawing
+// XMLView drawing
 
-void TextView::OnDraw(CDC* /*pDC*/)
+void XMLView::OnDraw(CDC* /*pDC*/)
 {
 	MFCDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
@@ -109,45 +99,44 @@ void TextView::OnDraw(CDC* /*pDC*/)
 	// TODO: add draw code for native data here
 }
 
-#pragma region Printer Features
 #ifndef BlazesMFCApp_DisablePrinterFeatures
-// TextView printing
-BOOL TextView::OnPreparePrinting(CPrintInfo* pInfo)
+// XMLView printing
+BOOL XMLView::OnPreparePrinting(CPrintInfo* pInfo)
 {
 	// default preparation
 	return DoPreparePrinting(pInfo);
 }
 
-void TextView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void XMLView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 	// TODO: add extra initialization before printing
 }
 
-void TextView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void XMLView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 	// TODO: add cleanup after printing
 }
 #endif
-#pragma endregion Printer Features
 
-#pragma region TextView diagnostics
+// XMLView diagnostics
+
 #ifdef _DEBUG
-void TextView::AssertValid() const
+void XMLView::AssertValid() const
 {
 	MFCView::AssertValid();
 }
 
-void TextView::Dump(CDumpContext& dc) const
+void XMLView::Dump(CDumpContext& dc) const
 {
 	MFCView::Dump(dc);
 }
 
-MFCDoc* TextView::GetDocument() const // non-debug version is inline
+MFCDoc* XMLView::GetDocument() const // non-debug version is inline
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(MFCDoc)));
 	return (MFCDoc*)m_pDocument;
 }
 #endif //_DEBUG
-#pragma endregion TextView diagnostics
 
-// TextView message handlers
+
+// XMLView message handlers

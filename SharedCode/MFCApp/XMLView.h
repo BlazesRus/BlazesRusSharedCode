@@ -1,5 +1,5 @@
 
-// TextView.h : interface of the TextView class
+// XMLView.h : interface of the XMLView class
 //
 
 #pragma once
@@ -10,16 +10,16 @@
 #include "ContextMenu.h"
 #include "..\VariableLists\StringVectorList.h"
 
-class TextView : public MFCView
+class XMLView : public MFCView
 {
 protected: // create from serialization only
-    TextView() noexcept;
-    virtual ~TextView()
+    XMLView() noexcept;
+    virtual ~XMLView()
     {
         Reset();
         m_Font.DeleteObject();
     }
-    DECLARE_DYNCREATE(TextView)
+    DECLARE_DYNCREATE(XMLView)
 
     void CreateFileIfDoesntExist()
     {
@@ -64,7 +64,9 @@ protected: // create from serialization only
     }
 // Attributes
 public:
-    StringVectorList ContentList;
+    //Name of File(if blank then not saved/loaded yet into view)
+    //std::string FileName="";
+
     MFCDoc* GetDocument() const;
 
 protected:
@@ -83,16 +85,20 @@ protected:
     int				m_iLineHeight;
     int				m_iIndent;
     int				m_iPadding;
-    //ContextMenu TextMenu(&m_Font);
 
 // Operations
 public:
+	void AddNodeToRoot(std::string TagContent)
+	{
+	
+	}
+
     /// <summary>
     /// Resets the storage of this instance.
     /// </summary>
     void Reset()
     {
-        ContentList.clear();
+
     }
 
     //-------File Loading Operations-------------------------------------------------------
@@ -103,11 +109,6 @@ public:
     /// <param name="FilePath">The file path.</param>
     /// <returns>bool</returns>
     bool LoadDataFromFile(std::string FilePath);
-
-    /// <summary>
-    /// Saves the loaded data to file targeting filename stored in MFCDoc?
-    /// </summary>
-	bool SaveDataToFile();
 
     /// <summary>
     /// Saves the loaded data to file. (if / or \ is last character(Targeting Directory instead of file), will instead create/replace TextFile.xml)
@@ -139,8 +140,8 @@ protected:
     DECLARE_MESSAGE_MAP()
 };
 
-#ifndef _DEBUG  // debug version in TextView.cpp
-inline MFCDoc* TextView::GetDocument() const
+#ifndef _DEBUG  // debug version in XMLView.cpp
+inline MFCDoc* XMLView::GetDocument() const
    { return reinterpret_cast<MFCDoc*>(m_pDocument); }
 #endif
 
