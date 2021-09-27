@@ -329,7 +329,7 @@
     <ClCompile Include="TextView.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)'=='MDIDebug_TextView'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)'!='MDIDebug_TextView'">true</ExcludedFromBuild>
-    </ClInclude>
+    </ClCompile>
     <ClInclude Include="XMLViewProcessing.h">
       <ExcludedFromBuild Condition="'$(Configuration)'=='MDIDebug_XMLView'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)'!='MDIDebug_XMLView'">true</ExcludedFromBuild>
@@ -345,7 +345,7 @@
     <ClCompile Include="XMLView.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)'=='MDIDebug_XMLView'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)'!='MDIDebug_XMLView'">true</ExcludedFromBuild>
-    </ClInclude>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MFCApp.rc" />
