@@ -23,7 +23,7 @@
 IMPLEMENT_DYNCREATE(MFCView, CView)
 
 BEGIN_MESSAGE_MAP(MFCView, CView)
-#ifndef BlazesMFCApp_DisablePrinterFeatures
+#ifndef BlazesMFCApp_DisablePrinter
 	// Standard printing commands
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
@@ -62,7 +62,7 @@ void MFCView::OnDraw(CDC* /*pDC*/)
 	// TODO: add draw code for native data here
 }
 
-#ifndef BlazesMFCApp_DisablePrinterFeatures
+#ifndef BlazesMFCApp_DisablePrinter
 // MFCView printing
 BOOL MFCView::OnPreparePrinting(CPrintInfo* pInfo)
 {

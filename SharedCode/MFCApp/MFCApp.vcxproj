@@ -255,18 +255,22 @@
     <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\MFCMacros.h" />
     <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\MFCMacrosV2.h" />
 
-    <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableList.h" />
     <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableTypeLists.h" />
 -->
-    <ClInclude Include="..\OtherFunctions\VariableLists\VariableList.h" />
-    <ClCompile Include="..\OtherFunctions\VariableLists\StringVectorList.cpp">
+    <ClInclude Include="..\Databases\ArgList.h" />
+    <ClInclude Include="..\Databases\ArgStringList.h" />
+    <ClInclude Include="..\tsl\ordered_map.h" />
+    <ClInclude Include="..\VariableLists\StringVectorList.h" />
+    <ClInclude Include="..\VariableLists\VariableList.h" />
+    <ClInclude Include="..\OtherFunctions\StringFunctions.h" />
+    <ClCompile Include="..\OtherFunctions\StringFunctions.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClInclude Include="..\OtherFunctions\VariableLists\StringVectorList.h" />
-	<ClInclude Include="..\OtherFunctions\StringFunctions.h" />
+    <ClCompile Include="..\VariableLists\StringVectorList.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-
     <ClInclude Include="AboutDlg.hpp" />
     <ClInclude Include="MFCFramework.h" />
     <ClInclude Include="MFCDoc.h" />
@@ -280,10 +284,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\OtherFunctions\StringFunctions.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="MFCDoc.cpp" />
     <ClCompile Include="MFCFrame.cpp" />
     <ClCompile Include="MFCSubFrame.cpp">
@@ -312,8 +312,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ContextMenu.cpp"/>
-    <ClInclude Include="ContextMenu.h"/>
+    <ClCompile Include="ContextMenu.cpp" />
+    <ClInclude Include="ContextMenu.h" />
     <ClInclude Include="TextViewProcessing.h">
       <ExcludedFromBuild Condition="'$(Configuration)'=='MDIDebug_TextView'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)'!='MDIDebug_TextView'">true</ExcludedFromBuild>

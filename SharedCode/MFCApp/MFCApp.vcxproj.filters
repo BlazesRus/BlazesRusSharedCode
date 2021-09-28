@@ -39,15 +39,6 @@
     <ClCompile Include="AppProcessing.cpp">
       <Filter>ProcessingThread</Filter>
     </ClCompile>
-    <ClInclude Include="TextViewProcessing.h">
-      <Filter>ProcessingThread</Filter>
-    </ClInclude>
-    <ClCompile Include="TextViewProcessing.cpp">
-      <Filter>ProcessingThread</Filter>
-    </ClCompile>
-    <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AboutDlg.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -57,11 +48,35 @@
     <ClInclude Include="ContextMenu.h">
       <Filter>ViewFiles</Filter>
     </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\VariableLists\StringVectorList.h">
-      <Filter>BlazesRusSharedCode</Filter>
-    </ClInclude>
     <ClInclude Include="..\OtherFunctions\StringFunctions.h">
       <Filter>BlazesRusSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VariableLists\StringVectorList.h">
+      <Filter>BlazesRusSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VariableLists\VariableList.h">
+      <Filter>BlazesRusSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="XMLView.h">
+      <Filter>ViewFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="XMLViewProcessing.h">
+      <Filter>ViewFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Databases\ArgList.h">
+      <Filter>BlazesRusSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Databases\ArgStringList.h">
+      <Filter>BlazesRusSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="TextViewProcessing.h">
+      <Filter>ViewFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="TextView.h">
+      <Filter>ViewFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tsl\ordered_map.h">
+      <Filter>TSL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -109,20 +124,26 @@
     <ClCompile Include="OutputWnd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\VariableLists\StringVectorList.cpp">
-      <Filter>BlazesRusSharedCode</Filter>
-    </ClCompile>
     <ClCompile Include="ContextMenu.cpp">
       <Filter>ViewFiles</Filter>
     </ClCompile>
     <ClCompile Include="TextView.cpp">
       <Filter>ViewFiles</Filter>
     </ClCompile>
-    <ClCompile Include="TextView.h">
-      <Filter>ViewFiles</Filter>
-    </ClCompile>
     <ClCompile Include="..\OtherFunctions\StringFunctions.cpp">
       <Filter>BlazesRusSharedCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VariableLists\StringVectorList.cpp">
+      <Filter>BlazesRusSharedCode</Filter>
+    </ClCompile>
+    <ClCompile Include="XMLView.cpp">
+      <Filter>ViewFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="XMLViewProcessing.cpp">
+      <Filter>ViewFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="TextViewProcessing.cpp">
+      <Filter>ViewFiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

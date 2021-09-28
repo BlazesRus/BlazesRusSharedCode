@@ -1,11 +1,13 @@
 #pragma once
 
 #include "MFCApp.h"
-#include "MFCView.h"
-//#include "OtherFunctions/MFCMacrosV2.h"
+#include "XMLView.h"
 
-class AppProcesser : public MFCApp<MFCView>
-{
+/// <summary>
+/// MFC Application for Viewing XML tag like formatted files
+/// </summary>
+class XMLViewProcesser : public MFCApp<XMLView>
+{//Class name doesn't really matter (works even if has same AppProcessor named class as AppProcessing.h)
 protected://BEGIN_AltMESSAGE_MAP()
 	/// <summary>
 	/// Gets the this message map.
@@ -13,12 +15,13 @@ protected://BEGIN_AltMESSAGE_MAP()
 	/// <returns>const AFX_MSGMAP*</returns>
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{
-		typedef AppProcesser ThisClass;
-		typedef MFCApp<MFCView> TheBaseClass;
+		typedef XMLViewProcesser ThisClass;
+		typedef MFCApp<XMLView> TheBaseClass;
 		__pragma(warning(push))
 		__pragma(warning(disable: 4640))
 		static const AFX_MSGMAP_ENTRY _messageEntries[] =
 		{
+
 			{ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }
 		};
 		__pragma(warning(pop))
@@ -37,4 +40,4 @@ public:
 	}
 };
 
-extern AppProcesser theApp;
+extern XMLViewProcesser theApp;

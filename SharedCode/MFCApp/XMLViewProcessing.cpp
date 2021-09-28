@@ -1,6 +1,6 @@
 #include "MFCpch.h"
 
-#include "AppProcessing.h"
+#include "XMLViewProcessing.h"
 
 // The one and only MFCApp object
-AppProcesser theApp;
+XMLViewProcesser theApp;

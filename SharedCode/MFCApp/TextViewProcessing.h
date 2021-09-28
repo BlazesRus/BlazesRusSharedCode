@@ -3,7 +3,10 @@
 #include "MFCApp.h"
 #include "TextView.h"
 
-class AppProcesser : public MFCApp<TextView>
+/// <summary>
+/// MFC Application for viewing content of any files(preferably text files) (Mostly just an app for testing of features)
+/// </summary>
+class TextViewProcesser : public MFCApp<TextView>
 {
 protected://BEGIN_AltMESSAGE_MAP()
 	/// <summary>
@@ -12,8 +15,8 @@ protected://BEGIN_AltMESSAGE_MAP()
 	/// <returns>const AFX_MSGMAP*</returns>
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{
-		typedef AppProcesser ThisClass;
-		typedef MFCApp<MFCView> TheBaseClass;
+		typedef TextViewProcesser ThisClass;
+		typedef MFCApp<TextView> TheBaseClass;
 		__pragma(warning(push))
 		__pragma(warning(disable: 4640))
 		static const AFX_MSGMAP_ENTRY _messageEntries[] =
@@ -36,4 +39,4 @@ public:
 	}
 };
 
-extern AppProcesser theApp;
+extern TextViewProcesser theApp;

@@ -21,40 +21,44 @@ protected: // create from serialization only
     }
     DECLARE_DYNCREATE(TextView)
 
-    void CreateFileIfDoesntExist()
-    {
-        if (FileName == "")
-        {
-            std::cout << "Filename not set yet!" << std::endl;
-        }
-        else
-        {
-            bool FileExists = false;
-            //Based on https://www.quora.com/What-is-the-best-way-to-check-whether-a-particular-file-exists-or-not-in-C++
-            struct stat buffer;
-            FileExists = (stat(FileName.c_str(), &buffer) == 0);
-            //Based on http://stackoverflow.com/questions/17818099/how-to-check-if-a-file-exists-before-creating-a-new-file
-            if (!FileExists)
-            {
-                std::ofstream file(FileName);
-                if (!file)
-                {
-                    std::cout << "File could not be created" << std::endl;
-                    return;
-                }
-            }
-        }
-    }
+    //void CreateFileIfDoesntExist()
+    //{
+    //    if (FileName == "")
+    //    {
+    //        std::cout << "Filename not set yet!" << std::endl;
+    //    }
+    //    else
+    //    {
+    //        bool FileExists = false;
+    //        //Based on https://www.quora.com/What-is-the-best-way-to-check-whether-a-particular-file-exists-or-not-in-C++
+    //        struct stat buffer;
+    //        FileExists = (stat(FileName.c_str(), &buffer) == 0);
+    //        //Based on http://stackoverflow.com/questions/17818099/how-to-check-if-a-file-exists-before-creating-a-new-file
+    //        if (!FileExists)
+    //        {
+    //            std::ofstream file(FileName);
+    //            if (!file)
+    //            {
+    //                std::cout << "File could not be created" << std::endl;
+    //                return;
+    //            }
+    //        }
+    //    }
+    //}
+
+    /// <summary>
+    /// Create File if it doesn't if doesn't exist
+    /// </summary>
     void CreateFileIfDoesntExist(std::string fileName)
     {
         bool FileExists = false;
         //Based on https://www.quora.com/What-is-the-best-way-to-check-whether-a-particular-file-exists-or-not-in-C++
         struct stat buffer;
-        FileExists = (stat(FileName.c_str(), &buffer) == 0);
+        FileExists = (stat(fileName.c_str(), &buffer) == 0);
         //Based on http://stackoverflow.com/questions/17818099/how-to-check-if-a-file-exists-before-creating-a-new-file
         if (!FileExists)
         {
-            std::ofstream file(FileName);
+            std::ofstream file(fileName);
             if (!file)
             {
                 std::cout << "File could not be created" << std::endl;
@@ -107,7 +111,7 @@ public:
     /// <summary>
     /// Saves the loaded data to file targeting filename stored in MFCDoc?
     /// </summary>
-	bool SaveDataToFile();
+    bool SaveDataToFile();
 
     /// <summary>
     /// Saves the loaded data to file. (if / or \ is last character(Targeting Directory instead of file), will instead create/replace TextFile.xml)

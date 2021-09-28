@@ -11,7 +11,7 @@
 IMPLEMENT_DYNCREATE(TextView, MFCView)
 
 BEGIN_MESSAGE_MAP(TextView, MFCView)
-#ifndef BlazesMFCApp_DisablePrinterFeatures
+#ifndef BlazesMFCApp_DisablePrinter
 	// Standard printing commands
 	ON_COMMAND(ID_FILE_PRINT, &MFCView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &MFCView::OnFilePrint)
@@ -40,10 +40,6 @@ TextView::TextView() noexcept
 	//contextMenuPopUp.AppendMenuItem(MF_SEPARATOR, 0, _T(""), pDC);
 }
 
-TextView::~TextView()
-{
-}
-
 BOOL TextView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: Modify the Window class or styles here by modifying
@@ -54,46 +50,62 @@ BOOL TextView::PreCreateWindow(CREATESTRUCT& cs)
 #pragma region File Loading And Saving
 bool TextView::LoadDataFromFile(std::string FilePath)
 {
-
-}
-
-void TextView::SaveDataToFile(std::string FilePath)
-{
-
+	Reset();
+	char LineChar;
+	std::string LineString="";
+	std::ifstream inFile;
+	inFile.open(FilePath);
+	if (!inFile)
+	{
+		return false;
+	}
+	while (inFile >> LineChar)
+	{
+		if (LineChar != '\n')
+		{
+			ContentList.Add(LineString); LineString.clear();
+		}
+		else
+			LineString += LineChar;
+	}
+	if (!LineString.empty())
+		ContentList.Add(LineString);
+	return true;
 }
 
 void TextView::SaveDataToFile(std::string FilePath)
 {
 	if (FilePath.back() == '/' || FilePath.back() == '\\') { FilePath += "TextFile.txt"; }
-	size_t StringLength;
-	char StringChar;
-	std::string LineString;
-	std::fstream LoadedFileStream;
-	//Fix for non-existing file
-	CreateFileIfDoesntExist(FilePath);
-	LoadedFileStream.open(FilePath.c_str(), std::fstream::out | std::fstream::trunc);
-	if (LoadedFileStream.is_open())
-	{
-		if (LoadedFileStream.good())
-		{//Saving to file now
-			//for (ContentList::iterator ArgElement = ContentList.begin(), EndElement = ContentList.end(); ArgElement != EndElement; ++ArgElement)
-			//{
-			//	LoadedFileStream << ArgElement << "\n";
-			//}
-		}
-		else
-		{
-			if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
-			else if (LoadedFileStream.fail()) { std::cout << "Failed format based Error!\n"; }
-			else if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
-			else if (LoadedFileStream.eof()) {/*Send debug message of reaching end of file?*/ }
-		}
-		LoadedFileStream.close();
-	}
-	else
-	{
-		std::cout << "Failed to open " << FilePath << ".\n";
-	}
+	//size_t StringLength;
+	//char StringChar;
+	//std::string LineString;
+	//std::fstream LoadedFileStream;
+	////Fix for non-existing file
+	//CreateFileIfDoesntExist(FilePath);
+	//LoadedFileStream.open(FilePath.c_str(), std::fstream::out | std::fstream::trunc);
+	//if (LoadedFileStream.is_open())
+	//{
+	//	if (LoadedFileStream.good())
+	//	{//Saving to file now
+	//		//for (ContentList::iterator ArgElement = ContentList.begin(), EndElement = ContentList.end(); ArgElement != EndElement; ++ArgElement)
+	//		//{
+	//		//	LoadedFileStream << ArgElement << "\n";
+	//		//}
+	//	}
+	//	else
+	//	{
+	//		if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
+	//		else if (LoadedFileStream.fail()) { std::cout << "Failed format based Error!\n"; }
+	//		else if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
+	//		else if (LoadedFileStream.eof()) {/*Send debug message of reaching end of file?*/ }
+	//	}
+	//	LoadedFileStream.close();
+	//}
+	//else
+	//{
+	//	std::cout << "Failed to open " << FilePath << ".\n";
+	//}
+	ContentList.SaveDataToFileV3(FilePath, true);
 }
 #pragma endregion File Loading And Saving
 
@@ -110,7 +122,7 @@ void TextView::OnDraw(CDC* /*pDC*/)
 }
 
 #pragma region Printer Features
-#ifndef BlazesMFCApp_DisablePrinterFeatures
+#ifndef BlazesMFCApp_DisablePrinter
 // TextView printing
 BOOL TextView::OnPreparePrinting(CPrintInfo* pInfo)
 {

@@ -167,7 +167,7 @@ protected://BEGIN_AltMESSAGE_MAP()
             // Standard file based document commands
             ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
             ON_COMMAND(ID_FILE_OPEN, &CWinApp::OnFileOpen)
-#ifndef BlazesMFCApp_DisablePrinterFeatures
+#ifndef BlazesMFCApp_DisablePrinter
             // Standard print setup command
             ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinApp::OnFilePrintSetup)
 #endif

@@ -16,12 +16,12 @@ class MFCFrame
 {
 #ifdef BlazesMFCApp_UseSDI
 protected: // create from serialization only
-	MFCFrame() noexcept;
-	DECLARE_DYNCREATE(MFCFrame)
+    MFCFrame() noexcept;
+    DECLARE_DYNCREATE(MFCFrame)
 #else
-	DECLARE_DYNAMIC(MFCFrame)
+    DECLARE_DYNAMIC(MFCFrame)
 public:
-	MFCFrame() noexcept;
+    MFCFrame() noexcept;
 #endif
 
 // Attributes
@@ -32,32 +32,31 @@ public:
 
 // Overrides
 public:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
 // Implementation
 public:
-	virtual ~MFCFrame();
+    virtual ~MFCFrame();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:  // control bar embedded members
-	CToolBar          m_wndToolBar;
-	CReBar            m_wndReBar;
-	CDialogBar        m_wndDlgBar;
-	CStatusBar        m_wndStatusBar;
+    CToolBar          m_wndToolBar;
+    CReBar            m_wndReBar;
+    CDialogBar        m_wndDlgBar;
+    CStatusBar        m_wndStatusBar;
 #ifdef BlazesMFCApp_EnableOutputWindow
     OutputWnd        m_wndOutput;
 #endif
 
 // Generated message map functions
 protected:
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	DECLARE_MESSAGE_MAP()
+    afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    DECLARE_MESSAGE_MAP()
 #ifdef BlazesMFCApp_EnableOutputWindow
-    BOOL CreateDockingWindows();
-    void SetDockingWindowIcons();
+    BOOL CreateOutputWindows();
 #endif
 };
 

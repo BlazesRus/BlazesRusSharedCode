@@ -21,40 +21,16 @@ protected: // create from serialization only
     }
     DECLARE_DYNCREATE(XMLView)
 
-    void CreateFileIfDoesntExist()
-    {
-        if (FileName == "")
-        {
-            std::cout << "Filename not set yet!" << std::endl;
-        }
-        else
-        {
-            bool FileExists = false;
-            //Based on https://www.quora.com/What-is-the-best-way-to-check-whether-a-particular-file-exists-or-not-in-C++
-            struct stat buffer;
-            FileExists = (stat(FileName.c_str(), &buffer) == 0);
-            //Based on http://stackoverflow.com/questions/17818099/how-to-check-if-a-file-exists-before-creating-a-new-file
-            if (!FileExists)
-            {
-                std::ofstream file(FileName);
-                if (!file)
-                {
-                    std::cout << "File could not be created" << std::endl;
-                    return;
-                }
-            }
-        }
-    }
     void CreateFileIfDoesntExist(std::string fileName)
     {
         bool FileExists = false;
         //Based on https://www.quora.com/What-is-the-best-way-to-check-whether-a-particular-file-exists-or-not-in-C++
         struct stat buffer;
-        FileExists = (stat(FileName.c_str(), &buffer) == 0);
+        FileExists = (stat(fileName.c_str(), &buffer) == 0);
         //Based on http://stackoverflow.com/questions/17818099/how-to-check-if-a-file-exists-before-creating-a-new-file
         if (!FileExists)
         {
-            std::ofstream file(FileName);
+            std::ofstream file(fileName);
             if (!file)
             {
                 std::cout << "File could not be created" << std::endl;
@@ -88,10 +64,10 @@ protected:
 
 // Operations
 public:
-	void AddNodeToRoot(std::string TagContent)
-	{
-	
-	}
+    void AddNodeToRoot(std::string TagContent)
+    {
+    
+    }
 
     /// <summary>
     /// Resets the storage of this instance.
