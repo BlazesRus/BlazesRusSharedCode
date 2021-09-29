@@ -21,18 +21,27 @@ public:
 	NodeDictionary NodeStore;
 private:
 	class InnerLocationStorage
-	{public:
+	{
+		//Includes all child nodes from Root node except for those that are closed
+		//X position Calculated by CRect::BottomRight.x
+		//Remove Tracking Of Nodes from storage when close them, and readd when open the nodes
+		//All Child nodes removed from tracking as well when parent closes
+	public:
 		InnerLocationStorage(unsigned _int64 rootIndex)
 		{
-		
 		}
 		unsigned _int64 RootNodeIndex;
-		//Only full RootLocation will be stored on Draw Updates instead of storing every node
-		CRect	RootLocation;
-		//To-Do Store Dictionary Variant storing Nodes within with key refering to X position and potentially storing Y offset data
+		//Store CRect::TopLeft.y position of Root Node
+		int RootYPosition;
+		//To-Do Store Dictionary Variant storing Nodes within with key refering to X position
 	}
 	VariableList<InnerLocationStorage> LocationStore;
 public:
+	unsigned _int64 FindNodeFromPoint(CPoint point)
+	{
+		ScreenToClient(&cp);
+		
+	}
 	void Reset()
 	{
 		NodeStore.clear();

@@ -9,7 +9,7 @@
 #include "MFCView.h"
 #include "ContextMenu.h"
 
-#ifdef BlazesMFCApp_UseNewNodeFinder
+#ifndef BlazesMFCApp_UseLegacyNodeSearch
 //#include "../Databases/ArgList.h"
 #include "XMLNodeData.hpp"
 #else

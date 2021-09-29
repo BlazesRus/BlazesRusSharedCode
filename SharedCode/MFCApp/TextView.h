@@ -1,7 +1,7 @@
-
-// TextView.h : interface of the TextView class
-//
-
+// ***********************************************************************
+// Code Created by James Michael Armstrong (https://github.com/BlazesRus)
+// Tree Code based on https://www.codeproject.com/Articles/9887/CStaticTreeCtrl-A-CStatic-derived-custom-Tree-cont
+// ***********************************************************************
 #pragma once
 
 #include "MFCpch.h"
