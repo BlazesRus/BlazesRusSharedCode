@@ -8,7 +8,13 @@
 
 #include "MFCView.h"
 #include "ContextMenu.h"
-#include "..\VariableLists\StringVectorList.h"
+
+#ifdef BlazesMFCApp_UseNewNodeFinder
+//#include "../Databases/ArgList.h"
+#include "XMLNodeData.hpp"
+#else
+
+#endif
 
 class XMLView : public MFCView
 {
@@ -38,6 +44,8 @@ protected: // create from serialization only
             }
         }
     }
+protected:
+
 // Attributes
 public:
     //Name of File(if blank then not saved/loaded yet into view)
@@ -48,9 +56,13 @@ public:
 protected:
     LOGFONT			m_lgFont;
     CFont			m_Font;
-    COLORREF		m_crDefaultTextColor;
-    COLORREF		m_TagContentColor = RGB(40, 40, 160);
-    COLORREF		m_crConnectingLines;
+    COLORREF		m_DefaultTextColor;
+    /// <summary>
+    /// The node's text color
+    /// </summary>
+    const COLORREF	defaultNodeTextColor = RGB(202, 201, 201);
+    const COLORREF	defaultNodeContentColor = RGB(40, 40, 160);
+    const COLORREF	defaultLineColor = RGB(0, 0, 0);
     const COLORREF	m_ArgColor = RGB(202, 201, 201);//(Lighter Shade of Sonic Silver) https://www.schemecolor.com/sample?getcolor=7a7978
 
     BOOL			m_bShowLines;
@@ -64,7 +76,7 @@ protected:
 
 // Operations
 public:
-    void AddNodeToRoot(std::string TagContent)
+    unsigned _int64 AddNodeByFullTag(std::string TagContent, int parentIndex=0)
     {
     
     }
@@ -91,6 +103,14 @@ public:
     /// </summary>
     /// <param name="FilePath">The file path. or file name </param>
     void SaveDataToFile(std::string FilePath);
+	
+	/// <summary>
+    /// Generates Data for a test view for possible more extreme .xml file (to test things like finding nodes clicked in deep in xml file)
+    /// </summary>
+	void CreateXMLTestView()
+	{
+	
+	}
 //--------------------------------------------------------------------------------------
 
 // Overrides

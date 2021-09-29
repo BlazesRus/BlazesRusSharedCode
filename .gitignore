@@ -210,3 +210,6 @@ SharedCode/HybridPlatform/
 SharedCode/MFCHybrid/
 SharedCode/MFCApp/TextViewV0.h
 SharedCode/MFCApp/TextViewV0.cpp
+SharedCode/MFCApp/TreeView.cpp
+
+SharedCode/MFCApp/TreeView.h
