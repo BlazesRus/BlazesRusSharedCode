@@ -22,7 +22,7 @@ size_t StringVectorList::AddData()
 
 void StringVectorList::ConvertStringToStringVectorList(std::string Content)
 {
-    if (Size() != 0)
+    if (!empty())
     {
         Reset();
     }
@@ -912,4 +912,64 @@ bool StringVectorList::LoadFileDataV2(std::string FileName, unsigned short Confi
         return false;
     }
     return true;
+}
+
+bool StringVectorList::Save(std::string FileName/*="AppSettings.ini"*/)
+{
+	if(empty())
+		return true;
+	size_t StringLength;
+	char StringChar;
+	std::string LineString;
+	std::fstream LoadedFileStream;
+	bool CreatingFreshIni = CreateFileIfDoesntExist(FilePath);
+	LoadedFileStream.open(FilePath.c_str(), std::fstream::in | std::fstream::out);
+	if (LoadedFileStream.is_open())
+	{
+		if (LoadedFileStream.good())
+		{//Saving to file now
+			if(CreatingFreshIni)
+			{
+				LineString = ElementAt(0);
+				StringLength = LineString.length();
+				for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
+				{
+					StringChar = LineString.at(StringIndex);
+					LoadedFileStream << StringChar;
+				}
+				for (size_t i = 1; i < DataSize; ++i)
+				{
+					//Carriage Return to next line
+					LoadedFileStream << "\n";
+					LineString = ElementAt(i);
+					StringLength = LineString.length();
+					for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
+					{
+						StringChar = LineString.at(StringIndex);
+						LoadedFileStream << StringChar;
+					}
+				}
+			}
+			else
+			{
+				while (inFile >> LineChar)
+				{
+				
+				}
+			}
+		}
+		else
+		{
+			if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
+			else if (LoadedFileStream.fail()) { std::cout << "Failed format based Error!\n"; }
+			else if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
+			else if (LoadedFileStream.eof()) {/*Send debug message of reaching end of file?*/ }
+		}
+		LoadedFileStream.close();
+	}
+	else
+	{
+		std::cout << "Failed to open " << FilePath << ".\n";
+	}
+	return false;
 }

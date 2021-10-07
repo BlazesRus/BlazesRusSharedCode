@@ -87,5 +87,11 @@ public:
 	// Parameter: std::string Content
 	//************************************
 	void ConvertStringToStringVectorList(std::string Content);
+	/// <summary>
+    /// Updates/Saves the INI data.
+    /// </summary>
+    /// <param name="FileName">Name of the file.</param>
+    /// <returns>bool.</returns>
+    bool Save(std::string FilePath = "AppSettings.ini");
 };
 #endif
