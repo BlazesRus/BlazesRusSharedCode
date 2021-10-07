@@ -352,10 +352,59 @@ public:
 		{
 			if (LoadedFileStream.good())
 			{//Saving to file now
-				while (inFile >> LineChar)
+#ifndef MFCApp_SaveFreshConfigFile
+				if(CreatingFreshIni)
 				{
-				
+#endif
+#ifdef MFCApp_UseOldIniDataFormatForSettings//[IniSetting=IniValue]
+					//LoadedFileStream << "[IniSetting=";
+					//if(IniValue)
+					//	LoadedFileStream << "true";
+					//else
+					//	LoadedFileStream << "false";
+					//LoadedFileStream << "]\n";
+#else//IniSetting:IniValue;
+					//LoadedFileStream << "IniSetting:";
+					//if(IniValue)
+					//	LoadedFileStream << "true";
+					//else
+					//	LoadedFileStream << "false";
+					//LoadedFileStream << ";\n";
+#endif
+#ifdef MFCApp_StoreDynamicAppSettings
+					if(!empty())
+					{
+						//LineString = ElementAt(0);
+						//StringLength = LineString.length();
+						//for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
+						//{
+						//	StringChar = LineString.at(StringIndex);
+						//	LoadedFileStream << StringChar;
+						//}
+						//for (size_t i = 1; i < DataSize; ++i)
+						//{
+						//	//Carriage Return to next line
+						//	LoadedFileStream << "\n";
+						//	LineString = ElementAt(i);
+						//	StringLength = LineString.length();
+						//	for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
+						//	{
+						//		StringChar = LineString.at(StringIndex);
+						//		LoadedFileStream << StringChar;
+						//	}
+						//}
+					}
+#endif
+#ifndef MFCApp_SaveFreshConfigFile
 				}
+				else
+				{
+					while (inFile >> LineChar)
+					{
+					
+					}
+				}
+#endif
 			}
 			else
 			{
