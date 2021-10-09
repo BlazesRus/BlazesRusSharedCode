@@ -18,7 +18,7 @@ protected://BEGIN_AltMESSAGE_MAP()
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{
 		typedef TreePage ThisClass;
-		typedef CustomTreeView<TreePageNode> TheBaseClass;
+		typedef CustomTreeView<TreePageNode, MultiViewDoc> TheBaseClass;
 		__pragma(warning(push))
 		__pragma(warning(disable: 4640))
 		static const AFX_MSGMAP_ENTRY _messageEntries[] =
