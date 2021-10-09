@@ -6,14 +6,14 @@
 #pragma once
 
 /*
-class class_name: public baseClass<baseArg01>
+class class_name: public baseClass
 {
-	MFC_RuntimeExtPart01Base01(class_name, baseClass, baseArg01)
-	//Any message map messages here
-	MFC_RuntimeExtPart02Base01(class_name, baseClass, baseArg01)
 	class_name(){}
 	~class_name(){}
 	//And other class stuff
+	MFC_RuntimeExtPart01(class_name, baseClass)
+	//Any message map messages here
+	MFC_RuntimeExtPart02(class_name, baseClass)
 };
 
 MFC_RuntimeImplimentation(class_name)
@@ -71,12 +71,12 @@ public:\
 /*
 class class_name: public baseClass<baseArg01>
 {
-	MFC_RuntimeExtPart01Base01(class_name, baseClass, baseArg01)
-	//Any message map messages here
-	MFC_RuntimeExtPart02Base01(class_name, baseClass, baseArg01)
 	class_name(){}
 	~class_name(){}
 	//And other class stuff
+	MFC_RuntimeExtPart01Base01(class_name, baseClass, baseArg01)
+	//Any message map messages here
+	MFC_RuntimeExtPart02Base01(class_name, baseClass, baseArg01)
 };
 
 MFC_RuntimeImplimentation(class_name)
@@ -134,12 +134,13 @@ public:\
 /*
 class class_name: public baseClass<baseArg01, baseArg02>
 {
-	MFC_RuntimeExtPart01Base02(class_name, baseClass, baseArg01, baseArg02)
-	//Any message map messages here
-	MFC_RuntimeExtPart02Base02(class_name, baseClass, baseArg01, baseArg02)
 	class_name(){}
 	~class_name(){}
 	//And other class stuff
+	
+	MFC_RuntimeExtPart01Base02(class_name, baseClass, baseArg01, baseArg02)
+	//Any message map messages here
+	MFC_RuntimeExtPart02Base02(class_name, baseClass, baseArg01, baseArg02)
 };
 
 MFC_RuntimeImplimentation(class_name)

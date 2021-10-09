@@ -20,10 +20,6 @@
 /// <seealso cref="CustomTreeView{XMLTagViewNode}" />
 class XMLTagView : public CustomTreeView<XMLTagViewNode, MultiViewDoc>
 {
-	MFC_RuntimeExtPart01Base02(XMLTagView, CustomTreeView, XMLTagViewNode, MultiViewDoc)
-	//Any message map messages here
-	MFC_RuntimeExtPart02Base02(XMLTagView, CustomTreeView, XMLTagViewNode, MultiViewDoc)
-
 	/// <summary>
 	/// Initializes a new instance of the <see cref="XMLTagView"/> class.
 	/// </summary>
@@ -39,6 +35,10 @@ class XMLTagView : public CustomTreeView<XMLTagViewNode, MultiViewDoc>
 	/// <param name="FilePath">The file path.</param>
 	/// <returns>bool</returns>
 	bool LoadDataFromFile(std::string FilePath);
+
+	MFC_RuntimeExtPart01Base02(XMLTagView, CustomTreeView, XMLTagViewNode, MultiViewDoc)
+	//Any message map messages here
+	MFC_RuntimeExtPart02Base02(XMLTagView, CustomTreeView, XMLTagViewNode, MultiViewDoc)
 };
 
 MFC_RuntimeImplimentation(XMLTagView)
