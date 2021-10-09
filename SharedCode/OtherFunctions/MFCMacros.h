@@ -218,6 +218,17 @@ public:\
 	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(class_name); }\
 	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(class_name); }
 
+#define CRuntime_Base02V2(class_name, baseClass, baseargOne, baseargTwo)\
+private:\
+	typedef baseClass<baseargOne, baseargTwo> TheBaseClass;\
+	typedef class_name ThisClass;\
+protected:\
+	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
+public:\
+	static const CRuntimeClass class##class_name;\
+	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(class_name); }\
+	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(class_name); }
+
 #define CRuntime_Arg02Base01(class_name, template_class, template_class02, baseClass, baseargOne)\
 private:\
 	static std::string ClassString()\
