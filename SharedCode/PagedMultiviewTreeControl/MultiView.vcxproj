@@ -117,6 +117,8 @@
   <ItemGroup Label="SharedCodeIncludes">
     <ClInclude Include="..\Databases\ArgList.h" />
     <ClInclude Include="..\Databases\ArgStringList.h" />
+    <ClInclude Include="..\Databases\IniDataV2.h" />
+    <ClInclude Include="..\MFCApp\AppSettings.h" />
     <ClInclude Include="..\tsl\ordered_map.h" />
     <ClInclude Include="..\VariableLists\StringVectorList.h" />
     <ClInclude Include="..\VariableLists\VariableList.h" />
@@ -150,25 +152,21 @@
     <ClInclude Include="$(BlazesSharedCode)\AltNum\MediumDec.hpp" />
     <ClInclude Include="$(BlazesSharedCode)\QuadVector\QuadVector.h" />
     <ClInclude Include="$(BlazesSharedCode)\QuadVector\QuadVectorFunctions.h" />
-	<ClInclude Include="$(BlazesSharedCode)\Databases\CustomDictionary.h" />
+    <ClInclude Include="$(BlazesSharedCode)\Databases\CustomDictionary.h" />
     <ClInclude Include="$(BlazesSharedCode)\Databases\CustomOrderedDictionary.h" />
     <ClInclude Include="$(BlazesSharedCode)\Databases\IndexedDictionary.h" />
     <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\MFCMacros.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AboutDlg.hpp" />
-    <ClInclude Include="MFCFramework.h" />
-
+    <ClInclude Include="AboutDlg.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MFView.h" />
     <ClInclude Include="OtherView.h" />
     <ClInclude Include="MultiviewPrecompile.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp" />
-    <ClCompile Include="MFView.cpp" />
     <ClCompile Include="OtherView.cpp" />
     <ClCompile Include="MultiviewPrecompile.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -180,31 +178,30 @@
     <ClInclude Include="MultiViewDoc.h" />
     <ClInclude Include="MultiViewApp.h" />
     <ClCompile Include="MultiViewApp.cpp" />
-	<ClInclude Include="DLG_TreeNodeText.h" />
+    <ClInclude Include="DLG_TreeNodeText.h" />
   </ItemGroup>
   <ItemGroup>
-  	<ClInclude Include="WP_APPDefines.h" />
+    <ClInclude Include="WP_APPDefines.h" />
     <ClCompile Include="ContextMenu.cpp" />
     <ClInclude Include="ContextMenu.h" />
     <ClCompile Include="AudioSupportedContextMenu.cpp" />
     <ClInclude Include="AudioSupportedContextMenu.h" />
-	<ClInclude Include="BasicMultiviewTemplate.h" />
-	<ClInclude Include="BasicXMLNode.h" />
-	<ClInclude Include="HalfPagedMultiview.h" />
-	<ClCompile Include="HalfPagedMultiview.cpp" />
-	<ClInclude Include="PagedMultiviewVarient01.h" />
-	<ClInclude Include="CustomTreeNode.h" />
-	<ClInclude Include="NonGUINodeTree.h" />
-	<ClInclude Include="CustomTreeViewWAudio.h" />
-	<ClInclude Include="GenericFrameView.h" />
-	<ClInclude Include="LinkedTreeView.h" />
-	<ClInclude Include="CustomTreeView.h" />
+    <ClInclude Include="BasicMultiviewTemplate.h" />
+    <ClInclude Include="BasicXMLNode.h" />
+    <ClInclude Include="HalfPagedMultiview.h" />
+    <ClInclude Include="PagedMultiviewVarient01.h" />
+    <ClInclude Include="CustomTreeNode.h" />
+    <ClInclude Include="NonGUINodeTree.h" />
+    <ClInclude Include="CustomTreeViewWAudio.h" />
+    <ClInclude Include="GenericFrameView.h" />
+    <ClInclude Include="LinkedTreeView.h" />
+    <ClInclude Include="CustomTreeView.h" />
     <ClCompile Include="XMLTagView.cpp" />
     <ClInclude Include="XMLTagView.h" />
-	<ClInclude Include="TreePageNode.h" />
+    <ClInclude Include="TreePageNode.h" />
     <ClCompile Include="TreePage.cpp" />
     <ClInclude Include="TreePage.h" />
-	<ClInclude Include="CustomTreeCtrl.h" />
+    <ClInclude Include="CustomTreeCtrl.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MultiView.rc" />

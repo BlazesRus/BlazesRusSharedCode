@@ -16,14 +16,8 @@
     <Filter Include="MultiView">
       <UniqueIdentifier>{e3ccac91-12d8-4199-afd7-0792b2cde47b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\SharedCode">
-      <UniqueIdentifier>{13e2e699-a199-48af-87e2-5ad7f29bd50c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="NodeTreeStuff">
       <UniqueIdentifier>{1664e39f-4e74-469c-a72d-2b011c9daa74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\SharedCode">
-      <UniqueIdentifier>{96a2085a-bee7-47c9-b291-db3b059bf2ad}</UniqueIdentifier>
     </Filter>
     <Filter Include="TSL">
       <UniqueIdentifier>{aeadce5e-4f69-4c63-98f4-c0e7db367732}</UniqueIdentifier>
@@ -34,203 +28,50 @@
     <Filter Include="NodeTreeStuff\OldHkNodeTreeStuff">
       <UniqueIdentifier>{8644373c-f86c-4dd3-a3f4-54571953ad19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OtherSharedCode">
+      <UniqueIdentifier>{e98a37ec-9b01-4b52-8f34-e7928a1f2851}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LessImportantFiles">
+      <UniqueIdentifier>{b007345e-69f7-4e78-addb-4a314d3cf088}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TreeCtrlPage.cpp">
-      <Filter>MultiView</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\NodeTrees\VariableData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\MainFrm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\MultiViewDoc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\OtherView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\MultiviewPrecompile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\ContextMenu.cpp">
-      <Filter>NodeTreeStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\DLG_TreeNodeText.cpp">
-      <Filter>NodeTreeStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\XMLTagView.cpp">
-      <Filter>NodeTreeStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\MultiViewApp.cpp">
-      <Filter>MultiView</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\Databases\IniDataV2.cpp">
-      <Filter>Source Files\SharedCode</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\VariableLists\VariableVectorFunctions.cpp">
-      <Filter>Source Files\SharedCode</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\VariableLists\VariableTypeLists.cpp">
-      <Filter>Source Files\SharedCode</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\OtherFunctions\VariableConversionFunctions.cpp">
-      <Filter>Source Files\SharedCode</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\VariableLists\StringVectorList.cpp">
-      <Filter>Source Files\SharedCode</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\OtherFunctions\StringFunctions.cpp">
-      <Filter>Source Files\SharedCode</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\QuadVector\QuadVectorFunctions.cpp">
-      <Filter>Source Files\SharedCode</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\QuadVector\QuadVector.cpp">
-      <Filter>Source Files\SharedCode</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\TreePage.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BlazesSharedCode)\AltNum\MediumDec.cpp">
-      <Filter>Source Files\SharedCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\NodeTrees\TagNodeTreeTemplate.cpp">
-      <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\NodeTrees\XMLOption.cpp">
-      <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
-    </ClCompile>
-    <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\BlazesBehaviorFileMerger.cpp">
-      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\DifferenceData.cpp">
-      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkBhvData.cpp">
-      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkBhvNodeTree.cpp">
-      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkClassUsageTree.cpp">
-      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\BHVEditor\bvhTweak\HkBasedCode\HkTreeView.cpp">
-      <Filter>NodeTreeStuff</Filter>
-    </ClCompile>
     <ClCompile Include="AudioSupportedContextMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ContextMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="XMLTagView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TreePage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiViewDoc.cpp">
+      <Filter>MultiView</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiViewApp.cpp">
+      <Filter>MultiView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OtherFunctions\StringFunctions.cpp">
+      <Filter>LessImportantFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VariableLists\StringVectorList.cpp">
+      <Filter>LessImportantFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiviewPrecompile.cpp">
+      <Filter>LessImportantFiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\StringFunctions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\VariableLists\StringVectorList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\CustomTreeCtrl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\MFCMacros.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\TreeCtrlPage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\AboutDlg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\BasicMultiviewTemplate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\MainFrm.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\MultiViewDoc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\OtherView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\MultiviewPrecompile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\Databases\IndexedDictionary.h">
-      <Filter>Header Files\SharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\Databases\IndexedPDictionary.h">
-      <Filter>Header Files\SharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\Databases\IniDataV2.h">
-      <Filter>Header Files\SharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\Databases\CustomOrderedDictionary.h">
-      <Filter>Header Files\SharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\Databases\CustomDictionary.h">
-      <Filter>Header Files\SharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\AltNum\MediumDec.hpp">
-      <Filter>Header Files\SharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\WP_APPDefines.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\CustomTreeView.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\ContextMenu.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\XMLTagViewNode.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\GenericFrameView.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\LinkedTreeView.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\MFView.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\XMLTagView.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\CustomTreeNode.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\MultiViewApp.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\TreePage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\Databases\PointerDictionary.h">
-      <Filter>Header Files\SharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\Databases\OrderedPointerDictionary.h">
-      <Filter>Header Files\SharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\DLLAPI.h">
-      <Filter>Header Files\SharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\TreePageNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\QuadVector\QuadVector.h">
-      <Filter>Header Files\SharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\QuadVector\QuadVectorFunctions.h">
-      <Filter>Header Files\SharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_map.h">
+    <!--     <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_map.h">
       <Filter>TSL</Filter>
     </ClInclude>
     <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_hash.h">
@@ -238,24 +79,12 @@
     </ClInclude>
     <ClInclude Include="$(BlazesSharedCode)\tsl\ordered_set.h">
       <Filter>TSL</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\DLG_TreeNodeText.h">
-      <Filter>NodeTreeStuff</Filter>
+    </ClInclude> -->
+    <ClInclude Include="..\tsl\ordered_map.h">
+      <Filter>TSL</Filter>
     </ClInclude>
     <ClInclude Include="BasicXMLNode.h">
       <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableList.h">
-      <Filter>Header Files\SharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\VariableConversionFunctions.h">
-      <Filter>Header Files\SharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableTypeLists.h">
-      <Filter>Header Files\SharedCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\VariableLists\VariableVectorFunctions.h">
-      <Filter>Header Files\SharedCode</Filter>
     </ClInclude>
     <ClInclude Include="..\NodeTrees\LooseNodeTreeTemplate.h">
       <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
@@ -272,30 +101,6 @@
     <ClInclude Include="..\NodeTrees\XMLTagTree.h">
       <Filter>NodeTreeStuff\OldNodeTreeCode</Filter>
     </ClInclude>
-    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\BlazesBehaviorFileMerger.h">
-      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\DifferenceData.h">
-      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HavokActionTree.h">
-      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HavokActionTreeOlder.h">
-      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkBhvData.h">
-      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkBhvNodeTree.h">
-      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="I:\UserFiles\ProgrammingInfo\C++ code\HkBasedCode\HkClassUsageTree.h">
-      <Filter>NodeTreeStuff\OldHkNodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(HkBasedCode)\BasicHkNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CustomTreeViewWAudio.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
@@ -305,34 +110,133 @@
     <ClInclude Include="NonGUINodeTree.h">
       <Filter>NodeTreeStuff</Filter>
     </ClInclude>
-    <ClInclude Include="NonGUINode.h">
-      <Filter>NodeTreeStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\HalfPagedMultiview.h">
-      <Filter>MultiView</Filter>
-    </ClInclude>
     <ClInclude Include="PagedMultiviewVarient01.h">
       <Filter>MultiView</Filter>
     </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MFView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiviewPrecompile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WP_APPDefines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ContextMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicMultiviewTemplate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HalfPagedMultiview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomTreeNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GenericFrameView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedTreeView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomTreeView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XMLTagView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TreePageNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TreePage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomTreeCtrl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Databases\ArgList.h">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Databases\ArgStringList.h">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OtherFunctions\StringFunctions.h">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VariableLists\StringVectorList.h">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiViewApp.h">
+      <Filter>MultiView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VariableLists\VariableList.h">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="AboutDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\Databases\CustomDictionary.h">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\Databases\CustomOrderedDictionary.h">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\Databases\IndexedDictionary.h">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\AltNum\MediumDec.hpp">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\QuadVector\QuadVector.h">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\QuadVector\QuadVectorFunctions.h">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>LessImportantFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="$(BlazesSharedCode)\OtherFunctions\MFCMacros.h">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="DLG_TreeNodeText.h">
+      <Filter>LessImportantFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiViewDoc.h">
+      <Filter>LessImportantFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Databases\IniDataV2.h">
+      <Filter>LessImportantFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MFCApp\AppSettings.h">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\res\MultiView.ico">
+    <Image Include="res\MultiView.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\res\MultiViewDoc.ico">
+    <Image Include="res\MultiViewDoc.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\res\Toolbar.bmp">
+    <Image Include="res\Toolbar.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\res\MultiView.rc2">
+    <None Include="res\MultiView.rc2">
       <Filter>Resource Files</Filter>
-    </CustomBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="$(BlazesSharedCode)\PagedMultiviewTreeControl\MultiView.rc">
+    <ResourceCompile Include="MultiView.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

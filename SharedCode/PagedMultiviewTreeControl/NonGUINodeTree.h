@@ -6,8 +6,8 @@
 #if !defined(NonGUINodeTree_IncludeGuard)
 #define NonGUINodeTree_IncludeGuard
 
-#include "IniData/IndexedDictionary.h"
-#include "VariableLists/VariableTypeLists.h"
+#include "../Databases/IndexedDictionary.h"
+#include "../VariableLists/VariableTypeLists.h"
 #include "NonGUINode.h"
 
 /// <summary>

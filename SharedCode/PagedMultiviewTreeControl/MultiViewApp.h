@@ -18,7 +18,8 @@
 #include "OtherView.h"
 #include "TreePage.h"
 
-#include <IniData/IniDataV2.h>
+//#include "../Databases/IniDataV2.h"
+#include "../MFCApp/AppSettings.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CMultiViewApp:
@@ -42,7 +43,7 @@ public:
 	/// <summary>
 	/// The INI settings
 	/// </summary>
-	IniDataV2 IniSettings;
+	AppSettings IniSettings;
 private:
 	/// <summary>
 	/// Edit this virtual function inside Derived Class with method void InitializationCode() defined to run edit code thats run just before displays main view on InitInstance()

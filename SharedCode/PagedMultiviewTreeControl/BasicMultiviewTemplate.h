@@ -8,14 +8,15 @@
 #endif
 
 #include "resource.h"       // main symbols
-#include <IniData/IniDataV2.h>
 #include "MultiViewDoc.h"
 #include "AboutDlg.h"
+
+//#include "../Databases/IniDataV2.h"
 //#include <IniData/IndexedPDictionary.h>
 //#include "BvhFrame.h"
 
 /// <summary>
-/// Multiview features based on https://www.codeproject.com/Articles/7686/Using-Multiview
+/// Multi-view features based on https://www.codeproject.com/Articles/7686/Using-Multiview
 /// </summary>
 template <typename ViewType01, typename ViewType02, typename WindowType, typename FrameWindowType>//: MainFrame, OtherView, CView, CFrameWnd
 class BasicMultiviewTemplate : public CWinAppEx

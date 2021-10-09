@@ -3,7 +3,6 @@
 // Created          : 10-15-2018
 //
 // Last Modified By : BlazesRus
-// Last Modified On : 11-22-2018
 // ***********************************************************************
 // <copyright file="MainFrm.h" company="">
 //     Copyright (c) . All rights reserved.

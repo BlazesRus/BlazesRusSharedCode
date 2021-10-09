@@ -10,7 +10,7 @@
 #ifndef __AFXWIN_H__
 #error "include 'MultiviewPrecompile.h' before including this file for PCH"
 #endif
-#include "OtherFunctions/MFCMacros.h"
+#include "../OtherFunctions/MFCMacros.h"
 
 #include "resource.h"       // main symbols
 
@@ -18,7 +18,7 @@
 #include "MFView.h"
 #include "AboutDlg.h"
 
-#include <VariableLists/VariableList.h>
+#include "../VariableLists/VariableList.h"
 
 /// <summary>
 /// Multi-view features based on https://www.codeproject.com/Articles/7686/Using-Multiview
