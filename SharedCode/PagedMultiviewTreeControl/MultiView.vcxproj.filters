@@ -218,6 +218,9 @@
     <ClInclude Include="MainFrm.h">
       <Filter>LessImportantFiles</Filter>
     </ClInclude>
+    <ClInclude Include="..\OtherFunctions\MFCMacrosV3.h">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\MultiView.ico">

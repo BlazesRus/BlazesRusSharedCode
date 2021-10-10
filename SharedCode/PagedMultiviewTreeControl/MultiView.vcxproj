@@ -119,6 +119,7 @@
     <ClInclude Include="..\Databases\ArgStringList.h" />
     <ClInclude Include="..\Databases\IniDataV2.h" />
     <ClInclude Include="..\MFCApp\AppSettings.h" />
+    <ClInclude Include="..\OtherFunctions\MFCMacrosV3.h" />
     <ClInclude Include="..\tsl\ordered_map.h" />
     <ClInclude Include="..\VariableLists\StringVectorList.h" />
     <ClInclude Include="..\VariableLists\VariableList.h" />
