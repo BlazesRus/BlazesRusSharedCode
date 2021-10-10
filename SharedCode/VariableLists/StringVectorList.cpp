@@ -8,6 +8,7 @@
 
 #include "..\VariableLists\StringVectorList.h"
 #include "..\OtherFunctions\StringFunctions.h"
+#include "..\OtherFunctions\FileOps.hpp"
 
 using std::cout;
 using std::string;
@@ -916,60 +917,106 @@ bool StringVectorList::LoadFileDataV2(std::string FileName, unsigned short Confi
 
 bool StringVectorList::Save(std::string FileName/*="AppSettings.ini"*/)
 {
-	if(empty())
-		return true;
-	size_t StringLength;
-	char StringChar;
-	std::string LineString;
-	std::fstream LoadedFileStream;
-	bool CreatingFreshIni = CreateFileIfDoesntExist(FilePath);
-	LoadedFileStream.open(FilePath.c_str(), std::fstream::in | std::fstream::out);
-	if (LoadedFileStream.is_open())
-	{
-		if (LoadedFileStream.good())
-		{//Saving to file now
-			if(CreatingFreshIni)
-			{
-				LineString = ElementAt(0);
-				StringLength = LineString.length();
-				for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
-				{
-					StringChar = LineString.at(StringIndex);
-					LoadedFileStream << StringChar;
-				}
-				for (size_t i = 1; i < DataSize; ++i)
-				{
-					//Carriage Return to next line
-					LoadedFileStream << "\n";
-					LineString = ElementAt(i);
-					StringLength = LineString.length();
-					for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
-					{
-						StringChar = LineString.at(StringIndex);
-						LoadedFileStream << StringChar;
-					}
-				}
-			}
-			else
-			{
-				while (inFile >> LineChar)
-				{
-				
-				}
-			}
-		}
-		else
-		{
-			if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
-			else if (LoadedFileStream.fail()) { std::cout << "Failed format based Error!\n"; }
-			else if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
-			else if (LoadedFileStream.eof()) {/*Send debug message of reaching end of file?*/ }
-		}
-		LoadedFileStream.close();
-	}
-	else
-	{
-		std::cout << "Failed to open " << FilePath << ".\n";
-	}
-	return false;
+    if(empty())
+        return true;
+    size_t StringLength;
+    char LineChar;
+    std::string LineString;
+    std::fstream LoadedFileStream;
+    bool LoadingExistingFile = BlazesRusCode::FileOps::CreateFileIfDoesntExist(FileName);
+    LoadedFileStream.open(FileName.c_str(), std::fstream::in | std::fstream::out);
+    if (LoadedFileStream.is_open())
+    {
+        if (LoadedFileStream.good())
+        {//Saving to file now
+            if(LoadingExistingFile)
+            {
+                size_t LineIndex = 0;
+                std::filebuf* FileBuffer = LoadedFileStream.rdbuf();
+                for (LineChar = FileBuffer->sbumpc(); LineChar != EOF; LineChar = FileBuffer->sbumpc())
+                {
+                    if (LineChar == '\n')
+                    {
+                        //Compare List content before updating
+                        if(LineString!=ElementAt(LineIndex))
+                            this->at(LineIndex) = LineString;
+                        LineString.clear();
+                        LineIndex++;
+                    }
+                    else
+                    {
+                        LineString += LineChar;
+                    }
+                }
+                if (!LineString.empty())
+                {
+                    if (LineString != ElementAt(LineIndex))
+                        this->at(LineIndex) = LineString;
+                    LineString.clear();
+                    LineIndex++;
+                }
+                if ((size()-1) > LineIndex)//If only part of Current List lines exist then continue rest as CreatingFreshFile based code
+                {
+                    if (LineIndex == 0)
+                    {
+                        LineString = ElementAt(0);
+                        StringLength = LineString.length();
+                        for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
+                        {
+                            LineChar = LineString.at(StringIndex);
+                            LoadedFileStream << LineChar;
+                        }
+                    }
+                    while (LineIndex < size())
+                    {
+                        //Carriage Return to next line
+                        LoadedFileStream << "\n";
+                        LineString = ElementAt(LineIndex);
+                        StringLength = LineString.length();
+                        for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
+                        {
+                            LineChar = LineString.at(StringIndex);
+                            LoadedFileStream << LineChar;
+                        }
+                        ++LineIndex;
+                    }
+                }
+            }
+            else//Otherwise CreatingFreshFile
+            {
+                LineString = ElementAt(0);
+                StringLength = LineString.length();
+                for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
+                {
+                    LineChar = LineString.at(StringIndex);
+                    LoadedFileStream << LineChar;
+                }
+                for (size_t i = 1; i < size(); ++i)
+                {
+                    //Carriage Return to next line
+                    LoadedFileStream << "\n";
+                    LineString = ElementAt(i);
+                    StringLength = LineString.length();
+                    for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
+                    {
+                        LineChar = LineString.at(StringIndex);
+                        LoadedFileStream << LineChar;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
+            else if (LoadedFileStream.fail()) { std::cout << "Failed format based Error!\n"; }
+            else if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
+            else if (LoadedFileStream.eof()) {/*Send debug message of reaching end of file?*/ }
+        }
+        LoadedFileStream.close();
+    }
+    else
+    {
+        std::cout << "Failed to open " << FileName << ".\n";
+    }
+    return false;
 }
