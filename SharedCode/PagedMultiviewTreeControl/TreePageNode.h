@@ -17,34 +17,34 @@
 class TreePageNode : public CustomTreeNode
 {
 public:
-	/// <summary>
-	/// Initializes a new instance of the <see cref="TreePageNode"/> class.
-	/// </summary>
-	TreePageNode() : CustomTreeNode()
-	{
-	}
-	/// <summary>
-	/// Initializes a new instance of the <see cref="TreePageNode"/> class.
-	/// </summary>
-	/// <param name="MenuType">Type of the menu.</param>
-	TreePageNode(int MenuType) : CustomTreeNode(MenuType)
-	{
-	}
-	/// <summary>
-	/// Implements the operator CustomTreeNode* operator.
-	/// </summary>
-	/// <returns>The result of the operator.</returns>
-	explicit operator CustomTreeNode*()
-	{
-		if (this == nullptr)
-		{
-			return nullptr;
-		}
-		else
-		{
-			return dynamic_cast<CustomTreeNode*>(this);
-		}
-	}
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TreePageNode"/> class.
+    /// </summary>
+    TreePageNode() : CustomTreeNode()
+    {
+    }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TreePageNode"/> class.
+    /// </summary>
+    /// <param name="MenuType">Type of the menu.</param>
+    TreePageNode(int MenuType) : CustomTreeNode(MenuType)
+    {
+    }
+    /// <summary>
+    /// Implements the operator CustomTreeNode* operator.
+    /// </summary>
+    /// <returns>The result of the operator.</returns>
+    explicit operator CustomTreeNode*()
+    {
+        if (this == nullptr)
+        {
+            return nullptr;
+        }
+        else
+        {
+            return dynamic_cast<CustomTreeNode*>(this);
+        }
+    }
 };
 
 #endif

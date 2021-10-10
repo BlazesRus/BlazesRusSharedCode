@@ -26,9 +26,9 @@ OtherView::~OtherView()
 
 
 BEGIN_MESSAGE_MAP(OtherView, CView)
-	//{{AFX_MSG_MAP(OtherView)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(OtherView)
+        // NOTE - the ClassWizard will add and remove mapping macros here.
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -36,10 +36,10 @@ END_MESSAGE_MAP()
 
 void OtherView::OnDraw(CDC* pDC)
 {
-	MultiViewDoc* pDoc = GetDocument();
-	pDC->TextOut(400,300,"Other view");
-	pDC->TextOut(400,320,pDoc->m_str);
-	// TODO: add draw code here
+    MultiViewDoc* pDoc = GetDocument();
+    pDC->TextOut(400,300,"Other view");
+    pDC->TextOut(400,320,pDoc->m_str);
+    // TODO: add draw code here
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -48,12 +48,12 @@ void OtherView::OnDraw(CDC* pDC)
 #ifdef _DEBUG
 void OtherView::AssertValid() const
 {
-	CView::AssertValid();
+    CView::AssertValid();
 }
 
 void OtherView::Dump(CDumpContext& dc) const
 {
-	CView::Dump(dc);
+    CView::Dump(dc);
 }
 #endif //_DEBUG
 
@@ -62,5 +62,5 @@ void OtherView::Dump(CDumpContext& dc) const
 
 MultiViewDoc* OtherView::GetDocument()
 {
-	return (MultiViewDoc*)m_pDocument;
+    return (MultiViewDoc*)m_pDocument;
 }

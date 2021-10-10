@@ -16,15 +16,15 @@
 template <typename TreeNode, typename NodeDictionaryType>
 class LinkedTreeView : public CustomTreeView<TreeNode>
 {
-	CRuntime_Arg02Base01(LinkedTreeView, TreeNode, NodeDictionaryType, CustomTreeView, TreeNode)
-		/// <summary>
-		/// Initializes a new instance of the <see cref="LinkedTreeView"/> class.
-		/// </summary>
-		/// <param name="FilePath">The file path.</param>
-		LinkedTreeView(string FilePath) : CustomTreeView<TreeNode>()
-	{
+    CRuntime_Arg02Base01(LinkedTreeView, TreeNode, NodeDictionaryType, CustomTreeView, TreeNode)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LinkedTreeView"/> class.
+        /// </summary>
+        /// <param name="FilePath">The file path.</param>
+        LinkedTreeView(string FilePath) : CustomTreeView<TreeNode>()
+    {
 
-	}
+    }
 };
 
 CRuntimeImplimentation_Arg02(LinkedTreeView, TreeNode, NodeDictionaryType)

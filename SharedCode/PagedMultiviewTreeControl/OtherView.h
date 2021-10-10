@@ -17,41 +17,41 @@ class OtherView : public CView
 //private:
 //	static std::string ClassString() { return "OtherView"; }
 protected:
-	DECLARE_DYNCREATE(OtherView)
+    DECLARE_DYNCREATE(OtherView)
 
 // Attributes
 // Operations
 public:
-	OtherView();           // protected constructor used by dynamic creation
-	virtual ~OtherView();
-	//CStaticTreeCtrl	m_ST_Tree;
-	//TreeCtrlPage MainTree;
-	//TreePage MainTree;
+    OtherView();           // protected constructor used by dynamic creation
+    virtual ~OtherView();
+    //CStaticTreeCtrl	m_ST_Tree;
+    //TreeCtrlPage MainTree;
+    //TreePage MainTree;
 
 public:
-	MultiViewDoc* GetDocument();
+    MultiViewDoc* GetDocument();
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(OtherView)
-	protected:
-	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
-	//}}AFX_VIRTUAL
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(OtherView)
+    protected:
+    virtual void OnDraw(CDC* pDC);      // overridden to draw this view
+    //}}AFX_VIRTUAL
 
 // Implementation
 protected:
 #ifdef _DEBUG
 
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	// Generated message map functions
+    // Generated message map functions
 protected:
-	//{{AFX_MSG(OtherView)
-		// NOTE - the ClassWizard will add and remove member functions here.
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(OtherView)
+        // NOTE - the ClassWizard will add and remove member functions here.
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -111,7 +111,7 @@ protected:
                 return;
             }
         }
-		return FileExists;
+        return FileExists;
     }
 #ifndef MFCApp_SaveFreshConfigFile
 #endif
@@ -130,9 +130,9 @@ public:
         StringVectorList FileData;
         bool FileLoaded = FileData.LoadFileDataV2("AppSettings.ini", 1);
         if (FileLoaded == false)
-		{ 
-			SetToDefaultSettings(); return false;
-		}
+        { 
+            SetToDefaultSettings(); return false;
+        }
         std::string LineData;
         std::string IniSetting = "";
         std::string IniValue = "";
@@ -143,24 +143,24 @@ public:
 #endif
         std::string builder = "";
 #ifdef MFCApp_UseOldIniDataFormatForSettings
-		bool InsideParenthesis = false;
-		int CommandStage = 0;
+        bool InsideParenthesis = false;
+        int CommandStage = 0;
 #endif
 #ifdef MFCApp_StoreDynamicAppSettings
 
 #endif
-		for (int Index = 0; Index < FileData.length(); ++Index)
-		{
-			LineData = FileData[Index];
-			for (const char LineChar : LineData)
-			{
+        for (int Index = 0; Index < FileData.length(); ++Index)
+        {
+            LineData = FileData[Index];
+            for (const char LineChar : LineData)
+            {
 #ifdef MFCApp_UseOldIniDataFormatForSettings
-				if (LineChar == '"') { InsideParenthesis = !InsideParenthesis; }
-				else if (LineChar == '[')
-				{
-					IniSetting = "";
-					CommandStage = 1;
-				}
+                if (LineChar == '"') { InsideParenthesis = !InsideParenthesis; }
+                else if (LineChar == '[')
+                {
+                    IniSetting = "";
+                    CommandStage = 1;
+                }
 #ifdef MFCApp_StoreDynamicAppSettings
                 else if (InsideTypeDeclaration)
                 {
@@ -179,19 +179,19 @@ public:
                     builder.clear(); InsideTypeDeclaration = true;
                 }
 #endif
-				else if (CommandStage > 0)
-				{
-					if (InsideParenthesis == false && (LineChar == '=' || LineChar == ':'))
-					{
-						CommandStage = 2;
-					}
-					else if (CommandStage == 2)
-					{
-						if (LineChar == ']')
-						{
-							CommandStage = 0;
-							//if(IniSetting=="AppSetting")
-							//	AppSetting = IniValue=="true"?true:false;
+                else if (CommandStage > 0)
+                {
+                    if (InsideParenthesis == false && (LineChar == '=' || LineChar == ':'))
+                    {
+                        CommandStage = 2;
+                    }
+                    else if (CommandStage == 2)
+                    {
+                        if (LineChar == ']')
+                        {
+                            CommandStage = 0;
+                            //if(IniSetting=="AppSetting")
+                            //	AppSetting = IniValue=="true"?true:false;
 #ifdef MFCApp_StoreDynamicAppSettings
                                 if (TypeName == "Int")
                                 {
@@ -222,28 +222,28 @@ public:
                                     self.Add(IniSetting, IniValue);
                                 }
 #else
-							//else
-								std::cout<<"Unknown setting named "+IniSetting+" not loaded from AppSettings.ini."<<std::endl;
+                            //else
+                                std::cout<<"Unknown setting named "+IniSetting+" not loaded from AppSettings.ini."<<std::endl;
 #endif
-							IniValue = "";
-							IniSetting = "";
-						}
-						else
-						{
-							IniValue += LineChar;
-						}
-					}
-					else
-					{
-						IniSetting += LineChar;
-					}
-				}
+                            IniValue = "";
+                            IniSetting = "";
+                        }
+                        else
+                        {
+                            IniValue += LineChar;
+                        }
+                    }
+                    else
+                    {
+                        IniSetting += LineChar;
+                    }
+                }
 #else
-				if (LineChar == ':')
-				{
-					IniSetting = builder;
-					builder.clear();
-				}
+                if (LineChar == ':')
+                {
+                    IniSetting = builder;
+                    builder.clear();
+                }
 #ifdef MFCApp_StoreDynamicAppSettings
                 else if (InsideTypeDeclaration)
                 {
@@ -262,12 +262,12 @@ public:
                     builder.clear(); InsideTypeDeclaration = true;
                 }
 #endif
-				else if (LineChar == ';')
-				{
-					IniValue = builder;
-					builder.clear();
-					//if(IniSetting=="AppSetting")
-					//	AppSetting = IniValue=="true"?true:false;
+                else if (LineChar == ';')
+                {
+                    IniValue = builder;
+                    builder.clear();
+                    //if(IniSetting=="AppSetting")
+                    //	AppSetting = IniValue=="true"?true:false;
 #ifdef MFCApp_StoreDynamicAppSettings
                         if (TypeName == "Int")
                         {
@@ -294,39 +294,39 @@ public:
                             self.Add(IniSetting, IniValue);
                         }
 #else
-					//else
-						std::cout<<"Unknown setting named "+IniSetting+" not loaded from AppSettings.ini."<<std::endl;
+                    //else
+                        std::cout<<"Unknown setting named "+IniSetting+" not loaded from AppSettings.ini."<<std::endl;
 #endif
 
 
-				}
-				else if (LineChar == '/')//Start of line comment detected so skip rest of line
-				{
-					if (builder == "/")
-					{
-						builder.clear();
-						break;
-					}
-					else//False alarm on line comment detection
-					{
-						builder.append(&LineChar);
-					}
-				}
-				else
-				{
-					if (builder.length() == 0)
-					{
-						continue;
-					}
-					else
-					{
-						builder.append(&LineChar);
-						continue;
-					}
-				}
-			}
+                }
+                else if (LineChar == '/')//Start of line comment detected so skip rest of line
+                {
+                    if (builder == "/")
+                    {
+                        builder.clear();
+                        break;
+                    }
+                    else//False alarm on line comment detection
+                    {
+                        builder.append(&LineChar);
+                    }
+                }
+                else
+                {
+                    if (builder.length() == 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        builder.append(&LineChar);
+                        continue;
+                    }
+                }
+            }
 #endif
-		}
+        }
         return true;
     }
 
@@ -338,87 +338,87 @@ public:
     /// <returns>bool.</returns>
     bool Save()
     {
-		std::string FilePath = "AppSettings.ini";
-		size_t StringLength;
-		char StringChar;
-		std::string LineString;
-		std::fstream LoadedFileStream;
+        std::string FilePath = "AppSettings.ini";
+        size_t StringLength;
+        char StringChar;
+        std::string LineString;
+        std::fstream LoadedFileStream;
 #ifndef MFCApp_SaveFreshConfigFile
-		bool CreatingFreshIni =
+        bool CreatingFreshIni =
 #endif
-		CreateFileIfDoesntExist(FilePath);
-		LoadedFileStream.open(FilePath.c_str(), std::fstream::out | std::fstream::trunc);
-		if (LoadedFileStream.is_open())
-		{
-			if (LoadedFileStream.good())
-			{//Saving to file now
+        CreateFileIfDoesntExist(FilePath);
+        LoadedFileStream.open(FilePath.c_str(), std::fstream::out | std::fstream::trunc);
+        if (LoadedFileStream.is_open())
+        {
+            if (LoadedFileStream.good())
+            {//Saving to file now
 #ifndef MFCApp_SaveFreshConfigFile
-				if(CreatingFreshIni)
-				{
+                if(CreatingFreshIni)
+                {
 #endif
 #ifdef MFCApp_UseOldIniDataFormatForSettings//[IniSetting=IniValue]
-					//LoadedFileStream << "[IniSetting=";
-					//if(IniValue)
-					//	LoadedFileStream << "true";
-					//else
-					//	LoadedFileStream << "false";
-					//LoadedFileStream << "]\n";
+                    //LoadedFileStream << "[IniSetting=";
+                    //if(IniValue)
+                    //	LoadedFileStream << "true";
+                    //else
+                    //	LoadedFileStream << "false";
+                    //LoadedFileStream << "]\n";
 #else//IniSetting:IniValue;
-					//LoadedFileStream << "IniSetting:";
-					//if(IniValue)
-					//	LoadedFileStream << "true";
-					//else
-					//	LoadedFileStream << "false";
-					//LoadedFileStream << ";\n";
+                    //LoadedFileStream << "IniSetting:";
+                    //if(IniValue)
+                    //	LoadedFileStream << "true";
+                    //else
+                    //	LoadedFileStream << "false";
+                    //LoadedFileStream << ";\n";
 #endif
 #ifdef MFCApp_StoreDynamicAppSettings
-					if(!empty())
-					{
-						//LineString = ElementAt(0);
-						//StringLength = LineString.length();
-						//for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
-						//{
-						//	StringChar = LineString.at(StringIndex);
-						//	LoadedFileStream << StringChar;
-						//}
-						//for (size_t i = 1; i < DataSize; ++i)
-						//{
-						//	//Carriage Return to next line
-						//	LoadedFileStream << "\n";
-						//	LineString = ElementAt(i);
-						//	StringLength = LineString.length();
-						//	for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
-						//	{
-						//		StringChar = LineString.at(StringIndex);
-						//		LoadedFileStream << StringChar;
-						//	}
-						//}
-					}
+                    if(!empty())
+                    {
+                        //LineString = ElementAt(0);
+                        //StringLength = LineString.length();
+                        //for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
+                        //{
+                        //	StringChar = LineString.at(StringIndex);
+                        //	LoadedFileStream << StringChar;
+                        //}
+                        //for (size_t i = 1; i < DataSize; ++i)
+                        //{
+                        //	//Carriage Return to next line
+                        //	LoadedFileStream << "\n";
+                        //	LineString = ElementAt(i);
+                        //	StringLength = LineString.length();
+                        //	for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
+                        //	{
+                        //		StringChar = LineString.at(StringIndex);
+                        //		LoadedFileStream << StringChar;
+                        //	}
+                        //}
+                    }
 #endif
 #ifndef MFCApp_SaveFreshConfigFile
-				}
-				else
-				{
-					while (inFile >> LineChar)
-					{
-					
-					}
-				}
+                }
+                else
+                {
+                    while (inFile >> LineChar)
+                    {
+                    
+                    }
+                }
 #endif
-			}
-			else
-			{
-				if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
-				else if (LoadedFileStream.fail()) { std::cout << "Failed format based Error!\n"; }
-				else if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
-				else if (LoadedFileStream.eof()) {/*Send debug message of reaching end of file?*/ }
-			}
-			LoadedFileStream.close();
-		}
-		else
-		{
-			std::cout << "Failed to open " << FilePath << ".\n";
-		}
+            }
+            else
+            {
+                if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
+                else if (LoadedFileStream.fail()) { std::cout << "Failed format based Error!\n"; }
+                else if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
+                else if (LoadedFileStream.eof()) {/*Send debug message of reaching end of file?*/ }
+            }
+            LoadedFileStream.close();
+        }
+        else
+        {
+            std::cout << "Failed to open " << FilePath << ".\n";
+        }
         return false;
     }
 
@@ -727,12 +727,12 @@ public:
     }
 #endif
 
-	void SetToDefaultSettings()
-	{
+    void SetToDefaultSettings()
+    {
 #ifdef MFCApp_StoreDynamicAppSettings
         clear();
 #endif
-	}
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AppSettings" /> class.
@@ -749,7 +749,7 @@ public:
         MediumDecSettings = CustomDictionary<std::string, MediumDec>({});
 #endif
 #endif
-		Load();
+        Load();
     };
 
 #ifdef MFCApp_StoreDynamicAppSettings

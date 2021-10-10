@@ -8,7 +8,7 @@
 #include "MultiviewPrecompile.h"
 
 #ifndef __AFXWIN_H__
-	#error include 'MultiviewPrecompile.h' before including this file for PCH
+    #error include 'MultiviewPrecompile.h' before including this file for PCH
 #endif
 
 #include "resource.h"       // main symbols
@@ -36,37 +36,37 @@ class MultiViewApp : public HalfPagedMultiview<MainFrameView, TreePage, MainFram
 //private:
 //	static std::string ClassString() { return "MultiViewApp"; }
 public:
-	/// <summary>
-	/// Initializes a new instance of the <see cref="MultiViewApp"/> class.
-	/// </summary>
-	MultiViewApp() {};
-	/// <summary>
-	/// The INI settings
-	/// </summary>
-	AppSettings IniSettings;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MultiViewApp"/> class.
+    /// </summary>
+    MultiViewApp() {};
+    /// <summary>
+    /// The INI settings
+    /// </summary>
+    AppSettings IniSettings;
 private:
-	/// <summary>
-	/// Edit this virtual function inside Derived Class with method void InitializationCode() defined to run edit code thats run just before displays main view on InitInstance()
-	/// </summary>
-	void InitializationCode()
-	{
-	}
+    /// <summary>
+    /// Edit this virtual function inside Derived Class with method void InitializationCode() defined to run edit code thats run just before displays main view on InitInstance()
+    /// </summary>
+    void InitializationCode()
+    {
+    }
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CMultiViewApp)
-	//public:
-	//virtual BOOL InitInstance();
-	//}}AFX_VIRTUAL
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CMultiViewApp)
+    //public:
+    //virtual BOOL InitInstance();
+    //}}AFX_VIRTUAL
 
 // Implementation
-	//{{AFX_MSG(CMultiViewApp)
-	//afx_msg void OnAppAbout();
-	//afx_msg void OnViewOtherview();
-	//afx_msg void OnViewFirstview();
-	////}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(CMultiViewApp)
+    //afx_msg void OnAppAbout();
+    //afx_msg void OnViewOtherview();
+    //afx_msg void OnViewFirstview();
+    ////}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 extern MultiViewApp theApp;

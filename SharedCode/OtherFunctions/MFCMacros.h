@@ -40,276 +40,276 @@
 protected:\
 static const AFX_MSGMAP* PASCAL GetThisMessageMap()\
 {\
-		__pragma(warning(push))							   \
-		__pragma(warning(disable: 4640)) /* message maps can only be called by single threaded message pump */ \
-		static const AFX_MSGMAP_ENTRY _messageEntries[] =  \
-		{
+        __pragma(warning(push))							   \
+        __pragma(warning(disable: 4640)) /* message maps can only be called by single threaded message pump */ \
+        static const AFX_MSGMAP_ENTRY _messageEntries[] =  \
+        {
 #define END_AltMESSAGE_MAP(baseClass) \
-		{ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 } \
-	}; \
-	__pragma(warning(pop)) \
-	static const AFX_MSGMAP messageMap = \
-	{ &baseClass::GetThisMessageMap, &_messageEntries[0] };\
-	return &messageMap;\
+        { 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 } \
+    }; \
+    __pragma(warning(pop)) \
+    static const AFX_MSGMAP messageMap = \
+    { &baseClass::GetThisMessageMap, &_messageEntries[0] };\
+    return &messageMap;\
 }\
 public:\
-	virtual const AFX_MSGMAP* GetMessageMap() const\
-	{\
-		return GetThisMessageMap();\
-	}
+    virtual const AFX_MSGMAP* GetMessageMap() const\
+    {\
+        return GetThisMessageMap();\
+    }
 #define END_AltMESSAGE_MAP_Base01(baseClass, baseargOne) \
-		{ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 } \
-	}; \
-	__pragma(warning(pop)) \
-	static const AFX_MSGMAP messageMap = \
-	{ &baseClass<baseargOne>::GetThisMessageMap, &_messageEntries[0] };\
-	return &messageMap;\
+        { 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 } \
+    }; \
+    __pragma(warning(pop)) \
+    static const AFX_MSGMAP messageMap = \
+    { &baseClass<baseargOne>::GetThisMessageMap, &_messageEntries[0] };\
+    return &messageMap;\
 }\
 public:\
-	virtual const AFX_MSGMAP* GetMessageMap() const\
-	{\
-		return GetThisMessageMap();\
-	}
+    virtual const AFX_MSGMAP* GetMessageMap() const\
+    {\
+        return GetThisMessageMap();\
+    }
 
 #ifdef _AFXDLL
 //based off of https://stackoverflow.com/questions/3004870/can-a-custom-mfc-window-dialog-be-a-class-template-instantiation + afx.h
 #define CRuntime_Arg01(class_name, template_class, baseClass)\
 private:\
-	static std::string ClassString()\
-	{\
-		std::string Combined = "class_name<"; \
-		Combined += typeid(template_class).name(); \
-		Combined += ">"; \
-		return Combined; \
-	}\
+    static std::string ClassString()\
+    {\
+        std::string Combined = "class_name<"; \
+        Combined += typeid(template_class).name(); \
+        Combined += ">"; \
+        return Combined; \
+    }\
 public:\
-	static const std::string classNameStr;\
-	static LPCSTR ClassName() { return classNameStr.c_str(); }\
+    static const std::string classNameStr;\
+    static LPCSTR ClassName() { return classNameStr.c_str(); }\
 private:\
-	typedef baseClass TheBaseClass;\
-	typedef class_name<template_class> ThisClass;\
+    typedef baseClass TheBaseClass;\
+    typedef class_name<template_class> ThisClass;\
 protected:\
-	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
+    static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
-	CObject* PASCAL CreateObject() { return new class_name<template_class>; }\
-	static const CRuntimeClass class##class_name##_##template_class;\
-	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS01(class_name, template_class); }\
-	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS01(class_name, template_class); }
+    CObject* PASCAL CreateObject() { return new class_name<template_class>; }\
+    static const CRuntimeClass class##class_name##_##template_class;\
+    static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS01(class_name, template_class); }\
+    virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS01(class_name, template_class); }
 
 #define CRuntime_Arg01V2(class_name, template_class, baseClass)\
 private:\
-	static std::string ClassString()\
-	{\
-		std::string Combined = "class_name<"; \
-		Combined += typeid(template_class).name(); \
-		Combined += ">"; \
-		return Combined; \
-	}\
+    static std::string ClassString()\
+    {\
+        std::string Combined = "class_name<"; \
+        Combined += typeid(template_class).name(); \
+        Combined += ">"; \
+        return Combined; \
+    }\
 public:\
-	static const std::string classNameStr;\
-	static LPCSTR ClassName() { return classNameStr.c_str(); }\
+    static const std::string classNameStr;\
+    static LPCSTR ClassName() { return classNameStr.c_str(); }\
 private:\
-	typedef baseClass TheBaseClass;\
-	typedef class_name<template_class> ThisClass;\
+    typedef baseClass TheBaseClass;\
+    typedef class_name<template_class> ThisClass;\
 protected:\
-	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
+    static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
-	static const CRuntimeClass class##class_name##_##template_class;\
-	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS01(class_name, template_class); }\
-	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS01(class_name, template_class); }
+    static const CRuntimeClass class##class_name##_##template_class;\
+    static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS01(class_name, template_class); }\
+    virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS01(class_name, template_class); }
 
 #define CRuntime_Arg02V2(class_name, template_class, template_class02, baseClass)\
 private:\
-	static std::string ClassString()\
-	{\
-		std::string Combined = "class_name<"; \
-		Combined += typeid(template_class).name(); \
-		Combined += ", ";\
-		Combined += typeid(template_class02).name();\
-		Combined += ">"; \
-		return Combined; \
-	}\
+    static std::string ClassString()\
+    {\
+        std::string Combined = "class_name<"; \
+        Combined += typeid(template_class).name(); \
+        Combined += ", ";\
+        Combined += typeid(template_class02).name();\
+        Combined += ">"; \
+        return Combined; \
+    }\
 public:\
-	static const std::string classNameStr;\
-	static LPCSTR ClassName() { return classNameStr.c_str(); }\
+    static const std::string classNameStr;\
+    static LPCSTR ClassName() { return classNameStr.c_str(); }\
 private:\
-	typedef baseClass TheBaseClass;\
-	typedef class_name<template_class, template_class02> ThisClass;\
+    typedef baseClass TheBaseClass;\
+    typedef class_name<template_class, template_class02> ThisClass;\
 protected:\
-	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
+    static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
-	static const CRuntimeClass class##class_name##_##template_class##_##template_class02;\
-	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }\
-	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }
+    static const CRuntimeClass class##class_name##_##template_class##_##template_class02;\
+    static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }\
+    virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }
 
 #define CRuntime_Arg03V2(class_name, template_class, template_class02, template_class03, baseClass)\
 private:\
-	static std::string ClassString()\
-	{\
-		std::string Combined = "class_name<"; \
-		Combined += typeid(template_class).name(); \
-		Combined += ", ";\
-		Combined += typeid(template_class02).name();\
-		Combined += ", ";\
-		Combined += typeid(template_class03).name();\
-		Combined += ">"; \
-		return Combined; \
-	}\
+    static std::string ClassString()\
+    {\
+        std::string Combined = "class_name<"; \
+        Combined += typeid(template_class).name(); \
+        Combined += ", ";\
+        Combined += typeid(template_class02).name();\
+        Combined += ", ";\
+        Combined += typeid(template_class03).name();\
+        Combined += ">"; \
+        return Combined; \
+    }\
 public:\
-	static const std::string classNameStr;\
-	static LPCSTR ClassName() { return classNameStr.c_str(); }\
+    static const std::string classNameStr;\
+    static LPCSTR ClassName() { return classNameStr.c_str(); }\
 private:\
-	typedef baseClass TheBaseClass;\
-	typedef class_name<template_class, template_class02, template_class03> ThisClass;\
+    typedef baseClass TheBaseClass;\
+    typedef class_name<template_class, template_class02, template_class03> ThisClass;\
 protected:\
-	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
+    static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
-	static const CRuntimeClass class##class_name##_##template_class##_##template_class02##_##template_class03;\
-	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS03(class_name, template_class, template_class02, template_class03); }\
-	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS03(class_name, template_class, template_class02, template_class03); }
+    static const CRuntimeClass class##class_name##_##template_class##_##template_class02##_##template_class03;\
+    static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS03(class_name, template_class, template_class02, template_class03); }\
+    virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS03(class_name, template_class, template_class02, template_class03); }
 
 //Reusing template variables in base class for class_name<template_class, template_class02> : baseClass<template_class, template_class02, base_arg03>
 #define CRuntime_Arg02Base03_Reused01(class_name, template_class, template_class02, baseClass, base_arg03)\
 private:\
-	static std::string ClassString()\
-	{\
-		std::string Combined = "class_name<"; \
-		Combined += typeid(template_class).name(); \
-		Combined += ", ";\
-		Combined += typeid(template_class02).name();\
-		Combined += ">"; \
-		return Combined; \
-	}\
+    static std::string ClassString()\
+    {\
+        std::string Combined = "class_name<"; \
+        Combined += typeid(template_class).name(); \
+        Combined += ", ";\
+        Combined += typeid(template_class02).name();\
+        Combined += ">"; \
+        return Combined; \
+    }\
 public:\
-	static const std::string classNameStr;\
-	static LPCSTR ClassName() { return classNameStr.c_str(); }\
+    static const std::string classNameStr;\
+    static LPCSTR ClassName() { return classNameStr.c_str(); }\
 private:\
-	typedef baseClass<template_class, template_class02, base_arg03> TheBaseClass;\
-	typedef class_name<template_class, template_class02> ThisClass;\
+    typedef baseClass<template_class, template_class02, base_arg03> TheBaseClass;\
+    typedef class_name<template_class, template_class02> ThisClass;\
 protected:\
-	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
+    static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
-	static const CRuntimeClass class##class_name##_##template_class##_##template_class02;\
-	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }\
-	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }
+    static const CRuntimeClass class##class_name##_##template_class##_##template_class02;\
+    static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }\
+    virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }
 
 
 
 #define CRuntime_Base01(class_name, baseClass, baseargOne)\
 private:\
-	typedef baseClass<baseargOne> TheBaseClass;\
-	typedef class_name ThisClass;\
+    typedef baseClass<baseargOne> TheBaseClass;\
+    typedef class_name ThisClass;\
 protected:\
-	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
+    static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
-	CObject* PASCAL CreateObject() { return new class_name; }\
-	static const CRuntimeClass class##class_name;\
-	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(class_name); }\
-	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(class_name); }
+    CObject* PASCAL CreateObject() { return new class_name; }\
+    static const CRuntimeClass class##class_name;\
+    static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(class_name); }\
+    virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(class_name); }
 
 #define CRuntime_Base01V2(class_name, baseClass, baseargOne)\
 private:\
-	typedef baseClass<baseargOne> TheBaseClass;\
-	typedef class_name ThisClass;\
+    typedef baseClass<baseargOne> TheBaseClass;\
+    typedef class_name ThisClass;\
 protected:\
-	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
+    static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
-	static const CRuntimeClass class##class_name;\
-	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(class_name); }\
-	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(class_name); }
+    static const CRuntimeClass class##class_name;\
+    static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(class_name); }\
+    virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(class_name); }
 
 #define CRuntime_Base02V2(class_name, baseClass, baseargOne, baseargTwo)\
 private:\
-	typedef baseClass<baseargOne, baseargTwo> TheBaseClass;\
-	typedef class_name ThisClass;\
+    typedef baseClass<baseargOne, baseargTwo> TheBaseClass;\
+    typedef class_name ThisClass;\
 protected:\
-	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
+    static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
-	static const CRuntimeClass class##class_name;\
-	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(class_name); }\
-	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(class_name); }
+    static const CRuntimeClass class##class_name;\
+    static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(class_name); }\
+    virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(class_name); }
 
 #define CRuntime_Arg02Base01(class_name, template_class, template_class02, baseClass, baseargOne)\
 private:\
-	static std::string ClassString()\
-	{\
-		std::string Combined = "class_name<";\
-		Combined += typeid(template_class).name();\
-		Combined += ", ";\
-		Combined += typeid(template_class02).name();\
-		Combined += ">";\
-		return Combined;\
-	}\
+    static std::string ClassString()\
+    {\
+        std::string Combined = "class_name<";\
+        Combined += typeid(template_class).name();\
+        Combined += ", ";\
+        Combined += typeid(template_class02).name();\
+        Combined += ">";\
+        return Combined;\
+    }\
 public:\
-	static const std::string classNameStr;\
-	static LPCSTR ClassName() { return classNameStr.c_str(); }\
+    static const std::string classNameStr;\
+    static LPCSTR ClassName() { return classNameStr.c_str(); }\
 private:\
-	typedef baseClass<baseargOne> TheBaseClass;\
-	typedef class_name<template_class, template_class02> ThisClass;\
+    typedef baseClass<baseargOne> TheBaseClass;\
+    typedef class_name<template_class, template_class02> ThisClass;\
 protected:\
-	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
+    static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
-	static const CRuntimeClass class##class_name##_##template_class##_##template_class02;\
-	static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }\
-	virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }
+    static const CRuntimeClass class##class_name##_##template_class##_##template_class02;\
+    static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }\
+    virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS02(class_name, template_class, template_class02); }
 
 #else
 //based off of https://stackoverflow.com/questions/3004870/can-a-custom-mfc-window-dialog-be-a-class-template-instantiation + afx.h
 #define CRuntime_Arg01(class_name, template_class, baseClass)\
 private:\
-	static std::string ClassString();\
+    static std::string ClassString();\
 public:\
-	static const std::string classNameStr;\
-	static LPCSTR ClassName() { return classNameStr.c_str(); }\
+    static const std::string classNameStr;\
+    static LPCSTR ClassName() { return classNameStr.c_str(); }\
 private:\
-	typedef baseClass TheBaseClass;\
-	typedef class_name<template_class> ThisClass;\
+    typedef baseClass TheBaseClass;\
+    typedef class_name<template_class> ThisClass;\
 protected:\
-	static const CRuntimeClass* PASCAL _GetBaseClass();\
+    static const CRuntimeClass* PASCAL _GetBaseClass();\
 public:\
-	CObject* PASCAL CreateObject() { return new class_name<template_class>; }\
-	static const CRuntimeClass class##class_name##_##template_class;\
-	CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS01(class_name, template_class); }\
-	CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS01(class_name, template_class); }\
+    CObject* PASCAL CreateObject() { return new class_name<template_class>; }\
+    static const CRuntimeClass class##class_name##_##template_class;\
+    CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS01(class_name, template_class); }\
+    CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS01(class_name, template_class); }\
 
 #define CRuntime_Arg01V2(class_name, template_class, baseClass)\
 private:\
-	static std::string ClassString();\
+    static std::string ClassString();\
 public:\
-	static const std::string classNameStr;\
-	static LPCSTR ClassName() { return classNameStr.c_str(); }\
+    static const std::string classNameStr;\
+    static LPCSTR ClassName() { return classNameStr.c_str(); }\
 private:\
-	typedef baseClass TheBaseClass;\
-	typedef class_name<template_class> ThisClass;\
+    typedef baseClass TheBaseClass;\
+    typedef class_name<template_class> ThisClass;\
 protected:\
-	static const CRuntimeClass* PASCAL _GetBaseClass();\
+    static const CRuntimeClass* PASCAL _GetBaseClass();\
 public:\
-	static const CRuntimeClass class##class_name##_##template_class;\
-	CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS01(class_name, template_class); }\
-	CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS01(class_name, template_class); }\
+    static const CRuntimeClass class##class_name##_##template_class;\
+    CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS01(class_name, template_class); }\
+    CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS01(class_name, template_class); }\
 
 #define CRuntime_Base01(class_name, baseClass, baseargOne)\
 private:\
-	typedef baseClass<baseargOne> TheBaseClass;\
-	typedef class_name ThisClass;\
+    typedef baseClass<baseargOne> TheBaseClass;\
+    typedef class_name ThisClass;\
 protected:\
-	static CRuntimeClass* PASCAL _GetBaseClass() { return _RUNTIME_CLASS01(baseClass, baseargOne); } \
+    static CRuntimeClass* PASCAL _GetBaseClass() { return _RUNTIME_CLASS01(baseClass, baseargOne); } \
 public:\
-	CObject* PASCAL CreateObject() { return new class_name; }\
-	static const CRuntimeClass class##class_name;\
-	CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(class_name); }\
-	CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(class_name); }\
+    CObject* PASCAL CreateObject() { return new class_name; }\
+    static const CRuntimeClass class##class_name;\
+    CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(class_name); }\
+    CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(class_name); }\
 
 #define CRuntime_Base01V2(class_name, baseClass, baseargOne)\
 private:\
-	typedef baseClass<baseargOne> TheBaseClass;\
-	typedef class_name ThisClass;\
+    typedef baseClass<baseargOne> TheBaseClass;\
+    typedef class_name ThisClass;\
 protected:\
-	static CRuntimeClass* PASCAL _GetBaseClass() { return _RUNTIME_CLASS01(baseClass, baseargOne); } \
+    static CRuntimeClass* PASCAL _GetBaseClass() { return _RUNTIME_CLASS01(baseClass, baseargOne); } \
 public:\
-	static const CRuntimeClass class##class_name;\
-	CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(class_name); }\
-	CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(class_name); }\
+    static const CRuntimeClass class##class_name;\
+    CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(class_name); }\
+    CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(class_name); }\
 
 #endif
 
@@ -341,10 +341,10 @@ inline AFX_COMDAT const CRuntimeClass class_name<template_class, template_class0
 template <class template_class>\
 std::string class_name<template_class>::ClassString()\
 {\
-	std::string Combined = "class_name<";\
-	Combined += typeid(template_class).name();\
-	Combined += ">";\
-	return Combined;\
+    std::string Combined = "class_name<";\
+    Combined += typeid(template_class).name();\
+    Combined += ">";\
+    return Combined;\
 }\
 template <class template_class>\
 inline const std::string class_name<template_class>::classNameStr = ClassString();\
@@ -358,16 +358,16 @@ inline AFX_COMDAT const CRuntimeClass class_name::DEFINERTCNAME(class_name) = { 
 #endif
 
 #define BEGIN_MESSAGE_MAPV2(theClass, baseClass) \
-	PTM_WARNING_DISABLE \
-	const AFX_MSGMAP* theClass::GetMessageMap() const \
-		{ return GetThisMessageMap(); } \
-	const noexcept AFX_MSGMAP* PASCAL theClass::GetThisMessageMap() \
-	{ \
-		typedef theClass ThisClass;						   \
-		typedef baseClass TheBaseClass;					   \
-		__pragma(warning(push))							   \
-		__pragma(warning(disable: 4640)) /* message maps can only be called by single threaded message pump */ \
-		static const AFX_MSGMAP_ENTRY _messageEntries[] =  \
-		{
+    PTM_WARNING_DISABLE \
+    const AFX_MSGMAP* theClass::GetMessageMap() const \
+        { return GetThisMessageMap(); } \
+    const noexcept AFX_MSGMAP* PASCAL theClass::GetThisMessageMap() \
+    { \
+        typedef theClass ThisClass;						   \
+        typedef baseClass TheBaseClass;					   \
+        __pragma(warning(push))							   \
+        __pragma(warning(disable: 4640)) /* message maps can only be called by single threaded message pump */ \
+        static const AFX_MSGMAP_ENTRY _messageEntries[] =  \
+        {
 
 #endif // MFCMacros_IncludeGuard

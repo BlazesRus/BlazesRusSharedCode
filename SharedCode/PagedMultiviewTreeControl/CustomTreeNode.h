@@ -25,108 +25,108 @@ class CustomTreeNode : public NonGUINode
 //protected:
 //	typedef CustomTreeNode NodeType;
 public:
-	/// <summary>
-	/// This refers to index inside list of button contexts dictionary unless -1 in which case it uses default menu context list
-	/// </summary>
-	int NBMenuType;
-	/// <summary>
-	/// Initializes a new instance of the <see cref="CustomTreeNode"/> class.
-	/// </summary>
-	CustomTreeNode()
-	{
-		DisplayName.clear();
-		rNode.SetRectEmpty();
+    /// <summary>
+    /// This refers to index inside list of button contexts dictionary unless -1 in which case it uses default menu context list
+    /// </summary>
+    int NBMenuType;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CustomTreeNode"/> class.
+    /// </summary>
+    CustomTreeNode()
+    {
+        DisplayName.clear();
+        rNode.SetRectEmpty();
 
-		bUseDefaultTextColor = TRUE;
+        bUseDefaultTextColor = TRUE;
 
-		bOpen = TRUE;
+        bOpen = TRUE;
 
-		ParentIndex = EmptyNode;
+        ParentIndex = EmptyNode;
 
-		NBMenuType = -1;//Use default node context menu options
-		textColor = RGB(240,240,240);//Default to a off-white grey
-	}
-	/// <summary>
-	/// Initializes a new instance of the <see cref="CustomTreeNode"/> class.
-	/// </summary>
-	/// <param name="MenuType">Type of the menu.</param>
-	CustomTreeNode(int MenuType)
-	{
-		DisplayName.clear();
-		rNode.SetRectEmpty();
+        NBMenuType = -1;//Use default node context menu options
+        textColor = RGB(240,240,240);//Default to a off-white grey
+    }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CustomTreeNode"/> class.
+    /// </summary>
+    /// <param name="MenuType">Type of the menu.</param>
+    CustomTreeNode(int MenuType)
+    {
+        DisplayName.clear();
+        rNode.SetRectEmpty();
 
-		bUseDefaultTextColor = TRUE;
+        bUseDefaultTextColor = TRUE;
 
-		bOpen = TRUE;
+        bOpen = TRUE;
 
-		ParentIndex = EmptyNode;
+        ParentIndex = EmptyNode;
 
-		NBMenuType = MenuType;//Use non-default node context menu defined inside a (List<CustomOrderedDictionary<string, ButtonContextData>>)? or defined in override function in CustomTreeView
-		textColor = RGB(240, 240, 240);
-	}
+        NBMenuType = MenuType;//Use non-default node context menu defined inside a (List<CustomOrderedDictionary<string, ButtonContextData>>)? or defined in override function in CustomTreeView
+        textColor = RGB(240, 240, 240);
+    }
 
-	CustomTreeNode(int MenuType, unsigned _int64 parentIndex)
-	{
-		DisplayName.clear();
-		rNode.SetRectEmpty();
+    CustomTreeNode(int MenuType, unsigned _int64 parentIndex)
+    {
+        DisplayName.clear();
+        rNode.SetRectEmpty();
 
-		bUseDefaultTextColor = TRUE;
+        bUseDefaultTextColor = TRUE;
 
-		bOpen = TRUE;
+        bOpen = TRUE;
 
-		ParentIndex = parentIndex;
+        ParentIndex = parentIndex;
 
-		NBMenuType = MenuType;//Use non-default node context menu defined inside a (List<CustomOrderedDictionary<string, ButtonContextData>>)? or defined in override function in CustomTreeView
-		textColor = RGB(240, 240, 240);
-	}
+        NBMenuType = MenuType;//Use non-default node context menu defined inside a (List<CustomOrderedDictionary<string, ButtonContextData>>)? or defined in override function in CustomTreeView
+        textColor = RGB(240, 240, 240);
+    }
 
-	/// <summary>
-	/// Finalizes an instance of the <see cref="CustomTreeNode"/> class.
-	/// </summary>
-	virtual ~CustomTreeNode()
-	{
-		DisplayName.clear();
-	}
+    /// <summary>
+    /// Finalizes an instance of the <see cref="CustomTreeNode"/> class.
+    /// </summary>
+    virtual ~CustomTreeNode()
+    {
+        DisplayName.clear();
+    }
 
-	/// <summary>
-	/// The r node
-	/// </summary>
-	CRect		rNode;
+    /// <summary>
+    /// The r node
+    /// </summary>
+    CRect		rNode;
 
-	/// <summary>
-	/// The text's color
-	/// </summary>
-	COLORREF	textColor;
-	/// <summary>
-	/// The b use default text color
-	/// </summary>
-	BOOL		bUseDefaultTextColor;
+    /// <summary>
+    /// The text's color
+    /// </summary>
+    COLORREF	textColor;
+    /// <summary>
+    /// The b use default text color
+    /// </summary>
+    BOOL		bUseDefaultTextColor;
 
-	/// <summary>
-	/// The b open
-	/// </summary>
-	BOOL    bOpen;
+    /// <summary>
+    /// The b open
+    /// </summary>
+    BOOL    bOpen;
 
-	CustomTreeNode(std::string newNodeName) : CustomTreeNode()
-	{
-		this->DisplayName = newNodeName;
-	}
+    CustomTreeNode(std::string newNodeName) : CustomTreeNode()
+    {
+        this->DisplayName = newNodeName;
+    }
 
-	/// <summary>
-	/// Implements the operator ConvertedType* operator.
-	/// </summary>
-	/// <returns>The result of the operator.</returns>
-	template <typename ConvertedType>
-	explicit operator ConvertedType*()
-	{
-		if (self == nullptr)
-		{
-			return nullptr;
-		}
-		else
-		{
-			return dynamic_cast<ConvertedType*>(self);
-		}
-	}
+    /// <summary>
+    /// Implements the operator ConvertedType* operator.
+    /// </summary>
+    /// <returns>The result of the operator.</returns>
+    template <typename ConvertedType>
+    explicit operator ConvertedType*()
+    {
+        if (self == nullptr)
+        {
+            return nullptr;
+        }
+        else
+        {
+            return dynamic_cast<ConvertedType*>(self);
+        }
+    }
 };
 #endif

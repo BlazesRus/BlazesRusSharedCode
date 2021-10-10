@@ -15,42 +15,42 @@
 /// </summary>
 template <typename TreeNode = NonGUINode> class NonGUINodeTree
 {public:
-	static const unsigned _int64 EmptyNode = 18446744073709551615;
-	NodeDictionary<TreeNode> NodeBank;
-	/// <summary>
-	/// List of indexes for Root level nodes inside NodeBank
-	/// </summary>
-	UXIntList RootLvlNodes;
+    static const unsigned _int64 EmptyNode = 18446744073709551615;
+    NodeDictionary<TreeNode> NodeBank;
+    /// <summary>
+    /// List of indexes for Root level nodes inside NodeBank
+    /// </summary>
+    UXIntList RootLvlNodes;
 public:
 /*
-	/// <summary>
-	/// Adds a node with specified name.
-	/// </summary>
-	/// <param name="name">The name.</param>
-	void Add(std::string name)
-	{
-		//int Index = this->AddData();
-		//this->at(Index).DisplayName = name;
-	}
-	NonGUINodeTree<TreeNode>& LastNode()
-	{
-		return this->at(size() - 1);
-	}
+    /// <summary>
+    /// Adds a node with specified name.
+    /// </summary>
+    /// <param name="name">The name.</param>
+    void Add(std::string name)
+    {
+        //int Index = this->AddData();
+        //this->at(Index).DisplayName = name;
+    }
+    NonGUINodeTree<TreeNode>& LastNode()
+    {
+        return this->at(size() - 1);
+    }
 */
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="NonGUINodeTree"/> class.
-	/// </summary>
-	NonGUINodeTree()
-	{
-	}
-	/// <summary>
-	/// Finalizes an instance of the <see cref="NonGUINodeTree"/> class.
-	/// </summary>
-	~NonGUINodeTree()
-	{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="NonGUINodeTree"/> class.
+    /// </summary>
+    NonGUINodeTree()
+    {
+    }
+    /// <summary>
+    /// Finalizes an instance of the <see cref="NonGUINodeTree"/> class.
+    /// </summary>
+    ~NonGUINodeTree()
+    {
 
-	}
+    }
 };
 
 #endif

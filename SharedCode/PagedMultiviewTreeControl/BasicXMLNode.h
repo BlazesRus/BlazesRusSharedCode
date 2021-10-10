@@ -15,23 +15,23 @@
 class BasicNodeList : public VariableList<BufferNode>
 {
 public:
-	/// <summary>
-	/// Adds the specified name.
-	/// </summary>
-	/// <param name="name">The name.</param>
-	void Add(std::string name)
-	{
-		int Index = this->AddData();
-		this->at(Index).DisplayName = name;
-	}
-	///<summary>
-	/// Reference to last node in List
-	///</summary>
-	///<returns>BufferNode&</returns>
-	BufferNode& LastNode()
-	{
-		return this->at(size() - 1);
-	}
+    /// <summary>
+    /// Adds the specified name.
+    /// </summary>
+    /// <param name="name">The name.</param>
+    void Add(std::string name)
+    {
+        int Index = this->AddData();
+        this->at(Index).DisplayName = name;
+    }
+    ///<summary>
+    /// Reference to last node in List
+    ///</summary>
+    ///<returns>BufferNode&</returns>
+    BufferNode& LastNode()
+    {
+        return this->at(size() - 1);
+    }
 };
 
 #endif
