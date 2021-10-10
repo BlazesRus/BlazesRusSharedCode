@@ -221,6 +221,9 @@
     <ClInclude Include="..\OtherFunctions\MFCMacrosV3.h">
       <Filter>OtherSharedCode</Filter>
     </ClInclude>
+    <ClInclude Include="..\OtherFunctions\FileOps.hpp">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\MultiView.ico">

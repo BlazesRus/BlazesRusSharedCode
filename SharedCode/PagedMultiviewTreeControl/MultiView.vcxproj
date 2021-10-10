@@ -71,6 +71,26 @@
   <PropertyGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Label="Windows Item Definition Group">
     <!-- Condition="'$(Platform)'=='Win32' Or '$(Platform)'=='x64'"-->
     <ClCompile>
@@ -86,8 +106,8 @@
       <Optimization Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">MaxSpeed</Optimization>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>MFCpch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>.\Release\MFCpch.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile>MultiviewPrecompile.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\Release\MultiviewPrecompile.pch</PrecompiledHeaderOutputFile>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <OmitFramePointers Condition="'$(Platform)'=='Win32'">true</OmitFramePointers>
       <ProgramDataBaseFileName Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='VS2022Debug'">.\Debug\</ProgramDataBaseFileName>
@@ -119,6 +139,7 @@
     <ClInclude Include="..\Databases\ArgStringList.h" />
     <ClInclude Include="..\Databases\IniDataV2.h" />
     <ClInclude Include="..\MFCApp\AppSettings.h" />
+    <ClInclude Include="..\OtherFunctions\FileOps.hpp" />
     <ClInclude Include="..\OtherFunctions\MFCMacrosV3.h" />
     <ClInclude Include="..\tsl\ordered_map.h" />
     <ClInclude Include="..\VariableLists\StringVectorList.h" />
@@ -171,7 +192,7 @@
     <ClCompile Include="OtherView.cpp" />
     <ClCompile Include="MultiviewPrecompile.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
-      <PrecompiledHeaderFile>MFCpch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>MultiviewPrecompile.h</PrecompiledHeaderFile>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

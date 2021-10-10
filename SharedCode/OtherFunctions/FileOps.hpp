@@ -29,27 +29,33 @@
 
 namespace BlazesRusCode
 {
+    /// <summary>
+    /// Class for storing reusable file operation functions
+    /// </summary>
     class DLL_API FileOps
     {
-public:
-		bool CreateFileIfDoesntExist(std::string fileName)
-		{
-			bool FileExists = false;
-			//Based on https://www.quora.com/What-is-the-best-way-to-check-whether-a-particular-file-exists-or-not-in-C++
-			struct stat buffer;
-			FileExists = (stat(fileName.c_str(), &buffer) == 0);
-			//Based on http://stackoverflow.com/questions/17818099/how-to-check-if-a-file-exists-before-creating-a-new-file
-			if (!FileExists)
-			{
-				std::ofstream file(fileName);
-				if (!file)
-				{
-					std::cout << "File could not be created" << std::endl;
-					return;
-				}
-			}
-			return FileExists;
-		}
-	}
+    public:
+        /// <summary>
+        /// BlazesRusCode::FileOps::CreateFileIfDoesntExist(fileName) Returns true if File Already Existed, otherwise returns false
+        /// </summary>
+        static bool CreateFileIfDoesntExist(std::string fileName)
+        {
+            bool FileExists = false;
+            //Based on https://www.quora.com/What-is-the-best-way-to-check-whether-a-particular-file-exists-or-not-in-C++
+            struct stat buffer;
+            FileExists = (stat(fileName.c_str(), &buffer) == 0);
+            //Based on http://stackoverflow.com/questions/17818099/how-to-check-if-a-file-exists-before-creating-a-new-file
+            if (!FileExists)
+            {
+                std::ofstream file(fileName);
+                if (!file)
+                {
+                    std::cout << "File could not be created" << std::endl;
+                    return false;
+                }
+            }
+            return FileExists;
+        }
+    };
 }
 #endif

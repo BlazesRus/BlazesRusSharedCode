@@ -38,7 +38,7 @@ protected:\
 		static const AFX_MSGMAP_ENTRY _messageEntries[] =\
 		{
 
-#define MFC_RuntimeExtPart02(class_name, baseClass)\
+#define MFC_RuntimeExtPart02(class_name)\
 			{ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }\
 		};\
 		__pragma(warning(pop))\
@@ -64,7 +64,7 @@ class class_name: public baseClass<baseArg01>
 	//And other class stuff
 	MFC_RuntimeExtPart01Base01(class_name, baseClass, baseArg01)
 	//Any message map messages here
-	MFC_RuntimeExtPart02(class_name, baseClass)
+	MFC_RuntimeExtPart02(class_name)
 };
 
 MFC_RuntimeImplimentation(class_name)
@@ -97,7 +97,7 @@ class class_name: public baseClass<baseArg01, baseArg02>
 	
 	MFC_RuntimeExtPart01Base02(class_name, baseClass, baseArg01, baseArg02)
 	//Any message map messages here
-	MFC_RuntimeExtPart02(class_name, baseClass, baseArg01, baseArg02)
+	MFC_RuntimeExtPart02(class_name)
 };
 
 MFC_RuntimeImplimentation(class_name)
@@ -142,7 +142,7 @@ class class_name: public baseClass
 	//And other class stuff
 	MFC_RuntimeExtPart01With01Args(class_name, arg01, baseClass)
 	//Any message map messages here
-	MFC_RuntimeExtPart02With01Args(class_name, arg01, baseClass)
+	MFC_RuntimeExtPart02With01Args(class_name, arg01)
 };
 
 MFC_RuntimeImplimentationWith01Args(class_name, arg01)
@@ -167,7 +167,7 @@ protected:\
 		static const AFX_MSGMAP_ENTRY _messageEntries[] =\
 		{
 
-#define MFC_RuntimeExtPart02With01Args(class_name, arg01, baseClass)\
+#define MFC_RuntimeExtPart02With01Args(class_name, arg01)\
 			{ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }\
 		};\
 		__pragma(warning(pop))\
@@ -197,7 +197,7 @@ class class_name: public baseClass
 	//And other class stuff
 	MFC_RuntimeExtPart01With02Args(class_name, arg01, arg02, baseClass)
 	//Any message map messages here
-	MFC_RuntimeExtPart02With02Args(class_name, arg01, arg02, baseClass)
+	MFC_RuntimeExtPart02With02Args(class_name, arg01, arg02)
 };
 
 MFC_RuntimeImplimentationWith02Args(class_name, arg01, arg02)
@@ -222,7 +222,7 @@ protected:\
 		static const AFX_MSGMAP_ENTRY _messageEntries[] =\
 		{
 
-#define MFC_RuntimeExtPart02With02Args(class_name, arg01, arg02, baseClass)\
+#define MFC_RuntimeExtPart02With02Args(class_name, arg01, arg02)\
 			{ 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }\
 		};\
 		__pragma(warning(pop))\
