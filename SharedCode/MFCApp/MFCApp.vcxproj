@@ -260,6 +260,7 @@
 -->
     <ClInclude Include="..\Databases\ArgList.h" />
     <ClInclude Include="..\Databases\ArgStringList.h" />
+    <ClInclude Include="..\OtherFunctions\MFCMacrosV3.h" />
     <ClInclude Include="..\tsl\ordered_map.h" />
     <ClInclude Include="..\VariableLists\StringVectorList.h" />
     <ClInclude Include="..\VariableLists\VariableList.h" />
@@ -282,6 +283,7 @@
     <ClInclude Include="MFCView.h" />
     <ClInclude Include="MFCpch.h" />
     <ClInclude Include="MFCRes.h" />
+    <ClInclude Include="MFCViewV2.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -308,6 +310,7 @@
     <ClInclude Include="OutputWnd.h">
       <ExcludedFromBuild Condition="'$(Configuration)'!='MDIDebug_TextView'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClCompile Include="MFCViewV2.cpp" />
     <ClCompile Include="OutputWnd.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)'!='MDIDebug_TextView'">true</ExcludedFromBuild>
     </ClCompile>

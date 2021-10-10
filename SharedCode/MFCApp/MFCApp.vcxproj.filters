@@ -78,6 +78,12 @@
     <ClInclude Include="..\tsl\ordered_map.h">
       <Filter>TSL</Filter>
     </ClInclude>
+    <ClInclude Include="..\OtherFunctions\MFCMacrosV3.h">
+      <Filter>BlazesRusSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCViewV2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MFCFramework.h">
@@ -144,6 +150,9 @@
     </ClCompile>
     <ClCompile Include="TextViewProcessing.cpp">
       <Filter>ViewFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCViewV2.cpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
