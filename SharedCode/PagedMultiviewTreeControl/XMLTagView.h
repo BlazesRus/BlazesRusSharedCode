@@ -38,7 +38,7 @@ class XMLTagView : public CustomTreeView<XMLTagViewNode, MultiViewDoc>
 
 	MFC_RuntimeExtPart01Base02(XMLTagView, CustomTreeView, XMLTagViewNode, MultiViewDoc)
 	//Any message map messages here
-	MFC_RuntimeExtPart02Base02(XMLTagView, CustomTreeView, XMLTagViewNode, MultiViewDoc)
+	MFC_RuntimeExtPart02(XMLTagView, CustomTreeView, XMLTagViewNode, MultiViewDoc)
 };
 
 MFC_RuntimeImplimentation(XMLTagView)

@@ -14,11 +14,12 @@
 class TreePage : public CustomTreeView<TreePageNode, MultiViewDoc>
 {
 	CRuntime_Base02V2(TreePage, CustomTreeView, TreePageNode, MultiViewDoc)
+private:
+	typedef CustomTreeView<TreePageNode, MultiViewDoc> TheBaseClass;
+	typedef TreePage ThisClass;
 protected://BEGIN_AltMESSAGE_MAP()
 	static const AFX_MSGMAP* PASCAL GetThisMessageMap()
 	{
-		typedef TreePage ThisClass;
-		typedef CustomTreeView<TreePageNode, MultiViewDoc> TheBaseClass;
 		__pragma(warning(push))
 		__pragma(warning(disable: 4640))
 		static const AFX_MSGMAP_ENTRY _messageEntries[] =
@@ -43,9 +44,6 @@ public:
 public:
 	static const std::string TreePageStr;
 	static LPCSTR ClassName() { return classNameStr.c_str(); }
-private:
-	typedef CustomTreeView<TreePageNode, MultiViewDoc> TheBaseClass;
-	typedef TreePage ThisClass;
 protected:
 	static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } 
 public:
