@@ -14,10 +14,12 @@ class className: public baseClass
     //And other class stuff
     MFC_RuntimeExtPart01(className, baseClass)
     //Any message map messages here
-    MFC_RuntimeExtPart02(className)
+    MFC_RuntimeExtPart02(className, baseClass, baseArg01, baseArg02)
+    //MFC_RuntimeExtClassName(className, arg01)//If need ClassName info
 };
 
-MFC_RuntimeImplimentation(className)
+MFC_RuntimeImplimentation(className, arg01)
+//MFC_RuntimeClassImplimentation(className, arg01)//If need ClassName info
 */
 #define MFC_RuntimeExtPart01(className, baseClass)\
 private:\
@@ -55,6 +57,19 @@ public:\
         return GetThisMessageMap();\
     }
 
+#define MFC_RuntimeExtClassName(className)\
+protected:\
+    static std::string ClassString()\
+    {\
+        return "className"; \
+    }\
+public:\
+    static const std::string classNameStr;\
+    static LPCSTR ClassName() { return classNameStr.c_str(); }
+
+#define MFC_RuntimeClassImplimentation(className)\
+const std::string className::classNameStr = className::ClassString();
+
 #define MFC_RuntimeImplimentation(className)\
 const CRuntimeClass className::class##className = { "className", sizeof(className), 0xFFFF, NULL,&className::_GetBaseClass, NULL, NULL };
 
@@ -66,10 +81,12 @@ class className: public baseClass<baseArg01>
     //And other class stuff
     MFC_RuntimeExtPart01Base01(className, baseClass, baseArg01)
     //Any message map messages here
-    MFC_RuntimeExtPart02(className)
+    MFC_RuntimeExtPart02(className, baseClass, baseArg01, baseArg02)
+    //MFC_RuntimeExtClassName(className, arg01)//If need ClassName info
 };
 
-MFC_RuntimeImplimentation(className)
+MFC_RuntimeImplimentation(className, arg01)
+//MFC_RuntimeClassImplimentation(className, arg01)//If need ClassName info
 */
 #define MFC_RuntimeExtPart01Base01(className, baseClass, baseArg01)\
 private:\
@@ -98,10 +115,12 @@ class className: public baseClass<baseArg01, baseArg02>
     
     MFC_RuntimeExtPart01Base02(className, baseClass, baseArg01, baseArg02)
     //Any message map messages here
-    MFC_RuntimeExtPart02(className)
+    MFC_RuntimeExtPart02(className, baseClass, baseArg01, baseArg02)
+    //MFC_RuntimeExtClassName(className, arg01)//If need ClassName info
 };
 
-MFC_RuntimeImplimentation(className)
+MFC_RuntimeImplimentation(className, arg01)
+//MFC_RuntimeClassImplimentation(className, arg01)//If need ClassName info
 */
 #define MFC_RuntimeExtPart01Base02(className, baseClass, baseArg01, baseArg02)\
 private:\
@@ -137,14 +156,16 @@ class className: public baseClass
     MFC_RuntimeExtPart01With01Args(className, arg01, baseClass)
     //Any message map messages here
     MFC_RuntimeExtPart02With01Args(className, arg01)
+    //MFC_RuntimeExtClassNameWith01Args(className, arg01)//If need ClassName info
 };
 
 MFC_RuntimeImplimentationWith01Args(className, arg01)
+//MFC_RuntimeClassImplimentationWith01Args(className, arg01)//If need ClassName info
 */
 #define MFC_RuntimeExtPart01With01Args(className, arg01, baseClass)\
 private:\
-    typedef baseClass TheBaseClass;\
     typedef className<arg01> ThisClass;\
+    typedef baseClass TheBaseClass;\
 protected:\
     static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
@@ -159,14 +180,8 @@ protected:\
         static const AFX_MSGMAP_ENTRY _messageEntries[] =\
         {
 
-#define MFC_RuntimeExtPart02With01Args(className, arg01)\
-            { 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }\
-        };\
-        __pragma(warning(pop))\
-        static const AFX_MSGMAP messageMap =\
-        { &TheBaseClass::GetThisMessageMap, &_messageEntries[0] };\
-        return &messageMap;\
-    }\
+#define MFC_RuntimeExtClassNameWith01Args(className, arg01)\
+protected:\
     static std::string ClassString()\
     {\
         std::string Combined = "className<"; \
@@ -175,11 +190,12 @@ protected:\
         return Combined; \
     }\
 public:\
-    virtual const AFX_MSGMAP* GetMessageMap() const\
-    {\
-        return GetThisMessageMap();\
-    }
-    
+    static const std::string className##_##arg01Str;\
+    static LPCSTR ClassName() { return className##_##arg01##Str.c_str(); }
+
+#define MFC_RuntimeClassImplimentationWith01Args(className, arg01)\
+const std::string className::className##_##arg01Str = className::ClassString();
+
 /*
 template<typename arg01>
 class className: public baseClass

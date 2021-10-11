@@ -30,12 +30,15 @@
    #include "..\AltNum\MediumDec.hpp"
 #endif
 #ifdef MFCApp_StoreDynamicAppSettings
+#if defined(BlazesRusAppSetting_StoreDynamicSettingsInList)
+#else
 #include "..\Databases\CustomDictionary.h"
+#endif
 #include "..\Databases\CustomOrderedDictionary.h"
 #endif
 #include "..\OtherFunctions\FileOps.hpp"
 
-#if defined(BlazesRusAppSetting_UseAlternativeDynamicAppSettings) || defined(MFCApp_StoreDynamicAppSettings)
+#if defined(BlazesRusAppSetting_UseAlternativeDynamicAppSettings) && defined(MFCApp_StoreDynamicAppSettings)
 class DLL_API IniElementV3
 {
 public:
@@ -139,7 +142,7 @@ public:
     bool AppSetting01;
 #endif
     /// <summary>
-    /// Loads the Ini data.
+    /// Loads the INI data.
     /// </summary>
     /// <param name="FileName">Name of the file.</param>
     /// <param name="IniFormat">The ini storage format.
@@ -243,16 +246,16 @@ public:
 #else
                             if (TypeName == "Int")
                             {
-                                if (self.AddOnlyNew(IniSetting, IntDeclaration)) { IntSettings.Add(IniSetting, VariableConversionFunctions::ReadIntFromString(IniValue)); }
+                                if (self.AddOnlyNew(IniSetting, IntDeclaration)) { IntSettings.Add(IniSetting, BlazesRusCode::VariableConversionFunctions::ReadIntFromString(IniValue)); }
                             }
                             else if (TypeName == "Bool")
                             {
-                                if (self.AddOnlyNew(IniSetting, BoolDeclaration)) { BoolSettings.Add(IniSetting, VariableConversionFunctions::ReadBoolFromString(IniValue)); }
+                                if (self.AddOnlyNew(IniSetting, BoolDeclaration)) { BoolSettings.Add(IniSetting, BlazesRusCode::VariableConversionFunctions::ReadBoolFromString(IniValue)); }
                             }
 #ifdef BlazesMFCAppIni_EnableFloat
                             else if (TypeName == "Float")
                             {
-                                if (self.AddOnlyNew(IniSetting, FloatDeclaration)) { BoolSettings.Add(IniSetting, VariableConversionFunctions::ReadFloatFromString(IniValue)); }
+                                if (self.AddOnlyNew(IniSetting, FloatDeclaration)) { BoolSettings.Add(IniSetting, BlazesRusCode::VariableConversionFunctions::ReadFloatFromString(IniValue)); }
                             }
 #endif
 #ifdef BlazesMFCAppIni_EnableAltDec
@@ -339,16 +342,16 @@ public:
 #else
                         if (TypeName == "Int")
                         {
-                            if(self.AddOnlyNew(IniSetting, IntDeclaration)){ IntSettings.Add(IniSetting, VariableConversionFunctions::ReadIntFromString(IniValue)); }
+                            if(self.AddOnlyNew(IniSetting, IntDeclaration)){ IntSettings.Add(IniSetting, BlazesRusCode::VariableConversionFunctions::ReadIntFromString(IniValue)); }
                         }
                         else if (TypeName == "Bool")
                         {
-                            if (self.AddOnlyNew(IniSetting, BoolDeclaration)) { BoolSettings.Add(IniSetting, VariableConversionFunctions::ReadBoolFromString(IniValue)); }
+                            if (self.AddOnlyNew(IniSetting, BoolDeclaration)) { BoolSettings.Add(IniSetting, BlazesRusCode::VariableConversionFunctions::ReadBoolFromString(IniValue)); }
                         }
 #ifdef BlazesMFCAppIni_EnableFloat
                         else if (TypeName == "Float")
                         {
-                            if (self.AddOnlyNew(IniSetting, FloatDeclaration)) { BoolSettings.Add(IniSetting, VariableConversionFunctions::ReadFloatFromString(IniValue)); }
+                            if (self.AddOnlyNew(IniSetting, FloatDeclaration)) { BoolSettings.Add(IniSetting, BlazesRusCode::VariableConversionFunctions::ReadFloatFromString(IniValue)); }
                         }
 #endif
 #ifdef BlazesMFCAppIni_EnableAltDec
@@ -403,8 +406,10 @@ public:
     bool Save()
     {
         std::string FilePath = "AppSettings.ini";
+#if !defined(BlazesRusAppSetting_UseAlternativeDynamicAppSettings) || defined(MFCApp_StoreDynamicAppSettings)//C4101 Warning Fix
         size_t StringLength;
-        char StringChar;
+        char LineChar;
+#endif
         std::string LineString;
         std::fstream LoadedFileStream;
 #ifndef MFCApp_SaveFreshConfigFile
@@ -459,25 +464,30 @@ public:
 #ifdef MFCApp_StoreDynamicAppSettings
                     if (!self.empty())
                     {
-                        //LineString = ElementAt(0);
-                        //StringLength = LineString.length();
-                        //for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
-                        //{
-                        //	LineChar = LineString.at(StringIndex);
-                        //	LoadedFileStream << LineChar;
-                        //}
-                        //for (size_t i = 1; i < DataSize; ++i)
-                        //{
-                        //	//Carriage Return to next line
-                        //	LoadedFileStream << "\n";
-                        //	LineString = ElementAt(i);
-                        //	StringLength = LineString.length();
-                        //	for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
-                        //	{
-                        //		LineChar = LineString.at(StringIndex);
-                        //		LoadedFileStream << LineChar;
-                        //	}
-                        //}
+#if defined(BlazesRusAppSetting_StoreDynamicSettingsInList)
+#else
+/*                      //To-Do Fix this code later
+                        LineString = self.ElementAt(0);
+                        StringLength = LineString.length();
+                        for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
+                        {
+                        	LineChar = LineString.at(StringIndex);
+                        	LoadedFileStream << LineChar;
+                        }
+                        for (size_t i = 1; i < DataSize; ++i)
+                        {
+                        	//Carriage Return to next line
+                        	LoadedFileStream << "\n";
+                        	LineString = self.ElementAt(i);
+                        	StringLength = LineString.length();
+                        	for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
+                        	{
+                        		LineChar = LineString.at(StringIndex);
+                        		LoadedFileStream << LineChar;
+                        	}
+                        }
+*/
+#endif
                     }
 #endif
 #ifndef MFCApp_SaveFreshConfigFile
@@ -818,6 +828,16 @@ public:
     AppSettings()
     {
 #ifdef MFCApp_StoreDynamicAppSettings
+#if defined(BlazesRusAppSetting_StoreDynamicSettingsInList)
+//		IntSettings = CustomDictionary<std::string, int>({});
+//		BoolSettings = CustomDictionary<std::string, bool>({});
+//#ifdef BlazesMFCAppIni_EnableFloat
+//		FloatSettings = CustomDictionary<std::string, float>({});
+//#endif
+//#ifdef BlazesMFCAppIni_EnableAltDec
+//		MediumDecSettings = CustomDictionary<std::string, MediumDec>({});
+//#endif
+#else
         IntSettings = CustomDictionary<std::string, int>({});
         BoolSettings = CustomDictionary<std::string, bool>({});
 #ifdef BlazesMFCAppIni_EnableFloat
@@ -825,6 +845,7 @@ public:
 #endif
 #ifdef BlazesMFCAppIni_EnableAltDec
         MediumDecSettings = CustomDictionary<std::string, MediumDec>({});
+#endif
 #endif
 #ifdef BlazesRusAppSetting_UseAlternativeDynamicAppSettings
         self = CustomOrderedDictionary<std::string, IniElementV3>({});
@@ -835,8 +856,7 @@ public:
         Load();
     };
 
-#ifdef MFCApp_StoreDynamicAppSettings
-#ifndef BlazesRusAppSetting_UseAlternativeDynamicAppSettings
+#if defined(MFCApp_StoreDynamicAppSettings) && !defined(BlazesRusAppSetting_UseAlternativeDynamicAppSettings) && !defined(BlazesRusAppSetting_StoreDynamicSettingsInList)
     /// <summary>
     /// Copies the data.
     /// </summary>
@@ -873,7 +893,6 @@ public:
             }
         }
     }
-#endif
 #endif
 
     /// <summary>
