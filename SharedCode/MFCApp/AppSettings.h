@@ -31,26 +31,61 @@
 #endif
 #ifdef MFCApp_StoreDynamicAppSettings
 #include "..\Databases\CustomDictionary.h"
+#include "..\Databases\CustomOrderedDictionary.h"
+#endif
+#include "..\OtherFunctions\FileOps.hpp"
+
+#if defined(BlazesRusAppSetting_UseAlternativeDynamicAppSettings) || defined(MFCApp_StoreDynamicAppSettings)
+class DLL_API IniElementV3
+{
+public:
+    //0 = String Value Stored, 1 = Bool, 2 = Int, 3 = MediumDec(if BlazesMFCAppIni_EnableAltDec enabled), 4 = float(if BlazesMFCAppIni_EnableFloat enabled), 5 = Void(No Parameters), 6=AltDec
+    __int8 IniTypeStored;
+    std::string IniValue;
+    IniElementV3(std::string iniVal)
+    {
+        IniTypeStored = 0; IniValue = iniVal;
+    }
+    IniElementV3(std::string iniVal, __int8 typeStored)
+    {
+        IniTypeStored = typeStored; IniValue = iniVal;
+    }
+    IniElementV3(__int8 typeStored)
+    {
+        IniTypeStored = typeStored; IniValue = "";
+    }
+    IniElementV3()
+    {
+        IniTypeStored = 5; IniValue = "";
+    }
+};
 #endif
 
 /// <summary>
 /// Class named AppSettings for settings Registry like data for app(without storing data inside registry).
 /// </summary>
 class DLL_API AppSettings
-#ifdef MFCApp_StoreDynamicAppSettings
-: public CustomDictionary<std::string, std::string>
-#endif
 {
 #ifdef MFCApp_StoreDynamicAppSettings
 public:
+#ifdef BlazesRusAppSetting_UseAlternativeDynamicAppSettings
+    const IniElementV3 NewBoolVal = 1;
+    const IniElementV3 NewIntVal = 2;
+    const IniElementV3 NewMediumDecVal = 3;
+    const IniElementV3 NewFloatVal = 4;
+    const IniElementV3 NewVoidVal = 5;
+    const IniElementV3 BlankStringVal = 0;
+#else
     /// <summary>
     /// The int declaration
     /// </summary>
     const static std::string IntDeclaration;
+#ifdef BlazesMFCAppIni_EnableAltDec
     /// <summary>
     /// The medium decimal declaration
     /// </summary>
     const static std::string MediumDecDeclaration;
+#endif
     /// <summary>
     /// The bool declaration
     /// </summary>
@@ -59,19 +94,23 @@ public:
     /// The Void declaration(No Parameter Value)
     /// </summary>
     const static std::string VoidDeclaration;
+#ifdef BlazesMFCAppIni_EnableFloat
+    /// <summary>
+    /// The float declaration
+    /// </summary>
+    const static std::string FloatDeclaration;
+#endif
+#endif
 
+#if defined(BlazesRusAppSetting_StoreDynamicSettingsInList)
+#else
     /// <summary>
     /// The IniSettings with Int Values
     /// </summary>
     CustomDictionary<std::string, int> IntSettings = {};
 
 #ifdef BlazesMFCAppIni_EnableFloat
-    /// <summary>
-    /// The float declaration
-    /// </summary>
-    const static std::string FloatDeclaration;
-
-    /// <summary>
+   /// <summary>
     /// The IniSettings with Float Values
     /// </summary>
     CustomDictionary<std::string, float> FloatSettings = {};
@@ -94,28 +133,11 @@ public:
     /// </summary>
     CustomOrderedDictionary<std::string, std::string> self = {};
 #endif
-protected:
-    bool CreateFileIfDoesntExist(std::string fileName)
-    {
-        bool FileExists = false;
-        //Based on https://www.quora.com/What-is-the-best-way-to-check-whether-a-particular-file-exists-or-not-in-C++
-        struct stat buffer;
-        FileExists = (stat(fileName.c_str(), &buffer) == 0);
-        //Based on http://stackoverflow.com/questions/17818099/how-to-check-if-a-file-exists-before-creating-a-new-file
-        if (!FileExists)
-        {
-            std::ofstream file(fileName);
-            if (!file)
-            {
-                std::cout << "File could not be created" << std::endl;
-                return;
-            }
-        }
-        return FileExists;
-    }
-#ifndef MFCApp_SaveFreshConfigFile
 #endif
 public:
+#ifdef MFCApp_UseIniTesterSettings
+    bool AppSetting01;
+#endif
     /// <summary>
     /// Loads the Ini data.
     /// </summary>
@@ -190,40 +212,60 @@ public:
                         if (LineChar == ']')
                         {
                             CommandStage = 0;
-                            //if(IniSetting=="AppSetting")
-                            //	AppSetting = IniValue=="true"?true:false;
+#ifdef MFCApp_UseIniTesterSettings
+                            if (IniSetting == "AppSetting01")
+                                AppSetting01 = IniValue == "true" ? true : false;
+#ifndef MFCApp_StoreDynamicAppSettings
+                            else
+                                std::cout << "Unknown setting named " + IniSetting + " not loaded from AppSettings.ini." << std::endl;
+#endif
+#endif
 #ifdef MFCApp_StoreDynamicAppSettings
-                                if (TypeName == "Int")
-                                {
-                                    self.Add(IniSetting, IntDeclaration);
-                                    IntSettings.Add(IniSetting, VariableConversionFunctions::ReadIntFromString(IniValue));
-                                }
-#ifdef IniDataV2_DisableFloat
-                                else if (TypeName == "Float")
-                                {
-                                    self.Add(IniSetting, FloatDeclaration);
-                                    FloatSettings.Add(IniSetting, VariableConversionFunctions::ReadFloatFromString(IniValue));
-                                }
-#endif
-                                else if (TypeName == "Bool")
-                                {
-                                    self.Add(IniSetting, FloatDeclaration);
-                                    BoolSettings.Add(IniSetting, VariableConversionFunctions::ReadBoolFromString(IniValue));
-                                }
+#ifdef BlazesRusAppSetting_UseAlternativeDynamicAppSettings
+                            if (TypeName == "Bool")
+                                AddIniSetting(IniSetting, 1);
+                            else if (TypeName == "Int")
+                                AddIniSetting(IniSetting, 2);
 #ifdef BlazesMFCAppIni_EnableAltDec
-                                else if (TypeName == "MediumDec")
-                                {
-                                    self.Add(IniSetting, MediumDecDeclaration);
-                                    MediumDecSettings.Add(IniSetting, (MediumDec)IniValue);
-                                }
+                            else if (TypeName == "MediumDec")
+                                AddIniSetting(IniSetting, 4);
 #endif
-                                else
-                                {
-                                    self.Add(IniSetting, IniValue);
-                                }
+#ifdef BlazesMFCAppIni_EnableFloat
+                            else if (TypeName == "Float")
+                                AddIniSetting(IniSetting, 4);
+#endif
+#ifdef BlazesMFCAppIni_EnableVoid
+                            else if (TypeName == "Void")
+                                AddIniSetting(IniSetting, 5);
+#endif                    
+                            else//StringSetting
+                                AddIniSetting(IniSetting);
 #else
-                            //else
-                                std::cout<<"Unknown setting named "+IniSetting+" not loaded from AppSettings.ini."<<std::endl;
+                            if (TypeName == "Int")
+                            {
+                                if (self.AddOnlyNew(IniSetting, IntDeclaration)) { IntSettings.Add(IniSetting, VariableConversionFunctions::ReadIntFromString(IniValue)); }
+                            }
+                            else if (TypeName == "Bool")
+                            {
+                                if (self.AddOnlyNew(IniSetting, BoolDeclaration)) { BoolSettings.Add(IniSetting, VariableConversionFunctions::ReadBoolFromString(IniValue)); }
+                            }
+#ifdef BlazesMFCAppIni_EnableFloat
+                            else if (TypeName == "Float")
+                            {
+                                if (self.AddOnlyNew(IniSetting, FloatDeclaration)) { BoolSettings.Add(IniSetting, VariableConversionFunctions::ReadFloatFromString(IniValue)); }
+                            }
+#endif
+#ifdef BlazesMFCAppIni_EnableAltDec
+                            else if (TypeName == "MediumDec")
+                            {
+                                if (self.AddOnlyNew(IniSetting, MediumDecDeclaration)) { MediumDecSettings.Add(IniSetting, (MediumDec)IniValue); }
+                            }
+#endif
+                            else//String Based INI Setting
+                            {
+                                self.Add(IniSetting, IniValue);
+                            }
+#endif
 #endif
                             IniValue = "";
                             IniSetting = "";
@@ -247,14 +289,14 @@ public:
 #ifdef MFCApp_StoreDynamicAppSettings
                 else if (InsideTypeDeclaration)
                 {
-                    if (StringChar == ')')
+                    if (LineChar == ')')
                     {
                         TypeName = builder;
                         InsideTypeDeclaration = false;
                     }
                     else
                     {
-                        builder.append(&StringChar);
+                        builder.append(&LineChar);
                     }
                 }
                 else if (LineChar == '(')
@@ -266,9 +308,35 @@ public:
                 {
                     IniValue = builder;
                     builder.clear();
-                    //if(IniSetting=="AppSetting")
-                    //	AppSetting = IniValue=="true"?true:false;
+#ifdef MFCApp_UseIniTesterSettings
+                    if (IniSetting == "AppSetting01")
+                        AppSetting01 = IniValue == "true" ? true : false;
+#ifndef MFCApp_StoreDynamicAppSettings
+                    else
+                        std::cout << "Unknown setting named " + IniSetting + " not loaded from AppSettings.ini." << std::endl;
+#endif
+#endif
 #ifdef MFCApp_StoreDynamicAppSettings
+#ifdef BlazesRusAppSetting_UseAlternativeDynamicAppSettings
+                    if (TypeName == "Bool")
+                        AddIniSetting(IniSetting, 1);
+                    else if (TypeName == "Int")
+                        AddIniSetting(IniSetting, 2);
+#ifdef BlazesMFCAppIni_EnableAltDec
+                    else if (TypeName == "MediumDec")
+                        AddIniSetting(IniSetting, 4);
+#endif
+#ifdef BlazesMFCAppIni_EnableFloat
+                    else if (TypeName == "Float")
+                        AddIniSetting(IniSetting, 4);
+#endif
+#ifdef BlazesMFCAppIni_EnableVoid
+                    else if (TypeName == "Void")
+                        AddIniSetting(IniSetting, 5);
+#endif                    
+                    else//StringSetting
+                        AddIniSetting(IniSetting);
+#else
                         if (TypeName == "Int")
                         {
                             if(self.AddOnlyNew(IniSetting, IntDeclaration)){ IntSettings.Add(IniSetting, VariableConversionFunctions::ReadIntFromString(IniValue)); }
@@ -289,16 +357,12 @@ public:
                             if (self.AddOnlyNew(IniSetting, MediumDecDeclaration)) { MediumDecSettings.Add(IniSetting, (MediumDec)IniValue); }
                         }
 #endif
-                        else//String Based Ini Setting
+                        else//String Based INI Setting
                         {
                             self.Add(IniSetting, IniValue);
                         }
-#else
-                    //else
-                        std::cout<<"Unknown setting named "+IniSetting+" not loaded from AppSettings.ini."<<std::endl;
 #endif
-
-
+#endif
                 }
                 else if (LineChar == '/')//Start of line comment detected so skip rest of line
                 {
@@ -344,42 +408,63 @@ public:
         std::string LineString;
         std::fstream LoadedFileStream;
 #ifndef MFCApp_SaveFreshConfigFile
-        bool CreatingFreshIni =
+        bool LoadingExistingFile =
 #endif
-        CreateFileIfDoesntExist(FilePath);
+            BlazesRusCode::FileOps::CreateFileIfDoesntExist(FilePath);
+#ifdef MFCApp_SaveFreshConfigFile
         LoadedFileStream.open(FilePath.c_str(), std::fstream::out | std::fstream::trunc);
+#else
+        LoadedFileStream.open(FilePath.c_str(), std::fstream::out | std::fstream::in);
+#endif
+        std::string IniSetting = "";
+        std::string IniValue = "";
+#ifdef MFCApp_StoreDynamicAppSettings
+        std::string TypeName = "";
+        bool InsideTypeDeclaration = false;
+#endif
         if (LoadedFileStream.is_open())
         {
             if (LoadedFileStream.good())
             {//Saving to file now
 #ifndef MFCApp_SaveFreshConfigFile
-                if(CreatingFreshIni)
+                if (LoadingExistingFile)
+                {
+#ifdef MFCApp_StoreDynamicAppSettings
+
+#endif
+
+                }
+                else//Otherwise CreatingFreshFile
                 {
 #endif
 #ifdef MFCApp_UseOldIniDataFormatForSettings//[IniSetting=IniValue]
-                    //LoadedFileStream << "[IniSetting=";
-                    //if(IniValue)
-                    //	LoadedFileStream << "true";
-                    //else
-                    //	LoadedFileStream << "false";
-                    //LoadedFileStream << "]\n";
+#ifdef MFCApp_UseIniTesterSettings
+                    LoadedFileStream << "[AppSetting01=";
+                    if (AppSetting01)
+                        LoadedFileStream << "true";
+                    else
+                        LoadedFileStream << "false";
+                    LoadedFileStream << "]\n";
+#endif
 #else//IniSetting:IniValue;
-                    //LoadedFileStream << "IniSetting:";
-                    //if(IniValue)
-                    //	LoadedFileStream << "true";
-                    //else
-                    //	LoadedFileStream << "false";
-                    //LoadedFileStream << ";\n";
+#ifdef MFCApp_UseIniTesterSettings
+                    LoadedFileStream << "AppSetting01:";
+                    if (AppSetting01)
+                        LoadedFileStream << "true";
+                    else
+                        LoadedFileStream << "false";
+                    LoadedFileStream << ";\n";
+#endif
 #endif
 #ifdef MFCApp_StoreDynamicAppSettings
-                    if(!empty())
+                    if (!self.empty())
                     {
                         //LineString = ElementAt(0);
                         //StringLength = LineString.length();
                         //for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
                         //{
-                        //	StringChar = LineString.at(StringIndex);
-                        //	LoadedFileStream << StringChar;
+                        //	LineChar = LineString.at(StringIndex);
+                        //	LoadedFileStream << LineChar;
                         //}
                         //for (size_t i = 1; i < DataSize; ++i)
                         //{
@@ -389,23 +474,16 @@ public:
                         //	StringLength = LineString.length();
                         //	for (size_t StringIndex = 0; StringIndex < StringLength; ++StringIndex)
                         //	{
-                        //		StringChar = LineString.at(StringIndex);
-                        //		LoadedFileStream << StringChar;
+                        //		LineChar = LineString.at(StringIndex);
+                        //		LoadedFileStream << LineChar;
                         //	}
                         //}
                     }
 #endif
 #ifndef MFCApp_SaveFreshConfigFile
                 }
-                else
-                {
-                    while (inFile >> LineChar)
-                    {
-                    
-                    }
-                }
 #endif
-            }
+    }
             else
             {
                 if (LoadedFileStream.bad()) { std::cout << "Failed Read/Write operation Error!\n"; }
@@ -487,7 +565,7 @@ public:
             std::string ElementValue = ValueInfo->second;
             if (ElementValue == IntDeclaration)
             {
-                return VariableConversionFunctions::IntToStringConversion(IntSettings[Value]);
+                return BlazesRusCode::VariableConversionFunctions::IntToStringConversion(IntSettings[Value]);
             }
             else if (ElementValue == BoolDeclaration)
             {
@@ -503,7 +581,7 @@ public:
 #ifdef BlazesMFCAppIni_EnableFloat
             else if (ElementValue == FloatDeclaration)
             {
-                return VariableConversionFunctions::FloatToStringConversion(FloatSettings[Value]);
+                return BlazesRusCode::VariableConversionFunctions::FloatToStringConversion(FloatSettings[Value]);
             }
 #endif
 #ifdef BlazesMFCAppIni_EnableAltDec
@@ -531,17 +609,16 @@ public:
     }
 
 
-    /// <summary>
-    /// Sets the string element data.
-    /// </summary>
-    /// <param name="Key">The key.</param>
-    /// <param name="Value">if set to <c>true</c> then [value] is "true" otherwise "false".</param>
-    void SetStringElementData(std::string Key, bool Value)
-    {
-        if(Value==true){ self.Add(Key, "true"); }
-        else { self.Add(Key, "false"); }
-
-    }
+    ///// <summary>
+    ///// Sets the string element data.
+    ///// </summary>
+    ///// <param name="Key">The key.</param>
+    ///// <param name="Value">if set to <c>true</c> then [value] is "true" otherwise "false".</param>
+    //void SetStringElementData(std::string Key, bool Value)
+    //{
+    //    if(Value==true){ self.Add(Key, "true"); }
+    //    else { self.Add(Key, "false"); }
+    //}
 
 
     /// <summary>
@@ -574,7 +651,7 @@ public:
 
 
     /// <summary>
-    /// Adds the int element data.
+    /// Adds the value to the element data.
     /// </summary>
     /// <param name="Key">The key.</param>
     /// <param name="Value">The value.</param>
@@ -704,7 +781,7 @@ public:
 #endif
 
     /// <summary>
-    /// Returns number of ini elements stored.
+    /// Returns number of INI elements stored.
     /// </summary>
     /// <returns>size_t.</returns>
     size_t Size()
@@ -713,9 +790,9 @@ public:
     }
 #endif
 
-#ifdef MFCApp_StoreDynamicAppSettings
     void clear()
     {
+#ifdef MFCApp_StoreDynamicAppSettings
         IntSettings.clear();
         BoolSettings.clear();
 #ifdef BlazesMFCAppIni_EnableFloat
@@ -724,8 +801,9 @@ public:
 #ifdef BlazesMFCAppIni_EnableAltDec
         MediumDecSettings.clear();
 #endif
-    }
+        self.clear();
 #endif
+    }
 
     void SetToDefaultSettings()
     {
@@ -748,11 +826,17 @@ public:
 #ifdef BlazesMFCAppIni_EnableAltDec
         MediumDecSettings = CustomDictionary<std::string, MediumDec>({});
 #endif
+#ifdef BlazesRusAppSetting_UseAlternativeDynamicAppSettings
+        self = CustomOrderedDictionary<std::string, IniElementV3>({});
+#else
+        self = CustomOrderedDictionary<std::string, std::string>({});
+#endif
 #endif
         Load();
     };
 
 #ifdef MFCApp_StoreDynamicAppSettings
+#ifndef BlazesRusAppSetting_UseAlternativeDynamicAppSettings
     /// <summary>
     /// Copies the data.
     /// </summary>
@@ -790,6 +874,7 @@ public:
         }
     }
 #endif
+#endif
 
     /// <summary>
     /// Finalizes an instance of the <see cref="AppSettings" /> class.
@@ -798,14 +883,16 @@ public:
 };
 
 #ifdef MFCApp_StoreDynamicAppSettings
-const std::string IniDataV2::BoolDeclaration = "#Bool";
-const std::string IniDataV2::IntDeclaration = "#Int";
-const std::string IniDataV2::VoidDeclaration = "#Void";
+#ifndef BlazesRusAppSetting_UseAlternativeDynamicAppSettings
+const std::string AppSettings::BoolDeclaration = "#Bool";
+const std::string AppSettings::IntDeclaration = "#Int";
+const std::string AppSettings::VoidDeclaration = "#Void";
 #ifdef BlazesMFCAppIni_EnableAltDec
-    const std::string IniDataV2::MediumDecDeclaration = "#MediumDec";
+const std::string AppSettings::MediumDecDeclaration = "#MediumDec";
 #endif
 #ifdef BlazesMFCAppIni_EnableFloat
-    const std::string IniDataV2::FloatDeclaration = "#Float";
+const std::string AppSettings::FloatDeclaration = "#Float";
+#endif
 #endif
 #endif
 

@@ -32,17 +32,20 @@ class DLL_API CustomOrderedDictionary : public tsl::ordered_map<EntryType, Value
 {
 public:
     /// <summary>
-    /// Use insert if doesn't Already exist, otherwise set the value
+    /// Use insert if doesn't Already exist, otherwise set the value(Returns True if adds new non-existing element)
     /// </summary>
     /// <param name="Key">The key.</param>
     /// <param name="Value">The value.</param>
-    void Add(EntryType Key, ValueType Value)
+    bool Add(EntryType Key, ValueType Value)
     {//https://stackoverflow.com/questions/31792229/how-to-set-a-value-in-an-unordered-map-and-find-out-if-a-new-key-was-added
         auto p = this->insert({ Key, Value });
         if (!p.second) {
             // overwrite previous value
             p.first->second = Value;
+            return false;
         }
+        else
+            return true;
     }
     /// <summary>
     /// Adds the only Values for keys that don't exist yet
