@@ -122,6 +122,46 @@
   <PropertyGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='VS2022Release'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2022Debug|Win32'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2022Release|Win32'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2022Debug|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2022Release|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <!--
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -239,7 +279,11 @@
     <ClInclude Include="..\Databases\CustomDictionary.h" />
     <ClInclude Include="..\Databases\CustomOrderedDictionary.h" />
     <ClInclude Include="..\DLLAPI.h" />
+    <ClInclude Include="..\OtherFunctions\MFCBaseOneMacros.h" />
+    <ClInclude Include="..\OtherFunctions\MFCBaseTwoMacros.h" />
     <ClInclude Include="..\OtherFunctions\MFCMacrosV3.h" />
+    <ClInclude Include="..\OtherFunctions\MFCOneArgMacros.h" />
+    <ClInclude Include="..\OtherFunctions\MFCTwoArgMacros.h" />
     <ClInclude Include="..\tsl\ordered_map.h" />
     <ClInclude Include="..\VariableLists\StringVectorList.h" />
     <ClInclude Include="..\VariableLists\VariableList.h" />

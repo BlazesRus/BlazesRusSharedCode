@@ -28,6 +28,9 @@
     <Filter Include="FailedFiles">
       <UniqueIdentifier>{60b21c15-3fee-46a8-8d98-498c74d7fa39}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MFCMacros">
+      <UniqueIdentifier>{d5c31459-6406-49fd-90f1-fa8bd9d23421}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MFCApp.h">
@@ -81,9 +84,6 @@
     <ClInclude Include="..\tsl\ordered_map.h">
       <Filter>TSL</Filter>
     </ClInclude>
-    <ClInclude Include="..\OtherFunctions\MFCMacrosV3.h">
-      <Filter>OtherSharedCode</Filter>
-    </ClInclude>
     <ClInclude Include="DFBody2DView.h">
       <Filter>ViewFiles</Filter>
     </ClInclude>
@@ -101,6 +101,21 @@
     </ClInclude>
     <ClInclude Include="..\DLLAPI.h">
       <Filter>OtherSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OtherFunctions\MFCMacrosV3.h">
+      <Filter>MFCMacros</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OtherFunctions\MFCBaseOneMacros.h">
+      <Filter>MFCMacros</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OtherFunctions\MFCBaseTwoMacros.h">
+      <Filter>MFCMacros</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OtherFunctions\MFCOneArgMacros.h">
+      <Filter>MFCMacros</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OtherFunctions\MFCTwoArgMacros.h">
+      <Filter>MFCMacros</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
