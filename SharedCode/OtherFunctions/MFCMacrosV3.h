@@ -194,7 +194,7 @@ public:\
     static LPCSTR ClassName() { return className##_##arg01##Str.c_str(); }
 
 #define MFC_RuntimeClassImplimentationWith01Args(className, arg01)\
-const std::string className::className##_##arg01Str = className::ClassString();
+const std::string className::className##_##arg01Str = className<arg01>::ClassString();
 
 /*
 template<typename arg01>
@@ -228,14 +228,8 @@ protected:\
         static const AFX_MSGMAP_ENTRY _messageEntries[] =\
         {
 
-#define MFC_RuntimeExtPart02With02Args(className, arg01, arg02)\
-            { 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }\
-        };\
-        __pragma(warning(pop))\
-        static const AFX_MSGMAP messageMap =\
-        { &TheBaseClass::GetThisMessageMap, &_messageEntries[0] };\
-        return &messageMap;\
-    }\
+#define MFC_RuntimeExtClassNameWith02Args(className, arg01)\
+protected:\
     static std::string ClassString()\
     {\
         std::string Combined = "className<"; \
@@ -246,11 +240,10 @@ protected:\
         return Combined; \
     }\
 public:\
-    virtual const AFX_MSGMAP* GetMessageMap() const\
-    {\
-        return GetThisMessageMap();\
-    }
+    static const std::string className##_##arg01Str;\
+    static LPCSTR ClassName() { return className##_##arg01##_##arg02##Str.c_str(); }
 
-
+#define MFC_RuntimeClassImplimentationWith02Args(className, arg01)\
+const std::string className::className##_##arg01##_##arg02Str = className<arg01,arg02Str>::ClassString();
 
 #endif
