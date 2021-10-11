@@ -10,14 +10,16 @@
 
 #include "MFCRes.h"       // main symbols
 
-#include "MFCFramework.h"
 #include "afxwinappex.h"
 #include "afxdialogex.h"
-#include "MFCApp.h"
-#include "MFCFrame.h"
 
-#include "MFCSubFrame.h"
+#include "MFCFramework.h"
+#include "MFCFrame.h"
 #include "MFCDoc.h"
+
+#ifndef BlazesMFCApp_UseSDI
+#include "MFCSubFrame.h"
+#endif
 
 #include "../OtherFunctions/MFCMacrosV3.h"
 #ifdef BlazesMFCApp_UseAppAsDualView
