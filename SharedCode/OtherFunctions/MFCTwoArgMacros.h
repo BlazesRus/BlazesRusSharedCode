@@ -28,8 +28,8 @@ protected:\
     static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
     static const CRuntimeClass class##classType##_##arg01##_##arg02;\
-    static CRuntimeClass* PASCAL GetThisClass() { return ((CRuntimeClass*)(&classType<arg01>::class##classType##_##arg01##_##arg02)); }\
-    virtual CRuntimeClass* GetRuntimeClass() const { return ((CRuntimeClass*)(&classType<arg01>::class##classType##_##arg01##_##arg02)); }\
+    static CRuntimeClass* PASCAL GetThisClass() { return ((CRuntimeClass*)(&classType<arg01,arg02>::class##classType##_##arg01##_##arg02)); }\
+    virtual CRuntimeClass* GetRuntimeClass() const { return ((CRuntimeClass*)(&classType<arg01,arg02>::class##classType##_##arg01##_##arg02)); }\
 protected:\
     static const AFX_MSGMAP* PASCAL GetThisMessageMap()\
     {\
