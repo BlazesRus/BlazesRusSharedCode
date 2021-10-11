@@ -5,6 +5,7 @@
 #define MFCMacrosV3_IncludeGuard
 #pragma once
 
+#include <string>
 /*
 class className: public baseClass
 {
@@ -25,8 +26,6 @@ private:\
 protected:\
     static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
-    static const std::string classNameStr;\
-    static LPCSTR ClassName() { return classNameStr.c_str(); }\
     static const CRuntimeClass class##className;\
     static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(className); }\
     virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(className); }\
@@ -57,7 +56,6 @@ public:\
     }
 
 #define MFC_RuntimeImplimentation(className)\
-const std::string className::classNameStr = className::classNameStr;\
 const CRuntimeClass className::class##className = { "className", sizeof(className), 0xFFFF, NULL,&className::_GetBaseClass, NULL, NULL };
 
 /*
@@ -80,8 +78,6 @@ private:\
 protected:\
     static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
-    static const std::string classNameStr;\
-    static LPCSTR ClassName() { return classNameStr.c_str(); }\
     static const CRuntimeClass class##className;\
     static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(className); }\
     virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(className); }\
@@ -114,7 +110,6 @@ private:\
 protected:\
     static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
-    static LPCSTR ClassName() { return classNameStr.c_str(); }\
     static const CRuntimeClass class##className;\
     static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(className); }\
     virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(className); }\
@@ -127,11 +122,9 @@ protected:\
         {
 
 #define MFC_RuntimeImplimentationWith01Args(className,arg01)\
-const std::string className::classNameStr = className::className##_##arg01Str;\
 const CRuntimeClass className::class##className_##arg01 = { "className<arg01>", sizeof(className<arg01>), 0xFFFF, NULL,&className::_GetBaseClass, NULL, NULL };
 
 #define MFC_RuntimeImplimentationWith02Args(className,arg01,arg02)\
-const std::string className::className_##arg01_##arg02Str = className::className##_##arg01##_##arg02Str;\
 const CRuntimeClass className::class##className_##arg01_##arg02 = { "className<arg01,arg02>", sizeof(className<arg01,arg02>), 0xFFFF, NULL,&className::_GetBaseClass, NULL, NULL };
 
 /*
@@ -155,8 +148,6 @@ private:\
 protected:\
     static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
-    static const std::string className##_##arg01##Str;\
-    static LPCSTR ClassName() { return className##_##arg01##Str.c_str(); }\
     static const CRuntimeClass class##className##_##arg01;\
     static CRuntimeClass* PASCAL GetThisClass() { return ((CRuntimeClass*)(&className<arg01>::class##className##_##arg01)) }\
     virtual CRuntimeClass* GetRuntimeClass() const { return ((CRuntimeClass*)(&className<arg01>::class##className##_##arg01)) }\
@@ -210,8 +201,6 @@ private:\
 protected:\
     static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
-    static const std::string className##_##arg01##_##arg02##Str;\
-    static LPCSTR ClassName() { return className##_##arg01##_##arg02##Str.c_str(); }\
     static const CRuntimeClass class##className##_##arg01##_##arg02;\
     static CRuntimeClass* PASCAL GetThisClass() { return ((CRuntimeClass*)(&className<arg01>::class##className##_##arg01##_##arg02)) }\
     virtual CRuntimeClass* GetRuntimeClass() const { return ((CRuntimeClass*)(&className<arg01>::class##className##_##arg01##_##arg02)) }\
@@ -245,5 +234,7 @@ public:\
     {\
         return GetThisMessageMap();\
     }
+
+
 
 #endif

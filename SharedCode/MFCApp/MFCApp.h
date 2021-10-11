@@ -18,7 +18,7 @@
 
 #include "MFCSubFrame.h"
 #include "MFCDoc.h"
-#include "MFCView.h"
+#include "../OtherFunctions/MFCMacrosV3.h"
 
 #ifdef BlazesMFCApp_UseAppAsDualView
 /// <summary>
@@ -90,13 +90,13 @@ public:
             IDR_MAINFRAME,
             RUNTIME_CLASS(MFCDoc),
             RUNTIME_CLASS(MFCFrame),       // main SDI frame window
-            RUNTIME_CLASS(MFCView));//Replace MFCView with custom view derived from MFCView/CView
+            RUNTIME_CLASS(ViewType));//Replace MFCView with custom view derived from MFCView/CView
 #else
         CMultiDocTemplate* pDocTemplate;
         pDocTemplate = new CMultiDocTemplate(IDR_MFCAppTYPE,
             RUNTIME_CLASS(MFCDoc),
             RUNTIME_CLASS(MFCSubFrame), // custom MDI child frame
-            RUNTIME_CLASS(MFCView));
+            RUNTIME_CLASS(ViewType));
 #endif
         if (!pDocTemplate)
             return FALSE;
@@ -149,20 +149,22 @@ public:
         AboutDlg aboutDlg;
         aboutDlg.DoModal();
     }
-    //DECLARE_MESSAGE_MAP()
-protected://BEGIN_AltMESSAGE_MAP()
-    /// <summary>
-    /// Gets the this message map.
-    /// </summary>
-    /// <returns>const AFX_MSGMAP*</returns>
-    static const AFX_MSGMAP* PASCAL GetThisMessageMap()
-    {
-        typedef MFCApp<ViewType> ThisClass;
-        typedef CWinApp TheBaseClass;
-        __pragma(warning(push))
-        __pragma(warning(disable: 4640))
-        static const AFX_MSGMAP_ENTRY _messageEntries[] =
-        {
+
+    MFC_RuntimeExtPart01With01Args(MFCApp, ViewType, CWinAppEx)
+//    //DECLARE_MESSAGE_MAP()
+//protected://BEGIN_AltMESSAGE_MAP()
+//    /// <summary>
+//    /// Gets the this message map.
+//    /// </summary>
+//    /// <returns>const AFX_MSGMAP*</returns>
+//    static const AFX_MSGMAP* PASCAL GetThisMessageMap()
+//    {
+//        typedef MFCApp<ViewType> ThisClass;
+//        typedef CWinApp TheBaseClass;
+//        __pragma(warning(push))
+//        __pragma(warning(disable: 4640))
+//        static const AFX_MSGMAP_ENTRY _messageEntries[] =
+//        {
             ON_COMMAND(ID_APP_ABOUT, &MFCApp::OnAppAbout)
             // Standard file based document commands
             ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
@@ -171,20 +173,23 @@ protected://BEGIN_AltMESSAGE_MAP()
             // Standard print setup command
             ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinApp::OnFilePrintSetup)
 #endif
-            { 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }
-        };
-        __pragma(warning(pop))
-            static const AFX_MSGMAP messageMap =
-        { &TheBaseClass::GetThisMessageMap, &_messageEntries[0] };
-        return &messageMap;
-    }
-public:
-    /// <summary>
-    /// Gets the message map.
-    /// </summary>
-    /// <returns>const AFX_MSGMAP *</returns>
-    virtual const AFX_MSGMAP* GetMessageMap() const
-    {
-        return GetThisMessageMap();
-    }
+        MFC_RuntimeImplimentationWith01Args(MFCApp, ViewType)
+//            { 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }
+//        };
+//        __pragma(warning(pop))
+//            static const AFX_MSGMAP messageMap =
+//        { &TheBaseClass::GetThisMessageMap, &_messageEntries[0] };
+//        return &messageMap;
+//    }
+//public:
+//    /// <summary>
+//    /// Gets the message map.
+//    /// </summary>
+//    /// <returns>const AFX_MSGMAP *</returns>
+//    virtual const AFX_MSGMAP* GetMessageMap() const
+//    {
+//        return GetThisMessageMap();
+//    }
 };
+
+MFC_RuntimeImplimentation(MFCApp)
