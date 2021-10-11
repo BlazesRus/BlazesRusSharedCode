@@ -7,18 +7,6 @@
 #define new DEBUG_NEW
 #endif
 
-// DFBody2DView
-IMPLEMENT_DYNCREATE(DFBody2DView, MFCView)
-
-BEGIN_MESSAGE_MAP(DFBody2DView, MFCView)
-#ifndef BlazesMFCApp_DisablePrinter
-    // Standard printing commands
-    ON_COMMAND(ID_FILE_PRINT, &MFCView::OnFilePrint)
-    ON_COMMAND(ID_FILE_PRINT_DIRECT, &MFCView::OnFilePrint)
-    ON_COMMAND(ID_FILE_PRINT_PREVIEW, &MFCView::OnFilePrintPreview)
-#endif
-END_MESSAGE_MAP()
-
 // DFBody2DView construction/destruction
 
 DFBody2DView::DFBody2DView() noexcept

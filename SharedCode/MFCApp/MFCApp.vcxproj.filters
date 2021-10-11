@@ -22,7 +22,7 @@
     <Filter Include="ViewFiles">
       <UniqueIdentifier>{2a69c0b5-4589-4d75-b6c6-9bbc42bc0584}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BlazesRusSharedCode">
+    <Filter Include="OtherSharedCode">
       <UniqueIdentifier>{bfdd3849-a8b9-40a8-a8d5-7120a8cda092}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -49,13 +49,13 @@
       <Filter>ViewFiles</Filter>
     </ClInclude>
     <ClInclude Include="..\OtherFunctions\StringFunctions.h">
-      <Filter>BlazesRusSharedCode</Filter>
+      <Filter>OtherSharedCode</Filter>
     </ClInclude>
     <ClInclude Include="..\VariableLists\StringVectorList.h">
-      <Filter>BlazesRusSharedCode</Filter>
+      <Filter>OtherSharedCode</Filter>
     </ClInclude>
     <ClInclude Include="..\VariableLists\VariableList.h">
-      <Filter>BlazesRusSharedCode</Filter>
+      <Filter>OtherSharedCode</Filter>
     </ClInclude>
     <ClInclude Include="XMLView.h">
       <Filter>ViewFiles</Filter>
@@ -64,10 +64,10 @@
       <Filter>ViewFiles</Filter>
     </ClInclude>
     <ClInclude Include="..\Databases\ArgList.h">
-      <Filter>BlazesRusSharedCode</Filter>
+      <Filter>OtherSharedCode</Filter>
     </ClInclude>
     <ClInclude Include="..\Databases\ArgStringList.h">
-      <Filter>BlazesRusSharedCode</Filter>
+      <Filter>OtherSharedCode</Filter>
     </ClInclude>
     <ClInclude Include="TextViewProcessing.h">
       <Filter>ViewFiles</Filter>
@@ -79,10 +79,13 @@
       <Filter>TSL</Filter>
     </ClInclude>
     <ClInclude Include="..\OtherFunctions\MFCMacrosV3.h">
-      <Filter>BlazesRusSharedCode</Filter>
+      <Filter>OtherSharedCode</Filter>
     </ClInclude>
     <ClInclude Include="MFCViewV2.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DFBody2DView.h">
+      <Filter>ViewFiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -137,10 +140,10 @@
       <Filter>ViewFiles</Filter>
     </ClCompile>
     <ClCompile Include="..\OtherFunctions\StringFunctions.cpp">
-      <Filter>BlazesRusSharedCode</Filter>
+      <Filter>OtherSharedCode</Filter>
     </ClCompile>
     <ClCompile Include="..\VariableLists\StringVectorList.cpp">
-      <Filter>BlazesRusSharedCode</Filter>
+      <Filter>OtherSharedCode</Filter>
     </ClCompile>
     <ClCompile Include="XMLView.cpp">
       <Filter>ViewFiles</Filter>
@@ -153,6 +156,9 @@
     </ClCompile>
     <ClCompile Include="MFCViewV2.cpp">
       <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DFBody2DView.cpp">
+      <Filter>ViewFiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

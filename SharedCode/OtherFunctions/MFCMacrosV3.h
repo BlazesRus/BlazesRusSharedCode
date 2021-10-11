@@ -80,7 +80,8 @@ private:\
 protected:\
     static CRuntimeClass* PASCAL _GetBaseClass() { return TheBaseClass::GetThisClass(); } \
 public:\
-    static LPCSTR ClassName() { return className##Str.c_str(); }\
+    static const std::string classNameStr;\
+    static LPCSTR ClassName() { return classNameStr.c_str(); }\
     static const CRuntimeClass class##className;\
     static CRuntimeClass* PASCAL GetThisClass() { return _RUNTIME_CLASS(className); }\
     virtual CRuntimeClass* GetRuntimeClass() const { return _RUNTIME_CLASS(className); }\

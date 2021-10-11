@@ -6,7 +6,7 @@
 
 #include "MFCpch.h"
 
-#include "MFCView.h"
+#include "MFCViewV2.h"
 #include "ContextMenu.h"
 
 #ifndef BlazesMFCApp_UseLegacyNodeSearch
@@ -16,7 +16,7 @@
 
 #endif
 
-class DFBody2DView : public MFCView
+class DFBody2DView : public MFCViewV2
 {
 protected: // create from serialization only
     DFBody2DView() noexcept;
@@ -25,27 +25,6 @@ protected: // create from serialization only
         Reset();
         m_Font.DeleteObject();
     }
-    DECLARE_DYNCREATE(DFBody2DView)
-
-    void CreateFileIfDoesntExist(std::string fileName)
-    {
-        bool FileExists = false;
-        //Based on https://www.quora.com/What-is-the-best-way-to-check-whether-a-particular-file-exists-or-not-in-C++
-        struct stat buffer;
-        FileExists = (stat(fileName.c_str(), &buffer) == 0);
-        //Based on http://stackoverflow.com/questions/17818099/how-to-check-if-a-file-exists-before-creating-a-new-file
-        if (!FileExists)
-        {
-            std::ofstream file(fileName);
-            if (!file)
-            {
-                std::cout << "File could not be created" << std::endl;
-                return;
-            }
-        }
-    }
-protected:
-
 // Attributes
 public:
     //Name of File(if blank then not saved/loaded yet into view)
@@ -57,7 +36,7 @@ protected:
     LOGFONT			m_lgFont;
     CFont			m_Font;
     //COLORREF		m_DefaultTextColor;
-	
+    
     /// <summary>
     /// (Lighter Shade of Sonic Silver) https://www.schemecolor.com/sample?getcolor=7a7978
     /// </summary>
@@ -123,13 +102,17 @@ public:
     virtual void Dump(CDumpContext& dc) const;
 #endif
 
-protected:
-
-// Generated message map functions
-protected:
-    DECLARE_MESSAGE_MAP()
+    MFC_RuntimeExtPart01(DFBody2DView, MFCViewV2)
+    //Any message map messages here
+#ifndef BlazesMFCApp_DisablePrinter
+    ON_COMMAND(ID_FILE_PRINT, &DFBody2DView::OnFilePrint)
+    ON_COMMAND(ID_FILE_PRINT_DIRECT, &DFBody2DView::OnFilePrint)
+    ON_COMMAND(ID_FILE_PRINT_PREVIEW, &DFBody2DView::OnFilePrintPreview)
+#endif
+    MFC_RuntimeExtPart02(DFBody2DView)
 };
 
+MFC_RuntimeImplimentation(DFBody2DView)
 #ifndef _DEBUG  // debug version in DFBody2DView.cpp
 inline MFCDoc* DFBody2DView::GetDocument() const
    { return reinterpret_cast<MFCDoc*>(m_pDocument); }

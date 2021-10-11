@@ -35,10 +35,12 @@ public:
 #endif
 	MFC_RuntimeExtPart01(MFCViewV2, CView)
 	//Any message map messages here
+#ifndef BlazesMFCApp_DisablePrinter
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
-	MFC_RuntimeExtPart02(MFCViewV2, CView)
+#endif
+	MFC_RuntimeExtPart02(MFCViewV2)
 };
 
 MFC_RuntimeImplimentation(MFCViewV2)
