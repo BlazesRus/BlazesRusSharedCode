@@ -9,40 +9,40 @@
 class MFCView : public CView
 {
 protected: // create from serialization only
-	MFCView() noexcept;
-	DECLARE_DYNCREATE(MFCView)
+    MFCView() noexcept;
+    DECLARE_DYNCREATE(MFCView)
 
 // Attributes
 public:
-	MFCDoc* GetDocument() const;
+    MFCDoc* GetDocument() const;
 
 // Operations
 public:
 
 // Overrides
 public:
-	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual void OnDraw(CDC* pDC);  // overridden to draw this view
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
 #ifndef BlazesMFCApp_DisablePrinter
-	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
-	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
-	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+    virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
+    virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
+    virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
 #endif
 
 // Implementation
 public:
-	virtual ~MFCView();
+    virtual ~MFCView();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:
 
 // Generated message map functions
 protected:
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
 
 #ifndef _DEBUG  // debug version in MFCView.cpp

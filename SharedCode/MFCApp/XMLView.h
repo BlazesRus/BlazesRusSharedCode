@@ -103,14 +103,14 @@ public:
     /// </summary>
     /// <param name="FilePath">The file path. or file name </param>
     void SaveDataToFile(std::string FilePath);
-	
-	/// <summary>
+    
+    /// <summary>
     /// Generates Data for a test view for possible more extreme .xml file (to test things like finding nodes clicked in deep in xml file)
     /// </summary>
-	void CreateXMLTestView()
-	{
-	
-	}
+    void CreateXMLTestView()
+    {
+    
+    }
 //--------------------------------------------------------------------------------------
 
 // Overrides

@@ -25,6 +25,9 @@
     <Filter Include="OtherSharedCode">
       <UniqueIdentifier>{bfdd3849-a8b9-40a8-a8d5-7120a8cda092}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FailedFiles">
+      <UniqueIdentifier>{60b21c15-3fee-46a8-8d98-498c74d7fa39}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MFCApp.h">
@@ -81,11 +84,23 @@
     <ClInclude Include="..\OtherFunctions\MFCMacrosV3.h">
       <Filter>OtherSharedCode</Filter>
     </ClInclude>
-    <ClInclude Include="MFCViewV2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DFBody2DView.h">
       <Filter>ViewFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCViewV2.h">
+      <Filter>FailedFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="AppSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Databases\CustomDictionary.h">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Databases\CustomOrderedDictionary.h">
+      <Filter>OtherSharedCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DLLAPI.h">
+      <Filter>OtherSharedCode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -154,11 +169,11 @@
     <ClCompile Include="TextViewProcessing.cpp">
       <Filter>ViewFiles</Filter>
     </ClCompile>
-    <ClCompile Include="MFCViewV2.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="DFBody2DView.cpp">
       <Filter>ViewFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCViewV2.cpp">
+      <Filter>FailedFiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -19,16 +19,14 @@
 #include "MFCSubFrame.h"
 #include "MFCDoc.h"
 #include "../OtherFunctions/MFCMacrosV3.h"
+#include "AppSettings.h"
 
-#ifdef BlazesMFCApp_UseAppAsDualView
 /// <summary>
-/// MFC based template for generating applications with 2 view types
+/// MFC based template for generating applications with Single ViewType or 2 View Types if BlazesMFCApp_UseAppAsDualView enabled
 /// </summary>
+#ifdef BlazesMFCApp_UseAppAsDualView
 template <typename ViewType, typename SecondaryViewType>
 #else
-/// <summary>
-/// MFC based template for generating applications with Single ViewType
-/// </summary>
 template <typename ViewType>
 #endif
 class MFCApp : public CWinAppEx
@@ -77,7 +75,8 @@ public:
         SetRegistryKey(_T("MFCApp"));// TODO: You should modify this string to be something appropriate(such as the name of your company or organization)
         LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
 #else//Portable non-registry storage variant(localOnly Profile settings including last file storage)
-    //Place localOnly Profile settings here instead
+        AppSettings AppRegistry;
+        AppRegistry.Load();
 #endif
 
     // Register the application's document templates.  Document templates

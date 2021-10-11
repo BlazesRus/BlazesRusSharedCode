@@ -24,10 +24,10 @@ IMPLEMENT_DYNCREATE(MFCView, CView)
 
 BEGIN_MESSAGE_MAP(MFCView, CView)
 #ifndef BlazesMFCApp_DisablePrinter
-	// Standard printing commands
-	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+    // Standard printing commands
+    ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
+    ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
+    ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
 #endif
 END_MESSAGE_MAP()
 
@@ -35,7 +35,7 @@ END_MESSAGE_MAP()
 
 MFCView::MFCView() noexcept
 {
-	// TODO: add construction code here
+    // TODO: add construction code here
 }
 
 MFCView::~MFCView()
@@ -44,40 +44,40 @@ MFCView::~MFCView()
 
 BOOL MFCView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	// TODO: Modify the Window class or styles here by modifying
-	//  the CREATESTRUCT cs
+    // TODO: Modify the Window class or styles here by modifying
+    //  the CREATESTRUCT cs
 
-	return CView::PreCreateWindow(cs);
+    return CView::PreCreateWindow(cs);
 }
 
 // MFCView drawing
 
 void MFCView::OnDraw(CDC* /*pDC*/)
 {
-	MFCDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
-	if (!pDoc)
-		return;
+    MFCDoc* pDoc = GetDocument();
+    ASSERT_VALID(pDoc);
+    if (!pDoc)
+        return;
 
-	// TODO: add draw code for native data here
+    // TODO: add draw code for native data here
 }
 
 #ifndef BlazesMFCApp_DisablePrinter
 // MFCView printing
 BOOL MFCView::OnPreparePrinting(CPrintInfo* pInfo)
 {
-	// default preparation
-	return DoPreparePrinting(pInfo);
+    // default preparation
+    return DoPreparePrinting(pInfo);
 }
 
 void MFCView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-	// TODO: add extra initialization before printing
+    // TODO: add extra initialization before printing
 }
 
 void MFCView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-	// TODO: add cleanup after printing
+    // TODO: add cleanup after printing
 }
 #endif
 
@@ -86,18 +86,18 @@ void MFCView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 #ifdef _DEBUG
 void MFCView::AssertValid() const
 {
-	CView::AssertValid();
+    CView::AssertValid();
 }
 
 void MFCView::Dump(CDumpContext& dc) const
 {
-	CView::Dump(dc);
+    CView::Dump(dc);
 }
 
 MFCDoc* MFCView::GetDocument() const // non-debug version is inline
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(MFCDoc)));
-	return (MFCDoc*)m_pDocument;
+    ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(MFCDoc)));
+    return (MFCDoc*)m_pDocument;
 }
 #endif //_DEBUG
 

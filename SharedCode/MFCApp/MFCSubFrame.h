@@ -6,31 +6,31 @@
 
 class MFCSubFrame : public CMDIChildWndEx
 {
-	DECLARE_DYNCREATE(MFCSubFrame)
+    DECLARE_DYNCREATE(MFCSubFrame)
 public:
-	MFCSubFrame() noexcept;
+    MFCSubFrame() noexcept;
 
 // Attributes
 protected:
-	CSplitterWndEx m_wndSplitter;
+    CSplitterWndEx m_wndSplitter;
 public:
 
 // Operations
 public:
 
 // Overrides
-	public:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    public:
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
 // Implementation
 public:
-	virtual ~MFCSubFrame();
+    virtual ~MFCSubFrame();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 // Generated message map functions
 protected:
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
