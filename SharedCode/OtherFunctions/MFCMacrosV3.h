@@ -15,11 +15,11 @@ class className: public baseClass
     MFC_RuntimeExtPart01(className, baseClass)
     //Any message map messages here
     MFC_RuntimeExtPart02(className, baseClass, baseArg01, baseArg02)
-    //MFC_RuntimeExtClassName(className, arg01)//If need ClassName info
+    //MFC_RuntimeExtClassName(className)//If need ClassName info
 };
 
 MFC_RuntimeImplimentation(className, arg01)
-//MFC_RuntimeClassImplimentation(className, arg01)//If need ClassName info
+//MFC_RuntimeClassImplimentation(className)//If need ClassName info
 */
 #define MFC_RuntimeExtPart01(className, baseClass)\
 private:\
@@ -82,11 +82,11 @@ class className: public baseClass<baseArg01>
     MFC_RuntimeExtPart01Base01(className, baseClass, baseArg01)
     //Any message map messages here
     MFC_RuntimeExtPart02(className, baseClass, baseArg01, baseArg02)
-    //MFC_RuntimeExtClassName(className, arg01)//If need ClassName info
+    //MFC_RuntimeExtClassName(className)//If need ClassName info
 };
 
 MFC_RuntimeImplimentation(className, arg01)
-//MFC_RuntimeClassImplimentation(className, arg01)//If need ClassName info
+//MFC_RuntimeClassImplimentation(className)//If need ClassName info
 */
 #define MFC_RuntimeExtPart01Base01(className, baseClass, baseArg01)\
 private:\
@@ -155,7 +155,7 @@ class className: public baseClass
     //And other class stuff
     MFC_RuntimeExtPart01With01Args(className, arg01, baseClass)
     //Any message map messages here
-    MFC_RuntimeExtPart02With01Args(className, arg01)
+    MFC_RuntimeExtPart02(className)
     //MFC_RuntimeExtClassNameWith01Args(className, arg01)//If need ClassName info
 };
 
@@ -205,10 +205,12 @@ class className: public baseClass
     //And other class stuff
     MFC_RuntimeExtPart01With02Args(className, arg01, arg02, baseClass)
     //Any message map messages here
-    MFC_RuntimeExtPart02With02Args(className, arg01, arg02)
+    MFC_RuntimeExtPart02(className)
+    //MFC_RuntimeExtClassNameWith02Args(className, arg01, arg02)//If need ClassName info
 };
 
 MFC_RuntimeImplimentationWith02Args(className, arg01, arg02)
+//MFC_RuntimeClassImplimentationWith02Args(className, arg01, arg02)//If need ClassName info
 */
 #define MFC_RuntimeExtPart01With02Args(className, arg01, arg02, baseClass)\
 private:\
