@@ -41,7 +41,7 @@ public:
         auto p = this->insert({ Key, Value });
         if (!p.second) {
             // overwrite previous value
-            p.first->second = Value;
+            p.first.value() = Value;
             return false;
         }
         else
@@ -69,7 +69,9 @@ public:
     //{
     //	return
     //}
-    CustomOrderedDictionary() {}
+    CustomOrderedDictionary()
+    {
+    }
     ~CustomOrderedDictionary() {}
 };
 #endif

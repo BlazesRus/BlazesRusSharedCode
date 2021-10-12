@@ -267,9 +267,6 @@
     <ClInclude Include="MFCView.h" />
     <ClInclude Include="MFCpch.h" />
     <ClInclude Include="MFCRes.h" />
-    <ClInclude Include="MFCViewV2.h">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -295,9 +292,6 @@
     <ClInclude Include="OutputWnd.h">
       <ExcludedFromBuild>false</ExcludedFromBuild>
     </ClInclude>
-    <ClCompile Include="MFCViewV2.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="OutputWnd.cpp">
       <ExcludedFromBuild>false</ExcludedFromBuild>
     </ClCompile>
@@ -305,7 +299,7 @@
   <ItemGroup>
     <ClCompile Include="ContextMenu.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClInclude>
+    </ClCompile>
     <ClInclude Include="ContextMenu.h">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClInclude>

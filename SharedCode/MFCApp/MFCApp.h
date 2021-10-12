@@ -171,8 +171,12 @@ public:
     // Standard print setup command
     ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinApp::OnFilePrintSetup)
 #endif
-    MFC_RuntimeExtPart02(MFCApp, ViewType)
-    MFC_RuntimeExtClassName(MFCApp)
+    MFC_RuntimeExtPart02(MFCApp)
+#ifdef BlazesMFCApp_UseAppAsDualView
+    MFC_RuntimeExtClassNameWith02Args(MFCApp, ViewType, SecondaryViewType)
+#else
+    MFC_RuntimeExtClassNameWith01Args(MFCApp, ViewType)
+#endif
 };
 
 #ifdef BlazesMFCApp_UseAppAsDualView
