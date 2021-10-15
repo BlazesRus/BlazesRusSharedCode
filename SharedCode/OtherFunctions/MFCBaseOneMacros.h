@@ -10,7 +10,7 @@ class classType: public baseClass<baseArg01>
     //And other class stuff
     MFC_RuntimeExtPart01Base01(classType, baseClass, baseArg01)
     //Any message map messages here
-    MFC_RuntimeExtPart02(classType, baseClass, baseArg01, baseArg02)
+    MFC_RuntimeExtPart02()
     //MFC_RuntimeExtclassType(classType)//If need classType info
 };
 

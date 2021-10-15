@@ -14,7 +14,7 @@ class classType: public baseClass
     //And other class stuff
     MFC_RuntimeExtPart01(classType, baseClass)
     //Any message map messages here
-    MFC_RuntimeExtPart02(classType, baseClass, baseArg01, baseArg02)
+    MFC_RuntimeExtPart02()
     //MFC_RuntimeExtClassName(classType)//If need classType info
 };
 
@@ -39,15 +39,19 @@ protected:\
         static const AFX_MSGMAP_ENTRY _messageEntries[] =\
         {
 
-#define MFC_RuntimeExtPart02(classType)\
+#define MFC_RuntimeExtPart02()\
             { 0, 0, 0, 0, AfxSig_end, (AFX_PMSG)0 }\
         };\
         __pragma(warning(pop))\
-        static const AFX_MSGMAP messageMap =\
+            static const AFX_MSGMAP messageMap =\
         { &TheBaseClass::GetThisMessageMap, &_messageEntries[0] };\
         return &messageMap;\
     }\
 public:\
+    /// <summary>\
+    /// Gets the message map.\
+    /// </summary>\
+    /// <returns>const AFX_MSGMAP *</returns>\
     virtual const AFX_MSGMAP* GetMessageMap() const\
     {\
         return GetThisMessageMap();\
