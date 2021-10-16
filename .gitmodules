@@ -1,0 +1,3 @@
+[submodule "SharedCode/MFCApp"]
+	path = SharedCode/MFCApp
+	url = https://github.com/BlazesRus/MFCApp.git
