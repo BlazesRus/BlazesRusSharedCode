@@ -48,10 +48,10 @@ protected:\
         return &messageMap;\
     }\
 public:\
-    /// <summary>\
-    /// Gets the message map.\
-    /// </summary>\
-    /// <returns>const AFX_MSGMAP *</returns>\
+    /* /// <summary>*/\
+    /* /// Gets the message map. */\
+    /* /// </summary> */\
+    /* /// <returns>const AFX_MSGMAP *</returns> */\
     virtual const AFX_MSGMAP* GetMessageMap() const\
     {\
         return GetThisMessageMap();\
