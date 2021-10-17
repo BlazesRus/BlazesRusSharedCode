@@ -1,3 +1,6 @@
 [submodule "SharedCode/MFCApp"]
 	path = SharedCode/MFCApp
 	url = https://github.com/BlazesRus/MFCApp.git
+[submodule "SharedCode/MFCTextViewer"]
+	path = SharedCode/MFCTextViewer
+	url = https://github.com/BlazesRus/MFCTextViewer.git
