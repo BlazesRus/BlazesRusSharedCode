@@ -4,3 +4,6 @@
 [submodule "SharedCode/MFCTextViewer"]
 	path = SharedCode/MFCTextViewer
 	url = https://github.com/BlazesRus/MFCTextViewer.git
+[submodule "SharedCode/FileReferenceMacros"]
+	path = SharedCode/FileReferenceMacros
+	url = https://github.com/BlazesRus/FileReferenceMacros.git
