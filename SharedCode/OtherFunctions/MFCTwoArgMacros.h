@@ -13,7 +13,7 @@ class classType: public baseClass
     //And other class stuff
     MFC_RuntimeExtPart01With02Args(classType, arg01, arg02, baseClass)
     //Any message map messages here
-    MFC_RuntimeExtPart02(classType)
+    MFC_RuntimeExtPart02()
     //MFC_RuntimeExtClassNameWith02Args(classType, arg01, arg02)//If need classType info
 };
 
@@ -38,7 +38,7 @@ protected:\
         static const AFX_MSGMAP_ENTRY _messageEntries[] =\
         {
 
-#define MFC_RuntimeExtClassNameWith02Args(classType, arg01)\
+#define MFC_RuntimeExtClassNameWith02Args(classType, arg01, arg02)\
 public:\
     static std::string ClassString()\
     {\
@@ -52,9 +52,9 @@ public:\
     static const std::string classNameStr;\
     static LPCSTR ClassName() { return classNameStr.c_str(); }
 
-#define MFC_RuntimeImplimentationWith02Args(classType,arg01,arg02)\
+#define MFC_RuntimeImplimentationWith02Args(classType, arg01, arg02)\
 template <typename arg01, typename arg02>\
-inline AFX_COMDAT const CRuntimeClass classType<arg01, arg02>::class##classType##_##arg01##_##arg02 = { ClassName(), sizeof(class_name<arg01, arg02>), 0xFFFF, NULL,&class_name<arg01, arg02>::_GetBaseClass, NULL, NULL };
+inline AFX_COMDAT const CRuntimeClass classType<arg01, arg02>::class##classType##_##arg01##_##arg02 = { ClassName(), sizeof(classType<arg01, arg02>), 0xFFFF, NULL,&classType<arg01, arg02>::_GetBaseClass, NULL, NULL };
 
 #define MFC_RuntimeClassImplimentationWith02Args(classType, arg01, arg02)\
 template <typename arg01, typename arg02>\
