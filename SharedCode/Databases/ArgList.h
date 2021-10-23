@@ -1,6 +1,6 @@
-// ***********************************************************************
-// Code Created by James Michael Armstrong (https://github.com/BlazesRus)
-// ***********************************************************************
+//	Code Created by James Michael Armstrong (NexusName:BlazesRus)(https://github.com/BlazesRus)
+//	Latest Code Release at https://github.com/BlazesRus/BlazesRusSharedCode
+//
 #pragma once
 #ifndef ArgList_IncludeGuard
 #define ArgList_IncludeGuard
