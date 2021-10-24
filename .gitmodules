@@ -10,3 +10,6 @@
 [submodule "SharedCode/XMLViewer"]
 	path = SharedCode/XMLViewer
 	url = https://github.com/BlazesRus/XMLViewer.git
+[submodule "SharedCode/NifTreeView"]
+	path = SharedCode/NifTreeView
+	url = https://github.com/BlazesRus/NifTreeView
