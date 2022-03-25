@@ -24,52 +24,161 @@
 
 #include <boost/rational.hpp>
 #include <boost/multiprecision/cpp_int.hpp>
-#include "MediumDec.hpp"
-#include "AltNumModChecker.hpp"
 
-//Preprocessor Switches
+#ifdef AltDec_EnableMediumDecBasedSetValues
+    #include "MediumDec.hpp"
+#endif
+
+#include "AltNumModChecker.hpp"
+//Preprocessor options
 /*
-AltDec_EnableMixedFractional = If DecimalHalf is negative and ExtraRep is Positive, then AltDec represents mixed fraction of -2147483648 to 2147483647 + (DecimalHalf*-1)/ExtraRep(Not Fully Implimented)
-AltDec_EnableInfinityRep = Enable support of positive/negative infinity representations and approaching value representations(Not Fully Implimented)
-AltDec_EnableNaN = Enable NaN based representations and operations(Not Fully Implimented)
-AltDec_EnableComplexNum = Enable Representation of complex numbers with Imaginary number operations(Requires AltDec_EnableImaginaryNum, Not Implimented Yet)
-AltDec_EnableNegativeZero = (Not Fully Implimented)
-AltDec_EnableHigherPrecisionPIConversion = (Not Implimented)
-AltDec_EnableInfinityPowers = Allows powers of infinity for operations where infinity is somehow more infinite then normal(Not Implimented)
-AltDec_DisablePIRep = Disables usage of PI Representation(Not Fully Implimented)
+AltDec_EnableNegativeZero =
+      (Not Implimented)
+
+//--Infinity based preprocessors--
+AltDec_EnableInfinityRep = Enable support of positive/negative infinity representations and approaching value representations
+      When DecimalHalf is -2147483648, it represents negative infinity(if IntValue is -1) or positive infinity(if IntValue is 1)
+      When DecimalHalf is -2147483647, it represents Approaching IntValue+1 from left towards right (IntValue.9__9)
+      When DecimalHalf is -2147483646, it represents Approaching IntValue from right towards left (IntValue.0__1)
+     (Not Fully Implimented)
+AltDec_EnableApproachingMidDec = 
+      When DecimalHalf is -2147483645, it represents Approaching Half way point of {IntValue,IntValue+1} from left towards right (IntValue.49__9)
+      When DecimalHalf is -2147483644, it represents Approaching Half way point of {IntValue,IntValue+1} from right towards left (IntValue.50__1)
+      Assumes AltDec_EnableInfinityRep is enabled
+      (Not Implimented)
+
 AltDec_EnableNearPI = (Not Implimented)
 AltDec_EnableNearE = (Not Implimented)
-AltDec_EnavleNearI = (Not Implimented)
-AltDec_DisplayApproachingAsReal = Display approaching value as real number with 20 digits in decimal section
+AltDec_EnableNearI = (Not Implimented)
 
-Can't be Enabled if any EnableNear Options enabled:
+AltDec_EnableInfinityPowers =
+      Allows powers of infinity for operations where infinity is somehow more infinite than normal
+      (Not Implimented)
+
+AltDec_DisplayApproachingAsReal =
+      Display approaching value as real number with 20 digits in decimal section
+
+//--Can't be Enabled if any EnableNear Options enabled:
 AltDec_EnableApproachingDivided = (Not Implimented)
 AltDec_EnableApproachingPointFive = Enables Approaching IntValue.49_infinitely_9 and .50_infinitely_1 as ExtraRep values -1 and 1(Not Implimented)
+//--
 
+//----
 
-Only one of below can be active at once:
-AltDec_EnableENum = If DecimalHalf is positive and ExtraRep is -2147483647, then AltDec represents +- 2147483647.999999999 * e (Not Fully Implimented)
-                    If DecimalHalf is positive and ExtraRep is negative number greator than -2147483647, then AltDec represents (+- 2147483647.999999999 * e)/(ExtraRep*-1)
-AltDec_EnableImaginaryNum = If DecimalHalf is positive and ExtraRep is -2147483647, then AltDec represents +- 2147483647.999999999i(Not Fully Implimented)
-                            If DecimalHalf is positive and ExtraRep is negative number greator than -2147483647, then AltDec represents (+- 2147483647.999999999i)/(ExtraRep*-1)
-AltDec_EnablePIPowers = (Not Fully Implimented)(Might automatically enable if neither AltDec_EnableENum or AltDec_EnableImaginaryNum are on)
+AltDec_EnableNaN =
+      Enable NaN based representations and operations(Not Fully Implimented)
+
+AltDec_EnableHigherPrecisionPIConversion =
+      (Not Implimented)
+
+AltDec_UseMediumDecBasedRepresentations =
+      Forces to calculate certain representations like MediumDec does 
+      (preference for storing non-normal representations within value of negative DecimalHalf)
+	  (Not Implimented Yet)
+	  
+AltDec_EnableOverflowPreventionCode =
+      Use to enable code to check for overflows on addition/subtraction/multiplication operations (return an exception if overflow)
+      (Not Implimented Yet)
+	  
+AltDec_DisableInfinityRepTypeReturn =
+
+AltDec_DisablePIRep =
+      Force toggles AltDec_EnablePIRep to off
+      AltDec_EnablePIRep given greator priority if both both AltDec_DisablePIRep and AltDec_EnablePIRep
+      are set by preprocessor settings of project
+
+AltDec_EnablePIRep =
+      If AltDec_UseMediumDecBasedRepresentations enabled, then
+        PI*(+- 2147483647.999999999) Representation enabled
+        (When DecimalHalf is between -1 and -1000000000 (when DecimalHalf is -1000000000 is Equal to IntValue*PI))
+      Otherwise represents pi within format of
+         If DecimalHalf is positive and ExtraRep is -2147483647,
+         then AltDec represents +- 2147483647.999999999 * e (Not Fully Implimented)
+         If DecimalHalf is positive and ExtraRep is negative number greator than -2147483647,
+         then AltDec represents (+- 2147483647.999999999 * e)/(ExtraRep*-1)
+	  (Not Fully Implimented--Enabled by default if AltDec_DisablePIRep not set)
+
+AltDec_EnableComplexNum =
+      Enable Representation of complex numbers with Imaginary number operations
+      (Requires AltDec_EnableImaginaryNum, Not Implimented Yet)
+
+AltDec_EnableMixedFractional =
+      If DecimalHalf is negative and ExtraRep is Positive,
+      then AltDec represents mixed fraction of -2147483648 to 2147483647 + (DecimalHalf*-1)/ExtraRep
+      (Not Fully Implimented)
+
+//--Only one of below can be active at once:
+
+AltDec_EnableERep =
+      If AltDec_UseMediumDecBasedRepresentations enabled, then
+    e*(+- 2147483647.999999999) Representation enabled
+    (When DecimalHalf is between -1000000001 and -2000000000 (when DecimalHalf is -2000000000 is Equal to IntValue*e))
+      Otherwise represents e within format of
+    If DecimalHalf is positive and ExtraRep is -2147483647, then
+       represents +- 2147483647.999999999 * e
+    If DecimalHalf is positive and ExtraRep is negative number greator than -2147483647, then
+        represents (+- 2147483647.999999999 * e)/(ExtraRep*-1)
+      (Not Fully Implimented)
+
+AltDec_EnableImaginaryNum =
+      If DecimalHalf is positive and ExtraRep is -2147483647, then
+      represents +- 2147483647.999999999i
+      If DecimalHalf is positive and ExtraRep is negative number greator than -2147483647, then
+      represents (+- 2147483647.999999999i)/(ExtraRep*-1)
+      (Not Fully Implimented)
+
+AltDec_EnablePIPowers =
+      If ExtraRep value is between -1 and -2147483640, then
+      represents IntValue.DecimalHalf * Pi^(ExtraRep*-1)
+      (Not Fully Implimented)
+
+//----
+AltDec_EnablePublicRepType =
+      Sets GetRepType code to be public instead of private
+
+AltDec_TogglePreferedSettings =
+      Force enables AltDec_EnablePIRep, AltDec_EnableInfinityRep, and AltDec_EnablePublicRepType
+
+AltDec_DisableSwitchBasedConversion =
+
+AltDec_EnableMediumDecBasedSetValues =
 */
 
-//Only one of the 2 can be enabled at once(AltDec_EnableImaginaryNum given preference in case that both used)
+#if defined(AltDec_TogglePreferedSettings)
+    #define AltDec_OtherNegativeExtraRepsDefined
+#endif
+
+#if defined(AltDec_EnablePIRep) && defined(AltDec_DisablePIRep)
+    #undef AltDec_DisablePIRep
+#endif
+
+#if !defined(AltDec_DisablePIRep) && !defined(AltDec_EnablePIRep)
+    #define AltDec_EnablePIRep
+#endif
+
 #if defined(AltDec_EnableENum) && (defined(AltDec_EnableImaginaryNum)||defined(AltDec_EnablePIPowers))
     #undef AltDec_EnableENum
 #endif
 
 #if defined(AltDec_EnableENum) || defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnablePIPowers)
-#define AltDec_OtherNegativeExtraRepsDefined
+    #define AltDec_OtherNegativeExtraRepsDefined
 #endif
 
 namespace BlazesRusCode
 {
     class AltDec;
 
-/*---Accuracy Tests:
-
+/*---Accuracy Tests(with MediumDec based settings):
+ * 100% accuracy for all integer value multiplication operations.
+ * 100% accuracy for addition/subtraction operations
+ * Partial but still high accuracy for non-integer representation variations of multiplication because of truncation
+   (values get lost if get too small)
+ * Partial but still high accuracy for division because of truncation
+   (values get lost if get too small)
+ * Other operations like Ln and Sqrt contained with decent level of accuracy
+   (still loses a little accuracy because of truncation etc)
+ * Operations and functions will mess up if IntValue overflows/underflows
+   or reaches exactly -2147483648 which is used to represent negative zero when it has decimal values
 */
 
     /// <summary>
@@ -90,8 +199,18 @@ namespace BlazesRusCode
         static const signed int InfinityRep = -2147483648;
         //Is Approaching IntValue when DecimalHalf==-2147483647
         static const signed int ApproachingValRep = -2147483647;
+        /*
+        //When DecimalHalf == -2147483647, it represents Approaching IntValue+1 from left towards right (IntValue.9__9)
+        static signed int const ApproachingTopRep = -2147483647;
+        //When DecimalHalf == -2147483646, it represents Approaching IntValue from right towards left (IntValue.0__1)
+        static signed int const ApproachingBottomRep = -2147483646;
+#if defined(AltDec_EnableApproachingMidDec)
+            static signed int const MidFromTopRep = -2147483644;
+            static signed int const MidFromBottomRep = -2147483645;
 #endif
-#if !defined(AltDec_DisablePIRep)
+        */
+#endif
+#if defined(AltDec_EnablePIRep)
         //Is PI*Value representation when ExtraRep==-2147483648
         static const signed int PIRep = -2147483648;
 #endif
@@ -106,7 +225,7 @@ namespace BlazesRusCode
         {
             NormalType = 0,
             NumByDiv,
-#if !defined(AltDec_DisablePIRep)
+#if defined(AltDec_EnablePIRep)
             PINum,
 #if defined(AltDec_EnablePIPowers)
             PIPower,
@@ -132,29 +251,35 @@ namespace BlazesRusCode
 #endif
             NaN,
             NegativeZero,
-#if !defined(AltDec_DisablePIRep)
+#if defined(AltDec_EnablePIRep)
             NearPI,//(Approaching Away from Zero is equal to 0.9999...PI)
 #endif
+#if defined(AltDec_EnableENum)
             NearE,//(Approaching Away from Zero is equal to 0.9999...e)
+#endif
+#if defined(AltDec_EnableImaginaryNum)
             NearI,//(Approaching Away from Zero is equal to 0.9999...i)
+#endif
             UnknownType
         };
         RepType GetRepType()
         {
             if(ExtraRep==0)
                 return RepType::NormalType;
-#ifdef AltDec_EnableInfinityRep
-//            else if(DecimalHalf==InfinityRep)
-//            {
-//                if(IntValue==1)//If Positive Infinity, then convert number into MaximumValue instead
-//                {
-//                    return RepType::PositiveInfinity;
-//                }
-//                else//If Negative Infinity, then convert number into MinimumValue instead
-//                {
-//                    return RepType::NegativeInfinity;
-//                }
-//            }
+#if defined(AltDec_EnableInfinityRep)
+#if !defined(AltDec_DisableInfinityRepTypeReturn)
+            else if(DecimalHalf==InfinityRep)
+            {
+                if(IntValue==1)//If Positive Infinity, then convert number into MaximumValue instead when need as real number
+                {
+                    return RepType::PositiveInfinity;
+                }
+                else//If Negative Infinity, then convert number into MinimumValue instead when need as real number
+                {
+                    return RepType::NegativeInfinity;
+                }
+            }
+#endif
             else if (DecimalHalf == ApproachingValRep)
             {
                 if(ExtraRep==0)
@@ -162,7 +287,7 @@ namespace BlazesRusCode
 #if defined(AltDec_EnableApproachingDivided)
 
 #else
-#if !defined(AltDec_DisablePIRep)
+#if defined(AltDec_EnablePIRep)
 #if defined(AltDec_EnableNearPI)
                 else if (ExtraRep == PIRep)
                     return RepType::NearPI;
@@ -180,7 +305,7 @@ namespace BlazesRusCode
                     return RepType::ApproachingTop;//Approaching from left to (IntValue-1)
             }
 #endif
-#ifndef AltDec_DisablePIRep
+#ifdef AltDec_EnablePIRep
             else if(ExtraRep==PIRep)
                 return RepType::PINum;
 #endif
@@ -230,7 +355,7 @@ namespace BlazesRusCode
         using ldouble = long double;
     public:
         /// <summary>
-        /// Value when IntValue is at -0.XXXXXXXXXX (when has decimal part)
+        /// Value when IntValue is at -0.XXXXXXXXXX (when has decimal part)(Negative Zero is Decimal Half is Zero)
         /// </summary>
         static signed int const NegativeRep = -2147483648;
 
@@ -268,6 +393,14 @@ namespace BlazesRusCode
             IntValue = 0; DecimalHalf = 0;
             ExtraRep = 0;
         }
+
+#if defined(AltDec_EnableNegativeZero)
+        void SetAsNegativeZero()
+        {
+            IntValue = NegativeRep; DecimalHalf = 0;
+            ExtraRep = 0;
+        }
+#endif
         
         /// <summary>
         /// Sets the value.
@@ -279,11 +412,22 @@ namespace BlazesRusCode
             DecimalHalf = Value.DecimalHalf; ExtraRep = Value.ExtraRep;
         }
         
-#if !defined(AltDec_DisablePIRep)
-        void SetPiVal(MediumDec Value)
+#if defined(AltDec_EnablePIRep)
+#if defined(AltDec_EnableMediumDecBasedSetValues)
+        void SetPiValFromMediumDec(MediumDec Value)
         {
             IntValue = Value.IntValue; DecimalHalf = Value.DecimalHalf;
             ExtraRep = PIRep;
+        }
+#endif
+
+        void SetPiVal(AltDec Value)
+        {
+            if(ExtraRep==0)
+            {
+                IntValue = Value.IntValue; DecimalHalf = Value.DecimalHalf;
+                ExtraRep = PIRep;
+            }
         }
         
         void SetPiVal(int Value)
@@ -489,7 +633,7 @@ public:
 //        }
 
         private:
-#if !defined(AltDec_DisablePIRep)
+#if defined(AltDec_EnablePIRep)
         void ConvertPIToNum()
         {
 
@@ -632,7 +776,7 @@ public:
 #endif
             if(ExtraRep==0)//Skip converting if already normal number state(Equal to default MediumDec format)
                 return;
-#ifndef AltDec_DisablePIRep
+#ifdef AltDec_EnablePIRep
             if(ExtraRep==PIRep)
             {
                 ConvertPIToNum(); return;
@@ -969,6 +1113,12 @@ public:
         /// <returns>AltDec</returns>
         static AltDec PI;
       
+        /// <summary>
+        /// Euler's number (Non-Alternative Representation)
+        /// Irrational number equal to about (1 + 1/n)^n
+        /// (about 2.71828182845904523536028747135266249775724709369995)
+        /// </summary>
+        /// <returns>AltDec</returns>
         static AltDec E;
         
         static AltDec Zero;

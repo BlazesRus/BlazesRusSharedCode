@@ -69,6 +69,7 @@ namespace BlazesRusCode
     class DLL_API MediumDec
     {
     private:
+        //-----Used when DecimalHalf equals any of these constants----
 #if defined(MediumDec_EnableInfinityRep)
         //Is Infinity Representation when DecimalHalf==-2147483648 (IntValue==1 for positive infinity;IntValue==-1 for negative Infinity)
         static const signed int InfinityRep = -2147483648;
@@ -91,6 +92,7 @@ namespace BlazesRusCode
         static signed int const ETopRep = -1999999999;
         //static signed int const EBottomRep = -1000000001;
 #endif
+        //
 #if defined(MediumDec_SpecialStatusEnabled)
         enum class RepType : int
         {
