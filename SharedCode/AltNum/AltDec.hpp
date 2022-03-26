@@ -7288,6 +7288,7 @@ public:
             return IntValue == NegativeRep ? "-0.0___1" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".0___1";
 #endif
             break;
+/*
 #if defined(AltDec_EnableNaN)
         case RepType::NaN:
             return "NaN";
@@ -7299,12 +7300,15 @@ public:
 #endif
             break;
 #endif
-
+#if defined(AltDec_EnableImaginaryNum)
         case RepType::INum:
+#if defined(AltDec_EnableByDivRep)
         case RepType::INumByDiv:
+#endif
             break;
+#endif
+*/
         default:
-            ConvertToNumRep();
             break;
         }
         std::string Value = "";
@@ -7359,6 +7363,7 @@ public:
             break;
 #endif
 #endif
+#if defined(AltDec_EnableImaginaryNum)
         case RepType::INum:
             Value += "i";
             break;
@@ -7367,6 +7372,7 @@ public:
             Value += "i/";
             Value += ExtraRep*-1;
             break;
+#endif
 #endif
         default:
             break;
@@ -7402,13 +7408,23 @@ public:
             return IntValue == NegativeRep ? "-0.0___1" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".0___1";
 #endif
             break;
+/*
+#if defined(AltDec_EnableENum)
         case RepType::ENum:
+#if defined(AltDec_EnableByDivRep)
         case RepType::ENumByDiv:
-        case RepType::INum:
-        case RepType::INumByDiv:
+#endif
             break;
+#endif
+#if defined(AltDec_EnableImaginaryNum)
+        case RepType::INum:
+#if defined(AltDec_EnableByDivRep)
+        case RepType::INumByDiv:
+#endif
+            break;
+#endif
+*/
         default:
-            ConvertToNumRep();
             break;
         }
         std::string Value = "";
@@ -7447,23 +7463,28 @@ public:
         {
             Value += ".000000000";
         }
-        switch (repType)
-        {
+#if defined(AltDec_EnableENum)
         case RepType::ENum:
             Value += "e";
+            break;
+#if defined(AltDec_EnableByDivRep)
         case RepType::ENumByDiv:
             Value += "e/";
             Value += ExtraRep*-1;
             break;
+#endif
+#endif
+#if defined(AltDec_EnableImaginaryNum)
         case RepType::INum:
             Value += "i";
+            break;
+#if defined(AltDec_EnableByDivRep)
         case RepType::INumByDiv:
             Value += "i/";
             Value += ExtraRep*-1;
             break;
-        default:
-            break;
-        }
+#endif
+#endif
         return Value;
     }
     #pragma endregion String Function Source
