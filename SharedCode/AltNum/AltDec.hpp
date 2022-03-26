@@ -6900,6 +6900,8 @@ public:
             else if(Value.DecimalHalf==InfinityRep)
 #if defined(AltDec_EnableNaN)
                 return NaNValue();//https://byjus.com/questions/what-is-the-value-of-sin-and-cos-infinity/
+#elif defined(AltDec_EnableUndefinedButInRange)
+//Return undefined value between -1 and 1
 #else
                 throw "Operation results in NaN";
 #endif
@@ -6950,6 +6952,8 @@ public:
             else if(Value.DecimalHalf==InfinityRep)
 #if defined(AltDec_EnableNaN)
                 return NaNValue();//https://byjus.com/questions/what-is-the-value-of-sin-and-cos-infinity/
+#elif defined(AltDec_EnableUndefinedButInRange)
+//Return undefined value between -1 and 1
 #else
                 throw "Operation results in NaN";
 #endif
