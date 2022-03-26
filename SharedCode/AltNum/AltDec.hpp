@@ -32,6 +32,9 @@
 #include "AltNumModChecker.hpp"
 //Preprocessor options
 /*
+AltDec_EnableByDivRep =
+      Enables fractional representations in attempt to preserve more accuracy during operations
+
 AltDec_EnableNegativeZero =
       (Not Implimented)
 
@@ -137,7 +140,8 @@ AltDec_EnablePublicRepType =
       Sets GetRepType code to be public instead of private
 
 AltDec_TogglePreferedSettings =
-      Force enables AltDec_EnablePIRep, AltDec_EnableInfinityRep, and AltDec_EnablePublicRepType
+      Force enables AltDec_EnablePIRep, AltDec_EnableInfinityRep, AltDec_EnableByDivRep,
+      and AltDec_EnablePublicRepType
 
 AltDec_DisableSwitchBasedConversion =
 
@@ -145,7 +149,10 @@ AltDec_EnableMediumDecBasedSetValues =
 */
 
 #if defined(AltDec_TogglePreferedSettings)
-    #define AltDec_OtherNegativeExtraRepsDefined
+    #define AltDec_EnablePIRep
+    #define AltDec_EnableInfinityRep
+    #define AltDec_EnableByDivRep
+    #define AltDec_EnablePublicRepType
 #endif
 
 #if defined(AltDec_EnablePIRep) && defined(AltDec_DisablePIRep)
@@ -323,8 +330,10 @@ namespace BlazesRusCode
 #endif
             else if(ExtraRep==IERep)
                 return RepType::INum;
+#if defined(AltDec_EnableByDivRep)
             else
                 return RepType::INumByDiv;
+#endif
 #elif defined(AltDec_EnableENum)
 #if AltDec_EnableMixedFractional
             else if(DecimalHalf<0)
@@ -332,8 +341,10 @@ namespace BlazesRusCode
 #endif
             else if(ExtraRep==IERep)
                 return RepType::ENum;
+#if defined(AltDec_EnableByDivRep)
             else
                 return RepType::ENumByDiv;
+#endif
 #endif
             throw "Unknown or non-enabled representation type detected from AltDec";
             return RepType::UnknownType;//Catch-All Value;
@@ -355,24 +366,28 @@ namespace BlazesRusCode
         using ldouble = long double;
     public:
         /// <summary>
-        /// Value when IntValue is at -0.XXXXXXXXXX (when has decimal part)(Negative Zero is Decimal Half is Zero)
+        /// Value when IntValue is at -0.XXXXXXXXXX (when has decimal part)(with Negative Zero the Decimal Half is Zero)
         /// </summary>
         static signed int const NegativeRep = -2147483648;
 
         /// <summary>
         /// Stores whole half of number(Including positive/negative status)
+		/// (in the case of infinity is used to determine if positive vs negative infinity)
         /// </summary>
         signed int IntValue;
 
         /// <summary>
-        /// Stores decimal section info and possibly other special info
+        /// Stores decimal section info and other special info
         /// </summary>
         signed int DecimalHalf;
 
-        // If both DecimalHalf&ExtraRep are Positive with ExtraRep as non-zero, then ExtraRep acts as denominator
-        // If DecimalHalf is positive and ExtraRep is -2147483648, then AltDec represents +- 2147483647.999999999 * PI
-        // If DecimalHalf is negative and ExtraRep is Positive, then AltDec represents mixed fraction of -2147483648 to 2147483647 + (DecimalHalf*-1)/ExtraRep
-        // If ExtraRep is zero and DecimalHalf is positive, then AltDec represents +- 2147483647.999999999
+        /// <summary>
+		/// (Used exclusively for alternative represents of numbers including imaginery numbers)
+        /// If both DecimalHalf&ExtraRep are Positive with ExtraRep as non-zero, then ExtraRep acts as denominator
+        /// If DecimalHalf is positive and ExtraRep is -2147483648, then AltDec represents +- 2147483647.999999999 * PI
+        /// If DecimalHalf is negative and ExtraRep is Positive, then AltDec represents mixed fraction of -2147483648 to 2147483647 + (DecimalHalf*-1)/ExtraRep
+        /// If ExtraRep is zero and DecimalHalf is positive, then AltDec represents +- 2147483647.999999999
+        /// </summary>
         signed int ExtraRep;
 
         /// <summary>
@@ -454,14 +469,14 @@ namespace BlazesRusCode
         {
             IntValue = Value.IntValue;
             DecimalHalf = Numerator*-1;
-            ExtraRep = Divisor;
+            ExtraRep = Denom;
         }
         
         void SetMixedFractionalValAsNeg(int WholeNum, int NumeratorAsNeg, int Denom)
         {
             IntValue = Value.IntValue;
             DecimalHalf = Numerator;
-            ExtraRep = Divisor;
+            ExtraRep = Denom;
         }
 #endif
 
@@ -540,98 +555,6 @@ public:
             return NewSelf;
         }
 #endif
-//        void UpdateValue(MediumDec& UpdateTarget)
-//        {
-//            if(ExtraRep==0)
-//            {
-//                UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = DecimalHalf;
-//            }
-//#ifdef AltDec_EnableInfinityRep
-//            else if(DecimalHalf==InfinityRep)
-//            {
-//                if(IntValue==1)//If Positive Infinity, then convert number into MaximumValue instead
-//                {
-//                    UpdateTarget.IntValue = 2147483647; UpdateTarget.DecimalHalf = 999999999;
-//                }
-//                else//If Negative Infinity, then convert number into MinimumValue instead
-//                {
-//                    UpdateTarget.IntValue = -2147483647; UpdateTarget.DecimalHalf = 999999999;
-//                }
-//            }
-//            else if(DecimalHalf==ApproachingValRep)
-//            {
-//                UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = 1;
-//            }
-//#endif
-//            else if(ExtraRep==PIRep)
-//            {
-//                if (DecimalHalf == 0 && IntValue == 10)
-//                {
-//                    UpdateTarget.IntValue = 31; UpdateTarget.DecimalHalf = 415926536;
-//                }
-//                else
-//                {
-//                    UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = DecimalHalf;
-//                    UpdateTarget *= MediumDec::PI;
-//                }
-//            }
-//#if defined(AltDec_EnableNaN)
-//            else if(DecimalHalf==NaNRep)//If NaN, then convert number into Nil instead
-//            {
-//                UpdateTarget.IntValue = InfinityRep; UpdateTarget.DecimalHalf = InfinityRep;
-//            }
-//#endif
-//#if AltDec_EnableMixedFractional
-//#if defined(AltDec_EnableImaginaryNum) || defined(AltDec_EnableENum)
-//            else if(ExtraRep>0)
-//#else
-//            else
-//#endif
-//            {
-//                if(DecimalHalf<0)//Mixed Fraction
-//                {
-//                    UpdateTarget.IntValue = DecimalHalf*-1; UpdateTarget.DecimalHalf = 0;
-//                    UpdateTarget /= ExtraRep;
-//                    UpdateTarget += IntValue;
-//                }
-//                else//Value Divided by ExtraRep
-//                {
-//                    UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = DecimalHalf;
-//                    UpdateTarget /= ExtraRep;
-//                }
-//            }
-//#endif
-//#if defined(AltDec_EnableImaginaryNum)
-//#if AltDec_EnableMixedFractional
-//            else//(ExtraRep<0)
-//#else
-//            else if(ExtraRep<0)
-//#endif
-//            {
-//                UpdateTarget.SetVal(MediumDec::Nil);//Imaginary number representation doesn't exist for MediumDec
-//            }
-//#elif defined(AltDec_EnableENum)
-//#if AltDec_EnableMixedFractional
-//            else//(ExtraRep<0)
-//#else
-//            else if(ExtraRep<0)
-//#endif
-//            {
-//                if(ExtraRep==-2147483647)
-//                {
-//                    UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = DecimalHalf;
-//                    UpdateTarget *= MediumDec::E;
-//                }
-//                else
-//                {
-//                    UpdateTarget.IntValue = IntValue; UpdateTarget.DecimalHalf = DecimalHalf;
-//                    UpdateTarget *= MediumDec::E;
-//                    UpdateTarget/= ExtraRep*-1;
-//                }
-//            }
-//#endif
-//        }
-
         private:
 #if defined(AltDec_EnablePIRep)
         void ConvertPIToNum()
@@ -794,7 +717,7 @@ public:
                 ConvertEToNum(); return;
             }
 #endif
-#if defined(AltDec_OtherNegativeExtraRepsDefined) || !defined(AltDec_DisablePIRep)
+#if defined(AltDec_OtherNegativeExtraRepsDefined) || defined(AltDec_EnablePIRep)
             else
             {
 #endif
@@ -813,7 +736,7 @@ public:
 #if AltDec_EnableMixedFractional
                 }
 #endif
-#if defined(AltDec_OtherNegativeExtraRepsDefined) || !defined(AltDec_DisablePIRep)
+#if defined(AltDec_OtherNegativeExtraRepsDefined) || defined(AltDec_EnablePIRep)
             }
 #endif
             ExtraRep = 0;
@@ -849,7 +772,7 @@ public:
                 DecimalHalf = 999999999; ExtraRep = 0;
                 break;
 #endif
-#if !defined(AltDec_DisablePIRep)
+#if defined(AltDec_EnablePIRep)
             case RepType::PINum:
                 BasicMultOp(PINum);
                 ExtraRep = 0;
@@ -1290,6 +1213,7 @@ public:
                 this->ReadString(Value);
             }
         }
+
         /// <summary>
         /// Converts to string.
         /// </summary>
@@ -6959,8 +6883,22 @@ public:
                     return Zero;
                 if (Value.DecimalHalf == 500000000)//0.5 PI = 1; 1.5PI = -1
                     return Value.IntValue==0?NegativeOne:One;
+                AltDec SinValue = Zero;
+                for (int i = 0; i < 7; ++i)
+                {
+                    SinValue += (i % 2 == 0 ? 1 : -1) * AltDec::Pow(Value, 2 * i + 1) / VariableConversionFunctions::Fact(2 * i + 1);
+                }
+                return SinValue;
 
             }
+#if defined(AltDec_EnableInfinityRep)
+            else if(Value.DecimalHalf==InfinityRep)
+#if defined(AltDec_EnableNaN)
+                return NaNValue();//https://byjus.com/questions/what-is-the-value-of-sin-and-cos-infinity/
+#else
+                throw "Operation results in NaN";
+#endif
+#endif
             AltDec SinValue = Zero;
             for (int i = 0; i < 7; ++i)
             {
@@ -7003,6 +6941,14 @@ public:
                 if (Value.DecimalHalf == 500000000)//cos(0.5) PI = 0; cos(1.5PI) = 0;
                     return Zero;
             }
+#if defined(AltDec_EnableInfinityRep)
+            else if(Value.DecimalHalf==InfinityRep)
+#if defined(AltDec_EnableNaN)
+                return NaNValue();//https://byjus.com/questions/what-is-the-value-of-sin-and-cos-infinity/
+#else
+                throw "Operation results in NaN";
+#endif
+#endif
             AltDec CosValue = Zero;
             for (int i = 0; i < 7; ++i)
             {
@@ -7040,7 +6986,36 @@ public:
         /// <returns>AltDec</returns>
         static AltDec TanFromAngle(AltDec Value)
         {
-            Value.ConvertToNumRep();
+            RepType repType = Value.GetRepType();
+            switch (repType)
+            {
+#if defined(AltDec_EnableNaN)
+            case RepType::NaN:
+                return NaNValue();
+#endif
+#if defined(AltDec_EnableImaginaryNum) && defined(AltDec_EnableByDivRep)
+            {
+                int Divisor = Value.ExtraRep*-1;
+
+                break;
+            }
+#endif
+#if defined(AltDec_EnablePIRep)
+            case RepType::RepType::PINum:
+#endif
+#if defined(AltDec_EnableENum)
+            case RepType::RepType::ENum:
+#if defined(AltDec_EnableByDivRep)
+            case RepType::RepType::ENumByDiv:
+#endif
+#endif
+                Value.ConvertToNumRep();
+                break;
+            //case RepType::INum:
+            default:
+                //Value.ConvertToNumRep();//Don't convert things like imaginary numbers into real numbers
+                break;
+            }
             if (Value.IntValue < 0)
             {
                 if (Value.IntValue == NegativeRep)
@@ -7062,7 +7037,11 @@ public:
             if (Value == Zero) { return AltDec::Zero; }
             else if (Value.IntValue == 90 && Value.DecimalHalf == 0)
             {
+#if defined(AltDec_EnableInfinityRep)
+                return AltDec::PositiveInfinity;
+#else
                 return AltDec::Maximum;//Positive Infinity
+#endif
             }
             else if (Value.IntValue == 180 && Value.DecimalHalf == 0)
             {
@@ -7070,7 +7049,11 @@ public:
             }
             else if (Value.IntValue == 270 && Value.DecimalHalf == 0)
             {
+#if defined(AltDec_EnableInfinityRep)
+                return AltDec::NegativeInfinity;
+#else
                 return AltDec::Minimum;//Negative Infinity
+#endif
             }
             else
             {
@@ -7086,7 +7069,17 @@ public:
         /// <returns>AltDec</returns>
         static AltDec ATan(AltDec Value)
         {
-            Value.ConvertToNumRep();
+            RepType repType = Value.GetRepType();
+            switch (repType)
+            {
+#if defined(AltDec_EnableNaN)
+            case RepType::NaN:
+                return NaNValue();
+#endif
+            default:
+                Value.ConvertToNumRep();
+                break;
+            }
             AltDec SinValue = Zero;
             AltDec CosValue = Zero;
             //Angle as Radian
@@ -7112,7 +7105,11 @@ public:
         /// <returns>AltDec</returns>
         static AltDec ArcTan2(AltDec y, AltDec x)
         {
+#if defined(AltDec_EnablePIRep)
             AltDec coeff_1 = AltDec(0, 250000000, PIRep);//PI / 4;
+#else
+            AltDec coeff_1 = PI / 4;
+#endif
             AltDec coeff_2 = 3 * coeff_1;
             AltDec abs_y = AltDec::Abs(y) + JustAboveZero;// kludge to prevent 0/0 condition
             AltDec r;
@@ -7277,6 +7274,28 @@ public:
             return IntValue == NegativeRep ? "-0.0___1" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".0___1";
 #endif
             break;
+        case RepType::ApproachingBottom:
+#ifdef AltDec_DisplayApproachingAsReal
+            return IntValue == NegativeRep ? "-0.00000000000000000001" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".00000000000000000001";
+#else
+            return IntValue == NegativeRep ? "-0.0___1" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".0___1";
+#endif
+            break;
+#if defined(AltDec_EnableNaN)
+        case RepType::NaN:
+            return "NaN";
+#endif
+#if defined(AltDec_EnableENum)
+        case RepType::ENum:
+#if defined(AltDec_EnableByDivRep)
+        case RepType::ENumByDiv:
+#endif
+            break;
+#endif
+
+        case RepType::INum:
+        case RepType::INumByDiv:
+            break;
         default:
             ConvertToNumRep();
             break;
@@ -7320,6 +7339,31 @@ public:
                 }
             }
         }
+        switch (repType)
+        {
+#if defined(AltDec_EnableENum)
+        case RepType::ENum:
+            Value += "e";
+            break;
+#if defined(AltDec_EnableByDivRep)
+        case RepType::ENumByDiv:
+            Value += "e/";
+            Value += ExtraRep*-1;
+            break;
+#endif
+#endif
+        case RepType::INum:
+            Value += "i";
+            break;
+#if defined(AltDec_EnableByDivRep)
+        case RepType::INumByDiv:
+            Value += "i/";
+            Value += ExtraRep*-1;
+            break;
+#endif
+        default:
+            break;
+        }
         return Value;
     }
 
@@ -7350,6 +7394,11 @@ public:
 #else
             return IntValue == NegativeRep ? "-0.0___1" : VariableConversionFunctions::IntToStringConversion(IntValue) + ".0___1";
 #endif
+            break;
+        case RepType::ENum:
+        case RepType::ENumByDiv:
+        case RepType::INum:
+        case RepType::INumByDiv:
             break;
         default:
             ConvertToNumRep();
@@ -7390,6 +7439,23 @@ public:
         else
         {
             Value += ".000000000";
+        }
+        switch (repType)
+        {
+        case RepType::ENum:
+            Value += "e";
+        case RepType::ENumByDiv:
+            Value += "e/";
+            Value += ExtraRep*-1;
+            break;
+        case RepType::INum:
+            Value += "i";
+        case RepType::INumByDiv:
+            Value += "i/";
+            Value += ExtraRep*-1;
+            break;
+        default:
+            break;
         }
         return Value;
     }
