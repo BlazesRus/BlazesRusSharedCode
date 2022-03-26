@@ -143,6 +143,8 @@ AltDec_TogglePreferedSettings =
       Force enables AltDec_EnablePIRep, AltDec_EnableInfinityRep, AltDec_EnableByDivRep,
       and AltDec_EnablePublicRepType
 
+AltDec_EnableUndefinedButInRange =
+
 AltDec_DisableSwitchBasedConversion =
 
 AltDec_EnableMediumDecBasedSetValues =
@@ -266,6 +268,9 @@ namespace BlazesRusCode
 #endif
 #if defined(AltDec_EnableImaginaryNum)
             NearI,//(Approaching Away from Zero is equal to 0.9999...i)
+#endif
+#if defined(AltDec_EnableUndefinedButInRange)//Such as result of Cos of infinity
+            UndefinedButInRange,
 #endif
             UnknownType
         };
