@@ -7001,7 +7001,9 @@ public:
 #if defined(AltDec_EnableImaginaryNum) && defined(AltDec_EnableByDivRep)
             {
                 int Divisor = Value.ExtraRep*-1;
-
+                Value.ExtraRep = 0;
+                Value /= Divisor;
+                Value.ExtraRep = -2147483647;
                 break;
             }
 #endif
