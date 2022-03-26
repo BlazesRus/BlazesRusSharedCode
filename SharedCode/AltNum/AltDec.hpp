@@ -7084,7 +7084,7 @@ public:
                 return NaNValue();
 #endif
             default:
-                Value.ConvertToNumRep();
+                //Value.ConvertToNumRep();
                 break;
             }
             AltDec SinValue = Zero;
