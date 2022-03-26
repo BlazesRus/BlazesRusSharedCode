@@ -5665,7 +5665,7 @@ public:
                 return *this;
                 break;
             default:
-                ConvertToNumRep();
+                //ConvertToNumRep();//Prevent losing imaginery numbers
                 break;
             }
             if (DecimalHalf == 0)
@@ -6750,7 +6750,27 @@ public:
         /// <returns>AltDec</returns>
         static AltDec SinFromAngle(AltDec Value)
         {
-            Value.ConvertToNumRep();
+#if defined(AltDec_EnableInfinityRep)
+            if (DecimalHalf == InfinityRep)
+#if defined(AltDec_EnableNaN)
+                return NaNValue();//https://byjus.com/questions/what-is-the-value-of-sin-and-cos-infinity/
+#elif defined(AltDec_EnableUndefinedButInRange)
+//Return undefined value between -1 and 1
+#else
+                throw "Operation results in NaN";
+#endif
+#endif
+            RepType repType = Value.GetRepType();
+            switch (repType)
+            {
+            case RepType::PINum:
+            case RepType::ApproachingTop::
+            case RepType::ApproachingBottom:
+                Value.ConvertToNumRep();
+                break;
+            default:
+                break;
+            }
             if (Value.IntValue < 0)
             {
                 if (Value.IntValue == NegativeRep)
@@ -6807,7 +6827,28 @@ public:
         /// <returns></returns>
         static AltDec CosFromAngle(AltDec Value)
         {
-            Value.ConvertToNumRep();
+#if defined(AltDec_EnableInfinityRep)
+            if (DecimalHalf == InfinityRep)
+#if defined(AltDec_EnableNaN)
+                return NaNValue();//https://byjus.com/questions/what-is-the-value-of-sin-and-cos-infinity/
+#elif defined(AltDec_EnableUndefinedButInRange)
+//Return undefined value between -1 and 1
+#else
+                throw "Operation results in NaN";
+#endif
+#endif
+            RepType repType = Value.GetRepType();
+            switch (repType)
+            {
+            case RepType::PINum:
+            case RepType::ApproachingTop::
+            case RepType::ApproachingBottom:
+                Value.ConvertToNumRep();
+                break;
+            default:
+                break;
+            }
+            //Value.ConvertToNumRep();
             if (Value.IntValue < 0)
             {
                 if (Value.IntValue == NegativeRep)
