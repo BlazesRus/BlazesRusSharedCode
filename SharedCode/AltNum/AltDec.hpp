@@ -7352,6 +7352,10 @@ public:
         }
         switch (repType)
         {
+#if defined(AltDec_EnablePIRep)
+        case RepType::PINum:
+            Value += "Pi";
+            break;
 #if defined(AltDec_EnableENum)
         case RepType::ENum:
             Value += "e";
@@ -7463,6 +7467,12 @@ public:
         {
             Value += ".000000000";
         }
+        switch (repType)
+        {
+#if defined(AltDec_EnablePIRep)
+        case RepType::PINum:
+            Value += "Pi";
+            break;
 #if defined(AltDec_EnableENum)
         case RepType::ENum:
             Value += "e";
@@ -7485,6 +7495,9 @@ public:
             break;
 #endif
 #endif
+        default:
+            break;
+        }
         return Value;
     }
     #pragma endregion String Function Source
