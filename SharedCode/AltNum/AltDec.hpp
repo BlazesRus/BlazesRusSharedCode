@@ -176,6 +176,12 @@ AltDec_EnableMediumDecBasedSetValues =
 namespace BlazesRusCode
 {
     class AltDec;
+/* Other Varient of AltDec = ExtendedAltDec
+DecimalHalf and ExtraRep instead as unsigned ints
+ExtraFlags variable as a byte/char variable for determining extra variable states such as infinity and Imaginary Numbers
+ExtraFlags treated as bitwise flag storage
+(13 bytes worth of Variable Storage inside class for each instance)
+*/
 
 /*---Accuracy Tests(with MediumDec based settings):
  * 100% accuracy for all integer value multiplication operations.
@@ -321,8 +327,10 @@ namespace BlazesRusCode
             else if(ExtraRep==PIRep)
                 return RepType::PINum;
 #endif
+#if defined(AltDec_EnableByDivRep)
             else if(ExtraRep>0)
                 return RepType::NumByDiv;
+#endif
 #if defined(AltDec_EnableNaN)
             else if(DecimalHalf==NaNRep)
                 return RepType::NaN;
@@ -737,7 +745,9 @@ public:
                 else//Value Divided by ExtraRep
                 {
 #endif
+#if defined(AltDec_EnableByDivRep)
                     BasicIntDivOp(ExtraRep);
+#endif
 #if AltDec_EnableMixedFractional
                 }
 #endif
@@ -6552,9 +6562,41 @@ public:
         {
             if (value == AltDec::One)
                 return AltDec::Zero;
-            if(value.ExtraRep!=0)
-                return Log10_Part02(value);
-            if (value.DecimalHalf == 0 && value.IntValue % 10 == 0)
+            bool WithinThresholdRange = false;
+            switch(DecimalHalf)
+            {
+#if defined(AltDec_EnableInfinityRep)
+            case InfinityRep:
+                return value;
+                break;
+#endif
+#if defined(AltDec_EnableNaN)
+            case NaNRep:
+                return value;
+                break;
+#endif
+            case ApproachingValRep:
+                WithinThresholdRange = true;
+                break;
+            default:
+                if(value.ExtraRep==PIRep)
+                    ConvertPIToNum();
+#if defined(AltDec_EnableENum)
+                else if(value.ExtraRep<0)
+                    ConvertEToNum();
+#endif
+#if defined(AltDec_EnableByDivRep)
+                else if(value.ExtraRep>0)
+                {
+                    BasicIntDivOp(ExtraRep);
+                    ExtraRep = 0;
+                }
+#endif
+                if(value.IntValue < 2)
+                    WithinThresholdRange = true;
+                break;
+            }
+            if (value.ExtraRep==0 && value.DecimalHalf == 0 && value.IntValue % 10 == 0)
             {
                 for (int index = 1; index < 9; ++index)
                 {
@@ -6563,7 +6605,7 @@ public:
                 }
                 return AltDec(9, 0);
             }
-            if (value.IntValue<2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+            if (WithinThresholdRange)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
             {//This section gives accurate answer for values between 1 & 2
                 AltDec threshold = AltDec::FiveBillionth;
                 AltDec base = value - 1;        // Base of the numerator; exponent will be explicit
@@ -6620,8 +6662,8 @@ public:
         {
             if (value == 1)
                 return AltDec::Zero;
-            if(value.ExtraRep!=0)
-                return Log10_IntPart02(value);
+            //if(value.ExtraRep!=0)
+            //    return Log10_IntPart02(value);
             if (value % 10 == 0)
             {
                 for (int index = 1; index < 9; ++index)
@@ -6660,6 +6702,40 @@ public:
         /// <returns>AltDec</returns>
         static AltDec Log(AltDec value, int baseVal)
         {
+            bool WithinThresholdRange = false;
+            switch(DecimalHalf)
+            {
+#if defined(AltDec_EnableInfinityRep)
+            case InfinityRep:
+                return value;
+                break;
+#endif
+#if defined(AltDec_EnableNaN)
+            case NaNRep:
+                return value;
+                break;
+#endif
+            case ApproachingValRep:
+                WithinThresholdRange = true;
+                break;
+            default:
+                if(value.ExtraRep==PIRep)
+                    ConvertPIToNum();
+#if defined(AltDec_EnableENum)
+                else if(value.ExtraRep<0)
+                    ConvertEToNum();
+#endif
+#if defined(AltDec_EnableByDivRep)
+                else if(value.ExtraRep>0)
+                {
+                    BasicIntDivOp(ExtraRep);
+                    ExtraRep = 0;
+                }
+#endif
+                if(value.IntValue < 2)
+                    WithinThresholdRange = true;
+                break;
+            }
             if (value == AltDec::One)
                 return AltDec::Zero;
             //Calculate Base log first
@@ -6702,7 +6778,7 @@ public:
                 }
                 return lnMultLog? AltDec(9, 0) / (baseTotalRes*AltDec::HalfLN10Mult):AltDec(9, 0)/baseTotalRes;
             }
-            if (value.ExtraRep==0&&value.IntValue < 2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+            if (WithinThresholdRange)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
             {//This section gives accurate answer for values between 1 & 2
                 AltDec threshold = AltDec::FiveBillionth;
                 AltDec base = value - 1;        // Base of the numerator; exponent will be explicit
@@ -6764,7 +6840,7 @@ public:
             switch (repType)
             {
             case RepType::PINum:
-            case RepType::ApproachingTop::
+            case RepType::ApproachingTop:
             case RepType::ApproachingBottom:
                 Value.ConvertToNumRep();
                 break;
@@ -6841,7 +6917,7 @@ public:
             switch (repType)
             {
             case RepType::PINum:
-            case RepType::ApproachingTop::
+            case RepType::ApproachingTop:
             case RepType::ApproachingBottom:
                 Value.ConvertToNumRep();
                 break;
