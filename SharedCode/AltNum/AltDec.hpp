@@ -6340,10 +6340,27 @@ public:
                 case RepType::NormalType:
                     break;
                 case RepType::PINum:
-                    value.ConvertPIToNum();
+                    //value.ConvertPIToNum();
                     break;
+#if defined(AltDec_EnableInfinityRep)
+                //case RepType::ApproachingBottom:
+                //break;
+                //case RepType::ApproachingTop:
+                //break;
+                case InfinityRep:
+                    return expType.IsZero()?AltDec.One:value;
+                break;
+#endif
+#if defined(AltDec_EnableInfinityRep)
+
+#endif
+#if defined(AltDec_EnableNaN)
+            case NaNRep:
+                return value;
+                break;
+#endif
                 default:
-                    value.ConvertToNumRep();
+                    //value.ConvertToNumRep();
                     break;
                 }
                 RepType expType = expValue.GetRepType();
@@ -6351,21 +6368,40 @@ public:
                 {
                 case RepType::NormalType:
                     break;
+#if defined(AltDec_EnableInfinityRep)
+                //case RepType::ApproachingBottom:
+                //break;
+                //case RepType::ApproachingTop:
+                //break;
+                //case InfinityRep:
+                    //0^Infinity = 0
+                    //2^PositiveInfinity = PositiveInfinity
+                    //-2^PositiveInfinity = NegativeInfinity
+                    //2^NegativeInfinity = ApproachingZero
+                    //-2^NegativeInfinity = Within range of ApproachingZero and -Approaching Zero?
+                    //return value.IsZero()?value:(IntValue==1?expValue:);
+                //break;
+#endif
+#if defined(AltDec_EnableByDivRep)
                 case RepType::NumByDiv:
                     return FractionalPow(value, AltDec(expValue.IntValue, expValue.DecimalHalf), expValue.ExtraRep);
+#if defined(AltDec_EnableENum)
+                case RepType::ENumByDiv:
+                    return FractionalPow(value, value.ExtraRep*-1);
+                    break;
+#endif
+                case RepType::INumByDiv:
+                    return FractionalPow(value, value.ExtraRep*-1);
+                    break;
+#endif
     //            case RepType::PINum:
     //                expValue.ConvertPIToNum();
     //                break;
 /*
-                case RepType::ENumByDiv:
-                    return FractionalPow(value, value.ExtraRep*-1);
-                    break;
-                case RepType::INumByDiv:
-                    return FractionalPow(value, value.ExtraRep*-1);
-                    break;
+
 */
                 default:
-                    expValue.ConvertToNumRep();
+                    //expValue.ConvertToNumRep();
                     break;
                 }
                 boost::rational<int> Frac = boost::rational<int>(expValue.DecimalHalf, AltDec::DecimalOverflow);
