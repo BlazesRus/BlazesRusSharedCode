@@ -6241,7 +6241,7 @@ public:
         /// <returns>AltDec</returns>
         static AltDec Exp(AltDec x)
         {
-            x.ConvertToNumRep();
+            //x.ConvertToNumRep();//Prevent losing imaginary number status
             /*
              * Evaluates f(x) = e^x for any x in the interval [-709, 709].
              * If x < -709 or x > 709, raises an assertion error. Implemented
