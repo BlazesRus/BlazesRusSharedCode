@@ -6435,7 +6435,41 @@ public:
             //if (value <= 0) {}else//Error if equal or less than 0
             if (value == AltDec::One)
                 return AltDec::Zero;
-            if (value.ExtraRep==0&&value.IntValue<2)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
+            bool WithinThresholdRange = false;
+            switch(DecimalHalf)
+            {
+#if defined(AltDec_EnableInfinityRep)
+            case InfinityRep:
+                return value;
+                break;
+#endif
+#if defined(AltDec_EnableNaN)
+            case NaNRep:
+                return value;
+                break;
+#endif
+            case ApproachingValRep:
+                WithinThresholdRange = true;
+                break;
+            default:
+                if(value.ExtraRep==PIRep)
+                    ConvertPIToNum();
+#if defined(AltDec_EnableENum)
+                else if(value.ExtraRep<0)
+                    ConvertEToNum();
+#endif
+#if defined(AltDec_EnableByDivRep)
+                else if(value.ExtraRep>0)
+                {
+                    BasicIntDivOp(ExtraRep);
+                    ExtraRep = 0;
+                }
+#endif
+                if(value.IntValue < 2)
+                    WithinThresholdRange = true;
+                break;
+            }
+            if (WithinThresholdRange)//Threshold between 0 and 2 based on Taylor code series from https://stackoverflow.com/questions/26820871/c-program-which-calculates-ln-for-a-given-variable-x-without-using-any-ready-f
             {//This section gives accurate answer(for values between 1 and 2)
                 AltDec threshold = AltDec::FiveMillionth;
                 AltDec base = value - 1;        // Base of the numerator; exponent will be explicit
@@ -6477,6 +6511,23 @@ public:
                 return AltDec::Zero;
             if(value.ExtraRep!=0)
                 return LnRef_Part02(value);
+            switch(DecimalHalf)
+            {
+#if defined(AltDec_EnableInfinityRep)
+            case InfinityRep:
+                return value;
+                break;
+#endif
+#if defined(AltDec_EnableNaN)
+            case NaNRep:
+                return value;
+                break;
+#endif
+            //case ApproachingValRep:
+            //    break;
+            default:
+                break;
+            }
             if(value.IntValue==0)//Returns a negative number derived from (http://www.netlib.org/cephes/qlibdoc.html#qlog)
             {
                 AltDec W = (value - 1)/ (value + 1);
