@@ -6376,9 +6376,9 @@ public:
                 //case InfinityRep:
                     //0^Infinity = 0
                     //2^PositiveInfinity = PositiveInfinity
-                    //-2^PositiveInfinity = NegativeInfinity
+                    //-2^PositiveInfinity = Within range of Positive and NegativeInfinity(undefined?)
                     //2^NegativeInfinity = ApproachingZero
-                    //-2^NegativeInfinity = Within range of ApproachingZero and -Approaching Zero?
+                    //-2^NegativeInfinity = -Approaching Zero
                     //return value.IsZero()?value:(IntValue==1?expValue:);
                 //break;
 #endif
