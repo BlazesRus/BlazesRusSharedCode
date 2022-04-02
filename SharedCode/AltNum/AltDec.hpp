@@ -6373,14 +6373,33 @@ public:
                 //break;
                 //case RepType::ApproachingTop:
                 //break;
-                //case InfinityRep:
+                case InfinityRep:
                     //0^Infinity = 0
                     //2^PositiveInfinity = PositiveInfinity
                     //-2^PositiveInfinity = Within range of Positive and NegativeInfinity(undefined?)
                     //2^NegativeInfinity = ApproachingZero
                     //-2^NegativeInfinity = -Approaching Zero
                     //return value.IsZero()?value:(IntValue==1?expValue:);
-                //break;
+                    if(value.IsZero())
+                        return value;
+                    if(value.IntValue<0)
+                        if(expValue.IntValue<0)
+                            return NegativeApproachingZero;//-Approaching Zero
+                        else
+                            return ApproachingZero;//ApproachingZero
+                    else
+                         if(expValue.IntValue<0)//Returns result within range of Positive and NegativeInfinity or undefined or Any infinity?
+#if defined(AltDec_EnableUndefinedButInRange)
+                             throw "Returns noncoded representation infinity based value";//Return value here later
+#elif defined(AltDec_EnableNaN)
+                             return NaN;
+#else
+                             throw "Returns value in undefined range with current preprocessor settings.";
+#endif
+                            
+                        else
+                            return Infinity;//PositiveInfinity
+                break;
 #endif
 #if defined(AltDec_EnableByDivRep)
                 case RepType::NumByDiv:
