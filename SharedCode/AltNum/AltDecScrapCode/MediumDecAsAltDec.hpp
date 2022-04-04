@@ -3361,10 +3361,7 @@ namespace BlazesRusCode
         {
             if (expValue == 1) { return targetValue; }//Return self
             else if (expValue == 0)
-            {
-                targetValue.IntValue = 1; targetValue.DecimalHalf = 0;
-                return targetValue;
-            }
+                return AltDec::One;
             else if (expValue < 0)//Negative Pow
             {
                 if (targetValue.DecimalHalf == 0 && targetValue.IntValue == 10 && expValue >= -9)
