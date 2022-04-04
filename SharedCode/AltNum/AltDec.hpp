@@ -5806,11 +5806,23 @@ public:
         /// <returns>AltDec&</returns>
         AltDec& Abs()
         {
-            /*
+#ifdef AltDec_EnableInfinityRep
             if (DecimalHalf == InfinityRep)
             {
-                if (IntValue == -1)//Force negative Infinity into positive Infinity
+#ifdef AltDec_EnableInfinityPowers
+                if (IntValue<0)//Force negative Infinity into positive Infinity
+                    IntValue *= -1;
+#else
+                if (IntValue == -1)
                     IntValue = 1;
+#endif
+                return *this;
+            }
+#endif
+            /*
+
+            {
+
             }
             case RepType::NormalType:
             case RepType::PINum:
@@ -5992,9 +6004,7 @@ public:
         {
             if (expValue == 1) { return targetValue; }//Return self
             else if (expValue == 0)
-            {
-                return One;
-            }
+                return AltDec::One;
             else if (expValue < 0)//Negative Pow
             {
                 if (targetValue.DecimalHalf == 0 && targetValue.IntValue == 10 && expValue >= -9)
@@ -6006,7 +6016,7 @@ public:
                     //Code(Reversed in application) based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
                     expValue *= -1;
                     AltDec self = targetValue;
-                    targetValue = 1;// Initialize result
+                    targetValue = AltDec::One;// Initialize result
                     while (expValue > 0)
                     {
                         // If expValue is odd, multiply self with result
@@ -6027,7 +6037,7 @@ public:
             {
                 //Code based on https://www.geeksforgeeks.org/write-an-iterative-olog-y-function-for-powx-y/
                 AltDec self = targetValue;
-                targetValue = 1;// Initialize result
+                targetValue = AltDec::One;// Initialize result
                 while (expValue > 0)
                 {
                     // If expValue is odd, multiply self with result
@@ -6051,10 +6061,7 @@ public:
             if (expValue == 1)
                 return targetValue;//Return self
             else if (expValue == 0)
-            {
-                targetValue = 1;
-                return targetValue;
-            }
+                return AltDec::One;
             else if (expValue < 0)//Negative Pow
             {
                 if (targetValue.DecimalHalf == 0 && targetValue.IntValue == 10 && expValue >= -9)
