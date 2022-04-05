@@ -5806,10 +5806,10 @@ public:
         /// <returns>AltDec&</returns>
         AltDec& Abs()
         {
-#ifdef AltDec_EnableInfinityRep
+/*#ifdef AltDec_EnableInfinityRep
             if (DecimalHalf == InfinityRep)
             {
-#ifdef AltDec_EnableInfinityPowers
+#ifdef AltDec_EnableInfinityPowers//Not Reaaly needed to treat
                 if (IntValue<0)//Force negative Infinity into positive Infinity
                     IntValue *= -1;
 #else
@@ -5818,21 +5818,11 @@ public:
 #endif
                 return *this;
             }
-#endif
-            /*
-
-            {
-
-            }
-            case RepType::NormalType:
-            case RepType::PINum:
-            case RepType::ENum:
-            case RepType::INum:
-            case RepType::ApproachingBottom:
-            case RepType::ApproachingTop:
-            */
-            if (IntValue == NegativeRep) { IntValue = 0; }
-            else if (IntValue < 0) { IntValue *= -1; }
+#endif*/
+            if (IntValue == NegativeRep)
+                IntValue = 0;
+            else if (IntValue < 0)
+                IntValue = -IntValue;//IntValue *= -1;
             return *this;
         }
         
