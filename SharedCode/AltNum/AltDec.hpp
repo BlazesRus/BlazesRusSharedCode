@@ -173,6 +173,18 @@ AltDec_EnableMediumDecBasedSetValues =
     #define AltDec_OtherNegativeExtraRepsDefined
 #endif
 
+#if defined(AltDec_EnableNearPI) && !defined(AltDec_EnablePIRep)
+    #undef AltDec_EnableNearPI
+#endif
+
+#if defined(AltDec_EnableNearE) && !defined(AltDec_EnableERep)
+    #undef AltDec_EnableNearE
+#endif
+
+#if defined(AltDec_EnableNearI) && !defined(AltDec_EnableImaginaryNum)
+    #undef AltDec_EnableNearI
+#endif
+
 namespace BlazesRusCode
 {
     class AltDec;
@@ -270,13 +282,13 @@ ExtraFlags treated as bitwise flag storage
 #endif
             NaN,
             NegativeZero,
-#if defined(AltDec_EnablePIRep)
+#if defined(AltDec_EnableNearPI)
             NearPI,//(Approaching Away from Zero is equal to 0.9999...PI)
 #endif
-#if defined(AltDec_EnableENum)
+#if defined(AltDec_EnableNearE)
             NearE,//(Approaching Away from Zero is equal to 0.9999...e)
 #endif
-#if defined(AltDec_EnableImaginaryNum)
+#if defined(AltDec_EnableNearI)
             NearI,//(Approaching Away from Zero is equal to 0.9999...i)
 #endif
 #if defined(AltDec_EnableUndefinedButInRange)//Such as result of Cos of infinity
