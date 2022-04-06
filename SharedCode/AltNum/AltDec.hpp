@@ -5761,6 +5761,7 @@ public:
 #if defined(AltDec_EnableByDivRep)
             case RepType::ENumByDiv:
 #endif
+                Value.ConvertToNumRep();
                 break;
 #endif
 #if defined(AltDec_EnableImaginaryNum)
