@@ -248,11 +248,15 @@ ExtraFlags treated as bitwise flag storage
 #endif
 #if defined(AltDec_EnableENum)
             ENum,
+#if defined(AltDec_EnableByDivRep)
             ENumByDiv,
+#endif
 #endif
 #if defined(AltDec_EnableImaginaryNum)
             INum,
+#if defined(AltDec_EnableByDivRep)
             INumByDiv,
+#endif
 #endif
 #if defined(AltDec_EnableMixedFractional)
             ComplexIRep,
@@ -5736,12 +5740,26 @@ public:
             case RepType::NormalType:
                 break;
             case RepType::PINum:
-                Value.ConvertPIToNum();
+            {
+                Value.ConvertPIToNum();//return CeilInt(Value.ConvertPIToNum());
                 break;
+            }
+#if defined(AltDec_EnableENum)
+            case RepType::ENum:
+#if defined(AltDec_EnableByDivRep)
+            case RepType::ENumByDiv:
+#endif
+                break;
+#endif
+#if defined(AltDec_EnableImaginaryNum)
+            case RepType::INum:
+#if defined(AltDec_EnableByDivRep)
+            case RepType::INumByDiv:
+#endif
+                break;
+#endif
             //case RepType::ApproachingTop:
             //case RepType::ApproachingBottom:
-            //    return Value.IntValue+1;
-            //    break;
             default:
                 Value.ConvertToNumRep();
                 break;
@@ -5774,7 +5792,9 @@ public:
         AltDec& Trunc()
         {
 #if defined(AltDec_EnableInfinityRep)
-            if (DecimalHalf == ApproachingValRep)
+            if (DecimalHalf == InfinityRep)
+                return *this;
+            else if (DecimalHalf == ApproachingValRep)
             {
                 DecimalHalf = 0; ExtraRep = 0;
             }
