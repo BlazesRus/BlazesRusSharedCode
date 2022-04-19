@@ -181,13 +181,13 @@ namespace BlazesRusCode
         /// Sets the value.
         /// </summary>
         /// <param name="Value">The value.</param>
-        void SetVal(MediumDecV2 Value)
+        virtual void SetVal(MediumDecV2 Value)
         {
             IntValue = Value.IntValue;
             DecimalHalf = Value.DecimalHalf;
         }
         
-        void SetAsZero()
+        virtual void SetAsZero()
         {
             IntValue = 0; DecimalHalf = 0;
         }
@@ -195,7 +195,7 @@ namespace BlazesRusCode
         /// <summary>
         /// Swaps the negative status.
         /// </summary>
-        void SwapNegativeStatus()
+        virtual void SwapNegativeStatus()
         {
             if (IntValue == NegativeRep)
             {
@@ -215,7 +215,7 @@ namespace BlazesRusCode
         /// Reads the string.
         /// </summary>
         /// <param name="Value">The value.</param>
-        void ReadString(std::string Value);
+        virtual void ReadString(std::string Value);
 
         /// <summary>
         /// Gets the value from string.
@@ -297,7 +297,7 @@ namespace BlazesRusCode
         /// Sets the value.
         /// </summary>
         /// <param name="Value">The value.</param>
-        void SetVal(float Value)
+        virtual void SetVal(float Value)
         {
             bool IsNegative = Value < 0.0f;
             if (IsNegative) { Value *= -1.0f; }
@@ -324,7 +324,7 @@ namespace BlazesRusCode
         /// Sets the value.
         /// </summary>
         /// <param name="Value">The value.</param>
-        void SetVal(double Value)
+        virtual void SetVal(double Value)
         {
             bool IsNegative = Value < 0.0;
             if (IsNegative) { Value *= -1.0; }
@@ -351,7 +351,7 @@ namespace BlazesRusCode
         /// Sets the value.
         /// </summary>
         /// <param name="Value">The value.</param>
-        void SetVal(ldouble Value)
+        virtual void SetVal(ldouble Value)
         {
             bool IsNegative = Value < 0.0L;
             if (IsNegative) { Value *= -1.0L; }
@@ -378,7 +378,7 @@ namespace BlazesRusCode
         /// Sets the value(false equals zero; otherwise is true).
         /// </summary>
         /// <param name="Value">The value.</param>
-        void SetVal(bool Value)
+        virtual void SetVal(bool Value)
         {
             IntValue = Value==false ? 0 : 1;
             DecimalHalf = 0;
@@ -388,7 +388,7 @@ namespace BlazesRusCode
         /// Sets the value.
         /// </summary>
         /// <param name="Value">The value.</param>
-        void SetVal(int Value)
+        virtual void SetVal(int Value)
         {
             IntValue = Value; DecimalHalf = 0;
         }
@@ -881,6 +881,16 @@ namespace BlazesRusCode
             }
             return self;
         }
+		
+		/// <summary>
+        /// Addition Operation Between MediumDecV2s
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>MediumDecV2</returns>
+        virtual MediumDecV2& AddOp(MediumDecV2& Value)
+		{
+		    return AddOp(this, Value);
+		}
 
         /// <summary>
         /// Subtraction Operation Between MediumDecV2s
@@ -963,6 +973,16 @@ namespace BlazesRusCode
             }
             return self;
         }
+		
+        /// <summary>
+        /// Subtraction Operation Between MediumDecV2s
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>MediumDecV2&</returns>
+        virtual MediumDecV2& SubOp(MediumDecV2& Value)
+        {
+		    return SubOp(this, Value);
+		}
 
         /// <summary>
         /// Multiplication Operation Between MediumDecV2s
@@ -1108,6 +1128,16 @@ namespace BlazesRusCode
             if (self == MediumDecV2::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
             return self;
         }
+		
+        /// <summary>
+        /// Multiplication Operation Between MediumDecV2s
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>MediumDecV2&</returns>
+        virtual MediumDecV2& MultOp(MediumDecV2& Value)
+        {
+		    return MultOp(this, Value);
+	    }
 
         /// <summary>
         /// Division Operation Between MediumDecV2s
@@ -1248,6 +1278,16 @@ namespace BlazesRusCode
             if (self == MediumDecV2::Zero) { self.DecimalHalf = 1; }//Prevent Dividing into nothing
             return self;
         }
+		
+        /// <summary>
+        /// Division Operation Between MediumDecV2s
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns>MediumDecV2&</returns>
+        virtual MediumDecV2& DivOp(MediumDecV2& Value)
+        {
+		    return MediumDecV2& DivOp(this, Value);
+		}
 
         /// <summary>
         /// Remainder/Modulus Operation Between MediumDecV2s
@@ -1298,6 +1338,16 @@ namespace BlazesRusCode
             }
             return self;
         }
+		
+        /// <summary>
+        /// Remainder/Modulus Operation Between MediumDecV2s
+        /// </summary>
+        /// <param name="self">The left side value</param>
+        /// <param name="Value">The right side value</param>
+        /// <returns>MediumDecV2&</returns>
+        static MediumDecV2& RemOp(MediumDecV2& self, MediumDecV2& Value)
+        {
+		}
         
     public:
         /// <summary>
