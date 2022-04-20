@@ -26,19 +26,7 @@
 #include <boost/multiprecision/cpp_int.hpp>
 //Preprocessor options
 /*
-MediumDec_EnableNegativeZero = (Not Implimented)
-MediumDec_EnableInfinityRep = -Enable support of positive/negative infinity representations and approaching value representations
--When DecimalHalf is -2147483648, it represents negative infinity(if IntValue is -1) or positive infinity(if IntValue is 1)
--When DecimalHalf is -2147483647, it represents Approaching IntValue+1 from left towards right (IntValue.9__9)
--When DecimalHalf is -2147483646, it represents Approaching IntValue from right towards left (IntValue.0__1)
-(Not Fully Implimented)
-MediumDec_EnableApproachingMidDec = -When DecimalHalf is -2147483645, it represents Approaching Half way point of {IntValue,IntValue+1} from left towards right (IntValue.49__9)
--When DecimalHalf is -2147483644, it represents Approaching Half way point of {IntValue,IntValue+1} from right towards left (IntValue.50__1)
--Assumes MediumDec_EnableInfinityRep is enabled
-(Not Implimented)
-MediumDec_EnablePIRep = PI*(+- 2147483647.999999999) Representation enabled (When DecimalHalf is between -1 and -1000000000 (when DecimalHalf is -1000000000 is Equal to IntValue*PI))
-MediumDec_EnableERep = e*(+- 2147483647.999999999) Representation enabled (When DecimalHalf is between -1000000001 and -2000000000 (when DecimalHalf is -2000000000 is Equal to IntValue*e))
-MediumDec_SpecialStatusEnabled = Automatically set if MediumDec_EnableInfinityRep or MediumDec_EnablePIRep
+AltDec_InheritMediumDec = Toggle have AltDec Inherit MediumDec class
 */
 #if defined(MediumDec_EnablePIRep) || defined(MediumDec_EnableInfinityRep) || defined(MediumDec_EnableERep)
 #define MediumDec_SpecialStatusEnabled
@@ -63,79 +51,11 @@ namespace BlazesRusCode
 
     /// <summary>
     /// Fixed point based number class representing +- 2147483647.999999999 with 100% consistency of accuracy for most operations as long as don't get too small
-    /// (values will be lost past 9th decimal digit)
+    /// (values will be lost past 9th decimal digit)(Use MediumDecV2 instead for infinity, Pi, and e features)
     /// (8 bytes worth of Variable Storage inside class for each instance)
     /// </summary>
     class DLL_API MediumDec
     {
-    private:
-        //-----Used when DecimalHalf equals any of these constants----
-#if defined(MediumDec_EnableInfinityRep)
-        //Is Infinity Representation when DecimalHalf==-2147483648 (IntValue==1 for positive infinity;IntValue==-1 for negative Infinity)
-        static const signed int InfinityRep = -2147483648;
-        //When DecimalHalf == -2147483647, it represents Approaching IntValue+1 from left towards right (IntValue.9__9)
-        static signed int const ApproachingTopRep = -2147483647;
-        //When DecimalHalf == -2147483646, it represents Approaching IntValue from right towards left (IntValue.0__1)
-        static signed int const ApproachingBottomRep = -2147483646;
-#endif
-#if defined(MediumDec_EnableApproachingMidDec)
-        static signed int const MidFromTopRep = -2147483644;
-        static signed int const MidFromBottomRep = --2147483645;
-#endif
-#if defined(MediumDec_EnablePIRep)
-        static signed int const IntPiRep = -1000000000;
-        static signed int const PiTopRep = -999999999;
-        //static signed int const PiBottomRep = -1;
-#endif
-#if defined(MediumDec_EnableERep)
-        static signed int const IntERep = -2000000000;
-        static signed int const ETopRep = -1999999999;
-        //static signed int const EBottomRep = -1000000001;
-#endif
-        //
-#if defined(MediumDec_SpecialStatusEnabled)
-        enum class RepType : int
-        {
-            NormalType = 0,
-            PIIntNum,
-            PINum,
-            EIntNum,
-            ENum,
-            ApproachingBottom,//(Approaching Towards Zero is equal to 0.000...1)
-            ApproachingTop,//(Approaching Away from Zero is equal to 0.9999...)
-            Infinity,
-            NaN,
-            NegativeZero,
-            UnknownType
-        };
-        RepType GetRepType()
-        {
-            if (DecimalHalf >= 0)
-                return RepType::NormalType;
-#ifdef MediumDec_EnableInfinityRep
-            else if (DecimalHalf == InfinityRep)
-                return RepType::Infinity;//Either negative or positive infinity
-            else if (DecimalHalf == ApproachingBottomRep)
-                return RepType::ApproachingBottom;//Approaching from right to IntValue
-            else if (DecimalHalf == ApproachingTopRep)
-                return RepType::ApproachingTop;//Approaching from left to IntValue+1
-#endif
-#ifdef MediumDec_EnablePIRep
-            else if (DecimalHalf == IntPiRep)
-                return RepType::PIIntNum;
-            else if (DecimalHalf > PiTopRep)
-                return RepType::PINum,
-#endif
-#ifdef MediumDec_EnableERep
-            else if (DecimalHalf == IntERep)
-                return RepType::EIntNum;
-            else if (DecimalHalf > ETopRep)
-                return RepType::ENum,
-#endif
-                throw "Unknown or non-enabled representation type detected from MediumDec";
-            return RepType::UnknownType;//Catch-All Value;
-        }
-#endif
     public:
         /// <summary>
         /// The decimal overflow
@@ -183,13 +103,13 @@ namespace BlazesRusCode
         /// Sets the value.
         /// </summary>
         /// <param name="Value">The value.</param>
-        void SetVal(MediumDec Value)
+        virtual void SetVal(MediumDec Value)
         {
             IntValue = Value.IntValue;
             DecimalHalf = Value.DecimalHalf;
         }
         
-        void SetAsZero()
+        virtual void SetAsZero()
         {
             IntValue = 0; DecimalHalf = 0;
         }
@@ -4351,6 +4271,301 @@ namespace BlazesRusCode
     MediumDec MediumDec::FiveBillionth = FiveBillionthValue();
     MediumDec MediumDec::OneGMillionth = OneHundredMillionthValue();
     MediumDec MediumDec::Nil = NilValue();
+
+/*#ifdef AltDec_InheritMediumDec
+    //Workaround to enable static inheritance
+    class DLL_API MediumDecValues
+    {
+    #pragma region ValueDefines
+    private:
+        /// <summary>
+        /// Returns the value at zero
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec ZeroValue()
+        {
+            MediumDec NewSelf = MediumDec();
+            return NewSelf;
+        }
+        /// <summary>
+        /// Returns the value at one
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec OneValue()
+        {
+            MediumDec NewSelf = MediumDec(1);
+            return NewSelf;
+        }
+
+        /// <summary>
+        /// Returns the value at one
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec TwoValue()
+        {
+            MediumDec NewSelf = MediumDec(2);
+            return NewSelf;
+        }
+
+        /// <summary>
+        /// Returns the value at negative one
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec NegativeOneValue()
+        {
+            MediumDec NewSelf = MediumDec(-1);
+            return NewSelf;
+        }
+
+        /// <summary>
+        /// Returns the value at 0.5
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec Point5Value()
+        {
+            MediumDec NewSelf = MediumDec(0, 500000000);
+            return NewSelf;
+        }
+
+        static MediumDec JustAboveZeroValue()
+        {
+            MediumDec NewSelf = MediumDec(0, 1);
+            return NewSelf;
+        }
+
+        static MediumDec OneMillionthValue()
+        {
+            MediumDec NewSelf = MediumDec(0, 1000);
+            return NewSelf;
+        }
+
+        static MediumDec FiveThousandthValue()
+        {
+            MediumDec NewSelf = MediumDec(0, 5000000);
+            return NewSelf;
+        }
+
+        static MediumDec FiveMillionthValue()
+        {
+            MediumDec NewSelf = MediumDec(0, 5000);
+            return NewSelf;
+        }
+
+        static MediumDec TenMillionthValue()
+        {
+            MediumDec NewSelf = MediumDec(0, 100);
+            return NewSelf;
+        }
+
+        static MediumDec OneHundredMillionthValue()
+        {
+            MediumDec NewSelf = MediumDec(0, 10);
+            return NewSelf;
+        }
+
+        static MediumDec FiveBillionthValue()
+        {
+            MediumDec NewSelf = MediumDec(0, 5);
+            return NewSelf;
+        }
+
+        /// <summary>
+        /// Returns PI(3.1415926535897932384626433) with tenth digit rounded up(3.141592654)
+        /// (about 1.000000000448883 times actual value of PI with digits past 15th cut off)
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec PIValue()
+        {
+            MediumDec NewSelf = MediumDec(3, 141592654);
+            return NewSelf;
+        }
+
+        /// <summary>
+        /// Returns value of -2147483647.999999999
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec MinimumValue()
+        {
+            return MediumDec(-2147483647, 999999999);
+        }
+
+        /// <summary>
+        /// Returns value of 2147483647.999999999
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec MaximumValue()
+        {
+            return MediumDec(2147483647, 999999999);
+        }
+
+        /// <summary>
+        /// Euler's number
+        /// Irrational number equal to about (1 + 1/n)^n
+        /// (about 2.71828182845904523536028747135266249775724709369995)
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        virtual MediumDec EValue()
+        {
+            return MediumDec(2, 718281828);
+        }
+
+        virtual MediumDec LN10Value()
+        {
+            return MediumDec(2, 302585093);
+        }
+
+        virtual MediumDec LN10MultValue()
+        {
+            return MediumDec(0, 434294482);
+        }
+
+        virtual MediumDec HalfLN10MultValue()
+        {
+            return MediumDec(0, 868588964);
+        }
+
+        virtual MediumDec NilValue()
+        {
+            return MediumDec(-2147483648, -2147483648);
+        }
+    public:
+        static MediumDec PI;
+
+        /// <summary>
+        /// Returns the value at zero
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec Zero;
+
+        /// <summary>
+        /// Returns the value at one
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec One;
+
+        /// <summary>
+        /// Returns the value at two
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec Two;
+
+        /// <summary>
+        /// Returns the value at 0.5
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec PointFive;
+
+        /// <summary>
+        /// Returns the value at digit one more than zero (0.000000001)
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec JustAboveZero;
+
+        /// <summary>
+        /// Returns the value at .000000005
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec FiveBillionth;
+
+        /// <summary>
+        /// Returns the value at .000001000
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec OneMillionth;
+
+        /// <summary>
+        /// Returns the value at "0.005"
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec FiveThousandth;
+
+        /// <summary>
+        /// Returns the value at .000000010
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec OneGMillionth;
+
+        //0e-7
+        static MediumDec TenMillionth;
+
+        /// <summary>
+        /// Returns the value at "0.000005"
+        /// </summary>
+        static MediumDec FiveMillionth;
+
+        /// <summary>
+        /// Returns the value at negative one
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec NegativeOne;
+
+        /// <summary>
+        /// Returns value of highest non-infinite/Special Decimal State Value that can store
+        /// </summary>
+        static MediumDec Maximum;
+
+        /// <summary>
+        /// Returns value of lowest non-infinite/Special Decimal State Value that can store
+        /// </summary>
+        static MediumDec Minimum;
+
+        /// <summary>
+        /// Euler's number
+        /// Irrational number equal to about (1 + 1/n)^n
+        /// (about 2.71828182845904523536028747135266249775724709369995)
+        /// </summary>
+        /// <returns>MediumDec</returns>
+        static MediumDec E;
+
+        /// <summary>
+        /// 2.3025850929940456840179914546844
+        /// (Based on https://stackoverflow.com/questions/35968963/trying-to-calculate-logarithm-base-10-without-math-h-really-close-just-having)
+        /// </summary>
+        static MediumDec LN10;
+
+        /// <summary>
+        /// (1 / Ln10) (Ln10 operation as division as recommended by https://helloacm.com/fast-integer-log10/ for speed optimization)
+        /// </summary>
+        static MediumDec LN10Mult;
+
+        /// <summary>
+        /// (1 / Ln10)*2 (Ln10 operation as division as recommended by https://helloacm.com/fast-integer-log10/ for speed optimization)
+        /// </summary>
+        static MediumDec HalfLN10Mult;
+
+        /// <summary>
+        /// Nil Value as proposed by https://docs.google.com/document/d/19n-E8Mu-0MWCcNt0pQnFi2Osq-qdMDW6aCBweMKiEb4/edit
+        /// </summary>
+        static MediumDec Nil;
+
+        ///// <summary>
+        ///// 16 x 1 Matrix with Values at Zero
+        ///// </summary>
+        //static MediumDec ZeroMatrix16[16] = { Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero };
+    #pragma endregion ValueDefines
+	}
+
+    MediumDec MediumDecValues::PI = PIValue();
+    MediumDec MediumDecValues::One = OneValue();
+    MediumDec MediumDecValues::Two = TwoValue();
+    MediumDec MediumDecValues::NegativeOne = NegativeOneValue();
+    MediumDec MediumDecValues::Zero = ZeroValue();
+    MediumDec MediumDecValues::PointFive = Point5Value();
+    MediumDec MediumDecValues::JustAboveZero = JustAboveZeroValue();
+    MediumDec MediumDecValues::OneMillionth = OneMillionthValue();
+    MediumDec MediumDecValues::FiveThousandth = FiveThousandthValue();
+    MediumDec MediumDecValues::Minimum = MinimumValue();
+    MediumDec MediumDecValues::Maximum = MaximumValue();
+    MediumDec MediumDecValues::E = EValue();
+    MediumDec MediumDecValues::LN10 = LN10Value();
+    MediumDec MediumDecValues::LN10Mult = LN10MultValue();
+    MediumDec MediumDecValues::HalfLN10Mult = HalfLN10MultValue();
+    MediumDec MediumDecValues::TenMillionth = TenMillionthValue();
+    MediumDec MediumDecValues::FiveMillionth = FiveMillionthValue();
+    MediumDec MediumDecValues::FiveBillionth = FiveBillionthValue();
+    MediumDec MediumDecValues::OneGMillionth = OneHundredMillionthValue();
+    MediumDec MediumDecValues::Nil = NilValue();
+#endif*/
     #pragma endregion ValueDefine Source
 
     #pragma region String Function Source
