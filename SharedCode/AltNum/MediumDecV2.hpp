@@ -70,7 +70,8 @@ namespace BlazesRusCode
     {
     private:
         //-----Used when DecimalHalf equals any of these constants----
-#if defined(MediumDecV2_EnableInfinityRep)
+		static signed int const FullDecimal = 1000000000;
+#ifndef MediumDecV2_DisableInfinityRep
         //Is Infinity Representation when DecimalHalf==-2147483648 (IntValue==1 for positive infinity;IntValue==-1 for negative Infinity)
         static const signed int InfinityRep = -2147483648;
         //When DecimalHalf == -2147483647, it represents Approaching IntValue+1 from left towards right (IntValue.9__9)
@@ -80,57 +81,87 @@ namespace BlazesRusCode
 #endif
 #if defined(MediumDecV2_EnableApproachingMidDec)
         static signed int const MidFromTopRep = -2147483644;
-        static signed int const MidFromBottomRep = --2147483645;
+        static signed int const MidFromBottomRep = -2147483645;
 #endif
-#if defined(MediumDecV2_EnablePIRep)
-        static signed int const IntPiRep = -1000000000;
-        static signed int const PiTopRep = -999999999;
+#ifndef MediumDecV2_DisablePIRep
+		static signed int const PiNumBreakpoint = FullDecimal;
+		//IntValue*Pi/(DecimalHalf-2000000000) Representation
+		static signed int const PiNumByDivisorBreakpoint = 2000000000;
+        //static signed int const PiTopRep = -999999999;
         //static signed int const PiBottomRep = -1;
 #endif
 #if defined(MediumDecV2_EnableERep)
-        static signed int const IntERep = -2000000000;
-        static signed int const ETopRep = -1999999999;
+		static signed int const ENumBreakpoint = -1000000000;
+		static signed int const ENumByDivisorBreakpoint = -2000000000;
+        //static signed int const IntERep = -2000000000;
+        //static signed int const ETopRep = -1999999999;
         //static signed int const EBottomRep = -1000000001;
 #endif
         //
         virtual enum class RepType : int
         {
             NormalType = 0,
-            PIIntNum,
-            PINum,
-            EIntNum,
-            ENum,
+#ifndef MediumDecV2_DisablePIRep
+            PIMultipliedNum,
+            PiIntNumByDivisor,
+#endif
+#ifdef MediumDecV2_EnableERep
+            EMultipliedNum,
+            ENumByDivisor,
+#endif
+#ifndef MediumDecV2_DisableInfinityRep
             ApproachingBottom,//(Approaching Towards Zero is equal to 0.000...1)
             ApproachingTop,//(Approaching Away from Zero is equal to 0.9999...)
             Infinity,
+#endif
+#ifndef MediumDecV2_DisableIntNumByDivisor
+			//IntValue/(DecimalHalf*-1)
+			//For DecimalHalf values of between 0 and ENumBreakpoint if MediumDecV2_EnableERep toggled
+			//For DecimalHalf Values:
+			//between 0 and ApproachingBottomRep if MediumDecV2_DisableInfinityRep not toggled and MediumDecV2_EnableApproachingMidDec not toggled
+			//between 0 and MidFromBottomRep if MediumDecV2_DisableInfinityRep not toggled and MediumDecV2_EnableApproachingMidDec is toggled
+			//between 0 and -2147483648 if no infinity representations are enabled
+            IntNumByDivisor,
+#endif
             NaN,
             NegativeZero,
             UnknownType
         };
+		
         virtual RepType GetRepType()
         {
             if (DecimalHalf >= 0)
-                return RepType::NormalType;
-#ifdef MediumDecV2_EnableInfinityRep
-            else if (DecimalHalf == InfinityRep)
-                return RepType::Infinity;//Either negative or positive infinity
-            else if (DecimalHalf == ApproachingBottomRep)
-                return RepType::ApproachingBottom;//Approaching from right to IntValue
-            else if (DecimalHalf == ApproachingTopRep)
-                return RepType::ApproachingTop;//Approaching from left to IntValue+1
+			{
+				if(DecimalHalf<FullDecimal)
+					return RepType::NormalType;
+				if(DecimalHalf<PiNumByDivisorBreakpoint)//IntValue.DecimalHalf*Pi
+					return RepType::PIMultipliedNum
+				else
+					return RepType::PiIntNumByDivisor;
+			}
+			else
+			{
+#ifndef MediumDecV2_DisableInfinityRep
+				if (DecimalHalf == InfinityRep)
+					return RepType::Infinity;//Either negative or positive infinity
+				else if (DecimalHalf == ApproachingBottomRep)
+					return RepType::ApproachingBottom;//Approaching from right to IntValue
+				else if (DecimalHalf == ApproachingTopRep)
+					return RepType::ApproachingTop;//Approaching from left to IntValue+1
 #endif
-#ifdef MediumDecV2_EnablePIRep
-            else if (DecimalHalf == IntPiRep)
-                return RepType::PIIntNum;
-            else if (DecimalHalf > PiTopRep)
-                return RepType::PINum,
-#endif
-#ifdef MediumDecV2_EnableERep
-            else if (DecimalHalf == IntERep)
-                return RepType::EIntNum;
-            else if (DecimalHalf > ETopRep)
-                return RepType::ENum,
-#endif
+//#ifdef MediumDecV2_EnablePIRep
+//				else if (DecimalHalf == IntPiRep)
+//					return RepType::PIMultipliedNum;
+//				else if (DecimalHalf > PiTopRep)
+//					return RepType::PINum,
+//#endif
+//#ifdef MediumDecV2_EnableERep
+//				else if (DecimalHalf == IntERep)
+//					return RepType::EIntNum;
+//				else if (DecimalHalf > ETopRep)
+//					return RepType::ENum,
+//#endif
+			}
                 throw "Unknown or non-enabled representation type detected from MediumDecV2";
             return RepType::UnknownType;//Catch-All Value;
         }
