@@ -1,0 +1,3 @@
+[submodule "SharedCode"]
+	path = SharedCode
+	url = https://github.com/BlazesRus/SharedCPPCode.git
