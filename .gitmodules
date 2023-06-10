@@ -1,3 +1,9 @@
 [submodule "SharedCode"]
 	path = SharedCode
 	url = https://github.com/BlazesRus/SharedCPPCode.git
+[submodule "UtilityTools"]
+	path = UtilityTools
+	url = https://github.com/BlazesRus/BlazesRusUtilityToolsSubmodule.git
+[submodule "CSharpCode"]
+	path = CSharpCode
+	url = https://github.com/BlazesRus/BlazesRusCSharpCode.git
