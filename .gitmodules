@@ -7,3 +7,6 @@
 [submodule "CSharpCode"]
 	path = CSharpCode
 	url = https://github.com/BlazesRus/BlazesRusCSharpCode.git
+[submodule "NifNodeTreeAddon"]
+	path = NifNodeTreeAddon
+	url = https://github.com/BlazesRus/NifNodeTreeAddon.git
