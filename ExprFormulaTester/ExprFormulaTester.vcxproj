@@ -29,26 +29,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -161,21 +161,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_AddOp.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_ConvertToOtherRep.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_DivOp.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_MultOp.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_PowOp.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepAddition.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepDivision.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepMultiplication.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepSubtraction.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_SubOp.cpp" />
+    <ClCompile Include="..\SharedCode\OtherFunctions\StringFunctions.cpp" />
     <ClCompile Include="..\SharedCode\OtherFunctions\VariableConversionFunctions.cpp" />
     <ClCompile Include="ExprFormulaTester.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\SharedCode\AltNum\AltNumDebug.hpp" />
-    <ClInclude Include="..\SharedCode\AltNum\FloatingOperations.hpp" />
-    <ClInclude Include="..\SharedCode\AltNum\MediumDec.hpp" />
-    <ClInclude Include="..\SharedCode\AltNum\ModCheckerXX.hpp" />
-    <ClInclude Include="..\SharedCode\Databases\CustomDictionary.h" />
-    <ClInclude Include="..\SharedCode\Databases\CustomOrderedDictionary.h" />
-    <ClInclude Include="..\SharedCode\Databases\DataDictionary.h" />
-    <ClInclude Include="..\SharedCode\Databases\ElementType.hpp" />
-    <ClInclude Include="..\SharedCode\Databases\IndexedDictionary.h" />
-    <ClInclude Include="..\SharedCode\Databases\MediumDecFormula.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\AltDec.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\AltNumBase.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\AltNumConversions.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\MirroredInt.hpp" />
     <ClInclude Include="..\SharedCode\DLLAPI.h" />
+    <ClInclude Include="..\SharedCode\OtherFunctions\StringFunctions.h" />
     <ClInclude Include="..\SharedCode\tsl\ordered_map.h" />
     <ClInclude Include="..\SharedCode\OtherFunctions\VariableConversionFunctions.h" />
   </ItemGroup>

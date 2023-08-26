@@ -42,46 +42,67 @@
     <ClCompile Include="..\SharedCode\OtherFunctions\VariableConversionFunctions.cpp">
       <Filter>Source Files\OtherFunctions</Filter>
     </ClCompile>
+    <ClCompile Include="..\SharedCode\OtherFunctions\StringFunctions.cpp">
+      <Filter>Source Files\OtherFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_PowOp.cpp">
+      <Filter>Source Files\AltNum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepAddition.cpp">
+      <Filter>Source Files\AltNum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepDivision.cpp">
+      <Filter>Source Files\AltNum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepMultiplication.cpp">
+      <Filter>Source Files\AltNum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepSubtraction.cpp">
+      <Filter>Source Files\AltNum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_AddOp.cpp">
+      <Filter>Source Files\AltNum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_ConvertToOtherRep.cpp">
+      <Filter>Source Files\AltNum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_DivOp.cpp">
+      <Filter>Source Files\AltNum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_MultOp.cpp">
+      <Filter>Source Files\AltNum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_SubOp.cpp">
+      <Filter>Source Files\AltNum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec.cpp">
+      <Filter>Source Files\AltNum</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\SharedCode\Databases\CustomDictionary.h">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SharedCode\Databases\CustomOrderedDictionary.h">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SharedCode\Databases\DataDictionary.h">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SharedCode\Databases\IndexedDictionary.h">
-      <Filter>Header Files\Databases</Filter>
-    </ClInclude>
     <ClInclude Include="..\SharedCode\DLLAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\SharedCode\tsl\ordered_map.h">
       <Filter>Header Files\tsl</Filter>
     </ClInclude>
-    <ClInclude Include="..\SharedCode\AltNum\MediumDec.hpp">
-      <Filter>Header Files\AltNum</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SharedCode\AltNum\AltNumDebug.hpp">
-      <Filter>Header Files\AltNum</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SharedCode\AltNum\FloatingOperations.hpp">
-      <Filter>Header Files\AltNum</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SharedCode\AltNum\ModCheckerXX.hpp">
-      <Filter>Header Files\AltNum</Filter>
-    </ClInclude>
     <ClInclude Include="..\SharedCode\OtherFunctions\VariableConversionFunctions.h">
       <Filter>Header Files\OtherFunctions</Filter>
     </ClInclude>
-    <ClInclude Include="..\SharedCode\Databases\ElementType.hpp">
-      <Filter>Header Files\Databases</Filter>
+    <ClInclude Include="..\SharedCode\OtherFunctions\StringFunctions.h">
+      <Filter>Header Files\OtherFunctions</Filter>
     </ClInclude>
-    <ClInclude Include="..\SharedCode\Databases\MediumDecFormula.hpp">
-      <Filter>Header Files\Databases</Filter>
+    <ClInclude Include="..\SharedCode\AltNum\AltDec.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\AltNumConversions.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\MirroredInt.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\AltNumBase.hpp">
+      <Filter>Header Files\AltNum</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
