@@ -102,11 +102,14 @@
       <AdditionalIncludeDirectories>$(BoostDir);$(SharedCode);$(ParallelMap);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AdditionalOptions>/utf-8</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkStatus>true</LinkStatus>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -163,16 +166,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\SharedCode\AltNum\AltDec.cpp" />
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_AddOp.cpp" />
     <ClCompile Include="..\SharedCode\AltNum\AltDec_ConvertToOtherRep.cpp" />
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_DivOp.cpp" />
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_MultOp.cpp" />
     <ClCompile Include="..\SharedCode\AltNum\AltDec_PowOp.cpp" />
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepAddition.cpp" />
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepDivision.cpp" />
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepMultiplication.cpp" />
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepSubtraction.cpp" />
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_SubOp.cpp" />
     <ClCompile Include="..\SharedCode\OtherFunctions\StringFunctions.cpp" />
     <ClCompile Include="..\SharedCode\OtherFunctions\VariableConversionFunctions.cpp" />
     <ClCompile Include="ExprFormulaTester.cpp" />

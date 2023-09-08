@@ -48,31 +48,7 @@
     <ClCompile Include="..\SharedCode\AltNum\AltDec_PowOp.cpp">
       <Filter>Source Files\AltNum</Filter>
     </ClCompile>
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepAddition.cpp">
-      <Filter>Source Files\AltNum</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepDivision.cpp">
-      <Filter>Source Files\AltNum</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepMultiplication.cpp">
-      <Filter>Source Files\AltNum</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_RepToRepSubtraction.cpp">
-      <Filter>Source Files\AltNum</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_AddOp.cpp">
-      <Filter>Source Files\AltNum</Filter>
-    </ClCompile>
     <ClCompile Include="..\SharedCode\AltNum\AltDec_ConvertToOtherRep.cpp">
-      <Filter>Source Files\AltNum</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_DivOp.cpp">
-      <Filter>Source Files\AltNum</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_MultOp.cpp">
-      <Filter>Source Files\AltNum</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_SubOp.cpp">
       <Filter>Source Files\AltNum</Filter>
     </ClCompile>
     <ClCompile Include="..\SharedCode\AltNum\AltDec.cpp">
