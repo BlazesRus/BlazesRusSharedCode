@@ -10,3 +10,6 @@
 [submodule "NifNodeTreeAddon"]
 	path = NifNodeTreeAddon
 	url = https://github.com/BlazesRus/NifNodeTreeAddon.git
+[submodule "PythonCode"]
+	path = PythonCode
+	url = https://github.com/BlazesRus/PythonCode.git
