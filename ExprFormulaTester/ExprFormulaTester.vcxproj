@@ -166,8 +166,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\SharedCode\AltNum\AltDec.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec\AddOp.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec\AltDec.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec\AltDecBase.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec\DivOp.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec\MultOp.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec\PowOp.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\AltDec\SubOp.cpp" />
     <ClCompile Include="..\SharedCode\AltNum\AltDec_ConvertToOtherRep.cpp" />
     <ClCompile Include="..\SharedCode\AltNum\AltDec_PowOp.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\AddOp.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\ConvertToOtherRep.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\DivOp.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\MediumDecV2.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\MediumDecV2Base.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\MultOp.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\PowOp.cpp" />
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\SubOp.cpp" />
     <ClCompile Include="..\SharedCode\OtherFunctions\StringFunctions.cpp" />
     <ClCompile Include="..\SharedCode\OtherFunctions\VariableConversionFunctions.cpp" />
     <ClCompile Include="ExprFormulaTester.cpp" />
@@ -176,7 +191,23 @@
     <ClInclude Include="..\SharedCode\AltNum\AltDec.hpp" />
     <ClInclude Include="..\SharedCode\AltNum\AltNumBase.hpp" />
     <ClInclude Include="..\SharedCode\AltNum\AltNumConversions.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\AltNumDebug.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\AltNumModResult.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\FlaggedInt.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\IntegerConcept.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\MediumDecV2\MediumDecV2.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\MediumDecV2\MediumDecV2Base.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\MediumDecV2\MediumDecV2Preprocessors.h" />
+    <ClInclude Include="..\SharedCode\AltNum\MediumDecVariantConcept.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\MediumDec\AltNumBase.h" />
+    <ClInclude Include="..\SharedCode\AltNum\MediumDec\MediumDec.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\MediumDec\MediumDecBase.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\MediumDec\MediumDecPreprocessors.h" />
+    <ClInclude Include="..\SharedCode\AltNum\MediumDec\OtherMath.hpp" />
     <ClInclude Include="..\SharedCode\AltNum\MirroredInt.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\PartialInt.hpp" />
+    <ClInclude Include="..\SharedCode\AltNum\RepType.h" />
+    <ClInclude Include="..\SharedCode\AltNum\VirtualTableBase.hpp" />
     <ClInclude Include="..\SharedCode\DLLAPI.h" />
     <ClInclude Include="..\SharedCode\OtherFunctions\StringFunctions.h" />
     <ClInclude Include="..\SharedCode\tsl\ordered_map.h" />

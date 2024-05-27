@@ -34,6 +34,24 @@
     <Filter Include="Source Files\OtherFunctions">
       <UniqueIdentifier>{e7673aec-d6d0-4711-aaae-188c35242bbb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\AltNum\AltDec">
+      <UniqueIdentifier>{eae0208a-c03f-4805-91a4-7b89ffe6dd57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\AltNum\MediumDec">
+      <UniqueIdentifier>{1ca6d346-181d-43e9-a982-76e1c1e924f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\AltNum\MediumDecV2">
+      <UniqueIdentifier>{0ddc18ad-2c49-4d79-9f41-9b4618d57a44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AltNum\AltDec">
+      <UniqueIdentifier>{d6f296ce-abce-4a78-8722-17e6e7a87703}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AltNum\MediumDec">
+      <UniqueIdentifier>{eb6d439d-e695-40bc-892e-860debf9d460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AltNum\MediumDecV2">
+      <UniqueIdentifier>{ef9c220f-55f7-4b50-891a-772a58f99297}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ExprFormulaTester.cpp">
@@ -46,13 +64,58 @@
       <Filter>Source Files\OtherFunctions</Filter>
     </ClCompile>
     <ClCompile Include="..\SharedCode\AltNum\AltDec_PowOp.cpp">
-      <Filter>Source Files\AltNum</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SharedCode\AltNum\AltDec_ConvertToOtherRep.cpp">
-      <Filter>Source Files\AltNum</Filter>
+      <Filter>Source Files\AltNum\AltDec</Filter>
     </ClCompile>
     <ClCompile Include="..\SharedCode\AltNum\AltDec.cpp">
-      <Filter>Source Files\AltNum</Filter>
+      <Filter>Source Files\AltNum\AltDec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec_ConvertToOtherRep.cpp">
+      <Filter>Source Files\AltNum\AltDec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\MediumDecV2Base.cpp">
+      <Filter>Header Files\AltNum\MediumDecV2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec\AddOp.cpp">
+      <Filter>Source Files\AltNum\AltDec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec\AltDec.cpp">
+      <Filter>Source Files\AltNum\AltDec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec\AltDecBase.cpp">
+      <Filter>Source Files\AltNum\AltDec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec\DivOp.cpp">
+      <Filter>Source Files\AltNum\AltDec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec\MultOp.cpp">
+      <Filter>Source Files\AltNum\AltDec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec\PowOp.cpp">
+      <Filter>Source Files\AltNum\AltDec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\AltDec\SubOp.cpp">
+      <Filter>Source Files\AltNum\AltDec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\SubOp.cpp">
+      <Filter>Source Files\AltNum\MediumDecV2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\PowOp.cpp">
+      <Filter>Source Files\AltNum\MediumDecV2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\MultOp.cpp">
+      <Filter>Source Files\AltNum\MediumDecV2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\MediumDecV2.cpp">
+      <Filter>Source Files\AltNum\MediumDecV2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\DivOp.cpp">
+      <Filter>Source Files\AltNum\MediumDecV2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\ConvertToOtherRep.cpp">
+      <Filter>Source Files\AltNum\MediumDecV2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SharedCode\AltNum\MediumDecV2\AddOp.cpp">
+      <Filter>Source Files\AltNum\MediumDecV2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,16 +131,64 @@
     <ClInclude Include="..\SharedCode\OtherFunctions\StringFunctions.h">
       <Filter>Header Files\OtherFunctions</Filter>
     </ClInclude>
-    <ClInclude Include="..\SharedCode\AltNum\AltDec.hpp">
-      <Filter>Header Files\AltNum</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SharedCode\AltNum\AltNumConversions.hpp">
-      <Filter>Header Files\AltNum</Filter>
-    </ClInclude>
     <ClInclude Include="..\SharedCode\AltNum\MirroredInt.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\AltDec.hpp">
+      <Filter>Header Files\AltNum\AltDec</Filter>
+    </ClInclude>
     <ClInclude Include="..\SharedCode\AltNum\AltNumBase.hpp">
+      <Filter>Header Files\AltNum\AltDec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\AltNumConversions.hpp">
+      <Filter>Header Files\AltNum\AltDec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\MediumDec\AltNumBase.h">
+      <Filter>Header Files\AltNum\MediumDec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\MediumDec\MediumDec.hpp">
+      <Filter>Header Files\AltNum\MediumDec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\MediumDec\MediumDecBase.hpp">
+      <Filter>Header Files\AltNum\MediumDec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\MediumDec\MediumDecPreprocessors.h">
+      <Filter>Header Files\AltNum\MediumDec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\MediumDec\OtherMath.hpp">
+      <Filter>Header Files\AltNum\MediumDec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\MediumDecV2\MediumDecV2Preprocessors.h">
+      <Filter>Header Files\AltNum\MediumDecV2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\MediumDecV2\MediumDecV2Base.hpp">
+      <Filter>Header Files\AltNum\MediumDecV2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\MediumDecV2\MediumDecV2.hpp">
+      <Filter>Header Files\AltNum\MediumDecV2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\AltNumDebug.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\AltNumModResult.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\FlaggedInt.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\IntegerConcept.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\MediumDecVariantConcept.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\PartialInt.hpp">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\RepType.h">
+      <Filter>Header Files\AltNum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedCode\AltNum\VirtualTableBase.hpp">
       <Filter>Header Files\AltNum</Filter>
     </ClInclude>
   </ItemGroup>
