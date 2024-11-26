@@ -13,3 +13,6 @@
 [submodule "PythonCode"]
 	path = PythonCode
 	url = https://github.com/BlazesRus/PythonCode.git
+[submodule "JavaCode"]
+	path = JavaCode
+	url = https://github.com/BlazesRus/SharedJava.git
